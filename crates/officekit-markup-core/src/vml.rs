@@ -215,6 +215,7 @@
 //!
 //! The namespace is `urn:schemas-microsoft-com:vml`.
 
+mod archive;
 pub mod read;
 pub mod write;
 
@@ -225,6 +226,10 @@ use officekit_markup_base::vml_wordprocessing_drawing;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
+use rkyv::de::Pooling;
+use rkyv::rancor::Source;
+use rkyv::ser::{Allocator, Sharing, Writer};
+use rkyv::validation::{ArchiveContext, SharedContext};
 
 const NS_O: Option<NamespaceId> = Some(60);
 const NS_PVML: Option<NamespaceId> = Some(87);
@@ -1320,7 +1325,13 @@ pub static TEXT_BOX_CONTENT_TAGS: officekit_markup_base::Accept = officekit_mark
 };
 
 /// 19.1.2.1 arc (Arc Segment): the tag `v:arc`, schema type `CT_Arc`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ArcSegment {
     pub allowincell: Option<common_simple_types::BooleanValue>,
@@ -1340,6 +1351,7 @@ pub struct ArcSegment {
     pub clip: Option<common_simple_types::BooleanValue>,
     pub cliptowrap: Option<common_simple_types::BooleanValue>,
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<ShapeElementContent>,
     pub coordorigin: Option<String>,
     pub coordsize: Option<String>,
@@ -1383,7 +1395,13 @@ pub struct ArcSegment {
 }
 
 /// 19.1.2.3 curve (Bezier Curve): the tag `v:curve`, schema type `CT_Curve`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BezierCurve {
     pub allowincell: Option<common_simple_types::BooleanValue>,
@@ -1403,6 +1421,7 @@ pub struct BezierCurve {
     pub clip: Option<common_simple_types::BooleanValue>,
     pub cliptowrap: Option<common_simple_types::BooleanValue>,
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<ShapeElementContent>,
     pub control1: Option<String>,
     pub control2: Option<String>,
@@ -1448,7 +1467,10 @@ pub struct BezierCurve {
 }
 
 /// 19.1.2.2 background (Document Background): the tag `v:background`, schema type `CT_Background`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DocumentBackground {
     pub bwmode: Option<super::vml_office_drawing::BlackAndWhiteModes>,
@@ -1463,7 +1485,10 @@ pub struct DocumentBackground {
 }
 
 /// 19.1.3.3 `ST_FillMethod` (Gradient Fill Computation Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GradientFillComputationType(pub String);
 /// The members of `ST_FillMethod`, in alphabetical order.
@@ -1478,7 +1503,10 @@ pub enum GradientFillComputationTypeMember {
 }
 
 /// 19.1.2.11 imagedata (Image Data): the tag `v:imagedata`, schema type `CT_ImageData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ImageData {
     pub althref: Option<String>,
@@ -1509,7 +1537,13 @@ pub struct ImageData {
 }
 
 /// 19.1.2.10 image (Image File): the tag `v:image`, schema type `CT_Image`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ImageFile {
     pub allowincell: Option<common_simple_types::BooleanValue>,
@@ -1531,6 +1565,7 @@ pub struct ImageFile {
     pub clip: Option<common_simple_types::BooleanValue>,
     pub cliptowrap: Option<common_simple_types::BooleanValue>,
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<ShapeElementContent>,
     pub coordorigin: Option<String>,
     pub coordsize: Option<String>,
@@ -1580,7 +1615,10 @@ pub struct ImageFile {
 }
 
 /// 19.1.3.5 `ST_ImageAspect` (Image Scaling Behavior): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ImageScalingBehavior(pub String);
 /// The members of `ST_ImageAspect`, in alphabetical order.
@@ -1593,7 +1631,13 @@ pub enum ImageScalingBehaviorMember {
 }
 
 /// 19.1.2.12 line (Line): the tag `v:line`, schema type `CT_Line`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Line {
     pub allowincell: Option<common_simple_types::BooleanValue>,
@@ -1613,6 +1657,7 @@ pub struct Line {
     pub clip: Option<common_simple_types::BooleanValue>,
     pub cliptowrap: Option<common_simple_types::BooleanValue>,
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<ShapeElementContent>,
     pub coordorigin: Option<String>,
     pub coordsize: Option<String>,
@@ -1656,7 +1701,10 @@ pub struct Line {
 }
 
 /// 19.1.3.11 `ST_StrokeJoinStyle` (Line Join Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LineJoinType(pub String);
 /// The members of `ST_StrokeJoinStyle`, in alphabetical order.
@@ -1669,7 +1717,10 @@ pub enum LineJoinTypeMember {
 }
 
 /// 19.1.2.21 stroke (Line Stroke Settings): the tag `v:stroke`, schema type `CT_Stroke`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LineStrokeSettings {
     pub althref: Option<String>,
@@ -1710,7 +1761,13 @@ pub struct LineStrokeSettings {
 }
 
 /// 19.1.2.15 polyline (Multiple Path Line): the tag `v:polyline`, schema type `CT_PolyLine`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MultiplePathLine {
     pub allowincell: Option<common_simple_types::BooleanValue>,
@@ -1730,6 +1787,7 @@ pub struct MultiplePathLine {
     pub clip: Option<common_simple_types::BooleanValue>,
     pub cliptowrap: Option<common_simple_types::BooleanValue>,
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<MultiplePathLineContent>,
     pub coordorigin: Option<String>,
     pub coordsize: Option<String>,
@@ -1802,7 +1860,13 @@ pub enum MultiplePathLineContent {
 }
 
 /// 19.1.2.13 oval (Oval): the tag `v:oval`, schema type `CT_Oval`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Oval {
     pub allowincell: Option<common_simple_types::BooleanValue>,
@@ -1822,6 +1886,7 @@ pub struct Oval {
     pub clip: Option<common_simple_types::BooleanValue>,
     pub cliptowrap: Option<common_simple_types::BooleanValue>,
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<ShapeElementContent>,
     pub coordorigin: Option<String>,
     pub coordsize: Option<String>,
@@ -1863,7 +1928,13 @@ pub struct Oval {
 }
 
 /// 19.1.2.16 rect (Rectangle): the tag `v:rect`, schema type `CT_Rect`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Rectangle {
     pub allowincell: Option<common_simple_types::BooleanValue>,
@@ -1883,6 +1954,7 @@ pub struct Rectangle {
     pub clip: Option<common_simple_types::BooleanValue>,
     pub cliptowrap: Option<common_simple_types::BooleanValue>,
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<ShapeElementContent>,
     pub coordorigin: Option<String>,
     pub coordsize: Option<String>,
@@ -1924,7 +1996,13 @@ pub struct Rectangle {
 }
 
 /// 19.1.2.17 roundrect (Rounded Rectangle): the tag `v:roundrect`, schema type `CT_RoundRect`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RoundedRectangle {
     pub allowincell: Option<common_simple_types::BooleanValue>,
@@ -1945,6 +2023,7 @@ pub struct RoundedRectangle {
     pub clip: Option<common_simple_types::BooleanValue>,
     pub cliptowrap: Option<common_simple_types::BooleanValue>,
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<ShapeElementContent>,
     pub coordorigin: Option<String>,
     pub coordsize: Option<String>,
@@ -1986,7 +2065,10 @@ pub struct RoundedRectangle {
 }
 
 /// 19.1.2.6 formulas (Set of Formulas): the tag `v:formulas`, schema type `CT_Formulas`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SetOfFormulas {
     pub single_formula: Vec<SingleFormula>,
@@ -1994,7 +2076,10 @@ pub struct SetOfFormulas {
 }
 
 /// 19.1.2.9 handles (Set of Handles): the tag `v:handles`, schema type `CT_Handles`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SetOfHandles {
     pub shape_handle: Vec<ShapeHandle>,
@@ -2002,7 +2087,10 @@ pub struct SetOfHandles {
 }
 
 /// 19.1.2.18 shadow (Shadow Effect): the tag `v:shadow`, schema type `CT_Shadow`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShadowEffect {
     pub color: Option<String>,
@@ -2020,7 +2108,10 @@ pub struct ShadowEffect {
 }
 
 /// 19.1.3.6 `ST_ShadowType` (Shadow Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShadowType(pub String);
 /// The members of `ST_ShadowType`, in alphabetical order.
@@ -2034,7 +2125,13 @@ pub enum ShadowTypeMember {
 }
 
 /// 19.1.2.19 shape (Shape Definition): the tag `v:shape`, schema type `CT_Shape`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShapeDefinition {
     pub adj: Option<String>,
@@ -2055,6 +2152,7 @@ pub struct ShapeDefinition {
     pub clip: Option<common_simple_types::BooleanValue>,
     pub cliptowrap: Option<common_simple_types::BooleanValue>,
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<ShapeDefinitionContent>,
     pub coordorigin: Option<String>,
     pub coordsize: Option<String>,
@@ -2165,7 +2263,10 @@ pub enum ShapeElementContent {
 }
 
 /// 19.1.2.5 fill (Shape Fill Properties): the tag `v:fill`, schema type `CT_Fill`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShapeFillProperties {
     pub alignshape: Option<common_simple_types::BooleanValue>,
@@ -2201,7 +2302,10 @@ pub struct ShapeFillProperties {
 }
 
 /// 19.1.3.4 `ST_FillType` (Shape Fill Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShapeFillType(pub String);
 /// The members of `ST_FillType`, in alphabetical order.
@@ -2217,7 +2321,13 @@ pub enum ShapeFillTypeMember {
 }
 
 /// 19.1.2.7 group (Shape Group): the tag `v:group`, schema type `CT_Group`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShapeGroup {
     pub allowincell: Option<common_simple_types::BooleanValue>,
@@ -2230,6 +2340,7 @@ pub struct ShapeGroup {
     pub bullet: Option<common_simple_types::BooleanValue>,
     pub button: Option<common_simple_types::BooleanValue>,
     pub class: Option<String>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<ShapeGroupContent>,
     pub coordorigin: Option<String>,
     pub coordsize: Option<String>,
@@ -2305,7 +2416,10 @@ pub enum ShapeGroupContent {
 }
 
 /// 19.1.3.1 `ST_EditAs` (Shape Grouping Types): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShapeGroupingTypes(pub String);
 /// The members of `ST_EditAs`, in alphabetical order.
@@ -2322,7 +2436,10 @@ pub enum ShapeGroupingTypesMember {
 }
 
 /// 19.1.2.8 h (Shape Handle): the tag `v:h`, schema type `CT_H`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShapeHandle {
     pub invx: Option<common_simple_types::BooleanValue>,
@@ -2338,7 +2455,10 @@ pub struct ShapeHandle {
 }
 
 /// 19.1.2.14 path (Shape Path): the tag `v:path`, schema type `CT_Path`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShapePath {
     pub arrowok: Option<common_simple_types::BooleanValue>,
@@ -2360,7 +2480,13 @@ pub struct ShapePath {
 }
 
 /// 19.1.2.20 shapetype (Shape Template): the tag `v:shapetype`, schema type `CT_Shapetype`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShapeTemplate {
     pub adj: Option<String>,
@@ -2382,6 +2508,7 @@ pub struct ShapeTemplate {
     pub cliptowrap: Option<common_simple_types::BooleanValue>,
     pub complex: Option<Box<super::vml_office_drawing::Complex>>,
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<ShapeElementContent>,
     pub coordorigin: Option<String>,
     pub coordsize: Option<String>,
@@ -2425,7 +2552,10 @@ pub struct ShapeTemplate {
 }
 
 /// 19.1.2.4 f (Single Formula): the tag `v:f`, schema type `CT_F`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SingleFormula {
     pub eqn: Option<String>,
@@ -2433,7 +2563,10 @@ pub struct SingleFormula {
 }
 
 /// 19.1.3.7 `ST_StrokeArrowLength` (Stroke Arrowhead Length): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StrokeArrowheadLength(pub String);
 /// The members of `ST_StrokeArrowLength`, in alphabetical order.
@@ -2446,7 +2579,10 @@ pub enum StrokeArrowheadLengthMember {
 }
 
 /// 19.1.3.8 `ST_StrokeArrowType` (Stroke Arrowhead Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StrokeArrowheadType(pub String);
 /// The members of `ST_StrokeArrowType`, in alphabetical order.
@@ -2462,7 +2598,10 @@ pub enum StrokeArrowheadTypeMember {
 }
 
 /// 19.1.3.9 `ST_StrokeArrowWidth` (Stroke Arrowhead Width): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StrokeArrowheadWidth(pub String);
 /// The members of `ST_StrokeArrowWidth`, in alphabetical order.
@@ -2475,7 +2614,10 @@ pub enum StrokeArrowheadWidthMember {
 }
 
 /// 19.1.3.10 `ST_StrokeEndCap` (Stroke End Cap Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StrokeEndCapType(pub String);
 /// The members of `ST_StrokeEndCap`, in alphabetical order.
@@ -2488,7 +2630,10 @@ pub enum StrokeEndCapTypeMember {
 }
 
 /// 19.1.3.12 `ST_StrokeLineStyle` (Stroke Line Style): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StrokeLineStyle(pub String);
 /// The members of `ST_StrokeLineStyle`, in alphabetical order.
@@ -2503,9 +2648,16 @@ pub enum StrokeLineStyleMember {
 }
 
 /// 19.1.2.22 textbox (Text Box): the tag `v:textbox`, schema type `CT_Textbox`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TextBox {
+    #[rkyv(omit_bounds)]
     pub content: Option<Box<TextBoxContent>>,
     pub id: Option<String>,
     pub inset: Option<String>,
@@ -2523,7 +2675,10 @@ pub enum TextBoxContent {
 }
 
 /// 19.1.2.23 textpath (Text Layout Path): the tag `v:textpath`, schema type `CT_TextPath`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TextLayoutPath {
     pub fitpath: Option<common_simple_types::BooleanValue>,
@@ -2538,7 +2693,10 @@ pub struct TextLayoutPath {
 }
 
 /// 19.1.3.2 `ST_Ext` (VML Extension Handling Behaviors): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct VMLExtensionHandlingBehaviors(pub String);
 /// The members of `ST_Ext`, in alphabetical order.

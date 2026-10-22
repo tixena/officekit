@@ -35,6 +35,18 @@ use officekit_xml::write::{Scope, is_whitespace_text};
 #[cfg(test)]
 mod tests;
 
+/// The `From` of an enum's rkyv mirror too long to write out: the match that
+/// moves each variant of the mirror `$from` into the variant of `$to` of the
+/// same name.
+#[macro_export]
+macro_rules! mirror_into {
+    ($item:expr, $from:ident => $to:ident; $($variant:ident),+ $(,)?) => {
+        match $item {
+            $($from::$variant(arm) => $to::$variant(arm),)+
+        }
+    };
+}
+
 /// The tags an enum of the typed tree reads: its arms', and the namespaces a
 /// wildcard among them allows.
 #[derive(Debug)]
@@ -78,7 +90,8 @@ pub enum Descend {
 
 /// A node the schemas do not declare, at a position no list covers: after
 /// the `after`-th declared child of its parent, 0 being before the first.
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Extra {
     pub after: usize,
@@ -200,7 +213,10 @@ enum SlotOccurs {
 pub type Tag = (Option<NamespaceId>, &'static str);
 
 /// What every node carries besides its declared attributes and children.
-#[derive(Clone, Debug, Default, PartialEq, Eq)]
+#[derive(
+    Clone, Debug, Default, PartialEq, Eq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Unknown {
     /// The positions, in its shape's `slots`, of the required single children

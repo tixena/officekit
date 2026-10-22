@@ -215,6 +215,7 @@
 //!
 //! The namespace is `http://schemas.microsoft.com/office/powerpoint/2010/main`.
 
+mod archive;
 pub mod read;
 pub mod write;
 
@@ -678,7 +679,10 @@ pub static SHOW_EVENT_RECORD_LIST_CONTENT_TAGS: officekit_markup_base::Accept =
     };
 
 /// The tag `p14:bmk`, schema type `CT_MediaBookmark` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Bmk {
     pub name: Option<String>,
@@ -687,7 +691,10 @@ pub struct Bmk {
 }
 
 /// The tag `p14:bmkLst`, schema type `CT_MediaBookmarkList` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BmkLst {
     pub bmk: Vec<Bmk>,
@@ -695,7 +702,10 @@ pub struct BmkLst {
 }
 
 /// The tag `p14:bmkTgt`, schema type `CT_MediaBookmarkTarget` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BmkTgt {
     pub bmk_name: Option<String>,
@@ -704,7 +714,10 @@ pub struct BmkTgt {
 }
 
 /// The tag `p14:browseMode`, schema type `CT_BrowseMode` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BrowseMode {
     pub show_status: Option<String>,
@@ -713,7 +726,10 @@ pub struct BrowseMode {
 
 /// The tag `p14:cNvContentPartPr`, schema type `CT_NonVisualInkContentPartProperties` of SDK
 /// 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CNvContentPartPr {
     pub cp_locks: Option<Box<super::office_drawing_2010_main::CpLocks>>,
@@ -723,7 +739,10 @@ pub struct CNvContentPartPr {
 }
 
 /// The tag `p14:cNvPr`, schema type `CT_NonVisualDrawingProps` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CNvPr {
     pub click_hyperlink: Option<Box<super::drawing::ClickHyperlink>>,
@@ -738,21 +757,30 @@ pub struct CNvPr {
 }
 
 /// The tag `p14:conveyor`, schema type `CT_LeftRightDirectionTransition` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Conveyor {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `p14:creationId`, schema type `CT_RandomId` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CreationId {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `p14:defaultImageDpi`, schema type `CT_DefaultImageDpi` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DefaultImageDpi {
     pub unknown: officekit_markup_base::Unknown,
@@ -760,7 +788,10 @@ pub struct DefaultImageDpi {
 }
 
 /// The tag `p14:discardImageEditData`, schema type `CT_DiscardImageEditData` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DiscardImageEditData {
     pub unknown: officekit_markup_base::Unknown,
@@ -768,7 +799,10 @@ pub struct DiscardImageEditData {
 }
 
 /// The tag `p14:doors`, schema type `CT_OrientationTransition` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Doors {
     pub dir: Option<super::presentation::Direction>,
@@ -776,7 +810,10 @@ pub struct Doors {
 }
 
 /// The tag `p14:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExtLstExtensionList {
     pub extension: Vec<super::presentation::Extension>,
@@ -784,7 +821,10 @@ pub struct ExtLstExtensionList {
 }
 
 /// The tag `p14:extLst`, schema type `CT_ExtensionListModify` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExtLstExtensionListModify {
     pub extension: Vec<super::presentation::Extension>,
@@ -793,7 +833,10 @@ pub struct ExtLstExtensionListModify {
 }
 
 /// The tag `p14:fade`, schema type `CT_MediaFade` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Fade {
     pub r#in: Option<String>,
@@ -802,28 +845,40 @@ pub struct Fade {
 }
 
 /// The tag `p14:ferris`, schema type `CT_LeftRightDirectionTransition` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Ferris {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `p14:flash`, schema type `CT_Empty` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Flash {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `p14:flip`, schema type `CT_LeftRightDirectionTransition` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Flip {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `p14:flythrough`, schema type `CT_FlyThroughTransition` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Flythrough {
     pub dir: Option<super::presentation::TransitionInOutDirectionType>,
@@ -832,14 +887,20 @@ pub struct Flythrough {
 }
 
 /// The tag `p14:gallery`, schema type `CT_LeftRightDirectionTransition` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Gallery {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `p14:glitter`, schema type `CT_GlitterTransition` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Glitter {
     pub dir: Option<super::presentation::TransitionSideDirectionType>,
@@ -848,14 +909,20 @@ pub struct Glitter {
 }
 
 /// The tag `p14:honeycomb`, schema type `CT_Empty` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Honeycomb {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `p14:laserClr`, schema type `CT_Color` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LaserClr {
     pub content: Box<super::drawing::ColorContent>,
@@ -863,7 +930,10 @@ pub struct LaserClr {
 }
 
 /// The tag `p14:laserTraceLst`, schema type `CT_LaserTraceList` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LaserTraceLst {
     pub trace_pt_lst: Vec<TracePtLst>,
@@ -871,7 +941,10 @@ pub struct LaserTraceLst {
 }
 
 /// The tag `p14:media`, schema type `CT_Media` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Media {
     pub bmk_lst: Option<Box<BmkLst>>,
@@ -884,14 +957,20 @@ pub struct Media {
 }
 
 /// The tag `p14:modId`, schema type `CT_RandomId` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ModId {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `p14:nullEvt`, schema type `CT_NullEventRecord` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NullEvt {
     pub obj_id: Option<String>,
@@ -900,7 +979,10 @@ pub struct NullEvt {
 }
 
 /// The tag `p14:nvContentPartPr`, schema type `CT_ContentPartNonVisual` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NvContentPartPr {
     pub c: Option<Box<CNvContentPartPr>>,
@@ -910,7 +992,10 @@ pub struct NvContentPartPr {
 }
 
 /// The tag `p14:nvPr`, schema type `CT_ApplicationNonVisualDrawingProps` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NvPr {
     pub content: Option<Box<super::presentation::NonVisualPropertiesContent>>,
@@ -923,7 +1008,10 @@ pub struct NvPr {
 }
 
 /// The tag `p14:pan`, schema type `CT_SideDirectionTransition` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Pan {
     pub dir: Option<super::presentation::TransitionSideDirectionType>,
@@ -931,21 +1019,30 @@ pub struct Pan {
 }
 
 /// The tag `p14:pauseEvt`, schema type `CT_MediaPlaybackEventRecord` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PauseEvt {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `p14:playEvt`, schema type `CT_MediaPlaybackEventRecord` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PlayEvt {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `p14:prism`, schema type `CT_PrismTransition` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Prism {
     pub dir: Option<super::presentation::TransitionSideDirectionType>,
@@ -955,14 +1052,20 @@ pub struct Prism {
 }
 
 /// The tag `p14:resumeEvt`, schema type `CT_MediaPlaybackEventRecord` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ResumeEvt {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `p14:reveal`, schema type `CT_RevealTransition` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Reveal {
     pub dir: Option<TransitionLeftRightDirectionType>,
@@ -971,7 +1074,10 @@ pub struct Reveal {
 }
 
 /// The tag `p14:ripple`, schema type `CT_RippleTransition` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Ripple {
     pub dir: Option<String>,
@@ -979,7 +1085,10 @@ pub struct Ripple {
 }
 
 /// The tag `p14:sectionLst`, schema type `CT_SectionList` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SectionLst {
     pub section_section: Vec<SectionSection>,
@@ -987,7 +1096,10 @@ pub struct SectionLst {
 }
 
 /// The tag `p14:sectionPr`, schema type `CT_SectionProperties` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SectionPr {
     pub section_section_old: Vec<SectionSectionOld>,
@@ -995,7 +1107,10 @@ pub struct SectionPr {
 }
 
 /// The tag `p14:section`, schema type `CT_Section` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SectionSection {
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionList>>,
@@ -1006,7 +1121,10 @@ pub struct SectionSection {
 }
 
 /// The tag `p14:section`, schema type `CT_SectionOld` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SectionSectionOld {
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionList>>,
@@ -1017,7 +1135,10 @@ pub struct SectionSectionOld {
 }
 
 /// The tag `p14:seekEvt`, schema type `CT_MediaSeekEventRecord` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SeekEvt {
     pub obj_id: Option<String>,
@@ -1041,7 +1162,10 @@ pub enum ShowEventRecordListContent {
 }
 
 /// The tag `p14:showEvtLst`, schema type `CT_ShowEventRecordList` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShowEvtLst {
     pub content: Vec<ShowEventRecordListContent>,
@@ -1049,7 +1173,10 @@ pub struct ShowEvtLst {
 }
 
 /// The tag `p14:showMediaCtrls`, schema type `CT_ShowMediaControls` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShowMediaCtrls {
     pub unknown: officekit_markup_base::Unknown,
@@ -1057,7 +1184,10 @@ pub struct ShowMediaCtrls {
 }
 
 /// The tag `p14:shred`, schema type `CT_ShredTransition` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Shred {
     pub dir: Option<super::presentation::TransitionInOutDirectionType>,
@@ -1066,7 +1196,10 @@ pub struct Shred {
 }
 
 /// The tag `p14:sldId`, schema type `CT_SectionSlideIdListEntry` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SldId {
     pub id: Option<String>,
@@ -1074,7 +1207,10 @@ pub struct SldId {
 }
 
 /// The tag `p14:sldIdLst`, schema type `CT_SectionSlideIdList` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SldIdLst {
     pub sld_id: Vec<SldId>,
@@ -1082,21 +1218,30 @@ pub struct SldIdLst {
 }
 
 /// The tag `p14:stopEvt`, schema type `CT_MediaPlaybackEventRecord` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StopEvt {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `p14:switch`, schema type `CT_LeftRightDirectionTransition` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Switch {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `p14:tracePt`, schema type `CT_LaserTracePoint` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TracePt {
     pub t: Option<String>,
@@ -1106,7 +1251,10 @@ pub struct TracePt {
 }
 
 /// The tag `p14:tracePtLst`, schema type `CT_LaserTrace` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TracePtLst {
     pub trace_pt: Vec<TracePt>,
@@ -1114,7 +1262,10 @@ pub struct TracePtLst {
 }
 
 /// `ST_TransitionLeftRightDirectionType`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TransitionLeftRightDirectionType(pub String);
 /// The members of `ST_TransitionLeftRightDirectionType`, in alphabetical order.
@@ -1126,7 +1277,10 @@ pub enum TransitionLeftRightDirectionTypeMember {
 }
 
 /// `ST_TransitionPattern`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TransitionPattern(pub String);
 /// The members of `ST_TransitionPattern`, in alphabetical order.
@@ -1138,7 +1292,10 @@ pub enum TransitionPatternMember {
 }
 
 /// `ST_TransitionShredPattern`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TransitionShredPattern(pub String);
 /// The members of `ST_TransitionShredPattern`, in alphabetical order.
@@ -1150,7 +1307,10 @@ pub enum TransitionShredPatternMember {
 }
 
 /// The tag `p14:triggerEvt`, schema type `CT_TriggerEventRecord` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TriggerEvt {
     pub obj_id: Option<String>,
@@ -1160,7 +1320,10 @@ pub struct TriggerEvt {
 }
 
 /// The tag `p14:trim`, schema type `CT_MediaTrim` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Trim {
     pub end: Option<String>,
@@ -1169,7 +1332,10 @@ pub struct Trim {
 }
 
 /// The tag `p14:vortex`, schema type `CT_SideDirectionTransition` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Vortex {
     pub dir: Option<super::presentation::TransitionSideDirectionType>,
@@ -1177,7 +1343,10 @@ pub struct Vortex {
 }
 
 /// The tag `p14:warp`, schema type `CT_InOutTransition` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Warp {
     pub dir: Option<super::presentation::TransitionInOutDirectionType>,
@@ -1185,7 +1354,10 @@ pub struct Warp {
 }
 
 /// The tag `p14:wheelReverse`, schema type `CT_WheelTransition` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct WheelReverse {
     pub spokes: Option<String>,
@@ -1193,7 +1365,10 @@ pub struct WheelReverse {
 }
 
 /// The tag `p14:window`, schema type `CT_OrientationTransition` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Window {
     pub dir: Option<super::presentation::Direction>,
@@ -1201,7 +1376,10 @@ pub struct Window {
 }
 
 /// The tag `p14:xfrm`, schema type `CT_Transform2D` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Xfrm {
     pub extents: Option<Box<super::drawing::Extents>>,

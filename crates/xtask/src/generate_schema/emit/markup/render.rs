@@ -1,9 +1,9 @@
 //! The text of the typed tree's files: one module per namespace with its
-//! structs, enums, and newtypes, its readers in `read.rs` and writers in
-//! `write.rs` beside it, in the folder of its crate; each crate's
-//! `modules.rs` declaring them; and in `officekit-markup-ext`, `root.rs` and
-//! the hook modules of base's and core's namespaces; and the facade's
-//! `lib.rs`.
+//! structs, enums, and newtypes, its readers in `read.rs`, writers in
+//! `write.rs` and its enums' rkyv mirrors in `archive.rs` beside it, in the
+//! folder of its crate; each crate's `modules.rs` declaring them; and in
+//! `officekit-markup-ext`, `root.rs` and the hook modules of base's and
+//! core's namespaces; and the facade's `lib.rs`.
 
 pub mod layout;
 
@@ -17,6 +17,7 @@ use anyhow::{Context as _, Result, bail};
 use os_shim::System;
 
 use self::layout::{Expr, MAX_WIDTH, doc, line, statement};
+use super::archive::{self, Cycles};
 use super::names;
 use super::structs::{Body, Catalog, EnumDef, EnumKind, Node, Occurs, Target, Value, Wildcard};
 use super::{Crate, MARKUP_PATH, readers, traversal, writers};
@@ -59,7 +60,7 @@ impl Names<'_> {
     }
 
     /// The imports of the modules of other crates `path` gave paths into.
-    fn imports(&self, uses: &mut Uses) {
+    pub fn imports(&self, uses: &mut Uses) {
         for module in self.named.borrow().iter() {
             if let Some(krate) = self.catalog.crates.get(*module)
                 && self.crosses(*module)
@@ -412,16 +413,22 @@ struct ModuleItems {
 impl ModuleItems {
     /// The items of `names.module`, each list in alphabetical order; the
     /// enums of `opened` are not `#[non_exhaustive]`.
-    fn collect(names: &Names<'_>, uses: &mut Uses, opened: &BTreeSet<usize>) -> Result<Self> {
+    fn collect(
+        names: &Names<'_>,
+        cycles: &Cycles,
+        uses: &mut Uses,
+        opened: &BTreeSet<usize>,
+    ) -> Result<Self> {
         let catalog = names.catalog;
         let mut parts = Self::default();
         for (index, node) in catalog.nodes.iter().enumerate() {
             if node.module != names.module {
                 continue;
             }
-            parts
-                .items
-                .push((node.name.clone(), struct_text(names, index, node)));
+            parts.items.push((
+                node.name.clone(),
+                struct_text(names, cycles, index, node, uses),
+            ));
             let shape = shape_text(names, index, node, &mut parts.namespaces);
             parts.statics.push_str(&shape);
             parts
@@ -491,6 +498,7 @@ where
     });
     let listed = traversal::listed(catalog);
     let opened = opened(catalog)?;
+    let cycles = Cycles::new(catalog);
     let ext = Path::new(Crate::Ext.folder());
     let mut files = Vec::new();
     for module in &order {
@@ -506,8 +514,11 @@ where
             .unwrap_or(false);
         files.push((
             folder.join(format!("{name}.rs")),
-            module_text(header, &names, [&listed, &opened], tests)?,
+            module_text(header, &names, &cycles, [&listed, &opened], tests)?,
         ));
+        if let Some(text) = archive::text(header, &functions(catalog, *module)?, &cycles) {
+            files.push((folder.join(name).join("archive.rs"), text));
+        }
         files.push((
             folder.join(name).join("read.rs"),
             readers::text(header, &names),
@@ -556,10 +567,11 @@ where
 ///
 /// A name that cannot be written.
 pub fn references(catalog: &Catalog) -> Result<Vec<BTreeSet<usize>>> {
+    let cycles = Cycles::new(catalog);
     (0..catalog.modules.len())
         .map(|module| {
             let names = functions(catalog, module)?;
-            ModuleItems::collect(&names, &mut Uses::default(), &BTreeSet::new())?;
+            ModuleItems::collect(&names, &cycles, &mut Uses::default(), &BTreeSet::new())?;
             Ok(names.named.take())
         })
         .collect()
@@ -724,6 +736,7 @@ pub fn functions(catalog: &Catalog, module: usize) -> Result<Names<'_>> {
 fn module_text(
     header: &str,
     names: &Names<'_>,
+    cycles: &Cycles,
     [listed, opened]: [&BTreeSet<usize>; 2],
     tests: bool,
 ) -> Result<String> {
@@ -737,12 +750,19 @@ fn module_text(
          //! `write`.\n//!\n//! The namespace is `{}`.\n",
         module.prefix, module.uri
     );
+    if catalog
+        .enums
+        .iter()
+        .any(|found| found.module == names.module)
+    {
+        out.push_str("mod archive;\n");
+    }
     out.push_str("pub mod read;\npub mod write;\n");
     if tests {
         out.push_str("\n#[cfg(test)]\nmod tests;\n");
     }
     let mut uses = Uses::default();
-    let mut parts = ModuleItems::collect(names, &mut uses, opened)?;
+    let mut parts = ModuleItems::collect(names, cycles, &mut uses, opened)?;
     if catalog.crates.get(names.module) == Some(&Crate::Ext) {
         parts.items.push((
             "Context".to_owned(),
@@ -832,15 +852,23 @@ fn tag(
     Expr::Tuple(vec![Expr::Atom(space), Expr::Atom(layout::string(local))])
 }
 
-/// A struct's definition.
-fn struct_text(names: &Names<'_>, index: usize, node: &Node) -> String {
-    let mut fields: Vec<(String, String)> = Vec::new();
+/// A struct's definition, with the bounds names of its rkyv attributes in
+/// `uses` when one of its fields closes a cycle.
+fn struct_text(
+    names: &Names<'_>,
+    cycles: &Cycles,
+    index: usize,
+    node: &Node,
+    uses: &mut Uses,
+) -> String {
+    // Each field's name, type, and whether it closes a cycle.
+    let mut fields: Vec<(String, String, bool)> = Vec::new();
     for attribute in &node.attributes {
         let value = value_type(names, attribute.value);
-        fields.push((attribute.field.clone(), format!("Option<{value}>")));
+        fields.push((attribute.field.clone(), format!("Option<{value}>"), false));
     }
     match &node.body {
-        Body::Text(value) => fields.push(("value".to_owned(), value_type(names, *value))),
+        Body::Text(value) => fields.push(("value".to_owned(), value_type(names, *value), false)),
         Body::Children(children) => {
             for child in children {
                 let target = match child.target {
@@ -859,19 +887,36 @@ fn struct_text(names: &Names<'_>, index: usize, node: &Node) -> String {
                     Occurs::Optional => format!("Option<Box<{target}>>"),
                     Occurs::Required => format!("Box<{target}>"),
                 };
-                fields.push((child.field.clone(), shown));
+                fields.push((
+                    child.field.clone(),
+                    shown,
+                    cycles.child(index, child.target),
+                ));
             }
         }
     }
     fields.push((
         "unknown".to_owned(),
         format!("{}::Unknown", names.runtime()),
+        false,
     ));
     fields.sort_by(|left, right| bare(&left.0).cmp(bare(&right.0)));
+    let bounded = fields.iter().any(|(_, _, recursive)| *recursive);
+    if bounded {
+        for name in archive::BOUND_NAMES {
+            uses.add(name);
+        }
+    }
     let mut out = doc(0, &node.doc);
-    out.push_str("#[derive(Clone, Debug, Default, Eq, PartialEq)]\n#[non_exhaustive]\n");
+    out.push_str(&archive::attributes(
+        "Clone, Debug, Default, Eq, PartialEq",
+        bounded,
+    ));
     let _ = writeln!(out, "pub struct {} {{", node.name);
-    for (field, shown) in fields {
+    for (field, shown, recursive) in fields {
+        if recursive {
+            let _ = writeln!(out, "    {}", archive::OMIT_BOUNDS);
+        }
         let line = format!("    pub {field}: {shown},");
         if line.len() <= MAX_WIDTH {
             out.push_str(&line);
@@ -1015,7 +1060,7 @@ fn shape_text(
     );
     let mut out = String::from("\n");
     statement(
-        &format!("pub static {}: {runtime}::Shape = ", names.shape(index)),
+        &layout::static_start(&names.shape(index), &format!("{runtime}::Shape")),
         &expr,
         &mut out,
     );
@@ -1072,9 +1117,9 @@ fn tags_text(names: &Names<'_>, found: &EnumDef, namespaces: &mut BTreeSet<Optio
     );
     let mut out = String::from("\n");
     statement(
-        &format!(
-            "pub static {}_TAGS: {runtime}::Accept = ",
-            names::screaming(&found.name)
+        &layout::static_start(
+            &format!("{}_TAGS", names::screaming(&found.name)),
+            &format!("{runtime}::Accept"),
         ),
         &expr,
         &mut out,

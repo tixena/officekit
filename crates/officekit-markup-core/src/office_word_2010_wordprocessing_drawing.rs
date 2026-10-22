@@ -270,7 +270,10 @@ pub static SIZE_REL_V_SHAPE: officekit_markup_base::Shape = officekit_markup_bas
 };
 
 /// The tag `wp14:pctHeight`, schema type `ST_PositivePercentage` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PctHeight {
     pub unknown: officekit_markup_base::Unknown,
@@ -278,7 +281,10 @@ pub struct PctHeight {
 }
 
 /// The tag `wp14:pctPosHOffset`, schema type `ST_Percentage` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PctPosHOffset {
     pub unknown: officekit_markup_base::Unknown,
@@ -286,7 +292,10 @@ pub struct PctPosHOffset {
 }
 
 /// The tag `wp14:pctPosVOffset`, schema type `ST_Percentage` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PctPosVOffset {
     pub unknown: officekit_markup_base::Unknown,
@@ -294,7 +303,10 @@ pub struct PctPosVOffset {
 }
 
 /// The tag `wp14:pctWidth`, schema type `ST_PositivePercentage` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PctWidth {
     pub unknown: officekit_markup_base::Unknown,
@@ -302,7 +314,10 @@ pub struct PctWidth {
 }
 
 /// `ST_SizeRelFromH`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SizeRelFromH(pub String);
 /// The members of `ST_SizeRelFromH`, in alphabetical order.
@@ -318,7 +333,10 @@ pub enum SizeRelFromHMember {
 }
 
 /// `ST_SizeRelFromV`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SizeRelFromV(pub String);
 /// The members of `ST_SizeRelFromV`, in alphabetical order.
@@ -334,7 +352,10 @@ pub enum SizeRelFromVMember {
 }
 
 /// The tag `wp14:sizeRelH`, schema type `CT_SizeRelH` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SizeRelH {
     pub pct_width: Box<PctWidth>,
@@ -343,7 +364,10 @@ pub struct SizeRelH {
 }
 
 /// The tag `wp14:sizeRelV`, schema type `CT_SizeRelV` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SizeRelV {
     pub pct_height: Box<PctHeight>,

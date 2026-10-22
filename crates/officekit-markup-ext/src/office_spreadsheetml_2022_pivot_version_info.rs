@@ -269,7 +269,10 @@ pub static PIVOT_VERSION_INFO_SHAPE: officekit_markup_base::Shape = officekit_ma
 };
 
 /// The tag `xxpvi:cacheVersionInfo`, schema type `CT_CacheVersionInfo` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CacheVersionInfo {
     pub last_refresh_feature: Vec<LastRefreshFeature>,
@@ -364,7 +367,10 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `xxpvi:lastRefreshFeature`, schema type `string` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LastRefreshFeature {
     pub unknown: officekit_markup_base::Unknown,
@@ -372,7 +378,10 @@ pub struct LastRefreshFeature {
 }
 
 /// The tag `xxpvi:lastUpdateFeature`, schema type `string` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LastUpdateFeature {
     pub unknown: officekit_markup_base::Unknown,
@@ -380,7 +389,10 @@ pub struct LastUpdateFeature {
 }
 
 /// The tag `xxpvi:pivotVersionInfo`, schema type `CT_PivotVersionInfo` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PivotVersionInfo {
     pub last_update_feature: Vec<LastUpdateFeature>,
@@ -389,7 +401,10 @@ pub struct PivotVersionInfo {
 }
 
 /// The tag `xxpvi:requiredFeature`, schema type `string` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RequiredFeature {
     pub unknown: officekit_markup_base::Unknown,

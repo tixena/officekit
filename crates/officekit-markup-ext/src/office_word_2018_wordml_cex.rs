@@ -257,7 +257,10 @@ pub static EXT_LST_SHAPE: officekit_markup_base::Shape = officekit_markup_base::
 };
 
 /// The tag `w16cex:commentExtensible`, schema type `CT_CommentExtensible` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CommentExtensible {
     pub date_utc: Option<String>,
@@ -268,7 +271,10 @@ pub struct CommentExtensible {
 }
 
 /// The tag `w16cex:commentsExtensible`, schema type `CT_CommentsExtensible` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CommentsExtensible {
     pub comment_extensible: Vec<CommentExtensible>,
@@ -328,7 +334,10 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `w16cex:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExtLst {
     pub ext: Vec<super::office_word_2018_wordml::Ext>,

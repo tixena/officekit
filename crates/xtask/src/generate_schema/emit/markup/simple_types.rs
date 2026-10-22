@@ -818,7 +818,10 @@ pub fn render(
     uses: &mut Uses,
 ) -> Result<(String, String, String)> {
     let mut declared = layout::doc(0, &simple.doc);
-    declared.push_str("#[derive(Clone, Debug, Default, Eq, PartialEq)]\n#[non_exhaustive]\n");
+    declared.push_str(&super::archive::attributes(
+        "Clone, Debug, Default, Eq, PartialEq",
+        false,
+    ));
     let _ = writeln!(declared, "pub struct {}(pub String);", simple.name);
     let conversions = format!(
         "\n{}    fn as_ref(&self) -> &str {{\n        &self.0\n    }}\n}}\n\

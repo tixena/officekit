@@ -266,7 +266,10 @@ pub static MODEL_TIME_GROUPINGS_SHAPE: officekit_markup_base::Shape =
     };
 
 /// The tag `x16:calculatedTimeColumn`, schema type `CT_CalculatedTimeColumn` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CalculatedTimeColumn {
     pub column_id: Option<String>,
@@ -335,7 +338,10 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `x16:modelTimeGrouping`, schema type `CT_ModelTimeGrouping` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ModelTimeGrouping {
     pub calculated_time_column: Vec<CalculatedTimeColumn>,
@@ -346,7 +352,10 @@ pub struct ModelTimeGrouping {
 }
 
 /// `ST_ModelTimeGroupingContentType`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ModelTimeGroupingContentType(pub String);
 /// The members of `ST_ModelTimeGroupingContentType`, in alphabetical order.
@@ -365,7 +374,10 @@ pub enum ModelTimeGroupingContentTypeMember {
 }
 
 /// The tag `x16:modelTimeGroupings`, schema type `CT_ModelTimeGroupings` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ModelTimeGroupings {
     pub model_time_grouping: Vec<ModelTimeGrouping>,

@@ -243,7 +243,10 @@ pub static EMBEDDED_CUSTOM_XML_SCHEMA_SUPPLEMENTARY_DATA_SHAPE: crate::Shape = c
 };
 
 /// 23.2.1 schema (Custom XML Schema Reference): the tag `sl:schema`, schema type `CT_Schema`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomXMLSchemaReference {
     pub manifest_location: Option<String>,
@@ -255,7 +258,10 @@ pub struct CustomXMLSchemaReference {
 
 /// 23.2.2 `schemaLibrary` (Embedded Custom XML Schema Supplementary Data): the tag
 /// `sl:schemaLibrary`, schema type `CT_SchemaLibrary`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EmbeddedCustomXMLSchemaSupplementaryData {
     pub custom_xml_schema_reference: Vec<CustomXMLSchemaReference>,

@@ -215,12 +215,17 @@
 //!
 //! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes`.
 
+mod archive;
 pub mod read;
 pub mod write;
 
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
+use rkyv::de::Pooling;
+use rkyv::rancor::Source;
+use rkyv::ser::{Allocator, Sharing, Writer};
+use rkyv::validation::{ArchiveContext, SharedContext};
 
 const NS_VT: Option<NamespaceId> = Some(96);
 
@@ -566,10 +571,17 @@ static ERROR_STATUS_CODE_SIMPLE_TYPE_FACETS: crate::Facets = crate::Facets {
 };
 
 /// 22.4.2.1 array (Array): the tag `vt:array`, schema type `CT_Array`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Array {
     pub base_type: Option<ArrayBaseTypeSimpleType>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<ArrayContent>,
     pub l_bounds: Option<String>,
     pub u_bounds: Option<String>,
@@ -577,7 +589,10 @@ pub struct Array {
 }
 
 /// 22.4.3.1 `ST_ArrayBaseType` (Array Base Type Simple Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ArrayBaseTypeSimpleType(pub String);
 /// The members of `ST_ArrayBaseType`, in alphabetical order.
@@ -627,7 +642,10 @@ pub enum ArrayContent {
 }
 
 /// 22.4.2.4 bstr (Basic String): the tag `vt:bstr`, schema type `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BasicString {
     pub unknown: crate::Unknown,
@@ -635,7 +653,10 @@ pub struct BasicString {
 }
 
 /// 22.4.2.2 blob (Binary Blob): the tag `vt:blob`, schema type `base64Binary`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BinaryBlob {
     pub unknown: crate::Unknown,
@@ -643,7 +664,10 @@ pub struct BinaryBlob {
 }
 
 /// 22.4.2.20 oblob (Binary Blob Object): the tag `vt:oblob`, schema type `base64Binary`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BinaryBlobObject {
     pub unknown: crate::Unknown,
@@ -651,7 +675,10 @@ pub struct BinaryBlobObject {
 }
 
 /// 22.4.2.25 storage (Binary Storage): the tag `vt:storage`, schema type `base64Binary`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BinaryStorage {
     pub unknown: crate::Unknown,
@@ -659,7 +686,10 @@ pub struct BinaryStorage {
 }
 
 /// 22.4.2.21 ostorage (Binary Storage Object): the tag `vt:ostorage`, schema type `base64Binary`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BinaryStorageObject {
     pub unknown: crate::Unknown,
@@ -667,7 +697,10 @@ pub struct BinaryStorageObject {
 }
 
 /// 22.4.2.26 stream (Binary Stream): the tag `vt:stream`, schema type `base64Binary`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BinaryStream {
     pub unknown: crate::Unknown,
@@ -675,7 +708,10 @@ pub struct BinaryStream {
 }
 
 /// 22.4.2.22 ostream (Binary Stream Object): the tag `vt:ostream`, schema type `base64Binary`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BinaryStreamObject {
     pub unknown: crate::Unknown,
@@ -683,7 +719,10 @@ pub struct BinaryStreamObject {
 }
 
 /// 22.4.2.34 vstream (Binary Versioned Stream): the tag `vt:vstream`, schema type `CT_Vstream`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BinaryVersionedStream {
     pub unknown: crate::Unknown,
@@ -692,7 +731,10 @@ pub struct BinaryVersionedStream {
 }
 
 /// 22.4.2.3 bool (Boolean): the tag `vt:bool`, schema type `boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Boolean {
     pub unknown: crate::Unknown,
@@ -700,7 +742,10 @@ pub struct Boolean {
 }
 
 /// 22.4.2.5 clsid (Class ID): the tag `vt:clsid`, schema type `ST_Guid`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ClassID {
     pub unknown: crate::Unknown,
@@ -708,7 +753,10 @@ pub struct ClassID {
 }
 
 /// 22.4.2.6 cy (Currency): the tag `vt:cy`, schema type `ST_Cy`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Currency {
     pub unknown: crate::Unknown,
@@ -716,12 +764,18 @@ pub struct Currency {
 }
 
 /// 22.4.3.2 `ST_Cy` (Currency Simple Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CurrencySimpleType(pub String);
 
 /// 22.4.2.7 date (Date and Time): the tag `vt:date`, schema type `dateTime`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DateAndTime {
     pub unknown: crate::Unknown,
@@ -729,7 +783,10 @@ pub struct DateAndTime {
 }
 
 /// 22.4.2.8 decimal (Decimal): the tag `vt:decimal`, schema type `decimal`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Decimal {
     pub unknown: crate::Unknown,
@@ -737,14 +794,20 @@ pub struct Decimal {
 }
 
 /// 22.4.2.9 empty (Empty): the tag `vt:empty`, schema type `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Empty {
     pub unknown: crate::Unknown,
 }
 
 /// 22.4.2.10 error (Error Status Code): the tag `vt:error`, schema type `ST_Error`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ErrorStatusCode {
     pub unknown: crate::Unknown,
@@ -752,12 +815,18 @@ pub struct ErrorStatusCode {
 }
 
 /// 22.4.3.3 `ST_Error` (Error Status Code Simple Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ErrorStatusCodeSimpleType(pub String);
 
 /// 22.4.2.11 filetime (File Time): the tag `vt:filetime`, schema type `dateTime`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FileTime {
     pub unknown: crate::Unknown,
@@ -765,7 +834,10 @@ pub struct FileTime {
 }
 
 /// The tag `vt:i1`, schema type `byte`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct I1 {
     pub unknown: crate::Unknown,
@@ -773,7 +845,10 @@ pub struct I1 {
 }
 
 /// The tag `vt:i2`, schema type `short`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct I2 {
     pub unknown: crate::Unknown,
@@ -781,7 +856,10 @@ pub struct I2 {
 }
 
 /// The tag `vt:i4`, schema type `int`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct I4 {
     pub unknown: crate::Unknown,
@@ -789,7 +867,10 @@ pub struct I4 {
 }
 
 /// The tag `vt:i8`, schema type `long`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct I8 {
     pub unknown: crate::Unknown,
@@ -797,7 +878,10 @@ pub struct I8 {
 }
 
 /// 22.4.2.16 int (Integer): the tag `vt:int`, schema type `int`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Integer {
     pub unknown: crate::Unknown,
@@ -805,7 +889,10 @@ pub struct Integer {
 }
 
 /// 22.4.2.17 lpstr (LPSTR): the tag `vt:lpstr`, schema type `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Lpstr {
     pub unknown: crate::Unknown,
@@ -813,7 +900,10 @@ pub struct Lpstr {
 }
 
 /// 22.4.2.18 lpwstr (LPWSTR): the tag `vt:lpwstr`, schema type `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Lpwstr {
     pub unknown: crate::Unknown,
@@ -821,14 +911,20 @@ pub struct Lpwstr {
 }
 
 /// 22.4.2.19 null (Null): the tag `vt:null`, schema type `CT_Null`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Null {
     pub unknown: crate::Unknown,
 }
 
 /// The tag `vt:r4`, schema type `float`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct R4 {
     pub unknown: crate::Unknown,
@@ -836,7 +932,10 @@ pub struct R4 {
 }
 
 /// The tag `vt:r8`, schema type `double`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct R8 {
     pub unknown: crate::Unknown,
@@ -844,7 +943,10 @@ pub struct R8 {
 }
 
 /// The tag `vt:ui1`, schema type `unsignedByte`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Ui1 {
     pub unknown: crate::Unknown,
@@ -852,7 +954,10 @@ pub struct Ui1 {
 }
 
 /// The tag `vt:ui2`, schema type `unsignedShort`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Ui2 {
     pub unknown: crate::Unknown,
@@ -860,7 +965,10 @@ pub struct Ui2 {
 }
 
 /// The tag `vt:ui4`, schema type `unsignedInt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Ui4 {
     pub unknown: crate::Unknown,
@@ -868,7 +976,10 @@ pub struct Ui4 {
 }
 
 /// The tag `vt:ui8`, schema type `unsignedLong`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Ui8 {
     pub unknown: crate::Unknown,
@@ -876,7 +987,10 @@ pub struct Ui8 {
 }
 
 /// 22.4.2.31 uint (Unsigned Integer): the tag `vt:uint`, schema type `unsignedInt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UnsignedInteger {
     pub unknown: crate::Unknown,
@@ -884,9 +998,16 @@ pub struct UnsignedInteger {
 }
 
 /// 22.4.2.32 variant (Variant): the tag `vt:variant`, schema type `CT_Variant`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Variant {
+    #[rkyv(omit_bounds)]
     pub content: Box<VariantContent>,
     pub unknown: crate::Unknown,
 }
@@ -932,17 +1053,27 @@ pub enum VariantContent {
 }
 
 /// 22.4.2.33 vector (Vector): the tag `vt:vector`, schema type `CT_Vector`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Vector {
     pub base_type: Option<VectorBaseTypeSimpleType>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<VectorContent>,
     pub size: Option<String>,
     pub unknown: crate::Unknown,
 }
 
 /// 22.4.3.4 `ST_VectorBaseType` (Vector Base Type Simple Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct VectorBaseTypeSimpleType(pub String);
 /// The members of `ST_VectorBaseType`, in alphabetical order.

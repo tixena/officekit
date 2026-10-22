@@ -241,7 +241,10 @@ pub static COMMENTS_IDS_SHAPE: officekit_markup_base::Shape = officekit_markup_b
 };
 
 /// The tag `w16cid:commentId`, schema type `CT_CommentId` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CommentId {
     pub durable_id: Option<String>,
@@ -250,7 +253,10 @@ pub struct CommentId {
 }
 
 /// The tag `w16cid:commentsIds`, schema type `CT_CommentsIds` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CommentsIds {
     pub comment_id: Vec<CommentId>,

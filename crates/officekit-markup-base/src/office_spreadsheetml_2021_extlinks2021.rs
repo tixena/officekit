@@ -248,14 +248,20 @@ pub static ALTERNATE_URLS_SHAPE: crate::Shape = crate::Shape {
 };
 
 /// The tag `xxl21:absoluteUrl`, schema type `CT_AlternateUrl` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AbsoluteUrl {
     pub unknown: crate::Unknown,
 }
 
 /// The tag `xxl21:alternateUrls`, schema type `CT_ExternalBookAlternateUrls` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AlternateUrls {
     pub absolute_url: Option<Box<AbsoluteUrl>>,
@@ -266,7 +272,10 @@ pub struct AlternateUrls {
 }
 
 /// The tag `xxl21:relativeUrl`, schema type `CT_AlternateUrl` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RelativeUrl {
     pub unknown: crate::Unknown,

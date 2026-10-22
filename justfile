@@ -5,8 +5,11 @@ default:
 # Lint Rust: clippy across the whole workspace, then officekit-core and
 # officekit-parts in every feature combination, then fmt check, and rustfmt
 # over every test file, which reaches the ones `include!` hides. `--workspace`
-# because `default-members` excludes `crates/xtask`.
+# because `default-members` excludes `crates/xtask`. officekit-markup-core is
+# checked first and alone: its compile takes most of the memory cap, so no
+# other compile runs beside it.
 lint:
+    cargo clippy -p officekit-markup-core --all-targets -- -D warnings
     cargo clippy --workspace --all-targets -- -D warnings
     cargo clippy -p officekit-core --all-targets --all-features -- -D warnings
     cargo clippy -p officekit-core --all-targets --no-default-features -- -D warnings
@@ -21,16 +24,19 @@ lint:
 fmt:
     cargo fmt --all
 
-# Build every crate.
+# Build every crate, officekit-markup-core first and alone.
 build:
+    cargo build -p officekit-markup-core
     cargo build --workspace
 
 # Run the test suite, officekit-core's and officekit-parts' with every class on,
-# and officekit-core's with Strict alone. The first line builds the libraries,
-# binaries and examples with the dev-dependencies' features, as the test run
-# resolves them, so `cargo test --workspace` compiles test targets only and no
-# generated crate's library compiles beside its test binary.
+# and officekit-core's with Strict alone. officekit-markup-core builds first and
+# alone. The next line builds the libraries, binaries and examples with the
+# dev-dependencies' features, as the test run resolves them, so `cargo test
+# --workspace` compiles test targets only and no generated crate's library
+# compiles beside its test binary.
 test:
+    cargo build -p officekit-markup-core
     cargo build --workspace --lib --bins --examples
     cargo test --workspace
     cargo test -p officekit-core --all-features

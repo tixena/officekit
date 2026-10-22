@@ -215,17 +215,19 @@
 //!
 //! The namespace is `http://schemas.openxmlformats.org/wordprocessingml/2006/main`.
 
+mod archive;
 pub mod read;
 pub mod write;
-
-#[cfg(test)]
-mod tests;
 
 use officekit_markup_base::common_simple_types;
 use officekit_markup_base::custom_xml_schema_properties;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::{DateTime, Measure, ValueError};
+use rkyv::de::Pooling;
+use rkyv::rancor::Source;
+use rkyv::ser::{Allocator, Sharing, Writer};
+use rkyv::validation::{ArchiveContext, SharedContext};
 
 const NS_M: Option<NamespaceId> = Some(52);
 const NS_O: Option<NamespaceId> = Some(60);
@@ -469,13 +471,13 @@ pub static ALLOW_AUTOMATIC_FORMATTING_OVERRIDE_SHAPE: officekit_markup_base::Sha
         text: false,
     };
 
-pub static AUTOMATICALLY_HYPHENATE_DOCUMENT_CONTENTS_WHEN_DISPLAYED_SHAPE: officekit_markup_base::Shape =
-    officekit_markup_base::Shape {
-        attributes: &[(NS_W, "val")],
-        name: (NS_W, "autoHyphenation"),
-        slots: &[],
-        text: false,
-    };
+pub static AUTOMATICALLY_HYPHENATE_DOCUMENT_CONTENTS_WHEN_DISPLAYED_SHAPE:
+    officekit_markup_base::Shape = officekit_markup_base::Shape {
+    attributes: &[(NS_W, "val")],
+    name: (NS_W, "autoHyphenation"),
+    slots: &[],
+    text: false,
+};
 
 pub static AUTOMATICALLY_MERGE_USER_FORMATTING_SHAPE: officekit_markup_base::Shape =
     officekit_markup_base::Shape {
@@ -785,13 +787,13 @@ pub static BOTTOM_BORDER_SHAPE: officekit_markup_base::Shape = officekit_markup_
     text: false,
 };
 
-pub static PARAGRAPH_BORDER_BELOW_IDENTICAL_PARAGRAPHS_TBL_WIDTH_SHAPE: officekit_markup_base::Shape =
-    officekit_markup_base::Shape {
-        attributes: &[(NS_W, "w"), (NS_W, "type")],
-        name: (NS_W, "bottom"),
-        slots: &[],
-        text: false,
-    };
+pub static PARAGRAPH_BORDER_BELOW_IDENTICAL_PARAGRAPHS_TBL_WIDTH_SHAPE:
+    officekit_markup_base::Shape = officekit_markup_base::Shape {
+    attributes: &[(NS_W, "w"), (NS_W, "type")],
+    name: (NS_W, "bottom"),
+    slots: &[],
+    text: false,
+};
 
 pub static BREAK_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Shape {
     attributes: &[(NS_W, "type"), (NS_W, "clear")],
@@ -800,13 +802,13 @@ pub static BREAK_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Sh
     text: false,
 };
 
-pub static USE_CACHED_PARAGRAPH_INFORMATION_FOR_COLUMN_BALANCING_SHAPE: officekit_markup_base::Shape =
-    officekit_markup_base::Shape {
-        attributes: &[(NS_W, "val")],
-        name: (NS_W, "cachedColBalance"),
-        slots: &[],
-        text: false,
-    };
+pub static USE_CACHED_PARAGRAPH_INFORMATION_FOR_COLUMN_BALANCING_SHAPE:
+    officekit_markup_base::Shape = officekit_markup_base::Shape {
+    attributes: &[(NS_W, "val")],
+    name: (NS_W, "cachedColBalance"),
+    slots: &[],
+    text: false,
+};
 
 pub static RECALCULATE_FIELDS_WHEN_MODIFIED_SHAPE: officekit_markup_base::Shape =
     officekit_markup_base::Shape {
@@ -1241,13 +1243,13 @@ pub static EMBEDDED_CONTROL_SHAPE: officekit_markup_base::Shape = officekit_mark
     text: false,
 };
 
-pub static TREAT_BACKSLASH_QUOTATION_DELIMITER_AS_TWO_QUOTATION_MARKS_SHAPE: officekit_markup_base::Shape =
-    officekit_markup_base::Shape {
-        attributes: &[(NS_W, "val")],
-        name: (NS_W, "convMailMergeEsc"),
-        slots: &[],
-        text: false,
-    };
+pub static TREAT_BACKSLASH_QUOTATION_DELIMITER_AS_TWO_QUOTATION_MARKS_SHAPE:
+    officekit_markup_base::Shape = officekit_markup_base::Shape {
+    attributes: &[(NS_W, "val")],
+    name: (NS_W, "convMailMergeEsc"),
+    slots: &[],
+    text: false,
+};
 
 pub static CARRIAGE_RETURN_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Shape {
     attributes: &[],
@@ -1790,13 +1792,13 @@ pub static DO_NOT_SHOW_FORM_FIELD_INDICATOR_SHAPE: officekit_markup_base::Shape 
         text: false,
     };
 
-pub static DO_NOT_SNAP_TO_DOCUMENT_GRID_IN_TABLE_CELLS_WITH_OBJECTS_SHAPE: officekit_markup_base::Shape =
-    officekit_markup_base::Shape {
-        attributes: &[(NS_W, "val")],
-        name: (NS_W, "doNotSnapToGridInCell"),
-        slots: &[],
-        text: false,
-    };
+pub static DO_NOT_SNAP_TO_DOCUMENT_GRID_IN_TABLE_CELLS_WITH_OBJECTS_SHAPE:
+    officekit_markup_base::Shape = officekit_markup_base::Shape {
+    attributes: &[(NS_W, "val")],
+    name: (NS_W, "doNotSnapToGridInCell"),
+    slots: &[],
+    text: false,
+};
 
 pub static DO_NOT_SUPPRESS_BLANK_LINES_SHAPE: officekit_markup_base::Shape =
     officekit_markup_base::Shape {
@@ -2780,15 +2782,15 @@ pub static HEADER_SHAPE: officekit_markup_base::Shape = officekit_markup_base::S
     text: false,
 };
 
-pub static DEFAULT_PROPERTIES_FOR_VML_OBJECTS_IN_HEADER_AND_FOOTER_SHAPE: officekit_markup_base::Shape =
-    officekit_markup_base::Shape {
-        attributes: &[],
-        name: (NS_W, "hdrShapeDefaults"),
-        slots: &[officekit_markup_base::Slot::items(
-            &VML_OFFICE_DRAWING_ELEMENT_CONTENT_TAGS,
-        )],
-        text: false,
-    };
+pub static DEFAULT_PROPERTIES_FOR_VML_OBJECTS_IN_HEADER_AND_FOOTER_SHAPE:
+    officekit_markup_base::Shape = officekit_markup_base::Shape {
+    attributes: &[],
+    name: (NS_W, "hdrShapeDefaults"),
+    slots: &[officekit_markup_base::Slot::items(
+        &VML_OFFICE_DRAWING_ELEMENT_CONTENT_TAGS,
+    )],
+    text: false,
+};
 
 pub static HEADER_CELL_REFERENCE_SHAPE: officekit_markup_base::Shape =
     officekit_markup_base::Shape {
@@ -3155,13 +3157,13 @@ pub static LAYOUT_RAW_TABLE_WIDTH_SHAPE: officekit_markup_base::Shape =
         text: false,
     };
 
-pub static ALLOW_TABLE_ROWS_TO_WRAP_INLINE_OBJECTS_INDEPENDENTLY_SHAPE: officekit_markup_base::Shape =
-    officekit_markup_base::Shape {
-        attributes: &[(NS_W, "val")],
-        name: (NS_W, "layoutTableRowsApart"),
-        slots: &[],
-        text: false,
-    };
+pub static ALLOW_TABLE_ROWS_TO_WRAP_INLINE_OBJECTS_INDEPENDENTLY_SHAPE:
+    officekit_markup_base::Shape = officekit_markup_base::Shape {
+    attributes: &[(NS_W, "val")],
+    name: (NS_W, "layoutTableRowsApart"),
+    slots: &[],
+    text: false,
+};
 
 pub static LEFT_PARAGRAPH_BORDER_SHAPE: officekit_markup_base::Shape =
     officekit_markup_base::Shape {
@@ -3723,13 +3725,13 @@ pub static SUPPRESS_ENDNOTES_IN_DOCUMENT_SHAPE: officekit_markup_base::Shape =
         text: false,
     };
 
-pub static DO_NOT_CENTER_CONTENT_ON_LINES_WITH_EXACT_LINE_HEIGHT_SHAPE: officekit_markup_base::Shape =
-    officekit_markup_base::Shape {
-        attributes: &[(NS_W, "val")],
-        name: (NS_W, "noExtraLineSpacing"),
-        slots: &[],
-        text: false,
-    };
+pub static DO_NOT_CENTER_CONTENT_ON_LINES_WITH_EXACT_LINE_HEIGHT_SHAPE:
+    officekit_markup_base::Shape = officekit_markup_base::Shape {
+    attributes: &[(NS_W, "val")],
+    name: (NS_W, "noExtraLineSpacing"),
+    slots: &[],
+    text: false,
+};
 
 pub static DO_NOT_ADD_LEADING_BETWEEN_LINES_OF_TEXT_SHAPE: officekit_markup_base::Shape =
     officekit_markup_base::Shape {
@@ -5346,13 +5348,13 @@ pub static DEFAULT_PROPERTIES_FOR_VML_OBJECTS_IN_MAIN_DOCUMENT_SHAPE: officekit_
         text: false,
     };
 
-pub static IGNORE_TEXT_WRAPPING_AROUND_OBJECTS_AT_BOTTOM_OF_PAGE_SHAPE: officekit_markup_base::Shape =
-    officekit_markup_base::Shape {
-        attributes: &[(NS_W, "val")],
-        name: (NS_W, "shapeLayoutLikeWW8"),
-        slots: &[],
-        text: false,
-    };
+pub static IGNORE_TEXT_WRAPPING_AROUND_OBJECTS_AT_BOTTOM_OF_PAGE_SHAPE:
+    officekit_markup_base::Shape = officekit_markup_base::Shape {
+    attributes: &[(NS_W, "val")],
+    name: (NS_W, "shapeLayoutLikeWW8"),
+    slots: &[],
+    text: false,
+};
 
 pub static PARAGRAPH_SHADING_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Shape {
     attributes: &[
@@ -6044,21 +6046,21 @@ pub static TABLE_LAYOUT_SHAPE: officekit_markup_base::Shape = officekit_markup_b
     text: false,
 };
 
-pub static TABLE_STYLE_CONDITIONAL_FORMATTING_SETTINGS_EXCEPTION_SHAPE: officekit_markup_base::Shape =
-    officekit_markup_base::Shape {
-        attributes: &[
-            (NS_W, "firstRow"),
-            (NS_W, "lastRow"),
-            (NS_W, "firstColumn"),
-            (NS_W, "lastColumn"),
-            (NS_W, "noHBand"),
-            (NS_W, "noVBand"),
-            (NS_W, "val"),
-        ],
-        name: (NS_W, "tblLook"),
-        slots: &[],
-        text: false,
-    };
+pub static TABLE_STYLE_CONDITIONAL_FORMATTING_SETTINGS_EXCEPTION_SHAPE:
+    officekit_markup_base::Shape = officekit_markup_base::Shape {
+    attributes: &[
+        (NS_W, "firstRow"),
+        (NS_W, "lastRow"),
+        (NS_W, "firstColumn"),
+        (NS_W, "lastColumn"),
+        (NS_W, "noHBand"),
+        (NS_W, "noVBand"),
+        (NS_W, "val"),
+    ],
+    name: (NS_W, "tblLook"),
+    slots: &[],
+    text: false,
+};
 
 pub static FLOATING_TABLE_ALLOWS_OVERLAP_SHAPE: officekit_markup_base::Shape =
     officekit_markup_base::Shape {
@@ -6170,18 +6172,18 @@ pub static PREVIOUS_TABLE_LEVEL_PROPERTY_EXCEPTIONS_SHAPE: officekit_markup_base
         text: false,
     };
 
-pub static REVISION_INFORMATION_FOR_TABLE_LEVEL_PROPERTY_EXCEPTIONS_SHAPE: officekit_markup_base::Shape =
-    officekit_markup_base::Shape {
-        attributes: &[
-            (NS_W, "id"),
-            (NS_W, "author"),
-            (NS_W, "date"),
-            (NS_W16DU, "dateUtc"),
-        ],
-        name: (NS_W, "tblPrExChange"),
-        slots: &[officekit_markup_base::Slot::required((NS_W, "tblPrEx"))],
-        text: false,
-    };
+pub static REVISION_INFORMATION_FOR_TABLE_LEVEL_PROPERTY_EXCEPTIONS_SHAPE:
+    officekit_markup_base::Shape = officekit_markup_base::Shape {
+    attributes: &[
+        (NS_W, "id"),
+        (NS_W, "author"),
+        (NS_W, "date"),
+        (NS_W16DU, "dateUtc"),
+    ],
+    name: (NS_W, "tblPrExChange"),
+    slots: &[officekit_markup_base::Slot::required((NS_W, "tblPrEx"))],
+    text: false,
+};
 
 pub static REFERENCED_TABLE_STYLE_SHAPE: officekit_markup_base::Shape =
     officekit_markup_base::Shape {
@@ -6489,13 +6491,13 @@ pub static PARAGRAPH_BORDER_ABOVE_IDENTICAL_PARAGRAPHS_SHAPE: officekit_markup_b
         text: false,
     };
 
-pub static PARAGRAPH_BORDER_ABOVE_IDENTICAL_PARAGRAPHS_TBL_WIDTH_SHAPE: officekit_markup_base::Shape =
-    officekit_markup_base::Shape {
-        attributes: &[(NS_W, "w"), (NS_W, "type")],
-        name: (NS_W, "top"),
-        slots: &[],
-        text: false,
-    };
+pub static PARAGRAPH_BORDER_ABOVE_IDENTICAL_PARAGRAPHS_TBL_WIDTH_SHAPE:
+    officekit_markup_base::Shape = officekit_markup_base::Shape {
+    attributes: &[(NS_W, "w"), (NS_W, "type")],
+    name: (NS_W, "top"),
+    slots: &[],
+    text: false,
+};
 
 pub static TOP_BORDER_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Shape {
     attributes: &[
@@ -6937,13 +6939,13 @@ pub static ALLOW_LINE_BREAKING_AT_CHARACTER_LEVEL_SHAPE: officekit_markup_base::
         text: false,
     };
 
-pub static FIT_TO_EXPANDED_WIDTH_WHEN_PERFORMING_FULL_JUSTIFICATION_SHAPE: officekit_markup_base::Shape =
-    officekit_markup_base::Shape {
-        attributes: &[(NS_W, "val")],
-        name: (NS_W, "wpJustification"),
-        slots: &[],
-        text: false,
-    };
+pub static FIT_TO_EXPANDED_WIDTH_WHEN_PERFORMING_FULL_JUSTIFICATION_SHAPE:
+    officekit_markup_base::Shape = officekit_markup_base::Shape {
+    attributes: &[(NS_W, "val")],
+    name: (NS_W, "wpJustification"),
+    slots: &[],
+    text: false,
+};
 
 pub static USE_SPECIFIC_SPACE_WIDTH_SHAPE: officekit_markup_base::Shape =
     officekit_markup_base::Shape {
@@ -7634,7 +7636,10 @@ static STATUS_TEXT_VALUE_FACETS: officekit_markup_base::Facets = officekit_marku
 static ST_TEXT_SCALE_PERCENT_PATTERNS: &[&str] = &["0*(600|([0-5]?[0-9]?[0-9]))%"];
 
 /// 17.18.71 `ST_PTabAlignment` (Absolute Position Tab Alignment): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AbsolutePositionTabAlignment(pub String);
 /// The members of `ST_PTabAlignment`, in alphabetical order.
@@ -7647,7 +7652,10 @@ pub enum AbsolutePositionTabAlignmentMember {
 }
 
 /// 17.3.3.23 ptab (Absolute Position Tab Character): the tag `w:ptab`, schema type `CT_PTab`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AbsolutePositionTabCharacter {
     pub alignment: Option<AbsolutePositionTabAlignment>,
@@ -7657,7 +7665,10 @@ pub struct AbsolutePositionTabCharacter {
 }
 
 /// 17.18.72 `ST_PTabLeader` (Absolute Position Tab Leader Character): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AbsolutePositionTabLeaderCharacter(pub String);
 /// The members of `ST_PTabLeader`, in alphabetical order.
@@ -7673,7 +7684,10 @@ pub enum AbsolutePositionTabLeaderCharacterMember {
 
 /// 17.18.73 `ST_PTabRelativeTo` (Absolute Position Tab Positioning Base): the text the file
 /// carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AbsolutePositionTabPositioningBase(pub String);
 /// The members of `ST_PTabRelativeTo`, in alphabetical order.
@@ -7686,7 +7700,10 @@ pub enum AbsolutePositionTabPositioningBaseMember {
 
 /// 17.9.1 `abstractNum` (Abstract Numbering Definition): the tag `w:abstractNum`, schema type
 /// `CT_AbstractNum`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AbstractNumberingDefinition {
     pub abstract_num_id: Option<DecimalNumberValue>,
@@ -7702,7 +7719,10 @@ pub struct AbstractNumberingDefinition {
 
 /// 17.9.14 nsid (Abstract Numbering Definition Identifier): the tag `w:nsid`, schema type
 /// `CT_LongHexNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AbstractNumberingDefinitionIdentifier {
     pub unknown: officekit_markup_base::Unknown,
@@ -7711,7 +7731,10 @@ pub struct AbstractNumberingDefinitionIdentifier {
 
 /// 17.9.2 `abstractNumId` (Abstract Numbering Definition Reference): the tag `w:abstractNumId`,
 /// schema type `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AbstractNumberingDefinitionReference {
     pub unknown: officekit_markup_base::Unknown,
@@ -7720,7 +7743,10 @@ pub struct AbstractNumberingDefinitionReference {
 
 /// 17.9.12 `multiLevelType` (Abstract Numbering Definition Type): the tag `w:multiLevelType`,
 /// schema type `CT_MultiLevelType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AbstractNumberingDefinitionType {
     pub unknown: officekit_markup_base::Unknown,
@@ -7729,7 +7755,10 @@ pub struct AbstractNumberingDefinitionType {
 
 /// 17.15.3.1 `adjustLineHeightInTable` (Add Document Grid Line Pitch To Lines in Table Cells): the
 /// tag `w:adjustLineHeightInTable`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AddDocumentGridLinePitch {
     pub unknown: officekit_markup_base::Unknown,
@@ -7738,7 +7767,10 @@ pub struct AddDocumentGridLinePitch {
 
 /// 17.15.3.7 `spaceForUL` (Add Additional Space Below Baseline For Underlined East Asian Text): the
 /// tag `w:spaceForUL`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AddSpaceBelowUnderlinedText {
     pub unknown: officekit_markup_base::Unknown,
@@ -7747,7 +7779,10 @@ pub struct AddSpaceBelowUnderlinedText {
 
 /// 17.3.1.3 `autoSpaceDN` (Automatically Adjust Spacing of East Asian Text and Numbers): the tag
 /// `w:autoSpaceDN`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AdjustSpacingEastAsianTextNumbers {
     pub unknown: officekit_markup_base::Unknown,
@@ -7756,7 +7791,10 @@ pub struct AdjustSpacingEastAsianTextNumbers {
 
 /// 17.3.1.2 `autoSpaceDE` (Automatically Adjust Spacing of Latin and East Asian Text): the tag
 /// `w:autoSpaceDE`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AdjustSpacingLatinEastAsianText {
     pub unknown: officekit_markup_base::Unknown,
@@ -7765,7 +7803,10 @@ pub struct AdjustSpacingLatinEastAsianText {
 
 /// 17.15.1.2 `alignBordersAndEdges` (Align Paragraph and Table Borders with Page Border): the tag
 /// `w:alignBordersAndEdges`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AlignParagraphAndTableBorders {
     pub unknown: officekit_markup_base::Unknown,
@@ -7774,7 +7815,10 @@ pub struct AlignParagraphAndTableBorders {
 
 /// 14.8.3.1 `alignTablesRowByRow` (Align Table Rows Independently): the tag
 /// `w:alignTablesRowByRow`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AlignTableRowsIndependently {
     pub unknown: officekit_markup_base::Unknown,
@@ -7783,7 +7827,10 @@ pub struct AlignTableRowsIndependently {
 
 /// 17.15.1.9 `autoFormatOverride` (Allow Automatic Formatting to Override Formatting Protection
 /// Settings): the tag `w:autoFormatOverride`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AllowAutomaticFormattingOverride {
     pub unknown: officekit_markup_base::Unknown,
@@ -7792,7 +7839,10 @@ pub struct AllowAutomaticFormattingOverride {
 
 /// 14.8.3.2 `allowSpaceOfSameStyleInTable` (Allow Contextual Spacing of Paragraphs in Tables): the
 /// tag `w:allowSpaceOfSameStyleInTable`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AllowContextualSpacingOfParagraphsInTables {
     pub unknown: officekit_markup_base::Unknown,
@@ -7801,7 +7851,10 @@ pub struct AllowContextualSpacingOfParagraphsInTables {
 
 /// 17.3.1.44 `widowControl` (Allow First/Last Line to Display on a Separate Page): the tag
 /// `w:widowControl`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AllowFirstLastLineDisplay {
     pub unknown: officekit_markup_base::Unknown,
@@ -7810,7 +7863,10 @@ pub struct AllowFirstLastLineDisplay {
 
 /// 17.3.1.45 `wordWrap` (Allow Line Breaking At Character Level): the tag `w:wordWrap`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AllowLineBreakingAtCharacterLevel {
     pub unknown: officekit_markup_base::Unknown,
@@ -7819,7 +7875,10 @@ pub struct AllowLineBreakingAtCharacterLevel {
 
 /// 17.15.2.1 `allowPNG` (Allow PNG as Graphic Format): the tag `w:allowPNG`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AllowPNGAsGraphicFormat {
     pub unknown: officekit_markup_base::Unknown,
@@ -7828,7 +7887,10 @@ pub struct AllowPNGAsGraphicFormat {
 
 /// 17.3.1.21 `overflowPunct` (Allow Punctuation to Extend Past Text Extents): the tag
 /// `w:overflowPunct`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AllowPunctuationExtendPastTextExtents {
     pub unknown: officekit_markup_base::Unknown,
@@ -7837,7 +7899,10 @@ pub struct AllowPunctuationExtendPastTextExtents {
 
 /// 17.15.1.74 `saveInvalidXml` (Allow Saving Document As XML File When Custom XML Markup Is
 /// Invalid): the tag `w:saveInvalidXml`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AllowSavingDocumentAsXMLFile {
     pub unknown: officekit_markup_base::Unknown,
@@ -7846,7 +7911,10 @@ pub struct AllowSavingDocumentAsXMLFile {
 
 /// 14.8.3.24 `layoutTableRowsApart` (Allow Table Rows to Wrap Inline Objects Independently): the
 /// tag `w:layoutTableRowsApart`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AllowTableRowsToWrapInlineObjectsIndependently {
     pub unknown: officekit_markup_base::Unknown,
@@ -7855,7 +7923,10 @@ pub struct AllowTableRowsToWrapInlineObjectsIndependently {
 
 /// 14.8.3.22 `growAutofit` (Allow Tables to `AutoFit` Into Page Margins): the tag `w:growAutofit`,
 /// schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AllowTablesToAutoFitIntoPageMargins {
     pub unknown: officekit_markup_base::Unknown,
@@ -7863,7 +7934,10 @@ pub struct AllowTablesToAutoFitIntoPageMargins {
 }
 
 /// 17.8.3.1 `altName` (Alternate Names for Font): the tag `w:altName`, schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AlternateNamesForFont {
     pub unknown: officekit_markup_base::Unknown,
@@ -7871,7 +7945,10 @@ pub struct AlternateNamesForFont {
 }
 
 /// 17.7.4.1 aliases (Alternate Style Names): the tag `w:aliases`, schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AlternateStyleNames {
     pub unknown: officekit_markup_base::Unknown,
@@ -7879,7 +7956,10 @@ pub struct AlternateStyleNames {
 }
 
 /// The tag `w:alwaysMergeEmptyNamespace`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AlwaysMergeEmptyNamespace {
     pub unknown: officekit_markup_base::Unknown,
@@ -7887,7 +7967,10 @@ pub struct AlwaysMergeEmptyNamespace {
 }
 
 /// The tag `w:alwaysShowPlaceholderText`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AlwaysShowPlaceholderText {
     pub unknown: officekit_markup_base::Unknown,
@@ -7896,7 +7979,10 @@ pub struct AlwaysShowPlaceholderText {
 
 /// 14.8.3.7 `displayHangulFixedWidth` (Always Use Fixed Width for Hangul Characters): the tag
 /// `w:displayHangulFixedWidth`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AlwaysUseFixedWidthForHangulCharacters {
     pub unknown: officekit_markup_base::Unknown,
@@ -7905,7 +7991,10 @@ pub struct AlwaysUseFixedWidthForHangulCharacters {
 
 /// 17.17.2.1 `altChunk` (Anchor for Imported External Content): the tag `w:altChunk`, schema type
 /// `CT_AltChunk`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AnchorForImportedExternalContent {
     pub id: Option<String>,
@@ -7914,7 +8003,10 @@ pub struct AnchorForImportedExternalContent {
 }
 
 /// 17.17.1.1 `subDoc` (Anchor for Subdocument Location): the tag `w:subDoc`, schema type `CT_Rel`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AnchorForSubdocumentLocation {
     pub id: Option<String>,
@@ -7922,7 +8014,10 @@ pub struct AnchorForSubdocumentLocation {
 }
 
 /// 17.3.2.11 effect (Animated Text Effect): the tag `w:effect`, schema type `CT_TextEffect`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AnimatedTextEffect {
     pub unknown: officekit_markup_base::Unknown,
@@ -7930,7 +8025,10 @@ pub struct AnimatedTextEffect {
 }
 
 /// 17.18.94 `ST_TextEffect` (Animated Text Effects): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AnimatedTextEffects(pub String);
 /// The members of `ST_TextEffect`, in alphabetical order.
@@ -7947,7 +8045,10 @@ pub enum AnimatedTextEffectsMember {
 }
 
 /// 17.3.1.10 `divId` (Associated HTML div ID): the tag `w:divId`, schema type `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AssociatedHTMLDivID {
     pub unknown: officekit_markup_base::Unknown,
@@ -7955,7 +8056,10 @@ pub struct AssociatedHTMLDivID {
 }
 
 /// 17.16.21 `helpText` (Associated Help Text): the tag `w:helpText`, schema type `CT_FFHelpText`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AssociatedHelpText {
     pub r#type: Option<HelpOrStatusTextType>,
@@ -7965,7 +8069,10 @@ pub struct AssociatedHelpText {
 
 /// 17.3.1.20 `outlineLvl` (Associated Outline Level): the tag `w:outlineLvl`, schema type
 /// `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AssociatedOutlineLevel {
     pub unknown: officekit_markup_base::Unknown,
@@ -7973,7 +8080,10 @@ pub struct AssociatedOutlineLevel {
 }
 
 /// 17.12.14 style (Associated Paragraph Style Name): the tag `w:style`, schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AssociatedParagraphStyleName {
     pub unknown: officekit_markup_base::Unknown,
@@ -7982,7 +8092,10 @@ pub struct AssociatedParagraphStyleName {
 
 /// 17.16.31 `statusText` (Associated Status Text): the tag `w:statusText`, schema type
 /// `CT_FFStatusText`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AssociatedStatusText {
     pub r#type: Option<HelpOrStatusTextType>,
@@ -7992,7 +8105,10 @@ pub struct AssociatedStatusText {
 
 /// 17.15.1.5 `attachedSchema` (Attached Custom XML Schema): the tag `w:attachedSchema`, schema type
 /// `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AttachedCustomXMLSchema {
     pub unknown: officekit_markup_base::Unknown,
@@ -8001,7 +8117,10 @@ pub struct AttachedCustomXMLSchema {
 
 /// 17.15.1.6 `attachedTemplate` (Attached Document Template): the tag `w:attachedTemplate`, schema
 /// type `CT_Rel`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AttachedDocumentTemplate {
     pub id: Option<String>,
@@ -8009,7 +8128,10 @@ pub struct AttachedDocumentTemplate {
 }
 
 /// The tag `w:autoSpaceLikeWord95`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AutoSpaceLikeWord95 {
     pub unknown: officekit_markup_base::Unknown,
@@ -8017,7 +8139,10 @@ pub struct AutoSpaceLikeWord95 {
 }
 
 /// The tag `w:autofitToFirstFixedWidthCell`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AutofitToFirstFixedWidthCell {
     pub unknown: officekit_markup_base::Unknown,
@@ -8025,7 +8150,10 @@ pub struct AutofitToFirstFixedWidthCell {
 }
 
 /// 17.18.5 `ST_CaptionPos` (Automatic Caption Positioning Values): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AutomaticCaptionPositioningValues(pub String);
 /// The members of `ST_CaptionPos`, in alphabetical order.
@@ -8040,7 +8168,10 @@ pub enum AutomaticCaptionPositioningValuesMember {
 
 /// 17.15.1.8 `autoCaptions` (Automatic Captioning Settings): the tag `w:autoCaptions`, schema type
 /// `CT_AutoCaptions`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AutomaticCaptioningSettings {
     pub single_automatic_captioning_setting: Vec<SingleAutomaticCaptioningSetting>,
@@ -8049,7 +8180,10 @@ pub struct AutomaticCaptioningSettings {
 
 /// 17.3.1.1 `adjustRightInd` (Automatically Adjust Right Indent When Using Document Grid): the tag
 /// `w:adjustRightInd`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AutomaticallyAdjustRightIndent {
     pub unknown: officekit_markup_base::Unknown,
@@ -8058,7 +8192,10 @@ pub struct AutomaticallyAdjustRightIndent {
 
 /// 17.15.1.10 `autoHyphenation` (Automatically Hyphenate Document Contents When Displayed): the tag
 /// `w:autoHyphenation`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AutomaticallyHyphenateDocumentContentsWhenDisplayed {
     pub unknown: officekit_markup_base::Unknown,
@@ -8067,7 +8204,10 @@ pub struct AutomaticallyHyphenateDocumentContentsWhenDisplayed {
 
 /// 17.7.4.2 `autoRedefine` (Automatically Merge User Formatting Into Style Definition): the tag
 /// `w:autoRedefine`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AutomaticallyMergeUserFormatting {
     pub unknown: officekit_markup_base::Unknown,
@@ -8076,7 +8216,10 @@ pub struct AutomaticallyMergeUserFormatting {
 
 /// 17.15.1.90 `updateFields` (Automatically Recalculate Fields on Open): the tag `w:updateFields`,
 /// schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AutomaticallyRecalculateFieldsOnOpen {
     pub unknown: officekit_markup_base::Unknown,
@@ -8085,7 +8228,10 @@ pub struct AutomaticallyRecalculateFieldsOnOpen {
 
 /// 17.16.30 `sizeAuto` (Automatically Size Form Field): the tag `w:sizeAuto`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AutomaticallySizeFormField {
     pub unknown: officekit_markup_base::Unknown,
@@ -8094,7 +8240,10 @@ pub struct AutomaticallySizeFormField {
 
 /// 17.15.1.55 `linkStyles` (Automatically Update Styles From Document Template): the tag
 /// `w:linkStyles`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AutomaticallyUpdateStylesFromDocumentTemplate {
     pub unknown: officekit_markup_base::Unknown,
@@ -8102,7 +8251,10 @@ pub struct AutomaticallyUpdateStylesFromDocumentTemplate {
 }
 
 /// The tag `w:balanceSingleByteDoubleByteWidth`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BalanceSingleByteDoubleByteWidth {
     pub unknown: officekit_markup_base::Unknown,
@@ -8111,14 +8263,20 @@ pub struct BalanceSingleByteDoubleByteWidth {
 
 /// 17.5.2.2 bibliography (Bibliography Structured Document Tag): the tag `w:bibliography`, schema
 /// type `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BibliographyStructuredDocumentTag {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 17.18.12 `ST_Direction` (Bidirectional Direction Types): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BidirectionalDirectionTypes(pub String);
 /// The members of `ST_Direction`, in alphabetical order.
@@ -8130,18 +8288,32 @@ pub enum BidirectionalDirectionTypesMember {
 }
 
 /// 17.3.2.8 dir (Bidirectional Embedding Level): the tag `w:dir`, schema type `CT_DirContentRun`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BidirectionalEmbeddingLevel {
+    #[rkyv(omit_bounds)]
     pub content: Vec<ParagraphContent>,
     pub unknown: officekit_markup_base::Unknown,
     pub val: Option<BidirectionalDirectionTypes>,
 }
 
 /// 17.3.2.3 bdo (Bidirectional Override): the tag `w:bdo`, schema type `CT_BdoContentRun`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BidirectionalOverride {
+    #[rkyv(omit_bounds)]
     pub content: Vec<ParagraphContent>,
     pub unknown: officekit_markup_base::Unknown,
     pub val: Option<BidirectionalDirectionTypes>,
@@ -8193,9 +8365,16 @@ pub enum BlockContent {
 
 /// 17.5.1.6 `customXml` (Block-Level Custom XML Element): the tag `w:customXml`, schema type
 /// `CT_CustomXmlBlock`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BlockLevelCustomXMLElement {
+    #[rkyv(omit_bounds)]
     pub content: Vec<ContentBlockContent>,
     pub element: Option<common_simple_types::XMLName>,
     pub properties: Option<Box<CustomXMLElementProperties>>,
@@ -8204,9 +8383,16 @@ pub struct BlockLevelCustomXMLElement {
 }
 
 /// 17.5.2.29 sdt (Block-Level Structured Document Tag): the tag `w:sdt`, schema type `CT_SdtBlock`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BlockLevelStructuredDocumentTag {
+    #[rkyv(omit_bounds)]
     pub content: Option<Box<BlockLevelStructuredDocumentTagContent>>,
     pub custom_xml_conflict_del_range_end:
         Vec<super::office_word_2010_wordml::CustomXmlConflictDelRangeEnd>,
@@ -8223,15 +8409,25 @@ pub struct BlockLevelStructuredDocumentTag {
 
 /// 17.5.2.34 `sdtContent` (Block-Level Structured Document Tag Content): the tag `w:sdtContent`,
 /// schema type `CT_SdtContentBlock`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BlockLevelStructuredDocumentTagContent {
+    #[rkyv(omit_bounds)]
     pub content: Vec<ContentBlockContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 17.3.2.1 b (Bold): the tag `w:b`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Bold {
     pub unknown: officekit_markup_base::Unknown,
@@ -8240,7 +8436,10 @@ pub struct Bold {
 
 /// 17.8.3.4 `embedBoldItalic` (Bold Italic Font Style Embedding): the tag `w:embedBoldItalic`,
 /// schema type `CT_FontRel`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BoldItalicFontStyleEmbedding {
     pub font_key: Option<common_simple_types::Guid>,
@@ -8251,7 +8450,10 @@ pub struct BoldItalicFontStyleEmbedding {
 
 /// 17.8.3.3 `embedBold` (Bold Style Font Style Embedding): the tag `w:embedBold`, schema type
 /// `CT_FontRel`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BoldStyleFontStyleEmbedding {
     pub font_key: Option<common_simple_types::Guid>,
@@ -8262,7 +8464,10 @@ pub struct BoldStyleFontStyleEmbedding {
 
 /// 17.15.1.11 `bookFoldPrinting` (Book Fold Printing): the tag `w:bookFoldPrinting`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BookFoldPrinting {
     pub unknown: officekit_markup_base::Unknown,
@@ -8270,7 +8475,10 @@ pub struct BookFoldPrinting {
 }
 
 /// 17.13.6.1 `bookmarkEnd` (Bookmark End): the tag `w:bookmarkEnd`, schema type `CT_MarkupRange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BookmarkEnd {
     pub displaced_by_custom_xml: Option<DisplacedByCustomXml>,
@@ -8280,7 +8488,10 @@ pub struct BookmarkEnd {
 
 /// 17.13.6.2 `bookmarkStart` (Bookmark Start): the tag `w:bookmarkStart`, schema type
 /// `CT_Bookmark`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BookmarkStart {
     pub col_first: Option<DecimalNumberValue>,
@@ -8292,7 +8503,10 @@ pub struct BookmarkStart {
 }
 
 /// 17.18.2 `ST_Border` (Border Styles): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BorderStyles(pub String);
 /// The members of `ST_Border`, in alphabetical order.
@@ -8495,7 +8709,10 @@ pub enum BorderStylesMember {
 }
 
 /// 17.6.2 bottom (Bottom Border): the tag `w:bottom`, schema type `CT_BottomPageBorder`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BottomBorder {
     pub bottom_left: Option<String>,
@@ -8515,7 +8732,10 @@ pub struct BottomBorder {
 
 /// 17.15.2.24 `marBottom` (Bottom Margin for HTML div): the tag `w:marBottom`, schema type
 /// `CT_SignedTwipsMeasure`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BottomMarginForHTMLDiv {
     pub unknown: officekit_markup_base::Unknown,
@@ -8523,7 +8743,10 @@ pub struct BottomMarginForHTMLDiv {
 }
 
 /// 17.3.3.1 br (Break): the tag `w:br`, schema type `CT_Br`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Break {
     pub clear: Option<LineBreakTextWrappingRestartLocation>,
@@ -8532,7 +8755,10 @@ pub struct Break {
 }
 
 /// 17.18.4 `ST_BrType` (Break Types): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BreakTypes(pub String);
 /// The members of `ST_BrType`, in alphabetical order.
@@ -8546,7 +8772,10 @@ pub enum BreakTypesMember {
 
 /// 17.5.2.14 `docPartUnique` (Built-In Document Part): the tag `w:docPartUnique`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BuiltInDocumentPart {
     pub unknown: officekit_markup_base::Unknown,
@@ -8555,7 +8784,10 @@ pub struct BuiltInDocumentPart {
 
 /// 17.5.2.13 `docPartObj` (Built-In Document Part Structured Document Tag): the tag `w:docPartObj`,
 /// schema type `CT_SdtDocPart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BuiltInDocumentPartStructuredDocumentTag {
     pub built_in_document_part: Option<Box<BuiltInDocumentPart>>,
@@ -8565,7 +8797,10 @@ pub struct BuiltInDocumentPartStructuredDocumentTag {
 }
 
 /// 17.15.1.17 captions (Caption Settings): the tag `w:captions`, schema type `CT_Captions`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CaptionSettings {
     pub automatic_captioning_settings: Option<Box<AutomaticCaptioningSettings>>,
@@ -8574,7 +8809,10 @@ pub struct CaptionSettings {
 }
 
 /// 17.3.3.4 cr (Carriage Return): the tag `w:cr`, schema type `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CarriageReturn {
     pub unknown: officekit_markup_base::Unknown,
@@ -8582,9 +8820,16 @@ pub struct CarriageReturn {
 
 /// 17.5.1.4 `customXml` (Cell-Level Custom XML Element): the tag `w:customXml`, schema type
 /// `CT_CustomXmlCell`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CellLevelCustomXMLElement {
+    #[rkyv(omit_bounds)]
     pub content: Vec<ContentCellContent>,
     pub element: Option<common_simple_types::XMLName>,
     pub properties: Option<Box<CustomXMLElementProperties>>,
@@ -8593,9 +8838,16 @@ pub struct CellLevelCustomXMLElement {
 }
 
 /// 17.5.2.32 sdt (Cell-Level Structured Document Tag): the tag `w:sdt`, schema type `CT_SdtCell`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CellLevelStructuredDocumentTag {
+    #[rkyv(omit_bounds)]
     pub content: Option<Box<CellLevelStructuredDocumentTagContent>>,
     pub custom_xml_conflict_del_range_end:
         Vec<super::office_word_2010_wordml::CustomXmlConflictDelRangeEnd>,
@@ -8612,9 +8864,16 @@ pub struct CellLevelStructuredDocumentTag {
 
 /// 17.5.2.33 `sdtContent` (Cell-Level Structured Document Tag Content): the tag `w:sdtContent`,
 /// schema type `CT_SdtContentCell`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CellLevelStructuredDocumentTagContent {
+    #[rkyv(omit_bounds)]
     pub content: Vec<ContentCellContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
@@ -8630,7 +8889,10 @@ pub enum CellMarkupContent {
 }
 
 /// 17.18.6 `ST_ChapterSep` (Chapter Separator Types): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ChapterSeparatorTypes(pub String);
 /// The members of `ST_ChapterSep`, in alphabetical order.
@@ -8646,7 +8908,10 @@ pub enum ChapterSeparatorTypesMember {
 
 /// 17.15.1.18 `characterSpacingControl` (Character-Level Whitespace Compression): the tag
 /// `w:characterSpacingControl`, schema type `CT_CharacterSpacing`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CharacterLevelWhitespaceCompression {
     pub unknown: officekit_markup_base::Unknown,
@@ -8655,7 +8920,10 @@ pub struct CharacterLevelWhitespaceCompression {
 
 /// 17.18.7 `ST_CharacterSpacing` (Character-Level Whitespace Compression Settings): the text the
 /// file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CharacterLevelWhitespaceCompressionSettings(pub String);
 /// The members of `ST_CharacterSpacing`, in alphabetical order.
@@ -8669,7 +8937,10 @@ pub enum CharacterLevelWhitespaceCompressionSettingsMember {
 
 /// 17.8.3.2 charset (Character Set Supported By Font): the tag `w:charset`, schema type
 /// `CT_Charset`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CharacterSetSupportedByFont {
     pub character_set: Option<String>,
@@ -8679,7 +8950,10 @@ pub struct CharacterSetSupportedByFont {
 
 /// 17.3.2.35 spacing (Character Spacing Adjustment): the tag `w:spacing`, schema type
 /// `CT_SignedTwipsMeasure`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CharacterSpacingAdjustment {
     pub unknown: officekit_markup_base::Unknown,
@@ -8688,7 +8962,10 @@ pub struct CharacterSpacingAdjustment {
 
 /// 17.15.1.59 `noLineBreaksBefore` (Custom Set Of Characters Which Cannot Begin A Line): the tag
 /// `w:noLineBreaksBefore`, schema type `CT_Kinsoku`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CharactersWhichCannotBeginALine {
     pub lang: Option<String>,
@@ -8698,7 +8975,10 @@ pub struct CharactersWhichCannotBeginALine {
 
 /// 17.15.1.58 `noLineBreaksAfter` (Custom Set of Characters Which Cannot End a Line): the tag
 /// `w:noLineBreaksAfter`, schema type `CT_Kinsoku`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CharactersWhichCannotEndALine {
     pub lang: Option<String>,
@@ -8708,7 +8988,10 @@ pub struct CharactersWhichCannotEndALine {
 
 /// 17.16.7 `checkBox` (Checkbox Form Field Properties): the tag `w:checkBox`, schema type
 /// `CT_FFCheckBox`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CheckboxFormFieldProperties {
     pub checkbox_form_field_state: Option<Box<CheckboxFormFieldState>>,
@@ -8727,7 +9010,10 @@ pub enum CheckboxFormFieldPropertiesContent {
 }
 
 /// 17.16.29 size (Checkbox Form Field Size): the tag `w:size`, schema type `CT_HpsMeasure`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CheckboxFormFieldSize {
     pub unknown: officekit_markup_base::Unknown,
@@ -8735,7 +9021,10 @@ pub struct CheckboxFormFieldSize {
 }
 
 /// 17.16.8 checked (Checkbox Form Field State): the tag `w:checked`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CheckboxFormFieldState {
     pub unknown: officekit_markup_base::Unknown,
@@ -8744,23 +9033,36 @@ pub struct CheckboxFormFieldState {
 
 /// 17.15.2.9 `divsChild` (Child div Elements Contained within Current div): the tag `w:divsChild`,
 /// schema type `CT_Divs`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ChildDivElements {
+    #[rkyv(omit_bounds)]
     pub information_about_single_html_div_element: Vec<InformationAboutSingleHTMLDivElement>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 17.5.2.4 citation (Citation Structured Document Tag): the tag `w:citation`, schema type
 /// `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CitationStructuredDocumentTag {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `w:clickAndTypeStyle`, schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ClickAndTypeStyle {
     pub unknown: officekit_markup_base::Unknown,
@@ -8768,7 +9070,10 @@ pub struct ClickAndTypeStyle {
 }
 
 /// 17.18.38 `ST_HexColor` (Color Value): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ColorValue(pub String);
 /// The member types of `ST_HexColor`, in alphabetical order; `value` tries them in the schema's
@@ -8782,7 +9087,10 @@ pub enum ColorValueMember {
 
 /// 17.14.3 `addressFieldName` (Column Containing E-mail Address): the tag `w:addressFieldName`,
 /// schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ColumnContainingEMailAddress {
     pub unknown: officekit_markup_base::Unknown,
@@ -8790,7 +9098,10 @@ pub struct ColumnContainingEMailAddress {
 }
 
 /// 17.6.4 cols (Column Definitions): the tag `w:cols`, schema type `CT_Columns`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ColumnDefinitions {
     pub equal_width: Option<common_simple_types::OnOffValue>,
@@ -8803,7 +9114,10 @@ pub struct ColumnDefinitions {
 
 /// 17.14.5 `colDelim` (Column Delimiter for Data Source): the tag `w:colDelim`, schema type
 /// `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ColumnDelimiterForDataSource {
     pub unknown: officekit_markup_base::Unknown,
@@ -8811,7 +9125,10 @@ pub struct ColumnDelimiterForDataSource {
 }
 
 /// 17.5.2.21 `listItem` (Combo Box List Item): the tag `w:listItem`, schema type `CT_SdtListItem`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ComboBoxListItem {
     pub display_text: Option<String>,
@@ -8821,7 +9138,10 @@ pub struct ComboBoxListItem {
 
 /// 17.5.2.5 `comboBox` (Combo Box Structured Document Tag): the tag `w:comboBox`, schema type
 /// `CT_SdtComboBox`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ComboBoxStructuredDocumentTag {
     pub combo_box_list_item: Vec<ComboBoxListItem>,
@@ -8831,7 +9151,10 @@ pub struct ComboBoxStructuredDocumentTag {
 
 /// 17.13.4.3 `commentRangeEnd` (Comment Anchor Range End): the tag `w:commentRangeEnd`, schema type
 /// `CT_MarkupRange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CommentAnchorRangeEnd {
     pub displaced_by_custom_xml: Option<DisplacedByCustomXml>,
@@ -8841,7 +9164,10 @@ pub struct CommentAnchorRangeEnd {
 
 /// 17.13.4.4 `commentRangeStart` (Comment Anchor Range Start): the tag `w:commentRangeStart`,
 /// schema type `CT_MarkupRange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CommentAnchorRangeStart {
     pub displaced_by_custom_xml: Option<DisplacedByCustomXml>,
@@ -8850,10 +9176,17 @@ pub struct CommentAnchorRangeStart {
 }
 
 /// 17.13.4.2 comment (Comment Content): the tag `w:comment`, schema type `CT_Comment`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CommentContent {
     pub author: Option<String>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<BlockContent>,
     pub date: Option<StandardDateAndTimeStorageFormat>,
     pub date_utc: Option<String>,
@@ -8864,7 +9197,10 @@ pub struct CommentContent {
 
 /// 17.13.4.5 `commentReference` (Comment Content Reference Mark): the tag `w:commentReference`,
 /// schema type `CT_Markup`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CommentContentReferenceMark {
     pub id: Option<DecimalNumberValue>,
@@ -8873,22 +9209,35 @@ pub struct CommentContentReferenceMark {
 
 /// 17.13.4.1 `annotationRef` (Comment Information Block): the tag `w:annotationRef`, schema type
 /// `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CommentInformationBlock {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 17.13.4.6 comments (Comments Collection): the tag `w:comments`, schema type `CT_Comments`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CommentsCollection {
+    #[rkyv(omit_bounds)]
     pub comment_content: Vec<CommentContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 17.15.1.21 compat (Compatibility Settings): the tag `w:compat`, schema type `CT_Compat`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CompatibilitySettings {
     pub add_document_grid_line_pitch: Option<Box<AddDocumentGridLinePitch>>,
@@ -8986,7 +9335,10 @@ pub struct CompatibilitySettings {
 }
 
 /// 17.16.18 `fldChar` (Complex Field Character): the tag `w:fldChar`, schema type `CT_FldChar`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ComplexFieldCharacter {
     pub content: Option<Box<ComplexFieldCharacterContent>>,
@@ -9007,7 +9359,10 @@ pub enum ComplexFieldCharacterContent {
 }
 
 /// 17.18.29 `ST_FldCharType` (Complex Field Character Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ComplexFieldCharacterType(pub String);
 /// The members of `ST_FldCharType`, in alphabetical order.
@@ -9020,7 +9375,10 @@ pub enum ComplexFieldCharacterTypeMember {
 }
 
 /// 17.3.2.2 `bCs` (Complex Script Bold): the tag `w:bCs`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ComplexScriptBold {
     pub unknown: officekit_markup_base::Unknown,
@@ -9028,7 +9386,10 @@ pub struct ComplexScriptBold {
 }
 
 /// 17.3.2.39 `szCs` (Complex Script Font Size): the tag `w:szCs`, schema type `CT_HpsMeasure`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ComplexScriptFontSize {
     pub unknown: officekit_markup_base::Unknown,
@@ -9036,7 +9397,10 @@ pub struct ComplexScriptFontSize {
 }
 
 /// 17.3.2.17 `iCs` (Complex Script Italics): the tag `w:iCs`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ComplexScriptItalics {
     pub unknown: officekit_markup_base::Unknown,
@@ -9045,7 +9409,10 @@ pub struct ComplexScriptItalics {
 
 /// 17.3.1.43 `topLinePunct` (Compress Punctuation at Start of a Line): the tag `w:topLinePunct`,
 /// schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CompressPunctuationAtStartOfLine {
     pub unknown: officekit_markup_base::Unknown,
@@ -9053,13 +9420,19 @@ pub struct CompressPunctuationAtStartOfLine {
 }
 
 /// 14.11.9 `ST_Cnf` (Conditional Formatting Bitmask): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ConditionalFormattingBitmask(pub String);
 
 /// 17.18.89 `ST_TblStyleOverrideType` (Conditional Table Style Formatting Types): the text the file
 /// carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ConditionalTableStyleFormattingTypes(pub String);
 /// The members of `ST_TblStyleOverrideType`, in alphabetical order.
@@ -9093,7 +9466,10 @@ pub enum ConflictChangeContent {
 
 /// 17.9.28 suff (Content Between Numbering Symbol and Paragraph Text): the tag `w:suff`, schema
 /// type `CT_LevelSuffix`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ContentBetweenNumberingSymbolAndText {
     pub unknown: officekit_markup_base::Unknown,
@@ -9184,7 +9560,10 @@ pub enum ContentCellContent {
 }
 
 /// 17.3.3.2 `contentPart` (Content Part): the tag `w:contentPart`, schema type `CT_Rel`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ContentPart {
     pub id: Option<String>,
@@ -9234,9 +9613,16 @@ pub enum ContentRowContent {
 
 /// 17.12.6 `docPartBody` (Contents of Glossary Document Entry): the tag `w:docPartBody`, schema
 /// type `CT_Body`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ContentsOfGlossaryDocumentEntry {
+    #[rkyv(omit_bounds)]
     pub content: Vec<BlockContent>,
     pub document_final_section_properties: Option<Box<DocumentFinalSectionProperties>>,
     pub unknown: officekit_markup_base::Unknown,
@@ -9244,7 +9630,10 @@ pub struct ContentsOfGlossaryDocumentEntry {
 
 /// 17.11.1 `continuationSeparator` (Continuation Separator Mark): the tag
 /// `w:continuationSeparator`, schema type `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ContinuationSeparatorMark {
     pub unknown: officekit_markup_base::Unknown,
@@ -9252,7 +9641,10 @@ pub struct ContinuationSeparatorMark {
 
 /// 17.5.2.39 `showingPlcHdr` (Current Contents Are Placeholder Text): the tag `w:showingPlcHdr`,
 /// schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CurrentContentsArePlaceholderText {
     pub unknown: officekit_markup_base::Unknown,
@@ -9261,7 +9653,10 @@ pub struct CurrentContentsArePlaceholderText {
 
 /// 17.15.3.4 `compatSetting` (Custom Compatibility Setting): the tag `w:compatSetting`, schema type
 /// `CT_CompatSetting`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomCompatibilitySetting {
     pub name: Option<String>,
@@ -9271,7 +9666,10 @@ pub struct CustomCompatibilitySetting {
 }
 
 /// 14.10.5 `fldData` (Custom Field Data): the tag `w:fldData`, schema type `CT_Text`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomFieldData {
     pub space: Option<String>,
@@ -9280,7 +9678,10 @@ pub struct CustomFieldData {
 }
 
 /// 17.3.1.37 tab (Custom Tab Stop): the tag `w:tab`, schema type `CT_TabStop`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomTabStop {
     pub leader: Option<CustomTabStopLeaderCharacter>,
@@ -9290,7 +9691,10 @@ pub struct CustomTabStop {
 }
 
 /// 17.18.85 `ST_TabTlc` (Custom Tab Stop Leader Character): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomTabStopLeaderCharacter(pub String);
 /// The members of `ST_TabTlc`, in alphabetical order.
@@ -9306,7 +9710,10 @@ pub enum CustomTabStopLeaderCharacterMember {
 }
 
 /// 17.18.84 `ST_TabJc` (Custom Tab Stop Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomTabStopType(pub String);
 /// The members of `ST_TabJc`, in alphabetical order.
@@ -9325,7 +9732,10 @@ pub enum CustomTabStopTypeMember {
 }
 
 /// 17.5.1.1 attr (Custom XML Attribute): the tag `w:attr`, schema type `CT_Attr`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomXMLAttribute {
     pub name: Option<String>,
@@ -9336,7 +9746,10 @@ pub struct CustomXMLAttribute {
 
 /// 17.5.2.40 `storeMappedDataAs` (Custom XML Data Date Storage Format): the tag
 /// `w:storeMappedDataAs`, schema type `CT_SdtDateMappingType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomXMLDataDateStorageFormat {
     pub unknown: officekit_markup_base::Unknown,
@@ -9345,7 +9758,10 @@ pub struct CustomXMLDataDateStorageFormat {
 
 /// 17.5.1.8 placeholder (Custom XML Element Placeholder Text): the tag `w:placeholder`, schema type
 /// `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomXMLElementPlaceholderText {
     pub unknown: officekit_markup_base::Unknown,
@@ -9354,7 +9770,10 @@ pub struct CustomXMLElementPlaceholderText {
 
 /// 17.5.1.7 `customXmlPr` (Custom XML Element Properties): the tag `w:customXmlPr`, schema type
 /// `CT_CustomXmlPr`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomXMLElementProperties {
     pub custom_xml_attribute: Vec<CustomXMLAttribute>,
@@ -9364,7 +9783,10 @@ pub struct CustomXMLElementProperties {
 
 /// 17.13.5.4 `customXmlDelRangeEnd` (Custom XML Markup Deletion End): the tag
 /// `w:customXmlDelRangeEnd`, schema type `CT_Markup`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomXMLMarkupDeletionEnd {
     pub id: Option<DecimalNumberValue>,
@@ -9373,7 +9795,10 @@ pub struct CustomXMLMarkupDeletionEnd {
 
 /// 17.13.5.5 `customXmlDelRangeStart` (Custom XML Markup Deletion Start): the tag
 /// `w:customXmlDelRangeStart`, schema type `CT_TrackChange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomXMLMarkupDeletionStart {
     pub author: Option<String>,
@@ -9384,7 +9809,10 @@ pub struct CustomXMLMarkupDeletionStart {
 
 /// 17.13.5.6 `customXmlInsRangeEnd` (Custom XML Markup Insertion End): the tag
 /// `w:customXmlInsRangeEnd`, schema type `CT_Markup`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomXMLMarkupInsertionEnd {
     pub id: Option<DecimalNumberValue>,
@@ -9393,7 +9821,10 @@ pub struct CustomXMLMarkupInsertionEnd {
 
 /// 17.13.5.7 `customXmlInsRangeStart` (Custom XML Markup Insertion Start): the tag
 /// `w:customXmlInsRangeStart`, schema type `CT_TrackChange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomXMLMarkupInsertionStart {
     pub author: Option<String>,
@@ -9404,7 +9835,10 @@ pub struct CustomXMLMarkupInsertionStart {
 
 /// 17.13.5.8 `customXmlMoveFromRangeEnd` (Custom XML Markup Move Source End): the tag
 /// `w:customXmlMoveFromRangeEnd`, schema type `CT_Markup`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomXMLMarkupMoveSourceEnd {
     pub id: Option<DecimalNumberValue>,
@@ -9413,7 +9847,10 @@ pub struct CustomXMLMarkupMoveSourceEnd {
 
 /// 17.13.5.9 `customXmlMoveFromRangeStart` (Custom XML Markup Move Source Start): the tag
 /// `w:customXmlMoveFromRangeStart`, schema type `CT_TrackChange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomXMLMarkupMoveSourceStart {
     pub author: Option<String>,
@@ -9424,7 +9861,10 @@ pub struct CustomXMLMarkupMoveSourceStart {
 
 /// 17.15.1.76 `saveThroughXslt` (Custom XSL Transform To Use When Saving As XML File): the tag
 /// `w:saveThroughXslt`, schema type `CT_SaveThroughXslt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomXSLTransform {
     pub id: Option<String>,
@@ -9433,7 +9873,10 @@ pub struct CustomXSLTransform {
 }
 
 /// The tag `w:customXmlMoveToRangeEnd`, schema type `CT_Markup`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomXmlMoveToRangeEnd {
     pub id: Option<DecimalNumberValue>,
@@ -9441,7 +9884,10 @@ pub struct CustomXmlMoveToRangeEnd {
 }
 
 /// The tag `w:customXmlMoveToRangeStart`, schema type `CT_TrackChange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomXmlMoveToRangeStart {
     pub author: Option<String>,
@@ -9452,7 +9898,10 @@ pub struct CustomXmlMoveToRangeStart {
 
 /// 17.14.27 `recipientData` (Data About Single Data Source Record): the tag `w:recipientData`,
 /// schema type `CT_RecipientData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DataAboutSingleDataSourceRecord {
     pub index_of_column_being_mapped: Box<IndexOfColumnBeingMapped>,
@@ -9463,7 +9912,10 @@ pub struct DataAboutSingleDataSourceRecord {
 
 /// 17.15.2.2 `blockQuote` (Data for HTML blockquote Element): the tag `w:blockQuote`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DataForHTMLBlockquoteElement {
     pub unknown: officekit_markup_base::Unknown,
@@ -9471,7 +9923,10 @@ pub struct DataForHTMLBlockquoteElement {
 }
 
 /// 17.15.2.3 `bodyDiv` (Data for HTML body Element): the tag `w:bodyDiv`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DataForHTMLBodyElement {
     pub unknown: officekit_markup_base::Unknown,
@@ -9480,7 +9935,10 @@ pub struct DataForHTMLBodyElement {
 
 /// 17.14.8 `connectString` (Data Source Connection String): the tag `w:connectString`, schema type
 /// `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DataSourceConnectionString {
     pub unknown: officekit_markup_base::Unknown,
@@ -9488,7 +9946,10 @@ pub struct DataSourceConnectionString {
 }
 
 /// 17.14.9 `dataSource` (Data Source File Path): the tag `w:dataSource`, schema type `CT_Rel`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DataSourceFilePath {
     pub id: Option<String>,
@@ -9496,7 +9957,10 @@ pub struct DataSourceFilePath {
 }
 
 /// 17.14.31 table (Data Source Table Name): the tag `w:table`, schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DataSourceTableName {
     pub unknown: officekit_markup_base::Unknown,
@@ -9505,7 +9969,10 @@ pub struct DataSourceTableName {
 
 /// 17.14.10 `dataType` (Data Source Type): the tag `w:dataType`, schema type
 /// `CT_MailMergeDataType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DataSourceType {
     pub unknown: officekit_markup_base::Unknown,
@@ -9513,7 +9980,10 @@ pub struct DataSourceType {
 }
 
 /// 17.3.3.5 `dayLong` (Date Block - Long Day Format): the tag `w:dayLong`, schema type `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DateBlockLongDayFormat {
     pub unknown: officekit_markup_base::Unknown,
@@ -9521,7 +9991,10 @@ pub struct DateBlockLongDayFormat {
 
 /// 17.3.3.15 `monthLong` (Date Block - Long Month Format): the tag `w:monthLong`, schema type
 /// `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DateBlockLongMonthFormat {
     pub unknown: officekit_markup_base::Unknown,
@@ -9529,7 +10002,10 @@ pub struct DateBlockLongMonthFormat {
 
 /// 17.3.3.33 `yearLong` (Date Block - Long Year Format): the tag `w:yearLong`, schema type
 /// `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DateBlockLongYearFormat {
     pub unknown: officekit_markup_base::Unknown,
@@ -9537,7 +10013,10 @@ pub struct DateBlockLongYearFormat {
 
 /// 17.3.3.6 `dayShort` (Date Block - Short Day Format): the tag `w:dayShort`, schema type
 /// `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DateBlockShortDayFormat {
     pub unknown: officekit_markup_base::Unknown,
@@ -9545,7 +10024,10 @@ pub struct DateBlockShortDayFormat {
 
 /// 17.3.3.16 `monthShort` (Date Block - Short Month Format): the tag `w:monthShort`, schema type
 /// `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DateBlockShortMonthFormat {
     pub unknown: officekit_markup_base::Unknown,
@@ -9553,14 +10035,20 @@ pub struct DateBlockShortMonthFormat {
 
 /// 17.3.3.34 `yearShort` (Date Block - Short Year Format): the tag `w:yearShort`, schema type
 /// `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DateBlockShortYearFormat {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 17.5.2.8 `dateFormat` (Date Display Mask): the tag `w:dateFormat`, schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DateDisplayMask {
     pub unknown: officekit_markup_base::Unknown,
@@ -9569,7 +10057,10 @@ pub struct DateDisplayMask {
 
 /// 17.5.2.3 calendar (Date Picker Calendar Type): the tag `w:calendar`, schema type
 /// `CT_CalendarType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DatePickerCalendarType {
     pub unknown: officekit_markup_base::Unknown,
@@ -9577,7 +10068,10 @@ pub struct DatePickerCalendarType {
 }
 
 /// 17.18.76 `ST_SdtDateMappingType` (Date Storage Format Types): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DateStorageFormatTypes(pub String);
 /// The members of `ST_SdtDateMappingType`, in alphabetical order.
@@ -9590,7 +10084,10 @@ pub enum DateStorageFormatTypesMember {
 }
 
 /// 17.5.2.7 date (Date Structured Document Tag): the tag `w:date`, schema type `CT_SdtDate`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DateStructuredDocumentTag {
     pub custom_xml_data_date_storage_format: Option<Box<CustomXMLDataDateStorageFormat>>,
@@ -9602,13 +10099,19 @@ pub struct DateStructuredDocumentTag {
 }
 
 /// 17.18.10 `ST_DecimalNumber` (Decimal Number Value): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DecimalNumberValue(pub String);
 
 /// 17.16.12 default (Default Checkbox Form Field State): the tag `w:default`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DefaultCheckboxFormFieldState {
     pub unknown: officekit_markup_base::Unknown,
@@ -9617,7 +10120,10 @@ pub struct DefaultCheckboxFormFieldState {
 
 /// 17.16.11 default (Default Drop-Down List Item Index): the tag `w:default`, schema type
 /// `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DefaultDropDownListItemIndex {
     pub unknown: officekit_markup_base::Unknown,
@@ -9626,7 +10132,10 @@ pub struct DefaultDropDownListItemIndex {
 
 /// 17.7.5.3 `pPrDefault` (Default Paragraph Properties): the tag `w:pPrDefault`, schema type
 /// `CT_PPrDefault`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DefaultParagraphProperties {
     pub p_pr_general: Option<Box<ParagraphPropertiesPPrGeneral>>,
@@ -9635,25 +10144,42 @@ pub struct DefaultParagraphProperties {
 
 /// 14.8.2.1 `hdrShapeDefaults` (Default Properties for VML Objects in Header and Footer): the tag
 /// `w:hdrShapeDefaults`, schema type `CT_ShapeDefaults`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DefaultPropertiesForVMLObjectsInHeaderAndFooter {
+    #[rkyv(omit_bounds)]
     pub content: Vec<VmlOfficeDrawingElementContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 14.8.2.2 `shapeDefaults` (Default Properties for VML Objects in Main Document): the tag
 /// `w:shapeDefaults`, schema type `CT_ShapeDefaults`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DefaultPropertiesForVMLObjectsInMainDocument {
+    #[rkyv(omit_bounds)]
     pub content: Vec<VmlOfficeDrawingElementContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 17.7.5.5 `rPrDefault` (Default Run Properties): the tag `w:rPrDefault`, schema type
 /// `CT_RPrDefault`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DefaultRunProperties {
     pub run_properties: Option<Box<RunProperties>>,
@@ -9662,7 +10188,10 @@ pub struct DefaultRunProperties {
 
 /// 17.15.1.24 `defaultTableStyle` (Default Table Style for Newly Inserted Tables): the tag
 /// `w:defaultTableStyle`, schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DefaultTableStyle {
     pub unknown: officekit_markup_base::Unknown,
@@ -9671,7 +10200,10 @@ pub struct DefaultTableStyle {
 
 /// 17.16.10 default (Default Text Box Form Field String): the tag `w:default`, schema type
 /// `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DefaultTextBoxFormFieldString {
     pub unknown: officekit_markup_base::Unknown,
@@ -9679,7 +10211,10 @@ pub struct DefaultTextBoxFormFieldString {
 }
 
 /// The tag `w:del`, schema type `CT_RPrChange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Del {
     pub author: Option<String>,
@@ -9690,7 +10225,10 @@ pub struct Del {
 }
 
 /// 17.16.13 `delInstrText` (Deleted Field Code): the tag `w:delInstrText`, schema type `CT_Text`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DeletedFieldCode {
     pub space: Option<String>,
@@ -9699,7 +10237,10 @@ pub struct DeletedFieldCode {
 }
 
 /// 17.13.5.13 del (Deleted Math Control Character): the tag `w:del`, schema type `CT_MathCtrlDel`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DeletedMathControlCharacter {
     pub author: Option<String>,
@@ -9711,10 +10252,17 @@ pub struct DeletedMathControlCharacter {
 }
 
 /// 17.13.5.14 del (Deleted Run Content): the tag `w:del`, schema type `CT_RunTrackChange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DeletedRunContent {
     pub author: Option<String>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<TrackedRunContent>,
     pub date: Option<StandardDateAndTimeStorageFormat>,
     pub id: Option<DecimalNumberValue>,
@@ -9722,7 +10270,10 @@ pub struct DeletedRunContent {
 }
 
 /// 17.13.5.12 del (Deleted Table Row): the tag `w:del`, schema type `CT_TrackChange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DeletedTableRow {
     pub author: Option<String>,
@@ -9732,7 +10283,10 @@ pub struct DeletedTableRow {
 }
 
 /// 17.3.3.7 `delText` (Deleted Text): the tag `w:delText`, schema type `CT_Text`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DeletedText {
     pub space: Option<String>,
@@ -9741,7 +10295,10 @@ pub struct DeletedText {
 }
 
 /// 17.12.4 description (Description for Entry): the tag `w:description`, schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DescriptionForEntry {
     pub unknown: officekit_markup_base::Unknown,
@@ -9750,7 +10307,10 @@ pub struct DescriptionForEntry {
 
 /// 17.10.1 `evenAndOddHeaders` (Different Even/Odd Page Headers and Footers): the tag
 /// `w:evenAndOddHeaders`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DifferentEvenOddPageHeadersAndFooters {
     pub unknown: officekit_markup_base::Unknown,
@@ -9759,7 +10319,10 @@ pub struct DifferentEvenOddPageHeadersAndFooters {
 
 /// 17.10.6 `titlePg` (Different First Page Headers and Footers): the tag `w:titlePg`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DifferentFirstPageHeadersAndFooters {
     pub unknown: officekit_markup_base::Unknown,
@@ -9768,7 +10331,10 @@ pub struct DifferentFirstPageHeadersAndFooters {
 
 /// 17.15.2.33 `optimizeForBrowser` (Disable Features Not Supported by Target Web Profile): the tag
 /// `w:optimizeForBrowser`, schema type `CT_OptimizeForBrowser`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DisableFeaturesNotSupported {
     pub target: Option<String>,
@@ -9777,7 +10343,10 @@ pub struct DisableFeaturesNotSupported {
 }
 
 /// `ST_DisplacedByCustomXml`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DisplacedByCustomXml(pub String);
 /// The members of `ST_DisplacedByCustomXml`, in alphabetical order.
@@ -9790,7 +10359,10 @@ pub enum DisplacedByCustomXmlMember {
 
 /// 17.3.2.5 caps (Display All Characters As Capital Letters): the tag `w:caps`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DisplayAllCharactersAsCapitalLetters {
     pub unknown: officekit_markup_base::Unknown,
@@ -9799,7 +10371,10 @@ pub struct DisplayAllCharactersAsCapitalLetters {
 
 /// 17.9.4 `isLgl` (Display All Levels Using Arabic Numerals): the tag `w:isLgl`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DisplayAllLevelsUsingArabicNumerals {
     pub unknown: officekit_markup_base::Unknown,
@@ -9807,7 +10382,10 @@ pub struct DisplayAllLevelsUsingArabicNumerals {
 }
 
 /// The tag `w:displayBackgroundShape`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DisplayBackgroundShape {
     pub unknown: officekit_markup_base::Unknown,
@@ -9816,7 +10394,10 @@ pub struct DisplayBackgroundShape {
 
 /// 17.15.3.6 `doNotLeaveBackslashAlone` (Display Backslash As Yen Sign): the tag
 /// `w:doNotLeaveBackslashAlone`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DisplayBackslashAsYenSign {
     pub unknown: officekit_markup_base::Unknown,
@@ -9824,7 +10405,10 @@ pub struct DisplayBackslashAsYenSign {
 }
 
 /// 17.3.2.23 outline (Display Character Outline): the tag `w:outline`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DisplayCharacterOutline {
     pub unknown: officekit_markup_base::Unknown,
@@ -9833,7 +10417,10 @@ pub struct DisplayCharacterOutline {
 
 /// 14.8.3.36 `showBreaksInFrames` (Display Page/Column Breaks Present in Frames): the tag
 /// `w:showBreaksInFrames`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DisplayPageColumnBreaksPresentInFrames {
     pub unknown: officekit_markup_base::Unknown,
@@ -9842,7 +10429,10 @@ pub struct DisplayPageColumnBreaksPresentInFrames {
 
 /// 17.15.1.25 `defaultTabStop` (Distance Between Automatic Tab Stops): the tag `w:defaultTabStop`,
 /// schema type `CT_TwipsMeasure`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DistanceBetweenAutomaticTabStops {
     pub unknown: officekit_markup_base::Unknown,
@@ -9851,7 +10441,10 @@ pub struct DistanceBetweenAutomaticTabStops {
 
 /// 17.15.1.27 `displayHorizontalDrawingGridEvery` (Distance between Horizontal Gridlines): the tag
 /// `w:displayHorizontalDrawingGridEvery`, schema type `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DistanceBetweenHorizontalGridlines {
     pub unknown: officekit_markup_base::Unknown,
@@ -9860,7 +10453,10 @@ pub struct DistanceBetweenHorizontalGridlines {
 
 /// 17.3.3.12 `hpsRaise` (Distance Between Phonetic Guide Text and Phonetic Guide Base Text): the
 /// tag `w:hpsRaise`, schema type `CT_HpsMeasure`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DistanceBetweenPhoneticGuideText {
     pub unknown: officekit_markup_base::Unknown,
@@ -9869,7 +10465,10 @@ pub struct DistanceBetweenPhoneticGuideText {
 
 /// 17.15.1.28 `displayVerticalDrawingGridEvery` (Distance between Vertical Gridlines): the tag
 /// `w:displayVerticalDrawingGridEvery`, schema type `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DistanceBetweenVerticalGridlines {
     pub unknown: officekit_markup_base::Unknown,
@@ -9878,7 +10477,10 @@ pub struct DistanceBetweenVerticalGridlines {
 
 /// 14.8.3.29 `noLeading` (Do Not Add Leading Between Lines of Text): the tag `w:noLeading`, schema
 /// type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotAddLeadingBetweenLinesOfText {
     pub unknown: officekit_markup_base::Unknown,
@@ -9887,7 +10489,10 @@ pub struct DoNotAddLeadingBetweenLinesOfText {
 
 /// 14.8.3.10 `doNotBreakWrappedTables` (Do Not Allow Floating Tables To Break Across Pages): the
 /// tag `w:doNotBreakWrappedTables`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotAllowFloatingTablesToBreakAcrossPages {
     pub unknown: officekit_markup_base::Unknown,
@@ -9895,7 +10500,10 @@ pub struct DoNotAllowFloatingTablesToBreakAcrossPages {
 }
 
 /// The tag `w:doNotAutofitConstrainedTables`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotAutofitConstrainedTables {
     pub unknown: officekit_markup_base::Unknown,
@@ -9904,7 +10512,10 @@ pub struct DoNotAutofitConstrainedTables {
 
 /// 17.15.1.33 `doNotAutoCompressPictures` (Do Not Automatically Compress Images): the tag
 /// `w:doNotAutoCompressPictures`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotAutomaticallyCompressImages {
     pub unknown: officekit_markup_base::Unknown,
@@ -9913,7 +10524,10 @@ pub struct DoNotAutomaticallyCompressImages {
 
 /// 14.8.3.27 `noColumnBalance` (Do Not Balance Text Columns within a Section): the tag
 /// `w:noColumnBalance`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotBalanceTextColumnsWithinASection {
     pub unknown: officekit_markup_base::Unknown,
@@ -9921,7 +10535,10 @@ pub struct DoNotBalanceTextColumnsWithinASection {
 }
 
 /// The tag `w:doNotBreakConstrainedForcedTable`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotBreakConstrainedForcedTable {
     pub unknown: officekit_markup_base::Unknown,
@@ -9930,7 +10547,10 @@ pub struct DoNotBreakConstrainedForcedTable {
 
 /// 14.8.3.50 `useFELayout` (Do Not Bypass East Asian/Complex Script Layout Code): the tag
 /// `w:useFELayout`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotBypassEastAsianComplexScriptLayoutCode {
     pub unknown: officekit_markup_base::Unknown,
@@ -9939,7 +10559,10 @@ pub struct DoNotBypassEastAsianComplexScriptLayoutCode {
 
 /// 14.8.3.28 `noExtraLineSpacing` (Do Not Center Content on Lines With Exact Line Height): the tag
 /// `w:noExtraLineSpacing`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotCenterContentOnLinesWithExactLineHeight {
     pub unknown: officekit_markup_base::Unknown,
@@ -9948,7 +10571,10 @@ pub struct DoNotCenterContentOnLinesWithExactLineHeight {
 
 /// 17.3.2.21 `noProof` (Do Not Check Spelling or Grammar): the tag `w:noProof`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotCheckSpellingOrGrammar {
     pub unknown: officekit_markup_base::Unknown,
@@ -9957,7 +10583,10 @@ pub struct DoNotCheckSpellingOrGrammar {
 
 /// 14.8.3.31 `noTabHangInd` (Do Not Create Custom Tab Stop for Hanging Indent): the tag
 /// `w:noTabHangInd`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotCreateCustomTabStopForHangingIndent {
     pub unknown: officekit_markup_base::Unknown,
@@ -9966,7 +10595,10 @@ pub struct DoNotCreateCustomTabStopForHangingIndent {
 
 /// 17.15.2.31 `noBorder` (Do Not Display Frameset Splitters): the tag `w:noBorder`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotDisplayFramesetSplitters {
     pub unknown: officekit_markup_base::Unknown,
@@ -9975,7 +10607,10 @@ pub struct DoNotDisplayFramesetSplitters {
 
 /// 17.15.1.51 `hideGrammaticalErrors` (Do Not Display Visual Indication of Grammatical Errors): the
 /// tag `w:hideGrammaticalErrors`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotDisplayGrammaticalErrors {
     pub unknown: officekit_markup_base::Unknown,
@@ -9983,7 +10618,10 @@ pub struct DoNotDisplayGrammaticalErrors {
 }
 
 /// The tag `w:doNotDisplayPageBoundaries`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotDisplayPageBoundaries {
     pub unknown: officekit_markup_base::Unknown,
@@ -9992,7 +10630,10 @@ pub struct DoNotDisplayPageBoundaries {
 
 /// 17.15.1.52 `hideSpellingErrors` (Do Not Display Visual Indication of Spelling Errors): the tag
 /// `w:hideSpellingErrors`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotDisplaySpellingErrors {
     pub unknown: officekit_markup_base::Unknown,
@@ -10001,7 +10642,10 @@ pub struct DoNotDisplaySpellingErrors {
 
 /// 17.15.1.37 `doNotHyphenateCaps` (Do Not Hyphenate Words in ALL CAPITAL LETTERS): the tag
 /// `w:doNotHyphenateCaps`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotHyphenateCapitalLetters {
     pub unknown: officekit_markup_base::Unknown,
@@ -10009,7 +10653,10 @@ pub struct DoNotHyphenateCapitalLetters {
 }
 
 /// The tag `w:doNotIncludeSubdocsInStats`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotIncludeSubdocsInStats {
     pub unknown: officekit_markup_base::Unknown,
@@ -10018,7 +10665,10 @@ pub struct DoNotIncludeSubdocsInStats {
 
 /// 14.8.3.30 `noSpaceRaiseLower` (Do Not Increase Line Height for Raised/Lowered Text): the tag
 /// `w:noSpaceRaiseLower`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotIncreaseLineHeightForRaisedLoweredText {
     pub unknown: officekit_markup_base::Unknown,
@@ -10027,7 +10677,10 @@ pub struct DoNotIncreaseLineHeightForRaisedLoweredText {
 
 /// 17.15.2.10 `doNotOrganizeInFolder` (Do Not Place Supporting Files in Subdirectory): the tag
 /// `w:doNotOrganizeInFolder`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotPlaceSupportingFiles {
     pub unknown: officekit_markup_base::Unknown,
@@ -10036,7 +10689,10 @@ pub struct DoNotPlaceSupportingFiles {
 
 /// 17.15.2.11 `doNotRelyOnCSS` (Do Not Rely on CSS for Font Face Formatting): the tag
 /// `w:doNotRelyOnCSS`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotRelyOnCSS {
     pub unknown: officekit_markup_base::Unknown,
@@ -10045,7 +10701,10 @@ pub struct DoNotRelyOnCSS {
 
 /// 17.15.1.39 `doNotShadeFormData` (Do Not Show Visual Indicator For Form Fields): the tag
 /// `w:doNotShadeFormData`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotShowFormFieldIndicator {
     pub unknown: officekit_markup_base::Unknown,
@@ -10054,7 +10713,10 @@ pub struct DoNotShowFormFieldIndicator {
 
 /// 17.15.1.34 `doNotDemarcateInvalidXml` (Do Not Show Visual Indicator For Invalid Custom XML
 /// Markup): the tag `w:doNotDemarcateInvalidXml`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotShowInvalidMarkupIndicator {
     pub unknown: officekit_markup_base::Unknown,
@@ -10063,7 +10725,10 @@ pub struct DoNotShowInvalidMarkupIndicator {
 
 /// 14.8.3.11 `doNotSnapToGridInCell` (Do Not Snap to Document Grid in Table Cells with Objects):
 /// the tag `w:doNotSnapToGridInCell`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotSnapToDocumentGridInTableCellsWithObjects {
     pub unknown: officekit_markup_base::Unknown,
@@ -10071,7 +10736,10 @@ pub struct DoNotSnapToDocumentGridInTableCellsWithObjects {
 }
 
 /// The tag `w:doNotSuppressBlankLines`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotSuppressBlankLines {
     pub unknown: officekit_markup_base::Unknown,
@@ -10079,7 +10747,10 @@ pub struct DoNotSuppressBlankLines {
 }
 
 /// The tag `w:doNotSuppressIndentation`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotSuppressIndentation {
     pub unknown: officekit_markup_base::Unknown,
@@ -10087,7 +10758,10 @@ pub struct DoNotSuppressIndentation {
 }
 
 /// The tag `w:doNotSuppressParagraphBorders`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotSuppressParagraphBorders {
     pub unknown: officekit_markup_base::Unknown,
@@ -10095,7 +10769,10 @@ pub struct DoNotSuppressParagraphBorders {
 }
 
 /// The tag `w:doNotTrackFormatting`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotTrackFormatting {
     pub unknown: officekit_markup_base::Unknown,
@@ -10103,7 +10780,10 @@ pub struct DoNotTrackFormatting {
 }
 
 /// The tag `w:doNotUseEastAsianBreakRules`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotUseEastAsianBreakRules {
     pub unknown: officekit_markup_base::Unknown,
@@ -10112,7 +10792,10 @@ pub struct DoNotUseEastAsianBreakRules {
 
 /// 17.15.2.13 `doNotUseLongFileNames` (Do Not Use File Names Longer than 8.3 Characters): the tag
 /// `w:doNotUseLongFileNames`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotUseFileNames {
     pub unknown: officekit_markup_base::Unknown,
@@ -10120,7 +10803,10 @@ pub struct DoNotUseFileNames {
 }
 
 /// The tag `w:doNotUseHTMLParagraphAutoSpacing`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotUseHTMLParagraphAutoSpacing {
     pub unknown: officekit_markup_base::Unknown,
@@ -10128,7 +10814,10 @@ pub struct DoNotUseHTMLParagraphAutoSpacing {
 }
 
 /// The tag `w:doNotUseIndentAsNumberingTabStop`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotUseIndentAsNumberingTabStop {
     pub unknown: officekit_markup_base::Unknown,
@@ -10136,7 +10825,10 @@ pub struct DoNotUseIndentAsNumberingTabStop {
 }
 
 /// The tag `w:doNotUseMarginsForDrawingGridOrigin`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotUseMarginsForDrawingGridOrigin {
     pub unknown: officekit_markup_base::Unknown,
@@ -10145,7 +10837,10 @@ pub struct DoNotUseMarginsForDrawingGridOrigin {
 
 /// 17.15.1.41 `doNotTrackMoves` (Do Not Use Move Syntax When Tracking Revisions): the tag
 /// `w:doNotTrackMoves`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotUseMoveSyntax {
     pub unknown: officekit_markup_base::Unknown,
@@ -10153,7 +10848,10 @@ pub struct DoNotUseMoveSyntax {
 }
 
 /// The tag `w:doNotValidateAgainstSchema`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotValidateAgainstSchema {
     pub unknown: officekit_markup_base::Unknown,
@@ -10161,7 +10859,10 @@ pub struct DoNotValidateAgainstSchema {
 }
 
 /// The tag `w:doNotVertAlignCellWithSp`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotVertAlignCellWithSp {
     pub unknown: officekit_markup_base::Unknown,
@@ -10169,7 +10870,10 @@ pub struct DoNotVertAlignCellWithSp {
 }
 
 /// The tag `w:doNotWrapTextWithPunct`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoNotWrapTextWithPunct {
     pub unknown: officekit_markup_base::Unknown,
@@ -10177,21 +10881,37 @@ pub struct DoNotWrapTextWithPunct {
 }
 
 /// 17.2.3 document (Document): the tag `w:document`, schema type `CT_Document`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Document {
+    #[rkyv(omit_bounds)]
     pub background: Option<Box<DocumentBackground>>,
+    #[rkyv(omit_bounds)]
     pub body: Option<Box<DocumentBody>>,
     pub conformance: Option<common_simple_types::DocumentConformanceClassValue>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 17.2.1 background (Document Background): the tag `w:background`, schema type `CT_Background`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DocumentBackground {
     pub color: Option<ColorValue>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<VmlElementContent>,
+    #[rkyv(omit_bounds)]
     pub drawingml_object: Option<Box<DrawingMLObject>>,
     pub theme_color: Option<ThemeColor>,
     pub theme_shade: Option<TwoDigitHexadecimalValue>,
@@ -10200,9 +10920,16 @@ pub struct DocumentBackground {
 }
 
 /// 17.2.2 body (Document Body): the tag `w:body`, schema type `CT_Body`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DocumentBody {
+    #[rkyv(omit_bounds)]
     pub content: Vec<BlockContent>,
     pub document_final_section_properties: Option<Box<DocumentFinalSectionProperties>>,
     pub unknown: officekit_markup_base::Unknown,
@@ -10210,7 +10937,10 @@ pub struct DocumentBody {
 
 /// 17.15.1.30 `documentType` (Document Classification): the tag `w:documentType`, schema type
 /// `CT_DocType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DocumentClassification {
     pub unknown: officekit_markup_base::Unknown,
@@ -10219,7 +10949,10 @@ pub struct DocumentClassification {
 
 /// 17.7.5.1 `docDefaults` (Document Default Paragraph and Run Properties): the tag `w:docDefaults`,
 /// schema type `CT_DocDefaults`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DocumentDefaultParagraphAndRunProperties {
     pub default_paragraph_properties: Option<Box<DefaultParagraphProperties>>,
@@ -10229,7 +10962,10 @@ pub struct DocumentDefaultParagraphAndRunProperties {
 
 /// 17.15.1.29 `documentProtection` (Document Editing Restrictions): the tag `w:documentProtection`,
 /// schema type `CT_DocProtect`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DocumentEditingRestrictions {
     pub alg_id_ext: Option<EightDigitHexadecimalValue>,
@@ -10255,16 +10991,26 @@ pub struct DocumentEditingRestrictions {
 }
 
 /// 17.11.8 endnotes (Document Endnotes): the tag `w:endnotes`, schema type `CT_Endnotes`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DocumentEndnotes {
+    #[rkyv(omit_bounds)]
     pub endnote_content: Vec<EndnoteContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 17.6.17 `sectPr` (Document Final Section Properties): the tag `w:sectPr`, schema type
 /// `CT_SectPr`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DocumentFinalSectionProperties {
     pub column_definitions: Option<Box<ColumnDefinitions>>,
@@ -10298,15 +11044,25 @@ pub struct DocumentFinalSectionProperties {
 }
 
 /// 17.11.15 footnotes (Document Footnotes): the tag `w:footnotes`, schema type `CT_Footnotes`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DocumentFootnotes {
+    #[rkyv(omit_bounds)]
     pub footnote_content: Vec<FootnoteContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 17.6.5 `docGrid` (Document Grid): the tag `w:docGrid`, schema type `CT_DocGrid`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DocumentGrid {
     pub char_space: Option<DecimalNumberValue>,
@@ -10317,7 +11073,10 @@ pub struct DocumentGrid {
 
 /// 17.3.1.32 `snapToGrid` (Use Document Grid Settings for Inter-Line Paragraph Spacing): the tag
 /// `w:snapToGrid`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DocumentGridInterLineParagraphSpacing {
     pub unknown: officekit_markup_base::Unknown,
@@ -10325,7 +11084,10 @@ pub struct DocumentGridInterLineParagraphSpacing {
 }
 
 /// 17.18.14 `ST_DocGrid` (Document Grid Types): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DocumentGridTypes(pub String);
 /// The members of `ST_DocGrid`, in alphabetical order.
@@ -10340,7 +11102,10 @@ pub enum DocumentGridTypesMember {
 
 /// 17.5.2.10 `docPartCategory` (Document Part Category Filter): the tag `w:docPartCategory`, schema
 /// type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DocumentPartCategoryFilter {
     pub unknown: officekit_markup_base::Unknown,
@@ -10349,7 +11114,10 @@ pub struct DocumentPartCategoryFilter {
 
 /// 17.5.2.11 `docPartGallery` (Document Part Gallery Filter): the tag `w:docPartGallery`, schema
 /// type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DocumentPartGalleryFilter {
     pub unknown: officekit_markup_base::Unknown,
@@ -10358,7 +11126,10 @@ pub struct DocumentPartGalleryFilter {
 
 /// 17.5.2.12 `docPartList` (Document Part Gallery Structured Document Tag): the tag
 /// `w:docPartList`, schema type `CT_SdtDocPart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DocumentPartGalleryStructuredDocumentTag {
     pub built_in_document_part: Option<Box<BuiltInDocumentPart>>,
@@ -10368,7 +11139,10 @@ pub struct DocumentPartGalleryStructuredDocumentTag {
 }
 
 /// 17.5.2.9 `docPart` (Document Part Reference): the tag `w:docPart`, schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DocumentPartReference {
     pub unknown: officekit_markup_base::Unknown,
@@ -10376,7 +11150,10 @@ pub struct DocumentPartReference {
 }
 
 /// 17.18.18 `ST_DocProtect` (Document Protection Types): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DocumentProtectionTypes(pub String);
 /// The members of `ST_DocProtect`, in alphabetical order.
@@ -10391,7 +11168,13 @@ pub enum DocumentProtectionTypesMember {
 }
 
 /// 17.15.1.78 settings (Document Settings): the tag `w:settings`, schema type `CT_Settings`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DocumentSettings {
     pub align_paragraph_and_table_borders: Option<Box<AlignParagraphAndTableBorders>>,
@@ -10418,8 +11201,10 @@ pub struct DocumentSettings {
     pub conflict_mode: Option<Box<super::office_word_2010_wordml::ConflictMode>>,
     pub custom_xsl_transform: Option<Box<CustomXSLTransform>>,
     pub default_image_dpi: Option<Box<super::office_word_2010_wordml::DefaultImageDpi>>,
+    #[rkyv(omit_bounds)]
     pub default_properties_for_vml_objects_in_header_and_footer:
         Option<Box<DefaultPropertiesForVMLObjectsInHeaderAndFooter>>,
+    #[rkyv(omit_bounds)]
     pub default_properties_for_vml_objects_in_main_document:
         Option<Box<DefaultPropertiesForVMLObjectsInMainDocument>>,
     pub default_table_style: Option<Box<DefaultTableStyle>>,
@@ -10513,7 +11298,10 @@ pub struct DocumentSettings {
 }
 
 /// 17.15.1.32 `docVars` (Document Variables): the tag `w:docVars`, schema type `CT_DocVars`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DocumentVariables {
     pub single_document_variable: Vec<SingleDocumentVariable>,
@@ -10521,7 +11309,10 @@ pub struct DocumentVariables {
 }
 
 /// 17.15.1.92 view (Document View Setting): the tag `w:view`, schema type `CT_View`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DocumentViewSetting {
     pub unknown: officekit_markup_base::Unknown,
@@ -10529,7 +11320,10 @@ pub struct DocumentViewSetting {
 }
 
 /// 17.18.102 `ST_View` (Document View Values): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DocumentViewValues(pub String);
 /// The members of `ST_View`, in alphabetical order.
@@ -10546,7 +11340,10 @@ pub enum DocumentViewValuesMember {
 
 /// 17.11.4 `endnotePr` (Document-Wide Endnote Properties): the tag `w:endnotePr`, schema type
 /// `CT_EdnDocProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DocumentWideEndnoteProperties {
     pub endnote_placement: Option<Box<EndnotePlacement>>,
@@ -10561,7 +11358,10 @@ pub struct DocumentWideEndnoteProperties {
 
 /// 17.11.12 `footnotePr` (Document-Wide Footnote Properties): the tag `w:footnotePr`, schema type
 /// `CT_FtnDocProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DocumentWideFootnoteProperties {
     pub footnote_and_endnote_numbering_restart_location:
@@ -10576,7 +11376,10 @@ pub struct DocumentWideFootnoteProperties {
 
 /// 17.15.3.5 `doNotExpandShiftReturn` (Don't Justify Lines Ending in Soft Line Break): the tag
 /// `w:doNotExpandShiftReturn`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DontJustifySoftLineBreakLines {
     pub unknown: officekit_markup_base::Unknown,
@@ -10584,7 +11387,10 @@ pub struct DontJustifySoftLineBreakLines {
 }
 
 /// 17.4.29 `noWrap` (Don't Wrap Cell Content): the tag `w:noWrap`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DontWrapCellContent {
     pub unknown: officekit_markup_base::Unknown,
@@ -10592,7 +11398,10 @@ pub struct DontWrapCellContent {
 }
 
 /// 17.3.2.9 dstrike (Double Strikethrough): the tag `w:dstrike`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoubleStrikethrough {
     pub unknown: officekit_markup_base::Unknown,
@@ -10601,7 +11410,10 @@ pub struct DoubleStrikethrough {
 
 /// 17.15.1.45 `drawingGridHorizontalSpacing` (Drawing Grid Horizontal Grid Unit Size): the tag
 /// `w:drawingGridHorizontalSpacing`, schema type `CT_TwipsMeasure`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DrawingGridHorizontalGridUnitSize {
     pub unknown: officekit_markup_base::Unknown,
@@ -10610,7 +11422,10 @@ pub struct DrawingGridHorizontalGridUnitSize {
 
 /// 17.15.1.44 `drawingGridHorizontalOrigin` (Drawing Grid Horizontal Origin Point): the tag
 /// `w:drawingGridHorizontalOrigin`, schema type `CT_TwipsMeasure`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DrawingGridHorizontalOriginPoint {
     pub unknown: officekit_markup_base::Unknown,
@@ -10619,7 +11434,10 @@ pub struct DrawingGridHorizontalOriginPoint {
 
 /// 17.15.1.47 `drawingGridVerticalSpacing` (Drawing Grid Vertical Grid Unit Size): the tag
 /// `w:drawingGridVerticalSpacing`, schema type `CT_TwipsMeasure`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DrawingGridVerticalGridUnitSize {
     pub unknown: officekit_markup_base::Unknown,
@@ -10628,7 +11446,10 @@ pub struct DrawingGridVerticalGridUnitSize {
 
 /// 17.15.1.46 `drawingGridVerticalOrigin` (Drawing Grid Vertical Origin Point): the tag
 /// `w:drawingGridVerticalOrigin`, schema type `CT_TwipsMeasure`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DrawingGridVerticalOriginPoint {
     pub unknown: officekit_markup_base::Unknown,
@@ -10636,9 +11457,16 @@ pub struct DrawingGridVerticalOriginPoint {
 }
 
 /// 17.3.3.9 drawing (`DrawingML` Object): the tag `w:drawing`, schema type `CT_Drawing`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DrawingMLObject {
+    #[rkyv(omit_bounds)]
     pub content: Vec<DrawingObjectContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
@@ -10654,7 +11482,10 @@ pub enum DrawingObjectContent {
 }
 
 /// 17.16.25 `listEntry` (Drop-Down List Entry): the tag `w:listEntry`, schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DropDownListEntry {
     pub unknown: officekit_markup_base::Unknown,
@@ -10663,7 +11494,10 @@ pub struct DropDownListEntry {
 
 /// 17.16.9 `ddList` (Drop-Down List Form Field Properties): the tag `w:ddList`, schema type
 /// `CT_FFDDList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DropDownListFormFieldProperties {
     pub default_drop_down_list_item_index: Option<Box<DefaultDropDownListItemIndex>>,
@@ -10673,7 +11507,10 @@ pub struct DropDownListFormFieldProperties {
 }
 
 /// 17.16.28 result (Drop-Down List Selection): the tag `w:result`, schema type `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DropDownListSelection {
     pub unknown: officekit_markup_base::Unknown,
@@ -10682,7 +11519,10 @@ pub struct DropDownListSelection {
 
 /// 17.5.2.15 `dropDownList` (Drop-Down List Structured Document Tag): the tag `w:dropDownList`,
 /// schema type `CT_SdtDropDownList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DropDownListStructuredDocumentTag {
     pub combo_box_list_item: Vec<ComboBoxListItem>,
@@ -10692,7 +11532,10 @@ pub struct DropDownListStructuredDocumentTag {
 
 /// 17.7.4.12 `personalCompose` (E-Mail Message Composition Style): the tag `w:personalCompose`,
 /// schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EMailMessageCompositionStyle {
     pub unknown: officekit_markup_base::Unknown,
@@ -10701,7 +11544,10 @@ pub struct EMailMessageCompositionStyle {
 
 /// 17.7.4.13 `personalReply` (E-Mail Message Reply Style): the tag `w:personalReply`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EMailMessageReplyStyle {
     pub unknown: officekit_markup_base::Unknown,
@@ -10709,7 +11555,10 @@ pub struct EMailMessageReplyStyle {
 }
 
 /// 17.7.4.11 personal (E-Mail Message Text Style): the tag `w:personal`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EMailMessageTextStyle {
     pub unknown: officekit_markup_base::Unknown,
@@ -10718,7 +11567,10 @@ pub struct EMailMessageTextStyle {
 
 /// 17.3.1.16 kinsoku (Use East Asian Typography Rules for First and Last Character per Line): the
 /// tag `w:kinsoku`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EastAsianTypographyRules {
     pub unknown: officekit_markup_base::Unknown,
@@ -10727,7 +11579,10 @@ pub struct EastAsianTypographyRules {
 
 /// 17.3.2.10 `eastAsianLayout` (East Asian Typography Settings): the tag `w:eastAsianLayout`,
 /// schema type `CT_EastAsianLayout`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EastAsianTypographySettings {
     pub combine: Option<common_simple_types::OnOffValue>,
@@ -10739,13 +11594,19 @@ pub struct EastAsianTypographySettings {
 }
 
 /// 17.18.50 `ST_LongHexNumber` (Eight Digit Hexadecimal Value): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EightDigitHexadecimalValue(pub String);
 
 /// 17.8.3.7 `embedSystemFonts` (Embed Common System Fonts): the tag `w:embedSystemFonts`, schema
 /// type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EmbedCommonSystemFonts {
     pub unknown: officekit_markup_base::Unknown,
@@ -10754,7 +11615,10 @@ pub struct EmbedCommonSystemFonts {
 
 /// 17.8.3.8 `embedTrueTypeFonts` (Embed `TrueType` Fonts): the tag `w:embedTrueTypeFonts`, schema
 /// type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EmbedTrueTypeFonts {
     pub unknown: officekit_markup_base::Unknown,
@@ -10762,7 +11626,10 @@ pub struct EmbedTrueTypeFonts {
 }
 
 /// 17.3.3.3 control (Embedded Control): the tag `w:control`, schema type `CT_Control`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EmbeddedControl {
     pub id: Option<String>,
@@ -10772,15 +11639,23 @@ pub struct EmbeddedControl {
 }
 
 /// 17.3.3.19 object (Embedded Object): the tag `w:object`, schema type `CT_Object`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EmbeddedObject {
     pub anchor_id: Option<String>,
     pub content: Option<Box<EmbeddedObjectContent>>,
+    #[rkyv(omit_bounds)]
     pub drawingml_object: Option<Box<DrawingMLObject>>,
     pub dxa_orig: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
     pub dya_orig: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
     pub unknown: officekit_markup_base::Unknown,
+    #[rkyv(omit_bounds)]
     pub vml_element_content: Vec<VmlElementContent>,
 }
 
@@ -10797,7 +11672,10 @@ pub enum EmbeddedObjectContent {
 
 /// 17.3.3.20 `objectEmbed` (Embedded Object Properties): the tag `w:objectEmbed`, schema type
 /// `CT_ObjectEmbed`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EmbeddedObjectProperties {
     pub draw_aspect: Option<EmbeddedObjectRepresentations>,
@@ -10809,7 +11687,10 @@ pub struct EmbeddedObjectProperties {
 }
 
 /// 17.18.60 `ST_ObjectDrawAspect` (Embedded Object Representations): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EmbeddedObjectRepresentations(pub String);
 /// The members of `ST_ObjectDrawAspect`, in alphabetical order.
@@ -10821,7 +11702,10 @@ pub enum EmbeddedObjectRepresentationsMember {
 }
 
 /// 17.18.61 `ST_ObjectUpdateMode` (Embedded Object Update Modes): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EmbeddedObjectUpdateModes(pub String);
 /// The members of `ST_ObjectUpdateMode`, in alphabetical order.
@@ -10833,7 +11717,10 @@ pub enum EmbeddedObjectUpdateModesMember {
 }
 
 /// 17.3.3.17 movie (Embedded Video): the tag `w:movie`, schema type `CT_Rel`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EmbeddedVideo {
     pub id: Option<String>,
@@ -10841,7 +11728,10 @@ pub struct EmbeddedVideo {
 }
 
 /// 17.3.2.13 emboss (Embossing): the tag `w:emboss`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Embossing {
     pub unknown: officekit_markup_base::Unknown,
@@ -10849,7 +11739,10 @@ pub struct Embossing {
 }
 
 /// 17.3.2.12 em (Emphasis Mark): the tag `w:em`, schema type `CT_Em`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EmphasisMark {
     pub unknown: officekit_markup_base::Unknown,
@@ -10857,7 +11750,10 @@ pub struct EmphasisMark {
 }
 
 /// 17.18.24 `ST_Em` (Emphasis Mark Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EmphasisMarkType(pub String);
 /// The members of `ST_Em`, in alphabetical order.
@@ -10872,9 +11768,16 @@ pub enum EmphasisMarkTypeMember {
 }
 
 /// 17.11.2 endnote (Endnote Content): the tag `w:endnote`, schema type `CT_FtnEdn`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EndnoteContent {
+    #[rkyv(omit_bounds)]
     pub content: Vec<BlockContent>,
     pub id: Option<DecimalNumberValue>,
     pub r#type: Option<FootnoteOrEndnoteType>,
@@ -10882,7 +11785,10 @@ pub struct EndnoteContent {
 }
 
 /// 17.11.22 pos (Endnote Placement): the tag `w:pos`, schema type `CT_EdnPos`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EndnotePlacement {
     pub unknown: officekit_markup_base::Unknown,
@@ -10890,7 +11796,10 @@ pub struct EndnotePlacement {
 }
 
 /// 17.18.22 `ST_EdnPos` (Endnote Positioning Location): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EndnotePositioningLocation(pub String);
 /// The members of `ST_EdnPos`, in alphabetical order.
@@ -10903,7 +11812,10 @@ pub enum EndnotePositioningLocationMember {
 
 /// 17.11.7 `endnoteReference` (Endnote Reference): the tag `w:endnoteReference`, schema type
 /// `CT_FtnEdnRef`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EndnoteReference {
     pub custom_mark_follows: Option<common_simple_types::OnOffValue>,
@@ -10912,14 +11824,20 @@ pub struct EndnoteReference {
 }
 
 /// 17.11.6 `endnoteRef` (Endnote Reference Mark): the tag `w:endnoteRef`, schema type `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EndnoteReferenceMark {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 17.12.3 category (Entry Categorization): the tag `w:category`, schema type `CT_DocPartCategory`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EntryCategorization {
     pub gallery_associated_with_entry: Box<GalleryAssociatedWithEntry>,
@@ -10928,7 +11846,10 @@ pub struct EntryCategorization {
 }
 
 /// 17.18.16 `ST_DocPartGallery` (Entry Gallery Types): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EntryGalleryTypes(pub String);
 /// The members of `ST_DocPartGallery`, in alphabetical order.
@@ -10976,7 +11897,10 @@ pub enum EntryGalleryTypesMember {
 }
 
 /// 17.12.11 guid (Entry ID): the tag `w:guid`, schema type `CT_Guid`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EntryID {
     pub unknown: officekit_markup_base::Unknown,
@@ -10985,7 +11909,10 @@ pub struct EntryID {
 
 /// 17.12.1 behavior (Entry Insertion Behavior): the tag `w:behavior`, schema type
 /// `CT_DocPartBehavior`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EntryInsertionBehavior {
     pub unknown: officekit_markup_base::Unknown,
@@ -10994,7 +11921,10 @@ pub struct EntryInsertionBehavior {
 
 /// 17.12.2 behaviors (Entry Insertion Behaviors): the tag `w:behaviors`, schema type
 /// `CT_DocPartBehaviors`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EntryInsertionBehaviors {
     pub entry_insertion_behavior: Vec<EntryInsertionBehavior>,
@@ -11002,7 +11932,10 @@ pub struct EntryInsertionBehaviors {
 }
 
 /// 17.12.13 name (Entry Name): the tag `w:name`, schema type `CT_DocPartName`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EntryName {
     pub decorated: Option<common_simple_types::OnOffValue>,
@@ -11011,7 +11944,10 @@ pub struct EntryName {
 }
 
 /// 17.12.15 type (Entry Type): the tag `w:type`, schema type `CT_DocPartType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EntryType {
     pub unknown: officekit_markup_base::Unknown,
@@ -11019,7 +11955,10 @@ pub struct EntryType {
 }
 
 /// 17.12.16 types (Entry Types): the tag `w:types`, schema type `CT_DocPartTypes`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EntryTypes {
     pub all: Option<common_simple_types::OnOffValue>,
@@ -11029,7 +11968,10 @@ pub struct EntryTypes {
 
 /// 17.5.2.16 equation (Equation Structured Document Tag): the tag `w:equation`, schema type
 /// `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EquationStructuredDocumentTag {
     pub unknown: officekit_markup_base::Unknown,
@@ -11037,7 +11979,10 @@ pub struct EquationStructuredDocumentTag {
 
 /// 17.16.15 `entryMacro` (Script Function to Execute on Form Field Entry): the tag `w:entryMacro`,
 /// schema type `CT_MacroName`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExecuteOnFormFieldEntry {
     pub unknown: officekit_markup_base::Unknown,
@@ -11046,7 +11991,10 @@ pub struct ExecuteOnFormFieldEntry {
 
 /// 17.16.16 `exitMacro` (Script Function to Execute on Form Field Exit): the tag `w:exitMacro`,
 /// schema type `CT_MacroName`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExecuteOnFormFieldExit {
     pub unknown: officekit_markup_base::Unknown,
@@ -11054,7 +12002,10 @@ pub struct ExecuteOnFormFieldExit {
 }
 
 /// 17.3.2.43 w (Expanded/Compressed Text): the tag `w:w`, schema type `CT_TextScale`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExpandedCompressedText {
     pub unknown: officekit_markup_base::Unknown,
@@ -11063,7 +12014,10 @@ pub struct ExpandedCompressedText {
 
 /// 17.17.2.2 `altChunkPr` (External Content Import Properties): the tag `w:altChunkPr`, schema type
 /// `CT_AltChunkPr`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExternalContentImportProperties {
     pub keep_source_formatting_on_import: Option<Box<KeepSourceFormattingOnImport>>,
@@ -11072,7 +12026,10 @@ pub struct ExternalContentImportProperties {
 
 /// 17.14.15 `fieldMapData` (External Data Source to Merge Field Mapping): the tag `w:fieldMapData`,
 /// schema type `CT_OdsoFieldMapData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExternalDataSourceMergeFieldMapping {
     pub index_of_column_being_mapped: Option<Box<IndexOfColumnBeingMapped>>,
@@ -11085,7 +12042,10 @@ pub struct ExternalDataSourceMergeFieldMapping {
 }
 
 /// 17.16.23 `instrText` (Field Code): the tag `w:instrText`, schema type `CT_Text`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FieldCode {
     pub space: Option<String>,
@@ -11095,7 +12055,10 @@ pub struct FieldCode {
 
 /// 17.14.14 `fHdr` (First Row of Data Source Contains Column Names): the tag `w:fHdr`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FirstRowContainsColumnNames {
     pub unknown: officekit_markup_base::Unknown,
@@ -11103,7 +12066,10 @@ pub struct FirstRowContainsColumnNames {
 }
 
 /// 17.4.67 `tcFitText` (Fit Text Within Cell): the tag `w:tcFitText`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FitTextWithinCell {
     pub unknown: officekit_markup_base::Unknown,
@@ -11112,7 +12078,10 @@ pub struct FitTextWithinCell {
 
 /// 14.8.3.56 `wpJustification` (Fit To Expanded Width When Performing Full Justification): the tag
 /// `w:wpJustification`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FitToExpandedWidthWhenPerformingFullJustification {
     pub unknown: officekit_markup_base::Unknown,
@@ -11121,7 +12090,10 @@ pub struct FitToExpandedWidthWhenPerformingFullJustification {
 
 /// 17.4.56 `tblOverlap` (Floating Table Allows Other Tables to Overlap): the tag `w:tblOverlap`,
 /// schema type `CT_TblOverlap`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FloatingTableAllowsOverlap {
     pub unknown: officekit_markup_base::Unknown,
@@ -11129,7 +12101,10 @@ pub struct FloatingTableAllowsOverlap {
 }
 
 /// 17.4.57 `tblpPr` (Floating Table Positioning): the tag `w:tblpPr`, schema type `CT_TblPPr`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FloatingTablePositioning {
     pub bottom_from_text: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
@@ -11146,7 +12121,10 @@ pub struct FloatingTablePositioning {
 }
 
 /// 17.8.3.9 family (Font Family): the tag `w:family`, schema type `CT_FontFamily`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FontFamily {
     pub unknown: officekit_markup_base::Unknown,
@@ -11154,7 +12132,10 @@ pub struct FontFamily {
 }
 
 /// 17.18.30 `ST_FontFamily` (Font Family Value): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FontFamilyValue(pub String);
 /// The members of `ST_FontFamily`, in alphabetical order.
@@ -11170,7 +12151,10 @@ pub enum FontFamilyValueMember {
 }
 
 /// 17.3.2.19 kern (Font Kerning): the tag `w:kern`, schema type `CT_HpsMeasure`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FontKerning {
     pub unknown: officekit_markup_base::Unknown,
@@ -11178,7 +12162,10 @@ pub struct FontKerning {
 }
 
 /// 17.8.3.14 pitch (Font Pitch): the tag `w:pitch`, schema type `CT_Pitch`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FontPitch {
     pub unknown: officekit_markup_base::Unknown,
@@ -11186,7 +12173,10 @@ pub struct FontPitch {
 }
 
 /// 17.18.66 `ST_Pitch` (Font Pitch Value): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FontPitchValue(pub String);
 /// The members of `ST_Pitch`, in alphabetical order.
@@ -11199,7 +12189,10 @@ pub enum FontPitchValueMember {
 }
 
 /// 17.8.3.11 fonts (Font Table Root Element): the tag `w:fonts`, schema type `CT_FontsList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FontTableRootElement {
     pub properties_for_a_single_font: Vec<PropertiesForASingleFont>,
@@ -11207,7 +12200,10 @@ pub struct FontTableRootElement {
 }
 
 /// 17.18.41 `ST_Hint` (Font Type Hint): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FontTypeHint(pub String);
 /// The members of `ST_Hint`, in alphabetical order.
@@ -11219,16 +12215,26 @@ pub enum FontTypeHintMember {
 }
 
 /// 17.10.3 ftr (Footer): the tag `w:ftr`, schema type `CT_HdrFtr`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Footer {
+    #[rkyv(omit_bounds)]
     pub content: Vec<BlockContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 17.10.2 `footerReference` (Footer Reference): the tag `w:footerReference`, schema type
 /// `CT_HdrFtrRef`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FooterReference {
     pub id: Option<String>,
@@ -11238,7 +12244,10 @@ pub struct FooterReference {
 
 /// 17.11.19 `numRestart` (Footnote and Endnote Numbering Restart Location): the tag `w:numRestart`,
 /// schema type `CT_NumRestart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FootnoteAndEndnoteNumberingRestartLocation {
     pub unknown: officekit_markup_base::Unknown,
@@ -11247,7 +12256,10 @@ pub struct FootnoteAndEndnoteNumberingRestartLocation {
 
 /// 17.11.20 `numStart` (Footnote and Endnote Numbering Starting Value): the tag `w:numStart`,
 /// schema type `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FootnoteAndEndnoteNumberingStartingValue {
     pub unknown: officekit_markup_base::Unknown,
@@ -11255,9 +12267,16 @@ pub struct FootnoteAndEndnoteNumberingStartingValue {
 }
 
 /// 17.11.10 footnote (Footnote Content): the tag `w:footnote`, schema type `CT_FtnEdn`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FootnoteContent {
+    #[rkyv(omit_bounds)]
     pub content: Vec<BlockContent>,
     pub id: Option<DecimalNumberValue>,
     pub r#type: Option<FootnoteOrEndnoteType>,
@@ -11266,7 +12285,10 @@ pub struct FootnoteContent {
 
 /// 17.18.74 `ST_RestartNumber` (Footnote/Endnote Numbering Restart Locations): the text the file
 /// carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FootnoteEndnoteNumberingRestartLocations(pub String);
 /// The members of `ST_RestartNumber`, in alphabetical order.
@@ -11280,14 +12302,20 @@ pub enum FootnoteEndnoteNumberingRestartLocationsMember {
 
 /// 17.11.23 separator (Footnote/Endnote Separator Mark): the tag `w:separator`, schema type
 /// `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FootnoteEndnoteSeparatorMark {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 17.18.33 `ST_FtnEdn` (Footnote or Endnote Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FootnoteOrEndnoteType(pub String);
 /// The members of `ST_FtnEdn`, in alphabetical order.
@@ -11301,7 +12329,10 @@ pub enum FootnoteOrEndnoteTypeMember {
 }
 
 /// 17.11.21 pos (Footnote Placement): the tag `w:pos`, schema type `CT_FtnPos`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FootnotePlacement {
     pub unknown: officekit_markup_base::Unknown,
@@ -11309,7 +12340,10 @@ pub struct FootnotePlacement {
 }
 
 /// 17.18.34 `ST_FtnPos` (Footnote Positioning Location): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FootnotePositioningLocation(pub String);
 /// The members of `ST_FtnPos`, in alphabetical order.
@@ -11324,7 +12358,10 @@ pub enum FootnotePositioningLocationMember {
 
 /// 17.11.14 `footnoteReference` (Footnote Reference): the tag `w:footnoteReference`, schema type
 /// `CT_FtnEdnRef`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FootnoteReference {
     pub custom_mark_follows: Option<common_simple_types::OnOffValue>,
@@ -11334,14 +12371,20 @@ pub struct FootnoteReference {
 
 /// 17.11.13 `footnoteRef` (Footnote Reference Mark): the tag `w:footnoteRef`, schema type
 /// `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FootnoteReferenceMark {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `w:forgetLastTabAlignment`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ForgetLastTabAlignment {
     pub unknown: officekit_markup_base::Unknown,
@@ -11349,7 +12392,10 @@ pub struct ForgetLastTabAlignment {
 }
 
 /// 17.16.14 enabled (Form Field Enabled): the tag `w:enabled`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FormFieldEnabled {
     pub unknown: officekit_markup_base::Unknown,
@@ -11357,7 +12403,10 @@ pub struct FormFieldEnabled {
 }
 
 /// 17.16.27 name (Form Field Name): the tag `w:name`, schema type `CT_FFName`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FormFieldName {
     pub unknown: officekit_markup_base::Unknown,
@@ -11365,12 +12414,18 @@ pub struct FormFieldName {
 }
 
 /// 17.18.26 `ST_FFName` (Form Field Name Value): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FormFieldNameValue(pub String);
 
 /// 17.16.17 `ffData` (Form Field Properties): the tag `w:ffData`, schema type `CT_FFData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FormFieldProperties {
     pub content: Vec<FormFieldPropertiesContent>,
@@ -11397,13 +12452,19 @@ pub enum FormFieldPropertiesContent {
 }
 
 /// 17.18.79 `ST_ShortHexNumber` (Four Digit Hexadecimal Value): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FourDigitHexadecimalValue(pub String);
 
 /// 17.15.2.32 `noResizeAllowed` (Frame Cannot Be Resized): the tag `w:noResizeAllowed`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FrameCannotBeResized {
     pub unknown: officekit_markup_base::Unknown,
@@ -11411,7 +12472,10 @@ pub struct FrameCannotBeResized {
 }
 
 /// 17.15.2.23 `longDesc` (Frame Long Description): the tag `w:longDesc`, schema type `CT_Rel`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FrameLongDescription {
     pub id: Option<String>,
@@ -11419,7 +12483,10 @@ pub struct FrameLongDescription {
 }
 
 /// 17.15.2.42 title (Frame or Frameset Title): the tag `w:title`, schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FrameOrFramesetTitle {
     pub unknown: officekit_markup_base::Unknown,
@@ -11427,7 +12494,10 @@ pub struct FrameOrFramesetTitle {
 }
 
 /// 17.18.32 `ST_FrameScrollbar` (Frame Scrollbar Visibility): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FrameScrollbarVisibility(pub String);
 /// The members of `ST_FrameScrollbar`, in alphabetical order.
@@ -11440,7 +12510,10 @@ pub enum FrameScrollbarVisibilityMember {
 }
 
 /// 17.15.2.39 sz (Frame Size): the tag `w:sz`, schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FrameSize {
     pub unknown: officekit_markup_base::Unknown,
@@ -11458,7 +12531,10 @@ pub enum FramesetDefinitionContent {
 
 /// 17.15.2.17 `frameLayout` (Frameset Layout): the tag `w:frameLayout`, schema type
 /// `CT_FrameLayout`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FramesetLayout {
     pub unknown: officekit_markup_base::Unknown,
@@ -11466,7 +12542,10 @@ pub struct FramesetLayout {
 }
 
 /// 17.18.31 `ST_FrameLayout` (Frameset Layout Order): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FramesetLayoutOrder(pub String);
 /// The members of `ST_FrameLayout`, in alphabetical order.
@@ -11480,7 +12559,10 @@ pub enum FramesetLayoutOrderMember {
 
 /// 17.15.2.15 `flatBorders` (Frameset Splitter Border Style): the tag `w:flatBorders`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FramesetSplitterBorderStyle {
     pub unknown: officekit_markup_base::Unknown,
@@ -11489,7 +12571,10 @@ pub struct FramesetSplitterBorderStyle {
 
 /// 17.15.2.20 `framesetSplitbar` (Frameset Splitter Properties): the tag `w:framesetSplitbar`,
 /// schema type `CT_FramesetSplitbar`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FramesetSplitterProperties {
     pub do_not_display_frameset_splitters: Option<Box<DoNotDisplayFramesetSplitters>>,
@@ -11500,7 +12585,10 @@ pub struct FramesetSplitterProperties {
 }
 
 /// 17.15.2.44 w (Frameset Splitter Width): the tag `w:w`, schema type `CT_TwipsMeasure`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FramesetSplitterWidth {
     pub unknown: officekit_markup_base::Unknown,
@@ -11509,7 +12597,10 @@ pub struct FramesetSplitterWidth {
 
 /// 17.15.1.66 `readModeInkLockDown` (Freeze Document Layout): the tag `w:readModeInkLockDown`,
 /// schema type `CT_ReadingModeInkLockDown`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FreezeDocumentLayout {
     pub actual_pg: Option<common_simple_types::OnOffValue>,
@@ -11520,7 +12611,10 @@ pub struct FreezeDocumentLayout {
 }
 
 /// 17.5.2.1 alias (Friendly Name): the tag `w:alias`, schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FriendlyName {
     pub unknown: officekit_markup_base::Unknown,
@@ -11529,7 +12623,10 @@ pub struct FriendlyName {
 
 /// 17.12.9 gallery (Gallery Associated With Entry): the tag `w:gallery`, schema type
 /// `CT_DocPartGallery`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GalleryAssociatedWithEntry {
     pub unknown: officekit_markup_base::Unknown,
@@ -11538,7 +12635,10 @@ pub struct GalleryAssociatedWithEntry {
 
 /// 17.15.1.75 `savePreviewPicture` (Generate Thumbnail For Document On Save): the tag
 /// `w:savePreviewPicture`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GenerateThumbnailForDocumentOnSave {
     pub unknown: officekit_markup_base::Unknown,
@@ -11546,9 +12646,16 @@ pub struct GenerateThumbnailForDocumentOnSave {
 }
 
 /// 17.12.5 `docPart` (Glossary Document Entry): the tag `w:docPart`, schema type `CT_DocPart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GlossaryDocumentEntry {
+    #[rkyv(omit_bounds)]
     pub contents: Option<Box<ContentsOfGlossaryDocumentEntry>>,
     pub properties: Option<Box<GlossaryDocumentEntryProperties>>,
     pub unknown: officekit_markup_base::Unknown,
@@ -11556,7 +12663,10 @@ pub struct GlossaryDocumentEntry {
 
 /// 17.12.7 `docPartPr` (Glossary Document Entry Properties): the tag `w:docPartPr`, schema type
 /// `CT_DocPartPr`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GlossaryDocumentEntryProperties {
     pub content: Vec<GlossaryDocumentEntryPropertiesContent>,
@@ -11579,17 +12689,28 @@ pub enum GlossaryDocumentEntryPropertiesContent {
 
 /// 17.12.10 `glossaryDocument` (Glossary Document Root Element): the tag `w:glossaryDocument`,
 /// schema type `CT_GlossaryDocument`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GlossaryDocumentRootElement {
+    #[rkyv(omit_bounds)]
     pub document_background: Option<Box<DocumentBackground>>,
+    #[rkyv(omit_bounds)]
     pub list_of_glossary_document_entries: Option<Box<ListOfGlossaryDocumentEntries>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 17.15.1.1 `activeWritingStyle` (Grammar Checking Settings): the tag `w:activeWritingStyle`,
 /// schema type `CT_WritingStyle`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GrammarCheckingSettings {
     pub app_name: Option<String>,
@@ -11602,7 +12723,10 @@ pub struct GrammarCheckingSettings {
 }
 
 /// 17.4.16 `gridCol` (Grid Column Definition): the tag `w:gridCol`, schema type `CT_TblGridCol`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GridColumnDefinition {
     pub unknown: officekit_markup_base::Unknown,
@@ -11611,7 +12735,10 @@ pub struct GridColumnDefinition {
 
 /// 17.4.14 `gridAfter` (Grid Columns After Last Cell): the tag `w:gridAfter`, schema type
 /// `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GridColumnsAfterLastCell {
     pub unknown: officekit_markup_base::Unknown,
@@ -11620,7 +12747,10 @@ pub struct GridColumnsAfterLastCell {
 
 /// 17.4.15 `gridBefore` (Grid Columns Before First Cell): the tag `w:gridBefore`, schema type
 /// `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GridColumnsBeforeFirstCell {
     pub unknown: officekit_markup_base::Unknown,
@@ -11629,7 +12759,10 @@ pub struct GridColumnsBeforeFirstCell {
 
 /// 17.4.17 `gridSpan` (Grid Columns Spanned by Current Table Cell): the tag `w:gridSpan`, schema
 /// type `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GridColumnsSpanned {
     pub unknown: officekit_markup_base::Unknown,
@@ -11637,7 +12770,10 @@ pub struct GridColumnsSpanned {
 }
 
 /// 17.5.2.17 group (Group Structured Document Tag): the tag `w:group`, schema type `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GroupStructuredDocumentTag {
     pub unknown: officekit_markup_base::Unknown,
@@ -11645,7 +12781,10 @@ pub struct GroupStructuredDocumentTag {
 
 /// 17.6.16 `rtlGutter` (Gutter on Right Side of Page): the tag `w:rtlGutter`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GutterOnRightSideOfPage {
     pub unknown: officekit_markup_base::Unknown,
@@ -11653,15 +12792,25 @@ pub struct GutterOnRightSideOfPage {
 }
 
 /// 17.10.4 hdr (Header): the tag `w:hdr`, schema type `CT_HdrFtr`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Header {
+    #[rkyv(omit_bounds)]
     pub content: Vec<BlockContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 17.4.18 header (Header Cell Reference): the tag `w:header`, schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HeaderCellReference {
     pub unknown: officekit_markup_base::Unknown,
@@ -11670,7 +12819,10 @@ pub struct HeaderCellReference {
 
 /// 17.4.19 headers (Header Cells Associated With Table Cell): the tag `w:headers`, schema type
 /// `CT_Headers`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HeaderCellsAssociatedWithTableCell {
     pub header_cell_reference: Vec<HeaderCellReference>,
@@ -11679,7 +12831,10 @@ pub struct HeaderCellsAssociatedWithTableCell {
 
 /// 17.14.16 `headerSource` (Header Definition File Path): the tag `w:headerSource`, schema type
 /// `CT_Rel`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HeaderDefinitionFilePath {
     pub id: Option<String>,
@@ -11687,7 +12842,10 @@ pub struct HeaderDefinitionFilePath {
 }
 
 /// 17.18.36 `ST_HdrFtr` (Header or Footer Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HeaderOrFooterType(pub String);
 /// The members of `ST_HdrFtr`, in alphabetical order.
@@ -11701,7 +12859,10 @@ pub enum HeaderOrFooterTypeMember {
 
 /// 17.10.5 `headerReference` (Header Reference): the tag `w:headerReference`, schema type
 /// `CT_HdrFtrRef`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HeaderReference {
     pub id: Option<String>,
@@ -11710,7 +12871,10 @@ pub struct HeaderReference {
 }
 
 /// 17.18.37 `ST_HeightRule` (Height Rule): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HeightRule(pub String);
 /// The members of `ST_HeightRule`, in alphabetical order.
@@ -11723,7 +12887,10 @@ pub enum HeightRuleMember {
 }
 
 /// 17.18.43 `ST_InfoTextType` (Help or Status Text Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HelpOrStatusTextType(pub String);
 /// The members of `ST_InfoTextType`, in alphabetical order.
@@ -11735,12 +12902,18 @@ pub enum HelpOrStatusTextTypeMember {
 }
 
 /// 17.18.25 `ST_FFHelpTextVal` (Help Text Value): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HelpTextValue(pub String);
 
 /// `ST_HexColorAuto`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HexColorAuto(pub String);
 /// The members of `ST_HexColorAuto`, in alphabetical order.
@@ -11751,7 +12924,10 @@ pub enum HexColorAutoMember {
 }
 
 /// 17.4.20 hidden (Hidden Table Row Marker): the tag `w:hidden`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HiddenTableRowMarker {
     pub unknown: officekit_markup_base::Unknown,
@@ -11759,7 +12935,10 @@ pub struct HiddenTableRowMarker {
 }
 
 /// 17.3.2.41 vanish (Hidden Text): the tag `w:vanish`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HiddenText {
     pub unknown: officekit_markup_base::Unknown,
@@ -11768,7 +12947,10 @@ pub struct HiddenText {
 
 /// 17.7.4.16 `semiHidden` (Hide Style From Main User Interface): the tag `w:semiHidden`, schema
 /// type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HideStyleFromMainUserInterface {
     pub unknown: officekit_markup_base::Unknown,
@@ -11776,7 +12958,10 @@ pub struct HideStyleFromMainUserInterface {
 }
 
 /// 17.18.44 `ST_Jc` (Horizontal Alignment Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HorizontalAlignmentType(pub String);
 /// The members of `ST_Jc`, in alphabetical order.
@@ -11798,7 +12983,10 @@ pub enum HorizontalAlignmentTypeMember {
 }
 
 /// 17.18.35 `ST_HAnchor` (Horizontal Anchor Location): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HorizontalAnchorLocation(pub String);
 /// The members of `ST_HAnchor`, in alphabetical order.
@@ -11811,7 +12999,10 @@ pub enum HorizontalAnchorLocationMember {
 }
 
 /// 14.4.13 `hMerge` (Horizontally Merged Cell): the tag `w:hMerge`, schema type `CT_HMerge`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HorizontallyMergedCell {
     pub unknown: officekit_markup_base::Unknown,
@@ -11819,10 +13010,17 @@ pub struct HorizontallyMergedCell {
 }
 
 /// 17.16.22 hyperlink (Hyperlink): the tag `w:hyperlink`, schema type `CT_Hyperlink`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Hyperlink {
     pub anchor: Option<String>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<ParagraphContent>,
     pub doc_location: Option<String>,
     pub history: Option<common_simple_types::OnOffValue>,
@@ -11834,7 +13032,10 @@ pub struct Hyperlink {
 
 /// 17.15.1.53 `hyphenationZone` (Hyphenation Zone): the tag `w:hyphenationZone`, schema type
 /// `CT_TwipsMeasure`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HyphenationZone {
     pub unknown: officekit_markup_base::Unknown,
@@ -11843,7 +13044,10 @@ pub struct HyphenationZone {
 
 /// 17.4.21 `hideMark` (Ignore End Of Cell Marker In Row Height Calculation): the tag `w:hideMark`,
 /// schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct IgnoreEndOfCellMarker {
     pub unknown: officekit_markup_base::Unknown,
@@ -11852,7 +13056,10 @@ pub struct IgnoreEndOfCellMarker {
 
 /// 14.8.3.40 `suppressBottomSpacing` (Ignore Exact Line Height for Last Line on Page): the tag
 /// `w:suppressBottomSpacing`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct IgnoreExactLineHeightForLastLineOnPage {
     pub unknown: officekit_markup_base::Unknown,
@@ -11861,7 +13068,10 @@ pub struct IgnoreExactLineHeightForLastLineOnPage {
 
 /// 14.8.3.41 `suppressSpacingAtTopOfPage` (Ignore Minimum Line Height for First Line on Page): the
 /// tag `w:suppressSpacingAtTopOfPage`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct IgnoreMinimumLineHeightForFirstLineOnPage {
     pub unknown: officekit_markup_base::Unknown,
@@ -11870,7 +13080,10 @@ pub struct IgnoreMinimumLineHeightForFirstLineOnPage {
 
 /// 17.15.1.54 `ignoreMixedContent` (Ignore Mixed Content When Validating Custom XML Markup): the
 /// tag `w:ignoreMixedContent`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct IgnoreMixedContent {
     pub unknown: officekit_markup_base::Unknown,
@@ -11879,7 +13092,10 @@ pub struct IgnoreMixedContent {
 
 /// 14.8.3.20 `footnoteLayoutLikeWW8` (Ignore Page Break from Continuous Section Break): the tag
 /// `w:footnoteLayoutLikeWW8`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct IgnorePageBreakFromContinuousSectionBreak {
     pub unknown: officekit_markup_base::Unknown,
@@ -11888,7 +13104,10 @@ pub struct IgnorePageBreakFromContinuousSectionBreak {
 
 /// 17.3.1.9 `contextualSpacing` (Ignore Spacing Above and Below When Using Identical Styles): the
 /// tag `w:contextualSpacing`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct IgnoreSpacingAboveAndBelow {
     pub unknown: officekit_markup_base::Unknown,
@@ -11897,7 +13116,10 @@ pub struct IgnoreSpacingAboveAndBelow {
 
 /// 14.8.3.35 `shapeLayoutLikeWW8` (Ignore Text Wrapping around Objects at Bottom of Page): the tag
 /// `w:shapeLayoutLikeWW8`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct IgnoreTextWrappingAroundObjectsAtBottomOfPage {
     pub unknown: officekit_markup_base::Unknown,
@@ -11906,7 +13128,10 @@ pub struct IgnoreTextWrappingAroundObjectsAtBottomOfPage {
 
 /// 14.8.3.18 `doNotVertAlignInTxbx` (Ignore Vertical Alignment in Textboxes): the tag
 /// `w:doNotVertAlignInTxbx`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct IgnoreVerticalAlignmentInTextboxes {
     pub unknown: officekit_markup_base::Unknown,
@@ -11914,7 +13139,10 @@ pub struct IgnoreVerticalAlignmentInTextboxes {
 }
 
 /// 17.3.2.18 imprint (Imprinting): the tag `w:imprint`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Imprinting {
     pub unknown: officekit_markup_base::Unknown,
@@ -11923,7 +13151,10 @@ pub struct Imprinting {
 
 /// 17.14.29 recipients (Inclusion/Exclusion Data for Data Source): the tag `w:recipients`, schema
 /// type `CT_Recipients`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct InclusionExclusionDataForDataSource {
     pub data_about_single_data_source_record: Vec<DataAboutSingleDataSourceRecord>,
@@ -11932,7 +13163,10 @@ pub struct InclusionExclusionDataForDataSource {
 
 /// 17.14.6 column (Index of Column Being Mapped): the tag `w:column`, schema type
 /// `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct IndexOfColumnBeingMapped {
     pub unknown: officekit_markup_base::Unknown,
@@ -11940,7 +13174,10 @@ pub struct IndexOfColumnBeingMapped {
 }
 
 /// 17.15.2.8 divs (Information about HTML div Elements): the tag `w:divs`, schema type `CT_Divs`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct InformationAboutHTMLDivElements {
     pub information_about_single_html_div_element: Vec<InformationAboutSingleHTMLDivElement>,
@@ -11949,10 +13186,17 @@ pub struct InformationAboutHTMLDivElements {
 
 /// 17.15.2.6 div (Information About Single HTML div Element): the tag `w:div`, schema type
 /// `CT_Div`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct InformationAboutSingleHTMLDivElement {
     pub bottom_margin_for_html_div: Box<BottomMarginForHTMLDiv>,
+    #[rkyv(omit_bounds)]
     pub child_div_elements: Vec<ChildDivElements>,
     pub data_for_html_blockquote_element: Option<Box<DataForHTMLBlockquoteElement>>,
     pub data_for_html_body_element: Option<Box<DataForHTMLBodyElement>>,
@@ -11966,9 +13210,16 @@ pub struct InformationAboutSingleHTMLDivElement {
 
 /// 17.5.1.3 `customXml` (Inline-Level Custom XML Element): the tag `w:customXml`, schema type
 /// `CT_CustomXmlRun`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct InlineLevelCustomXMLElement {
+    #[rkyv(omit_bounds)]
     pub content: Vec<ParagraphContent>,
     pub element: Option<common_simple_types::XMLName>,
     pub properties: Option<Box<CustomXMLElementProperties>>,
@@ -11978,9 +13229,16 @@ pub struct InlineLevelCustomXMLElement {
 
 /// 17.5.1.9 `smartTag` (Inline-Level Smart Tag): the tag `w:smartTag`, schema type
 /// `CT_SmartTagRun`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct InlineLevelSmartTag {
+    #[rkyv(omit_bounds)]
     pub content: Vec<ParagraphContent>,
     pub element: Option<common_simple_types::XMLName>,
     pub properties: Option<Box<SmartTagProperties>>,
@@ -11989,9 +13247,16 @@ pub struct InlineLevelSmartTag {
 }
 
 /// 17.5.2.31 sdt (Inline-Level Structured Document Tag): the tag `w:sdt`, schema type `CT_SdtRun`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct InlineLevelStructuredDocumentTag {
+    #[rkyv(omit_bounds)]
     pub content: Option<Box<InlineLevelStructuredDocumentTagContent>>,
     pub custom_xml_conflict_del_range_end:
         Vec<super::office_word_2010_wordml::CustomXmlConflictDelRangeEnd>,
@@ -12008,15 +13273,25 @@ pub struct InlineLevelStructuredDocumentTag {
 
 /// 17.5.2.36 `sdtContent` (Inline-Level Structured Document Tag Content): the tag `w:sdtContent`,
 /// schema type `CT_SdtContentRun`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct InlineLevelStructuredDocumentTagContent {
+    #[rkyv(omit_bounds)]
     pub content: Vec<ParagraphContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 17.13.5.16 ins (Inserted Math Control Character): the tag `w:ins`, schema type `CT_MathCtrlIns`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct InsertedMathControlCharacter {
     pub author: Option<String>,
@@ -12037,10 +13312,17 @@ pub enum InsertedMathControlCharacterContent {
 }
 
 /// 17.13.5.18 ins (Inserted Run Content): the tag `w:ins`, schema type `CT_RunTrackChange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct InsertedRunContent {
     pub author: Option<String>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<TrackedRunContent>,
     pub date: Option<StandardDateAndTimeStorageFormat>,
     pub id: Option<DecimalNumberValue>,
@@ -12048,7 +13330,10 @@ pub struct InsertedRunContent {
 }
 
 /// 17.13.5.17 ins (Inserted Table Row): the tag `w:ins`, schema type `CT_TrackChange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct InsertedTableRow {
     pub author: Option<String>,
@@ -12058,7 +13343,10 @@ pub struct InsertedTableRow {
 }
 
 /// 17.18.15 `ST_DocPartBehavior` (Insertion Behavior Types): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct InsertionBehaviorTypes(pub String);
 /// The members of `ST_DocPartBehavior`, in alphabetical order.
@@ -12071,7 +13359,10 @@ pub enum InsertionBehaviorTypesMember {
 }
 
 /// 17.3.3.8 dirty (Invalidated Field Cache): the tag `w:dirty`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct InvalidatedFieldCache {
     pub unknown: officekit_markup_base::Unknown,
@@ -12080,7 +13371,10 @@ pub struct InvalidatedFieldCache {
 
 /// 17.8.3.5 `embedItalic` (Italic Font Style Embedding): the tag `w:embedItalic`, schema type
 /// `CT_FontRel`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ItalicFontStyleEmbedding {
     pub font_key: Option<common_simple_types::Guid>,
@@ -12090,7 +13384,10 @@ pub struct ItalicFontStyleEmbedding {
 }
 
 /// 17.3.2.16 i (Italics): the tag `w:i`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Italics {
     pub unknown: officekit_markup_base::Unknown,
@@ -12098,7 +13395,10 @@ pub struct Italics {
 }
 
 /// 17.9.7 `lvlJc` (Justification): the tag `w:lvlJc`, schema type `CT_Jc`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Justification {
     pub unknown: officekit_markup_base::Unknown,
@@ -12107,7 +13407,10 @@ pub struct Justification {
 
 /// 17.3.1.14 `keepLines` (Keep All Lines On One Page): the tag `w:keepLines`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct KeepAllLinesOnOnePage {
     pub unknown: officekit_markup_base::Unknown,
@@ -12116,7 +13419,10 @@ pub struct KeepAllLinesOnOnePage {
 
 /// 17.3.1.15 `keepNext` (Keep Paragraph With Next Paragraph): the tag `w:keepNext`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct KeepParagraphWithNextParagraph {
     pub unknown: officekit_markup_base::Unknown,
@@ -12125,7 +13431,10 @@ pub struct KeepParagraphWithNextParagraph {
 
 /// 17.17.2.3 `matchSrc` (Keep Source Formatting on Import): the tag `w:matchSrc`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct KeepSourceFormattingOnImport {
     pub unknown: officekit_markup_base::Unknown,
@@ -12133,7 +13442,10 @@ pub struct KeepSourceFormattingOnImport {
 }
 
 /// 17.3.3.14 lid (Language ID for Phonetic Guide): the tag `w:lid`, schema type `CT_Lang`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LanguageIDForPhoneticGuide {
     pub unknown: officekit_markup_base::Unknown,
@@ -12141,7 +13453,10 @@ pub struct LanguageIDForPhoneticGuide {
 }
 
 /// 17.3.2.20 lang (Languages for Run Content): the tag `w:lang`, schema type `CT_Language`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LanguagesForRunContent {
     pub bidi: Option<String>,
@@ -12152,7 +13467,10 @@ pub struct LanguagesForRunContent {
 
 /// 17.9.19 `numIdMacAtCleanup` (Last Reviewed Abstract Numbering Definition): the tag
 /// `w:numIdMacAtCleanup`, schema type `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LastReviewedAbstractNumberingDefinition {
     pub unknown: officekit_markup_base::Unknown,
@@ -12161,7 +13479,10 @@ pub struct LastReviewedAbstractNumberingDefinition {
 
 /// 17.7.4.8 `lsdException` (Latent Style Exception): the tag `w:lsdException`, schema type
 /// `CT_LsdException`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LatentStyleException {
     pub locked: Option<common_simple_types::OnOffValue>,
@@ -12175,7 +13496,10 @@ pub struct LatentStyleException {
 
 /// 17.7.4.5 `latentStyles` (Latent Style Information): the tag `w:latentStyles`, schema type
 /// `CT_LatentStyles`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LatentStyleInformation {
     pub count: Option<DecimalNumberValue>,
@@ -12189,7 +13513,10 @@ pub struct LatentStyleInformation {
 }
 
 /// The tag `w:layoutRawTableWidth`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LayoutRawTableWidth {
     pub unknown: officekit_markup_base::Unknown,
@@ -12198,7 +13525,10 @@ pub struct LayoutRawTableWidth {
 
 /// 17.15.2.29 `marW` (Left and Right Margin for Frame): the tag `w:marW`, schema type
 /// `CT_PixelsMeasure`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LeftAndRightMarginForFrame {
     pub unknown: officekit_markup_base::Unknown,
@@ -12206,7 +13536,10 @@ pub struct LeftAndRightMarginForFrame {
 }
 
 /// 17.6.7 left (Left Border): the tag `w:left`, schema type `CT_PageBorder`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LeftBorder {
     pub color: Option<ColorValue>,
@@ -12224,7 +13557,10 @@ pub struct LeftBorder {
 
 /// 17.15.2.26 `marLeft` (Left Margin for HTML div): the tag `w:marLeft`, schema type
 /// `CT_SignedTwipsMeasure`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LeftMarginForHTMLDiv {
     pub unknown: officekit_markup_base::Unknown,
@@ -12232,7 +13568,10 @@ pub struct LeftMarginForHTMLDiv {
 }
 
 /// 17.3.1.17 left (Left Paragraph Border): the tag `w:left`, schema type `CT_Border`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LeftParagraphBorder {
     pub color: Option<ColorValue>,
@@ -12248,7 +13587,10 @@ pub struct LeftParagraphBorder {
 }
 
 /// 17.3.1.17 left (Left Paragraph Border): the tag `w:left`, schema type `CT_TblWidth`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LeftParagraphBorderTblWidth {
     pub r#type: Option<TableWidthUnits>,
@@ -12258,7 +13600,10 @@ pub struct LeftParagraphBorderTblWidth {
 
 /// 17.15.3.2 `applyBreakingRules` (Use Legacy Ethiopic and Amharic Line Breaking Rules): the tag
 /// `w:applyBreakingRules`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LegacyEthiopicAmharicLineBreakingRules {
     pub unknown: officekit_markup_base::Unknown,
@@ -12267,7 +13612,10 @@ pub struct LegacyEthiopicAmharicLineBreakingRules {
 
 /// 14.6.2 legacy (Legacy Numbering Level Properties): the tag `w:legacy`, schema type
 /// `CT_LvlLegacy`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LegacyNumberingLevelProperties {
     pub legacy: Option<common_simple_types::OnOffValue>,
@@ -12277,7 +13625,10 @@ pub struct LegacyNumberingLevelProperties {
 }
 
 /// 17.18.3 `ST_BrClear` (Line Break Text Wrapping Restart Location): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LineBreakTextWrappingRestartLocation(pub String);
 /// The members of `ST_BrClear`, in alphabetical order.
@@ -12291,7 +13642,10 @@ pub enum LineBreakTextWrappingRestartLocationMember {
 }
 
 /// 17.18.47 `ST_LineNumberRestart` (Line Numbering Restart Position): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LineNumberingRestartPosition(pub String);
 /// The members of `ST_LineNumberRestart`, in alphabetical order.
@@ -12305,7 +13659,10 @@ pub enum LineNumberingRestartPositionMember {
 
 /// 17.6.8 `lnNumType` (Line Numbering Settings): the tag `w:lnNumType`, schema type
 /// `CT_LineNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LineNumberingSettings {
     pub count_by: Option<DecimalNumberValue>,
@@ -12316,7 +13673,10 @@ pub struct LineNumberingSettings {
 }
 
 /// 17.18.48 `ST_LineSpacingRule` (Line Spacing Rule): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LineSpacingRule(pub String);
 /// The members of `ST_LineSpacingRule`, in alphabetical order.
@@ -12329,7 +13689,10 @@ pub enum LineSpacingRuleMember {
 }
 
 /// The tag `w:lineWrapLikeWord6`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LineWrapLikeWord6 {
     pub unknown: officekit_markup_base::Unknown,
@@ -12338,7 +13701,10 @@ pub struct LineWrapLikeWord6 {
 
 /// 14.8.3.58 `wrapTrailSpaces` (Line Wrap Trailing Spaces): the tag `w:wrapTrailSpaces`, schema
 /// type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LineWrapTrailingSpaces {
     pub unknown: officekit_markup_base::Unknown,
@@ -12347,7 +13713,10 @@ pub struct LineWrapTrailingSpaces {
 
 /// 17.14.18 `linkToQuery` (Query Contains Link to External Query File): the tag `w:linkToQuery`,
 /// schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LinkToExternalQueryFile {
     pub unknown: officekit_markup_base::Unknown,
@@ -12356,7 +13725,10 @@ pub struct LinkToExternalQueryFile {
 
 /// 17.3.3.21 `objectLink` (Linked Object Properties): the tag `w:objectLink`, schema type
 /// `CT_ObjectLink`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LinkedObjectProperties {
     pub draw_aspect: Option<EmbeddedObjectRepresentations>,
@@ -12370,7 +13742,10 @@ pub struct LinkedObjectProperties {
 }
 
 /// 17.7.4.6 link (Linked Style Reference): the tag `w:link`, schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LinkedStyleReference {
     pub unknown: officekit_markup_base::Unknown,
@@ -12379,16 +13754,26 @@ pub struct LinkedStyleReference {
 
 /// 17.12.8 `docParts` (List of Glossary Document Entries): the tag `w:docParts`, schema type
 /// `CT_DocParts`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ListOfGlossaryDocumentEntries {
+    #[rkyv(omit_bounds)]
     pub glossary_document_entry: Vec<GlossaryDocumentEntry>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 17.15.1.56 `listSeparator` (List Separator for Field Code Evaluation): the tag
 /// `w:listSeparator`, schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ListSeparatorForFieldCodeEvaluation {
     pub unknown: officekit_markup_base::Unknown,
@@ -12396,7 +13781,10 @@ pub struct ListSeparatorForFieldCodeEvaluation {
 }
 
 /// 17.5.2.23 lock (Locking Setting): the tag `w:lock`, schema type `CT_Lock`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LockingSetting {
     pub unknown: officekit_markup_base::Unknown,
@@ -12404,7 +13792,10 @@ pub struct LockingSetting {
 }
 
 /// 17.18.49 `ST_Lock` (Locking Types): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LockingTypes(pub String);
 /// The members of `ST_Lock`, in alphabetical order.
@@ -12418,7 +13809,10 @@ pub enum LockingTypesMember {
 }
 
 /// 17.18.105 `ST_Zoom` (Magnification Preset Values): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MagnificationPresetValues(pub String);
 /// The members of `ST_Zoom`, in alphabetical order.
@@ -12432,7 +13826,10 @@ pub enum MagnificationPresetValuesMember {
 }
 
 /// 17.15.1.94 zoom (Magnification Setting): the tag `w:zoom`, schema type `CT_Zoom`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MagnificationSetting {
     pub percent: Option<PercentageMeasurement>,
@@ -12442,7 +13839,10 @@ pub struct MagnificationSetting {
 
 /// 17.14.4 `checkErrors` (Mail Merge Error Reporting Setting): the tag `w:checkErrors`, schema type
 /// `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MailMergeErrorReportingSetting {
     pub unknown: officekit_markup_base::Unknown,
@@ -12451,7 +13851,10 @@ pub struct MailMergeErrorReportingSetting {
 
 /// 17.18.56 `ST_MailMergeSourceType` (Mail Merge ODSO Data Source Types): the text the file
 /// carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MailMergeODSODataSourceTypes(pub String);
 /// The members of `ST_MailMergeSourceType`, in alphabetical order.
@@ -12470,7 +13873,10 @@ pub enum MailMergeODSODataSourceTypesMember {
 }
 
 /// 17.14.20 `mailMerge` (Mail Merge Settings): the tag `w:mailMerge`, schema type `CT_MailMerge`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MailMergeSettings {
     pub column_containing_e_mail_address: Option<Box<ColumnContainingEMailAddress>>,
@@ -12495,7 +13901,10 @@ pub struct MailMergeSettings {
 
 /// 17.15.2.22 `linkedToFile` (Maintain Link to Existing File): the tag `w:linkedToFile`, schema
 /// type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MaintainLinkToExistingFile {
     pub unknown: officekit_markup_base::Unknown,
@@ -12503,7 +13912,10 @@ pub struct MaintainLinkToExistingFile {
 }
 
 /// 17.3.2.14 `fitText` (Manual Run Width): the tag `w:fitText`, schema type `CT_FitText`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ManualRunWidth {
     pub id: Option<DecimalNumberValue>,
@@ -12513,7 +13925,10 @@ pub struct ManualRunWidth {
 
 /// 17.15.1.22 `consecutiveHyphenLimit` (Maximum Number of Consecutively Hyphenated Lines): the tag
 /// `w:consecutiveHyphenLimit`, schema type `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MaximumNumberOfConsecutivelyHyphenatedLines {
     pub unknown: officekit_markup_base::Unknown,
@@ -12521,12 +13936,18 @@ pub struct MaximumNumberOfConsecutivelyHyphenatedLines {
 }
 
 /// 17.18.23 `ST_EighthPointMeasure` (Measurement in Eighths of a Point): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MeasurementInEighthsOfAPoint(pub String);
 
 /// 17.18.42 `ST_HpsMeasure` (Measurement in Half-Points): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MeasurementInHalfPoints(pub String);
 /// The member types of `ST_HpsMeasure`, in alphabetical order; `value` tries them in the schema's
@@ -12539,18 +13960,27 @@ pub enum MeasurementInHalfPointsMember {
 }
 
 /// 17.18.67 `ST_PixelsMeasure` (Measurement in Pixels): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MeasurementInPixels(pub String);
 
 /// 17.18.68 `ST_PointMeasure` (Measurement in Points): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MeasurementInPoints(pub String);
 
 /// 17.18.107 `ST_MeasurementOrPercent` (Measurement or Percentage Value): the text the file
 /// carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MeasurementOrPercentageValue(pub String);
 /// The member types of `ST_MeasurementOrPercent`, in alphabetical order; `value` tries them in the
@@ -12565,7 +13995,10 @@ pub enum MeasurementOrPercentageValueMember {
 
 /// 17.14.33 type (Merge Field Mapping): the tag `w:type`, schema type
 /// `CT_MailMergeOdsoFMDFieldType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MergeFieldMapping {
     pub unknown: officekit_markup_base::Unknown,
@@ -12573,7 +14006,10 @@ pub struct MergeFieldMapping {
 }
 
 /// 17.18.55 `ST_MailMergeOdsoFMDFieldType` (Merge Field Mapping Types): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MergeFieldMappingTypes(pub String);
 /// The members of `ST_MailMergeOdsoFMDFieldType`, in alphabetical order.
@@ -12585,7 +14021,10 @@ pub enum MergeFieldMappingTypesMember {
 }
 
 /// 17.18.57 `ST_Merge` (Merged Cell Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MergedCellType(pub String);
 /// The members of `ST_Merge`, in alphabetical order.
@@ -12598,7 +14037,10 @@ pub enum MergedCellTypeMember {
 
 /// 17.14.11 destination (Merged Document Destination): the tag `w:destination`, schema type
 /// `CT_MailMergeDest`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MergedDocumentDestination {
     pub unknown: officekit_markup_base::Unknown,
@@ -12606,7 +14048,10 @@ pub struct MergedDocumentDestination {
 }
 
 /// 17.18.53 `ST_MailMergeDest` (Merged Document Destination Types): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MergedDocumentDestinationTypes(pub String);
 /// The members of `ST_MailMergeDest`, in alphabetical order.
@@ -12621,7 +14066,10 @@ pub enum MergedDocumentDestinationTypesMember {
 
 /// 17.14.19 `mailAsAttachment` (Merged Document To E-Mail Attachment): the tag
 /// `w:mailAsAttachment`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MergedDocumentToEMailAttachment {
     pub unknown: officekit_markup_base::Unknown,
@@ -12630,7 +14078,10 @@ pub struct MergedDocumentToEMailAttachment {
 
 /// 17.14.21 `mailSubject` (Merged E-mail or Fax Subject Line): the tag `w:mailSubject`, schema type
 /// `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MergedEMailOrFaxSubjectLine {
     pub unknown: officekit_markup_base::Unknown,
@@ -12639,7 +14090,10 @@ pub struct MergedEMailOrFaxSubjectLine {
 
 /// 17.15.1.57 `mirrorMargins` (Mirror Page Margins): the tag `w:mirrorMargins`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MirrorPageMargins {
     pub unknown: officekit_markup_base::Unknown,
@@ -12648,7 +14102,10 @@ pub struct MirrorPageMargins {
 
 /// 17.13.5.27 `moveToRangeEnd` (Move Destination Location Container - End): the tag
 /// `w:moveToRangeEnd`, schema type `CT_MarkupRange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MoveDestinationLocationContainerEnd {
     pub displaced_by_custom_xml: Option<DisplacedByCustomXml>,
@@ -12658,7 +14115,10 @@ pub struct MoveDestinationLocationContainerEnd {
 
 /// 17.13.5.28 `moveToRangeStart` (Move Destination Location Container - Start): the tag
 /// `w:moveToRangeStart`, schema type `CT_MoveBookmark`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MoveDestinationLocationContainerStart {
     pub author: Option<String>,
@@ -12673,7 +14133,10 @@ pub struct MoveDestinationLocationContainerStart {
 
 /// 17.13.5.26 `moveTo` (Move Destination Paragraph): the tag `w:moveTo`, schema type
 /// `CT_TrackChange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MoveDestinationParagraph {
     pub author: Option<String>,
@@ -12684,10 +14147,17 @@ pub struct MoveDestinationParagraph {
 
 /// 17.13.5.25 `moveTo` (Move Destination Run Content): the tag `w:moveTo`, schema type
 /// `CT_RunTrackChange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MoveDestinationRunContent {
     pub author: Option<String>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<TrackedRunContent>,
     pub date: Option<StandardDateAndTimeStorageFormat>,
     pub id: Option<DecimalNumberValue>,
@@ -12696,7 +14166,10 @@ pub struct MoveDestinationRunContent {
 
 /// 17.13.5.23 `moveFromRangeEnd` (Move Source Location Container - End): the tag
 /// `w:moveFromRangeEnd`, schema type `CT_MarkupRange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MoveSourceLocationContainerEnd {
     pub displaced_by_custom_xml: Option<DisplacedByCustomXml>,
@@ -12706,7 +14179,10 @@ pub struct MoveSourceLocationContainerEnd {
 
 /// 17.13.5.24 `moveFromRangeStart` (Move Source Location Container - Start): the tag
 /// `w:moveFromRangeStart`, schema type `CT_MoveBookmark`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MoveSourceLocationContainerStart {
     pub author: Option<String>,
@@ -12721,7 +14197,10 @@ pub struct MoveSourceLocationContainerStart {
 
 /// 17.13.5.21 `moveFrom` (Move Source Paragraph): the tag `w:moveFrom`, schema type
 /// `CT_TrackChange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MoveSourceParagraph {
     pub author: Option<String>,
@@ -12732,10 +14211,17 @@ pub struct MoveSourceParagraph {
 
 /// 17.13.5.22 `moveFrom` (Move Source Run Content): the tag `w:moveFrom`, schema type
 /// `CT_RunTrackChange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MoveSourceRunContent {
     pub author: Option<String>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<TrackedRunContent>,
     pub date: Option<StandardDateAndTimeStorageFormat>,
     pub id: Option<DecimalNumberValue>,
@@ -12744,9 +14230,16 @@ pub struct MoveSourceRunContent {
 
 /// 17.15.2.18 frameset (Nested Frameset Definition): the tag `w:frameset`, schema type
 /// `CT_Frameset`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NestedFramesetDefinition {
+    #[rkyv(omit_bounds)]
     pub content: Vec<FramesetDefinitionContent>,
     pub frame_or_frameset_title: Option<Box<FrameOrFramesetTitle>>,
     pub frame_size: Option<Box<FrameSize>>,
@@ -12757,7 +14250,10 @@ pub struct NestedFramesetDefinition {
 
 /// 17.15.1.60 `noPunctuationKerning` (Never Kern Punctuation Characters): the tag
 /// `w:noPunctuationKerning`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NeverKernPunctuationCharacters {
     pub unknown: officekit_markup_base::Unknown,
@@ -12766,14 +14262,20 @@ pub struct NeverKernPunctuationCharacters {
 
 /// 17.3.3.18 `noBreakHyphen` (Non Breaking Hyphen Character): the tag `w:noBreakHyphen`, schema
 /// type `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NonBreakingHyphenCharacter {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 17.3.2.38 sz (Non-Complex Script Font Size): the tag `w:sz`, schema type `CT_HpsMeasure`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NonComplexScriptFontSize {
     pub unknown: officekit_markup_base::Unknown,
@@ -12782,7 +14284,10 @@ pub struct NonComplexScriptFontSize {
 
 /// 17.8.3.12 `notTrueType` (Not a `TrueType` outline Font): the tag `w:notTrueType`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NotATrueTypeOutlineFont {
     pub unknown: officekit_markup_base::Unknown,
@@ -12791,7 +14296,10 @@ pub struct NotATrueTypeOutlineFont {
 
 /// 17.7.6.5 `tblStyleColBandSize` (Number of Columns in Column Band): the tag
 /// `w:tblStyleColBandSize`, schema type `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumberOfColumnsInColumnBand {
     pub unknown: officekit_markup_base::Unknown,
@@ -12800,7 +14308,10 @@ pub struct NumberOfColumnsInColumnBand {
 
 /// 17.15.1.12 `bookFoldPrintingSheets` (Number of Pages Per Booklet): the tag
 /// `w:bookFoldPrintingSheets`, schema type `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumberOfPagesPerBooklet {
     pub unknown: officekit_markup_base::Unknown,
@@ -12809,7 +14320,10 @@ pub struct NumberOfPagesPerBooklet {
 
 /// 17.7.6.7 `tblStyleRowBandSize` (Number of Rows in Row Band): the tag `w:tblStyleRowBandSize`,
 /// schema type `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumberOfRowsInRowBand {
     pub unknown: officekit_markup_base::Unknown,
@@ -12817,7 +14331,10 @@ pub struct NumberOfRowsInRowBand {
 }
 
 /// 17.9.15 num (Numbering Definition Instance): the tag `w:num`, schema type `CT_Num`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumberingDefinitionInstance {
     pub abstract_numbering_definition_reference: Box<AbstractNumberingDefinitionReference>,
@@ -12828,7 +14345,10 @@ pub struct NumberingDefinitionInstance {
 
 /// 17.9.18 `numId` (Numbering Definition Instance Reference): the tag `w:numId`, schema type
 /// `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumberingDefinitionInstanceReferenceNumId {
     pub unknown: officekit_markup_base::Unknown,
@@ -12837,7 +14357,10 @@ pub struct NumberingDefinitionInstanceReferenceNumId {
 
 /// 17.3.1.19 `numPr` (Numbering Definition Instance Reference): the tag `w:numPr`, schema type
 /// `CT_NumPr`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumberingDefinitionInstanceReferenceNumPr {
     pub inserted_table_row: Option<Box<InsertedTableRow>>,
@@ -12849,7 +14372,10 @@ pub struct NumberingDefinitionInstanceReferenceNumPr {
 }
 
 /// 17.18.58 `ST_MultiLevelType` (Numbering Definition Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumberingDefinitionType(pub String);
 /// The members of `ST_MultiLevelType`, in alphabetical order.
@@ -12862,19 +14388,29 @@ pub enum NumberingDefinitionTypeMember {
 }
 
 /// 17.9.16 numbering (Numbering Definitions): the tag `w:numbering`, schema type `CT_Numbering`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumberingDefinitions {
     pub abstract_numbering_definition: Vec<AbstractNumberingDefinition>,
     pub last_reviewed_abstract_numbering_definition:
         Option<Box<LastReviewedAbstractNumberingDefinition>>,
     pub numbering_definition_instance: Vec<NumberingDefinitionInstance>,
+    #[rkyv(omit_bounds)]
     pub picture_numbering_symbol_definition: Vec<PictureNumberingSymbolDefinition>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 17.9.17 `numFmt` (Numbering Format): the tag `w:numFmt`, schema type `CT_NumFmt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumberingFormat {
     pub format: Option<String>,
@@ -12884,7 +14420,10 @@ pub struct NumberingFormat {
 
 /// 17.9.8 `lvlOverride` (Numbering Level Definition Override): the tag `w:lvlOverride`, schema type
 /// `CT_NumLvl`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumberingLevelDefinitionOverride {
     pub ilvl: Option<DecimalNumberValue>,
@@ -12894,7 +14433,10 @@ pub struct NumberingLevelDefinitionOverride {
 }
 
 /// 17.9.5 lvl (Numbering Level Override Definition): the tag `w:lvl`, schema type `CT_Lvl`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumberingLevelOverrideDefinition {
     pub content_between_numbering_symbol_and_text:
@@ -12918,7 +14460,10 @@ pub struct NumberingLevelOverrideDefinition {
 }
 
 /// 17.9.3 ilvl (Numbering Level Reference): the tag `w:ilvl`, schema type `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumberingLevelReference {
     pub unknown: officekit_markup_base::Unknown,
@@ -12927,7 +14472,10 @@ pub struct NumberingLevelReference {
 
 /// 17.9.26 `startOverride` (Numbering Level Starting Value Override): the tag `w:startOverride`,
 /// schema type `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumberingLevelStartingValueOverride {
     pub unknown: officekit_markup_base::Unknown,
@@ -12935,7 +14483,10 @@ pub struct NumberingLevelStartingValueOverride {
 }
 
 /// 17.9.11 `lvlText` (Numbering Level Text): the tag `w:lvlText`, schema type `CT_LevelText`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumberingLevelText {
     pub null: Option<common_simple_types::OnOffValue>,
@@ -12945,7 +14496,10 @@ pub struct NumberingLevelText {
 
 /// 17.9.27 `styleLink` (Numbering Style Definition): the tag `w:styleLink`, schema type
 /// `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumberingStyleDefinition {
     pub unknown: officekit_markup_base::Unknown,
@@ -12954,7 +14508,10 @@ pub struct NumberingStyleDefinition {
 
 /// 17.9.21 `numStyleLink` (Numbering Style Reference): the tag `w:numStyleLink`, schema type
 /// `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumberingStyleReference {
     pub unknown: officekit_markup_base::Unknown,
@@ -12962,7 +14519,10 @@ pub struct NumberingStyleReference {
 }
 
 /// 17.9.29 tmpl (Numbering Template Code): the tag `w:tmpl`, schema type `CT_LongHexNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumberingTemplateCode {
     pub unknown: officekit_markup_base::Unknown,
@@ -12970,7 +14530,10 @@ pub struct NumberingTemplateCode {
 }
 
 /// 17.14.30 src (ODSO Data Source File Path): the tag `w:src`, schema type `CT_Rel`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ODSODataSourceFilePath {
     pub id: Option<String>,
@@ -12978,7 +14541,10 @@ pub struct ODSODataSourceFilePath {
 }
 
 /// 17.14.32 type (ODSO Data Source Type): the tag `w:type`, schema type `CT_MailMergeSourceType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ODSODataSourceType {
     pub unknown: officekit_markup_base::Unknown,
@@ -12986,7 +14552,10 @@ pub struct ODSODataSourceType {
 }
 
 /// 17.14.25 odso (Office Data Source Object Settings): the tag `w:odso`, schema type `CT_Odso`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct OfficeDataSourceObjectSettings {
     pub column_delimiter_for_data_source: Option<Box<ColumnDelimiterForDataSource>>,
@@ -13001,7 +14570,10 @@ pub struct OfficeDataSourceObjectSettings {
 }
 
 /// 17.3.2.22 `oMath` (Office Open XML Math): the tag `w:oMath`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct OfficeOpenXMLMath {
     pub unknown: officekit_markup_base::Unknown,
@@ -13010,7 +14582,10 @@ pub struct OfficeOpenXMLMath {
 
 /// 17.6.6 `formProt` (Only Allow Editing of Form Fields): the tag `w:formProt`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct OnlyAllowEditingOfFormFields {
     pub unknown: officekit_markup_base::Unknown,
@@ -13019,7 +14594,10 @@ pub struct OnlyAllowEditingOfFormFields {
 
 /// 14.8.3.37 `spacingInWholePoints` (Only Expand/Condense Text By Whole Points): the tag
 /// `w:spacingInWholePoints`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct OnlyExpandCondenseTextByWholePoints {
     pub unknown: officekit_markup_base::Unknown,
@@ -13028,7 +14606,10 @@ pub struct OnlyExpandCondenseTextByWholePoints {
 
 /// 17.15.1.61 `printFormsData` (Only Print Form Field Content): the tag `w:printFormsData`, schema
 /// type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct OnlyPrintFormFieldContent {
     pub unknown: officekit_markup_base::Unknown,
@@ -13037,7 +14618,10 @@ pub struct OnlyPrintFormFieldContent {
 
 /// 17.15.1.77 `saveXmlDataOnly` (Only Save Custom XML Markup): the tag `w:saveXmlDataOnly`, schema
 /// type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct OnlySaveCustomXMLMarkup {
     pub unknown: officekit_markup_base::Unknown,
@@ -13046,7 +14630,10 @@ pub struct OnlySaveCustomXMLMarkup {
 
 /// 17.15.1.73 `saveFormsData` (Only Save Form Field Content): the tag `w:saveFormsData`, schema
 /// type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct OnlySaveFormFieldContent {
     pub unknown: officekit_markup_base::Unknown,
@@ -13055,7 +14642,10 @@ pub struct OnlySaveFormFieldContent {
 
 /// 17.3.3.29 `softHyphen` (Optional Hyphen Character): the tag `w:softHyphen`, schema type
 /// `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct OptionalHyphenCharacter {
     pub unknown: officekit_markup_base::Unknown,
@@ -13063,7 +14653,10 @@ pub struct OptionalHyphenCharacter {
 
 /// 17.7.4.19 `uiPriority` (Optional User Interface Sorting Order): the tag `w:uiPriority`, schema
 /// type `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct OptionalUserInterfaceSortingOrder {
     pub unknown: officekit_markup_base::Unknown,
@@ -13072,7 +14665,10 @@ pub struct OptionalUserInterfaceSortingOrder {
 
 /// 17.15.1.71 `rsidRoot` (Original Document Revision Save ID): the tag `w:rsidRoot`, schema type
 /// `CT_LongHexNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct OriginalDocumentRevisionSaveID {
     pub unknown: officekit_markup_base::Unknown,
@@ -13081,7 +14677,10 @@ pub struct OriginalDocumentRevisionSaveID {
 
 /// 17.15.2.14 encoding (Output Encoding When Saving as Web Page): the tag `w:encoding`, schema type
 /// `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct OutputEncoding {
     pub unknown: officekit_markup_base::Unknown,
@@ -13089,7 +14688,10 @@ pub struct OutputEncoding {
 }
 
 /// 17.18.62 `ST_PageBorderDisplay` (Page Border Display Options): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PageBorderDisplayOptions(pub String);
 /// The members of `ST_PageBorderDisplay`, in alphabetical order.
@@ -13103,7 +14705,10 @@ pub enum PageBorderDisplayOptionsMember {
 
 /// 17.15.1.14 `bordersDoNotSurroundFooter` (Page Border Excludes Footer): the tag
 /// `w:bordersDoNotSurroundFooter`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PageBorderExcludesFooter {
     pub unknown: officekit_markup_base::Unknown,
@@ -13112,7 +14717,10 @@ pub struct PageBorderExcludesFooter {
 
 /// 17.15.1.15 `bordersDoNotSurroundHeader` (Page Border Excludes Header): the tag
 /// `w:bordersDoNotSurroundHeader`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PageBorderExcludesHeader {
     pub unknown: officekit_markup_base::Unknown,
@@ -13120,7 +14728,10 @@ pub struct PageBorderExcludesHeader {
 }
 
 /// 17.18.63 `ST_PageBorderOffset` (Page Border Positioning Base): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PageBorderPositioningBase(pub String);
 /// The members of `ST_PageBorderOffset`, in alphabetical order.
@@ -13132,7 +14743,10 @@ pub enum PageBorderPositioningBaseMember {
 }
 
 /// 17.18.64 `ST_PageBorderZOrder` (Page Border Z-Order): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PageBorderZOrder(pub String);
 /// The members of `ST_PageBorderZOrder`, in alphabetical order.
@@ -13144,7 +14758,10 @@ pub enum PageBorderZOrderMember {
 }
 
 /// 17.6.10 `pgBorders` (Page Borders): the tag `w:pgBorders`, schema type `CT_PageBorders`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PageBorders {
     pub bottom_border: Option<Box<BottomBorder>>,
@@ -13158,7 +14775,10 @@ pub struct PageBorders {
 }
 
 /// 17.6.11 `pgMar` (Page Margins): the tag `w:pgMar`, schema type `CT_PageMar`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PageMargins {
     pub bottom: Option<SignedMeasurementInTwentiethsOfPoint>,
@@ -13172,7 +14792,10 @@ pub struct PageMargins {
 }
 
 /// 17.3.3.22 `pgNum` (Page Number Block): the tag `w:pgNum`, schema type `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PageNumberBlock {
     pub unknown: officekit_markup_base::Unknown,
@@ -13180,7 +14803,10 @@ pub struct PageNumberBlock {
 
 /// 17.6.12 `pgNumType` (Page Numbering Settings): the tag `w:pgNumType`, schema type
 /// `CT_PageNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PageNumberingSettings {
     pub chap_sep: Option<ChapterSeparatorTypes>,
@@ -13191,7 +14817,10 @@ pub struct PageNumberingSettings {
 }
 
 /// 17.18.65 `ST_PageOrientation` (Page Orientation): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PageOrientation(pub String);
 /// The members of `ST_PageOrientation`, in alphabetical order.
@@ -13203,7 +14832,10 @@ pub enum PageOrientationMember {
 }
 
 /// 17.6.13 `pgSz` (Page Size): the tag `w:pgSz`, schema type `CT_PageSz`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PageSize {
     pub code: Option<DecimalNumberValue>,
@@ -13215,7 +14847,10 @@ pub struct PageSize {
 
 /// 17.8.3.13 panose1 (Panose-1 Typeface Classification Number): the tag `w:panose1`, schema type
 /// `CT_Panose`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Panose1TypefaceClassificationNumber {
     pub unknown: officekit_markup_base::Unknown,
@@ -13224,7 +14859,10 @@ pub struct Panose1TypefaceClassificationNumber {
 
 /// 17.6.9 `paperSrc` (Paper Source Information): the tag `w:paperSrc`, schema type
 /// `CT_PaperSource`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PaperSourceInformation {
     pub first: Option<DecimalNumberValue>,
@@ -13233,9 +14871,16 @@ pub struct PaperSourceInformation {
 }
 
 /// 17.3.1.22 p (Paragraph): the tag `w:p`, schema type `CT_P`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Paragraph {
+    #[rkyv(omit_bounds)]
     pub content: Vec<ParagraphContent>,
     pub no_spell_err: Option<common_simple_types::OnOffValue>,
     pub para_id: Option<String>,
@@ -13250,7 +14895,10 @@ pub struct Paragraph {
 }
 
 /// 17.3.1.13 jc (Paragraph Alignment): the tag `w:jc`, schema type `CT_Jc`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ParagraphAlignment {
     pub unknown: officekit_markup_base::Unknown,
@@ -13259,7 +14907,10 @@ pub struct ParagraphAlignment {
 
 /// 17.3.1.42 top (Paragraph Border Above Identical Paragraphs): the tag `w:top`, schema type
 /// `CT_Border`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ParagraphBorderAboveIdenticalParagraphs {
     pub color: Option<ColorValue>,
@@ -13276,7 +14927,10 @@ pub struct ParagraphBorderAboveIdenticalParagraphs {
 
 /// 17.3.1.42 top (Paragraph Border Above Identical Paragraphs): the tag `w:top`, schema type
 /// `CT_TblWidth`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ParagraphBorderAboveIdenticalParagraphsTblWidth {
     pub r#type: Option<TableWidthUnits>,
@@ -13286,7 +14940,10 @@ pub struct ParagraphBorderAboveIdenticalParagraphsTblWidth {
 
 /// 17.3.1.7 bottom (Paragraph Border Below Identical Paragraphs): the tag `w:bottom`, schema type
 /// `CT_Border`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ParagraphBorderBelowIdenticalParagraphs {
     pub color: Option<ColorValue>,
@@ -13303,7 +14960,10 @@ pub struct ParagraphBorderBelowIdenticalParagraphs {
 
 /// 17.3.1.7 bottom (Paragraph Border Below Identical Paragraphs): the tag `w:bottom`, schema type
 /// `CT_TblWidth`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ParagraphBorderBelowIdenticalParagraphsTblWidth {
     pub r#type: Option<TableWidthUnits>,
@@ -13312,7 +14972,10 @@ pub struct ParagraphBorderBelowIdenticalParagraphsTblWidth {
 }
 
 /// 17.3.1.4 bar (Paragraph Border Between Facing Pages): the tag `w:bar`, schema type `CT_Border`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ParagraphBorderBetweenFacingPages {
     pub color: Option<ColorValue>,
@@ -13329,7 +14992,10 @@ pub struct ParagraphBorderBetweenFacingPages {
 
 /// 17.3.1.5 between (Paragraph Border Between Identical Paragraphs): the tag `w:between`, schema
 /// type `CT_Border`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ParagraphBorderBetweenIdenticalParagraphs {
     pub color: Option<ColorValue>,
@@ -13345,7 +15011,10 @@ pub struct ParagraphBorderBetweenIdenticalParagraphs {
 }
 
 /// 17.3.1.24 `pBdr` (Paragraph Borders): the tag `w:pBdr`, schema type `CT_PBdr`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ParagraphBorders {
     pub left_paragraph_border: Option<Box<LeftParagraphBorder>>,
@@ -13362,7 +15031,10 @@ pub struct ParagraphBorders {
 
 /// 17.3.1.8 `cnfStyle` (Paragraph Conditional Formatting): the tag `w:cnfStyle`, schema type
 /// `CT_Cnf`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ParagraphConditionalFormatting {
     pub even_h_band: Option<common_simple_types::OnOffValue>,
@@ -13430,7 +15102,10 @@ pub enum ParagraphContent {
 }
 
 /// 17.3.1.12 ind (Paragraph Indentation): the tag `w:ind`, schema type `CT_Ind`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ParagraphIndentation {
     pub end: Option<SignedMeasurementInTwentiethsOfPoint>,
@@ -13450,7 +15125,10 @@ pub struct ParagraphIndentation {
 
 /// 17.3.2.36 `specVanish` (Paragraph Mark Is Always Hidden): the tag `w:specVanish`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ParagraphMarkIsAlwaysHidden {
     pub unknown: officekit_markup_base::Unknown,
@@ -13459,7 +15137,10 @@ pub struct ParagraphMarkIsAlwaysHidden {
 
 /// 17.13.5.30 `rPrChange` (Revision Information for Run Properties on the Paragraph Mark): the tag
 /// `w:rPrChange`, schema type `CT_ParaRPrChange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ParagraphMarkRunPropertiesRevision {
     pub author: Option<String>,
@@ -13471,7 +15152,10 @@ pub struct ParagraphMarkRunPropertiesRevision {
 }
 
 /// 17.3.1.26 `pPr` (Paragraph Properties): the tag `w:pPr`, schema type `CT_PPr`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ParagraphProperties {
     pub adjust_spacing_east_asian_text_numbers: Option<Box<AdjustSpacingEastAsianTextNumbers>>,
@@ -13519,7 +15203,10 @@ pub struct ParagraphProperties {
 }
 
 /// 17.7.5.2 `pPr` (Paragraph Properties): the tag `w:pPr`, schema type `CT_PPrGeneral`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ParagraphPropertiesPPrGeneral {
     pub adjust_spacing_east_asian_text_numbers: Option<Box<AdjustSpacingEastAsianTextNumbers>>,
@@ -13566,7 +15253,10 @@ pub struct ParagraphPropertiesPPrGeneral {
 }
 
 /// 17.3.1.31 shd (Paragraph Shading): the tag `w:shd`, schema type `CT_Shd`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ParagraphShading {
     pub color: Option<ColorValue>,
@@ -13583,7 +15273,10 @@ pub struct ParagraphShading {
 
 /// 17.3.1.41 `textDirection` (Paragraph Text Flow Direction): the tag `w:textDirection`, schema
 /// type `CT_TextDirection`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ParagraphTextFlowDirection {
     pub unknown: officekit_markup_base::Unknown,
@@ -13591,7 +15284,10 @@ pub struct ParagraphTextFlowDirection {
 }
 
 /// 17.7.4.3 `basedOn` (Parent Style ID): the tag `w:basedOn`, schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ParentStyleID {
     pub unknown: officekit_markup_base::Unknown,
@@ -13599,7 +15295,10 @@ pub struct ParentStyleID {
 }
 
 /// 17.18.11 `ST_DecimalNumberOrPercent` (Percentage Measurement): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PercentageMeasurement(pub String);
 /// The member types of `ST_DecimalNumberOrPercent`, in alphabetical order; `value` tries them in
@@ -13613,7 +15312,10 @@ pub enum PercentageMeasurementMember {
 
 /// 17.15.1.87 `summaryLength` (Percentage of Document to Use When Generating Summary): the tag
 /// `w:summaryLength`, schema type `CT_DecimalNumberOrPrecent`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PercentageOfDocumentToUse {
     pub unknown: officekit_markup_base::Unknown,
@@ -13622,32 +15324,53 @@ pub struct PercentageOfDocumentToUse {
 
 /// 14.11.10 `ST_UnqualifiedPercentage` (Percentage Value Without Percent Sign): the text the file
 /// carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PercentageValueWithoutPercentSign(pub String);
 
 /// 17.3.3.25 ruby (Phonetic Guide): the tag `w:ruby`, schema type `CT_Ruby`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PhoneticGuide {
+    #[rkyv(omit_bounds)]
     pub base_text: Box<PhoneticGuideBaseText>,
     pub properties: Box<PhoneticGuideProperties>,
+    #[rkyv(omit_bounds)]
     pub text: Box<PhoneticGuideText>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 17.3.3.27 `rubyBase` (Phonetic Guide Base Text): the tag `w:rubyBase`, schema type
 /// `CT_RubyContent`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PhoneticGuideBaseText {
+    #[rkyv(omit_bounds)]
     pub content: Vec<PhoneticGuideContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 17.3.3.11 `hpsBaseText` (Phonetic Guide Base Text Font Size): the tag `w:hpsBaseText`, schema
 /// type `CT_HpsMeasure`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PhoneticGuideBaseTextFontSize {
     pub unknown: officekit_markup_base::Unknown,
@@ -13694,7 +15417,10 @@ pub enum PhoneticGuideContent {
 }
 
 /// 17.3.3.28 `rubyPr` (Phonetic Guide Properties): the tag `w:rubyPr`, schema type `CT_RubyPr`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PhoneticGuideProperties {
     pub distance_between_phonetic_guide_text: Box<DistanceBetweenPhoneticGuideText>,
@@ -13707,16 +15433,26 @@ pub struct PhoneticGuideProperties {
 }
 
 /// 17.3.3.24 rt (Phonetic Guide Text): the tag `w:rt`, schema type `CT_RubyContent`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PhoneticGuideText {
+    #[rkyv(omit_bounds)]
     pub content: Vec<PhoneticGuideContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 17.3.3.26 `rubyAlign` (Phonetic Guide Text Alignment): the tag `w:rubyAlign`, schema type
 /// `CT_RubyAlign`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PhoneticGuideTextAlignment {
     pub unknown: officekit_markup_base::Unknown,
@@ -13724,7 +15460,10 @@ pub struct PhoneticGuideTextAlignment {
 }
 
 /// 17.3.3.10 hps (Phonetic Guide Text Font Size): the tag `w:hps`, schema type `CT_HpsMeasure`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PhoneticGuideTextFontSize {
     pub unknown: officekit_markup_base::Unknown,
@@ -13733,9 +15472,16 @@ pub struct PhoneticGuideTextFontSize {
 
 /// 17.9.20 `numPicBullet` (Picture Numbering Symbol Definition): the tag `w:numPicBullet`, schema
 /// type `CT_NumPicBullet`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PictureNumberingSymbolDefinition {
+    #[rkyv(omit_bounds)]
     pub content: Box<PictureNumberingSymbolDefinitionContent>,
     pub num_pic_bullet_id: Option<DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
@@ -13752,7 +15498,10 @@ pub enum PictureNumberingSymbolDefinitionContent {
 
 /// 17.9.9 `lvlPicBulletId` (Picture Numbering Symbol Definition Reference): the tag
 /// `w:lvlPicBulletId`, schema type `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PictureNumberingSymbolDefinitionReference {
     pub unknown: officekit_markup_base::Unknown,
@@ -13761,7 +15510,10 @@ pub struct PictureNumberingSymbolDefinitionReference {
 
 /// 17.5.2.24 picture (Picture Structured Document Tag): the tag `w:picture`, schema type
 /// `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PictureStructuredDocumentTag {
     pub unknown: officekit_markup_base::Unknown,
@@ -13769,7 +15521,10 @@ pub struct PictureStructuredDocumentTag {
 
 /// 17.15.2.34 `pixelsPerInch` (Pixels per Inch for Graphics/Images): the tag `w:pixelsPerInch`,
 /// schema type `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PixelsPerInchForGraphicsImages {
     pub unknown: officekit_markup_base::Unknown,
@@ -13778,7 +15533,10 @@ pub struct PixelsPerInchForGraphicsImages {
 
 /// 17.15.1.49 `formsDesign` (Structured Document Tag Placeholder Text Should be Resaved): the tag
 /// `w:formsDesign`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PlaceholderTextShouldBeResaved {
     pub unknown: officekit_markup_base::Unknown,
@@ -13786,7 +15544,10 @@ pub struct PlaceholderTextShouldBeResaved {
 }
 
 /// 17.5.2.44 text (Plain Text Structured Document Tag): the tag `w:text`, schema type `CT_SdtText`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PlainTextStructuredDocumentTag {
     pub multi_line: Option<common_simple_types::OnOffValue>,
@@ -13795,7 +15556,10 @@ pub struct PlainTextStructuredDocumentTag {
 
 /// 17.15.1.50 `gutterAtTop` (Position Gutter At Top of Page): the tag `w:gutterAtTop`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PositionGutterAtTopOfPage {
     pub unknown: officekit_markup_base::Unknown,
@@ -13804,7 +15568,10 @@ pub struct PositionGutterAtTopOfPage {
 
 /// 17.3.3.13 `lastRenderedPageBreak` (Position of Last Calculated Page Break): the tag
 /// `w:lastRenderedPageBreak`, schema type `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PositionOfLastCalculatedPageBreak {
     pub unknown: officekit_markup_base::Unknown,
@@ -13812,7 +15579,10 @@ pub struct PositionOfLastCalculatedPageBreak {
 
 /// 17.14.23 `mappedName` (Predefined Merge Field Name): the tag `w:mappedName`, schema type
 /// `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PredefinedMergeFieldName {
     pub unknown: officekit_markup_base::Unknown,
@@ -13820,7 +15590,10 @@ pub struct PredefinedMergeFieldName {
 }
 
 /// 17.4.71 `tcW` (Preferred Table Cell Width): the tag `w:tcW`, schema type `CT_TblWidth`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PreferredTableCellWidth {
     pub r#type: Option<TableWidthUnits>,
@@ -13829,7 +15602,10 @@ pub struct PreferredTableCellWidth {
 }
 
 /// 17.4.63 `tblW` (Preferred Table Width): the tag `w:tblW`, schema type `CT_TblWidth`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PreferredTableWidth {
     pub r#type: Option<TableWidthUnits>,
@@ -13839,7 +15615,10 @@ pub struct PreferredTableWidth {
 
 /// 17.4.85 `wAfter` (Preferred Width After Table Row): the tag `w:wAfter`, schema type
 /// `CT_TblWidth`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PreferredWidthAfterTableRow {
     pub r#type: Option<TableWidthUnits>,
@@ -13849,7 +15628,10 @@ pub struct PreferredWidthAfterTableRow {
 
 /// 17.4.86 `wBefore` (Preferred Width Before Table Row): the tag `w:wBefore`, schema type
 /// `CT_TblWidth`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PreferredWidthBeforeTableRow {
     pub r#type: Option<TableWidthUnits>,
@@ -13859,7 +15641,10 @@ pub struct PreferredWidthBeforeTableRow {
 
 /// 17.15.1.84 `styleLockTheme` (Prevent Modification of Themes Part): the tag `w:styleLockTheme`,
 /// schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PreventModificationOfThemesPart {
     pub unknown: officekit_markup_base::Unknown,
@@ -13868,7 +15653,10 @@ pub struct PreventModificationOfThemesPart {
 
 /// 17.15.1.83 `styleLockQFSet` (Prevent Replacement of Styles Part): the tag `w:styleLockQFSet`,
 /// schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PreventReplacementOfStylesPart {
     pub unknown: officekit_markup_base::Unknown,
@@ -13877,7 +15665,10 @@ pub struct PreventReplacementOfStylesPart {
 
 /// 17.3.1.36 `suppressOverlap` (Prevent Text Frames From Overlapping): the tag `w:suppressOverlap`,
 /// schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PreventTextFramesFromOverlapping {
     pub unknown: officekit_markup_base::Unknown,
@@ -13886,7 +15677,10 @@ pub struct PreventTextFramesFromOverlapping {
 
 /// 14.7.1.1 `numberingChange` (Previous Numbering Field Properties): the tag `w:numberingChange`,
 /// schema type `CT_TrackChangeNumbering`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PreviousNumberingFieldProperties {
     pub author: Option<String>,
@@ -13899,7 +15693,10 @@ pub struct PreviousNumberingFieldProperties {
 
 /// 17.3.1.30 `rPr` (Previous Run Properties for the Paragraph Mark): the tag `w:rPr`, schema type
 /// `CT_ParaRPrOriginal`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PreviousParagraphMarkRunProperties {
     pub cntxt_alts: Vec<super::office_word_2010_wordml::CntxtAlts>,
@@ -13924,7 +15721,10 @@ pub struct PreviousParagraphMarkRunProperties {
 }
 
 /// 17.3.1.25 `pPr` (Previous Paragraph Properties): the tag `w:pPr`, schema type `CT_PPrBase`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PreviousParagraphProperties {
     pub adjust_spacing_east_asian_text_numbers: Option<Box<AdjustSpacingEastAsianTextNumbers>>,
@@ -13969,7 +15769,10 @@ pub struct PreviousParagraphProperties {
 }
 
 /// 17.3.2.27 `rPr` (Previous Run Properties): the tag `w:rPr`, schema type `CT_RPrOriginal`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PreviousRunProperties {
     pub cntxt_alts: Vec<super::office_word_2010_wordml::CntxtAlts>,
@@ -13989,7 +15792,10 @@ pub struct PreviousRunProperties {
 }
 
 /// 17.6.19 `sectPr` (Previous Section Properties): the tag `w:sectPr`, schema type `CT_SectPrBase`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PreviousSectionProperties {
     pub column_definitions: Option<Box<ColumnDefinitions>>,
@@ -14020,7 +15826,10 @@ pub struct PreviousSectionProperties {
 }
 
 /// 17.4.70 `tcPr` (Previous Table Cell Properties): the tag `w:tcPr`, schema type `CT_TcPrInner`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PreviousTableCellProperties {
     pub content: Option<Box<CellMarkupContent>>,
@@ -14042,7 +15851,10 @@ pub struct PreviousTableCellProperties {
 }
 
 /// 17.4.47 `tblGrid` (Previous Table Grid): the tag `w:tblGrid`, schema type `CT_TblGridBase`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PreviousTableGrid {
     pub column_definition: Vec<GridColumnDefinition>,
@@ -14051,7 +15863,10 @@ pub struct PreviousTableGrid {
 
 /// 17.4.61 `tblPrEx` (Previous Table-Level Property Exceptions): the tag `w:tblPrEx`, schema type
 /// `CT_TblPrExBase`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PreviousTableLevelPropertyExceptions {
     pub paragraph_shading: Option<Box<ParagraphShading>>,
@@ -14068,7 +15883,10 @@ pub struct PreviousTableLevelPropertyExceptions {
 }
 
 /// 17.4.58 `tblPr` (Previous Table Properties): the tag `w:tblPr`, schema type `CT_TblPrBase`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PreviousTableProperties {
     pub floating_table_allows_overlap: Option<Box<FloatingTableAllowsOverlap>>,
@@ -14093,7 +15911,10 @@ pub struct PreviousTableProperties {
 }
 
 /// 17.4.82 `trPr` (Previous Table Row Properties): the tag `w:trPr`, schema type `CT_TrPrBase`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PreviousTableRowProperties {
     pub content: Vec<TableRowPropertiesContent>,
@@ -14101,7 +15922,10 @@ pub struct PreviousTableRowProperties {
 }
 
 /// 17.7.4.14 `qFormat` (Primary Style): the tag `w:qFormat`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PrimaryStyle {
     pub unknown: officekit_markup_base::Unknown,
@@ -14109,7 +15933,10 @@ pub struct PrimaryStyle {
 }
 
 /// 17.7.4.9 name (Primary Style Name): the tag `w:name`, schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PrimaryStyleName {
     pub unknown: officekit_markup_base::Unknown,
@@ -14118,7 +15945,10 @@ pub struct PrimaryStyleName {
 
 /// 14.8.3.32 `printBodyTextBeforeHeader` (Print Body Text before Header/Footer Contents): the tag
 /// `w:printBodyTextBeforeHeader`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PrintBodyTextBeforeHeaderFooterContents {
     pub unknown: officekit_markup_base::Unknown,
@@ -14127,7 +15957,10 @@ pub struct PrintBodyTextBeforeHeaderFooterContents {
 
 /// 14.8.3.33 `printColBlack` (Print Colors as Black And White without Dithering): the tag
 /// `w:printColBlack`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PrintColorsAsBlackAndWhiteWithoutDithering {
     pub unknown: officekit_markup_base::Unknown,
@@ -14136,7 +15969,10 @@ pub struct PrintColorsAsBlackAndWhiteWithoutDithering {
 
 /// 17.15.1.62 `printFractionalCharacterWidth` (Print Fractional Character Widths): the tag
 /// `w:printFractionalCharacterWidth`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PrintFractionalCharacterWidths {
     pub unknown: officekit_markup_base::Unknown,
@@ -14145,7 +15981,10 @@ pub struct PrintFractionalCharacterWidths {
 
 /// 17.15.1.63 `printPostScriptOverText` (Print `PostScript` Codes With Document Text): the tag
 /// `w:printPostScriptOverText`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PrintPostScriptCodesWithDocumentText {
     pub unknown: officekit_markup_base::Unknown,
@@ -14154,7 +15993,10 @@ pub struct PrintPostScriptCodesWithDocumentText {
 
 /// 17.15.1.64 `printTwoOnOne` (Print Two Pages Per Sheet): the tag `w:printTwoOnOne`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PrintTwoPagesPerSheet {
     pub unknown: officekit_markup_base::Unknown,
@@ -14162,7 +16004,10 @@ pub struct PrintTwoPagesPerSheet {
 }
 
 /// 17.5.2.42 tag (Programmatic Tag): the tag `w:tag`, schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ProgrammaticTag {
     pub unknown: officekit_markup_base::Unknown,
@@ -14170,7 +16015,10 @@ pub struct ProgrammaticTag {
 }
 
 /// 17.13.8.1 `proofErr` (Proofing Error Anchor): the tag `w:proofErr`, schema type `CT_ProofErr`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ProofingErrorAnchor {
     pub r#type: Option<ProofingErrorType>,
@@ -14178,7 +16026,10 @@ pub struct ProofingErrorAnchor {
 }
 
 /// 17.18.70 `ST_ProofErr` (Proofing Error Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ProofingErrorType(pub String);
 /// The members of `ST_ProofErr`, in alphabetical order.
@@ -14192,7 +16043,10 @@ pub enum ProofingErrorTypeMember {
 }
 
 /// 17.18.69 `ST_Proof` (Proofing State Values): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ProofingStateValues(pub String);
 /// The members of `ST_Proof`, in alphabetical order.
@@ -14204,7 +16058,10 @@ pub enum ProofingStateValuesMember {
 }
 
 /// 17.8.3.10 font (Properties for a Single Font): the tag `w:font`, schema type `CT_Font`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PropertiesForASingleFont {
     pub alternate_names_for_font: Option<Box<AlternateNamesForFont>>,
@@ -14225,7 +16082,10 @@ pub struct PropertiesForASingleFont {
 
 /// 17.14.26 query (Query For Data Source Records To Merge): the tag `w:query`, schema type
 /// `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct QueryForDataSourceRecords {
     pub unknown: officekit_markup_base::Unknown,
@@ -14234,7 +16094,10 @@ pub struct QueryForDataSourceRecords {
 
 /// 17.15.1.23 `decimalSymbol` (Radix Point for Field Code Evaluation): the tag `w:decimalSymbol`,
 /// schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RadixPointForFieldCodeEvaluation {
     pub unknown: officekit_markup_base::Unknown,
@@ -14269,7 +16132,10 @@ pub enum RangeMarkupContent {
 }
 
 /// 17.18.21 `ST_EdGrp` (Range Permision Editing Group): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RangePermisionEditingGroup(pub String);
 /// The members of `ST_EdGrp`, in alphabetical order.
@@ -14286,7 +16152,10 @@ pub enum RangePermisionEditingGroupMember {
 }
 
 /// 17.13.7.1 `permEnd` (Range Permission End): the tag `w:permEnd`, schema type `CT_Perm`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RangePermissionEnd {
     pub displaced_by_custom_xml: Option<DisplacedByCustomXml>,
@@ -14296,7 +16165,10 @@ pub struct RangePermissionEnd {
 
 /// 17.13.7.2 `permStart` (Range Permission Start): the tag `w:permStart`, schema type
 /// `CT_PermStart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RangePermissionStart {
     pub col_first: Option<DecimalNumberValue>,
@@ -14310,7 +16182,10 @@ pub struct RangePermissionStart {
 
 /// 17.16.6 `calcOnExit` (Recalculate Fields When Current Field Is Modified): the tag
 /// `w:calcOnExit`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RecalculateFieldsWhenModified {
     pub unknown: officekit_markup_base::Unknown,
@@ -14319,7 +16194,10 @@ pub struct RecalculateFieldsWhenModified {
 
 /// 17.15.2.12 `doNotSaveAsSingleFile` (Recommend Web Page Format over Single File Web Page Format):
 /// the tag `w:doNotSaveAsSingleFile`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RecommendWebPageFormat {
     pub unknown: officekit_markup_base::Unknown,
@@ -14328,7 +16206,10 @@ pub struct RecommendWebPageFormat {
 
 /// 17.14.2 `activeRecord` (Record Currently Displayed In Merged Document): the tag
 /// `w:activeRecord`, schema type `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RecordCurrentlyDisplayedInMergedDocument {
     pub unknown: officekit_markup_base::Unknown,
@@ -14336,7 +16217,10 @@ pub struct RecordCurrentlyDisplayedInMergedDocument {
 }
 
 /// 17.14.1 active (Record Is Included in Mail Merge): the tag `w:active`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RecordIsIncludedInMailMerge {
     pub unknown: officekit_markup_base::Unknown,
@@ -14345,7 +16229,10 @@ pub struct RecordIsIncludedInMailMerge {
 
 /// 17.14.28 `recipientData` (Reference to Inclusion/Exclusion Data for Data Source): the tag
 /// `w:recipientData`, schema type `CT_Rel`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ReferenceToInclusionExclusionData {
     pub id: Option<String>,
@@ -14354,7 +16241,10 @@ pub struct ReferenceToInclusionExclusionData {
 
 /// 17.6.14 `printerSettings` (Reference to Printer Settings Data): the tag `w:printerSettings`,
 /// schema type `CT_Rel`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ReferenceToPrinterSettingsData {
     pub id: Option<String>,
@@ -14362,7 +16252,10 @@ pub struct ReferenceToPrinterSettingsData {
 }
 
 /// 17.3.2.29 `rStyle` (Referenced Character Style): the tag `w:rStyle`, schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ReferencedCharacterStyle {
     pub unknown: officekit_markup_base::Unknown,
@@ -14370,7 +16263,10 @@ pub struct ReferencedCharacterStyle {
 }
 
 /// 17.3.1.27 `pStyle` (Referenced Paragraph Style): the tag `w:pStyle`, schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ReferencedParagraphStyle {
     pub unknown: officekit_markup_base::Unknown,
@@ -14378,7 +16274,10 @@ pub struct ReferencedParagraphStyle {
 }
 
 /// 17.4.62 `tblStyle` (Referenced Table Style): the tag `w:tblStyle`, schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ReferencedTableStyle {
     pub unknown: officekit_markup_base::Unknown,
@@ -14387,7 +16286,10 @@ pub struct ReferencedTableStyle {
 
 /// 17.8.3.6 `embedRegular` (Regular Font Style Embedding): the tag `w:embedRegular`, schema type
 /// `CT_FontRel`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RegularFontStyleEmbedding {
     pub font_key: Option<common_simple_types::Guid>,
@@ -14398,7 +16300,10 @@ pub struct RegularFontStyleEmbedding {
 
 /// 17.15.1.67 `removeDateAndTime` (Remove Date and Time from Annotations): the tag
 /// `w:removeDateAndTime`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RemoveDateAndTimeFromAnnotations {
     pub unknown: officekit_markup_base::Unknown,
@@ -14406,7 +16311,10 @@ pub struct RemoveDateAndTimeFromAnnotations {
 }
 
 /// The tag `w:removePersonalInformation`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RemovePersonalInformation {
     pub unknown: officekit_markup_base::Unknown,
@@ -14415,7 +16323,10 @@ pub struct RemovePersonalInformation {
 
 /// 17.7.4.20 `unhideWhenUsed` (Remove Semi-Hidden Property When Style Is Used): the tag
 /// `w:unhideWhenUsed`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RemoveSemiHiddenProperty {
     pub unknown: officekit_markup_base::Unknown,
@@ -14424,7 +16335,10 @@ pub struct RemoveSemiHiddenProperty {
 
 /// 17.15.1.36 `doNotEmbedSmartTags` (Remove Smart Tags When Saving): the tag
 /// `w:doNotEmbedSmartTags`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RemoveSmartTagsWhenSaving {
     pub unknown: officekit_markup_base::Unknown,
@@ -14433,7 +16347,10 @@ pub struct RemoveSmartTagsWhenSaving {
 
 /// 17.5.2.43 temporary (Remove Structured Document Tag When Contents Are Edited): the tag
 /// `w:temporary`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RemoveStructuredDocumentTagWhenEdited {
     pub unknown: officekit_markup_base::Unknown,
@@ -14442,7 +16359,10 @@ pub struct RemoveStructuredDocumentTagWhenEdited {
 
 /// 17.4.49 `tblHeader` (Repeat Table Row on Every New Page): the tag `w:tblHeader`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RepeatTableRow {
     pub unknown: officekit_markup_base::Unknown,
@@ -14451,7 +16371,10 @@ pub struct RepeatTableRow {
 
 /// 14.8.3.39 `subFontBySize` (Require Exact Size During Font Substitution): the tag
 /// `w:subFontBySize`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RequireExactSizeDuringFontSubstitution {
     pub unknown: officekit_markup_base::Unknown,
@@ -14460,7 +16383,10 @@ pub struct RequireExactSizeDuringFontSubstitution {
 
 /// 17.9.10 `lvlRestart` (Restart Numbering Level Symbol): the tag `w:lvlRestart`, schema type
 /// `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RestartNumberingLevelSymbol {
     pub unknown: officekit_markup_base::Unknown,
@@ -14469,7 +16395,10 @@ pub struct RestartNumberingLevelSymbol {
 
 /// 17.15.1.13 `bookFoldRevPrinting` (Reverse Book Fold Printing): the tag `w:bookFoldRevPrinting`,
 /// schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ReverseBookFoldPrinting {
     pub unknown: officekit_markup_base::Unknown,
@@ -14478,7 +16407,10 @@ pub struct ReverseBookFoldPrinting {
 
 /// 17.7.4.15 rsid (Revision Identifier for Style Definition): the tag `w:rsid`, schema type
 /// `CT_LongHexNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RevisionIdentifierForStyleDefinition {
     pub unknown: officekit_markup_base::Unknown,
@@ -14487,7 +16419,10 @@ pub struct RevisionIdentifierForStyleDefinition {
 
 /// 17.13.5.29 `pPrChange` (Revision Information for Paragraph Properties): the tag `w:pPrChange`,
 /// schema type `CT_PPrChange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RevisionInformationForParagraphProperties {
     pub author: Option<String>,
@@ -14500,7 +16435,10 @@ pub struct RevisionInformationForParagraphProperties {
 
 /// 17.13.5.31 `rPrChange` (Revision Information for Run Properties): the tag `w:rPrChange`, schema
 /// type `CT_RPrChange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RevisionInformationForRunProperties {
     pub author: Option<String>,
@@ -14513,7 +16451,10 @@ pub struct RevisionInformationForRunProperties {
 
 /// 17.13.5.32 `sectPrChange` (Revision Information for Section Properties): the tag
 /// `w:sectPrChange`, schema type `CT_SectPrChange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RevisionInformationForSectionProperties {
     pub author: Option<String>,
@@ -14526,7 +16467,10 @@ pub struct RevisionInformationForSectionProperties {
 
 /// 17.13.5.36 `tcPrChange` (Revision Information for Table Cell Properties): the tag
 /// `w:tcPrChange`, schema type `CT_TcPrChange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RevisionInformationForTableCellProperties {
     pub author: Option<String>,
@@ -14539,7 +16483,10 @@ pub struct RevisionInformationForTableCellProperties {
 
 /// 17.13.5.35 `tblPrExChange` (Revision Information for Table-Level Property Exceptions): the tag
 /// `w:tblPrExChange`, schema type `CT_TblPrExChange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RevisionInformationForTableLevelPropertyExceptions {
     pub author: Option<String>,
@@ -14552,7 +16499,10 @@ pub struct RevisionInformationForTableLevelPropertyExceptions {
 
 /// 17.13.5.34 `tblPrChange` (Revision Information for Table Properties): the tag `w:tblPrChange`,
 /// schema type `CT_TblPrChange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RevisionInformationForTableProperties {
     pub author: Option<String>,
@@ -14565,7 +16515,10 @@ pub struct RevisionInformationForTableProperties {
 
 /// 17.13.5.37 `trPrChange` (Revision Information for Table Row Properties): the tag `w:trPrChange`,
 /// schema type `CT_TrPrChange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RevisionInformationForTableRowProperties {
     pub author: Option<String>,
@@ -14578,7 +16531,10 @@ pub struct RevisionInformationForTableRowProperties {
 
 /// 17.15.1.72 rsids (Listing of All Revision Save ID Values): the tag `w:rsids`, schema type
 /// `CT_DocRsids`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RevisionSaveIDValues {
     pub original_document_revision_save_id: Option<Box<OriginalDocumentRevisionSaveID>>,
@@ -14588,23 +16544,36 @@ pub struct RevisionSaveIDValues {
 
 /// 14.9.1.1 `txbxContent` (Rich Text Box Content Container): the tag `w:txbxContent`, schema type
 /// `CT_TxbxContent`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RichTextBoxContentContainer {
+    #[rkyv(omit_bounds)]
     pub content: Vec<BlockContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 17.5.2.26 `richText` (Rich Text Structured Document Tag): the tag `w:richText`, schema type
 /// `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RichTextStructuredDocumentTag {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 17.6.15 right (Right Border): the tag `w:right`, schema type `CT_PageBorder`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RightBorder {
     pub color: Option<ColorValue>,
@@ -14622,7 +16591,10 @@ pub struct RightBorder {
 
 /// 17.15.2.27 `marRight` (Right Margin for HTML div): the tag `w:marRight`, schema type
 /// `CT_SignedTwipsMeasure`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RightMarginForHTMLDiv {
     pub unknown: officekit_markup_base::Unknown,
@@ -14630,7 +16602,10 @@ pub struct RightMarginForHTMLDiv {
 }
 
 /// 17.3.1.28 right (Right Paragraph Border): the tag `w:right`, schema type `CT_Border`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RightParagraphBorder {
     pub color: Option<ColorValue>,
@@ -14646,7 +16621,10 @@ pub struct RightParagraphBorder {
 }
 
 /// 17.3.1.28 right (Right Paragraph Border): the tag `w:right`, schema type `CT_TblWidth`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RightParagraphBorderTblWidth {
     pub r#type: Option<TableWidthUnits>,
@@ -14655,7 +16633,10 @@ pub struct RightParagraphBorderTblWidth {
 }
 
 /// 17.3.1.6 bidi (Right to Left Paragraph Layout): the tag `w:bidi`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RightToLeftParagraphLayout {
     pub unknown: officekit_markup_base::Unknown,
@@ -14663,7 +16644,10 @@ pub struct RightToLeftParagraphLayout {
 }
 
 /// 17.3.2.30 rtl (Right To Left Text): the tag `w:rtl`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RightToLeftText {
     pub unknown: officekit_markup_base::Unknown,
@@ -14672,9 +16656,16 @@ pub struct RightToLeftText {
 
 /// 17.5.1.5 `customXml` (Row-Level Custom XML Element): the tag `w:customXml`, schema type
 /// `CT_CustomXmlRow`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RowLevelCustomXMLElement {
+    #[rkyv(omit_bounds)]
     pub content: Vec<ContentRowContent>,
     pub element: Option<common_simple_types::XMLName>,
     pub properties: Option<Box<CustomXMLElementProperties>>,
@@ -14683,9 +16674,16 @@ pub struct RowLevelCustomXMLElement {
 }
 
 /// 17.5.2.30 sdt (Row-Level Structured Document Tag): the tag `w:sdt`, schema type `CT_SdtRow`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RowLevelStructuredDocumentTag {
+    #[rkyv(omit_bounds)]
     pub content: Option<Box<RowLevelStructuredDocumentTagContent>>,
     pub custom_xml_conflict_del_range_end:
         Vec<super::office_word_2010_wordml::CustomXmlConflictDelRangeEnd>,
@@ -14702,15 +16700,25 @@ pub struct RowLevelStructuredDocumentTag {
 
 /// 17.5.2.35 `sdtContent` (Row-Level Structured Document Tag Content): the tag `w:sdtContent`,
 /// schema type `CT_SdtContentRow`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RowLevelStructuredDocumentTagContent {
+    #[rkyv(omit_bounds)]
     pub content: Vec<ContentRowContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 17.3.2.6 color (Run Content Color): the tag `w:color`, schema type `CT_Color`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RunContentColor {
     pub theme_color: Option<ThemeColor>,
@@ -14721,7 +16729,10 @@ pub struct RunContentColor {
 }
 
 /// 17.3.2.26 `rFonts` (Run Fonts): the tag `w:rFonts`, schema type `CT_Fonts`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RunFonts {
     pub ascii: Option<String>,
@@ -14737,7 +16748,10 @@ pub struct RunFonts {
 }
 
 /// 17.3.2.28 `rPr` (Run Properties): the tag `w:rPr`, schema type `CT_RPr`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RunProperties {
     pub cntxt_alts: Option<Box<super::office_word_2010_wordml::CntxtAlts>>,
@@ -14805,7 +16819,10 @@ pub enum RunPropertiesContent {
 
 /// 17.3.1.29 `rPr` (Run Properties for the Paragraph Mark): the tag `w:rPr`, schema type
 /// `CT_ParaRPr`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RunPropertiesForTheParagraphMark {
     pub cntxt_alts: Option<Box<super::office_word_2010_wordml::CntxtAlts>>,
@@ -14832,7 +16849,10 @@ pub struct RunPropertiesForTheParagraphMark {
 
 /// 17.15.2.36 `saveSmartTagsAsXml` (Save Smart Tag Data in XML Property Bag): the tag
 /// `w:saveSmartTagsAsXml`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SaveSmartTagData {
     pub unknown: officekit_markup_base::Unknown,
@@ -14841,7 +16861,10 @@ pub struct SaveSmartTagData {
 
 /// 17.15.1.91 `useXSLTWhenSaving` (Save Document as XML File through Custom XSL Transform): the tag
 /// `w:useXSLTWhenSaving`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SaveThroughCustomXSLTransform {
     pub unknown: officekit_markup_base::Unknown,
@@ -14849,13 +16872,19 @@ pub struct SaveThroughCustomXSLTransform {
 }
 
 /// 17.18.51 `ST_MacroName` (Script Subroutine Name Value): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ScriptSubroutineNameValue(pub String);
 
 /// 17.15.2.37 scrollbar (Scrollbar Display Option): the tag `w:scrollbar`, schema type
 /// `CT_FrameScrollbar`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ScrollbarDisplayOption {
     pub unknown: officekit_markup_base::Unknown,
@@ -14872,7 +16901,10 @@ pub enum SectionPropertiesContent {
 }
 
 /// 17.6.22 type (Section Type): the tag `w:type`, schema type `CT_SectType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SectionType {
     pub unknown: officekit_markup_base::Unknown,
@@ -14881,7 +16913,10 @@ pub struct SectionType {
 
 /// 17.11.5 `endnotePr` (Section-Wide Endnote Properties): the tag `w:endnotePr`, schema type
 /// `CT_EdnProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SectionWideEndnoteProperties {
     pub endnote_placement: Option<Box<EndnotePlacement>>,
@@ -14895,7 +16930,10 @@ pub struct SectionWideEndnoteProperties {
 
 /// 17.11.11 `footnotePr` (Section-Wide Footnote Properties): the tag `w:footnotePr`, schema type
 /// `CT_FtnProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SectionWideFootnoteProperties {
     pub footnote_and_endnote_numbering_restart_location:
@@ -14908,7 +16946,10 @@ pub struct SectionWideFootnoteProperties {
 }
 
 /// The tag `w:selectFldWithFirstOrLastChar`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SelectFldWithFirstOrLastChar {
     pub unknown: officekit_markup_base::Unknown,
@@ -14916,7 +16957,10 @@ pub struct SelectFldWithFirstOrLastChar {
 }
 
 /// 17.15.2.7 `divBdr` (Set of Borders for HTML div): the tag `w:divBdr`, schema type `CT_DivBdr`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SetOfBordersForHTMLDiv {
     pub left_paragraph_border: Option<Box<LeftParagraphBorder>>,
@@ -14929,7 +16973,10 @@ pub struct SetOfBordersForHTMLDiv {
 }
 
 /// 17.3.1.38 tabs (Set of Custom Tab Stops): the tag `w:tabs`, schema type `CT_Tabs`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SetOfCustomTabStops {
     pub custom_tab_stop: Vec<CustomTabStop>,
@@ -14937,7 +16984,10 @@ pub struct SetOfCustomTabStops {
 }
 
 /// 17.18.78 `ST_Shd` (Shading Patterns): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShadingPatterns(pub String);
 /// The members of `ST_Shd`, in alphabetical order.
@@ -14985,7 +17035,10 @@ pub enum ShadingPatternsMember {
 }
 
 /// 17.3.2.31 shadow (Shadow): the tag `w:shadow`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Shadow {
     pub unknown: officekit_markup_base::Unknown,
@@ -14994,7 +17047,10 @@ pub struct Shadow {
 
 /// 17.15.1.79 `showEnvelope` (Show E-Mail Message Header): the tag `w:showEnvelope`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShowEMailMessageHeader {
     pub unknown: officekit_markup_base::Unknown,
@@ -15002,7 +17058,10 @@ pub struct ShowEMailMessageHeader {
 }
 
 /// The tag `w:showXMLTags`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShowXMLTags {
     pub unknown: officekit_markup_base::Unknown,
@@ -15010,7 +17069,10 @@ pub struct ShowXMLTags {
 }
 
 /// 17.18.80 `ST_SignedHpsMeasure` (Signed Measurement in Half-Points): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SignedMeasurementInHalfPoints(pub String);
 /// The member types of `ST_SignedHpsMeasure`, in alphabetical order; `value` tries them in the
@@ -15024,7 +17086,10 @@ pub enum SignedMeasurementInHalfPointsMember {
 
 /// 17.18.81 `ST_SignedTwipsMeasure` (Signed Measurement in Twentieths of a Point): the text the
 /// file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SignedMeasurementInTwentiethsOfPoint(pub String);
 /// The member types of `ST_SignedTwipsMeasure`, in alphabetical order; `value` tries them in the
@@ -15037,9 +17102,16 @@ pub enum SignedMeasurementInTwentiethsOfPointMember {
 }
 
 /// 17.16.19 `fldSimple` (Simple Field): the tag `w:fldSimple`, schema type `CT_SimpleField`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SimpleField {
+    #[rkyv(omit_bounds)]
     pub content: Vec<ParagraphContent>,
     pub custom_field_data: Option<Box<CustomFieldData>>,
     pub dirty: Option<common_simple_types::OnOffValue>,
@@ -15050,7 +17122,10 @@ pub struct SimpleField {
 
 /// 17.15.1.7 `autoCaption` (Single Automatic Captioning Setting): the tag `w:autoCaption`, schema
 /// type `CT_AutoCaption`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SingleAutomaticCaptioningSetting {
     pub caption: Option<String>,
@@ -15060,7 +17135,10 @@ pub struct SingleAutomaticCaptioningSetting {
 
 /// 17.15.1.16 caption (Single Caption Type Definition): the tag `w:caption`, schema type
 /// `CT_Caption`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SingleCaptionTypeDefinition {
     pub chap_num: Option<common_simple_types::OnOffValue>,
@@ -15074,7 +17152,10 @@ pub struct SingleCaptionTypeDefinition {
 }
 
 /// 17.6.3 col (Single Column Definition): the tag `w:col`, schema type `CT_Column`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SingleColumnDefinition {
     pub space: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
@@ -15083,7 +17164,10 @@ pub struct SingleColumnDefinition {
 }
 
 /// 17.15.1.31 `docVar` (Single Document Variable): the tag `w:docVar`, schema type `CT_DocVar`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SingleDocumentVariable {
     pub name: Option<String>,
@@ -15092,7 +17176,10 @@ pub struct SingleDocumentVariable {
 }
 
 /// 17.15.2.16 frame (Single Frame Properties): the tag `w:frame`, schema type `CT_Frame`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SingleFrameProperties {
     pub frame_cannot_be_resized: Option<Box<FrameCannotBeResized>>,
@@ -15109,7 +17196,10 @@ pub struct SingleFrameProperties {
 }
 
 /// 17.3.2.37 strike (Single Strikethrough): the tag `w:strike`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SingleStrikethrough {
     pub unknown: officekit_markup_base::Unknown,
@@ -15117,7 +17207,10 @@ pub struct SingleStrikethrough {
 }
 
 /// 17.4.68 `tcMar` (Single Table Cell Margins): the tag `w:tcMar`, schema type `CT_TcMar`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SingleTableCellMargins {
     pub left_paragraph_border_tbl_width: Option<Box<LeftParagraphBorderTblWidth>>,
@@ -15133,7 +17226,10 @@ pub struct SingleTableCellMargins {
 }
 
 /// 17.3.2.33 `smallCaps` (Small Caps): the tag `w:smallCaps`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SmallCaps {
     pub unknown: officekit_markup_base::Unknown,
@@ -15142,7 +17238,10 @@ pub struct SmallCaps {
 
 /// 17.5.1.10 `smartTagPr` (Smart Tag Properties): the tag `w:smartTagPr`, schema type
 /// `CT_SmartTagPr`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SmartTagProperties {
     pub custom_xml_attribute: Vec<CustomXMLAttribute>,
@@ -15151,7 +17250,10 @@ pub struct SmartTagProperties {
 
 /// 17.14.22 `mainDocumentType` (Source Document Type): the tag `w:mainDocumentType`, schema type
 /// `CT_MailMergeDocType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SourceDocumentType {
     pub unknown: officekit_markup_base::Unknown,
@@ -15159,7 +17261,10 @@ pub struct SourceDocumentType {
 }
 
 /// 17.18.54 `ST_MailMergeDocType` (Source Document Types): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SourceDocumentTypes(pub String);
 /// The members of `ST_MailMergeDocType`, in alphabetical order.
@@ -15176,7 +17281,10 @@ pub enum SourceDocumentTypesMember {
 
 /// 17.15.2.38 `sourceFileName` (Source File for Frame): the tag `w:sourceFileName`, schema type
 /// `CT_Rel`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SourceFileForFrame {
     pub id: Option<String>,
@@ -15185,7 +17293,10 @@ pub struct SourceFileForFrame {
 
 /// 17.3.1.33 spacing (Spacing Between Lines and Above/Below Paragraph): the tag `w:spacing`, schema
 /// type `CT_Spacing`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SpacingBetweenLinesAndAboveBelowParagraph {
     pub after: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
@@ -15200,7 +17311,10 @@ pub struct SpacingBetweenLinesAndAboveBelowParagraph {
 }
 
 /// 17.11.3 endnote (Special Endnote List): the tag `w:endnote`, schema type `CT_FtnEdnSepRef`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SpecialEndnoteList {
     pub id: Option<DecimalNumberValue>,
@@ -15208,7 +17322,10 @@ pub struct SpecialEndnoteList {
 }
 
 /// 17.11.9 footnote (Special Footnote List): the tag `w:footnote`, schema type `CT_FtnEdnSepRef`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SpecialFootnoteList {
     pub id: Option<DecimalNumberValue>,
@@ -15217,7 +17334,10 @@ pub struct SpecialFootnoteList {
 
 /// 17.15.1.65 `proofState` (Spelling and Grammatical Checking State): the tag `w:proofState`,
 /// schema type `CT_Proof`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SpellingAndGrammaticalCheckingState {
     pub grammar: Option<ProofingStateValues>,
@@ -15226,7 +17346,10 @@ pub struct SpellingAndGrammaticalCheckingState {
 }
 
 /// The tag `w:splitPgBreakAndParaMark`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SplitPgBreakAndParaMark {
     pub unknown: officekit_markup_base::Unknown,
@@ -15234,7 +17357,10 @@ pub struct SplitPgBreakAndParaMark {
 }
 
 /// 17.18.17 `ST_DocPartType` (Entry Types): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StDocPartType(pub String);
 /// The members of `ST_DocPartType`, in alphabetical order.
@@ -15252,7 +17378,10 @@ pub enum StDocPartTypeMember {
 
 /// 17.18.46 `ST_LevelSuffix` (Content Between Numbering Symbol and Paragraph Text): the text the
 /// file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StLevelSuffix(pub String);
 /// The members of `ST_LevelSuffix`, in alphabetical order.
@@ -15265,7 +17394,10 @@ pub enum StLevelSuffixMember {
 }
 
 /// 17.18.59 `ST_NumberFormat` (Numbering Format): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StNumberFormat(pub String);
 /// The members of `ST_NumberFormat`, in alphabetical order.
@@ -15338,7 +17470,10 @@ pub enum StNumberFormatMember {
 }
 
 /// 17.18.75 `ST_RubyAlign` (Phonetic Guide Text Alignment): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StRubyAlign(pub String);
 /// The members of `ST_RubyAlign`, in alphabetical order.
@@ -15354,7 +17489,10 @@ pub enum StRubyAlignMember {
 }
 
 /// 17.18.77 `ST_SectionMark` (Section Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StSectionMark(pub String);
 /// The members of `ST_SectionMark`, in alphabetical order.
@@ -15369,7 +17507,10 @@ pub enum StSectionMarkMember {
 }
 
 /// 17.18.93 `ST_TextDirection` (Text Flow Direction): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StTextDirection(pub String);
 /// The members of `ST_TextDirection`, in alphabetical order.
@@ -15391,7 +17532,10 @@ pub enum StTextDirectionMember {
 }
 
 /// 17.18.95 `ST_TextScale` (Text Expansion/Compression Percentage): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StTextScale(pub String);
 /// The member types of `ST_TextScale`, in alphabetical order; `value` tries them in the schema's
@@ -15405,18 +17549,27 @@ pub enum StTextScaleMember {
 
 /// 17.18.106 `ST_TextScalePercent` (Text Expansion/Compression Percentage): the text the file
 /// carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StTextScalePercent(pub String);
 
 /// 17.18.9 `ST_DateTime` (Standard Date and Time Storage Format): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StandardDateAndTimeStorageFormat(pub String);
 
 /// 17.3.1.23 `pageBreakBefore` (Start Paragraph on Next Page): the tag `w:pageBreakBefore`, schema
 /// type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StartParagraphOnNextPage {
     pub unknown: officekit_markup_base::Unknown,
@@ -15424,7 +17577,10 @@ pub struct StartParagraphOnNextPage {
 }
 
 /// 17.9.25 start (Starting Value): the tag `w:start`, schema type `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StartingValue {
     pub unknown: officekit_markup_base::Unknown,
@@ -15432,13 +17588,19 @@ pub struct StartingValue {
 }
 
 /// 17.18.27 `ST_FFStatusTextVal` (Status Text Value): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StatusTextValue(pub String);
 
 /// 17.15.1.82 `strictFirstAndLastChars` (Use Strict Kinsoku Rules for Japanese Text): the tag
 /// `w:strictFirstAndLastChars`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StrictKinsokuRules {
     pub unknown: officekit_markup_base::Unknown,
@@ -15447,7 +17609,10 @@ pub struct StrictKinsokuRules {
 
 /// 17.5.2.37 `sdtEndPr` (Structured Document Tag End Character Properties): the tag `w:sdtEndPr`,
 /// schema type `CT_SdtEndPr`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StructuredDocumentTagEndCharacterProperties {
     pub run_properties: Vec<RunProperties>,
@@ -15456,7 +17621,10 @@ pub struct StructuredDocumentTagEndCharacterProperties {
 
 /// 17.5.2.19 label (Structured Document Tag Label): the tag `w:label`, schema type
 /// `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StructuredDocumentTagLabel {
     pub unknown: officekit_markup_base::Unknown,
@@ -15465,7 +17633,10 @@ pub struct StructuredDocumentTagLabel {
 
 /// 17.5.2.41 `tabIndex` (Structured Document Tag Navigation Order Index): the tag `w:tabIndex`,
 /// schema type `CT_UnsignedDecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StructuredDocumentTagNavigationOrderIndex {
     pub unknown: officekit_markup_base::Unknown,
@@ -15474,7 +17645,10 @@ pub struct StructuredDocumentTagNavigationOrderIndex {
 
 /// 17.5.2.25 placeholder (Structured Document Tag Placeholder Text): the tag `w:placeholder`,
 /// schema type `CT_Placeholder`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StructuredDocumentTagPlaceholderText {
     pub document_part_reference: Box<DocumentPartReference>,
@@ -15483,7 +17657,10 @@ pub struct StructuredDocumentTagPlaceholderText {
 
 /// 17.5.2.38 `sdtPr` (Structured Document Tag Properties): the tag `w:sdtPr`, schema type
 /// `CT_SdtPr`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StructuredDocumentTagProperties {
     pub appearance: Option<Box<super::office_word_2012_wordml::Appearance>>,
@@ -15532,7 +17709,10 @@ pub enum StructuredDocumentTagPropertiesContent {
 }
 
 /// 17.7.4.7 locked (Style Cannot Be Applied): the tag `w:locked`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StyleCannotBeApplied {
     pub unknown: officekit_markup_base::Unknown,
@@ -15541,7 +17721,10 @@ pub struct StyleCannotBeApplied {
 
 /// 17.7.6.6 `tblStylePr` (Style Conditional Table Formatting Properties): the tag `w:tblStylePr`,
 /// schema type `CT_TblStylePr`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StyleConditionalTableFormattingProperties {
     pub paragraph_properties_p_pr_general: Option<Box<ParagraphPropertiesPPrGeneral>>,
@@ -15554,7 +17737,10 @@ pub struct StyleConditionalTableFormattingProperties {
 }
 
 /// 17.7.4.17 style (Style Definition): the tag `w:style`, schema type `CT_Style`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StyleDefinition {
     pub alternate_style_names: Option<Box<AlternateStyleNames>>,
@@ -15588,7 +17774,10 @@ pub struct StyleDefinition {
 }
 
 /// 17.7.4.18 styles (Style Definitions): the tag `w:styles`, schema type `CT_Styles`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StyleDefinitions {
     pub document_default_paragraph_and_run_properties:
@@ -15599,7 +17788,10 @@ pub struct StyleDefinitions {
 }
 
 /// 17.7.4.10 next (Style For Next Paragraph): the tag `w:next`, schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StyleForNextParagraph {
     pub unknown: officekit_markup_base::Unknown,
@@ -15607,7 +17799,10 @@ pub struct StyleForNextParagraph {
 }
 
 /// 17.18.82 `ST_StyleSort` (Style Sort Settings): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StyleSortSettings(pub String);
 /// The members of `ST_StyleSort`, in alphabetical order.
@@ -15629,7 +17824,10 @@ pub enum StyleSortSettingsMember {
 }
 
 /// 17.18.83 `ST_StyleType` (Style Types): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StyleTypes(pub String);
 /// The members of `ST_StyleType`, in alphabetical order.
@@ -15644,7 +17842,10 @@ pub enum StyleTypesMember {
 
 /// 17.3.2.42 `vertAlign` (Subscript/Superscript Text): the tag `w:vertAlign`, schema type
 /// `CT_VerticalAlignRun`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SubscriptSuperscriptText {
     pub unknown: officekit_markup_base::Unknown,
@@ -15653,7 +17854,10 @@ pub struct SubscriptSuperscriptText {
 
 /// 17.8.3.15 `saveSubsetFonts` (Subset Fonts When Embedding): the tag `w:saveSubsetFonts`, schema
 /// type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SubsetFontsWhenEmbedding {
     pub unknown: officekit_markup_base::Unknown,
@@ -15662,7 +17866,10 @@ pub struct SubsetFontsWhenEmbedding {
 
 /// 17.15.1.85 `stylePaneFormatFilter` (Suggested Filtering for List of Document Styles): the tag
 /// `w:stylePaneFormatFilter`, schema type `CT_StylePaneFilter`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SuggestedFiltering {
     pub all_styles: Option<common_simple_types::OnOffValue>,
@@ -15686,7 +17893,10 @@ pub struct SuggestedFiltering {
 
 /// 17.15.1.86 `stylePaneSortMethod` (Suggested Sorting for List of Document Styles): the tag
 /// `w:stylePaneSortMethod`, schema type `CT_StyleSort`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SuggestedSorting {
     pub unknown: officekit_markup_base::Unknown,
@@ -15695,7 +17905,10 @@ pub struct SuggestedSorting {
 
 /// 17.15.1.81 `smartTagType` (Supplementary Smart Tag Information): the tag `w:smartTagType`,
 /// schema type `CT_SmartTagType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SupplementarySmartTagInformation {
     pub name: Option<String>,
@@ -15706,7 +17919,10 @@ pub struct SupplementarySmartTagInformation {
 
 /// 17.8.3.16 sig (Supported Unicode Subranges and Code Pages): the tag `w:sig`, schema type
 /// `CT_FontSig`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SupportedUnicodeSubrangesAndCodePages {
     pub csb0: Option<EightDigitHexadecimalValue>,
@@ -15720,7 +17936,10 @@ pub struct SupportedUnicodeSubrangesAndCodePages {
 
 /// 17.11.16 `noEndnote` (Suppress Endnotes In Document): the tag `w:noEndnote`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SuppressEndnotesInDocument {
     pub unknown: officekit_markup_base::Unknown,
@@ -15729,7 +17948,10 @@ pub struct SuppressEndnotesInDocument {
 
 /// 17.3.1.34 `suppressAutoHyphens` (Suppress Hyphenation for Paragraph): the tag
 /// `w:suppressAutoHyphens`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SuppressHyphenationForParagraph {
     pub unknown: officekit_markup_base::Unknown,
@@ -15738,7 +17960,10 @@ pub struct SuppressHyphenationForParagraph {
 
 /// 17.3.1.35 `suppressLineNumbers` (Suppress Line Numbers for Paragraph): the tag
 /// `w:suppressLineNumbers`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SuppressLineNumbersForParagraph {
     pub unknown: officekit_markup_base::Unknown,
@@ -15746,7 +17971,10 @@ pub struct SuppressLineNumbersForParagraph {
 }
 
 /// The tag `w:suppressSpBfAfterPgBrk`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SuppressSpBfAfterPgBrk {
     pub unknown: officekit_markup_base::Unknown,
@@ -15754,7 +17982,10 @@ pub struct SuppressSpBfAfterPgBrk {
 }
 
 /// The tag `w:suppressTopSpacing`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SuppressTopSpacing {
     pub unknown: officekit_markup_base::Unknown,
@@ -15763,7 +17994,10 @@ pub struct SuppressTopSpacing {
 
 /// 14.8.3.45 `swapBordersFacingPages` (Swap Paragraph Borders on Odd Numbered Pages): the tag
 /// `w:swapBordersFacingPages`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SwapParagraphBordersOnOddNumberedPages {
     pub unknown: officekit_markup_base::Unknown,
@@ -15771,7 +18005,10 @@ pub struct SwapParagraphBordersOnOddNumberedPages {
 }
 
 /// 17.3.3.30 sym (Symbol Character): the tag `w:sym`, schema type `CT_Sym`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SymbolCharacter {
     pub char: Option<FourDigitHexadecimalValue>,
@@ -15780,16 +18017,26 @@ pub struct SymbolCharacter {
 }
 
 /// 17.3.3.32 tab (Tab Character): the tag `w:tab`, schema type `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TabCharacter {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 17.4.37 tbl (Table): the tag `w:tbl`, schema type `CT_Tbl`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Table {
+    #[rkyv(omit_bounds)]
     pub content_row_content: Vec<ContentRowContent>,
     pub grid: Box<TableGrid>,
     pub properties: Box<TableProperties>,
@@ -15798,7 +18045,10 @@ pub struct Table {
 }
 
 /// 17.4.26 jc (Table Alignment Exception): the tag `w:jc`, schema type `CT_JcTable`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableAlignmentException {
     pub unknown: officekit_markup_base::Unknown,
@@ -15806,7 +18056,10 @@ pub struct TableAlignmentException {
 }
 
 /// 17.18.45 `ST_JcTable` (Table Alignment Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableAlignmentType(pub String);
 /// The members of `ST_JcTable`, in alphabetical order.
@@ -15821,7 +18074,10 @@ pub enum TableAlignmentTypeMember {
 }
 
 /// 17.4.38 `tblBorders` (Table Borders): the tag `w:tblBorders`, schema type `CT_TblBorders`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableBorders {
     pub left_paragraph_border: Option<Box<LeftParagraphBorder>>,
@@ -15838,7 +18094,10 @@ pub struct TableBorders {
 }
 
 /// 17.4.40 `tblCaption` (Table Caption): the tag `w:tblCaption`, schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableCaption {
     pub unknown: officekit_markup_base::Unknown,
@@ -15846,9 +18105,16 @@ pub struct TableCaption {
 }
 
 /// 17.4.65 tc (Table Cell): the tag `w:tc`, schema type `CT_Tc`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableCell {
+    #[rkyv(omit_bounds)]
     pub content: Vec<BlockContent>,
     pub id: Option<String>,
     pub properties: Option<Box<TableCellProperties>>,
@@ -15856,7 +18122,10 @@ pub struct TableCell {
 }
 
 /// 17.4.66 `tcBorders` (Table Cell Borders): the tag `w:tcBorders`, schema type `CT_TcBorders`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableCellBorders {
     pub left_paragraph_border: Option<Box<LeftParagraphBorder>>,
@@ -15875,7 +18144,10 @@ pub struct TableCellBorders {
 }
 
 /// 17.13.5.1 `cellDel` (Table Cell Deletion): the tag `w:cellDel`, schema type `CT_TrackChange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableCellDeletion {
     pub author: Option<String>,
@@ -15885,7 +18157,10 @@ pub struct TableCellDeletion {
 }
 
 /// 17.13.5.2 `cellIns` (Table Cell Insertion): the tag `w:cellIns`, schema type `CT_TrackChange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableCellInsertion {
     pub author: Option<String>,
@@ -15895,7 +18170,10 @@ pub struct TableCellInsertion {
 }
 
 /// 17.4.33 start (Table Cell Leading Edge Border): the tag `w:start`, schema type `CT_Border`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableCellLeadingEdgeBorder {
     pub color: Option<ColorValue>,
@@ -15911,7 +18189,10 @@ pub struct TableCellLeadingEdgeBorder {
 }
 
 /// 17.4.33 start (Table Cell Leading Edge Border): the tag `w:start`, schema type `CT_TblWidth`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableCellLeadingEdgeBorderTblWidth {
     pub r#type: Option<TableWidthUnits>,
@@ -15921,7 +18202,10 @@ pub struct TableCellLeadingEdgeBorderTblWidth {
 
 /// 17.4.41 `tblCellMar` (Table Cell Margin Exceptions): the tag `w:tblCellMar`, schema type
 /// `CT_TblCellMar`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableCellMarginExceptions {
     pub left_paragraph_border_tbl_width: Option<Box<LeftParagraphBorderTblWidth>>,
@@ -15937,7 +18221,10 @@ pub struct TableCellMarginExceptions {
 }
 
 /// 17.4.69 `tcPr` (Table Cell Properties): the tag `w:tcPr`, schema type `CT_TcPr`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableCellProperties {
     pub content: Option<Box<CellMarkupContent>>,
@@ -15960,7 +18247,10 @@ pub struct TableCellProperties {
 }
 
 /// 17.4.10 end (Table Cell Trailing Margin Exception): the tag `w:end`, schema type `CT_Border`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableCellTrailingMarginException {
     pub color: Option<ColorValue>,
@@ -15976,7 +18266,10 @@ pub struct TableCellTrailingMarginException {
 }
 
 /// 17.4.10 end (Table Cell Trailing Margin Exception): the tag `w:end`, schema type `CT_TblWidth`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableCellTrailingMarginExceptionTblWidth {
     pub r#type: Option<TableWidthUnits>,
@@ -15986,7 +18279,10 @@ pub struct TableCellTrailingMarginExceptionTblWidth {
 
 /// 17.4.83 `vAlign` (Table Cell Vertical Alignment): the tag `w:vAlign`, schema type
 /// `CT_VerticalJc`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableCellVerticalAlignment {
     pub unknown: officekit_markup_base::Unknown,
@@ -15995,7 +18291,10 @@ pub struct TableCellVerticalAlignment {
 
 /// 17.18.1 `ST_AnnotationVMerge` (Table Cell Vertical Merge Revision Type): the text the file
 /// carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableCellVerticalMergeRevisionType(pub String);
 /// The members of `ST_AnnotationVMerge`, in alphabetical order.
@@ -16008,7 +18307,10 @@ pub enum TableCellVerticalMergeRevisionTypeMember {
 
 /// 17.4.46 `tblDescription` (Table Description): the tag `w:tblDescription`, schema type
 /// `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableDescription {
     pub unknown: officekit_markup_base::Unknown,
@@ -16016,7 +18318,10 @@ pub struct TableDescription {
 }
 
 /// 17.4.48 `tblGrid` (Table Grid): the tag `w:tblGrid`, schema type `CT_TblGrid`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableGrid {
     pub column_definition: Vec<GridColumnDefinition>,
@@ -16026,7 +18331,10 @@ pub struct TableGrid {
 
 /// 17.13.5.33 `tblGridChange` (Revision Information for Table Grid Column Definitions): the tag
 /// `w:tblGridChange`, schema type `CT_TblGridChange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableGridColumnRevisionInformation {
     pub id: Option<DecimalNumberValue>,
@@ -16036,7 +18344,10 @@ pub struct TableGridColumnRevisionInformation {
 
 /// 17.4.50 `tblInd` (Table Indent from Leading Margin): the tag `w:tblInd`, schema type
 /// `CT_TblWidth`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableIndentFromLeadingMargin {
     pub r#type: Option<TableWidthUnits>,
@@ -16046,7 +18357,10 @@ pub struct TableIndentFromLeadingMargin {
 
 /// 17.4.22 `insideH` (Table Inside Horizontal Edges Border): the tag `w:insideH`, schema type
 /// `CT_Border`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableInsideHorizontalEdgesBorder {
     pub color: Option<ColorValue>,
@@ -16063,7 +18377,10 @@ pub struct TableInsideHorizontalEdgesBorder {
 
 /// 17.4.24 `insideV` (Table Inside Vertical Edges Border): the tag `w:insideV`, schema type
 /// `CT_Border`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableInsideVerticalEdgesBorder {
     pub color: Option<ColorValue>,
@@ -16079,7 +18396,10 @@ pub struct TableInsideVerticalEdgesBorder {
 }
 
 /// 17.4.52 `tblLayout` (Table Layout): the tag `w:tblLayout`, schema type `CT_TblLayoutType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableLayout {
     pub r#type: Option<TableLayoutType>,
@@ -16087,7 +18407,10 @@ pub struct TableLayout {
 }
 
 /// 17.18.87 `ST_TblLayoutType` (Table Layout Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableLayoutType(pub String);
 /// The members of `ST_TblLayoutType`, in alphabetical order.
@@ -16100,7 +18423,10 @@ pub enum TableLayoutTypeMember {
 
 /// 17.4.60 `tblPrEx` (Table-Level Property Exceptions): the tag `w:tblPrEx`, schema type
 /// `CT_TblPrEx`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableLevelPropertyExceptions {
     pub paragraph_shading: Option<Box<ParagraphShading>>,
@@ -16118,7 +18444,10 @@ pub struct TableLevelPropertyExceptions {
 }
 
 /// 17.18.88 `ST_TblOverlap` (Table Overlap Setting): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableOverlapSetting(pub String);
 /// The members of `ST_TblOverlap`, in alphabetical order.
@@ -16130,7 +18459,10 @@ pub enum TableOverlapSettingMember {
 }
 
 /// 17.4.59 `tblPr` (Table Properties): the tag `w:tblPr`, schema type `CT_TblPr`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableProperties {
     pub floating_table_allows_overlap: Option<Box<FloatingTableAllowsOverlap>>,
@@ -16156,9 +18488,16 @@ pub struct TableProperties {
 }
 
 /// 17.4.78 tr (Table Row): the tag `w:tr`, schema type `CT_Row`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableRow {
+    #[rkyv(omit_bounds)]
     pub content: Vec<ContentCellContent>,
     pub para_id: Option<String>,
     pub properties: Option<Box<TableRowProperties>>,
@@ -16173,7 +18512,10 @@ pub struct TableRow {
 
 /// 17.4.6 `cantSplit` (Table Row Cannot Break Across Pages): the tag `w:cantSplit`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableRowCannotBreakAcrossPages {
     pub unknown: officekit_markup_base::Unknown,
@@ -16182,7 +18524,10 @@ pub struct TableRowCannotBreakAcrossPages {
 
 /// 17.4.43 `tblCellSpacing` (Table Row Cell Spacing): the tag `w:tblCellSpacing`, schema type
 /// `CT_TblWidth`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableRowCellSpacing {
     pub r#type: Option<TableWidthUnits>,
@@ -16191,7 +18536,10 @@ pub struct TableRowCellSpacing {
 }
 
 /// 17.4.80 `trHeight` (Table Row Height): the tag `w:trHeight`, schema type `CT_Height`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableRowHeight {
     pub h_rule: Option<HeightRule>,
@@ -16200,7 +18548,10 @@ pub struct TableRowHeight {
 }
 
 /// 17.4.81 `trPr` (Table Row Properties): the tag `w:trPr`, schema type `CT_TrPr`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableRowProperties {
     pub conflict_change_content: Option<Box<ConflictChangeContent>>,
@@ -16232,7 +18583,10 @@ pub enum TableRowPropertiesContent {
 
 /// 17.4.54 `tblLook` (Table Style Conditional Formatting Settings Exception): the tag `w:tblLook`,
 /// schema type `CT_TblLook`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableStyleConditionalFormattingSettingsException {
     pub first_column: Option<common_simple_types::OnOffValue>,
@@ -16246,7 +18600,10 @@ pub struct TableStyleConditionalFormattingSettingsException {
 }
 
 /// 17.18.90 `ST_TblWidth` (Table Width Units): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TableWidthUnits(pub String);
 /// The members of `ST_TblWidth`, in alphabetical order.
@@ -16261,7 +18618,10 @@ pub enum TableWidthUnitsMember {
 
 /// 17.15.2.41 `targetScreenSz` (Target Screen Size for Web Page): the tag `w:targetScreenSz`,
 /// schema type `CT_TargetScreenSz`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TargetScreenSizeForWebPage {
     pub unknown: officekit_markup_base::Unknown,
@@ -16270,7 +18630,10 @@ pub struct TargetScreenSizeForWebPage {
 
 /// 17.18.86 `ST_TargetScreenSz` (Target Screen Sizes for Generated Web Pages): the text the file
 /// carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TargetScreenSizes(pub String);
 /// The members of `ST_TargetScreenSz`, in alphabetical order.
@@ -16291,7 +18654,10 @@ pub enum TargetScreenSizesMember {
 }
 
 /// 17.3.3.31 t (Text): the tag `w:t`, schema type `CT_Text`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Text {
     pub space: Option<String>,
@@ -16300,7 +18666,10 @@ pub struct Text {
 }
 
 /// 17.3.2.4 bdr (Text Border): the tag `w:bdr`, schema type `CT_Border`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TextBorder {
     pub color: Option<ColorValue>,
@@ -16316,7 +18685,10 @@ pub struct TextBorder {
 }
 
 /// 17.16.20 format (Text Box Form Field Formatting): the tag `w:format`, schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TextBoxFormFieldFormatting {
     pub unknown: officekit_markup_base::Unknown,
@@ -16325,7 +18697,10 @@ pub struct TextBoxFormFieldFormatting {
 
 /// 17.16.26 `maxLength` (Text Box Form Field Maximum Length): the tag `w:maxLength`, schema type
 /// `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TextBoxFormFieldMaximumLength {
     pub unknown: officekit_markup_base::Unknown,
@@ -16334,7 +18709,10 @@ pub struct TextBoxFormFieldMaximumLength {
 
 /// 17.16.33 `textInput` (Text Box Form Field Properties): the tag `w:textInput`, schema type
 /// `CT_FFTextInput`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TextBoxFormFieldProperties {
     pub default_text_box_form_field_string: Option<Box<DefaultTextBoxFormFieldString>>,
@@ -16345,7 +18723,10 @@ pub struct TextBoxFormFieldProperties {
 }
 
 /// 17.16.34 type (Text Box Form Field Type): the tag `w:type`, schema type `CT_FFTextType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TextBoxFormFieldType {
     pub unknown: officekit_markup_base::Unknown,
@@ -16353,7 +18734,10 @@ pub struct TextBoxFormFieldType {
 }
 
 /// 17.18.28 `ST_FFTextType` (Text Box Form Field Type Values): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TextBoxFormFieldTypeValues(pub String);
 /// The members of `ST_FFTextType`, in alphabetical order.
@@ -16370,12 +18754,18 @@ pub enum TextBoxFormFieldTypeValuesMember {
 
 /// 14.11.11 `ST_TextScaleDecimal` (Text Expansion/Compression Percentage): the text the file
 /// carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TextExpansionCompressionPercentage(pub String);
 
 /// 17.18.20 `ST_DropCap` (Text Frame Drop Cap Location): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TextFrameDropCapLocation(pub String);
 /// The members of `ST_DropCap`, in alphabetical order.
@@ -16388,7 +18778,10 @@ pub enum TextFrameDropCapLocationMember {
 }
 
 /// 17.3.1.11 `framePr` (Text Frame Properties): the tag `w:framePr`, schema type `CT_FramePr`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TextFrameProperties {
     pub anchor_lock: Option<common_simple_types::OnOffValue>,
@@ -16410,7 +18803,10 @@ pub struct TextFrameProperties {
 }
 
 /// 17.18.40 `ST_HighlightColor` (Text Highlight Colors): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TextHighlightColors(pub String);
 /// The members of `ST_HighlightColor`, in alphabetical order.
@@ -16437,7 +18833,10 @@ pub enum TextHighlightColorsMember {
 }
 
 /// 17.3.2.15 highlight (Text Highlighting): the tag `w:highlight`, schema type `CT_Highlight`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TextHighlighting {
     pub unknown: officekit_markup_base::Unknown,
@@ -16445,9 +18844,16 @@ pub struct TextHighlighting {
 }
 
 /// 17.3.2.25 r (Text Run): the tag `w:r`, schema type `CT_R`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TextRun {
+    #[rkyv(omit_bounds)]
     pub content: Vec<TextRunContent>,
     pub properties: Option<Box<RunProperties>>,
     pub rsid_del: Option<EightDigitHexadecimalValue>,
@@ -16497,7 +18903,10 @@ pub enum TextRunContent {
 }
 
 /// 17.18.104 `ST_Wrap` (Text Wrapping around Text Frame Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TextWrappingAroundTextFrameType(pub String);
 /// The members of `ST_Wrap`, in alphabetical order.
@@ -16513,7 +18922,10 @@ pub enum TextWrappingAroundTextFrameTypeMember {
 }
 
 /// The tag `w:textboxTightWrap`, schema type `CT_TextboxTightWrap`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TextboxTightWrap {
     pub unknown: officekit_markup_base::Unknown,
@@ -16521,7 +18933,10 @@ pub struct TextboxTightWrap {
 }
 
 /// 17.18.97 `ST_ThemeColor` (Theme Color): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ThemeColor(pub String);
 /// The members of `ST_ThemeColor`, in alphabetical order.
@@ -16549,7 +18964,10 @@ pub enum ThemeColorMember {
 
 /// 17.15.1.20 `clrSchemeMapping` (Theme Color Mappings): the tag `w:clrSchemeMapping`, schema type
 /// `CT_ColorSchemeMapping`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ThemeColorMappings {
     pub accent1: Option<ThemeColorReference>,
@@ -16568,7 +18986,10 @@ pub struct ThemeColorMappings {
 }
 
 /// 17.18.103 `ST_WmlColorSchemeIndex` (Theme Color Reference): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ThemeColorReference(pub String);
 /// The members of `ST_WmlColorSchemeIndex`, in alphabetical order.
@@ -16590,7 +19011,10 @@ pub enum ThemeColorReferenceMember {
 }
 
 /// 17.18.96 `ST_Theme` (Theme Font): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ThemeFont(pub String);
 /// The members of `ST_Theme`, in alphabetical order.
@@ -16609,7 +19033,10 @@ pub enum ThemeFontMember {
 
 /// 17.15.1.88 `themeFontLang` (Theme Font Languages): the tag `w:themeFontLang`, schema type
 /// `CT_Language`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ThemeFontLanguages {
     pub bidi: Option<String>,
@@ -16619,7 +19046,10 @@ pub struct ThemeFontLanguages {
 }
 
 /// 17.18.92 `ST_TextboxTightWrap` (Lines To Tight Wrap Within Text Box): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TightWrapWithinTextBox(pub String);
 /// The members of `ST_TextboxTightWrap`, in alphabetical order.
@@ -16635,7 +19065,10 @@ pub enum TightWrapWithinTextBoxMember {
 
 /// 17.15.2.25 `marH` (Top and Bottom Margin for Frame): the tag `w:marH`, schema type
 /// `CT_PixelsMeasure`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TopAndBottomMarginForFrame {
     pub unknown: officekit_markup_base::Unknown,
@@ -16643,7 +19076,10 @@ pub struct TopAndBottomMarginForFrame {
 }
 
 /// 17.6.21 top (Top Border): the tag `w:top`, schema type `CT_TopPageBorder`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TopBorder {
     pub color: Option<ColorValue>,
@@ -16663,7 +19099,10 @@ pub struct TopBorder {
 
 /// 17.4.73 tl2br (Table Cell Top Left to Bottom Right Diagonal Border): the tag `w:tl2br`, schema
 /// type `CT_Border`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TopLeftBottomRightDiagonalBorder {
     pub color: Option<ColorValue>,
@@ -16680,7 +19119,10 @@ pub struct TopLeftBottomRightDiagonalBorder {
 
 /// 17.15.2.28 `marTop` (Top Margin for HTML div): the tag `w:marTop`, schema type
 /// `CT_SignedTwipsMeasure`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TopMarginForHTMLDiv {
     pub unknown: officekit_markup_base::Unknown,
@@ -16689,7 +19131,10 @@ pub struct TopMarginForHTMLDiv {
 
 /// 17.4.79 tr2bl (Table Cell Top Right to Bottom Left Diagonal Border): the tag `w:tr2bl`, schema
 /// type `CT_Border`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TopRightBottomLeftDiagonalBorder {
     pub color: Option<ColorValue>,
@@ -16706,7 +19151,10 @@ pub struct TopRightBottomLeftDiagonalBorder {
 
 /// 17.15.1.89 `trackRevisions` (Track Revisions to Document): the tag `w:trackRevisions`, schema
 /// type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TrackRevisionsToDocument {
     pub unknown: officekit_markup_base::Unknown,
@@ -16779,7 +19227,10 @@ pub enum TrackedRunContent {
 
 /// 14.8.3.6 `convMailMergeEsc` (Treat Backslash Quotation Delimiter as Two Quotation Marks): the
 /// tag `w:convMailMergeEsc`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TreatBackslashQuotationDelimiterAsTwoQuotationMarks {
     pub unknown: officekit_markup_base::Unknown,
@@ -16787,7 +19238,10 @@ pub struct TreatBackslashQuotationDelimiterAsTwoQuotationMarks {
 }
 
 /// The tag `w:truncateFontHeightsLikeWP6`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TruncateFontHeightsLikeWP6 {
     pub unknown: officekit_markup_base::Unknown,
@@ -16795,13 +19249,19 @@ pub struct TruncateFontHeightsLikeWP6 {
 }
 
 /// 17.18.98 `ST_UcharHexNumber` (Two Digit Hexadecimal Value): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TwoDigitHexadecimalValue(pub String);
 
 /// 17.18.8 `ST_CombineBrackets` (Two Lines in One Enclosing Character Type): the text the file
 /// carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TwoLinesEnclosingCharacterType(pub String);
 /// The members of `ST_CombineBrackets`, in alphabetical order.
@@ -16816,7 +19276,10 @@ pub enum TwoLinesEnclosingCharacterTypeMember {
 }
 
 /// 17.14.34 udl (UDL Connection String): the tag `w:udl`, schema type `CT_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UDLConnectionString {
     pub unknown: officekit_markup_base::Unknown,
@@ -16824,7 +19287,10 @@ pub struct UDLConnectionString {
 }
 
 /// 17.3.2.40 u (Underline): the tag `w:u`, schema type `CT_Underline`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Underline {
     pub color: Option<ColorValue>,
@@ -16837,7 +19303,10 @@ pub struct Underline {
 
 /// 17.15.3.8 `ulTrailSpace` (Underline All Trailing Spaces): the tag `w:ulTrailSpace`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UnderlineAllTrailingSpaces {
     pub unknown: officekit_markup_base::Unknown,
@@ -16846,7 +19315,10 @@ pub struct UnderlineAllTrailingSpaces {
 
 /// 14.8.3.47 `underlineTabInNumList` (Underline Following Character Following Numbering): the tag
 /// `w:underlineTabInNumList`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UnderlineFollowingCharacterFollowingNumbering {
     pub unknown: officekit_markup_base::Unknown,
@@ -16854,7 +19326,10 @@ pub struct UnderlineFollowingCharacterFollowingNumbering {
 }
 
 /// 17.18.99 `ST_Underline` (Underline Patterns): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UnderlinePatterns(pub String);
 /// The members of `ST_Underline`, in alphabetical order.
@@ -16882,7 +19357,10 @@ pub enum UnderlinePatternsMember {
 }
 
 /// 17.5.2.18 id (Unique ID): the tag `w:id`, schema type `CT_DecimalNumber`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UniqueID {
     pub unknown: officekit_markup_base::Unknown,
@@ -16891,7 +19369,10 @@ pub struct UniqueID {
 
 /// 17.14.35 `uniqueTag` (Unique Value for Record): the tag `w:uniqueTag`, schema type
 /// `CT_Base64Binary`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UniqueValueForRecord {
     pub unknown: officekit_markup_base::Unknown,
@@ -16900,7 +19381,10 @@ pub struct UniqueValueForRecord {
 
 /// 17.15.1.48 `forceUpgrade` (Upgrade Document on Open): the tag `w:forceUpgrade`, schema type
 /// `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UpgradeDocumentOnOpen {
     pub unknown: officekit_markup_base::Unknown,
@@ -16908,7 +19392,10 @@ pub struct UpgradeDocumentOnOpen {
 
 /// 14.8.3.49 `useAnsiKerningPairs` (Use ANSI Kerning Pairs from Fonts): the tag
 /// `w:useAnsiKerningPairs`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UseANSIKerningPairsFromFonts {
     pub unknown: officekit_markup_base::Unknown,
@@ -16916,7 +19403,10 @@ pub struct UseANSIKerningPairsFromFonts {
 }
 
 /// The tag `w:useAltKinsokuLineBreakRules`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UseAltKinsokuLineBreakRules {
     pub unknown: officekit_markup_base::Unknown,
@@ -16925,7 +19415,10 @@ pub struct UseAltKinsokuLineBreakRules {
 
 /// 14.8.3.5 `cachedColBalance` (Use Cached Paragraph Information for Column Balancing): the tag
 /// `w:cachedColBalance`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UseCachedParagraphInformationForColumnBalancing {
     pub unknown: officekit_markup_base::Unknown,
@@ -16933,7 +19426,10 @@ pub struct UseCachedParagraphInformationForColumnBalancing {
 }
 
 /// 17.3.2.7 cs (Use Complex Script Formatting on Run): the tag `w:cs`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UseComplexScriptFormattingOnRun {
     pub unknown: officekit_markup_base::Unknown,
@@ -16942,7 +19438,10 @@ pub struct UseComplexScriptFormattingOnRun {
 
 /// 17.14.13 `dynamicAddress` (Use Country-Based Address Field Ordering): the tag
 /// `w:dynamicAddress`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UseCountryBasedAddressFieldOrdering {
     pub unknown: officekit_markup_base::Unknown,
@@ -16951,7 +19450,10 @@ pub struct UseCountryBasedAddressFieldOrdering {
 
 /// 14.8.3.55 `useWord97LineBreakRules` (Use Incorrect Inter-Character Spacing Rules): the tag
 /// `w:useWord97LineBreakRules`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UseIncorrectInterCharacterSpacingRules {
     pub unknown: officekit_markup_base::Unknown,
@@ -16960,7 +19462,10 @@ pub struct UseIncorrectInterCharacterSpacingRules {
 
 /// 17.3.1.18 `mirrorIndents` (Use Left/Right Indents as Inside/Outside Indents): the tag
 /// `w:mirrorIndents`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UseLeftRightIndentsAsInsideOutsideIndents {
     pub unknown: officekit_markup_base::Unknown,
@@ -16968,7 +19473,10 @@ pub struct UseLeftRightIndentsAsInsideOutsideIndents {
 }
 
 /// The tag `w:useNormalStyleForList`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UseNormalStyleForList {
     pub unknown: officekit_markup_base::Unknown,
@@ -16977,7 +19485,10 @@ pub struct UseNormalStyleForList {
 
 /// 14.8.3.52 `usePrinterMetrics` (Use Printer Metrics To Display Documents): the tag
 /// `w:usePrinterMetrics`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UsePrinterMetricsToDisplayDocuments {
     pub unknown: officekit_markup_base::Unknown,
@@ -16985,7 +19496,10 @@ pub struct UsePrinterMetricsToDisplayDocuments {
 }
 
 /// The tag `w:useSingleBorderforContiguousCells`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UseSingleBorderforContiguousCells {
     pub unknown: officekit_markup_base::Unknown,
@@ -16994,7 +19508,10 @@ pub struct UseSingleBorderforContiguousCells {
 
 /// 14.8.3.26 `mwSmallCaps` (Use Specific Small Caps Algorithm): the tag `w:mwSmallCaps`, schema
 /// type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UseSpecificSmallCapsAlgorithm {
     pub unknown: officekit_markup_base::Unknown,
@@ -17003,7 +19520,10 @@ pub struct UseSpecificSmallCapsAlgorithm {
 
 /// 14.8.3.57 `wpSpaceWidth` (Use Specific Space Width): the tag `w:wpSpaceWidth`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UseSpecificSpaceWidth {
     pub unknown: officekit_markup_base::Unknown,
@@ -17012,7 +19532,10 @@ pub struct UseSpecificSpaceWidth {
 
 /// 14.8.3.44 `suppressTopSpacingWP` (Use Static Text Leading): the tag `w:suppressTopSpacingWP`,
 /// schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UseStaticTextLeading {
     pub unknown: officekit_markup_base::Unknown,
@@ -17020,7 +19543,10 @@ pub struct UseStaticTextLeading {
 }
 
 /// The tag `w:useWord2002TableStyleRules`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UseWord2002TableStyleRules {
     pub unknown: officekit_markup_base::Unknown,
@@ -17029,7 +19555,10 @@ pub struct UseWord2002TableStyleRules {
 
 /// 14.8.4.1 `relyOnVML` (Utilize VML When Saving as Web Page): the tag `w:relyOnVML`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UtilizeVMLWhenSavingAsWebPage {
     pub unknown: officekit_markup_base::Unknown,
@@ -17037,10 +19566,17 @@ pub struct UtilizeVMLWhenSavingAsWebPage {
 }
 
 /// 14.3.2.2 pict (VML Object): the tag `w:pict`, schema type `CT_Picture`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct VMLObject {
     pub anchor_id: Option<String>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<VmlElementContent>,
     pub embedded_control: Option<Box<EmbeddedControl>>,
     pub embedded_video: Option<Box<EmbeddedVideo>>,
@@ -17048,7 +19584,10 @@ pub struct VMLObject {
 }
 
 /// 17.18.101 `ST_VerticalJc` (Vertical Alignment Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct VerticalAlignmentType(pub String);
 /// The members of `ST_VerticalJc`, in alphabetical order.
@@ -17062,7 +19601,10 @@ pub enum VerticalAlignmentTypeMember {
 }
 
 /// 17.18.100 `ST_VAnchor` (Vertical Anchor Location): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct VerticalAnchorLocation(pub String);
 /// The members of `ST_VAnchor`, in alphabetical order.
@@ -17076,7 +19618,10 @@ pub enum VerticalAnchorLocationMember {
 
 /// 17.3.1.39 `textAlignment` (Vertical Character Alignment on Line): the tag `w:textAlignment`,
 /// schema type `CT_TextAlignment`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct VerticalCharacterAlignmentOnLine {
     pub unknown: officekit_markup_base::Unknown,
@@ -17084,7 +19629,10 @@ pub struct VerticalCharacterAlignmentOnLine {
 }
 
 /// 17.18.91 `ST_TextAlignment` (Vertical Text Alignment Types): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct VerticalTextAlignmentTypes(pub String);
 /// The members of `ST_TextAlignment`, in alphabetical order.
@@ -17099,7 +19647,10 @@ pub enum VerticalTextAlignmentTypesMember {
 }
 
 /// 17.4.84 `vMerge` (Vertically Merged Cell): the tag `w:vMerge`, schema type `CT_VMerge`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct VerticallyMergedCell {
     pub unknown: officekit_markup_base::Unknown,
@@ -17108,7 +19659,10 @@ pub struct VerticallyMergedCell {
 
 /// 17.13.5.3 `cellMerge` (Vertically Merged/Split Table Cells): the tag `w:cellMerge`, schema type
 /// `CT_CellMergeTrackChange`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct VerticallyMergedSplitTableCells {
     pub author: Option<String>,
@@ -17122,7 +19676,10 @@ pub struct VerticallyMergedSplitTableCells {
 
 /// 17.3.2.24 position (Vertically Raised or Lowered Text): the tag `w:position`, schema type
 /// `CT_SignedHpsMeasure`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct VerticallyRaisedOrLoweredText {
     pub unknown: officekit_markup_base::Unknown,
@@ -17131,7 +19688,10 @@ pub struct VerticallyRaisedOrLoweredText {
 
 /// 17.14.36 `viewMergedData` (View Merged Data Within Document): the tag `w:viewMergedData`, schema
 /// type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ViewMergedDataWithinDocument {
     pub unknown: officekit_markup_base::Unknown,
@@ -17140,7 +19700,10 @@ pub struct ViewMergedDataWithinDocument {
 
 /// 17.15.1.69 `revisionView` (Visibility of Annotation Types): the tag `w:revisionView`, schema
 /// type `CT_TrackChangesView`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct VisibilityOfAnnotationTypes {
     pub comments: Option<common_simple_types::OnOffValue>,
@@ -17153,7 +19716,10 @@ pub struct VisibilityOfAnnotationTypes {
 
 /// 17.4.1 `bidiVisual` (Visually Right to Left Table): the tag `w:bidiVisual`, schema type
 /// `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct VisuallyRightToLeftTable {
     pub unknown: officekit_markup_base::Unknown,
@@ -17234,7 +19800,10 @@ pub enum VmlOfficeDrawingElementContent {
 }
 
 /// 17.3.2.44 `webHidden` (Web Hidden Text): the tag `w:webHidden`, schema type `CT_OnOff`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct WebHiddenText {
     pub unknown: officekit_markup_base::Unknown,
@@ -17243,7 +19812,10 @@ pub struct WebHiddenText {
 
 /// 17.15.2.45 `webSettings` (Web Page Settings): the tag `w:webSettings`, schema type
 /// `CT_WebSettings`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct WebPageSettings {
     pub allow_png_as_graphic_format: Option<Box<AllowPNGAsGraphicFormat>>,
@@ -17264,7 +19836,10 @@ pub struct WebPageSettings {
 
 /// 17.15.1.93 `writeProtection` (Write Protection): the tag `w:writeProtection`, schema type
 /// `CT_WriteProtection`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct WriteProtection {
     pub alg_id_ext: Option<EightDigitHexadecimalValue>,
@@ -17288,7 +19863,10 @@ pub struct WriteProtection {
 }
 
 /// 17.5.2.6 `dataBinding` (XML Mapping): the tag `w:dataBinding`, schema type `CT_DataBinding`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct XMLMapping {
     pub prefix_mappings: Option<String>,

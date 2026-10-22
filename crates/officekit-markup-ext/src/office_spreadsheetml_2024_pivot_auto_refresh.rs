@@ -234,7 +234,10 @@ pub static AUTO_REFRESH_SHAPE: officekit_markup_base::Shape = officekit_markup_b
 };
 
 /// The tag `xlpar:autoRefresh`, schema type `boolean` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AutoRefresh {
     pub unknown: officekit_markup_base::Unknown,

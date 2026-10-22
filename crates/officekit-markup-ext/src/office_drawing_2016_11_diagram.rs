@@ -256,7 +256,10 @@ pub static AUTO_BU_NODE_INFO_LST_SHAPE: officekit_markup_base::Shape =
     };
 
 /// The tag `dgm1611:autoBuNodeInfo`, schema type `CT_NumberDiagramInfo` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AutoBuNodeInfo {
     pub bu_pr: Box<BuPr>,
@@ -266,7 +269,10 @@ pub struct AutoBuNodeInfo {
 }
 
 /// The tag `dgm1611:autoBuNodeInfoLst`, schema type `CT_NumberDiagramInfoList` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AutoBuNodeInfoLst {
     pub auto_bu_node_info: Vec<AutoBuNodeInfo>,
@@ -274,7 +280,10 @@ pub struct AutoBuNodeInfoLst {
 }
 
 /// The tag `dgm1611:buPr`, schema type `CT_DiagramAutoBullet` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BuPr {
     pub content: Box<drawing::TextBulletContent>,
@@ -335,7 +344,10 @@ pub trait Context: crate::Context {
 }
 
 /// `ST_STorageType`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct STorageType(pub String);
 /// The members of `ST_STorageType`, in alphabetical order.

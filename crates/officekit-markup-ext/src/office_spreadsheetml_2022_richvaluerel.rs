@@ -301,7 +301,10 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `xlrvrel:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExtLst {
     pub extension: Vec<spreadsheet::Extension>,
@@ -309,7 +312,10 @@ pub struct ExtLst {
 }
 
 /// The tag `xlrvrel:rel`, schema type `CT_RichValueRelRelationship` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Rel {
     pub id: Option<String>,
@@ -317,7 +323,10 @@ pub struct Rel {
 }
 
 /// The tag `xlrvrel:richValueRels`, schema type `CT_RichValueRels` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RichValueRels {
     pub ext_lst: Option<Box<ExtLst>>,

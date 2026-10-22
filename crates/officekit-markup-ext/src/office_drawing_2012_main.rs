@@ -276,7 +276,10 @@ pub static SIGNATURE_LINE_SHAPE: officekit_markup_base::Shape = officekit_markup
 };
 
 /// The tag `a15:backgroundPr`, schema type `CT_BackgroundPr` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BackgroundPr {
     pub bw_mode: Option<drawing::BlackAndWhiteMode>,
@@ -360,7 +363,10 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `a15:nonVisualGroupProps`, schema type `CT_NonVisualGroupProps` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NonVisualGroupProps {
     pub is_legacy_group: Option<String>,
@@ -368,7 +374,10 @@ pub struct NonVisualGroupProps {
 }
 
 /// The tag `a15:objectPr`, schema type `CT_ObjectPr` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ObjectPr {
     pub is_active_x: Option<String>,
@@ -378,7 +387,10 @@ pub struct ObjectPr {
 }
 
 /// The tag `a15:signatureLine`, schema type `CT_SignatureLine` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SignatureLine {
     pub addl_xml: Option<String>,
@@ -397,7 +409,10 @@ pub struct SignatureLine {
 }
 
 /// `ST_TargetScreenSz`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TargetScreenSz(pub String);
 /// The members of `ST_TargetScreenSz`, in alphabetical order.

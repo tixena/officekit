@@ -52,6 +52,9 @@ zip = { version = "9.0.4", default-features = false, features = ["deflate-flate2
 # Reads and writes the XML of every part (D29).
 quick-xml = "0.42"
 
+# The typed tree archived, read in place without parsing.
+rkyv = { version = "0.8", default-features = false, features = ["std", "bytecheck"] }
+
 # Error handling
 anyhow = "1"
 thiserror = "2"
@@ -64,6 +67,17 @@ tempfile = "3"
 lto = true
 codegen-units = 1
 panic = "abort"
+
+# The three markup crates keep file and line numbers only: their full debug info
+# takes memory past the gate's cap.
+[profile.dev.package.officekit-markup-base]
+debug = "line-tables-only"
+
+[profile.dev.package.officekit-markup-core]
+debug = "line-tables-only"
+
+[profile.dev.package.officekit-markup-ext]
+debug = "line-tables-only"
 
 [workspace.lints.clippy]
 all = { level = "deny", priority = -1 }

@@ -269,7 +269,10 @@ pub static ANIM_PR_SHAPE: officekit_markup_base::Shape = officekit_markup_base::
 };
 
 /// The tag `a3danim:animPr`, schema type `CT_AnimationProperties` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AnimPr {
     pub auto: Option<String>,
@@ -346,7 +349,10 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `a3danim:embedAnim`, schema type `CT_EmbeddedAnimation` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EmbedAnim {
     pub anim_id: Option<String>,
@@ -356,7 +362,10 @@ pub struct EmbedAnim {
 }
 
 /// The tag `a3danim:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExtLst {
     pub extension: Vec<drawing::Extension>,
@@ -364,7 +373,10 @@ pub struct ExtLst {
 }
 
 /// The tag `a3danim:posterFrame`, schema type `CT_PosterFrame` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PosterFrame {
     pub anim_id: Option<String>,

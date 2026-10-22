@@ -250,7 +250,10 @@ pub static CHECKSUM_SHAPE: officekit_markup_base::Shape = officekit_markup_base:
 };
 
 /// The tag `xltc2:checksum`, schema type `unsignedInt` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Checksum {
     pub unknown: officekit_markup_base::Unknown,
@@ -310,7 +313,10 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `xltc2:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExtLst {
     pub extension: Vec<spreadsheet::Extension>,
@@ -318,7 +324,10 @@ pub struct ExtLst {
 }
 
 /// The tag `xltc2:hyperlink`, schema type `CT_CommentHyperlink` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Hyperlink {
     pub ext_lst: Option<Box<ExtLst>>,

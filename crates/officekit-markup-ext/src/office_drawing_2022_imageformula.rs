@@ -259,7 +259,10 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `aif:imageFormula`, schema type `CT_ImageFormula` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ImageFormula {
     pub formula: Option<String>,

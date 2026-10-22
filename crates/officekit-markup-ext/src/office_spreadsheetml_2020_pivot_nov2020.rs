@@ -315,7 +315,10 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `xxpim:dataFieldFutureData`, schema type `CT_DataFieldFutureData` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DataFieldFutureData {
     pub source_field: Option<String>,
@@ -324,7 +327,10 @@ pub struct DataFieldFutureData {
 }
 
 /// The tag `xxpim:ignorableAfterVersion`, schema type `CT_Ignorable` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct IgnorableAfterVersion {
     pub unknown: officekit_markup_base::Unknown,
@@ -332,7 +338,10 @@ pub struct IgnorableAfterVersion {
 }
 
 /// The tag `xxpim:implicitMeasureSupport`, schema type `boolean` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ImplicitMeasureSupport {
     pub unknown: officekit_markup_base::Unknown,

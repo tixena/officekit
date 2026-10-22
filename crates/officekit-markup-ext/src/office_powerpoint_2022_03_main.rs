@@ -319,7 +319,10 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `p223:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExtLst {
     pub extension: Vec<presentation::Extension>,
@@ -327,7 +330,10 @@ pub struct ExtLst {
 }
 
 /// The tag `p223:instance`, schema type `CT_ReactionInstance` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Instance {
     pub author_id: Option<String>,
@@ -337,7 +343,10 @@ pub struct Instance {
 }
 
 /// The tag `p223:reactions`, schema type `CT_Reactions` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Reactions {
     pub rxn: Vec<Rxn>,
@@ -345,7 +354,10 @@ pub struct Reactions {
 }
 
 /// The tag `p223:rxn`, schema type `CT_Reaction` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Rxn {
     pub instance: Vec<Instance>,

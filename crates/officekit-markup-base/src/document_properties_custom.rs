@@ -215,6 +215,7 @@
 //!
 //! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/custom-properties`.
 
+mod archive;
 pub mod read;
 pub mod write;
 
@@ -286,7 +287,10 @@ pub static CUSTOM_FILE_PROPERTY_CONTENT_TAGS: crate::Accept = crate::Accept {
 
 /// 22.3.2.1 Properties (Custom File Properties): the tag `op:Properties`, schema type
 /// `CT_Properties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomFileProperties {
     pub custom_file_property: Vec<CustomFileProperty>,
@@ -294,7 +298,10 @@ pub struct CustomFileProperties {
 }
 
 /// 22.3.2.2 property (Custom File Property): the tag `op:property`, schema type `CT_Property`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomFileProperty {
     pub content: Box<CustomFilePropertyContent>,

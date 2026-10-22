@@ -215,6 +215,7 @@
 //!
 //! The namespace is `urn:schemas-microsoft-com:office:office`.
 
+mod archive;
 pub mod read;
 pub mod write;
 
@@ -222,6 +223,10 @@ use officekit_markup_base::common_simple_types;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
+use rkyv::de::Pooling;
+use rkyv::rancor::Source;
+use rkyv::ser::{Allocator, Sharing, Writer};
+use rkyv::validation::{ArchiveContext, SharedContext};
 
 const NS_O: Option<NamespaceId> = Some(60);
 const NS_R: Option<NamespaceId> = Some(88);
@@ -767,7 +772,10 @@ pub static SHAPE_LAYOUT_PROPERTIES_CONTENT_TAGS: officekit_markup_base::Accept =
     };
 
 /// 19.2.3.3 `ST_BWMode` (Black And White Modes): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BlackAndWhiteModes(pub String);
 /// The members of `ST_BWMode`, in alphabetical order.
@@ -789,7 +797,10 @@ pub enum BlackAndWhiteModesMember {
 }
 
 /// 19.2.2.2 callout (Callout): the tag `o:callout`, schema type `CT_Callout`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Callout {
     pub accentbar: Option<common_simple_types::BooleanValue>,
@@ -810,7 +821,10 @@ pub struct Callout {
 }
 
 /// 19.2.3.2 `ST_Angle` (Callout Angles): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CalloutAngles(pub String);
 /// The members of `ST_Angle`, in alphabetical order.
@@ -826,7 +840,10 @@ pub enum CalloutAnglesMember {
 }
 
 /// 19.2.2.7 complex (Complex): the tag `o:complex`, schema type `CT_Complex`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Complex {
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
@@ -834,7 +851,10 @@ pub struct Complex {
 }
 
 /// 19.2.3.8 `ST_ConnectType` (Connection Locations Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ConnectionLocationsType(pub String);
 /// The members of `ST_ConnectType`, in alphabetical order.
@@ -848,7 +868,10 @@ pub enum ConnectionLocationsTypeMember {
 }
 
 /// 19.2.3.7 `ST_ConnectorType` (Connector Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ConnectorType(pub String);
 /// The members of `ST_ConnectorType`, in alphabetical order.
@@ -862,12 +885,18 @@ pub enum ConnectorTypeMember {
 }
 
 /// 19.2.3.10 `ST_DiagramLayout` (Diagram Layout Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DiagramLayoutType(pub String);
 
 /// 19.2.2.24 rel (Diagram Relationship): the tag `o:rel`, schema type `CT_Relation`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DiagramRelationship {
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
@@ -879,7 +908,10 @@ pub struct DiagramRelationship {
 
 /// 19.2.2.25 relationtable (Diagram Relationship Table): the tag `o:relationtable`, schema type
 /// `CT_RelationTable`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DiagramRelationshipTable {
     pub diagram_relationship: Vec<DiagramRelationship>,
@@ -889,7 +921,10 @@ pub struct DiagramRelationshipTable {
 
 /// 19.2.2.30 signatureline (Digital Signature Line): the tag `o:signatureline`, schema type
 /// `CT_SignatureLine`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DigitalSignatureLine {
     pub addlxml: Option<String>,
@@ -909,7 +944,10 @@ pub struct DigitalSignatureLine {
 }
 
 /// 19.2.2.20 `OLEObject` (Embedded OLE Object): the tag `o:OLEObject`, schema type `CT_OLEObject`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EmbeddedOLEObject {
     pub draw_aspect: Option<OLEDrawAspect>,
@@ -927,7 +965,10 @@ pub struct EmbeddedOLEObject {
 
 /// 19.2.2.17 `LinkType` (Embedded Object Alternate Image Request): the tag `o:LinkType`, schema
 /// type `ST_OLELinkType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EmbeddedObjectAlternateImageRequest {
     pub unknown: officekit_markup_base::Unknown,
@@ -936,7 +977,10 @@ pub struct EmbeddedObjectAlternateImageRequest {
 
 /// 19.2.2.19 `LockedField` (Embedded Object Cannot Be Refreshed): the tag `o:LockedField`, schema
 /// type `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EmbeddedObjectCannotBeRefreshed {
     pub unknown: officekit_markup_base::Unknown,
@@ -944,7 +988,10 @@ pub struct EmbeddedObjectCannotBeRefreshed {
 }
 
 /// The tag `o:extrusion`, schema type `CT_Extrusion`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Extrusion {
     pub autorotationcenter: Option<common_simple_types::BooleanValue>,
@@ -984,7 +1031,10 @@ pub struct Extrusion {
 }
 
 /// 19.2.3.6 `ST_ColorMode` (Extrusion Color Types): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExtrusionColorTypes(pub String);
 /// The members of `ST_ColorMode`, in alphabetical order.
@@ -996,7 +1046,10 @@ pub enum ExtrusionColorTypesMember {
 }
 
 /// 19.2.3.11 `ST_ExtrusionPlane` (Extrusion Planes): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExtrusionPlanes(pub String);
 /// The members of `ST_ExtrusionPlane`, in alphabetical order.
@@ -1009,7 +1062,10 @@ pub enum ExtrusionPlanesMember {
 }
 
 /// 19.2.3.12 `ST_ExtrusionRender` (Extrusion Rendering Types): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExtrusionRenderingTypes(pub String);
 /// The members of `ST_ExtrusionRender`, in alphabetical order.
@@ -1022,7 +1078,10 @@ pub enum ExtrusionRenderingTypesMember {
 }
 
 /// 19.2.3.13 `ST_ExtrusionType` (Extrusion Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExtrusionType(pub String);
 /// The members of `ST_ExtrusionType`, in alphabetical order.
@@ -1034,7 +1093,10 @@ pub enum ExtrusionTypeMember {
 }
 
 /// 19.2.2.15 ink (Ink): the tag `o:ink`, schema type `CT_Ink`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Ink {
     pub annotation: Option<common_simple_types::BooleanValue>,
@@ -1044,7 +1106,10 @@ pub struct Ink {
 }
 
 /// 19.2.3.17 `ST_InsetMode` (Inset Margin Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct InsetMarginType(pub String);
 /// The members of `ST_InsetMode`, in alphabetical order.
@@ -1056,7 +1121,10 @@ pub enum InsetMarginTypeMember {
 }
 
 /// 19.2.2.5 colormru (Most Recently Used Colors): the tag `o:colormru`, schema type `CT_ColorMru`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MostRecentlyUsedColors {
     pub colors: Option<String>,
@@ -1066,10 +1134,17 @@ pub struct MostRecentlyUsedColors {
 
 /// 19.2.2.28 shapedefaults (New Shape Defaults): the tag `o:shapedefaults`, schema type
 /// `CT_ShapeDefaults`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NewShapeDefaults {
     pub allowincell: Option<common_simple_types::BooleanValue>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<NewShapeDefaultsContent>,
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
     pub fill: Option<common_simple_types::BooleanValue>,
@@ -1099,7 +1174,10 @@ pub enum NewShapeDefaultsContent {
 }
 
 /// `ST_OLEDrawAspect`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct OLEDrawAspect(pub String);
 /// The members of `ST_OLEDrawAspect`, in alphabetical order.
@@ -1111,7 +1189,10 @@ pub enum OLEDrawAspectMember {
 }
 
 /// `ST_OLEType`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct OLEType(pub String);
 /// The members of `ST_OLEType`, in alphabetical order.
@@ -1123,7 +1204,10 @@ pub enum OLETypeMember {
 }
 
 /// `ST_OLEUpdateMode`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct OLEUpdateMode(pub String);
 /// The members of `ST_OLEUpdateMode`, in alphabetical order.
@@ -1135,7 +1219,10 @@ pub enum OLEUpdateModeMember {
 }
 
 /// 19.2.2.9 entry (Regroup Entry): the tag `o:entry`, schema type `CT_Entry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RegroupEntry {
     pub new: Option<String>,
@@ -1144,7 +1231,10 @@ pub struct RegroupEntry {
 }
 
 /// 19.2.2.22 r (Rule): the tag `o:r`, schema type `CT_R`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Rule {
     pub how: Option<StHow>,
@@ -1156,7 +1246,10 @@ pub struct Rule {
 }
 
 /// 19.2.2.27 rules (Rule Set): the tag `o:rules`, schema type `CT_Rules`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RuleSet {
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
@@ -1165,7 +1258,10 @@ pub struct RuleSet {
 }
 
 /// 19.2.3.22 `ST_RType` (Rule Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RuleType(pub String);
 /// The members of `ST_RType`, in alphabetical order.
@@ -1179,7 +1275,10 @@ pub enum RuleTypeMember {
 }
 
 /// 19.2.3.23 `ST_ScreenSize` (Screen Sizes Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ScreenSizesType(pub String);
 /// The members of `ST_ScreenSize`, in alphabetical order.
@@ -1195,7 +1294,10 @@ pub enum ScreenSizesTypeMember {
 }
 
 /// 19.2.2.3 clippath (Shape Clipping Path): the tag `o:clippath`, schema type `CT_ClipPath`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShapeClippingPath {
     pub unknown: officekit_markup_base::Unknown,
@@ -1203,7 +1305,10 @@ pub struct ShapeClippingPath {
 }
 
 /// 19.2.2.13 fill (Shape Fill Extended Properties): the tag `o:fill`, schema type `CT_Fill`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShapeFillExtendedProperties {
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
@@ -1212,7 +1317,10 @@ pub struct ShapeFillExtendedProperties {
 }
 
 /// 19.2.3.14 `ST_FillType` (Shape Fill Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShapeFillType(pub String);
 /// The members of `ST_FillType`, in alphabetical order.
@@ -1232,7 +1340,10 @@ pub enum ShapeFillTypeMember {
 
 /// 19.2.2.23 regrouptable (Shape Grouping History): the tag `o:regrouptable`, schema type
 /// `CT_RegroupTable`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShapeGroupingHistory {
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
@@ -1241,7 +1352,10 @@ pub struct ShapeGroupingHistory {
 }
 
 /// 19.2.2.14 idmap (Shape ID Map): the tag `o:idmap`, schema type `CT_IdMap`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShapeIDMap {
     pub data: Option<String>,
@@ -1251,7 +1365,10 @@ pub struct ShapeIDMap {
 
 /// 19.2.2.29 shapelayout (Shape Layout Properties): the tag `o:shapelayout`, schema type
 /// `CT_ShapeLayout`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShapeLayoutProperties {
     pub content: Vec<ShapeLayoutPropertiesContent>,
@@ -1270,7 +1387,10 @@ pub enum ShapeLayoutPropertiesContent {
 }
 
 /// 19.2.2.18 lock (Shape Protections): the tag `o:lock`, schema type `CT_Lock`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShapeProtections {
     pub adjusthandles: Option<common_simple_types::BooleanValue>,
@@ -1289,7 +1409,10 @@ pub struct ShapeProtections {
 }
 
 /// 19.2.2.21 proxy (Shape Reference): the tag `o:proxy`, schema type `CT_Proxy`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShapeReference {
     pub connectloc: Option<String>,
@@ -1300,7 +1423,10 @@ pub struct ShapeReference {
 }
 
 /// 19.2.2.31 skew (Skew Transform): the tag `o:skew`, schema type `CT_Skew`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SkewTransform {
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
@@ -1313,7 +1439,10 @@ pub struct SkewTransform {
 }
 
 /// 19.2.3.15 `ST_How` (Alignment Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StHow(pub String);
 /// The members of `ST_How`, in alphabetical order.
@@ -1329,7 +1458,10 @@ pub enum StHowMember {
 }
 
 /// 19.2.3.16 `ST_HrAlign` (Alignment Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StHrAlign(pub String);
 /// The members of `ST_HrAlign`, in alphabetical order.
@@ -1343,16 +1475,26 @@ pub enum StHrAlignMember {
 
 /// 19.2.2.10 equationxml (Storage for Alternate Math Content): the tag `o:equationxml`, schema type
 /// `CT_EquationXml`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StorageForAlternateMathContent {
+    #[rkyv(omit_bounds)]
     pub content: Box<super::drawing::AnyElementContent>,
     pub content_type: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.2.2.1 bottom (Text Box Bottom Stroke): the tag `o:bottom`, schema type `CT_StrokeChild`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TextBoxBottomStroke {
     pub althref: Option<String>,
@@ -1386,7 +1528,10 @@ pub struct TextBoxBottomStroke {
 }
 
 /// 19.2.2.6 column (Text Box Interior Stroke): the tag `o:column`, schema type `CT_StrokeChild`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TextBoxInteriorStroke {
     pub althref: Option<String>,
@@ -1420,7 +1565,10 @@ pub struct TextBoxInteriorStroke {
 }
 
 /// 19.2.2.16 left (Text Box Left Stroke): the tag `o:left`, schema type `CT_StrokeChild`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TextBoxLeftStroke {
     pub althref: Option<String>,
@@ -1454,7 +1602,10 @@ pub struct TextBoxLeftStroke {
 }
 
 /// 19.2.2.26 right (Text Box Right Stroke): the tag `o:right`, schema type `CT_StrokeChild`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TextBoxRightStroke {
     pub althref: Option<String>,
@@ -1488,7 +1639,10 @@ pub struct TextBoxRightStroke {
 }
 
 /// 19.2.2.32 top (Text Box Top Stroke): the tag `o:top`, schema type `CT_StrokeChild`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TextBoxTopStroke {
     pub althref: Option<String>,
@@ -1522,7 +1676,10 @@ pub struct TextBoxTopStroke {
 }
 
 /// 19.2.2.4 colormenu (UI Default Colors): the tag `o:colormenu`, schema type `CT_ColorMenu`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UIDefaultColors {
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
@@ -1534,7 +1691,10 @@ pub struct UIDefaultColors {
 }
 
 /// 19.2.2.8 diagram (VML Diagram): the tag `o:diagram`, schema type `CT_Diagram`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct VMLDiagram {
     pub autoformat: Option<common_simple_types::BooleanValue>,
@@ -1553,7 +1713,10 @@ pub struct VMLDiagram {
 
 /// 19.2.2.12 `FieldCodes` (`WordprocessingML` Field Switches): the tag `o:FieldCodes`, schema type
 /// `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct WordprocessingMLFieldSwitches {
     pub unknown: officekit_markup_base::Unknown,

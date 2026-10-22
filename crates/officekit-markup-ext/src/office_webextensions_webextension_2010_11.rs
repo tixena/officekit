@@ -317,7 +317,10 @@ pub static WEBEXTENSIONREF_SHAPE: officekit_markup_base::Shape = officekit_marku
 
 /// The tag `we:alternateReferences`, schema type `CT_OsfWebExtensionReferenceList` of SDK 3.5.1's
 /// data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AlternateReferences {
     pub reference: Vec<Reference>,
@@ -325,7 +328,10 @@ pub struct AlternateReferences {
 }
 
 /// The tag `we:binding`, schema type `CT_OsfWebExtensionBinding` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Binding {
     pub appref: Option<String>,
@@ -336,7 +342,10 @@ pub struct Binding {
 }
 
 /// The tag `we:bindings`, schema type `CT_OsfWebExtensionBindingList` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Bindings {
     pub binding: Vec<Binding>,
@@ -497,7 +506,10 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `we:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExtLst {
     pub extension: Vec<drawing::Extension>,
@@ -505,7 +517,10 @@ pub struct ExtLst {
 }
 
 /// The tag `we:properties`, schema type `CT_OsfWebExtensionPropertyBag` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Properties {
     pub property: Vec<Property>,
@@ -513,7 +528,10 @@ pub struct Properties {
 }
 
 /// The tag `we:property`, schema type `CT_OsfWebExtensionProperty` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Property {
     pub name: Option<String>,
@@ -522,7 +540,10 @@ pub struct Property {
 }
 
 /// The tag `we:reference`, schema type `CT_OsfWebExtensionReference` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Reference {
     pub ext_lst: Option<Box<ExtLst>>,
@@ -534,7 +555,10 @@ pub struct Reference {
 }
 
 /// The tag `we:snapshot`, schema type `CT_Blip` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Snapshot {
     pub content: Vec<drawing::BlipContent>,
@@ -596,7 +620,10 @@ pub trait Visitor: crate::Visitor {
 }
 
 /// The tag `we:webextension`, schema type `CT_OsfWebExtension` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Webextension {
     pub alternate_references: Option<Box<AlternateReferences>>,
@@ -611,7 +638,10 @@ pub struct Webextension {
 }
 
 /// The tag `we:webextensionref`, schema type `CT_WebExtensionPartRef` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Webextensionref {
     pub id: Option<String>,

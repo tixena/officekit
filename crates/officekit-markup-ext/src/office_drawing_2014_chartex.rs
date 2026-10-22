@@ -215,6 +215,7 @@
 //!
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2014/chartex`.
 
+mod archive;
 pub mod read;
 pub mod write;
 
@@ -1477,7 +1478,10 @@ pub static VALUE_COLOR_MIDDLE_POSITION_CONTENT_TAGS: officekit_markup_base::Acce
     };
 
 /// The tag `cx:address`, schema type `CT_Address` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Address {
     pub address1: Option<String>,
@@ -1491,14 +1495,20 @@ pub struct Address {
 }
 
 /// The tag `cx:aggregation`, schema type `CT_Aggregation` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Aggregation {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `cx:axis`, schema type `CT_Axis` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Axis {
     pub content: Box<AxisContent>,
@@ -1528,7 +1538,10 @@ pub enum AxisContent {
 }
 
 /// The tag `cx:axisId`, schema type `ST_AxisId` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AxisId {
     pub unknown: officekit_markup_base::Unknown,
@@ -1536,7 +1549,10 @@ pub struct AxisId {
 }
 
 /// `ST_AxisUnit`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AxisUnit(pub String);
 /// The members of `ST_AxisUnit`, in alphabetical order.
@@ -1556,7 +1572,10 @@ pub enum AxisUnitMember {
 }
 
 /// The tag `cx:binCount`, schema type `unsignedInt` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BinCount {
     pub unknown: officekit_markup_base::Unknown,
@@ -1564,7 +1583,10 @@ pub struct BinCount {
 }
 
 /// The tag `cx:binSize`, schema type `double` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BinSize {
     pub unknown: officekit_markup_base::Unknown,
@@ -1572,7 +1594,10 @@ pub struct BinSize {
 }
 
 /// The tag `cx:binary`, schema type `base64Binary` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Binary {
     pub unknown: officekit_markup_base::Unknown,
@@ -1580,7 +1605,10 @@ pub struct Binary {
 }
 
 /// The tag `cx:binning`, schema type `CT_Binning` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Binning {
     pub content: Option<Box<BinningContent>>,
@@ -1600,7 +1628,10 @@ pub enum BinningContent {
 }
 
 /// The tag `cx:catScaling`, schema type `CT_CategoryAxisScaling` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CatScaling {
     pub gap_width: Option<String>,
@@ -1608,7 +1639,10 @@ pub struct CatScaling {
 }
 
 /// The tag `cx:chart`, schema type `CT_Chart` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ChartChart {
     pub ext_lst: Option<Box<ExtLst>>,
@@ -1619,7 +1653,10 @@ pub struct ChartChart {
 }
 
 /// The tag `cx:chartData`, schema type `CT_ChartData` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ChartData {
     pub data: Vec<Data>,
@@ -1629,7 +1666,10 @@ pub struct ChartData {
 }
 
 /// The tag `cx:chart`, schema type `CT_RelId` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ChartRelId {
     pub id: Option<String>,
@@ -1637,7 +1677,10 @@ pub struct ChartRelId {
 }
 
 /// The tag `cx:chartSpace`, schema type `CT_ChartSpace` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ChartSpace {
     pub chart_chart: Box<ChartChart>,
@@ -1655,7 +1698,10 @@ pub struct ChartSpace {
 }
 
 /// The tag `cx:clear`, schema type `CT_Clear` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Clear {
     pub geo_child_entities_query_results: Option<Box<GeoChildEntitiesQueryResults>>,
@@ -1667,7 +1713,10 @@ pub struct Clear {
 }
 
 /// The tag `cx:clrMapOvr`, schema type `CT_ColorMapping` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ClrMapOvr {
     pub accent1: Option<drawing::ThemeColorReference>,
@@ -3650,7 +3699,10 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `cx:copyright`, schema type `string` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Copyright {
     pub unknown: officekit_markup_base::Unknown,
@@ -3658,7 +3710,10 @@ pub struct Copyright {
 }
 
 /// The tag `cx:copyrights`, schema type `CT_Copyrights` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Copyrights {
     pub copyright: Vec<Copyright>,
@@ -3666,7 +3721,10 @@ pub struct Copyrights {
 }
 
 /// The tag `cx:data`, schema type `CT_Data` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Data {
     pub content: Vec<DataContent>,
@@ -3685,7 +3743,10 @@ pub enum DataContent {
 }
 
 /// The tag `cx:dataId`, schema type `CT_DataId` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DataId {
     pub unknown: officekit_markup_base::Unknown,
@@ -3693,7 +3754,10 @@ pub struct DataId {
 }
 
 /// The tag `cx:dataLabel`, schema type `CT_DataLabel` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DataLabel {
     pub ext_lst: Option<Box<ExtLst>>,
@@ -3708,7 +3772,10 @@ pub struct DataLabel {
 }
 
 /// The tag `cx:dataLabelHidden`, schema type `CT_DataLabelHidden` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DataLabelHidden {
     pub idx: Option<String>,
@@ -3716,7 +3783,10 @@ pub struct DataLabelHidden {
 }
 
 /// `ST_DataLabelPos`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DataLabelPos(pub String);
 /// The members of `ST_DataLabelPos`, in alphabetical order.
@@ -3735,7 +3805,10 @@ pub enum DataLabelPosMember {
 }
 
 /// The tag `cx:dataLabels`, schema type `CT_DataLabels` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DataLabels {
     pub data_label: Vec<DataLabel>,
@@ -3751,7 +3824,10 @@ pub struct DataLabels {
 }
 
 /// The tag `cx:dataPt`, schema type `CT_DataPoint` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DataPt {
     pub ext_lst: Option<Box<ExtLst>>,
@@ -3761,7 +3837,10 @@ pub struct DataPt {
 }
 
 /// The tag `cx:entityType`, schema type `ST_EntityType` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EntityType {
     pub unknown: officekit_markup_base::Unknown,
@@ -3769,7 +3848,10 @@ pub struct EntityType {
 }
 
 /// The tag `cx:evenFooter`, schema type `string` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EvenFooter {
     pub unknown: officekit_markup_base::Unknown,
@@ -3777,7 +3859,10 @@ pub struct EvenFooter {
 }
 
 /// The tag `cx:evenHeader`, schema type `string` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EvenHeader {
     pub unknown: officekit_markup_base::Unknown,
@@ -3785,7 +3870,10 @@ pub struct EvenHeader {
 }
 
 /// The tag `cx:ext`, schema type `CT_Extension` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Ext {
     pub content: Box<drawing::AnyElementContent>,
@@ -3794,7 +3882,10 @@ pub struct Ext {
 }
 
 /// The tag `cx:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExtLst {
     pub ext: Vec<Ext>,
@@ -3802,7 +3893,10 @@ pub struct ExtLst {
 }
 
 /// The tag `cx:externalData`, schema type `CT_ExternalData` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExternalData {
     pub auto_update: Option<String>,
@@ -3811,14 +3905,20 @@ pub struct ExternalData {
 }
 
 /// The tag `cx:extremeValue`, schema type `CT_ExtremeValueColorPosition` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExtremeValue {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `cx:f`, schema type `CT_Formula` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct F {
     pub unknown: officekit_markup_base::Unknown,
@@ -3826,7 +3926,10 @@ pub struct F {
 }
 
 /// The tag `cx:firstFooter`, schema type `string` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FirstFooter {
     pub unknown: officekit_markup_base::Unknown,
@@ -3834,7 +3937,10 @@ pub struct FirstFooter {
 }
 
 /// The tag `cx:firstHeader`, schema type `string` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FirstHeader {
     pub unknown: officekit_markup_base::Unknown,
@@ -3842,7 +3948,10 @@ pub struct FirstHeader {
 }
 
 /// The tag `cx:fmtOvr`, schema type `CT_FormatOverride` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FmtOvr {
     pub ext_lst: Option<Box<ExtLst>>,
@@ -3852,7 +3961,10 @@ pub struct FmtOvr {
 }
 
 /// The tag `cx:fmtOvrs`, schema type `CT_FormatOverrides` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FmtOvrs {
     pub fmt_ovr: Vec<FmtOvr>,
@@ -3860,7 +3972,10 @@ pub struct FmtOvrs {
 }
 
 /// The tag `cx:geoCache`, schema type `CT_GeoCache` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoCache {
     pub content: Vec<GeographyCacheContent>,
@@ -3869,7 +3984,10 @@ pub struct GeoCache {
 }
 
 /// The tag `cx:geoChildEntities`, schema type `CT_GeoChildEntities` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoChildEntities {
     pub geo_hierarchy_entity: Vec<GeoHierarchyEntity>,
@@ -3877,7 +3995,10 @@ pub struct GeoChildEntities {
 }
 
 /// The tag `cx:geoChildEntitiesQuery`, schema type `CT_GeoChildEntitiesQuery` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoChildEntitiesQuery {
     pub entity_id: Option<String>,
@@ -3887,7 +4008,10 @@ pub struct GeoChildEntitiesQuery {
 
 /// The tag `cx:geoChildEntitiesQueryResult`, schema type `CT_GeoChildEntitiesQueryResult` of SDK
 /// 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoChildEntitiesQueryResult {
     pub geo_child_entities: Option<Box<GeoChildEntities>>,
@@ -3897,7 +4021,10 @@ pub struct GeoChildEntitiesQueryResult {
 
 /// The tag `cx:geoChildEntitiesQueryResults`, schema type `CT_GeoChildEntitiesQueryResults` of SDK
 /// 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoChildEntitiesQueryResults {
     pub geo_child_entities_query_result: Vec<GeoChildEntitiesQueryResult>,
@@ -3905,7 +4032,10 @@ pub struct GeoChildEntitiesQueryResults {
 }
 
 /// The tag `cx:geoChildTypes`, schema type `CT_GeoChildTypes` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoChildTypes {
     pub entity_type: Vec<EntityType>,
@@ -3913,7 +4043,10 @@ pub struct GeoChildTypes {
 }
 
 /// The tag `cx:geoData`, schema type `CT_GeoData` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoData {
     pub copyrights: Option<Box<Copyrights>>,
@@ -3928,7 +4061,10 @@ pub struct GeoData {
 }
 
 /// The tag `cx:geoDataEntityQuery`, schema type `CT_GeoDataEntityQuery` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoDataEntityQuery {
     pub entity_id: Option<String>,
@@ -3938,7 +4074,10 @@ pub struct GeoDataEntityQuery {
 
 /// The tag `cx:geoDataEntityQueryResult`, schema type `CT_GeoDataEntityQueryResult` of SDK 3.5.1's
 /// data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoDataEntityQueryResult {
     pub geo_data: Option<Box<GeoData>>,
@@ -3948,7 +4087,10 @@ pub struct GeoDataEntityQueryResult {
 
 /// The tag `cx:geoDataEntityQueryResults`, schema type `CT_GeoDataEntityQueryResults` of SDK
 /// 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoDataEntityQueryResults {
     pub geo_data_entity_query_result: Vec<GeoDataEntityQueryResult>,
@@ -3956,7 +4098,10 @@ pub struct GeoDataEntityQueryResults {
 }
 
 /// The tag `cx:geoDataPointQuery`, schema type `CT_GeoDataPointQuery` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoDataPointQuery {
     pub entity_type: Option<StEntityType>,
@@ -3967,7 +4112,10 @@ pub struct GeoDataPointQuery {
 
 /// The tag `cx:geoDataPointToEntityQuery`, schema type `CT_GeoDataPointToEntityQuery` of SDK
 /// 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoDataPointToEntityQuery {
     pub entity_id: Option<String>,
@@ -3977,7 +4125,10 @@ pub struct GeoDataPointToEntityQuery {
 
 /// The tag `cx:geoDataPointToEntityQueryResult`, schema type `CT_GeoDataPointToEntityQueryResult`
 /// of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoDataPointToEntityQueryResult {
     pub geo_data_point_query: Option<Box<GeoDataPointQuery>>,
@@ -3987,7 +4138,10 @@ pub struct GeoDataPointToEntityQueryResult {
 
 /// The tag `cx:geoDataPointToEntityQueryResults`, schema type `CT_GeoDataPointToEntityQueryResults`
 /// of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoDataPointToEntityQueryResults {
     pub geo_data_point_to_entity_query_result: Vec<GeoDataPointToEntityQueryResult>,
@@ -3995,7 +4149,10 @@ pub struct GeoDataPointToEntityQueryResults {
 }
 
 /// The tag `cx:geoEntity`, schema type `CT_GeoEntity` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoEntity {
     pub entity_name: Option<String>,
@@ -4004,7 +4161,10 @@ pub struct GeoEntity {
 }
 
 /// The tag `cx:geoHierarchyEntity`, schema type `CT_GeoHierarchyEntity` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoHierarchyEntity {
     pub entity_id: Option<String>,
@@ -4014,7 +4174,10 @@ pub struct GeoHierarchyEntity {
 }
 
 /// The tag `cx:geoLocation`, schema type `CT_GeoLocation` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoLocation {
     pub address: Option<Box<Address>>,
@@ -4026,7 +4189,10 @@ pub struct GeoLocation {
 }
 
 /// The tag `cx:geoLocationQuery`, schema type `CT_GeoLocationQuery` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoLocationQuery {
     pub admin_district1: Option<String>,
@@ -4039,7 +4205,10 @@ pub struct GeoLocationQuery {
 
 /// The tag `cx:geoLocationQueryResult`, schema type `CT_GeoLocationQueryResult` of SDK 3.5.1's
 /// data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoLocationQueryResult {
     pub geo_location_query: Option<Box<GeoLocationQuery>>,
@@ -4049,7 +4218,10 @@ pub struct GeoLocationQueryResult {
 
 /// The tag `cx:geoLocationQueryResults`, schema type `CT_GeoLocationQueryResults` of SDK 3.5.1's
 /// data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoLocationQueryResults {
     pub geo_location_query_result: Vec<GeoLocationQueryResult>,
@@ -4057,7 +4229,10 @@ pub struct GeoLocationQueryResults {
 }
 
 /// The tag `cx:geoLocations`, schema type `CT_GeoLocations` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoLocations {
     pub geo_location: Option<Box<GeoLocation>>,
@@ -4065,7 +4240,10 @@ pub struct GeoLocations {
 }
 
 /// `ST_GeoMappingLevel`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoMappingLevel(pub String);
 /// The members of `ST_GeoMappingLevel`, in alphabetical order.
@@ -4083,7 +4261,10 @@ pub enum GeoMappingLevelMember {
 
 /// The tag `cx:geoParentEntitiesQuery`, schema type `CT_GeoParentEntitiesQuery` of SDK 3.5.1's
 /// data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoParentEntitiesQuery {
     pub entity_id: Option<String>,
@@ -4092,7 +4273,10 @@ pub struct GeoParentEntitiesQuery {
 
 /// The tag `cx:geoParentEntitiesQueryResult`, schema type `CT_GeoParentEntitiesQueryResult` of SDK
 /// 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoParentEntitiesQueryResult {
     pub geo_entity: Option<Box<GeoEntity>>,
@@ -4103,7 +4287,10 @@ pub struct GeoParentEntitiesQueryResult {
 
 /// The tag `cx:geoParentEntitiesQueryResults`, schema type `CT_GeoParentEntitiesQueryResults` of
 /// SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoParentEntitiesQueryResults {
     pub geo_parent_entities_query_result: Vec<GeoParentEntitiesQueryResult>,
@@ -4111,7 +4298,10 @@ pub struct GeoParentEntitiesQueryResults {
 }
 
 /// The tag `cx:geoParentEntity`, schema type `CT_GeoParentEntity` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoParentEntity {
     pub entity_id: Option<String>,
@@ -4119,7 +4309,10 @@ pub struct GeoParentEntity {
 }
 
 /// The tag `cx:geoPolygon`, schema type `CT_GeoPolygon` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoPolygon {
     pub num_points: Option<String>,
@@ -4129,7 +4322,10 @@ pub struct GeoPolygon {
 }
 
 /// The tag `cx:geoPolygons`, schema type `CT_GeoPolygons` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoPolygons {
     pub geo_polygon: Vec<GeoPolygon>,
@@ -4137,7 +4333,10 @@ pub struct GeoPolygons {
 }
 
 /// `ST_GeoProjectionType`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GeoProjectionType(pub String);
 /// The members of `ST_GeoProjectionType`, in alphabetical order.
@@ -4151,7 +4350,10 @@ pub enum GeoProjectionTypeMember {
 }
 
 /// The tag `cx:geography`, schema type `CT_Geography` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Geography {
     pub attribution: Option<String>,
@@ -4173,7 +4375,10 @@ pub enum GeographyCacheContent {
 }
 
 /// The tag `cx:headerFooter`, schema type `CT_HeaderFooter` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HeaderFooter {
     pub align_with_margins: Option<String>,
@@ -4189,7 +4394,10 @@ pub struct HeaderFooter {
 }
 
 /// The tag `cx:idx`, schema type `CT_UnsignedInt` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Idx {
     pub unknown: officekit_markup_base::Unknown,
@@ -4197,7 +4405,10 @@ pub struct Idx {
 }
 
 /// `ST_IntervalClosedSide`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct IntervalClosedSide(pub String);
 /// The members of `ST_IntervalClosedSide`, in alphabetical order.
@@ -4209,7 +4420,10 @@ pub enum IntervalClosedSideMember {
 }
 
 /// The tag `cx:layoutPr`, schema type `CT_SeriesLayoutProperties` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LayoutPr {
     pub content: Option<Box<SeriesLayoutPropertiesContent>>,
@@ -4224,7 +4438,10 @@ pub struct LayoutPr {
 }
 
 /// The tag `cx:legend`, schema type `CT_Legend` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Legend {
     pub align: Option<PosAlign>,
@@ -4238,7 +4455,10 @@ pub struct Legend {
 }
 
 /// The tag `cx:lvl`, schema type `CT_NumericLevel` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LvlNumericLevel {
     pub format_code: Option<String>,
@@ -4249,7 +4469,10 @@ pub struct LvlNumericLevel {
 }
 
 /// The tag `cx:lvl`, schema type `CT_StringLevel` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LvlStringLevel {
     pub name: Option<String>,
@@ -4259,7 +4482,10 @@ pub struct LvlStringLevel {
 }
 
 /// The tag `cx:majorGridlines`, schema type `CT_Gridlines` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MajorGridlines {
     pub ext_lst: Option<Box<ExtLst>>,
@@ -4268,7 +4494,10 @@ pub struct MajorGridlines {
 }
 
 /// The tag `cx:majorTickMarks`, schema type `CT_TickMarks` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MajorTickMarks {
     pub ext_lst: Option<Box<ExtLst>>,
@@ -4276,7 +4505,10 @@ pub struct MajorTickMarks {
 }
 
 /// The tag `cx:max`, schema type `CT_ValueColorEndPosition` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Max {
     pub content: Box<ValueColorEndPositionContent>,
@@ -4284,7 +4516,10 @@ pub struct Max {
 }
 
 /// The tag `cx:maxColor`, schema type `CT_SolidColorFillProperties` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MaxColor {
     pub content: Option<Box<drawing::ColorContent>>,
@@ -4292,7 +4527,10 @@ pub struct MaxColor {
 }
 
 /// The tag `cx:mid`, schema type `CT_ValueColorMiddlePosition` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Mid {
     pub content: Box<ValueColorMiddlePositionContent>,
@@ -4300,7 +4538,10 @@ pub struct Mid {
 }
 
 /// The tag `cx:midColor`, schema type `CT_SolidColorFillProperties` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MidColor {
     pub content: Option<Box<drawing::ColorContent>>,
@@ -4308,7 +4549,10 @@ pub struct MidColor {
 }
 
 /// The tag `cx:min`, schema type `CT_ValueColorEndPosition` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Min {
     pub content: Box<ValueColorEndPositionContent>,
@@ -4316,7 +4560,10 @@ pub struct Min {
 }
 
 /// The tag `cx:minColor`, schema type `CT_SolidColorFillProperties` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MinColor {
     pub content: Option<Box<drawing::ColorContent>>,
@@ -4324,7 +4571,10 @@ pub struct MinColor {
 }
 
 /// The tag `cx:minorGridlines`, schema type `CT_Gridlines` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MinorGridlines {
     pub ext_lst: Option<Box<ExtLst>>,
@@ -4333,7 +4583,10 @@ pub struct MinorGridlines {
 }
 
 /// The tag `cx:minorTickMarks`, schema type `CT_TickMarks` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MinorTickMarks {
     pub ext_lst: Option<Box<ExtLst>>,
@@ -4341,7 +4594,10 @@ pub struct MinorTickMarks {
 }
 
 /// The tag `cx:nf`, schema type `CT_Formula` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Nf {
     pub unknown: officekit_markup_base::Unknown,
@@ -4349,7 +4605,10 @@ pub struct Nf {
 }
 
 /// The tag `cx:numDim`, schema type `CT_NumericDimension` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumDim {
     pub content: Vec<NumericDimensionContent>,
@@ -4358,7 +4617,10 @@ pub struct NumDim {
 }
 
 /// The tag `cx:numFmt`, schema type `CT_NumberFormat` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumFmt {
     pub format_code: Option<String>,
@@ -4367,7 +4629,10 @@ pub struct NumFmt {
 }
 
 /// The tag `cx:number`, schema type `CT_NumberColorPosition` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Number {
     pub unknown: officekit_markup_base::Unknown,
@@ -4385,7 +4650,10 @@ pub enum NumericDimensionContent {
 }
 
 /// `ST_NumericDimensionType`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumericDimensionType(pub String);
 /// The members of `ST_NumericDimensionType`, in alphabetical order.
@@ -4400,7 +4668,10 @@ pub enum NumericDimensionTypeMember {
 }
 
 /// The tag `cx:oddFooter`, schema type `string` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct OddFooter {
     pub unknown: officekit_markup_base::Unknown,
@@ -4408,7 +4679,10 @@ pub struct OddFooter {
 }
 
 /// The tag `cx:oddHeader`, schema type `string` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct OddHeader {
     pub unknown: officekit_markup_base::Unknown,
@@ -4416,7 +4690,10 @@ pub struct OddHeader {
 }
 
 /// The tag `cx:offset`, schema type `CT_Offset` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Offset {
     pub left: Option<String>,
@@ -4426,7 +4703,10 @@ pub struct Offset {
 
 /// The tag `cx:openxmlsdk_49BECFFA_3B03_4D13_8272_D6CCB22579E3`, schema type `unsignedInt` of SDK
 /// 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Openxmlsdk49BECFFA3B034D138272D6CCB22579E3 {
     pub unknown: officekit_markup_base::Unknown,
@@ -4434,7 +4714,10 @@ pub struct Openxmlsdk49BECFFA3B034D138272D6CCB22579E3 {
 }
 
 /// The tag `cx:pageMargins`, schema type `CT_PageMargins` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PageMargins {
     pub b: Option<String>,
@@ -4447,7 +4730,10 @@ pub struct PageMargins {
 }
 
 /// `ST_PageOrientation`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PageOrientation(pub String);
 /// The members of `ST_PageOrientation`, in alphabetical order.
@@ -4460,7 +4746,10 @@ pub enum PageOrientationMember {
 }
 
 /// The tag `cx:pageSetup`, schema type `CT_PageSetup` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PageSetup {
     pub black_and_white: Option<String>,
@@ -4476,7 +4765,10 @@ pub struct PageSetup {
 }
 
 /// The tag `cx:parentLabelLayout`, schema type `CT_ParentLabelLayout` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ParentLabelLayout {
     pub unknown: officekit_markup_base::Unknown,
@@ -4484,7 +4776,10 @@ pub struct ParentLabelLayout {
 }
 
 /// The tag `cx:percent`, schema type `CT_PercentageColorPosition` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Percent {
     pub unknown: officekit_markup_base::Unknown,
@@ -4492,7 +4787,10 @@ pub struct Percent {
 }
 
 /// The tag `cx:plotArea`, schema type `CT_PlotArea` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PlotArea {
     pub axis: Vec<Axis>,
@@ -4503,7 +4801,10 @@ pub struct PlotArea {
 }
 
 /// The tag `cx:plotAreaRegion`, schema type `CT_PlotAreaRegion` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PlotAreaRegion {
     pub ext_lst: Option<Box<ExtLst>>,
@@ -4513,7 +4814,10 @@ pub struct PlotAreaRegion {
 }
 
 /// The tag `cx:plotSurface`, schema type `CT_PlotSurface` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PlotSurface {
     pub ext_lst: Option<Box<ExtLst>>,
@@ -4522,7 +4826,10 @@ pub struct PlotSurface {
 }
 
 /// `ST_PosAlign`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PosAlign(pub String);
 /// The members of `ST_PosAlign`, in alphabetical order.
@@ -4535,7 +4842,10 @@ pub enum PosAlignMember {
 }
 
 /// The tag `cx:printSettings`, schema type `CT_PrintSettings` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PrintSettings {
     pub header_footer: Option<Box<HeaderFooter>>,
@@ -4545,7 +4855,10 @@ pub struct PrintSettings {
 }
 
 /// The tag `cx:pt`, schema type `CT_NumericValue` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PtNumericValue {
     pub idx: Option<String>,
@@ -4554,7 +4867,10 @@ pub struct PtNumericValue {
 }
 
 /// The tag `cx:pt`, schema type `CT_StringValue` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PtStringValue {
     pub idx: Option<String>,
@@ -4563,7 +4879,10 @@ pub struct PtStringValue {
 }
 
 /// `ST_QuartileMethod`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct QuartileMethod(pub String);
 /// The members of `ST_QuartileMethod`, in alphabetical order.
@@ -4575,7 +4894,10 @@ pub enum QuartileMethodMember {
 }
 
 /// The tag `cx:regionLabelLayout`, schema type `CT_RegionLabelLayout` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RegionLabelLayout {
     pub unknown: officekit_markup_base::Unknown,
@@ -4583,7 +4905,10 @@ pub struct RegionLabelLayout {
 }
 
 /// The tag `cx:rich`, schema type `CT_TextBody` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Rich {
     pub body_properties: Box<drawing::BodyProperties>,
@@ -4593,7 +4918,10 @@ pub struct Rich {
 }
 
 /// The tag `cx:separator`, schema type `string` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Separator {
     pub unknown: officekit_markup_base::Unknown,
@@ -4601,7 +4929,10 @@ pub struct Separator {
 }
 
 /// The tag `cx:series`, schema type `CT_Series` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Series {
     pub axis_id: Vec<AxisId>,
@@ -4623,7 +4954,10 @@ pub struct Series {
 }
 
 /// `ST_SeriesLayout`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SeriesLayout(pub String);
 /// The members of `ST_SeriesLayout`, in alphabetical order.
@@ -4650,7 +4984,10 @@ pub enum SeriesLayoutPropertiesContent {
 }
 
 /// `ST_SidePos`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SidePos(pub String);
 /// The members of `ST_SidePos`, in alphabetical order.
@@ -4664,7 +5001,10 @@ pub enum SidePosMember {
 }
 
 /// The tag `cx:spPr`, schema type `CT_ShapeProperties` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SpPr {
     pub apply_3d_shape_properties: Option<Box<drawing::Apply3DShapeProperties>>,
@@ -4680,7 +5020,10 @@ pub struct SpPr {
 }
 
 /// `ST_EntityType`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StEntityType(pub String);
 /// The members of `ST_EntityType`, in alphabetical order.
@@ -4702,7 +5045,10 @@ pub enum StEntityTypeMember {
 }
 
 /// `ST_ParentLabelLayout`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StParentLabelLayout(pub String);
 /// The members of `ST_ParentLabelLayout`, in alphabetical order.
@@ -4715,7 +5061,10 @@ pub enum StParentLabelLayoutMember {
 }
 
 /// `ST_RegionLabelLayout`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StRegionLabelLayout(pub String);
 /// The members of `ST_RegionLabelLayout`, in alphabetical order.
@@ -4728,7 +5077,10 @@ pub enum StRegionLabelLayoutMember {
 }
 
 /// The tag `cx:statistics`, schema type `CT_Statistics` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Statistics {
     pub quartile_method: Option<QuartileMethod>,
@@ -4736,7 +5088,10 @@ pub struct Statistics {
 }
 
 /// The tag `cx:strDim`, schema type `CT_StringDimension` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StrDim {
     pub content: Vec<StringDimensionContent>,
@@ -4755,7 +5110,10 @@ pub enum StringDimensionContent {
 }
 
 /// `ST_StringDimensionType`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StringDimensionType(pub String);
 /// The members of `ST_StringDimensionType`, in alphabetical order.
@@ -4768,7 +5126,10 @@ pub enum StringDimensionTypeMember {
 }
 
 /// The tag `cx:subtotals`, schema type `CT_Subtotals` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Subtotals {
     pub idx: Vec<Idx>,
@@ -4794,7 +5155,10 @@ pub enum TextDataContent {
 }
 
 /// The tag `cx:tickLabels`, schema type `CT_TickLabels` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TickLabels {
     pub ext_lst: Option<Box<ExtLst>>,
@@ -4802,7 +5166,10 @@ pub struct TickLabels {
 }
 
 /// The tag `cx:title`, schema type `CT_AxisTitle` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TitleAxisTitle {
     pub ext_lst: Option<Box<ExtLst>>,
@@ -4814,7 +5181,10 @@ pub struct TitleAxisTitle {
 }
 
 /// The tag `cx:title`, schema type `CT_ChartTitle` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TitleChartTitle {
     pub align: Option<PosAlign>,
@@ -4829,7 +5199,10 @@ pub struct TitleChartTitle {
 }
 
 /// The tag `cx:tx`, schema type `CT_Text` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Tx {
     pub content: Box<TextContent>,
@@ -4837,7 +5210,10 @@ pub struct Tx {
 }
 
 /// The tag `cx:txData`, schema type `CT_TextData` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TxData {
     pub content: Box<TextDataContent>,
@@ -4845,7 +5221,10 @@ pub struct TxData {
 }
 
 /// The tag `cx:txPr`, schema type `CT_TextBody` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TxPr {
     pub body_properties: Box<drawing::BodyProperties>,
@@ -4855,7 +5234,10 @@ pub struct TxPr {
 }
 
 /// The tag `cx:units`, schema type `CT_AxisUnits` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Units {
     pub ext_lst: Option<Box<ExtLst>>,
@@ -4865,7 +5247,10 @@ pub struct Units {
 }
 
 /// The tag `cx:unitsLabel`, schema type `CT_AxisUnitsLabel` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UnitsLabel {
     pub ext_lst: Option<Box<ExtLst>>,
@@ -4876,7 +5261,10 @@ pub struct UnitsLabel {
 }
 
 /// The tag `cx:v`, schema type `string` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct V {
     pub unknown: officekit_markup_base::Unknown,
@@ -4884,7 +5272,10 @@ pub struct V {
 }
 
 /// The tag `cx:valScaling`, schema type `CT_ValueAxisScaling` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ValScaling {
     pub major_unit: Option<String>,
@@ -4914,7 +5305,10 @@ pub enum ValueColorMiddlePositionContent {
 }
 
 /// The tag `cx:valueColorPositions`, schema type `CT_ValueColorPositions` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ValueColorPositions {
     pub count: Option<String>,
@@ -4925,7 +5319,10 @@ pub struct ValueColorPositions {
 }
 
 /// The tag `cx:valueColors`, schema type `CT_ValueColors` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ValueColors {
     pub max_color: Option<Box<MaxColor>>,
@@ -4935,7 +5332,10 @@ pub struct ValueColors {
 }
 
 /// The tag `cx:visibility`, schema type `CT_DataLabelVisibilities` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct VisibilityDataLabelVisibilities {
     pub category_name: Option<String>,
@@ -4945,7 +5345,10 @@ pub struct VisibilityDataLabelVisibilities {
 }
 
 /// The tag `cx:visibility`, schema type `CT_SeriesElementVisibilities` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct VisibilitySeriesElementVisibilities {
     pub connector_lines: Option<String>,

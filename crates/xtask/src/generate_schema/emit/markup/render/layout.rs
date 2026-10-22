@@ -637,6 +637,19 @@ pub fn pad(width: usize, out: &mut String) {
     out.extend(iter::repeat_n(' ', width));
 }
 
+/// The start of `pub static name: shown = `, for `statement`: the type on a
+/// line of its own one step in when it does not fit after the name, as
+/// rustfmt's `rewrite_static` puts it.
+#[must_use]
+pub fn static_start(name: &str, shown: &str) -> String {
+    let flat = format!("pub static {name}: {shown} = ");
+    if flat.len() - 1 <= MAX_WIDTH {
+        flat
+    } else {
+        format!("pub static {name}:\n    {shown} = ")
+    }
+}
+
 /// `start`, ending in `= `, then the expression and `;`, laid out as `line`
 /// lays it out.
 pub fn statement(start: &str, expr: &Expr, out: &mut String) {

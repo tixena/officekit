@@ -215,6 +215,7 @@
 //!
 //! The namespace is `http://schemas.openxmlformats.org/drawingml/2006/chart`.
 
+mod archive;
 pub mod read;
 pub mod write;
 
@@ -222,6 +223,10 @@ use officekit_markup_base::common_simple_types;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
+use rkyv::de::Pooling;
+use rkyv::rancor::Source;
+use rkyv::ser::{Allocator, Sharing, Writer};
+use rkyv::validation::{ArchiveContext, SharedContext};
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_C: Option<NamespaceId> = Some(22);
@@ -2722,7 +2727,10 @@ static SECOND_PIE_SIZE_PERCENTAGE_PATTERNS: &[&str] =
 static ST_THICKNESS_PERCENT_PATTERNS: &[&str] = &["([0-9]+)%"];
 
 /// 21.2.2.1 `applyToEnd` (Apply to End): the tag `c:applyToEnd`, schema type `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ApplyToEnd {
     pub unknown: officekit_markup_base::Unknown,
@@ -2730,7 +2738,10 @@ pub struct ApplyToEnd {
 }
 
 /// 21.2.2.2 `applyToFront` (Apply To Front): the tag `c:applyToFront`, schema type `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ApplyToFront {
     pub unknown: officekit_markup_base::Unknown,
@@ -2738,7 +2749,10 @@ pub struct ApplyToFront {
 }
 
 /// 21.2.2.3 `applyToSides` (Apply To Sides): the tag `c:applyToSides`, schema type `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ApplyToSides {
     pub unknown: officekit_markup_base::Unknown,
@@ -2746,13 +2760,23 @@ pub struct ApplyToSides {
 }
 
 /// The tag `c:area3DChart`, schema type `CT_Area3DChart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Area3DChart {
+    #[rkyv(omit_bounds)]
     pub area_chart_series: Vec<AreaChartSeries>,
     pub axis_id: Vec<AxisID>,
+    #[rkyv(omit_bounds)]
     pub data_labels: Option<Box<DataLabels>>,
+    #[rkyv(omit_bounds)]
     pub drop_lines: Option<Box<DropLines>>,
+    #[rkyv(omit_bounds)]
     pub extensibility: Option<Box<ChartExtensibility>>,
     pub gap_depth: Option<Box<GapDepth>>,
     pub grouping: Option<Box<Grouping>>,
@@ -2761,32 +2785,57 @@ pub struct Area3DChart {
 }
 
 /// 21.2.2.168 ser (Area Chart Series): the tag `c:ser`, schema type `CT_AreaSer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AreaChartSeries {
+    #[rkyv(omit_bounds)]
     pub category_axis_data_cat: Option<Box<CategoryAxisDataCat>>,
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub data_labels: Option<Box<DataLabels>>,
+    #[rkyv(omit_bounds)]
     pub data_point: Vec<DataPoint>,
+    #[rkyv(omit_bounds)]
     pub error_bars: Vec<ErrorBars>,
     pub index: Box<Index>,
     pub order: Box<Order>,
     pub picture_options: Option<Box<PictureOptions>>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
+    #[rkyv(omit_bounds)]
     pub text: Option<Box<SeriesText>>,
+    #[rkyv(omit_bounds)]
     pub trendlines: Vec<Trendlines>,
     pub unknown: officekit_markup_base::Unknown,
+    #[rkyv(omit_bounds)]
     pub values: Option<Box<Values>>,
 }
 
 /// 21.2.2.5 `areaChart` (Area Charts): the tag `c:areaChart`, schema type `CT_AreaChart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AreaCharts {
+    #[rkyv(omit_bounds)]
     pub area_chart_series: Vec<AreaChartSeries>,
     pub axis_id: Vec<AxisID>,
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub data_labels: Option<Box<DataLabels>>,
+    #[rkyv(omit_bounds)]
     pub drop_lines: Option<Box<DropLines>>,
     pub grouping: Option<Box<Grouping>>,
     pub unknown: officekit_markup_base::Unknown,
@@ -2795,7 +2844,10 @@ pub struct AreaCharts {
 
 /// 21.2.2.7 `autoTitleDeleted` (Auto Title Is Deleted): the tag `c:autoTitleDeleted`, schema type
 /// `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AutoTitleIsDeleted {
     pub unknown: officekit_markup_base::Unknown,
@@ -2803,7 +2855,10 @@ pub struct AutoTitleIsDeleted {
 }
 
 /// 21.2.2.6 auto (Automatic Category Axis): the tag `c:auto`, schema type `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AutomaticCategoryAxis {
     pub unknown: officekit_markup_base::Unknown,
@@ -2832,7 +2887,10 @@ pub enum AxisDataSourceContent {
 }
 
 /// 21.2.2.9 `axId` (Axis ID): the tag `c:axId`, schema type `CT_UnsignedInt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AxisID {
     pub unknown: officekit_markup_base::Unknown,
@@ -2841,7 +2899,10 @@ pub struct AxisID {
 
 /// 21.2.2.130 orientation (Axis Orientation): the tag `c:orientation`, schema type
 /// `CT_Orientation`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AxisOrientation {
     pub unknown: officekit_markup_base::Unknown,
@@ -2849,7 +2910,10 @@ pub struct AxisOrientation {
 }
 
 /// 21.2.2.10 `axPos` (Axis Position): the tag `c:axPos`, schema type `CT_AxPos`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AxisPosition {
     pub unknown: officekit_markup_base::Unknown,
@@ -2857,23 +2921,37 @@ pub struct AxisPosition {
 }
 
 /// 21.2.3.1 `ST_AxisUnit` (Axis Unit): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AxisUnit(pub String);
 
 /// 21.2.2.11 `backWall` (Back Wall): the tag `c:backWall`, schema type `CT_Surface`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BackWall {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
     pub picture_options: Option<Box<PictureOptions>>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
     pub thickness: Option<Box<Thickness>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.12 backward (Backward): the tag `c:backward`, schema type `CT_Double`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Backward {
     pub unknown: officekit_markup_base::Unknown,
@@ -2881,31 +2959,54 @@ pub struct Backward {
 }
 
 /// 21.2.2.13 `bandFmt` (Band Format): the tag `c:bandFmt`, schema type `CT_BandFmt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BandFormat {
     pub index: Box<Index>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.14 `bandFmts` (Band Formats): the tag `c:bandFmts`, schema type `CT_BandFmts`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BandFormats {
+    #[rkyv(omit_bounds)]
     pub band_format: Vec<BandFormat>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `c:bar3DChart`, schema type `CT_Bar3DChart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Bar3DChart {
     pub axis_id: Vec<AxisID>,
+    #[rkyv(omit_bounds)]
     pub bar_chart_series: Vec<BarChartSeries>,
     pub bar_direction: Box<BarDirection>,
     pub bar_grouping: Option<Box<BarGrouping>>,
+    #[rkyv(omit_bounds)]
     pub data_labels: Option<Box<DataLabels>>,
+    #[rkyv(omit_bounds)]
     pub extensibility: Option<Box<ChartExtensibility>>,
     pub gap_depth: Option<Box<GapDepth>>,
     pub gap_width: Option<Box<GapWidth>>,
@@ -2915,45 +3016,73 @@ pub struct Bar3DChart {
 }
 
 /// 21.2.2.170 ser (Bar Chart Series): the tag `c:ser`, schema type `CT_BarSer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BarChartSeries {
+    #[rkyv(omit_bounds)]
     pub category_axis_data_cat: Option<Box<CategoryAxisDataCat>>,
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub data_labels: Option<Box<DataLabels>>,
+    #[rkyv(omit_bounds)]
     pub data_point: Vec<DataPoint>,
+    #[rkyv(omit_bounds)]
     pub error_bars: Option<Box<ErrorBars>>,
     pub index: Box<Index>,
     pub invert_if_negative: Option<Box<InvertIfNegative>>,
     pub order: Box<Order>,
     pub picture_options: Option<Box<PictureOptions>>,
     pub shape: Option<Box<Shape>>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
+    #[rkyv(omit_bounds)]
     pub text: Option<Box<SeriesText>>,
+    #[rkyv(omit_bounds)]
     pub trendlines: Vec<Trendlines>,
     pub unknown: officekit_markup_base::Unknown,
+    #[rkyv(omit_bounds)]
     pub values: Option<Box<Values>>,
 }
 
 /// 21.2.2.16 `barChart` (Bar Charts): the tag `c:barChart`, schema type `CT_BarChart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BarCharts {
     pub axis_id: Vec<AxisID>,
+    #[rkyv(omit_bounds)]
     pub bar_chart_series: Vec<BarChartSeries>,
     pub bar_direction: Box<BarDirection>,
     pub bar_grouping: Option<Box<BarGrouping>>,
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub data_labels: Option<Box<DataLabels>>,
     pub gap_width: Option<Box<GapWidth>>,
     pub overlap: Option<Box<Overlap>>,
+    #[rkyv(omit_bounds)]
     pub series_lines: Vec<SeriesLines>,
     pub unknown: officekit_markup_base::Unknown,
     pub vary_colors_by_point: Option<Box<VaryColorsByPoint>>,
 }
 
 /// 21.2.2.17 `barDir` (Bar Direction): the tag `c:barDir`, schema type `CT_BarDir`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BarDirection {
     pub unknown: officekit_markup_base::Unknown,
@@ -2961,7 +3090,10 @@ pub struct BarDirection {
 }
 
 /// 21.2.2.77 grouping (Bar Grouping): the tag `c:grouping`, schema type `CT_BarGrouping`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BarGrouping {
     pub unknown: officekit_markup_base::Unknown,
@@ -2969,7 +3101,10 @@ pub struct BarGrouping {
 }
 
 /// 21.2.2.18 `baseTimeUnit` (Base Time Unit): the tag `c:baseTimeUnit`, schema type `CT_TimeUnit`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BaseTimeUnit {
     pub unknown: officekit_markup_base::Unknown,
@@ -2977,7 +3112,10 @@ pub struct BaseTimeUnit {
 }
 
 /// The tag `c:bubble3D`, schema type `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Bubble3D {
     pub unknown: officekit_markup_base::Unknown,
@@ -2985,35 +3123,60 @@ pub struct Bubble3D {
 }
 
 /// 21.2.2.174 ser (Bubble Chart Series): the tag `c:ser`, schema type `CT_BubbleSer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BubbleChartSeries {
     pub bubble3d: Option<Box<Bubble3D>>,
+    #[rkyv(omit_bounds)]
     pub bubble_size: Option<Box<BubbleSize>>,
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub data_labels: Option<Box<DataLabels>>,
+    #[rkyv(omit_bounds)]
     pub data_point: Vec<DataPoint>,
+    #[rkyv(omit_bounds)]
     pub error_bars: Vec<ErrorBars>,
     pub index: Box<Index>,
     pub invert_if_negative: Option<Box<InvertIfNegative>>,
     pub order: Box<Order>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
+    #[rkyv(omit_bounds)]
     pub text: Option<Box<SeriesText>>,
+    #[rkyv(omit_bounds)]
     pub trendlines: Vec<Trendlines>,
     pub unknown: officekit_markup_base::Unknown,
+    #[rkyv(omit_bounds)]
     pub x_values: Option<Box<XValues>>,
+    #[rkyv(omit_bounds)]
     pub y_values: Option<Box<YValues>>,
 }
 
 /// 21.2.2.20 `bubbleChart` (Bubble Charts): the tag `c:bubbleChart`, schema type `CT_BubbleChart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BubbleCharts {
     pub axis_id: Vec<AxisID>,
     pub bubble3d: Option<Box<Bubble3D>>,
+    #[rkyv(omit_bounds)]
     pub bubble_chart_series: Vec<BubbleChartSeries>,
     pub bubble_scale: Option<Box<BubbleScale>>,
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub data_labels: Option<Box<DataLabels>>,
     pub show_negative_bubbles: Option<Box<ShowNegativeBubbles>>,
     pub size_represents: Option<Box<SizeRepresents>>,
@@ -3022,7 +3185,10 @@ pub struct BubbleCharts {
 }
 
 /// 21.2.2.21 `bubbleScale` (Bubble Scale): the tag `c:bubbleScale`, schema type `CT_BubbleScale`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BubbleScale {
     pub unknown: officekit_markup_base::Unknown,
@@ -3030,26 +3196,42 @@ pub struct BubbleScale {
 }
 
 /// 21.2.3.58 `ST_BubbleScalePercent` (Bubble Scale Percentage): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BubbleScalePercentage(pub String);
 
 /// 18.1.3.16 `ST_BubbleScaleUInt` (Bubble Scale `UnsignedInt`): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BubbleScaleUnsignedInt(pub String);
 
 /// 21.2.2.22 `bubbleSize` (Bubble Size): the tag `c:bubbleSize`, schema type `CT_NumDataSource`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BubbleSize {
+    #[rkyv(omit_bounds)]
     pub content: Box<NumberDataSourceContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.23 `builtInUnit` (Built in Display Unit Value): the tag `c:builtInUnit`, schema type
 /// `CT_BuiltInUnit`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BuiltInDisplayUnitValue {
     pub unknown: officekit_markup_base::Unknown,
@@ -3057,7 +3239,10 @@ pub struct BuiltInDisplayUnitValue {
 }
 
 /// 21.2.3.6 `ST_BuiltInUnit` (Built-In Unit): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BuiltInUnit(pub String);
 /// The members of `ST_BuiltInUnit`, in alphabetical order.
@@ -3076,72 +3261,117 @@ pub enum BuiltInUnitMember {
 }
 
 /// 21.2.2.24 cat (Category Axis Data): the tag `c:cat`, schema type `CT_AxDataSource`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CategoryAxisDataCat {
+    #[rkyv(omit_bounds)]
     pub content: Box<AxisDataSourceContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.25 `catAx` (Category Axis Data): the tag `c:catAx`, schema type `CT_CatAx`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CategoryAxisDataCatAx {
     pub automatic_category_axis: Option<Box<AutomaticCategoryAxis>>,
     pub axis_id: Box<AxisID>,
     pub axis_position: Box<AxisPosition>,
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
     pub content: Option<Box<AxisCrossingContent>>,
     pub crossing_axis_id: Box<CrossingAxisID>,
     pub delete: Option<Box<Delete>>,
     pub label_alignment: Option<Box<LabelAlignment>>,
     pub label_offset: Option<Box<LabelOffset>>,
+    #[rkyv(omit_bounds)]
     pub major_gridlines: Option<Box<MajorGridlines>>,
     pub major_tick_mark: Option<Box<MajorTickMark>>,
+    #[rkyv(omit_bounds)]
     pub minor_gridlines: Option<Box<MinorGridlines>>,
     pub minor_tick_mark: Option<Box<MinorTickMark>>,
     pub no_multi_level_labels: Option<Box<NoMultiLevelLabels>>,
     pub number_format: Option<Box<NumberFormat>>,
+    #[rkyv(omit_bounds)]
     pub scaling: Box<Scaling>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
+    #[rkyv(omit_bounds)]
     pub text_properties: Option<Box<TextProperties>>,
     pub tick_label_position: Option<Box<TickLabelPosition>>,
     pub tick_label_skip: Option<Box<TickLabelSkip>>,
     pub tick_mark_skip: Option<Box<TickMarkSkip>>,
+    #[rkyv(omit_bounds)]
     pub title: Option<Box<Title>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.27 chart (Chart): the tag `c:chart`, schema type `CT_Chart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Chart {
     pub auto_title_is_deleted: Option<Box<AutoTitleIsDeleted>>,
+    #[rkyv(omit_bounds)]
     pub back_wall: Option<Box<BackWall>>,
     pub display_blanks_as: Option<Box<DisplayBlanksAs>>,
+    #[rkyv(omit_bounds)]
     pub extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub floor: Option<Box<Floor>>,
+    #[rkyv(omit_bounds)]
     pub legend: Option<Box<Legend>>,
+    #[rkyv(omit_bounds)]
     pub pivot_formats: Option<Box<PivotFormats>>,
+    #[rkyv(omit_bounds)]
     pub plot_area: Box<PlotArea>,
     pub plot_visible_only: Option<Box<PlotVisibleOnly>>,
     pub show_data_labels_over_maximum: Option<Box<ShowDataLabelsOverMaximum>>,
+    #[rkyv(omit_bounds)]
     pub side_wall: Option<Box<SideWall>>,
+    #[rkyv(omit_bounds)]
     pub title: Option<Box<Title>>,
     pub unknown: officekit_markup_base::Unknown,
+    #[rkyv(omit_bounds)]
     pub view_in_3d: Option<Box<ViewIn3D>>,
 }
 
 /// 21.2.2.64 `extLst` (Chart Extensibility): the tag `c:extLst`, schema type `CT_ExtensionList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ChartExtensibility {
+    #[rkyv(omit_bounds)]
     pub extension: Vec<Extension>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.28 `chartObject` (Chart Object): the tag `c:chartObject`, schema type `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ChartObject {
     pub unknown: officekit_markup_base::Unknown,
@@ -3149,31 +3379,50 @@ pub struct ChartObject {
 }
 
 /// 21.2.2.29 `chartSpace` (Chart Space): the tag `c:chartSpace`, schema type `CT_ChartSpace`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ChartSpace {
     pub c14_style: Option<Box<super::office_drawing_2007_8_2_chart::Style>>,
+    #[rkyv(omit_bounds)]
     pub chart: Box<Chart>,
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub color_map_override: Option<Box<ColorMapOverride>>,
     pub date1904: Option<Box<Date1904>>,
     pub editing_language: Option<Box<EditingLanguage>>,
     pub external_data_relationship: Option<Box<ExternalDataRelationship>>,
+    #[rkyv(omit_bounds)]
     pub pivot_source: Option<Box<PivotSource>>,
     pub print_settings: Option<Box<PrintSettings>>,
     pub protection: Option<Box<Protection>>,
     pub reference_to_chart_drawing_part: Option<Box<ReferenceToChartDrawingPart>>,
     pub rounded_corners: Option<Box<RoundedCorners>>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
     pub style: Option<Box<Style>>,
+    #[rkyv(omit_bounds)]
     pub text_properties: Option<Box<TextProperties>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.214 tx (Chart Text): the tag `c:tx`, schema type `CT_Tx`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ChartText {
+    #[rkyv(omit_bounds)]
     pub content: Box<ChartTextContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
@@ -3189,7 +3438,13 @@ pub enum ChartTextContent {
 
 /// 21.2.2.30 `clrMapOvr` (Color Map Override): the tag `c:clrMapOvr`, schema type
 /// `CT_ColorMapping`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ColorMapOverride {
     pub accent1: Option<super::drawing::ThemeColorReference>,
@@ -3200,6 +3455,7 @@ pub struct ColorMapOverride {
     pub accent6: Option<super::drawing::ThemeColorReference>,
     pub bg1: Option<super::drawing::ThemeColorReference>,
     pub bg2: Option<super::drawing::ThemeColorReference>,
+    #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
     pub fol_hlink: Option<super::drawing::ThemeColorReference>,
     pub hlink: Option<super::drawing::ThemeColorReference>,
@@ -3210,7 +3466,10 @@ pub struct ColorMapOverride {
 
 /// 21.2.2.32 `crossBetween` (Cross Between): the tag `c:crossBetween`, schema type
 /// `CT_CrossBetween`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CrossBetween {
     pub unknown: officekit_markup_base::Unknown,
@@ -3218,7 +3477,10 @@ pub struct CrossBetween {
 }
 
 /// 21.2.2.33 crosses (Crosses): the tag `c:crosses`, schema type `CT_Crosses`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Crosses {
     pub unknown: officekit_markup_base::Unknown,
@@ -3226,7 +3488,10 @@ pub struct Crosses {
 }
 
 /// 21.2.2.31 `crossAx` (Crossing Axis ID): the tag `c:crossAx`, schema type `CT_UnsignedInt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CrossingAxisID {
     pub unknown: officekit_markup_base::Unknown,
@@ -3234,7 +3499,10 @@ pub struct CrossingAxisID {
 }
 
 /// 21.2.2.34 `crossesAt` (Crossing Value): the tag `c:crossesAt`, schema type `CT_Double`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CrossingValue {
     pub unknown: officekit_markup_base::Unknown,
@@ -3242,7 +3510,10 @@ pub struct CrossingValue {
 }
 
 /// 21.2.2.36 `custUnit` (Custom Display Unit): the tag `c:custUnit`, schema type `CT_Double`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomDisplayUnit {
     pub unknown: officekit_markup_base::Unknown,
@@ -3250,7 +3521,10 @@ pub struct CustomDisplayUnit {
 }
 
 /// 21.2.2.35 `custSplit` (Custom Split): the tag `c:custSplit`, schema type `CT_CustSplit`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomSplit {
     pub second_pie_point: Vec<SecondPiePoint>,
@@ -3258,7 +3532,10 @@ pub struct CustomSplit {
 }
 
 /// 21.2.2.37 data (Data Cannot Be Changed): the tag `c:data`, schema type `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DataCannotBeChanged {
     pub unknown: officekit_markup_base::Unknown,
@@ -3266,10 +3543,18 @@ pub struct DataCannotBeChanged {
 }
 
 /// 21.2.2.47 `dLbl` (Data Label): the tag `c:dLbl`, schema type `CT_DLbl`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DataLabel {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<DataLabelContent>,
     pub index: Box<Index>,
     pub unknown: officekit_markup_base::Unknown,
@@ -3297,7 +3582,10 @@ pub enum DataLabelContent {
 }
 
 /// 21.2.2.48 `dLblPos` (Data Label Position): the tag `c:dLblPos`, schema type `CT_DLblPos`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DataLabelPosition {
     pub unknown: officekit_markup_base::Unknown,
@@ -3305,11 +3593,20 @@ pub struct DataLabelPosition {
 }
 
 /// 21.2.2.49 `dLbls` (Data Labels): the tag `c:dLbls`, schema type `CT_DLbls`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DataLabels {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<DataLabelsContent>,
+    #[rkyv(omit_bounds)]
     pub data_label: Vec<DataLabel>,
     pub unknown: officekit_markup_base::Unknown,
 }
@@ -3336,36 +3633,57 @@ pub enum DataLabelsContent {
 }
 
 /// 21.2.2.52 `dPt` (Data Point): the tag `c:dPt`, schema type `CT_DPt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DataPoint {
     pub bubble3d: Option<Box<Bubble3D>>,
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
     pub explosion: Option<Box<Explosion>>,
     pub index: Box<Index>,
     pub invert_if_negative: Option<Box<InvertIfNegative>>,
+    #[rkyv(omit_bounds)]
     pub marker: Option<Box<Marker>>,
     pub picture_options: Option<Box<PictureOptions>>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.54 `dTable` (Data Table): the tag `c:dTable`, schema type `CT_DTable`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DataTable {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
     pub show_horizontal_border: Option<Box<ShowHorizontalBorder>>,
     pub show_legend_keys: Option<Box<ShowLegendKeys>>,
     pub show_outline_border: Option<Box<ShowOutlineBorder>>,
     pub show_vertical_border: Option<Box<ShowVerticalBorder>>,
+    #[rkyv(omit_bounds)]
     pub text_properties: Option<Box<TextProperties>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `c:date1904`, schema type `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Date1904 {
     pub unknown: officekit_markup_base::Unknown,
@@ -3373,37 +3691,53 @@ pub struct Date1904 {
 }
 
 /// 21.2.2.39 `dateAx` (Date Axis): the tag `c:dateAx`, schema type `CT_DateAx`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DateAxis {
     pub automatic_category_axis: Option<Box<AutomaticCategoryAxis>>,
     pub base_time_unit: Option<Box<BaseTimeUnit>>,
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
     pub content: Option<Box<AxisCrossingContent>>,
     pub crossing_axis_id: Box<CrossingAxisID>,
     pub delete: Option<Box<Delete>>,
     pub id: Box<AxisID>,
     pub label_offset: Option<Box<LabelOffset>>,
+    #[rkyv(omit_bounds)]
     pub major_gridlines: Option<Box<MajorGridlines>>,
     pub major_tick_mark: Option<Box<MajorTickMark>>,
     pub major_time_unit: Option<Box<MajorTimeUnit>>,
     pub major_unit: Option<Box<MajorUnit>>,
+    #[rkyv(omit_bounds)]
     pub minor_gridlines: Option<Box<MinorGridlines>>,
     pub minor_tick_mark: Option<Box<MinorTickMark>>,
     pub minor_time_unit: Option<Box<MinorTimeUnit>>,
     pub minor_unit: Option<Box<MinorUnit>>,
     pub number_format: Option<Box<NumberFormat>>,
     pub position: Box<AxisPosition>,
+    #[rkyv(omit_bounds)]
     pub scaling: Box<Scaling>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
+    #[rkyv(omit_bounds)]
     pub text_properties: Option<Box<TextProperties>>,
     pub tick_label_position: Option<Box<TickLabelPosition>>,
+    #[rkyv(omit_bounds)]
     pub title: Option<Box<Title>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.40 delete (Delete): the tag `c:delete`, schema type `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Delete {
     pub unknown: officekit_markup_base::Unknown,
@@ -3412,7 +3746,10 @@ pub struct Delete {
 
 /// 21.2.2.41 `depthPercent` (Depth Percent): the tag `c:depthPercent`, schema type
 /// `CT_DepthPercent`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DepthPercent {
     pub unknown: officekit_markup_base::Unknown,
@@ -3420,23 +3757,35 @@ pub struct DepthPercent {
 }
 
 /// `ST_DepthPercentUShort`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DepthPercentUShort(pub String);
 
 /// 18.1.3.4 `ST_HPercentUShort` (Depth Percent `UnsignedShort`): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DepthPercentUnsignedShort(pub String);
 
 /// 21.2.3.51 `ST_DepthPercentWithSymbol` (Depth Percent with Symbol): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DepthPercentWithSymbol(pub String);
 
 /// 21.2.2.42 `dispBlanksAs` (Display Blanks As): the tag `c:dispBlanksAs`, schema type
 /// `CT_DispBlanksAs`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DisplayBlanksAs {
     pub unknown: officekit_markup_base::Unknown,
@@ -3444,7 +3793,10 @@ pub struct DisplayBlanksAs {
 }
 
 /// 21.2.2.43 `dispEq` (Display Equation): the tag `c:dispEq`, schema type `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DisplayEquation {
     pub unknown: officekit_markup_base::Unknown,
@@ -3452,7 +3804,10 @@ pub struct DisplayEquation {
 }
 
 /// 21.2.2.44 `dispRSqr` (Display R Squared Value): the tag `c:dispRSqr`, schema type `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DisplayRSquaredValue {
     pub unknown: officekit_markup_base::Unknown,
@@ -3460,11 +3815,19 @@ pub struct DisplayRSquaredValue {
 }
 
 /// 21.2.2.45 `dispUnits` (Display Units): the tag `c:dispUnits`, schema type `CT_DispUnits`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DisplayUnits {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
     pub content: Box<DisplayUnitsContent>,
+    #[rkyv(omit_bounds)]
     pub label: Option<Box<DisplayUnitsLabel>>,
     pub unknown: officekit_markup_base::Unknown,
 }
@@ -3480,48 +3843,84 @@ pub enum DisplayUnitsContent {
 
 /// 21.2.2.46 `dispUnitsLbl` (Display Units Label): the tag `c:dispUnitsLbl`, schema type
 /// `CT_DispUnitsLbl`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DisplayUnitsLabel {
+    #[rkyv(omit_bounds)]
     pub chart_text: Option<Box<ChartText>>,
+    #[rkyv(omit_bounds)]
     pub layout: Option<Box<Layout>>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
+    #[rkyv(omit_bounds)]
     pub text_properties: Option<Box<TextProperties>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.50 `doughnutChart` (Doughnut Charts): the tag `c:doughnutChart`, schema type
 /// `CT_DoughnutChart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DoughnutCharts {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub data_labels: Option<Box<DataLabels>>,
     pub first_slice_angle: Option<Box<FirstSliceAngle>>,
     pub hole_size: Option<Box<HoleSize>>,
+    #[rkyv(omit_bounds)]
     pub pie_chart_series: Vec<PieChartSeries>,
     pub unknown: officekit_markup_base::Unknown,
     pub vary_colors_by_point: Option<Box<VaryColorsByPoint>>,
 }
 
 /// 21.2.2.51 `downBars` (Down Bars): the tag `c:downBars`, schema type `CT_UpDownBar`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DownBars {
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.53 `dropLines` (Drop Lines): the tag `c:dropLines`, schema type `CT_ChartLines`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DropLines {
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.87 lang (Editing Language): the tag `c:lang`, schema type `CT_TextLanguageID`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EditingLanguage {
     pub unknown: officekit_markup_base::Unknown,
@@ -3529,7 +3928,10 @@ pub struct EditingLanguage {
 }
 
 /// 21.2.2.57 `errDir` (Error Bar Direction): the tag `c:errDir`, schema type `CT_ErrDir`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ErrorBarDirection {
     pub unknown: officekit_markup_base::Unknown,
@@ -3537,7 +3939,10 @@ pub struct ErrorBarDirection {
 }
 
 /// 21.2.2.56 `errBarType` (Error Bar Type): the tag `c:errBarType`, schema type `CT_ErrBarType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ErrorBarType {
     pub unknown: officekit_markup_base::Unknown,
@@ -3545,7 +3950,10 @@ pub struct ErrorBarType {
 }
 
 /// 21.2.2.225 val (Error Bar Value): the tag `c:val`, schema type `CT_Double`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ErrorBarValue {
     pub unknown: officekit_markup_base::Unknown,
@@ -3554,7 +3962,10 @@ pub struct ErrorBarValue {
 
 /// 21.2.2.58 `errValType` (Error Bar Value Type): the tag `c:errValType`, schema type
 /// `CT_ErrValType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ErrorBarValueType {
     pub unknown: officekit_markup_base::Unknown,
@@ -3562,23 +3973,36 @@ pub struct ErrorBarValueType {
 }
 
 /// 21.2.2.55 `errBars` (Error Bars): the tag `c:errBars`, schema type `CT_ErrBars`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ErrorBars {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
     pub error_bar_direction: Option<Box<ErrorBarDirection>>,
     pub error_bar_type: Box<ErrorBarType>,
     pub error_bar_value: Option<Box<ErrorBarValue>>,
     pub error_bar_value_type: Box<ErrorBarValueType>,
+    #[rkyv(omit_bounds)]
     pub minus: Option<Box<Minus>>,
     pub no_end_cap: Option<Box<NoEndCap>>,
+    #[rkyv(omit_bounds)]
     pub plus: Option<Box<Plus>>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.3.14 `ST_ErrValType` (Error Value Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ErrorValueType(pub String);
 /// The members of `ST_ErrValType`, in alphabetical order.
@@ -3593,7 +4017,10 @@ pub enum ErrorValueTypeMember {
 }
 
 /// 21.2.2.59 `evenFooter` (Even Footer): the tag `c:evenFooter`, schema type `ST_Xstring`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EvenFooter {
     pub unknown: officekit_markup_base::Unknown,
@@ -3601,7 +4028,10 @@ pub struct EvenFooter {
 }
 
 /// 21.2.2.60 `evenHeader` (Even Header): the tag `c:evenHeader`, schema type `ST_Xstring`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EvenHeader {
     pub unknown: officekit_markup_base::Unknown,
@@ -3609,7 +4039,10 @@ pub struct EvenHeader {
 }
 
 /// 21.2.2.61 explosion (Explosion): the tag `c:explosion`, schema type `CT_UnsignedInt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Explosion {
     pub unknown: officekit_markup_base::Unknown,
@@ -3617,9 +4050,16 @@ pub struct Explosion {
 }
 
 /// 21.2.2.62 ext (Extension): the tag `c:ext`, schema type `CT_Extension`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Extension {
+    #[rkyv(omit_bounds)]
     pub content: Box<super::drawing::AnyElementContent>,
     pub unknown: officekit_markup_base::Unknown,
     pub uri: Option<String>,
@@ -3627,7 +4067,10 @@ pub struct Extension {
 
 /// 21.2.2.63 `externalData` (External Data Relationship): the tag `c:externalData`, schema type
 /// `CT_ExternalData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExternalDataRelationship {
     pub id: Option<String>,
@@ -3636,7 +4079,10 @@ pub struct ExternalDataRelationship {
 }
 
 /// 21.2.2.66 `firstFooter` (First Footer): the tag `c:firstFooter`, schema type `ST_Xstring`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FirstFooter {
     pub unknown: officekit_markup_base::Unknown,
@@ -3644,7 +4090,10 @@ pub struct FirstFooter {
 }
 
 /// 21.2.2.67 `firstHeader` (First Header): the tag `c:firstHeader`, schema type `ST_Xstring`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FirstHeader {
     pub unknown: officekit_markup_base::Unknown,
@@ -3653,7 +4102,10 @@ pub struct FirstHeader {
 
 /// 21.2.2.68 `firstSliceAng` (First Slice Angle): the tag `c:firstSliceAng`, schema type
 /// `CT_FirstSliceAng`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FirstSliceAngle {
     pub unknown: officekit_markup_base::Unknown,
@@ -3661,18 +4113,29 @@ pub struct FirstSliceAngle {
 }
 
 /// 21.2.2.69 floor (Floor): the tag `c:floor`, schema type `CT_Surface`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Floor {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
     pub picture_options: Option<Box<PictureOptions>>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
     pub thickness: Option<Box<Thickness>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.71 `formatCode` (Format Code): the tag `c:formatCode`, schema type `ST_Xstring`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FormatCode {
     pub unknown: officekit_markup_base::Unknown,
@@ -3680,7 +4143,10 @@ pub struct FormatCode {
 }
 
 /// 21.2.2.70 `fmtId` (Format ID): the tag `c:fmtId`, schema type `CT_UnsignedInt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FormatID {
     pub unknown: officekit_markup_base::Unknown,
@@ -3688,7 +4154,10 @@ pub struct FormatID {
 }
 
 /// 21.2.2.72 formatting (Formatting): the tag `c:formatting`, schema type `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Formatting {
     pub unknown: officekit_markup_base::Unknown,
@@ -3696,7 +4165,10 @@ pub struct Formatting {
 }
 
 /// 21.2.2.65 f (Formula): the tag `c:f`, schema type `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Formula {
     pub unknown: officekit_markup_base::Unknown,
@@ -3704,7 +4176,10 @@ pub struct Formula {
 }
 
 /// 21.2.2.73 forward (Forward): the tag `c:forward`, schema type `CT_Double`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Forward {
     pub unknown: officekit_markup_base::Unknown,
@@ -3712,7 +4187,10 @@ pub struct Forward {
 }
 
 /// 21.2.3.16 `ST_GapAmount` (Gap Amount): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GapAmount(pub String);
 /// The member types of `ST_GapAmount`, in alphabetical order; `value` tries them in the schema's
@@ -3725,17 +4203,26 @@ pub enum GapAmountMember {
 }
 
 /// 21.2.3.53 `ST_GapAmountPercent` (Gap Amount Percentage): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GapAmountPercentage(pub String);
 
 /// 18.1.3.6 `ST_GapAmountUShort` (Gap Amount `UnsignedShort`): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GapAmountUnsignedShort(pub String);
 
 /// 21.2.2.74 `gapDepth` (Gap Depth): the tag `c:gapDepth`, schema type `CT_GapAmount`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GapDepth {
     pub unknown: officekit_markup_base::Unknown,
@@ -3743,7 +4230,10 @@ pub struct GapDepth {
 }
 
 /// 21.2.2.75 `gapWidth` (Gap Width): the tag `c:gapWidth`, schema type `CT_GapAmount`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GapWidth {
     pub unknown: officekit_markup_base::Unknown,
@@ -3751,7 +4241,10 @@ pub struct GapWidth {
 }
 
 /// 21.2.2.76 grouping (Grouping): the tag `c:grouping`, schema type `CT_Grouping`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Grouping {
     pub unknown: officekit_markup_base::Unknown,
@@ -3760,7 +4253,10 @@ pub struct Grouping {
 
 /// 21.2.2.79 `headerFooter` (Header and Footer): the tag `c:headerFooter`, schema type
 /// `CT_HeaderFooter`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HeaderAndFooter {
     pub align_with_margins: Option<String>,
@@ -3776,7 +4272,10 @@ pub struct HeaderAndFooter {
 }
 
 /// 21.2.2.78 h (Height): the tag `c:h`, schema type `CT_Double`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Height {
     pub unknown: officekit_markup_base::Unknown,
@@ -3784,7 +4283,10 @@ pub struct Height {
 }
 
 /// 21.2.2.81 `hMode` (Height Mode): the tag `c:hMode`, schema type `CT_LayoutMode`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HeightMode {
     pub unknown: officekit_markup_base::Unknown,
@@ -3792,7 +4294,10 @@ pub struct HeightMode {
 }
 
 /// 21.2.2.83 `hPercent` (Height Percent): the tag `c:hPercent`, schema type `CT_HPercent`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HeightPercent {
     pub unknown: officekit_markup_base::Unknown,
@@ -3800,20 +4305,33 @@ pub struct HeightPercent {
 }
 
 /// 21.2.3.52 `ST_HPercentWithSymbol` (Height Percent with Symbol): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HeightPercentWithSymbol(pub String);
 
 /// 21.2.2.80 `hiLowLines` (High Low Lines): the tag `c:hiLowLines`, schema type `CT_ChartLines`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HighLowLines {
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.82 `holeSize` (Hole Size): the tag `c:holeSize`, schema type `CT_HoleSize`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HoleSize {
     pub unknown: officekit_markup_base::Unknown,
@@ -3821,17 +4339,26 @@ pub struct HoleSize {
 }
 
 /// 21.2.3.55 `ST_HoleSizePercent` (Hole Size Percentage): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HoleSizePercentage(pub String);
 
 /// 18.1.3.10 `ST_HoleSizeUByte` (Hole Size `UnsignedByte`): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HoleSizeUnsignedByte(pub String);
 
 /// 21.2.2.84 idx (Index): the tag `c:idx`, schema type `CT_UnsignedInt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Index {
     pub unknown: officekit_markup_base::Unknown,
@@ -3839,7 +4366,10 @@ pub struct Index {
 }
 
 /// 21.2.2.85 intercept (Intercept): the tag `c:intercept`, schema type `CT_Double`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Intercept {
     pub unknown: officekit_markup_base::Unknown,
@@ -3848,7 +4378,10 @@ pub struct Intercept {
 
 /// 21.2.2.86 `invertIfNegative` (Invert if Negative): the tag `c:invertIfNegative`, schema type
 /// `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct InvertIfNegative {
     pub unknown: officekit_markup_base::Unknown,
@@ -3856,7 +4389,10 @@ pub struct InvertIfNegative {
 }
 
 /// 21.2.2.90 `lblAlgn` (Label Alignment): the tag `c:lblAlgn`, schema type `CT_LblAlgn`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LabelAlignment {
     pub unknown: officekit_markup_base::Unknown,
@@ -3864,7 +4400,10 @@ pub struct LabelAlignment {
 }
 
 /// 21.2.2.91 `lblOffset` (Label Offset): the tag `c:lblOffset`, schema type `CT_LblOffset`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LabelOffset {
     pub unknown: officekit_markup_base::Unknown,
@@ -3872,26 +4411,43 @@ pub struct LabelOffset {
 }
 
 /// 21.2.3.56 `ST_LblOffsetPercent` (Label Offset Percentage): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LabelOffsetPercentage(pub String);
 
 /// 18.1.3.12 `ST_LblOffsetUShort` (Label Offset `UnsignedShort`): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LabelOffsetUnsignedShort(pub String);
 
 /// 21.2.2.88 layout (Layout): the tag `c:layout`, schema type `CT_Layout`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Layout {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub manual: Option<Box<ManualLayout>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.3.20 `ST_LayoutMode` (Layout Mode): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LayoutMode(pub String);
 /// The members of `ST_LayoutMode`, in alphabetical order.
@@ -3904,7 +4460,10 @@ pub enum LayoutModeMember {
 
 /// 21.2.2.89 `layoutTarget` (Layout Target): the tag `c:layoutTarget`, schema type
 /// `CT_LayoutTarget`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LayoutTarget {
     pub unknown: officekit_markup_base::Unknown,
@@ -3912,15 +4471,25 @@ pub struct LayoutTarget {
 }
 
 /// 21.2.2.92 `leaderLines` (Leader Lines): the tag `c:leaderLines`, schema type `CT_ChartLines`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LeaderLines {
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.232 x (Left): the tag `c:x`, schema type `CT_Double`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Left {
     pub unknown: officekit_markup_base::Unknown,
@@ -3928,7 +4497,10 @@ pub struct Left {
 }
 
 /// 21.2.2.233 `xMode` (Left Mode): the tag `c:xMode`, schema type `CT_LayoutMode`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LeftMode {
     pub unknown: officekit_markup_base::Unknown,
@@ -3937,7 +4509,10 @@ pub struct LeftMode {
 
 /// 18.1.2.1 `legacyDrawingHF` (Legacy Drawing for Headers and Footers): the tag
 /// `c:legacyDrawingHF`, schema type `CT_RelId`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LegacyDrawingForHeadersAndFooters {
     pub id: Option<String>,
@@ -3945,24 +4520,43 @@ pub struct LegacyDrawingForHeadersAndFooters {
 }
 
 /// 21.2.2.93 legend (Legend): the tag `c:legend`, schema type `CT_Legend`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Legend {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub entry: Vec<LegendEntry>,
+    #[rkyv(omit_bounds)]
     pub layout: Option<Box<Layout>>,
     pub overlay: Option<Box<Overlay>>,
     pub position: Option<Box<LegendPosition>>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
+    #[rkyv(omit_bounds)]
     pub text_properties: Option<Box<TextProperties>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.94 `legendEntry` (Legend Entry): the tag `c:legendEntry`, schema type `CT_LegendEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LegendEntry {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub content: Option<Box<LegendEntryContent>>,
     pub index: Box<Index>,
     pub unknown: officekit_markup_base::Unknown,
@@ -3978,7 +4572,10 @@ pub enum LegendEntryContent {
 }
 
 /// 21.2.2.95 `legendPos` (Legend Position): the tag `c:legendPos`, schema type `CT_LegendPos`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LegendPosition {
     pub unknown: officekit_markup_base::Unknown,
@@ -3986,7 +4583,10 @@ pub struct LegendPosition {
 }
 
 /// 21.2.2.99 lvl (Level): the tag `c:lvl`, schema type `CT_Lvl`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Level {
     pub string_point: Vec<StringPoint>,
@@ -3994,60 +4594,101 @@ pub struct Level {
 }
 
 /// The tag `c:line3DChart`, schema type `CT_Line3DChart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Line3DChart {
     pub axis_id: Vec<AxisID>,
+    #[rkyv(omit_bounds)]
     pub data_labels: Option<Box<DataLabels>>,
+    #[rkyv(omit_bounds)]
     pub drop_lines: Option<Box<DropLines>>,
+    #[rkyv(omit_bounds)]
     pub extensibility: Option<Box<ChartExtensibility>>,
     pub gap_depth: Option<Box<GapDepth>>,
     pub grouping: Box<Grouping>,
+    #[rkyv(omit_bounds)]
     pub line_chart_series: Vec<LineChartSeries>,
     pub unknown: officekit_markup_base::Unknown,
     pub vary_colors_by_point: Option<Box<VaryColorsByPoint>>,
 }
 
 /// 21.2.2.171 ser (Line Chart Series): the tag `c:ser`, schema type `CT_LineSer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LineChartSeries {
+    #[rkyv(omit_bounds)]
     pub category_axis_data_cat: Option<Box<CategoryAxisDataCat>>,
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub data_labels: Option<Box<DataLabels>>,
+    #[rkyv(omit_bounds)]
     pub data_point: Vec<DataPoint>,
+    #[rkyv(omit_bounds)]
     pub error_bars: Option<Box<ErrorBars>>,
     pub index: Box<Index>,
+    #[rkyv(omit_bounds)]
     pub marker: Option<Box<Marker>>,
     pub order: Box<Order>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
     pub smoothing: Option<Box<Smoothing>>,
+    #[rkyv(omit_bounds)]
     pub text: Option<Box<SeriesText>>,
+    #[rkyv(omit_bounds)]
     pub trendlines: Vec<Trendlines>,
     pub unknown: officekit_markup_base::Unknown,
+    #[rkyv(omit_bounds)]
     pub values: Option<Box<Values>>,
 }
 
 /// 21.2.2.97 `lineChart` (Line Charts): the tag `c:lineChart`, schema type `CT_LineChart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LineCharts {
     pub axis_id: Vec<AxisID>,
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub data_labels: Option<Box<DataLabels>>,
+    #[rkyv(omit_bounds)]
     pub drop_lines: Option<Box<DropLines>>,
     pub grouping: Box<Grouping>,
+    #[rkyv(omit_bounds)]
     pub high_low_lines: Option<Box<HighLowLines>>,
+    #[rkyv(omit_bounds)]
     pub line_chart_series: Vec<LineChartSeries>,
     pub show_marker: Option<Box<ShowMarker>>,
     pub smoothing: Option<Box<Smoothing>>,
     pub unknown: officekit_markup_base::Unknown,
+    #[rkyv(omit_bounds)]
     pub up_down_bars: Option<Box<UpDownBars>>,
     pub vary_colors_by_point: Option<Box<VaryColorsByPoint>>,
 }
 
 /// 21.2.2.98 `logBase` (Logarithmic Base): the tag `c:logBase`, schema type `CT_LogBase`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LogarithmicBase {
     pub unknown: officekit_markup_base::Unknown,
@@ -4056,16 +4697,26 @@ pub struct LogarithmicBase {
 
 /// 21.2.2.100 `majorGridlines` (Major Gridlines): the tag `c:majorGridlines`, schema type
 /// `CT_ChartLines`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MajorGridlines {
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.101 `majorTickMark` (Major Tick Mark): the tag `c:majorTickMark`, schema type
 /// `CT_TickMark`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MajorTickMark {
     pub unknown: officekit_markup_base::Unknown,
@@ -4074,7 +4725,10 @@ pub struct MajorTickMark {
 
 /// 21.2.2.102 `majorTimeUnit` (Major Time Unit): the tag `c:majorTimeUnit`, schema type
 /// `CT_TimeUnit`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MajorTimeUnit {
     pub unknown: officekit_markup_base::Unknown,
@@ -4082,7 +4736,10 @@ pub struct MajorTimeUnit {
 }
 
 /// 21.2.2.103 `majorUnit` (Major Unit): the tag `c:majorUnit`, schema type `CT_AxisUnit`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MajorUnit {
     pub unknown: officekit_markup_base::Unknown,
@@ -4091,9 +4748,16 @@ pub struct MajorUnit {
 
 /// 21.2.2.104 `manualLayout` (Manual Layout): the tag `c:manualLayout`, schema type
 /// `CT_ManualLayout`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ManualLayout {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
     pub height: Option<Box<Height>>,
     pub height_mode: Option<Box<HeightMode>>,
@@ -4108,10 +4772,18 @@ pub struct ManualLayout {
 }
 
 /// 21.2.2.106 marker (Marker): the tag `c:marker`, schema type `CT_Marker`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Marker {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
     pub size: Option<Box<Size>>,
     pub symbol: Option<Box<Symbol>>,
@@ -4119,12 +4791,18 @@ pub struct Marker {
 }
 
 /// 21.2.3.26 `ST_MarkerSize` (Marker Size): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MarkerSize(pub String);
 
 /// 21.2.3.27 `ST_MarkerStyle` (Marker Style): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MarkerStyle(pub String);
 /// The members of `ST_MarkerStyle`, in alphabetical order.
@@ -4146,7 +4824,10 @@ pub enum MarkerStyleMember {
 }
 
 /// 21.2.2.107 max (Maximum): the tag `c:max`, schema type `CT_Double`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Maximum {
     pub unknown: officekit_markup_base::Unknown,
@@ -4154,7 +4835,10 @@ pub struct Maximum {
 }
 
 /// 21.2.2.108 min (Minimum): the tag `c:min`, schema type `CT_Double`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Minimum {
     pub unknown: officekit_markup_base::Unknown,
@@ -4163,16 +4847,26 @@ pub struct Minimum {
 
 /// 21.2.2.109 `minorGridlines` (Minor Gridlines): the tag `c:minorGridlines`, schema type
 /// `CT_ChartLines`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MinorGridlines {
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.110 `minorTickMark` (Minor Tick Mark): the tag `c:minorTickMark`, schema type
 /// `CT_TickMark`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MinorTickMark {
     pub unknown: officekit_markup_base::Unknown,
@@ -4181,7 +4875,10 @@ pub struct MinorTickMark {
 
 /// 21.2.2.111 `minorTimeUnit` (Minor Time Unit): the tag `c:minorTimeUnit`, schema type
 /// `CT_TimeUnit`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MinorTimeUnit {
     pub unknown: officekit_markup_base::Unknown,
@@ -4189,7 +4886,10 @@ pub struct MinorTimeUnit {
 }
 
 /// 21.2.2.112 `minorUnit` (Minor Unit): the tag `c:minorUnit`, schema type `CT_AxisUnit`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MinorUnit {
     pub unknown: officekit_markup_base::Unknown,
@@ -4197,18 +4897,32 @@ pub struct MinorUnit {
 }
 
 /// 21.2.2.113 minus (Minus): the tag `c:minus`, schema type `CT_NumDataSource`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Minus {
+    #[rkyv(omit_bounds)]
     pub content: Box<NumberDataSourceContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.114 `multiLvlStrCache` (Multi Level String Cache): the tag `c:multiLvlStrCache`, schema
 /// type `CT_MultiLvlStrData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MultiLevelStringCache {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
     pub level: Vec<Level>,
     pub point_count: Option<Box<PointCount>>,
@@ -4217,17 +4931,28 @@ pub struct MultiLevelStringCache {
 
 /// 21.2.2.115 `multiLvlStrRef` (Multi Level String Reference): the tag `c:multiLvlStrRef`, schema
 /// type `CT_MultiLvlStrRef`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MultiLevelStringReference {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
     pub formula: Box<Formula>,
+    #[rkyv(omit_bounds)]
     pub multi_level_string_cache: Option<Box<MultiLevelStringCache>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.118 `noEndCap` (No End Cap): the tag `c:noEndCap`, schema type `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NoEndCap {
     pub unknown: officekit_markup_base::Unknown,
@@ -4236,7 +4961,10 @@ pub struct NoEndCap {
 
 /// 21.2.2.119 `noMultiLvlLbl` (No Multi-level Labels): the tag `c:noMultiLvlLbl`, schema type
 /// `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NoMultiLevelLabels {
     pub unknown: officekit_markup_base::Unknown,
@@ -4244,9 +4972,16 @@ pub struct NoMultiLevelLabels {
 }
 
 /// 21.2.2.120 `numCache` (Number Cache): the tag `c:numCache`, schema type `CT_NumData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumberCache {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
     pub format_code: Option<Box<FormatCode>>,
     pub numeric_point: Vec<NumericPoint>,
@@ -4264,7 +4999,10 @@ pub enum NumberDataSourceContent {
 }
 
 /// 21.2.2.121 `numFmt` (Number Format): the tag `c:numFmt`, schema type `CT_NumFmt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumberFormat {
     pub format_code: Option<String>,
@@ -4273,9 +5011,16 @@ pub struct NumberFormat {
 }
 
 /// 21.2.2.122 `numLit` (Number Literal): the tag `c:numLit`, schema type `CT_NumData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumberLiteral {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
     pub format_code: Option<Box<FormatCode>>,
     pub numeric_point: Vec<NumericPoint>,
@@ -4284,17 +5029,28 @@ pub struct NumberLiteral {
 }
 
 /// 21.2.2.123 `numRef` (Number Reference): the tag `c:numRef`, schema type `CT_NumRef`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumberReference {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
     pub formula: Box<Formula>,
+    #[rkyv(omit_bounds)]
     pub number_cache: Option<Box<NumberCache>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.150 pt (Numeric Point): the tag `c:pt`, schema type `CT_NumVal`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumericPoint {
     pub format_code: Option<String>,
@@ -4304,7 +5060,10 @@ pub struct NumericPoint {
 }
 
 /// 21.2.2.222 v (Numeric Value): the tag `c:v`, schema type `ST_Xstring`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumericValue {
     pub unknown: officekit_markup_base::Unknown,
@@ -4312,7 +5071,10 @@ pub struct NumericValue {
 }
 
 /// 21.2.2.124 `oddFooter` (Odd Footer): the tag `c:oddFooter`, schema type `ST_Xstring`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct OddFooter {
     pub unknown: officekit_markup_base::Unknown,
@@ -4320,7 +5082,10 @@ pub struct OddFooter {
 }
 
 /// 21.2.2.125 `oddHeader` (Odd Header): the tag `c:oddHeader`, schema type `ST_Xstring`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct OddHeader {
     pub unknown: officekit_markup_base::Unknown,
@@ -4328,7 +5093,10 @@ pub struct OddHeader {
 }
 
 /// 21.2.2.128 order (Order): the tag `c:order`, schema type `CT_UnsignedInt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Order {
     pub unknown: officekit_markup_base::Unknown,
@@ -4336,7 +5104,10 @@ pub struct Order {
 }
 
 /// 21.2.3.30 `ST_Orientation` (Orientation): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Orientation(pub String);
 /// The members of `ST_Orientation`, in alphabetical order.
@@ -4348,7 +5119,10 @@ pub enum OrientationMember {
 }
 
 /// 21.2.2.131 overlap (Overlap): the tag `c:overlap`, schema type `CT_Overlap`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Overlap {
     pub unknown: officekit_markup_base::Unknown,
@@ -4356,17 +5130,26 @@ pub struct Overlap {
 }
 
 /// 18.1.3.14 `ST_OverlapByte` (Overlap Byte): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct OverlapByte(pub String);
 
 /// 21.2.3.57 `ST_OverlapPercent` (Overlap Percentage): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct OverlapPercentage(pub String);
 
 /// 21.2.2.132 overlay (Overlay): the tag `c:overlay`, schema type `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Overlay {
     pub unknown: officekit_markup_base::Unknown,
@@ -4374,7 +5157,10 @@ pub struct Overlay {
 }
 
 /// 21.2.2.133 `pageMargins` (Page Margins): the tag `c:pageMargins`, schema type `CT_PageMargins`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PageMargins {
     pub b: Option<String>,
@@ -4387,7 +5173,10 @@ pub struct PageMargins {
 }
 
 /// 21.2.2.134 `pageSetup` (Page Setup): the tag `c:pageSetup`, schema type `CT_PageSetup`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PageSetup {
     pub black_and_white: Option<String>,
@@ -4405,7 +5194,10 @@ pub struct PageSetup {
 }
 
 /// 21.2.2.135 period (Period): the tag `c:period`, schema type `CT_Period`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Period {
     pub unknown: officekit_markup_base::Unknown,
@@ -4413,7 +5205,10 @@ pub struct Period {
 }
 
 /// 21.2.2.136 perspective (Perspective): the tag `c:perspective`, schema type `CT_Perspective`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Perspective {
     pub unknown: officekit_markup_base::Unknown,
@@ -4422,7 +5217,10 @@ pub struct Perspective {
 
 /// 21.2.2.137 `pictureFormat` (Picture Format): the tag `c:pictureFormat`, schema type
 /// `CT_PictureFormat`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PictureFormat {
     pub unknown: officekit_markup_base::Unknown,
@@ -4431,7 +5229,10 @@ pub struct PictureFormat {
 
 /// 21.2.2.138 `pictureOptions` (Picture Options): the tag `c:pictureOptions`, schema type
 /// `CT_PictureOptions`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PictureOptions {
     pub apply_to_end: Option<Box<ApplyToEnd>>,
@@ -4444,7 +5245,10 @@ pub struct PictureOptions {
 
 /// 21.2.2.139 `pictureStackUnit` (Picture Stack Unit): the tag `c:pictureStackUnit`, schema type
 /// `CT_PictureStackUnit`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PictureStackUnit {
     pub unknown: officekit_markup_base::Unknown,
@@ -4452,40 +5256,71 @@ pub struct PictureStackUnit {
 }
 
 /// The tag `c:pie3DChart`, schema type `CT_Pie3DChart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Pie3DChart {
+    #[rkyv(omit_bounds)]
     pub data_labels: Option<Box<DataLabels>>,
+    #[rkyv(omit_bounds)]
     pub extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub pie_chart_series: Vec<PieChartSeries>,
     pub unknown: officekit_markup_base::Unknown,
     pub vary_colors_by_point: Option<Box<VaryColorsByPoint>>,
 }
 
 /// 21.2.2.172 ser (Pie Chart Series): the tag `c:ser`, schema type `CT_PieSer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PieChartSeries {
+    #[rkyv(omit_bounds)]
     pub category_axis_data_cat: Option<Box<CategoryAxisDataCat>>,
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub data_labels: Option<Box<DataLabels>>,
+    #[rkyv(omit_bounds)]
     pub data_point: Vec<DataPoint>,
     pub explosion: Option<Box<Explosion>>,
     pub index: Box<Index>,
     pub order: Box<Order>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
+    #[rkyv(omit_bounds)]
     pub text: Option<Box<SeriesText>>,
     pub unknown: officekit_markup_base::Unknown,
+    #[rkyv(omit_bounds)]
     pub values: Option<Box<Values>>,
 }
 
 /// 21.2.2.141 `pieChart` (Pie Charts): the tag `c:pieChart`, schema type `CT_PieChart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PieCharts {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub data_labels: Option<Box<DataLabels>>,
     pub first_slice_angle: Option<Box<FirstSliceAngle>>,
+    #[rkyv(omit_bounds)]
     pub pie_chart_series: Vec<PieChartSeries>,
     pub unknown: officekit_markup_base::Unknown,
     pub vary_colors_by_point: Option<Box<VaryColorsByPoint>>,
@@ -4493,16 +5328,26 @@ pub struct PieCharts {
 
 /// 21.2.2.126 `ofPieChart` (Pie of Pie or Bar of Pie Charts): the tag `c:ofPieChart`, schema type
 /// `CT_OfPieChart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PieOfPieCharts {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
     pub custom_split: Option<Box<CustomSplit>>,
+    #[rkyv(omit_bounds)]
     pub data_labels: Option<Box<DataLabels>>,
     pub gap_width: Option<Box<GapWidth>>,
+    #[rkyv(omit_bounds)]
     pub pie_chart_series: Vec<PieChartSeries>,
     pub pie_of_pie_type: Box<PieOfPieType>,
     pub second_pie_size: Option<Box<SecondPieSize>>,
+    #[rkyv(omit_bounds)]
     pub series_lines: Vec<SeriesLines>,
     pub split_position: Option<Box<SplitPosition>>,
     pub split_type: Option<Box<SplitType>>,
@@ -4512,7 +5357,10 @@ pub struct PieOfPieCharts {
 
 /// 21.2.2.127 `ofPieType` (Pie of Pie or Bar of Pie Type): the tag `c:ofPieType`, schema type
 /// `CT_OfPieType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PieOfPieType {
     pub unknown: officekit_markup_base::Unknown,
@@ -4520,28 +5368,49 @@ pub struct PieOfPieType {
 }
 
 /// 21.2.2.142 `pivotFmt` (Pivot Format): the tag `c:pivotFmt`, schema type `CT_PivotFmt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PivotFormat {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub data_label: Option<Box<DataLabel>>,
     pub index: Box<Index>,
+    #[rkyv(omit_bounds)]
     pub marker: Option<Box<Marker>>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
+    #[rkyv(omit_bounds)]
     pub text_properties: Option<Box<TextProperties>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.143 `pivotFmts` (Pivot Formats): the tag `c:pivotFmts`, schema type `CT_PivotFmts`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PivotFormats {
+    #[rkyv(omit_bounds)]
     pub pivot_format: Vec<PivotFormat>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.117 name (Pivot Name): the tag `c:name`, schema type `ST_Xstring`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PivotName {
     pub unknown: officekit_markup_base::Unknown,
@@ -4549,9 +5418,16 @@ pub struct PivotName {
 }
 
 /// 21.2.2.144 `pivotSource` (Pivot Source): the tag `c:pivotSource`, schema type `CT_PivotSource`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PivotSource {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Vec<ChartExtensibility>,
     pub format_id: Box<FormatID>,
     pub pivot_name: Box<PivotName>,
@@ -4559,14 +5435,26 @@ pub struct PivotSource {
 }
 
 /// 21.2.2.145 `plotArea` (Plot Area): the tag `c:plotArea`, schema type `CT_PlotArea`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PlotArea {
+    #[rkyv(omit_bounds)]
     pub axis_content: Vec<PlotAreaAxisContent>,
+    #[rkyv(omit_bounds)]
     pub chart_content: Vec<PlotAreaChartContent>,
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub data_table: Option<Box<DataTable>>,
+    #[rkyv(omit_bounds)]
     pub layout: Option<Box<Layout>>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
     pub unknown: officekit_markup_base::Unknown,
 }
@@ -4606,7 +5494,10 @@ pub enum PlotAreaChartContent {
 }
 
 /// 21.2.2.146 `plotVisOnly` (Plot Visible Only): the tag `c:plotVisOnly`, schema type `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PlotVisibleOnly {
     pub unknown: officekit_markup_base::Unknown,
@@ -4614,15 +5505,25 @@ pub struct PlotVisibleOnly {
 }
 
 /// 21.2.2.147 plus (Plus): the tag `c:plus`, schema type `CT_NumDataSource`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Plus {
+    #[rkyv(omit_bounds)]
     pub content: Box<NumberDataSourceContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.152 `ptCount` (Point Count): the tag `c:ptCount`, schema type `CT_UnsignedInt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PointCount {
     pub unknown: officekit_markup_base::Unknown,
@@ -4630,7 +5531,10 @@ pub struct PointCount {
 }
 
 /// 21.2.2.129 order (Polynomial Trendline Order): the tag `c:order`, schema type `CT_Order`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PolynomialTrendlineOrder {
     pub unknown: officekit_markup_base::Unknown,
@@ -4639,7 +5543,10 @@ pub struct PolynomialTrendlineOrder {
 
 /// 21.2.2.148 `printSettings` (Print Settings): the tag `c:printSettings`, schema type
 /// `CT_PrintSettings`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PrintSettings {
     pub header_and_footer: Option<Box<HeaderAndFooter>>,
@@ -4650,7 +5557,10 @@ pub struct PrintSettings {
 }
 
 /// 21.2.3.32 `ST_PageSetupOrientation` (Printed Page Orientation): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PrintedPageOrientation(pub String);
 /// The members of `ST_PageSetupOrientation`, in alphabetical order.
@@ -4663,7 +5573,10 @@ pub enum PrintedPageOrientationMember {
 }
 
 /// 21.2.2.149 protection (Protection): the tag `c:protection`, schema type `CT_Protection`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Protection {
     pub chart_object: Option<Box<ChartObject>>,
@@ -4675,29 +5588,52 @@ pub struct Protection {
 }
 
 /// 21.2.2.169 ser (Radar Chart Series): the tag `c:ser`, schema type `CT_RadarSer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RadarChartSeries {
+    #[rkyv(omit_bounds)]
     pub category_axis_data_cat: Option<Box<CategoryAxisDataCat>>,
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub data_labels: Option<Box<DataLabels>>,
+    #[rkyv(omit_bounds)]
     pub data_point: Vec<DataPoint>,
     pub index: Box<Index>,
+    #[rkyv(omit_bounds)]
     pub marker: Option<Box<Marker>>,
     pub order: Box<Order>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
+    #[rkyv(omit_bounds)]
     pub text: Option<Box<SeriesText>>,
     pub unknown: officekit_markup_base::Unknown,
+    #[rkyv(omit_bounds)]
     pub values: Option<Box<Values>>,
 }
 
 /// 21.2.2.153 `radarChart` (Radar Charts): the tag `c:radarChart`, schema type `CT_RadarChart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RadarCharts {
     pub axis_id: Vec<AxisID>,
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub data_labels: Option<Box<DataLabels>>,
+    #[rkyv(omit_bounds)]
     pub radar_chart_series: Vec<RadarChartSeries>,
     pub radar_style: Box<RadarStyle>,
     pub unknown: officekit_markup_base::Unknown,
@@ -4705,7 +5641,10 @@ pub struct RadarCharts {
 }
 
 /// 21.2.2.154 `radarStyle` (Radar Style): the tag `c:radarStyle`, schema type `CT_RadarStyle`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RadarStyle {
     pub unknown: officekit_markup_base::Unknown,
@@ -4714,7 +5653,10 @@ pub struct RadarStyle {
 
 /// 21.2.2.221 `userShapes` (Reference to Chart Drawing Part): the tag `c:userShapes`, schema type
 /// `CT_RelId`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ReferenceToChartDrawingPart {
     pub id: Option<String>,
@@ -4722,7 +5664,10 @@ pub struct ReferenceToChartDrawingPart {
 }
 
 /// 21.2.2.26 chart (Reference to Chart Part): the tag `c:chart`, schema type `CT_RelId`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ReferenceToChartPart {
     pub id: Option<String>,
@@ -4730,17 +5675,29 @@ pub struct ReferenceToChartPart {
 }
 
 /// 21.2.2.156 rich (Rich Text): the tag `c:rich`, schema type `CT_TextBody`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RichText {
+    #[rkyv(omit_bounds)]
     pub body_properties: Box<super::drawing::BodyProperties>,
+    #[rkyv(omit_bounds)]
     pub list_styles: Option<Box<super::drawing::TextListStyles>>,
+    #[rkyv(omit_bounds)]
     pub paragraphs: Vec<super::drawing::TextParagraphs>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.155 `rAngAx` (Right Angle Axes): the tag `c:rAngAx`, schema type `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RightAngleAxes {
     pub unknown: officekit_markup_base::Unknown,
@@ -4749,7 +5706,10 @@ pub struct RightAngleAxes {
 
 /// 21.2.2.159 `roundedCorners` (Rounded Corners): the tag `c:roundedCorners`, schema type
 /// `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RoundedCorners {
     pub unknown: officekit_markup_base::Unknown,
@@ -4757,10 +5717,17 @@ pub struct RoundedCorners {
 }
 
 /// 21.2.2.160 scaling (Scaling): the tag `c:scaling`, schema type `CT_Scaling`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Scaling {
     pub axis_orientation: Option<Box<AxisOrientation>>,
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
     pub logarithmic_base: Option<Box<LogarithmicBase>>,
     pub maximum: Option<Box<Maximum>>,
@@ -4769,33 +5736,58 @@ pub struct Scaling {
 }
 
 /// 21.2.2.167 ser (Scatter Chart Series): the tag `c:ser`, schema type `CT_ScatterSer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ScatterChartSeries {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub data_labels: Option<Box<DataLabels>>,
+    #[rkyv(omit_bounds)]
     pub data_point: Vec<DataPoint>,
+    #[rkyv(omit_bounds)]
     pub error_bars: Vec<ErrorBars>,
     pub index: Box<Index>,
+    #[rkyv(omit_bounds)]
     pub marker: Option<Box<Marker>>,
     pub order: Box<Order>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
     pub smoothing: Option<Box<Smoothing>>,
+    #[rkyv(omit_bounds)]
     pub text: Option<Box<SeriesText>>,
+    #[rkyv(omit_bounds)]
     pub trendlines: Vec<Trendlines>,
     pub unknown: officekit_markup_base::Unknown,
+    #[rkyv(omit_bounds)]
     pub x_values: Option<Box<XValues>>,
+    #[rkyv(omit_bounds)]
     pub y_values: Option<Box<YValues>>,
 }
 
 /// 21.2.2.161 `scatterChart` (Scatter Charts): the tag `c:scatterChart`, schema type
 /// `CT_ScatterChart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ScatterCharts {
     pub axis_id: Vec<AxisID>,
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub data_labels: Option<Box<DataLabels>>,
+    #[rkyv(omit_bounds)]
     pub scatter_chart_series: Vec<ScatterChartSeries>,
     pub scatter_style: Box<ScatterStyle>,
     pub unknown: officekit_markup_base::Unknown,
@@ -4804,7 +5796,10 @@ pub struct ScatterCharts {
 
 /// 21.2.2.162 `scatterStyle` (Scatter Style): the tag `c:scatterStyle`, schema type
 /// `CT_ScatterStyle`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ScatterStyle {
     pub unknown: officekit_markup_base::Unknown,
@@ -4813,7 +5808,10 @@ pub struct ScatterStyle {
 
 /// 21.2.2.163 `secondPiePt` (Second Pie Point): the tag `c:secondPiePt`, schema type
 /// `CT_UnsignedInt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SecondPiePoint {
     pub unknown: officekit_markup_base::Unknown,
@@ -4822,7 +5820,10 @@ pub struct SecondPiePoint {
 
 /// 21.2.2.164 `secondPieSize` (Second Pie Size): the tag `c:secondPieSize`, schema type
 /// `CT_SecondPieSize`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SecondPieSize {
     pub unknown: officekit_markup_base::Unknown,
@@ -4830,17 +5831,26 @@ pub struct SecondPieSize {
 }
 
 /// 21.2.3.54 `ST_SecondPieSizePercent` (Second Pie Size Percentage): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SecondPieSizePercentage(pub String);
 
 /// 18.1.3.8 `ST_SecondPieSizeUShort` (Second Pie Size `UnsignedShort`): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SecondPieSizeUnsignedShort(pub String);
 
 /// 21.2.2.165 selection (Selection): the tag `c:selection`, schema type `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Selection {
     pub unknown: officekit_markup_base::Unknown,
@@ -4848,7 +5858,10 @@ pub struct Selection {
 }
 
 /// 21.2.2.166 separator (Separator): the tag `c:separator`, schema type `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Separator {
     pub unknown: officekit_markup_base::Unknown,
@@ -4856,42 +5869,69 @@ pub struct Separator {
 }
 
 /// 21.2.2.175 `serAx` (Series Axis): the tag `c:serAx`, schema type `CT_SerAx`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SeriesAxis {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
     pub content: Option<Box<AxisCrossingContent>>,
     pub crossing_axis_id: Box<CrossingAxisID>,
     pub delete: Option<Box<Delete>>,
     pub id: Box<AxisID>,
+    #[rkyv(omit_bounds)]
     pub major_gridlines: Option<Box<MajorGridlines>>,
     pub major_tick_mark: Option<Box<MajorTickMark>>,
+    #[rkyv(omit_bounds)]
     pub minor_gridlines: Option<Box<MinorGridlines>>,
     pub minor_tick_mark: Option<Box<MinorTickMark>>,
     pub number_format: Option<Box<NumberFormat>>,
     pub position: Box<AxisPosition>,
+    #[rkyv(omit_bounds)]
     pub scaling: Box<Scaling>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
+    #[rkyv(omit_bounds)]
     pub text_properties: Option<Box<TextProperties>>,
     pub tick_label_position: Option<Box<TickLabelPosition>>,
     pub tick_label_skip: Option<Box<TickLabelSkip>>,
     pub tick_mark_skip: Option<Box<TickMarkSkip>>,
+    #[rkyv(omit_bounds)]
     pub title: Option<Box<Title>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.176 `serLines` (Series Lines): the tag `c:serLines`, schema type `CT_ChartLines`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SeriesLines {
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.215 tx (Series Text): the tag `c:tx`, schema type `CT_SerTx`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SeriesText {
+    #[rkyv(omit_bounds)]
     pub content: Box<SeriesTextContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
@@ -4906,7 +5946,10 @@ pub enum SeriesTextContent {
 }
 
 /// 21.2.2.177 shape (Shape): the tag `c:shape`, schema type `CT_Shape`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Shape {
     pub unknown: officekit_markup_base::Unknown,
@@ -4914,16 +5957,28 @@ pub struct Shape {
 }
 
 /// 21.2.2.197 `spPr` (Shape Properties): the tag `c:spPr`, schema type `CT_ShapeProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShapeProperties {
+    #[rkyv(omit_bounds)]
     pub apply_3d: Option<Box<super::drawing::Apply3DShapeProperties>>,
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
+    #[rkyv(omit_bounds)]
     pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContent>>,
+    #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    #[rkyv(omit_bounds)]
     pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContent>>,
     pub geometry_content: Option<Box<super::drawing::GeometryContent>>,
+    #[rkyv(omit_bounds)]
     pub outline: Option<Box<super::drawing::Outline>>,
+    #[rkyv(omit_bounds)]
     pub scene3d: Option<Box<super::drawing::Scene3d>>,
     pub unknown: officekit_markup_base::Unknown,
     pub xfrm_transform2d: Option<Box<super::drawing::XfrmTransform2D>>,
@@ -4931,7 +5986,10 @@ pub struct ShapeProperties {
 
 /// 21.2.2.178 `showBubbleSize` (Show Bubble Size): the tag `c:showBubbleSize`, schema type
 /// `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShowBubbleSize {
     pub unknown: officekit_markup_base::Unknown,
@@ -4940,7 +5998,10 @@ pub struct ShowBubbleSize {
 
 /// 21.2.2.179 `showCatName` (Show Category Name): the tag `c:showCatName`, schema type
 /// `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShowCategoryName {
     pub unknown: officekit_markup_base::Unknown,
@@ -4949,7 +6010,10 @@ pub struct ShowCategoryName {
 
 /// 21.2.2.180 `showDLblsOverMax` (Show Data Labels over Maximum): the tag `c:showDLblsOverMax`,
 /// schema type `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShowDataLabelsOverMaximum {
     pub unknown: officekit_markup_base::Unknown,
@@ -4958,7 +6022,10 @@ pub struct ShowDataLabelsOverMaximum {
 
 /// 21.2.2.181 `showHorzBorder` (Show Horizontal Border): the tag `c:showHorzBorder`, schema type
 /// `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShowHorizontalBorder {
     pub unknown: officekit_markup_base::Unknown,
@@ -4967,7 +6034,10 @@ pub struct ShowHorizontalBorder {
 
 /// 21.2.2.183 `showLeaderLines` (Show Leader Lines): the tag `c:showLeaderLines`, schema type
 /// `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShowLeaderLines {
     pub unknown: officekit_markup_base::Unknown,
@@ -4976,7 +6046,10 @@ pub struct ShowLeaderLines {
 
 /// 21.2.2.184 `showLegendKey` (Show Legend Key): the tag `c:showLegendKey`, schema type
 /// `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShowLegendKey {
     pub unknown: officekit_markup_base::Unknown,
@@ -4984,7 +6057,10 @@ pub struct ShowLegendKey {
 }
 
 /// 21.2.2.182 `showKeys` (Show Legend Keys): the tag `c:showKeys`, schema type `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShowLegendKeys {
     pub unknown: officekit_markup_base::Unknown,
@@ -4992,7 +6068,10 @@ pub struct ShowLegendKeys {
 }
 
 /// 21.2.2.105 marker (Show Marker): the tag `c:marker`, schema type `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShowMarker {
     pub unknown: officekit_markup_base::Unknown,
@@ -5001,7 +6080,10 @@ pub struct ShowMarker {
 
 /// 21.2.2.185 `showNegBubbles` (Show Negative Bubbles): the tag `c:showNegBubbles`, schema type
 /// `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShowNegativeBubbles {
     pub unknown: officekit_markup_base::Unknown,
@@ -5010,7 +6092,10 @@ pub struct ShowNegativeBubbles {
 
 /// 21.2.2.186 `showOutline` (Show Outline Border): the tag `c:showOutline`, schema type
 /// `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShowOutlineBorder {
     pub unknown: officekit_markup_base::Unknown,
@@ -5018,7 +6103,10 @@ pub struct ShowOutlineBorder {
 }
 
 /// 21.2.2.187 `showPercent` (Show Percent): the tag `c:showPercent`, schema type `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShowPercent {
     pub unknown: officekit_markup_base::Unknown,
@@ -5026,7 +6114,10 @@ pub struct ShowPercent {
 }
 
 /// 21.2.2.188 `showSerName` (Show Series Name): the tag `c:showSerName`, schema type `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShowSeriesName {
     pub unknown: officekit_markup_base::Unknown,
@@ -5034,7 +6125,10 @@ pub struct ShowSeriesName {
 }
 
 /// 21.2.2.189 `showVal` (Show Value): the tag `c:showVal`, schema type `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShowValue {
     pub unknown: officekit_markup_base::Unknown,
@@ -5043,7 +6137,10 @@ pub struct ShowValue {
 
 /// 21.2.2.190 `showVertBorder` (Show Vertical Border): the tag `c:showVertBorder`, schema type
 /// `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShowVerticalBorder {
     pub unknown: officekit_markup_base::Unknown,
@@ -5051,18 +6148,29 @@ pub struct ShowVerticalBorder {
 }
 
 /// 21.2.2.191 `sideWall` (Side Wall): the tag `c:sideWall`, schema type `CT_Surface`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SideWall {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
     pub picture_options: Option<Box<PictureOptions>>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
     pub thickness: Option<Box<Thickness>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.192 size (Size): the tag `c:size`, schema type `CT_MarkerSize`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Size {
     pub unknown: officekit_markup_base::Unknown,
@@ -5071,7 +6179,10 @@ pub struct Size {
 
 /// 21.2.2.193 `sizeRepresents` (Size Represents): the tag `c:sizeRepresents`, schema type
 /// `CT_SizeRepresents`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SizeRepresents {
     pub unknown: officekit_markup_base::Unknown,
@@ -5079,12 +6190,18 @@ pub struct SizeRepresents {
 }
 
 /// 21.2.3.44 `ST_Skip` (Skip): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Skip(pub String);
 
 /// 21.2.2.194 smooth (Smoothing): the tag `c:smooth`, schema type `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Smoothing {
     pub unknown: officekit_markup_base::Unknown,
@@ -5092,7 +6209,10 @@ pub struct Smoothing {
 }
 
 /// 21.2.2.195 `splitPos` (Split Position): the tag `c:splitPos`, schema type `CT_Double`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SplitPosition {
     pub unknown: officekit_markup_base::Unknown,
@@ -5100,7 +6220,10 @@ pub struct SplitPosition {
 }
 
 /// 21.2.2.196 `splitType` (Split Type): the tag `c:splitType`, schema type `CT_SplitType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SplitType {
     pub unknown: officekit_markup_base::Unknown,
@@ -5108,7 +6231,10 @@ pub struct SplitType {
 }
 
 /// 21.2.3.2 `ST_AxPos` (Axis Position): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StAxPos(pub String);
 /// The members of `ST_AxPos`, in alphabetical order.
@@ -5122,7 +6248,10 @@ pub enum StAxPosMember {
 }
 
 /// 21.2.3.3 `ST_BarDir` (Bar Direction): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StBarDir(pub String);
 /// The members of `ST_BarDir`, in alphabetical order.
@@ -5134,7 +6263,10 @@ pub enum StBarDirMember {
 }
 
 /// 21.2.3.4 `ST_BarGrouping` (Bar Grouping): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StBarGrouping(pub String);
 /// The members of `ST_BarGrouping`, in alphabetical order.
@@ -5148,7 +6280,10 @@ pub enum StBarGroupingMember {
 }
 
 /// 21.2.3.5 `ST_BubbleScale` (Bubble Scale): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StBubbleScale(pub String);
 /// The member types of `ST_BubbleScale`, in alphabetical order; `value` tries them in the schema's
@@ -5161,7 +6296,10 @@ pub enum StBubbleScaleMember {
 }
 
 /// 21.2.3.7 `ST_CrossBetween` (Cross Between): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StCrossBetween(pub String);
 /// The members of `ST_CrossBetween`, in alphabetical order.
@@ -5173,7 +6311,10 @@ pub enum StCrossBetweenMember {
 }
 
 /// 21.2.3.8 `ST_Crosses` (Crosses): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StCrosses(pub String);
 /// The members of `ST_Crosses`, in alphabetical order.
@@ -5186,7 +6327,10 @@ pub enum StCrossesMember {
 }
 
 /// 21.2.3.11 `ST_DLblPos` (Data Label Position): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StDLblPos(pub String);
 /// The members of `ST_DLblPos`, in alphabetical order.
@@ -5205,7 +6349,10 @@ pub enum StDLblPosMember {
 }
 
 /// 21.2.3.9 `ST_DepthPercent` (Depth Percent): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StDepthPercent(pub String);
 /// The member types of `ST_DepthPercent`, in alphabetical order; `value` tries them in the schema's
@@ -5218,7 +6365,10 @@ pub enum StDepthPercentMember {
 }
 
 /// 21.2.3.10 `ST_DispBlanksAs` (Display Blanks As): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StDispBlanksAs(pub String);
 /// The members of `ST_DispBlanksAs`, in alphabetical order.
@@ -5231,7 +6381,10 @@ pub enum StDispBlanksAsMember {
 }
 
 /// 21.2.3.12 `ST_ErrBarType` (Error Bar Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StErrBarType(pub String);
 /// The members of `ST_ErrBarType`, in alphabetical order.
@@ -5244,7 +6397,10 @@ pub enum StErrBarTypeMember {
 }
 
 /// 21.2.3.13 `ST_ErrDir` (Error Bar Direction): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StErrDir(pub String);
 /// The members of `ST_ErrDir`, in alphabetical order.
@@ -5256,12 +6412,18 @@ pub enum StErrDirMember {
 }
 
 /// 21.2.3.15 `ST_FirstSliceAng` (First Slice Angle): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StFirstSliceAng(pub String);
 
 /// 21.2.3.17 `ST_Grouping` (Grouping): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StGrouping(pub String);
 /// The members of `ST_Grouping`, in alphabetical order.
@@ -5274,7 +6436,10 @@ pub enum StGroupingMember {
 }
 
 /// 21.2.3.19 `ST_HPercent` (Height Percent): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StHPercent(pub String);
 /// The member types of `ST_HPercent`, in alphabetical order; `value` tries them in the schema's
@@ -5287,7 +6452,10 @@ pub enum StHPercentMember {
 }
 
 /// 21.2.3.18 `ST_HoleSize` (Hole Size): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StHoleSize(pub String);
 /// The member types of `ST_HoleSize`, in alphabetical order; `value` tries them in the schema's
@@ -5300,7 +6468,10 @@ pub enum StHoleSizeMember {
 }
 
 /// 21.2.3.21 `ST_LayoutTarget` (Layout Target): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StLayoutTarget(pub String);
 /// The members of `ST_LayoutTarget`, in alphabetical order.
@@ -5312,7 +6483,10 @@ pub enum StLayoutTargetMember {
 }
 
 /// 21.2.3.22 `ST_LblAlgn` (Label Alignment): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StLblAlgn(pub String);
 /// The members of `ST_LblAlgn`, in alphabetical order.
@@ -5325,7 +6499,10 @@ pub enum StLblAlgnMember {
 }
 
 /// 21.2.3.23 `ST_LblOffset` (Label Offset): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StLblOffset(pub String);
 /// The member types of `ST_LblOffset`, in alphabetical order; `value` tries them in the schema's
@@ -5338,7 +6515,10 @@ pub enum StLblOffsetMember {
 }
 
 /// 21.2.3.24 `ST_LegendPos` (Legend Position): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StLegendPos(pub String);
 /// The members of `ST_LegendPos`, in alphabetical order.
@@ -5353,12 +6533,18 @@ pub enum StLegendPosMember {
 }
 
 /// 21.2.3.25 `ST_LogBase` (Logarithmic Base): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StLogBase(pub String);
 
 /// 21.2.3.28 `ST_OfPieType` (Pie of Pie or Bar of Pie Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StOfPieType(pub String);
 /// The members of `ST_OfPieType`, in alphabetical order.
@@ -5370,12 +6556,18 @@ pub enum StOfPieTypeMember {
 }
 
 /// 21.2.3.29 `ST_Order` (Order): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StOrder(pub String);
 
 /// 21.2.3.31 `ST_Overlap` (Overlap): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StOverlap(pub String);
 /// The member types of `ST_Overlap`, in alphabetical order; `value` tries them in the schema's
@@ -5388,17 +6580,26 @@ pub enum StOverlapMember {
 }
 
 /// 21.2.3.33 `ST_Period` (Period): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StPeriod(pub String);
 
 /// 21.2.3.34 `ST_Perspective` (Perspective): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StPerspective(pub String);
 
 /// 21.2.3.35 `ST_PictureFormat` (Picture Format): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StPictureFormat(pub String);
 /// The members of `ST_PictureFormat`, in alphabetical order.
@@ -5411,12 +6612,18 @@ pub enum StPictureFormatMember {
 }
 
 /// 21.2.3.36 `ST_PictureStackUnit` (Picture Stack Unit): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StPictureStackUnit(pub String);
 
 /// 21.2.3.37 `ST_RadarStyle` (Radar Style): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StRadarStyle(pub String);
 /// The members of `ST_RadarStyle`, in alphabetical order.
@@ -5429,17 +6636,26 @@ pub enum StRadarStyleMember {
 }
 
 /// 21.2.3.38 `ST_RotX` (X Rotation): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StRotX(pub String);
 
 /// 21.2.3.39 `ST_RotY` (Y Rotation): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StRotY(pub String);
 
 /// 21.2.3.40 `ST_ScatterStyle` (Scatter Style): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StScatterStyle(pub String);
 /// The members of `ST_ScatterStyle`, in alphabetical order.
@@ -5455,7 +6671,10 @@ pub enum StScatterStyleMember {
 }
 
 /// 21.2.3.41 `ST_SecondPieSize` (Second Pie Size): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StSecondPieSize(pub String);
 /// The member types of `ST_SecondPieSize`, in alphabetical order; `value` tries them in the
@@ -5468,7 +6687,10 @@ pub enum StSecondPieSizeMember {
 }
 
 /// 21.2.3.42 `ST_Shape` (Shape): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StShape(pub String);
 /// The members of `ST_Shape`, in alphabetical order.
@@ -5484,7 +6706,10 @@ pub enum StShapeMember {
 }
 
 /// 21.2.3.43 `ST_SizeRepresents` (Size Represents): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StSizeRepresents(pub String);
 /// The members of `ST_SizeRepresents`, in alphabetical order.
@@ -5496,7 +6721,10 @@ pub enum StSizeRepresentsMember {
 }
 
 /// 21.2.3.45 `ST_SplitType` (Split Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StSplitType(pub String);
 /// The members of `ST_SplitType`, in alphabetical order.
@@ -5511,12 +6739,18 @@ pub enum StSplitTypeMember {
 }
 
 /// 21.2.3.46 `ST_Style` (Style): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StStyle(pub String);
 
 /// 21.2.3.59 `ST_Thickness` (Thickness Percentage): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StThickness(pub String);
 /// The member types of `ST_Thickness`, in alphabetical order; `value` tries them in the schema's
@@ -5529,12 +6763,18 @@ pub enum StThicknessMember {
 }
 
 /// 21.2.3.60 `ST_ThicknessPercent` (Thickness Percentage): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StThicknessPercent(pub String);
 
 /// 21.2.3.47 `ST_TickLblPos` (Tick Label Position): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StTickLblPos(pub String);
 /// The members of `ST_TickLblPos`, in alphabetical order.
@@ -5548,7 +6788,10 @@ pub enum StTickLblPosMember {
 }
 
 /// 21.2.3.50 `ST_TrendlineType` (Trendline Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StTrendlineType(pub String);
 /// The members of `ST_TrendlineType`, in alphabetical order.
@@ -5564,23 +6807,42 @@ pub enum StTrendlineTypeMember {
 }
 
 /// 21.2.2.198 `stockChart` (Stock Charts): the tag `c:stockChart`, schema type `CT_StockChart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StockCharts {
     pub axis_id: Vec<AxisID>,
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub data_labels: Option<Box<DataLabels>>,
+    #[rkyv(omit_bounds)]
     pub drop_lines: Option<Box<DropLines>>,
+    #[rkyv(omit_bounds)]
     pub high_low_lines: Option<Box<HighLowLines>>,
+    #[rkyv(omit_bounds)]
     pub line_chart_series: Vec<LineChartSeries>,
     pub unknown: officekit_markup_base::Unknown,
+    #[rkyv(omit_bounds)]
     pub up_down_bars: Option<Box<UpDownBars>>,
 }
 
 /// 21.2.2.199 `strCache` (String Cache): the tag `c:strCache`, schema type `CT_StrData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StringCache {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
     pub point_count: Option<Box<PointCount>>,
     pub string_point: Vec<StringPoint>,
@@ -5588,9 +6850,16 @@ pub struct StringCache {
 }
 
 /// 21.2.2.200 `strLit` (String Literal): the tag `c:strLit`, schema type `CT_StrData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StringLiteral {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
     pub point_count: Option<Box<PointCount>>,
     pub string_point: Vec<StringPoint>,
@@ -5598,7 +6867,10 @@ pub struct StringLiteral {
 }
 
 /// 21.2.2.151 pt (String Point): the tag `c:pt`, schema type `CT_StrVal`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StringPoint {
     pub idx: Option<String>,
@@ -5607,17 +6879,28 @@ pub struct StringPoint {
 }
 
 /// 21.2.2.201 `strRef` (String Reference): the tag `c:strRef`, schema type `CT_StrRef`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StringReference {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
     pub formula: Box<Formula>,
+    #[rkyv(omit_bounds)]
     pub string_cache: Option<Box<StringCache>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.202 style (Style): the tag `c:style`, schema type `CT_Style`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Style {
     pub unknown: officekit_markup_base::Unknown,
@@ -5625,46 +6908,78 @@ pub struct Style {
 }
 
 /// The tag `c:surface3DChart`, schema type `CT_Surface3DChart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Surface3DChart {
     pub axis_id: Vec<AxisID>,
+    #[rkyv(omit_bounds)]
     pub band_formats: Option<Box<BandFormats>>,
+    #[rkyv(omit_bounds)]
     pub extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub surface_chart_series: Vec<SurfaceChartSeries>,
     pub unknown: officekit_markup_base::Unknown,
     pub wireframe: Option<Box<Wireframe>>,
 }
 
 /// 21.2.2.173 ser (Surface Chart Series): the tag `c:ser`, schema type `CT_SurfaceSer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SurfaceChartSeries {
+    #[rkyv(omit_bounds)]
     pub category_axis_data_cat: Option<Box<CategoryAxisDataCat>>,
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
     pub index: Box<Index>,
     pub order: Box<Order>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
+    #[rkyv(omit_bounds)]
     pub text: Option<Box<SeriesText>>,
     pub unknown: officekit_markup_base::Unknown,
+    #[rkyv(omit_bounds)]
     pub values: Option<Box<Values>>,
 }
 
 /// 21.2.2.204 `surfaceChart` (Surface Charts): the tag `c:surfaceChart`, schema type
 /// `CT_SurfaceChart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SurfaceCharts {
     pub axis_id: Vec<AxisID>,
+    #[rkyv(omit_bounds)]
     pub band_formats: Option<Box<BandFormats>>,
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub surface_chart_series: Vec<SurfaceChartSeries>,
     pub unknown: officekit_markup_base::Unknown,
     pub wireframe: Option<Box<Wireframe>>,
 }
 
 /// 21.2.2.205 symbol (Symbol): the tag `c:symbol`, schema type `CT_MarkerStyle`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Symbol {
     pub unknown: officekit_markup_base::Unknown,
@@ -5672,17 +6987,29 @@ pub struct Symbol {
 }
 
 /// 21.2.2.216 `txPr` (Text Properties): the tag `c:txPr`, schema type `CT_TextBody`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TextProperties {
+    #[rkyv(omit_bounds)]
     pub body_properties: Box<super::drawing::BodyProperties>,
+    #[rkyv(omit_bounds)]
     pub text_list_styles: Option<Box<super::drawing::TextListStyles>>,
+    #[rkyv(omit_bounds)]
     pub text_paragraphs: Vec<super::drawing::TextParagraphs>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.206 thickness (Thickness): the tag `c:thickness`, schema type `CT_Thickness`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Thickness {
     pub unknown: officekit_markup_base::Unknown,
@@ -5691,7 +7018,10 @@ pub struct Thickness {
 
 /// 21.2.2.207 `tickLblPos` (Tick Label Position): the tag `c:tickLblPos`, schema type
 /// `CT_TickLblPos`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TickLabelPosition {
     pub unknown: officekit_markup_base::Unknown,
@@ -5699,7 +7029,10 @@ pub struct TickLabelPosition {
 }
 
 /// 21.2.2.208 `tickLblSkip` (Tick Label Skip): the tag `c:tickLblSkip`, schema type `CT_Skip`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TickLabelSkip {
     pub unknown: officekit_markup_base::Unknown,
@@ -5707,7 +7040,10 @@ pub struct TickLabelSkip {
 }
 
 /// 21.2.3.48 `ST_TickMark` (Tick Mark): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TickMark(pub String);
 /// The members of `ST_TickMark`, in alphabetical order.
@@ -5721,7 +7057,10 @@ pub enum TickMarkMember {
 }
 
 /// 21.2.2.209 `tickMarkSkip` (Tick Mark Skip): the tag `c:tickMarkSkip`, schema type `CT_Skip`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TickMarkSkip {
     pub unknown: officekit_markup_base::Unknown,
@@ -5729,7 +7068,10 @@ pub struct TickMarkSkip {
 }
 
 /// 21.2.3.49 `ST_TimeUnit` (Time Unit): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TimeUnit(pub String);
 /// The members of `ST_TimeUnit`, in alphabetical order.
@@ -5742,20 +7084,34 @@ pub enum TimeUnitMember {
 }
 
 /// 21.2.2.210 title (Title): the tag `c:title`, schema type `CT_Title`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Title {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub chart_text: Option<Box<ChartText>>,
+    #[rkyv(omit_bounds)]
     pub layout: Option<Box<Layout>>,
     pub overlay: Option<Box<Overlay>>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
+    #[rkyv(omit_bounds)]
     pub text_properties: Option<Box<TextProperties>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.235 y (Top): the tag `c:y`, schema type `CT_Double`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Top {
     pub unknown: officekit_markup_base::Unknown,
@@ -5763,7 +7119,10 @@ pub struct Top {
 }
 
 /// 21.2.2.236 `yMode` (Top Mode): the tag `c:yMode`, schema type `CT_LayoutMode`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TopMode {
     pub unknown: officekit_markup_base::Unknown,
@@ -5772,20 +7131,34 @@ pub struct TopMode {
 
 /// 21.2.2.212 `trendlineLbl` (Trendline Label): the tag `c:trendlineLbl`, schema type
 /// `CT_TrendlineLbl`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TrendlineLabel {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub chart_text: Option<Box<ChartText>>,
+    #[rkyv(omit_bounds)]
     pub layout: Option<Box<Layout>>,
     pub number_format: Option<Box<NumberFormat>>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
+    #[rkyv(omit_bounds)]
     pub text_properties: Option<Box<TextProperties>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.116 name (Trendline Name): the tag `c:name`, schema type `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TrendlineName {
     pub unknown: officekit_markup_base::Unknown,
@@ -5794,7 +7167,10 @@ pub struct TrendlineName {
 
 /// 21.2.2.213 `trendlineType` (Trendline Type): the tag `c:trendlineType`, schema type
 /// `CT_TrendlineType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TrendlineType {
     pub unknown: officekit_markup_base::Unknown,
@@ -5802,10 +7178,17 @@ pub struct TrendlineType {
 }
 
 /// 21.2.2.211 trendline (Trendlines): the tag `c:trendline`, schema type `CT_Trendline`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Trendlines {
     pub backward: Option<Box<Backward>>,
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
     pub display_equation: Option<Box<DisplayEquation>>,
     pub display_r_squared_value: Option<Box<DisplayRSquaredValue>>,
@@ -5813,7 +7196,9 @@ pub struct Trendlines {
     pub intercept: Option<Box<Intercept>>,
     pub period: Option<Box<Period>>,
     pub polynomial_trendline_order: Option<Box<PolynomialTrendlineOrder>>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
+    #[rkyv(omit_bounds)]
     pub trendline_label: Option<Box<TrendlineLabel>>,
     pub trendline_name: Option<Box<TrendlineName>>,
     pub trendline_type: Box<TrendlineType>,
@@ -5821,26 +7206,45 @@ pub struct Trendlines {
 }
 
 /// 21.2.2.217 `upBars` (Up Bars): the tag `c:upBars`, schema type `CT_UpDownBar`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UpBars {
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.218 `upDownBars` (Up/Down Bars): the tag `c:upDownBars`, schema type `CT_UpDownBars`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UpDownBars {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
+    #[rkyv(omit_bounds)]
     pub down_bars: Option<Box<DownBars>>,
     pub gap_width: Option<Box<GapWidth>>,
     pub unknown: officekit_markup_base::Unknown,
+    #[rkyv(omit_bounds)]
     pub up_bars: Option<Box<UpBars>>,
 }
 
 /// 21.2.2.8 `autoUpdate` (Update Automatically): the tag `c:autoUpdate`, schema type `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UpdateAutomatically {
     pub unknown: officekit_markup_base::Unknown,
@@ -5849,7 +7253,10 @@ pub struct UpdateAutomatically {
 
 /// 21.2.2.219 `userInterface` (User Interface): the tag `c:userInterface`, schema type
 /// `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UserInterface {
     pub unknown: officekit_markup_base::Unknown,
@@ -5857,51 +7264,82 @@ pub struct UserInterface {
 }
 
 /// 21.2.2.220 `userShapes` (User Shapes): the tag `c:userShapes`, schema type `CT_Drawing`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UserShapes {
+    #[rkyv(omit_bounds)]
     pub content: Vec<super::chart_drawing::UserShapesContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.226 `valAx` (Value Axis): the tag `c:valAx`, schema type `CT_ValAx`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ValueAxis {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
     pub content: Option<Box<AxisCrossingContent>>,
     pub cross_between: Option<Box<CrossBetween>>,
     pub crossing_axis_id: Box<CrossingAxisID>,
     pub delete: Option<Box<Delete>>,
+    #[rkyv(omit_bounds)]
     pub display_units: Option<Box<DisplayUnits>>,
     pub id: Box<AxisID>,
+    #[rkyv(omit_bounds)]
     pub major_gridlines: Option<Box<MajorGridlines>>,
     pub major_tick_mark: Option<Box<MajorTickMark>>,
     pub major_unit: Option<Box<MajorUnit>>,
+    #[rkyv(omit_bounds)]
     pub minor_gridlines: Option<Box<MinorGridlines>>,
     pub minor_tick_mark: Option<Box<MinorTickMark>>,
     pub minor_unit: Option<Box<MinorUnit>>,
     pub number_format: Option<Box<NumberFormat>>,
     pub position: Box<AxisPosition>,
+    #[rkyv(omit_bounds)]
     pub scaling: Box<Scaling>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Option<Box<ShapeProperties>>,
+    #[rkyv(omit_bounds)]
     pub text_properties: Option<Box<TextProperties>>,
     pub tick_label_position: Option<Box<TickLabelPosition>>,
+    #[rkyv(omit_bounds)]
     pub title: Option<Box<Title>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.224 val (Values): the tag `c:val`, schema type `CT_NumDataSource`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Values {
+    #[rkyv(omit_bounds)]
     pub content: Box<NumberDataSourceContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.227 `varyColors` (Vary Colors by Point): the tag `c:varyColors`, schema type
 /// `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct VaryColorsByPoint {
     pub unknown: officekit_markup_base::Unknown,
@@ -5909,9 +7347,16 @@ pub struct VaryColorsByPoint {
 }
 
 /// 21.2.2.228 `view3D` (View In 3D): the tag `c:view3D`, schema type `CT_View3D`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ViewIn3D {
+    #[rkyv(omit_bounds)]
     pub chart_extensibility: Option<Box<ChartExtensibility>>,
     pub depth_percent: Option<Box<DepthPercent>>,
     pub height_percent: Option<Box<HeightPercent>>,
@@ -5923,7 +7368,10 @@ pub struct ViewIn3D {
 }
 
 /// 21.2.2.229 w (Width): the tag `c:w`, schema type `CT_Double`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Width {
     pub unknown: officekit_markup_base::Unknown,
@@ -5931,7 +7379,10 @@ pub struct Width {
 }
 
 /// 21.2.2.231 `wMode` (Width Mode): the tag `c:wMode`, schema type `CT_LayoutMode`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct WidthMode {
     pub unknown: officekit_markup_base::Unknown,
@@ -5939,7 +7390,10 @@ pub struct WidthMode {
 }
 
 /// 21.2.2.230 wireframe (Wireframe): the tag `c:wireframe`, schema type `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Wireframe {
     pub unknown: officekit_markup_base::Unknown,
@@ -5947,7 +7401,10 @@ pub struct Wireframe {
 }
 
 /// 21.2.2.157 `rotX` (X Rotation): the tag `c:rotX`, schema type `CT_RotX`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct XRotation {
     pub unknown: officekit_markup_base::Unknown,
@@ -5955,15 +7412,25 @@ pub struct XRotation {
 }
 
 /// 21.2.2.234 `xVal` (X Values): the tag `c:xVal`, schema type `CT_AxDataSource`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct XValues {
+    #[rkyv(omit_bounds)]
     pub content: Box<AxisDataSourceContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.2.2.158 `rotY` (Y Rotation): the tag `c:rotY`, schema type `CT_RotY`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct YRotation {
     pub unknown: officekit_markup_base::Unknown,
@@ -5971,9 +7438,16 @@ pub struct YRotation {
 }
 
 /// 21.2.2.237 `yVal` (Y Values): the tag `c:yVal`, schema type `CT_NumDataSource`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct YValues {
+    #[rkyv(omit_bounds)]
     pub content: Box<NumberDataSourceContent>,
     pub unknown: officekit_markup_base::Unknown,
 }

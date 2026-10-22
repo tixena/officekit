@@ -215,6 +215,7 @@
 //!
 //! The namespace is `http://schemas.microsoft.com/office/powerpoint/2023/02/main`.
 
+mod archive;
 pub mod read;
 pub mod write;
 
@@ -263,7 +264,10 @@ pub static PLACEHOLDER_TYPE_CONTENT_TAGS: officekit_markup_base::Accept =
     };
 
 /// The tag `p232:cameo`, schema type `CT_Empty` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Cameo {
     pub unknown: officekit_markup_base::Unknown,
@@ -346,7 +350,10 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `p232:phTypeExt`, schema type `CT_PlaceholderTypeExtension` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PhTypeExt {
     pub r#type: Box<Type>,
@@ -363,7 +370,10 @@ pub enum PlaceholderTypeContent {
 }
 
 /// The tag `p232:type`, schema type `CT_PlaceholderTypeACB` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Type {
     pub content: Box<PlaceholderTypeContent>,
@@ -371,7 +381,10 @@ pub struct Type {
 }
 
 /// The tag `p232:unknown`, schema type `CT_Empty` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Unknown {
     pub unknown: officekit_markup_base::Unknown,

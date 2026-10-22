@@ -220,6 +220,10 @@ pub mod write;
 
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
+use rkyv::de::Pooling;
+use rkyv::rancor::Source;
+use rkyv::ser::{Allocator, Sharing, Writer};
+use rkyv::validation::{ArchiveContext, SharedContext};
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_LC: Option<NamespaceId> = Some(50);
@@ -239,14 +243,24 @@ pub static LOCKED_CANVAS_CONTAINER_SHAPE: officekit_markup_base::Shape =
 
 /// 20.3.2.1 `lockedCanvas` (Locked Canvas Container): the tag `lc:lockedCanvas`, schema type
 /// `CT_GvmlGroupShape`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LockedCanvasContainer {
+    #[rkyv(omit_bounds)]
     pub content: Vec<super::drawing::GroupShapeContent>,
+    #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    #[rkyv(omit_bounds)]
     pub non_visual_properties_for_a_group_shape:
         Box<super::drawing::NonVisualPropertiesForAGroupShape>,
     pub unknown: officekit_markup_base::Unknown,
+    #[rkyv(omit_bounds)]
     pub visual_group_shape_properties: Box<super::drawing::VisualGroupShapeProperties>,
 }
 

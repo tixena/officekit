@@ -220,6 +220,10 @@ pub mod write;
 
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
+use rkyv::de::Pooling;
+use rkyv::rancor::Source;
+use rkyv::ser::{Allocator, Sharing, Writer};
+use rkyv::validation::{ArchiveContext, SharedContext};
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_A14: Option<NamespaceId> = Some(1);
@@ -302,23 +306,40 @@ pub static NV_CONTENT_PART_PR_SHAPE: officekit_markup_base::Shape = officekit_ma
 
 /// The tag `cdr14:cNvContentPartPr`, schema type `CT_NonVisualInkContentPartProperties` of SDK
 /// 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CNvContentPartPr {
+    #[rkyv(omit_bounds)]
     pub cp_locks: Option<Box<super::office_drawing_2010_main::CpLocks>>,
+    #[rkyv(omit_bounds)]
     pub ext_lst: Option<Box<super::office_drawing_2010_main::ExtLst>>,
     pub is_comment: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `cdr14:cNvPr`, schema type `CT_NonVisualDrawingProps` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CNvPr {
+    #[rkyv(omit_bounds)]
     pub click_hyperlink: Option<Box<super::drawing::ClickHyperlink>>,
     pub descr: Option<String>,
+    #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
     pub hidden: Option<String>,
+    #[rkyv(omit_bounds)]
     pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHover>>,
     pub id: Option<super::drawing::DrawingElementID>,
     pub name: Option<String>,
@@ -327,12 +348,20 @@ pub struct CNvPr {
 }
 
 /// The tag `cdr14:contentPart`, schema type `CT_ContentPart` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ContentPart {
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
+    #[rkyv(omit_bounds)]
     pub ext_lst: Option<Box<ExtLst>>,
     pub id: Option<String>,
+    #[rkyv(omit_bounds)]
     pub nv_content_part_pr: Option<Box<NvContentPartPr>>,
     pub nv_pr: Option<Box<NvPr>>,
     pub unknown: officekit_markup_base::Unknown,
@@ -340,24 +369,42 @@ pub struct ContentPart {
 }
 
 /// The tag `cdr14:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExtLst {
+    #[rkyv(omit_bounds)]
     pub extension: Vec<super::drawing::Extension>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `cdr14:nvContentPartPr`, schema type `CT_ContentPartNonVisual` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NvContentPartPr {
+    #[rkyv(omit_bounds)]
     pub c: Option<Box<CNvContentPartPr>>,
+    #[rkyv(omit_bounds)]
     pub c_nv_pr: Box<CNvPr>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `cdr14:nvPr`, schema type `CT_ApplicationNonVisualDrawingProps` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NvPr {
     pub f_published: Option<String>,
@@ -366,7 +413,10 @@ pub struct NvPr {
 }
 
 /// The tag `cdr14:xfrm`, schema type `CT_Transform2D` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Xfrm {
     pub extents: Option<Box<super::drawing::Extents>>,

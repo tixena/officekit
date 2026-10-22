@@ -6,21 +6,21 @@ use officekit_xml::stream::reader::{PartEvent, PartReader};
 use officekit_xml::values::{DateTime, Measure, MeasureUnit, ValueError};
 use officekit_xml::write::Scope;
 
-use super::{
+use officekit_markup_core::spreadsheet::ReferenceSequence;
+use officekit_markup_core::wordprocessing::{
     AnchorForImportedExternalContent, BlockContent, ContentBlockContent, HorizontalAlignmentType,
     HorizontalAlignmentTypeMember, MeasurementOrPercentageValue,
     MeasurementOrPercentageValueMember, Paragraph, ParagraphContent,
     StandardDateAndTimeStorageFormat, Text, TextRun, TextRunContent, read, write,
 };
-use crate::spreadsheet::ReferenceSequence;
 
 #[test]
 fn an_enumeration_reads_its_members_and_keeps_text_it_does_not_know() {
     assert_eq!(
-        HorizontalAlignmentType("center".to_owned()).value(),
+        HorizontalAlignmentType::from("center".to_owned()).value(),
         Ok(HorizontalAlignmentTypeMember::Center)
     );
-    let unknown = HorizontalAlignmentType("justifyLow".to_owned());
+    let unknown = HorizontalAlignmentType::from("justifyLow".to_owned());
     assert_eq!(
         unknown.value(),
         Err(ValueError::new("ST_Jc", "justifyLow".to_owned()))
@@ -62,7 +62,7 @@ fn on_off_reads_every_spelling_and_writes_the_canonical_one() {
 
 #[test]
 fn a_union_gives_the_first_member_type_that_reads_the_text() {
-    let value = |text: &str| MeasurementOrPercentageValue(text.to_owned()).value();
+    let value = |text: &str| MeasurementOrPercentageValue::from(text.to_owned()).value();
     assert_eq!(
         value("5000"),
         Ok(MeasurementOrPercentageValueMember::PercentageValueWithoutPercentSign(5000))
@@ -93,19 +93,22 @@ fn a_union_gives_the_first_member_type_that_reads_the_text() {
 #[test]
 fn a_list_gives_each_item() {
     assert_eq!(
-        ReferenceSequence("A1:B2  D4\tF6:F9".to_owned()).value(),
+        ReferenceSequence::from("A1:B2  D4\tF6:F9".to_owned()).value(),
         Ok(vec![
             "A1:B2".to_owned(),
             "D4".to_owned(),
             "F6:F9".to_owned()
         ])
     );
-    assert_eq!(ReferenceSequence(String::new()).value(), Ok(Vec::new()));
+    assert_eq!(
+        ReferenceSequence::from(String::new()).value(),
+        Ok(Vec::new())
+    );
 }
 
 #[test]
 fn a_date_reads_its_zone_and_fraction() {
-    let date = |text: &str| StandardDateAndTimeStorageFormat(text.to_owned()).value();
+    let date = |text: &str| StandardDateAndTimeStorageFormat::from(text.to_owned()).value();
     assert_eq!(
         date("2026-10-15T09:30:05Z"),
         Ok(DateTime::new((2026_i32, 10, 15), (9, 30, 5, 0), Some(0)))
@@ -139,19 +142,13 @@ fn the_block_enums_convert_and_refuse_an_alt_chunk() {
 
 #[test]
 fn a_paragraph_built_from_default_writes_and_reads_back() {
-    let text = Text {
-        value: "Hola".to_owned(),
-        ..Text::default()
-    };
-    let run = TextRun {
-        content: vec![TextRunContent::Text(text)],
-        ..TextRun::default()
-    };
-    let paragraph = Paragraph {
-        content: vec![ParagraphContent::TextRun(run)],
-        para_id: Some("1A2B3C4D".to_owned()),
-        ..Paragraph::default()
-    };
+    let mut text = Text::default();
+    text.value = "Hola".to_owned();
+    let mut run = TextRun::default();
+    run.content = vec![TextRunContent::Text(text)];
+    let mut paragraph = Paragraph::default();
+    paragraph.content = vec![ParagraphContent::TextRun(run)];
+    paragraph.para_id = Some("1A2B3C4D".to_owned());
     let element = write::paragraph(&paragraph, &mut Scope::default());
     // The writer declares the prefixes its element uses, and the reader keeps
     // an element's own declarations.

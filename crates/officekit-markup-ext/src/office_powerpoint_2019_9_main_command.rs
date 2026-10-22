@@ -262,7 +262,10 @@ pub static CM_MK_LST_SHAPE: officekit_markup_base::Shape = officekit_markup_base
 };
 
 /// The tag `pc2:cmMK`, schema type `CT_CommentV2Moniker` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CmMK {
     pub id: Option<String>,
@@ -270,7 +273,10 @@ pub struct CmMK {
 }
 
 /// The tag `pc2:cmMkLst`, schema type `CT_CommentV2MonikerList` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CmMkLst {
     pub cm_mk: Box<CmMK>,
@@ -279,7 +285,10 @@ pub struct CmMkLst {
 }
 
 /// The tag `pc2:cmRplyMk`, schema type `CT_CommentReplyV2Moniker` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CmRplyMk {
     pub id: Option<String>,
@@ -287,7 +296,10 @@ pub struct CmRplyMk {
 }
 
 /// The tag `pc2:cmRplyMkLst`, schema type `CT_CommentReplyV2MonikerList` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CmRplyMkLst {
     pub cm_mk_lst: Box<CmMkLst>,

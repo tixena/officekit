@@ -293,7 +293,10 @@ pub static PIVOT_FIELD_SUBTOTAL_LINE_ITEMS_SHAPE: officekit_markup_base::Shape =
     };
 
 /// The tag `xlpcalc:aggregationInfo`, schema type `CT_AggregationInfo` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AggregationInfo {
     pub aggregation_type: Option<AggregationType>,
@@ -302,7 +305,10 @@ pub struct AggregationInfo {
 }
 
 /// `ST_AggregationType`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AggregationType(pub String);
 /// The members of `ST_AggregationType`, in alphabetical order.
@@ -463,7 +469,10 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `xlpcalc:featureSupportInfo`, schema type `CT_FeatureSupport` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FeatureSupportInfo {
     pub feature_name: Option<String>,
@@ -472,7 +481,10 @@ pub struct FeatureSupportInfo {
 
 /// The tag `xlpcalc:pivotAreaReferenceSubtotals`, schema type `CT_PivotAreaReferenceSubtotals` of
 /// SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PivotAreaReferenceSubtotals {
     pub subtotal_pivot_subtotal_type: Vec<SubtotalPivotSubtotalType>,
@@ -481,7 +493,10 @@ pub struct PivotAreaReferenceSubtotals {
 
 /// The tag `xlpcalc:pivotFieldSubtotalLineItems`, schema type `CT_PivotTableSubtotalLineItems` of
 /// SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PivotFieldSubtotalLineItems {
     pub subtotal_line_item: Vec<SubtotalLineItem>,
@@ -489,7 +504,10 @@ pub struct PivotFieldSubtotalLineItems {
 }
 
 /// The tag `xlpcalc:pivotFieldSubtotals`, schema type `CT_PivotFieldSubtotals` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PivotFieldSubtotals {
     pub subtotal_pivot_item_subtotal: Vec<SubtotalPivotItemSubtotal>,
@@ -497,21 +515,30 @@ pub struct PivotFieldSubtotals {
 }
 
 /// The tag `xlpcalc:subtotalLineItem`, schema type `CT_PivotItemSubtotal` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SubtotalLineItem {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `xlpcalc:subtotal`, schema type `CT_PivotItemSubtotal` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SubtotalPivotItemSubtotal {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `xlpcalc:subtotal`, schema type `CT_PivotSubtotalType` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SubtotalPivotSubtotalType {
     pub subtotal_type: Option<AggregationType>,

@@ -266,7 +266,10 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `xlpds:pivotCacheDataSource`, schema type `CT_PivotCacheDataSource` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PivotCacheDataSource {
     pub f: Option<Box<office_excel_2006_main::F>>,

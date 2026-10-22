@@ -215,6 +215,7 @@
 //!
 //! The namespace is `http://schemas.microsoft.com/office/word/2010/wordprocessingGroup`.
 
+mod archive;
 pub mod read;
 pub mod write;
 
@@ -225,6 +226,10 @@ use officekit_markup_core::picture;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
+use rkyv::de::Pooling;
+use rkyv::rancor::Source;
+use rkyv::ser::{Allocator, Sharing, Writer};
+use rkyv::validation::{ArchiveContext, SharedContext};
 use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -352,7 +357,10 @@ pub static WORDPROCESSING_GROUP_CONTENT_TAGS: officekit_markup_base::Accept =
     };
 
 /// The tag `wpg:cNvFrPr`, schema type `CT_NonVisualGraphicFrameProperties` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CNvFrPr {
     pub extension_list: Option<Box<drawing::ExtensionList>>,
@@ -361,7 +369,10 @@ pub struct CNvFrPr {
 }
 
 /// The tag `wpg:cNvGrpSpPr`, schema type `CT_NonVisualGroupDrawingShapeProps` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CNvGrpSpPr {
     pub extension_list: Option<Box<drawing::ExtensionList>>,
@@ -370,7 +381,10 @@ pub struct CNvGrpSpPr {
 }
 
 /// The tag `wpg:cNvPr`, schema type `CT_NonVisualDrawingProps` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CNvPr {
     pub click_hyperlink: Option<Box<drawing::ClickHyperlink>>,
@@ -546,7 +560,10 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `wpg:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExtLst {
     pub extension: Vec<drawing::Extension>,
@@ -554,7 +571,10 @@ pub struct ExtLst {
 }
 
 /// The tag `wpg:graphicFrame`, schema type `CT_GraphicFrame` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GraphicFrame {
     pub c_nv_fr_pr: Box<CNvFrPr>,
@@ -566,11 +586,18 @@ pub struct GraphicFrame {
 }
 
 /// The tag `wpg:grpSp`, schema type `CT_WordprocessingGroup` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GrpSp {
     pub c_nv_grp_sp_pr: Box<CNvGrpSpPr>,
     pub c_nv_pr: Option<Box<CNvPr>>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<WordprocessingGroupContent>,
     pub ext_lst: Option<Box<ExtLst>>,
     pub pr: Box<GrpSpPr>,
@@ -578,7 +605,10 @@ pub struct GrpSp {
 }
 
 /// The tag `wpg:grpSpPr`, schema type `CT_GroupShapeProperties` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GrpSpPr {
     pub bw_mode: Option<drawing::BlackAndWhiteMode>,
@@ -641,7 +671,10 @@ pub trait Visitor: crate::Visitor {
 }
 
 /// The tag `wpg:wgp`, schema type `CT_WordprocessingGroup` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Wgp {
     pub c_nv_grp_sp_pr: Box<CNvGrpSpPr>,
@@ -665,7 +698,10 @@ pub enum WordprocessingGroupContent {
 }
 
 /// The tag `wpg:xfrm`, schema type `CT_Transform2D` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Xfrm {
     pub extents: Option<Box<drawing::Extents>>,

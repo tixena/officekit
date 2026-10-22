@@ -241,7 +241,10 @@ pub static CALC_FEATURES_SHAPE: officekit_markup_base::Shape = officekit_markup_
 };
 
 /// The tag `xcalcf:calcFeatures`, schema type `CT_CalcFeatures` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CalcFeatures {
     pub feature: Vec<Feature>,
@@ -285,7 +288,10 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `xcalcf:feature`, schema type `CT_CalcFeature` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Feature {
     pub name: Option<String>,

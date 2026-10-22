@@ -215,6 +215,7 @@
 //!
 //! The namespace is `http://schemas.microsoft.com/office/powerpoint/2021/06/main`.
 
+mod archive;
 pub mod read;
 pub mod write;
 
@@ -377,14 +378,20 @@ pub static TASK_HISTORY_EVENT_CONTENT_TAGS: officekit_markup_base::Accept =
     };
 
 /// The tag `p216:add`, schema type `CT_Empty` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Add {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `p216:anchr`, schema type `CT_TaskAnchor` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Anchr {
     pub comment: Box<Comment>,
@@ -393,21 +400,30 @@ pub struct Anchr {
 }
 
 /// The tag `p216:asgn`, schema type `CT_TaskAssignUnassignUser` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Asgn {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `p216:atrbtn`, schema type `CT_TaskAssignUnassignUser` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Atrbtn {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `p216:comment`, schema type `CT_CommentAnchor` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Comment {
     pub id: Option<String>,
@@ -642,7 +658,10 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `p216:date`, schema type `CT_TaskScheduleEventInfo` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Date {
     pub end_dt: Option<String>,
@@ -651,7 +670,10 @@ pub struct Date {
 }
 
 /// The tag `p216:event`, schema type `CT_TaskHistoryEvent` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Event {
     pub anchr: Option<Box<Anchr>>,
@@ -664,7 +686,10 @@ pub struct Event {
 }
 
 /// The tag `p216:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExtLst {
     pub extension: Vec<presentation::Extension>,
@@ -672,7 +697,10 @@ pub struct ExtLst {
 }
 
 /// The tag `p216:history`, schema type `CT_TaskHistory` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct History {
     pub event: Vec<Event>,
@@ -680,7 +708,10 @@ pub struct History {
 }
 
 /// The tag `p216:pcntCmplt`, schema type `CT_TaskProgressEventInfo` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PcntCmplt {
     pub unknown: officekit_markup_base::Unknown,
@@ -688,7 +719,10 @@ pub struct PcntCmplt {
 }
 
 /// The tag `p216:pri`, schema type `CT_TaskPriorityRecord` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Pri {
     pub unknown: officekit_markup_base::Unknown,
@@ -696,7 +730,10 @@ pub struct Pri {
 }
 
 /// The tag `p216:taskHistoryDetails`, schema type `CT_TaskHistoryDetails` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TaskHistoryDetails {
     pub ext_lst: Option<Box<ExtLst>>,
@@ -723,7 +760,10 @@ pub enum TaskHistoryEventContent {
 }
 
 /// The tag `p216:title`, schema type `CT_TaskTitleEventInfo` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Title {
     pub unknown: officekit_markup_base::Unknown,
@@ -731,21 +771,30 @@ pub struct Title {
 }
 
 /// The tag `p216:unAsgn`, schema type `CT_TaskAssignUnassignUser` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UnAsgn {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `p216:unasgnAll`, schema type `CT_Empty` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UnasgnAll {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `p216:undo`, schema type `CT_TaskUndo` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Undo {
     pub id: Option<String>,
@@ -753,7 +802,10 @@ pub struct Undo {
 }
 
 /// The tag `p216:unknown`, schema type `CT_TaskUnknownRecord` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Unknown {
     pub unknown: officekit_markup_base::Unknown,

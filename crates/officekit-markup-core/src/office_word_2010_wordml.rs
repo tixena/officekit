@@ -215,12 +215,17 @@
 //!
 //! The namespace is `http://schemas.microsoft.com/office/word/2010/wordml`.
 
+mod archive;
 pub mod read;
 pub mod write;
 
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
+use rkyv::de::Pooling;
+use rkyv::rancor::Source;
+use rkyv::ser::{Allocator, Sharing, Writer};
+use rkyv::validation::{ArchiveContext, SharedContext};
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_A14: Option<NamespaceId> = Some(1);
@@ -845,28 +850,40 @@ pub static LINE_JOIN_CONTENT_TAGS: officekit_markup_base::Accept = officekit_mar
 };
 
 /// The tag `w14:alpha`, schema type `CT_PositiveFixedPercentage` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Alpha {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `w14:bevel`, schema type `CT_Empty` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Bevel {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `w14:bevelB`, schema type `CT_Bevel` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BevelB {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `w14:bevelT`, schema type `CT_Bevel` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BevelT {
     pub unknown: officekit_markup_base::Unknown,
@@ -874,7 +891,10 @@ pub struct BevelT {
 
 /// The tag `w14:cNvContentPartPr`, schema type `CT_NonVisualInkContentPartProperties` of SDK
 /// 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CNvContentPartPr {
     pub cp_locks: Option<Box<super::office_drawing_2010_main::CpLocks>>,
@@ -884,7 +904,10 @@ pub struct CNvContentPartPr {
 }
 
 /// The tag `w14:cNvPr`, schema type `CT_NonVisualDrawingProps` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CNvPr {
     pub click_hyperlink: Option<Box<super::drawing::ClickHyperlink>>,
@@ -899,7 +922,10 @@ pub struct CNvPr {
 }
 
 /// The tag `w14:camera`, schema type `CT_Camera` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Camera {
     pub prst: Option<PresetCameraType>,
@@ -907,7 +933,10 @@ pub struct Camera {
 }
 
 /// The tag `w14:checkbox`, schema type `CT_SdtCheckbox` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Checkbox {
     pub checked: Option<Box<Checked>>,
@@ -917,21 +946,30 @@ pub struct Checkbox {
 }
 
 /// The tag `w14:checked`, schema type `CT_OnOff` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Checked {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `w14:checkedState`, schema type `CT_SdtCheckboxSymbol` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CheckedState {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `w14:cntxtAlts`, schema type `CT_OnOff` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CntxtAlts {
     pub unknown: officekit_markup_base::Unknown,
@@ -968,7 +1006,10 @@ pub enum ColorTransformContent {
 }
 
 /// `ST_CompoundLine`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CompoundLine(pub String);
 /// The members of `ST_CompoundLine`, in alphabetical order.
@@ -983,10 +1024,17 @@ pub enum CompoundLineMember {
 }
 
 /// The tag `w14:conflictDel`, schema type `CT_RunTrackChange` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ConflictDelRunTrackChange {
     pub author: Option<String>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<super::wordprocessing::TrackedRunContent>,
     pub date: Option<super::wordprocessing::StandardDateAndTimeStorageFormat>,
     pub id: Option<super::wordprocessing::DecimalNumberValue>,
@@ -994,7 +1042,10 @@ pub struct ConflictDelRunTrackChange {
 }
 
 /// The tag `w14:conflictDel`, schema type `CT_TrackChange` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ConflictDelTrackChange {
     pub author: Option<String>,
@@ -1004,10 +1055,17 @@ pub struct ConflictDelTrackChange {
 }
 
 /// The tag `w14:conflictIns`, schema type `CT_RunTrackChange` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ConflictInsRunTrackChange {
     pub author: Option<String>,
+    #[rkyv(omit_bounds)]
     pub content: Vec<super::wordprocessing::TrackedRunContent>,
     pub date: Option<super::wordprocessing::StandardDateAndTimeStorageFormat>,
     pub id: Option<super::wordprocessing::DecimalNumberValue>,
@@ -1015,7 +1073,10 @@ pub struct ConflictInsRunTrackChange {
 }
 
 /// The tag `w14:conflictIns`, schema type `CT_TrackChange` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ConflictInsTrackChange {
     pub author: Option<String>,
@@ -1025,14 +1086,20 @@ pub struct ConflictInsTrackChange {
 }
 
 /// The tag `w14:conflictMode`, schema type `CT_OnOff` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ConflictMode {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `w14:contentPart`, schema type `CT_WordContentPart` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ContentPart {
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
@@ -1044,7 +1111,10 @@ pub struct ContentPart {
 }
 
 /// The tag `w14:contourClr`, schema type `CT_Color` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ContourClr {
     pub content: Box<ColorContent>,
@@ -1052,7 +1122,10 @@ pub struct ContourClr {
 }
 
 /// The tag `w14:customXmlConflictDelRangeEnd`, schema type `CT_Markup` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomXmlConflictDelRangeEnd {
     pub id: Option<super::wordprocessing::DecimalNumberValue>,
@@ -1060,7 +1133,10 @@ pub struct CustomXmlConflictDelRangeEnd {
 }
 
 /// The tag `w14:customXmlConflictDelRangeStart`, schema type `CT_TrackChange` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomXmlConflictDelRangeStart {
     pub author: Option<String>,
@@ -1070,7 +1146,10 @@ pub struct CustomXmlConflictDelRangeStart {
 }
 
 /// The tag `w14:customXmlConflictInsRangeEnd`, schema type `CT_Markup` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomXmlConflictInsRangeEnd {
     pub id: Option<super::wordprocessing::DecimalNumberValue>,
@@ -1078,7 +1157,10 @@ pub struct CustomXmlConflictInsRangeEnd {
 }
 
 /// The tag `w14:customXmlConflictInsRangeStart`, schema type `CT_TrackChange` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CustomXmlConflictInsRangeStart {
     pub author: Option<String>,
@@ -1088,7 +1170,10 @@ pub struct CustomXmlConflictInsRangeStart {
 }
 
 /// The tag `w14:defaultImageDpi`, schema type `CT_DefaultImageDpi` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DefaultImageDpi {
     pub unknown: officekit_markup_base::Unknown,
@@ -1096,14 +1181,20 @@ pub struct DefaultImageDpi {
 }
 
 /// The tag `w14:discardImageEditingData`, schema type `CT_OnOff` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DiscardImageEditingData {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `w14:docId`, schema type `CT_LongHexNumber` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DocId {
     pub unknown: officekit_markup_base::Unknown,
@@ -1111,14 +1202,20 @@ pub struct DocId {
 }
 
 /// The tag `w14:entityPicker`, schema type `CT_Empty` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EntityPicker {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `w14:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExtLst {
     pub extension: Vec<super::drawing::Extension>,
@@ -1126,7 +1223,10 @@ pub struct ExtLst {
 }
 
 /// The tag `w14:extrusionClr`, schema type `CT_Color` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExtrusionClr {
     pub content: Box<ColorContent>,
@@ -1145,7 +1245,10 @@ pub enum FillPropertiesContent {
 }
 
 /// The tag `w14:fillToRect`, schema type `CT_RelativeRect` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FillToRect {
     pub b: Option<String>,
@@ -1156,7 +1259,10 @@ pub struct FillToRect {
 }
 
 /// The tag `w14:glow`, schema type `CT_Glow` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Glow {
     pub content: Box<ColorContent>,
@@ -1165,7 +1271,10 @@ pub struct Glow {
 }
 
 /// The tag `w14:gradFill`, schema type `CT_GradientFillProperties` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GradFill {
     pub content: Option<Box<GradientFillPropertiesContent>>,
@@ -1183,7 +1292,10 @@ pub enum GradientFillPropertiesContent {
 }
 
 /// The tag `w14:gs`, schema type `CT_GradientStop` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Gs {
     pub content: Box<ColorContent>,
@@ -1192,7 +1304,10 @@ pub struct Gs {
 }
 
 /// The tag `w14:gsLst`, schema type `CT_GradientStopList` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GsLst {
     pub gs: Vec<Gs>,
@@ -1200,7 +1315,10 @@ pub struct GsLst {
 }
 
 /// The tag `w14:hueMod`, schema type `CT_PositivePercentage` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HueMod {
     pub unknown: officekit_markup_base::Unknown,
@@ -1208,7 +1326,10 @@ pub struct HueMod {
 }
 
 /// The tag `w14:ligatures`, schema type `CT_Ligatures` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Ligatures {
     pub unknown: officekit_markup_base::Unknown,
@@ -1216,7 +1337,10 @@ pub struct Ligatures {
 }
 
 /// The tag `w14:lightRig`, schema type `CT_LightRig` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LightRig {
     pub dir: Option<LightRigDirection>,
@@ -1226,7 +1350,10 @@ pub struct LightRig {
 }
 
 /// `ST_LightRigDirection`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LightRigDirection(pub String);
 /// The members of `ST_LightRigDirection`, in alphabetical order.
@@ -1244,7 +1371,10 @@ pub enum LightRigDirectionMember {
 }
 
 /// `ST_LightRigType`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LightRigType(pub String);
 /// The members of `ST_LightRigType`, in alphabetical order.
@@ -1281,7 +1411,10 @@ pub enum LightRigTypeMember {
 }
 
 /// The tag `w14:lin`, schema type `CT_LinearShadeProperties` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Lin {
     pub ang: Option<String>,
@@ -1290,7 +1423,10 @@ pub struct Lin {
 }
 
 /// `ST_LineCap`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LineCap(pub String);
 /// The members of `ST_LineCap`, in alphabetical order.
@@ -1313,28 +1449,40 @@ pub enum LineJoinContent {
 }
 
 /// The tag `w14:lum`, schema type `CT_Percentage` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Lum {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `w14:lumMod`, schema type `CT_Percentage` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LumMod {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `w14:lumOff`, schema type `CT_Percentage` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LumOff {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `w14:miter`, schema type `CT_LineJoinMiterProperties` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Miter {
     pub lim: Option<String>,
@@ -1342,14 +1490,20 @@ pub struct Miter {
 }
 
 /// The tag `w14:noFill`, schema type `CT_Empty` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NoFill {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `w14:numForm`, schema type `CT_NumForm` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumForm {
     pub unknown: officekit_markup_base::Unknown,
@@ -1357,7 +1511,10 @@ pub struct NumForm {
 }
 
 /// The tag `w14:numSpacing`, schema type `CT_NumSpacing` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NumSpacing {
     pub unknown: officekit_markup_base::Unknown,
@@ -1365,7 +1522,10 @@ pub struct NumSpacing {
 }
 
 /// The tag `w14:nvContentPartPr`, schema type `CT_WordContentPartNonVisual` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NvContentPartPr {
     pub c: Option<Box<CNvContentPartPr>>,
@@ -1374,7 +1534,10 @@ pub struct NvContentPartPr {
 }
 
 /// `ST_OnOff`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct OnOff(pub String);
 /// The members of `ST_OnOff`, in alphabetical order.
@@ -1388,7 +1551,10 @@ pub enum OnOffMember {
 }
 
 /// The tag `w14:path`, schema type `CT_PathShadeProperties` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Path {
     pub fill_to_rect: Option<Box<FillToRect>>,
@@ -1397,7 +1563,10 @@ pub struct Path {
 }
 
 /// `ST_PathShadeType`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PathShadeType(pub String);
 /// The members of `ST_PathShadeType`, in alphabetical order.
@@ -1410,7 +1579,10 @@ pub enum PathShadeTypeMember {
 }
 
 /// `ST_PenAlignment`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PenAlignment(pub String);
 /// The members of `ST_PenAlignment`, in alphabetical order.
@@ -1422,7 +1594,10 @@ pub enum PenAlignmentMember {
 }
 
 /// `ST_PresetCameraType`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PresetCameraType(pub String);
 /// The members of `ST_PresetCameraType`, in alphabetical order.
@@ -1494,7 +1669,10 @@ pub enum PresetCameraTypeMember {
 }
 
 /// `ST_PresetLineDashVal`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PresetLineDashVal(pub String);
 /// The members of `ST_PresetLineDashVal`, in alphabetical order.
@@ -1515,7 +1693,10 @@ pub enum PresetLineDashValMember {
 }
 
 /// `ST_PresetMaterialType`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PresetMaterialType(pub String);
 /// The members of `ST_PresetMaterialType`, in alphabetical order.
@@ -1541,7 +1722,10 @@ pub enum PresetMaterialTypeMember {
 }
 
 /// The tag `w14:props3d`, schema type `CT_Props3D` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Props3d {
     pub bevel_b: Option<Box<BevelB>>,
@@ -1555,7 +1739,10 @@ pub struct Props3d {
 }
 
 /// The tag `w14:prstDash`, schema type `CT_PresetLineDashProperties` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PrstDash {
     pub unknown: officekit_markup_base::Unknown,
@@ -1563,7 +1750,10 @@ pub struct PrstDash {
 }
 
 /// `ST_RectAlignment`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RectAlignment(pub String);
 /// The members of `ST_RectAlignment`, in alphabetical order.
@@ -1583,7 +1773,10 @@ pub enum RectAlignmentMember {
 }
 
 /// The tag `w14:reflection`, schema type `CT_Reflection` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Reflection {
     pub algn: Option<RectAlignment>,
@@ -1603,7 +1796,10 @@ pub struct Reflection {
 }
 
 /// The tag `w14:rot`, schema type `CT_SphereCoords` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Rot {
     pub lat: Option<String>,
@@ -1613,35 +1809,50 @@ pub struct Rot {
 }
 
 /// The tag `w14:round`, schema type `CT_Empty` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Round {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `w14:sat`, schema type `CT_Percentage` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Sat {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `w14:satMod`, schema type `CT_Percentage` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SatMod {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `w14:satOff`, schema type `CT_Percentage` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SatOff {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `w14:scene3d`, schema type `CT_Scene3D` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Scene3d {
     pub camera: Box<Camera>,
@@ -1650,7 +1861,10 @@ pub struct Scene3d {
 }
 
 /// The tag `w14:schemeClr`, schema type `CT_SchemeColor` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SchemeClr {
     pub content: Vec<ColorTransformContent>,
@@ -1659,7 +1873,10 @@ pub struct SchemeClr {
 }
 
 /// `ST_SchemeColorVal`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SchemeColorVal(pub String);
 /// The members of `ST_SchemeColorVal`, in alphabetical order.
@@ -1686,14 +1903,20 @@ pub enum SchemeColorValMember {
 }
 
 /// The tag `w14:shade`, schema type `CT_PositiveFixedPercentage` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Shade {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `w14:shadow`, schema type `CT_Shadow` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Shadow {
     pub algn: Option<RectAlignment>,
@@ -1709,7 +1932,10 @@ pub struct Shadow {
 }
 
 /// The tag `w14:solidFill`, schema type `CT_SolidColorFillProperties` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SolidFill {
     pub content: Option<Box<ColorContent>>,
@@ -1717,7 +1943,10 @@ pub struct SolidFill {
 }
 
 /// The tag `w14:srgbClr`, schema type `CT_SRgbColor` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SrgbClr {
     pub content: Vec<ColorTransformContent>,
@@ -1726,7 +1955,10 @@ pub struct SrgbClr {
 }
 
 /// `ST_Ligatures`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StLigatures(pub String);
 /// The members of `ST_Ligatures`, in alphabetical order.
@@ -1752,7 +1984,10 @@ pub enum StLigaturesMember {
 }
 
 /// `ST_NumForm`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StNumForm(pub String);
 /// The members of `ST_NumForm`, in alphabetical order.
@@ -1765,7 +2000,10 @@ pub enum StNumFormMember {
 }
 
 /// `ST_NumSpacing`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StNumSpacing(pub String);
 /// The members of `ST_NumSpacing`, in alphabetical order.
@@ -1778,7 +2016,10 @@ pub enum StNumSpacingMember {
 }
 
 /// The tag `w14:styleSet`, schema type `CT_StyleSet` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StyleSet {
     pub id: Option<String>,
@@ -1787,7 +2028,10 @@ pub struct StyleSet {
 }
 
 /// The tag `w14:stylisticSets`, schema type `CT_StylisticSets` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StylisticSets {
     pub style_set: Vec<StyleSet>,
@@ -1795,7 +2039,10 @@ pub struct StylisticSets {
 }
 
 /// The tag `w14:textFill`, schema type `CT_FillTextEffect` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TextFill {
     pub content: Option<Box<FillPropertiesContent>>,
@@ -1803,7 +2050,10 @@ pub struct TextFill {
 }
 
 /// The tag `w14:textOutline`, schema type `CT_TextOutlineEffect` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TextOutline {
     pub algn: Option<PenAlignment>,
@@ -1817,21 +2067,30 @@ pub struct TextOutline {
 }
 
 /// The tag `w14:tint`, schema type `CT_PositiveFixedPercentage` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Tint {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `w14:uncheckedState`, schema type `CT_SdtCheckboxSymbol` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UncheckedState {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `w14:xfrm`, schema type `CT_Transform2D` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Xfrm {
     pub extents: Option<Box<super::drawing::Extents>>,

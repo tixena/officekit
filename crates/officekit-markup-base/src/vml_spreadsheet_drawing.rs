@@ -215,6 +215,7 @@
 //!
 //! The namespace is `urn:schemas-microsoft-com:office:excel`.
 
+mod archive;
 pub mod read;
 pub mod write;
 
@@ -774,7 +775,10 @@ pub static ATTACHED_OBJECT_DATA_CONTENT_TAGS: crate::Accept = crate::Accept {
 };
 
 /// 19.4.2.3 Anchor (Anchor): the tag `xvml:Anchor`, schema type `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Anchor {
     pub unknown: crate::Unknown,
@@ -783,7 +787,10 @@ pub struct Anchor {
 
 /// 19.4.2.12 `ClientData` (Attached Object Data): the tag `xvml:ClientData`, schema type
 /// `CT_ClientData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AttachedObjectData {
     pub content: Vec<AttachedObjectDataContent>,
@@ -866,7 +873,10 @@ pub enum AttachedObjectDataContent {
 }
 
 /// 19.4.2.4 `AutoFill` (`AutoFill`): the tag `xvml:AutoFill`, schema type `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AutoFill {
     pub unknown: crate::Unknown,
@@ -874,7 +884,10 @@ pub struct AutoFill {
 }
 
 /// 19.4.2.5 `AutoLine` (`AutoLine`): the tag `xvml:AutoLine`, schema type `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AutoLine {
     pub unknown: crate::Unknown,
@@ -883,7 +896,10 @@ pub struct AutoLine {
 
 /// 19.4.2.6 `AutoPict` (Automatically Size): the tag `xvml:AutoPict`, schema type
 /// `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AutomaticallySize {
     pub unknown: crate::Unknown,
@@ -891,7 +907,10 @@ pub struct AutomaticallySize {
 }
 
 /// 19.4.2.35 LCT (Callback Type): the tag `xvml:LCT`, schema type `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CallbackType {
     pub unknown: crate::Unknown,
@@ -899,7 +918,10 @@ pub struct CallbackType {
 }
 
 /// 19.4.2.28 `FmlaPict` (Camera Source Range): the tag `xvml:FmlaPict`, schema type `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CameraSourceRange {
     pub unknown: crate::Unknown,
@@ -907,7 +929,10 @@ pub struct CameraSourceRange {
 }
 
 /// 19.4.2.8 Camera (Camera Tool): the tag `xvml:Camera`, schema type `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CameraTool {
     pub unknown: crate::Unknown,
@@ -915,7 +940,10 @@ pub struct CameraTool {
 }
 
 /// 19.4.2.9 Cancel (Cancel Button): the tag `xvml:Cancel`, schema type `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CancelButton {
     pub unknown: crate::Unknown,
@@ -923,7 +951,10 @@ pub struct CancelButton {
 }
 
 /// 19.4.2.11 Checked (Checked): the tag `xvml:Checked`, schema type `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Checked {
     pub unknown: crate::Unknown,
@@ -931,7 +962,10 @@ pub struct Checked {
 }
 
 /// 19.4.2.10 CF (Clipboard Format): the tag `xvml:CF`, schema type `ST_CF`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ClipboardFormat {
     pub unknown: crate::Unknown,
@@ -939,7 +973,10 @@ pub struct ClipboardFormat {
 }
 
 /// 19.4.2.15 Column (Comment Column Target): the tag `xvml:Column`, schema type `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CommentColumnTarget {
     pub unknown: crate::Unknown,
@@ -947,7 +984,10 @@ pub struct CommentColumnTarget {
 }
 
 /// 19.4.2.50 Row (Comment Row Target): the tag `xvml:Row`, schema type `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CommentRowTarget {
     pub unknown: crate::Unknown,
@@ -956,7 +996,10 @@ pub struct CommentRowTarget {
 
 /// 19.4.2.65 Visible (Comment Visibility Toggle): the tag `xvml:Visible`, schema type
 /// `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CommentVisibilityToggle {
     pub unknown: crate::Unknown,
@@ -965,7 +1008,10 @@ pub struct CommentVisibilityToggle {
 
 /// 19.4.2.13 `ColHidden` (Comment's Column is Hidden): the tag `xvml:ColHidden`, schema type
 /// `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CommentsColumnIsHidden {
     pub unknown: crate::Unknown,
@@ -974,7 +1020,10 @@ pub struct CommentsColumnIsHidden {
 
 /// 19.4.2.51 `RowHidden` (Comment's Row is Hidden): the tag `xvml:RowHidden`, schema type
 /// `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CommentsRowIsHidden {
     pub unknown: crate::Unknown,
@@ -982,7 +1031,10 @@ pub struct CommentsRowIsHidden {
 }
 
 /// 19.4.2.17 Default (Default Button): the tag `xvml:Default`, schema type `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DefaultButton {
     pub unknown: crate::Unknown,
@@ -991,7 +1043,10 @@ pub struct DefaultButton {
 
 /// 19.4.2.18 `DefaultSize` (Default Size Toggle): the tag `xvml:DefaultSize`, schema type
 /// `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DefaultSizeToggle {
     pub unknown: crate::Unknown,
@@ -999,7 +1054,10 @@ pub struct DefaultSizeToggle {
 }
 
 /// 19.4.2.45 `NoThreeD` (Disable 3D): the tag `xvml:NoThreeD`, schema type `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Disable3DNoThreeD {
     pub unknown: crate::Unknown,
@@ -1007,7 +1065,10 @@ pub struct Disable3DNoThreeD {
 }
 
 /// 19.4.2.46 `NoThreeD2` (Disable 3D): the tag `xvml:NoThreeD2`, schema type `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Disable3DNoThreeD2 {
     pub unknown: crate::Unknown,
@@ -1015,7 +1076,10 @@ pub struct Disable3DNoThreeD2 {
 }
 
 /// 19.4.2.20 Dismiss (Dismiss Button): the tag `xvml:Dismiss`, schema type `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DismissButton {
     pub unknown: crate::Unknown,
@@ -1024,7 +1088,10 @@ pub struct DismissButton {
 
 /// 19.4.2.14 Colored (Dropdown Color Toggle): the tag `xvml:Colored`, schema type
 /// `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DropdownColorToggle {
     pub unknown: crate::Unknown,
@@ -1032,7 +1099,10 @@ pub struct DropdownColorToggle {
 }
 
 /// 19.4.2.21 `DropLines` (Dropdown Maximum Lines): the tag `xvml:DropLines`, schema type `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DropdownMaximumLines {
     pub unknown: crate::Unknown,
@@ -1040,7 +1110,10 @@ pub struct DropdownMaximumLines {
 }
 
 /// 19.4.2.22 `DropStyle` (Dropdown Style): the tag `xvml:DropStyle`, schema type `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DropdownStyle {
     pub unknown: crate::Unknown,
@@ -1048,7 +1121,10 @@ pub struct DropdownStyle {
 }
 
 /// 19.4.2.16 DDE (Dynamic Data Exchange): the tag `xvml:DDE`, schema type `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DynamicDataExchange {
     pub unknown: crate::Unknown,
@@ -1056,7 +1132,10 @@ pub struct DynamicDataExchange {
 }
 
 /// 19.4.2.39 `MapOCX` (Embedded Control): the tag `xvml:MapOCX`, schema type `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EmbeddedControl {
     pub unknown: crate::Unknown,
@@ -1065,7 +1144,10 @@ pub struct EmbeddedControl {
 
 /// 19.4.2.34 `JustLastX` (Far East Alignment Toggle): the tag `xvml:JustLastX`, schema type
 /// `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FarEastAlignmentToggle {
     pub unknown: crate::Unknown,
@@ -1074,7 +1156,10 @@ pub struct FarEastAlignmentToggle {
 
 /// 19.4.2.24 `FirstButton` (First Radio Button): the tag `xvml:FirstButton`, schema type
 /// `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FirstRadioButton {
     pub unknown: crate::Unknown,
@@ -1083,7 +1168,10 @@ pub struct FirstRadioButton {
 
 /// 19.4.2.7 `AutoScale` (Font `AutoScale`): the tag `xvml:AutoScale`, schema type
 /// `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FontAutoScale {
     pub unknown: crate::Unknown,
@@ -1092,7 +1180,10 @@ pub struct FontAutoScale {
 
 /// 19.4.2.52 `ScriptExtended` (HTML Script Attributes): the tag `xvml:ScriptExtended`, schema type
 /// `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HTMLScriptAttributes {
     pub unknown: crate::Unknown,
@@ -1101,7 +1192,10 @@ pub struct HTMLScriptAttributes {
 
 /// 19.4.2.53 `ScriptLanguage` (HTML Script Language): the tag `xvml:ScriptLanguage`, schema type
 /// `nonNegativeInteger`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HTMLScriptLanguage {
     pub unknown: crate::Unknown,
@@ -1110,7 +1204,10 @@ pub struct HTMLScriptLanguage {
 
 /// 19.4.2.54 `ScriptLocation` (HTML Script Location): the tag `xvml:ScriptLocation`, schema type
 /// `nonNegativeInteger`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HTMLScriptLocation {
     pub unknown: crate::Unknown,
@@ -1118,7 +1215,10 @@ pub struct HTMLScriptLocation {
 }
 
 /// 19.4.2.55 `ScriptText` (HTML Script Text): the tag `xvml:ScriptText`, schema type `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HTMLScriptText {
     pub unknown: crate::Unknown,
@@ -1126,7 +1226,10 @@ pub struct HTMLScriptText {
 }
 
 /// 19.4.2.31 Help (Help Button): the tag `xvml:Help`, schema type `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HelpButton {
     pub unknown: crate::Unknown,
@@ -1135,7 +1238,10 @@ pub struct HelpButton {
 
 /// 19.4.2.60 `TextHAlign` (Horizontal Text Alignment): the tag `xvml:TextHAlign`, schema type
 /// `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HorizontalTextAlignment {
     pub unknown: crate::Unknown,
@@ -1143,7 +1249,10 @@ pub struct HorizontalTextAlignment {
 }
 
 /// 19.4.2.26 `FmlaLink` (Linked Formula): the tag `xvml:FmlaLink`, schema type `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LinkedFormula {
     pub unknown: crate::Unknown,
@@ -1152,7 +1261,10 @@ pub struct LinkedFormula {
 
 /// 19.4.2.25 `FmlaGroup` (Linked Formula - Group Box): the tag `xvml:FmlaGroup`, schema type
 /// `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LinkedFormulaGroupBox {
     pub unknown: crate::Unknown,
@@ -1160,7 +1272,10 @@ pub struct LinkedFormulaGroupBox {
 }
 
 /// 19.4.2.29 `FmlaRange` (List Items Source Range): the tag `xvml:FmlaRange`, schema type `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ListItemsSourceRange {
     pub unknown: crate::Unknown,
@@ -1168,7 +1283,10 @@ pub struct ListItemsSourceRange {
 }
 
 /// 19.4.2.37 Locked (Lock Toggle): the tag `xvml:Locked`, schema type `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LockToggle {
     pub unknown: crate::Unknown,
@@ -1177,7 +1295,10 @@ pub struct LockToggle {
 
 /// 19.4.2.19 Disabled (Macro Disable Toggle): the tag `xvml:Disabled`, schema type
 /// `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MacroDisableToggle {
     pub unknown: crate::Unknown,
@@ -1185,7 +1306,10 @@ pub struct MacroDisableToggle {
 }
 
 /// 19.4.2.68 `WidthMin` (Minimum Width): the tag `xvml:WidthMin`, schema type `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MinimumWidth {
     pub unknown: crate::Unknown,
@@ -1194,7 +1318,10 @@ pub struct MinimumWidth {
 
 /// 19.4.2.42 `MoveWithCells` (Move with Cells): the tag `xvml:MoveWithCells`, schema type
 /// `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MoveWithCells {
     pub unknown: crate::Unknown,
@@ -1202,7 +1329,10 @@ pub struct MoveWithCells {
 }
 
 /// 19.4.2.43 `MultiLine` (Multi-line): the tag `xvml:MultiLine`, schema type `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MultiLine {
     pub unknown: crate::Unknown,
@@ -1210,7 +1340,10 @@ pub struct MultiLine {
 }
 
 /// 19.4.2.44 `MultiSel` (Multiple Selections): the tag `xvml:MultiSel`, schema type `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MultipleSelections {
     pub unknown: crate::Unknown,
@@ -1218,7 +1351,10 @@ pub struct MultipleSelections {
 }
 
 /// 19.4.2.36 `ListItem` (Non-linked List Item): the tag `xvml:ListItem`, schema type `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NonLinkedListItem {
     pub unknown: crate::Unknown,
@@ -1226,7 +1362,10 @@ pub struct NonLinkedListItem {
 }
 
 /// 19.4.3.2 `ST_ObjectType` (Object Type): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ObjectType(pub String);
 /// The members of `ST_ObjectType`, in alphabetical order.
@@ -1256,7 +1395,10 @@ pub enum ObjectTypeMember {
 
 /// 19.4.2.56 `SecretEdit` (Password Edit): the tag `xvml:SecretEdit`, schema type
 /// `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PasswordEdit {
     pub unknown: crate::Unknown,
@@ -1264,7 +1406,10 @@ pub struct PasswordEdit {
 }
 
 /// 19.4.2.1 Accel (Primary Keyboard Accelerator): the tag `xvml:Accel`, schema type `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PrimaryKeyboardAccelerator {
     pub unknown: crate::Unknown,
@@ -1273,7 +1418,10 @@ pub struct PrimaryKeyboardAccelerator {
 
 /// 19.4.2.48 `PrintObject` (Print Toggle): the tag `xvml:PrintObject`, schema type
 /// `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PrintToggle {
     pub unknown: crate::Unknown,
@@ -1282,7 +1430,10 @@ pub struct PrintToggle {
 
 /// 19.4.2.49 `RecalcAlways` (Recalculation Toggle): the tag `xvml:RecalcAlways`, schema type
 /// `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RecalculationToggle {
     pub unknown: crate::Unknown,
@@ -1291,7 +1442,10 @@ pub struct RecalculationToggle {
 
 /// 19.4.2.27 `FmlaMacro` (Reference to Custom Function): the tag `xvml:FmlaMacro`, schema type
 /// `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ReferenceToCustomFunction {
     pub unknown: crate::Unknown,
@@ -1300,7 +1454,10 @@ pub struct ReferenceToCustomFunction {
 
 /// 19.4.2.59 `SizeWithCells` (Resize with Cells): the tag `xvml:SizeWithCells`, schema type
 /// `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ResizeWithCells {
     pub unknown: crate::Unknown,
@@ -1308,7 +1465,10 @@ pub struct ResizeWithCells {
 }
 
 /// 19.4.2.33 Inc (Scroll Bar Increment): the tag `xvml:Inc`, schema type `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ScrollBarIncrement {
     pub unknown: crate::Unknown,
@@ -1316,7 +1476,10 @@ pub struct ScrollBarIncrement {
 }
 
 /// 19.4.2.40 Max (Scroll Bar Maximum): the tag `xvml:Max`, schema type `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ScrollBarMaximum {
     pub unknown: crate::Unknown,
@@ -1324,7 +1487,10 @@ pub struct ScrollBarMaximum {
 }
 
 /// 19.4.2.41 Min (Scroll Bar Minimum): the tag `xvml:Min`, schema type `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ScrollBarMinimum {
     pub unknown: crate::Unknown,
@@ -1332,7 +1498,10 @@ pub struct ScrollBarMinimum {
 }
 
 /// 19.4.2.32 Horiz (Scroll Bar Orientation): the tag `xvml:Horiz`, schema type `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ScrollBarOrientation {
     pub unknown: crate::Unknown,
@@ -1340,7 +1509,10 @@ pub struct ScrollBarOrientation {
 }
 
 /// 19.4.2.47 Page (Scroll Bar Page Increment): the tag `xvml:Page`, schema type `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ScrollBarPageIncrement {
     pub unknown: crate::Unknown,
@@ -1348,7 +1520,10 @@ pub struct ScrollBarPageIncrement {
 }
 
 /// 19.4.2.63 Val (Scroll bar position): the tag `xvml:Val`, schema type `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ScrollBarPosition {
     pub unknown: crate::Unknown,
@@ -1356,7 +1531,10 @@ pub struct ScrollBarPosition {
 }
 
 /// 19.4.2.23 Dx (Scroll Bar Width): the tag `xvml:Dx`, schema type `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ScrollBarWidth {
     pub unknown: crate::Unknown,
@@ -1364,7 +1542,10 @@ pub struct ScrollBarWidth {
 }
 
 /// 19.4.2.2 Accel2 (Secondary Keyboard Accelerator): the tag `xvml:Accel2`, schema type `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SecondaryKeyboardAccelerator {
     pub unknown: crate::Unknown,
@@ -1372,7 +1553,10 @@ pub struct SecondaryKeyboardAccelerator {
 }
 
 /// 19.4.2.57 Sel (Selected Entry): the tag `xvml:Sel`, schema type `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SelectedEntry {
     pub unknown: crate::Unknown,
@@ -1380,7 +1564,10 @@ pub struct SelectedEntry {
 }
 
 /// 19.4.2.58 `SelType` (Selection Type): the tag `xvml:SelType`, schema type `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SelectionType {
     pub unknown: crate::Unknown,
@@ -1388,7 +1575,10 @@ pub struct SelectionType {
 }
 
 /// 19.4.2.30 `FmlaTxbx` (Text Formula): the tag `xvml:FmlaTxbx`, schema type `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TextFormula {
     pub unknown: crate::Unknown,
@@ -1396,7 +1586,10 @@ pub struct TextFormula {
 }
 
 /// 19.4.2.38 `LockText` (Text Lock): the tag `xvml:LockText`, schema type `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct TextLock {
     pub unknown: crate::Unknown,
@@ -1404,7 +1597,10 @@ pub struct TextLock {
 }
 
 /// 19.4.2.62 `UIObj` (UI Object Toggle): the tag `xvml:UIObj`, schema type `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UIObjectToggle {
     pub unknown: crate::Unknown,
@@ -1412,7 +1608,10 @@ pub struct UIObjectToggle {
 }
 
 /// 19.4.2.64 `ValidIds` (Valid ID): the tag `xvml:ValidIds`, schema type `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ValidID {
     pub unknown: crate::Unknown,
@@ -1420,7 +1619,10 @@ pub struct ValidID {
 }
 
 /// 19.4.2.67 `VTEdit` (Validation Type): the tag `xvml:VTEdit`, schema type `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ValidationType {
     pub unknown: crate::Unknown,
@@ -1428,7 +1630,10 @@ pub struct ValidationType {
 }
 
 /// 19.4.2.66 `VScroll` (Vertical Scroll): the tag `xvml:VScroll`, schema type `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct VerticalScroll {
     pub unknown: crate::Unknown,
@@ -1437,7 +1642,10 @@ pub struct VerticalScroll {
 
 /// 19.4.2.61 `TextVAlign` (Vertical Text Alignment): the tag `xvml:TextVAlign`, schema type
 /// `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct VerticalTextAlignment {
     pub unknown: crate::Unknown,

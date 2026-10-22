@@ -300,7 +300,10 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `dgm1612:lstStyle`, schema type `CT_TextListStyle` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct LstStyle {
     pub default_paragraph_style: Option<Box<drawing::DefaultParagraphStyle>>,
@@ -318,7 +321,10 @@ pub struct LstStyle {
 }
 
 /// The tag `dgm1612:spPr`, schema type `CT_ShapeProperties` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SpPr {
     pub apply_3d_shape_properties: Option<Box<drawing::Apply3DShapeProperties>>,

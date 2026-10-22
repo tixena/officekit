@@ -757,6 +757,7 @@ name = "officekit-markup-base"
 version = "0.1.0"
 dependencies = [
  "officekit-xml",
+ "rkyv",
 ]
 
 [[package]]
@@ -765,6 +766,7 @@ version = "0.1.0"
 dependencies = [
  "officekit-markup-base",
  "officekit-xml",
+ "rkyv",
 ]
 
 [[package]]
@@ -774,6 +776,7 @@ dependencies = [
  "officekit-markup-base",
  "officekit-markup-core",
  "officekit-xml",
+ "rkyv",
 ]
 
 [[package]]
@@ -798,6 +801,7 @@ dependencies = [
  "officekit-strict",
  "officekit-transitional",
  "officekit-xml",
+ "rkyv",
 ]
 
 [[package]]
@@ -840,8 +844,15 @@ dependencies = [
 name = "officekit-xml"
 version = "0.1.0"
 dependencies = [
+ "aho-corasick",
+ "indexmap",
  "quick-xml",
  "regex",
+ "regex-automata",
+ "rkyv",
+ "serde_core",
+ "syn 2.0.119",
+ "syn 3.0.5",
  "thiserror",
 ]
 

@@ -253,7 +253,10 @@ pub static RECOLOR_IMG_SHAPE: officekit_markup_base::Shape = officekit_markup_ba
 };
 
 /// The tag `dgm14:cNvPr`, schema type `CT_NonVisualDrawingProps` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CNvPr {
     pub click_hyperlink: Option<Box<drawing::ClickHyperlink>>,
@@ -304,7 +307,10 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `dgm14:recolorImg`, schema type `CT_Boolean` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RecolorImg {
     pub unknown: officekit_markup_base::Unknown,

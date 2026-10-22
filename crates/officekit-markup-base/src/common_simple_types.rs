@@ -258,7 +258,10 @@ static XML_NAME_FACETS: crate::Facets = crate::Facets {
 };
 
 /// 20.1.2.5 `ST_TrueFalse` (Boolean Value): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BooleanValue(pub String);
 /// The members of `ST_TrueFalse`, in alphabetical order.
@@ -273,7 +276,10 @@ pub enum BooleanValueMember {
 
 /// 20.1.2.6 `ST_TrueFalseBlank` (Boolean Value with Blank \[False\] State): the text the file
 /// carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct BooleanValueWithBlankFalseState(pub String);
 /// The members of `ST_TrueFalseBlank`, in alphabetical order.
@@ -290,7 +296,10 @@ pub enum BooleanValueWithBlankFalseStateMember {
 }
 
 /// 22.9.2.1 `ST_CalendarType` (Calendar Types): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CalendarTypes(pub String);
 /// The members of `ST_CalendarType`, in alphabetical order.
@@ -314,7 +323,10 @@ pub enum CalendarTypesMember {
 }
 
 /// 20.1.2.1 `ST_AlgClass` (Cryptographic Algorithm Classes): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CryptographicAlgorithmClasses(pub String);
 /// The members of `ST_AlgClass`, in alphabetical order.
@@ -326,7 +338,10 @@ pub enum CryptographicAlgorithmClassesMember {
 }
 
 /// 20.1.2.2 `ST_AlgType` (Cryptographic Algorithm Types): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CryptographicAlgorithmTypes(pub String);
 /// The members of `ST_AlgType`, in alphabetical order.
@@ -338,7 +353,10 @@ pub enum CryptographicAlgorithmTypesMember {
 }
 
 /// 20.1.2.4 `ST_CryptProv` (Cryptographic Provider Types): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct CryptographicProviderTypes(pub String);
 /// The members of `ST_CryptProv`, in alphabetical order.
@@ -351,7 +369,10 @@ pub enum CryptographicProviderTypesMember {
 }
 
 /// 22.9.2.2 `ST_ConformanceClass` (Document Conformance Class Value): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct DocumentConformanceClassValue(pub String);
 /// The members of `ST_ConformanceClass`, in alphabetical order.
@@ -363,22 +384,34 @@ pub enum DocumentConformanceClassValueMember {
 }
 
 /// 22.9.2.3 `ST_FixedPercentage` (Fixed Percentage Value with Sign): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct FixedPercentageValueWithSign(pub String);
 
 /// `ST_Guid`: the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Guid(pub String);
 
 /// 22.9.2.5 `ST_HexColorRGB` (Hexadecimal Color Value): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HexadecimalColorValue(pub String);
 
 /// 22.9.2.18 `ST_XAlign` (Horizontal Alignment Location): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct HorizontalAlignmentLocation(pub String);
 /// The members of `ST_XAlign`, in alphabetical order.
@@ -393,7 +426,10 @@ pub enum HorizontalAlignmentLocationMember {
 }
 
 /// 22.9.2.14 `ST_TwipsMeasure` (Measurement in Twentieths of a Point): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MeasurementInTwentiethsOfAPoint(pub String);
 /// The member types of `ST_TwipsMeasure`, in alphabetical order; `value` tries them in the schema's
@@ -406,50 +442,77 @@ pub enum MeasurementInTwentiethsOfAPointMember {
 }
 
 /// 22.9.2.7 `ST_OnOff` (On/Off Value): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct OnOffValue(pub String);
 
 /// 22.9.2.8 `ST_Panose` (Panose-1 Number): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Panose1Number(pub String);
 
 /// 22.9.2.9 `ST_Percentage` (Percentage Value with Sign): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PercentageValueWithSign(pub String);
 
 /// 22.9.2.10 `ST_PositiveFixedPercentage` (Positive Fixed Percentage Value with Sign): the text the
 /// file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PositiveFixedPercentageValueWithSign(pub String);
 
 /// 22.9.2.11 `ST_PositivePercentage` (Positive Percentage Value with Sign): the text the file
 /// carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PositivePercentageValueWithSign(pub String);
 
 /// 22.9.2.12 `ST_PositiveUniversalMeasure` (Positive Universal Measurement): the text the file
 /// carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PositiveUniversalMeasurement(pub String);
 
 /// 22.9.2.15 `ST_UniversalMeasure` (Universal Measurement): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UniversalMeasurement(pub String);
 
 /// 22.9.2.16 `ST_UnsignedDecimalNumber` (Unsigned Decimal Number Value): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct UnsignedDecimalNumberValue(pub String);
 
 /// 22.9.2.20 `ST_YAlign` (Vertical Alignment Location): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct VerticalAlignmentLocation(pub String);
 /// The members of `ST_YAlign`, in alphabetical order.
@@ -465,7 +528,10 @@ pub enum VerticalAlignmentLocationMember {
 }
 
 /// 22.9.2.17 `ST_VerticalAlignRun` (Vertical Positioning Location): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct VerticalPositioningLocation(pub String);
 /// The members of `ST_VerticalAlignRun`, in alphabetical order.
@@ -478,7 +544,10 @@ pub enum VerticalPositioningLocationMember {
 }
 
 /// 22.9.2.21 `ST_XmlName` (XML Name): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct XMLName(pub String);
 

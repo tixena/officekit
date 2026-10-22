@@ -1,5 +1,6 @@
 //! Qualified names: a namespace id and a local name.
 
+mod archive;
 pub mod table;
 
 use alloc::sync::Arc;
@@ -27,7 +28,7 @@ pub enum OfficeVersion {
 }
 
 /// A name's namespace: none, one the table knows by either class's URI, or any
-/// other URI kept as written.
+/// other URI kept as written. rkyv archives it through its mirror in `archive`.
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[non_exhaustive]
 pub enum Namespace {
@@ -38,7 +39,8 @@ pub enum Namespace {
 
 /// A qualified name: the prefix as the part wrote it, and the namespace it
 /// stands for.
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct QName {
     pub local: String,

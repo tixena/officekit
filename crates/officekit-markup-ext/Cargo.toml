@@ -15,3 +15,4 @@ workspace = true
 officekit-markup-base.workspace = true
 officekit-markup-core.workspace = true
 officekit-xml.workspace = true
+rkyv.workspace = true

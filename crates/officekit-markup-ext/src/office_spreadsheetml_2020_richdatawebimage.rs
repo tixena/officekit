@@ -279,7 +279,10 @@ pub static WEB_IMAGES_SRD_SHAPE: officekit_markup_base::Shape = officekit_markup
 
 /// The tag `xlrdwi:address`, schema type `CT_WebImageSupportingRichDataRelationship` of SDK 3.5.1's
 /// data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Address {
     pub unknown: officekit_markup_base::Unknown,
@@ -287,7 +290,10 @@ pub struct Address {
 
 /// The tag `xlrdwi:blip`, schema type `CT_WebImageSupportingRichDataRelationship` of SDK 3.5.1's
 /// data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Blip {
     pub unknown: officekit_markup_base::Unknown,
@@ -383,7 +389,10 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `xlrdwi:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExtLst {
     pub extension: Vec<spreadsheet::Extension>,
@@ -392,7 +401,10 @@ pub struct ExtLst {
 
 /// The tag `xlrdwi:moreImagesAddress`, schema type `CT_WebImageSupportingRichDataRelationship` of
 /// SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MoreImagesAddress {
     pub unknown: officekit_markup_base::Unknown,
@@ -430,7 +442,10 @@ pub trait Visitor: crate::Visitor {
 }
 
 /// The tag `xlrdwi:webImageSrd`, schema type `CT_WebImageSupportingRichData` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct WebImageSrd {
     pub address: Box<Address>,
@@ -440,7 +455,10 @@ pub struct WebImageSrd {
 }
 
 /// The tag `xlrdwi:webImagesSrd`, schema type `CT_WebImagesSupportingRichData` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct WebImagesSrd {
     pub ext_lst: Option<Box<ExtLst>>,

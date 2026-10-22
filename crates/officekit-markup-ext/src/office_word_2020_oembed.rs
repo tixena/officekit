@@ -259,7 +259,10 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `woe:oembed`, schema type `CT_OEmbed` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Oembed {
     pub media_type: Option<String>,

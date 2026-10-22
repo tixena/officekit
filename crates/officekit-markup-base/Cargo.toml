@@ -13,3 +13,4 @@ workspace = true
 
 [dependencies]
 officekit-xml.workspace = true
+rkyv.workspace = true

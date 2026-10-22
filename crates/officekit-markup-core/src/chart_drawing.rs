@@ -215,12 +215,17 @@
 //!
 //! The namespace is `http://schemas.openxmlformats.org/drawingml/2006/chartDrawing`.
 
+mod archive;
 pub mod read;
 pub mod write;
 
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
 use officekit_xml::values::ValueError;
+use rkyv::de::Pooling;
+use rkyv::rancor::Source;
+use rkyv::ser::{Allocator, Sharing, Writer};
+use rkyv::validation::{ArchiveContext, SharedContext};
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_CDR: Option<NamespaceId> = Some(29);
@@ -589,9 +594,16 @@ static CHART_MARKER_COORDINATE_VALUE_BOUNDS: officekit_markup_base::Bounds =
 
 /// 21.3.2.1 `absSizeAnchor` (Absolute Anchor Shape Size): the tag `cdr:absSizeAnchor`, schema type
 /// `CT_AbsSizeAnchor`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct AbsoluteAnchorShapeSize {
+    #[rkyv(omit_bounds)]
     pub content: Box<ObjectContent>,
     pub shape_extent: Box<ShapeExtent>,
     pub starting_anchor_point: Box<StartingAnchorPoint>,
@@ -599,17 +611,28 @@ pub struct AbsoluteAnchorShapeSize {
 }
 
 /// 21.3.3.1 `ST_MarkerCoordinate` (Chart Marker Coordinate Value): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ChartMarkerCoordinateValue(pub String);
 
 /// 21.3.2.9 `cxnSp` (Connection Shape): the tag `cdr:cxnSp`, schema type `CT_Connector`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ConnectionShape {
+    #[rkyv(omit_bounds)]
     pub connector_non_visual_properties: Box<ConnectorNonVisualProperties>,
     pub f_published: Option<String>,
     pub r#macro: Option<String>,
+    #[rkyv(omit_bounds)]
     pub properties: Box<ShapeProperties>,
     pub style: Option<Box<ShapeStyle>>,
     pub unknown: officekit_markup_base::Unknown,
@@ -617,17 +640,28 @@ pub struct ConnectionShape {
 
 /// 21.3.2.15 `nvCxnSpPr` (Connector Non Visual Properties): the tag `cdr:nvCxnSpPr`, schema type
 /// `CT_ConnectorNonVisual`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ConnectorNonVisualProperties {
+    #[rkyv(omit_bounds)]
     pub non_visual_connection_shape_drawing_properties:
         Box<NonVisualConnectionShapeDrawingProperties>,
+    #[rkyv(omit_bounds)]
     pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.3.2.25 to (Ending Anchor Point): the tag `cdr:to`, schema type `CT_Marker`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct EndingAnchorPoint {
     pub relative_x_coordinate: Box<RelativeXCoordinate>,
@@ -637,19 +671,30 @@ pub struct EndingAnchorPoint {
 
 /// 21.3.2.12 `graphicFrame` (Graphic Frame): the tag `cdr:graphicFrame`, schema type
 /// `CT_GraphicFrame`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GraphicFrame {
     pub f_published: Option<String>,
+    #[rkyv(omit_bounds)]
     pub graphic_object: Box<super::drawing::GraphicObject>,
     pub r#macro: Option<String>,
+    #[rkyv(omit_bounds)]
     pub non_visual_graphic_frame_properties: Box<NonVisualGraphicFrameProperties>,
     pub transform: Box<GraphicFrameTransform>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.3.2.28 xfrm (Graphic Frame Transform): the tag `cdr:xfrm`, schema type `CT_Transform2D`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GraphicFrameTransform {
     pub extents: Option<Box<super::drawing::Extents>>,
@@ -661,24 +706,43 @@ pub struct GraphicFrameTransform {
 }
 
 /// 21.3.2.13 `grpSp` (Group Shape): the tag `cdr:grpSp`, schema type `CT_GroupShape`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GroupShape {
+    #[rkyv(omit_bounds)]
     pub content: Vec<ObjectContent>,
+    #[rkyv(omit_bounds)]
     pub non_visual_group_shape_properties: Box<NonVisualGroupShapeProperties>,
+    #[rkyv(omit_bounds)]
     pub properties: Box<GroupShapeProperties>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.3.2.14 `grpSpPr` (Group Shape Properties): the tag `cdr:grpSpPr`, schema type
 /// `CT_GroupShapeProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct GroupShapeProperties {
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
+    #[rkyv(omit_bounds)]
     pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContent>>,
+    #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    #[rkyv(omit_bounds)]
     pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContent>>,
+    #[rkyv(omit_bounds)]
     pub scene3d: Option<Box<super::drawing::Scene3d>>,
     pub unknown: officekit_markup_base::Unknown,
     pub xfrm_group_transform2d: Option<Box<super::drawing::XfrmGroupTransform2D>>,
@@ -686,25 +750,42 @@ pub struct GroupShapeProperties {
 
 /// 21.3.2.3 `cNvCxnSpPr` (Non-Visual Connection Shape Drawing Properties): the tag
 /// `cdr:cNvCxnSpPr`, schema type `CT_NonVisualConnectorProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NonVisualConnectionShapeDrawingProperties {
     pub connection_end: Option<Box<super::drawing::ConnectionEnd>>,
+    #[rkyv(omit_bounds)]
     pub connection_shape_locks: Option<Box<super::drawing::ConnectionShapeLocks>>,
     pub connection_start: Option<Box<super::drawing::ConnectionStart>>,
+    #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.3.2.7 `cNvPr` (Non-Visual Drawing Properties): the tag `cdr:cNvPr`, schema type
 /// `CT_NonVisualDrawingProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NonVisualDrawingProperties {
+    #[rkyv(omit_bounds)]
     pub click_hyperlink: Option<Box<super::drawing::ClickHyperlink>>,
     pub descr: Option<String>,
+    #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
     pub hidden: Option<String>,
+    #[rkyv(omit_bounds)]
     pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHover>>,
     pub id: Option<super::drawing::DrawingElementID>,
     pub name: Option<String>,
@@ -714,50 +795,90 @@ pub struct NonVisualDrawingProperties {
 
 /// 21.3.2.4 `cNvGraphicFramePr` (Non-Visual Graphic Frame Drawing Properties): the tag
 /// `cdr:cNvGraphicFramePr`, schema type `CT_NonVisualGraphicFrameProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NonVisualGraphicFrameDrawingProperties {
+    #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    #[rkyv(omit_bounds)]
     pub graphic_frame_locks: Option<Box<super::drawing::GraphicFrameLocks>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.3.2.16 `nvGraphicFramePr` (Non-Visual Graphic Frame Properties): the tag
 /// `cdr:nvGraphicFramePr`, schema type `CT_GraphicFrameNonVisual`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NonVisualGraphicFrameProperties {
+    #[rkyv(omit_bounds)]
     pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
+    #[rkyv(omit_bounds)]
     pub non_visual_graphic_frame_drawing_properties: Box<NonVisualGraphicFrameDrawingProperties>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.3.2.5 `cNvGrpSpPr` (Non-Visual Group Shape Drawing Properties): the tag `cdr:cNvGrpSpPr`,
 /// schema type `CT_NonVisualGroupDrawingShapeProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NonVisualGroupShapeDrawingProperties {
+    #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    #[rkyv(omit_bounds)]
     pub group_shape_locks: Option<Box<super::drawing::GroupShapeLocks>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.3.2.17 `nvGrpSpPr` (Non-Visual Group Shape Properties): the tag `cdr:nvGrpSpPr`, schema type
 /// `CT_GroupShapeNonVisual`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NonVisualGroupShapeProperties {
+    #[rkyv(omit_bounds)]
     pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
+    #[rkyv(omit_bounds)]
     pub non_visual_group_shape_drawing_properties: Box<NonVisualGroupShapeDrawingProperties>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.3.2.6 `cNvPicPr` (Non-Visual Picture Drawing Properties): the tag `cdr:cNvPicPr`, schema type
 /// `CT_NonVisualPictureProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NonVisualPictureDrawingProperties {
+    #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    #[rkyv(omit_bounds)]
     pub picture_locks: Option<Box<super::drawing::PictureLocks>>,
     pub prefer_relative_resize: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
@@ -765,20 +886,36 @@ pub struct NonVisualPictureDrawingProperties {
 
 /// 21.3.2.18 `nvPicPr` (Non-Visual Picture Properties): the tag `cdr:nvPicPr`, schema type
 /// `CT_PictureNonVisual`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NonVisualPictureProperties {
+    #[rkyv(omit_bounds)]
     pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
+    #[rkyv(omit_bounds)]
     pub non_visual_picture_drawing_properties: Box<NonVisualPictureDrawingProperties>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.3.2.8 `cNvSpPr` (Non-Visual Shape Drawing Properties): the tag `cdr:cNvSpPr`, schema type
 /// `CT_NonVisualDrawingShapeProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NonVisualShapeDrawingProperties {
+    #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    #[rkyv(omit_bounds)]
     pub shape_locks: Option<Box<super::drawing::ShapeLocks>>,
     pub tx_box: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
@@ -786,10 +923,18 @@ pub struct NonVisualShapeDrawingProperties {
 
 /// 21.3.2.19 `nvSpPr` (Non-Visual Shape Properties): the tag `cdr:nvSpPr`, schema type
 /// `CT_ShapeNonVisual`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct NonVisualShapeProperties {
+    #[rkyv(omit_bounds)]
     pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
+    #[rkyv(omit_bounds)]
     pub non_visual_shape_drawing_properties: Box<NonVisualShapeDrawingProperties>,
     pub unknown: officekit_markup_base::Unknown,
 }
@@ -809,22 +954,38 @@ pub enum ObjectContent {
 }
 
 /// 21.3.2.20 pic (Picture): the tag `cdr:pic`, schema type `CT_Picture`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Picture {
     pub f_published: Option<String>,
+    #[rkyv(omit_bounds)]
     pub fill: Box<PictureFill>,
     pub r#macro: Option<String>,
+    #[rkyv(omit_bounds)]
     pub non_visual_picture_properties: Box<NonVisualPictureProperties>,
+    #[rkyv(omit_bounds)]
     pub shape_properties: Box<ShapeProperties>,
     pub shape_style: Option<Box<ShapeStyle>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.3.2.2 `blipFill` (Picture Fill): the tag `cdr:blipFill`, schema type `CT_BlipFillProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct PictureFill {
+    #[rkyv(omit_bounds)]
     pub blip: Option<Box<super::drawing::Blip>>,
     pub content: Option<Box<super::drawing::FillModeContent>>,
     pub dpi: Option<String>,
@@ -835,9 +996,16 @@ pub struct PictureFill {
 
 /// 21.3.2.21 `relSizeAnchor` (Relative Anchor Shape Size): the tag `cdr:relSizeAnchor`, schema type
 /// `CT_RelSizeAnchor`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RelativeAnchorShapeSize {
+    #[rkyv(omit_bounds)]
     pub content: Box<ObjectContent>,
     pub ending_anchor_point: Box<EndingAnchorPoint>,
     pub starting_anchor_point: Box<StartingAnchorPoint>,
@@ -845,7 +1013,10 @@ pub struct RelativeAnchorShapeSize {
 }
 
 /// 21.3.2.27 x (Relative X Coordinate): the tag `cdr:x`, schema type `ST_MarkerCoordinate`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RelativeXCoordinate {
     pub unknown: officekit_markup_base::Unknown,
@@ -853,7 +1024,10 @@ pub struct RelativeXCoordinate {
 }
 
 /// 21.3.2.29 y (Relative Y Coordinate): the tag `cdr:y`, schema type `ST_MarkerCoordinate`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct RelativeYCoordinate {
     pub unknown: officekit_markup_base::Unknown,
@@ -861,22 +1035,34 @@ pub struct RelativeYCoordinate {
 }
 
 /// 21.3.2.22 sp (Shape): the tag `cdr:sp`, schema type `CT_Shape`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Shape {
     pub f_locks_text: Option<String>,
     pub f_published: Option<String>,
     pub r#macro: Option<String>,
+    #[rkyv(omit_bounds)]
     pub non_visual_shape_properties: Box<NonVisualShapeProperties>,
+    #[rkyv(omit_bounds)]
     pub properties: Box<ShapeProperties>,
     pub style: Option<Box<ShapeStyle>>,
+    #[rkyv(omit_bounds)]
     pub text_body: Option<Box<ShapeTextBody>>,
     pub textlink: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.3.2.10 ext (Shape Extent): the tag `cdr:ext`, schema type `CT_PositiveSize2D`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShapeExtent {
     pub cx: Option<super::drawing::PositiveCoordinate>,
@@ -885,23 +1071,38 @@ pub struct ShapeExtent {
 }
 
 /// 21.3.2.23 `spPr` (Shape Properties): the tag `cdr:spPr`, schema type `CT_ShapeProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShapeProperties {
+    #[rkyv(omit_bounds)]
     pub apply_3d: Option<Box<super::drawing::Apply3DShapeProperties>>,
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
+    #[rkyv(omit_bounds)]
     pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContent>>,
+    #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    #[rkyv(omit_bounds)]
     pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContent>>,
     pub geometry_content: Option<Box<super::drawing::GeometryContent>>,
+    #[rkyv(omit_bounds)]
     pub outline: Option<Box<super::drawing::Outline>>,
+    #[rkyv(omit_bounds)]
     pub scene3d: Option<Box<super::drawing::Scene3d>>,
     pub unknown: officekit_markup_base::Unknown,
     pub xfrm_transform2d: Option<Box<super::drawing::XfrmTransform2D>>,
 }
 
 /// 21.3.2.24 style (Shape Style): the tag `cdr:style`, schema type `CT_ShapeStyle`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShapeStyle {
     pub effect_reference: Box<super::drawing::EffectReference>,
@@ -912,17 +1113,29 @@ pub struct ShapeStyle {
 }
 
 /// 21.3.2.26 `txBody` (Shape Text Body): the tag `cdr:txBody`, schema type `CT_TextBody`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ShapeTextBody {
+    #[rkyv(omit_bounds)]
     pub properties: Box<super::drawing::BodyProperties>,
+    #[rkyv(omit_bounds)]
     pub text_list_styles: Option<Box<super::drawing::TextListStyles>>,
+    #[rkyv(omit_bounds)]
     pub text_paragraphs: Vec<super::drawing::TextParagraphs>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 21.3.2.11 from (Starting Anchor Point): the tag `cdr:from`, schema type `CT_Marker`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct StartingAnchorPoint {
     pub relative_x_coordinate: Box<RelativeXCoordinate>,

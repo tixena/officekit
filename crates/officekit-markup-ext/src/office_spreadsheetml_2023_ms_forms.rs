@@ -330,7 +330,10 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `xlmsforms:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct ExtLst {
     pub extension: Vec<spreadsheet::Extension>,
@@ -338,7 +341,10 @@ pub struct ExtLst {
 }
 
 /// The tag `xlmsforms:msForm`, schema type `CT_MsForm` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct MsForm {
     pub ext_lst: Option<Box<ExtLst>>,
@@ -351,7 +357,10 @@ pub struct MsForm {
 }
 
 /// The tag `xlmsforms:question`, schema type `CT_Question` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Question {
     pub ext_lst: Option<Box<ExtLst>>,
@@ -360,7 +369,10 @@ pub struct Question {
 }
 
 /// The tag `xlmsforms:syncedQuestionId`, schema type `ST_Xstring` of SDK 3.5.1's data.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[derive(
+    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct SyncedQuestionId {
     pub unknown: officekit_markup_base::Unknown,
