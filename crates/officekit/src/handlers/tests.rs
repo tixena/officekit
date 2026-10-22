@@ -1,5 +1,6 @@
 use std::path::{Path, PathBuf};
 
+use officekit_core::binary::{MAGIC, VERSION};
 use officekit_core::xlsx::Xlsx;
 use officekit_packaging::package::Package;
 use officekit_packaging::part_name::PartName;
@@ -11,8 +12,8 @@ use os_shim::WriteMode;
 use os_shim::mock::MemorySystem;
 use serde_json::{Value, json};
 
-use super::{PackageValidator, Validate, cmd_cat, cmd_get, cmd_validate};
-use crate::cli::{CatArgs, Form, GetArgs, ValidateArgs};
+use super::{PackageValidator, Validate, cmd_cat, cmd_get, cmd_save, cmd_validate};
+use crate::cli::{CatArgs, Form, GetArgs, SaveArgs, ValidateArgs};
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const MAIN: &str =
@@ -333,4 +334,115 @@ fn get_writes_a_picture_into_the_markdown_as_a_data_uri() {
         "got {text}"
     );
     assert_eq!(system.read_dir(Path::new("/")).unwrap().len(), 0);
+}
+
+fn save_args(input: Option<&str>, format: Form, output: Option<&str>) -> SaveArgs {
+    SaveArgs {
+        input: input.map(PathBuf::from),
+        format,
+        output: output.map(PathBuf::from),
+        frontmatter: false,
+    }
+}
+
+fn save(
+    system: &MemorySystem,
+    args: &SaveArgs,
+    stdin: &[u8],
+) -> (anyhow::Result<()>, Vec<u8>, String) {
+    let (mut out, mut err) = (Vec::new(), Vec::new());
+    let mut input = stdin;
+    let result = cmd_save(system, args, &mut input, &mut out, &mut err);
+    (result, out, String::from_utf8(err).unwrap())
+}
+
+fn binary_of(system: &MemorySystem, docx: &[u8]) -> Vec<u8> {
+    let args = get_args("-", Form::Binary, None);
+    let (result, bytes, _) = get(system, &args, docx);
+    result.unwrap();
+    bytes
+}
+
+#[test]
+fn save_writes_the_markdown_of_the_binary_form_from_standard_input() {
+    let system = MemorySystem::new();
+    let docx = report_docx(&system);
+    let binary = binary_of(&system, &docx);
+
+    let args = save_args(None, Form::Markdown, None);
+    let (result, out, _) = save(&system, &args, &binary);
+    result.unwrap();
+    assert_eq!(String::from_utf8(out).unwrap(), REPORT);
+}
+
+#[test]
+fn save_reads_the_binary_form_from_a_file() {
+    let system = MemorySystem::new();
+    let docx = report_docx(&system);
+    let binary = binary_of(&system, &docx);
+    system
+        .write(Path::new("/it.bin"), &binary, WriteMode::Replace)
+        .unwrap();
+
+    let args = save_args(Some("/it.bin"), Form::Docx, Some("/copy.docx"));
+    let (result, out, _) = save(&system, &args, b"");
+    result.unwrap();
+    assert_eq!(out, b"");
+    Package::open(&system, Path::new("/copy.docx")).unwrap();
+}
+
+#[test]
+fn save_writes_the_same_word_file_as_get() {
+    let system = MemorySystem::new();
+    let docx = report_docx(&system);
+    let binary = binary_of(&system, &docx);
+
+    let args = save_args(Some("-"), Form::Docx, None);
+    let (result, saved, _) = save(&system, &args, &binary);
+    result.unwrap();
+    assert_eq!(saved, docx);
+}
+
+#[test]
+fn save_fails_for_bytes_that_are_not_the_binary_form() {
+    let system = MemorySystem::new();
+    let docx = report_docx(&system);
+
+    let args = save_args(None, Form::Markdown, None);
+    let (result, out, _) = save(&system, &args, &docx);
+    assert_eq!(out, b"");
+    assert_eq!(
+        format!("{:#}", result.unwrap_err()),
+        "not officekit's binary form: the bytes do not open with `officekit` and a zero byte"
+    );
+}
+
+#[test]
+fn save_fails_for_another_version() {
+    let system = MemorySystem::new();
+    let mut bytes = MAGIC.to_vec();
+    bytes.push(VERSION + 1);
+
+    let args = save_args(None, Form::Markdown, None);
+    let (result, _, _) = save(&system, &args, &bytes);
+    assert!(format!("{:#}", result.unwrap_err()).starts_with("officekit's binary form version 2"),);
+}
+
+#[test]
+fn save_does_not_write_the_binary_form() {
+    let system = MemorySystem::new();
+    let args = save_args(None, Form::Binary, None);
+    let (result, _, _) = save(&system, &args, b"");
+    assert_eq!(
+        format!("{:#}", result.unwrap_err()),
+        "save writes markdown, docx, xlsx or pptx; binary is what it reads"
+    );
+}
+
+#[test]
+fn save_fails_for_a_file_that_is_absent() {
+    let system = MemorySystem::new();
+    let args = save_args(Some("/absent.bin"), Form::Markdown, None);
+    let (result, _, _) = save(&system, &args, b"");
+    assert!(format!("{:#}", result.unwrap_err()).starts_with("reading /absent.bin"));
 }

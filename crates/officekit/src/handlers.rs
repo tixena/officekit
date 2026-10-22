@@ -9,6 +9,7 @@ use archie_core::writer::{self, WriteOptions};
 use os_shim::{System, WriteMode};
 use serde_json::{Value, json};
 
+use officekit_core::binary;
 use officekit_core::folder::{self, DownOptions, UpOptions};
 use officekit_core::markdown::MarkdownOptions;
 use officekit_core::office_file::OfficeFile;
@@ -19,7 +20,9 @@ use officekit_validation::error::ValidationError;
 use officekit_validation::validator::Validator;
 use officekit_xml::name::OfficeVersion;
 
-use crate::cli::{CatArgs, DownArgs, Form, FormatArgs, GetArgs, PartsArgs, UpArgs, ValidateArgs};
+use crate::cli::{
+    CatArgs, DownArgs, Form, FormatArgs, GetArgs, PartsArgs, SaveArgs, UpArgs, ValidateArgs,
+};
 use crate::dispatch::EXIT_ERROR;
 
 #[cfg(test)]
@@ -157,7 +160,52 @@ where
     markdown.embed_images = true;
     markdown.frontmatter = args.frontmatter;
     let file = OfficeFile::from_input(system, bytes, folder, OpenOptions::default(), markdown)?;
-    let output = match (args.format, &file) {
+    let output = write_form(&file, args.format, markdown, stderr)?;
+    emit(system, args.output.as_deref(), &output, stdout)
+}
+
+/// `officekit save -f <FORM>`: the binary form, from `-i` or standard input, written in `FORM`.
+pub fn cmd_save<S>(
+    system: &S,
+    args: &SaveArgs,
+    stdin: &mut dyn Read,
+    stdout: &mut dyn Write,
+    stderr: &mut dyn Write,
+) -> Result<()>
+where
+    S: System + ?Sized,
+{
+    if args.format == Form::Binary {
+        bail!("save writes markdown, docx, xlsx or pptx; binary is what it reads");
+    }
+    let mut bytes = Vec::new();
+    match args.input.as_deref() {
+        Some(path) if path != Path::new("-") => {
+            system
+                .open(path)
+                .and_then(|mut file| file.read_to_end(&mut bytes))
+                .with_context(|| format!("reading {}", path.display()))?;
+        }
+        _ => {
+            stdin.read_to_end(&mut bytes)?;
+        }
+    }
+    let file = binary::decode(&bytes)?;
+    let mut markdown = MarkdownOptions::default();
+    markdown.embed_images = true;
+    markdown.frontmatter = args.frontmatter;
+    let output = write_form(&file, args.format, markdown, stderr)?;
+    emit(system, args.output.as_deref(), &output, stdout)
+}
+
+fn write_form(
+    file: &OfficeFile,
+    form: Form,
+    markdown: MarkdownOptions,
+    stderr: &mut dyn Write,
+) -> Result<Vec<u8>> {
+    Ok(match (form, file) {
+        (Form::Binary, _) => binary::encode(file)?,
         (Form::Markdown, OfficeFile::Word(docx)) => {
             let exported = docx.to_archie("media", markdown)?;
             writer::write(
@@ -179,16 +227,22 @@ where
         (Form::Docx | Form::Xlsx | Form::Pptx, _) => {
             bail!(
                 "the input is {}; it cannot be written as {}",
-                kind_of(&file),
-                form_name(args.format)
+                kind_of(file),
+                form_name(form)
             )
         }
-    };
-    match args.output.as_deref() {
+    })
+}
+
+fn emit<S>(system: &S, output: Option<&Path>, bytes: &[u8], stdout: &mut dyn Write) -> Result<()>
+where
+    S: System + ?Sized,
+{
+    match output {
         Some(path) if path != Path::new("-") => system
-            .write(path, &output, WriteMode::Replace)
+            .write(path, bytes, WriteMode::Replace)
             .with_context(|| format!("writing {}", path.display()))?,
-        _ => stdout.write_all(&output)?,
+        _ => stdout.write_all(bytes)?,
     }
     Ok(())
 }
@@ -204,6 +258,7 @@ const fn kind_of(file: &OfficeFile) -> &'static str {
 
 const fn form_name(form: Form) -> &'static str {
     match form {
+        Form::Binary => "binary",
         Form::Markdown => "markdown",
         Form::Docx => "docx",
         Form::Xlsx => "xlsx",

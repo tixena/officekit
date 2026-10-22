@@ -30,6 +30,9 @@ where
         Commands::Get(args) => {
             handlers::cmd_get(system, args, stdin, stdout, stderr).map(|()| EXIT_OK)
         }
+        Commands::Save(args) => {
+            handlers::cmd_save(system, args, stdin, stdout, stderr).map(|()| EXIT_OK)
+        }
         Commands::Up(args) => handlers::cmd_up(system, args, stdout).map(|()| EXIT_OK),
         Commands::Parts(args) => handlers::cmd_parts(system, args, stdout).map(|()| EXIT_OK),
         Commands::Validate(args) => {

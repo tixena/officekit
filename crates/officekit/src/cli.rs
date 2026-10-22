@@ -39,6 +39,8 @@ pub enum Commands {
     Get(GetArgs),
     /// List the parts inside a package.
     Parts(PartsArgs),
+    /// Write a document from officekit's binary form, read from standard input or `-i`.
+    Save(SaveArgs),
     /// Zip every expanded folder under a folder back into a `.docx`.
     Up(UpArgs),
     /// Check a package against the schema of an Office version.
@@ -110,8 +112,28 @@ pub struct GetArgs {
     pub output: Option<PathBuf>,
 }
 
+#[derive(Args)]
+pub struct SaveArgs {
+    /// The form to write.
+    #[arg(short, long, value_enum)]
+    pub format: Form,
+
+    /// Carry a markdown frontmatter into the Word file and back.
+    #[arg(long)]
+    pub frontmatter: bool,
+
+    /// The binary form to read; standard input when absent or `-`.
+    #[arg(short, long, value_name = "FILE")]
+    pub input: Option<PathBuf>,
+
+    /// The file to write; standard output when absent or `-`.
+    #[arg(short, long, value_name = "FILE")]
+    pub output: Option<PathBuf>,
+}
+
 #[derive(Clone, Copy, Debug, PartialEq, Eq, ValueEnum)]
 pub enum Form {
+    Binary,
     Docx,
     #[value(alias = "md")]
     Markdown,
