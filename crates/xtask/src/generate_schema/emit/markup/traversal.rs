@@ -1,6 +1,6 @@
 //! The traversals of the typed tree: each namespace's
 //! hook traits, `Context` and `Visitor`, and the root accessors, one per
-//! namespace, in `officekit_markup`; every node's `Transform`, `Visit`, and
+//! namespace, in `officekit_markup_ext`; every node's `Transform`, `Visit`, and
 //! `WriteThrough`, and each enum's `Item`, in the namespace's module of
 //! `officekit_traversal`.
 //!
@@ -16,8 +16,9 @@ use std::path::{Path, PathBuf};
 
 use anyhow::Result;
 
+use super::Crate;
 use super::render::layout::{self, Expr, MAX_WIDTH};
-use super::render::{self, BODY_LINES, Names};
+use super::render::{self, BODY_LINES, Names, Uses};
 use super::structs::{Body, Catalog, EnumDef, Node, Occurs, Target};
 
 /// The root context's hooks for content the schemas do not declare, as the
@@ -305,6 +306,7 @@ fn trait_text(head: &str, entries: Vec<(String, String)>) -> String {
 #[must_use]
 pub fn visitor_trait(names: &Names<'_>) -> String {
     let module = &names.catalog.modules[names.module];
+    let descend = format!("{}::Descend", Crate::Base.name());
     let entries = hooks(names, &BTreeSet::new())
         .into_iter()
         .map(|(hook, node, _)| {
@@ -313,8 +315,8 @@ pub fn visitor_trait(names: &Names<'_>) -> String {
                 hook_text(
                     &hook,
                     &["&mut self".to_owned(), format!("_node: &{node}")],
-                    "crate::Descend",
-                    "crate::Descend::Yes",
+                    &descend,
+                    &format!("{descend}::Yes"),
                 ),
             )
         })
@@ -331,6 +333,51 @@ pub fn visitor_trait(names: &Names<'_>) -> String {
         ),
     );
     out.push_str(&trait_text("pub trait Visitor: crate::Visitor", entries));
+    out
+}
+
+/// Import what a namespace's hook traits name besides its nodes: `Written`,
+/// `PartWriter` and `io`, when it has a node.
+pub fn hook_uses(names: &Names<'_>, uses: &mut Uses) {
+    if has_nodes(names) {
+        uses.add(&format!("{}::Written", Crate::Base.name()));
+        uses.add("officekit_xml::stream::writer::PartWriter");
+        uses.add("std::io");
+    }
+}
+
+/// The module of `officekit-markup-ext` that holds the hook traits of a
+/// namespace of `home`, base or core, beside its nodes, re-exported.
+#[must_use]
+pub fn hooks_text(
+    header: &str,
+    names: &Names<'_>,
+    listed: &BTreeSet<usize>,
+    home: Crate,
+) -> String {
+    let module = &names.catalog.modules[names.module];
+    let mut out = String::from(header);
+    let _ = writeln!(
+        out,
+        "//! The hooks of the `{}` namespace, `Context` and `Visitor`, beside its typed\n\
+         //! tree, re-exported from `{}::{}`.\n//!\n//! The namespace is `{}`.\n",
+        module.prefix,
+        home.name(),
+        module.name,
+        module.uri
+    );
+    let _ = writeln!(out, "pub use {}::{}::*;", home.name(), module.name);
+    let mut uses = Uses::default();
+    hook_uses(names, &mut uses);
+    let use_text = uses.text();
+    if !use_text.is_empty() {
+        out.push('\n');
+        out.push_str(&use_text);
+    }
+    out.push('\n');
+    out.push_str(&context_trait(names, listed));
+    out.push('\n');
+    out.push_str(&visitor_trait(names));
     out
 }
 

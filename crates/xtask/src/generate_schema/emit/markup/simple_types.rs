@@ -859,6 +859,7 @@ fn value_body(
     parts: &mut [String; 3],
 ) -> Result<[String; 3]> {
     let [definitions, implementations, statics] = parts;
+    let runtime = names.runtime();
     let screaming = names::screaming(&simple.name);
     let schema = simple.xsd_name().to_owned();
     let member_name = format!("{}Member", simple.name);
@@ -871,9 +872,9 @@ fn value_body(
     Ok(match &simple.kind {
         Kind::Enumeration(members) => {
             definitions.push_str(&member_enum(simple, members));
-            implementations.push_str(&member_impls(simple, members, uses));
+            implementations.push_str(&member_impls(runtime, simple, members, uses));
             let call = Expr::call(
-                "crate::member",
+                &format!("{runtime}::member"),
                 vec![
                     Expr::Atom(format!("{member_name}::MEMBERS")),
                     Expr::atom("&self.0"),
@@ -890,7 +891,7 @@ fn value_body(
             );
             [
                 "bool".to_owned(),
-                expression(&text_call("crate::on_off")),
+                expression(&text_call(&format!("{runtime}::on_off"))),
                 String::new(),
             ]
         }
@@ -898,12 +899,13 @@ fn value_body(
             uses.add("officekit_xml::values::DateTime");
             [
                 "DateTime".to_owned(),
-                expression(&text_call("crate::date_time")),
+                expression(&text_call(&format!("{runtime}::date_time"))),
                 String::new(),
             ]
         }
         Kind::Atom(atom) => {
-            let (output, call) = atom_call(atom, &screaming, &schema, statics, uses, true);
+            let (output, call) =
+                atom_call(runtime, atom, [&screaming, &schema], statics, uses, true);
             [output, expression(&call), String::new()]
         }
         Kind::List(item) => {
@@ -935,10 +937,11 @@ fn list_value(names: &Names<'_>, item: Option<&Key>) -> Result<(String, String)>
         .find(|other| &other.key == key)
         .context("a list's item type has no newtype")?;
     let path = names.path(found.module, &found.name);
+    let newtype = names.newtype(found.module, &found.name);
     Ok((
         format!("Vec<{path}>"),
         format!(
-            "        let mut items = Vec::new();\n        for item in parse::list(&self.0) {{\n            let found = {path}(item.to_owned());\n            found.value()?;\n            items.push(found);\n        }}\n        Ok(items)\n"
+            "        let mut items = Vec::new();\n        for item in parse::list(&self.0) {{\n            let found = {newtype}(item.to_owned());\n            found.value()?;\n            items.push(found);\n        }}\n        Ok(items)\n"
         ),
     ))
 }
@@ -973,8 +976,9 @@ fn member_enum(simple: &Simple, members: &[Member]) -> String {
     out
 }
 
-/// The member enum's table, `as_str`, and `introduced`, and `From` the member.
-fn member_impls(simple: &Simple, members: &[Member], uses: &mut Uses) -> String {
+/// The member enum's table, `as_str`, and `introduced`, and `From` the member;
+/// `runtime` is the path to the runtime.
+fn member_impls(runtime: &str, simple: &Simple, members: &[Member], uses: &mut Uses) -> String {
     let name = &simple.name;
     let mut out = String::new();
     let _ = write!(
@@ -1002,23 +1006,25 @@ fn member_impls(simple: &Simple, members: &[Member], uses: &mut Uses) -> String 
         .collect();
     uses.add("officekit_xml::name::OfficeVersion");
     layout::statement(
-        "    const MEMBERS: &crate::Members<Self> = ",
+        &format!("    const MEMBERS: &{runtime}::Members<Self> = "),
         &Expr::Slice(entries),
         &mut out,
     );
-    out.push_str(
-        "\n    /// The text the member stands for.\n    #[must_use]\n    pub fn as_str(self) -> &'static str {\n        crate::member_text(Self::MEMBERS, self)\n    }\n\
-         \n    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for\n    /// ECMA-376's own.\n    #[must_use]\n    pub fn introduced(self) -> Option<OfficeVersion> {\n        crate::member_version(Self::MEMBERS, self)\n    }\n}\n",
+    let _ = write!(
+        out,
+        "\n    /// The text the member stands for.\n    #[must_use]\n    pub fn as_str(self) -> &'static str {{\n        {runtime}::member_text(Self::MEMBERS, self)\n    }}\n\
+         \n    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for\n    /// ECMA-376's own.\n    #[must_use]\n    pub fn introduced(self) -> Option<OfficeVersion> {{\n        {runtime}::member_version(Self::MEMBERS, self)\n    }}\n}}\n",
     );
     out
 }
 
 /// The call an atom's value reads through, and its owned or borrowed type;
-/// its statics are named after `screaming`.
+/// its statics are named after `screaming`, and `runtime` is the path to the
+/// runtime.
 fn atom_call(
+    runtime: &str,
     atom: &Atom,
-    screaming: &str,
-    schema: &str,
+    [screaming, schema]: [&str; 2],
     statics: &mut String,
     uses: &mut Uses,
     borrowed: bool,
@@ -1034,9 +1040,10 @@ fn atom_call(
     };
     let text = Expr::atom("&self.0");
     let name = Expr::Atom(layout::string(schema));
-    let call = match atom {
-        Atom::Boolean => Expr::call("crate::boolean", vec![text, name]),
-        Atom::DateTime => Expr::call("crate::date_time", vec![text, name]),
+    let call = |function: &str, arguments| Expr::call(&format!("{runtime}::{function}"), arguments);
+    let read = match atom {
+        Atom::Boolean => call("boolean", vec![text, name]),
+        Atom::DateTime => call("date_time", vec![text, name]),
         Atom::Double {
             max_exclusive,
             max_inclusive,
@@ -1050,7 +1057,7 @@ fn atom_call(
                 )
             };
             let bounds = Expr::Struct(
-                "crate::Bounds".to_owned(),
+                format!("{runtime}::Bounds"),
                 vec![
                     ("max_exclusive".to_owned(), bound(max_exclusive)),
                     ("max_inclusive".to_owned(), bound(max_inclusive)),
@@ -1058,33 +1065,28 @@ fn atom_call(
                     ("min_inclusive".to_owned(), bound(min_inclusive)),
                 ],
             );
-            let path = static_item(screaming, "BOUNDS: crate::Bounds", &bounds, statics);
-            Expr::call(
-                "crate::double",
-                vec![text, Expr::Atom(format!("&{path}")), name],
-            )
+            let declared = format!("BOUNDS: {runtime}::Bounds");
+            let path = static_item(screaming, &declared, &bounds, statics);
+            call("double", vec![text, Expr::Atom(format!("&{path}")), name])
         }
-        Atom::Hex { bytes } => Expr::call(
-            "crate::hex",
-            vec![text, Expr::Atom(bytes.to_string()), name],
-        ),
+        Atom::Hex { bytes } => call("hex", vec![text, Expr::Atom(bytes.to_string()), name]),
         Atom::Integer { max, min, values } if values.is_empty() => {
             let range = [min, max].map(|bound| Expr::Atom(layout::integer(*bound)));
             let [low, high] = range;
-            Expr::call("crate::integer", vec![text, low, high, name])
+            call("integer", vec![text, low, high, name])
         }
         Atom::Integer {
             max: _max,
             min: _min,
             values,
-        } => Expr::call("crate::integer_in", vec![text, strings(values), name]),
+        } => call("integer_in", vec![text, strings(values), name]),
         Atom::Measure { patterns } => {
             let path = static_item(screaming, "PATTERNS: &[&str]", &strings(patterns), statics);
-            Expr::call("crate::measure", vec![text, Expr::Atom(path), name])
+            call("measure", vec![text, Expr::Atom(path), name])
         }
         Atom::Percentage { patterns } => {
             let path = static_item(screaming, "PATTERNS: &[&str]", &strings(patterns), statics);
-            Expr::call("crate::percentage", vec![text, Expr::Atom(path), name])
+            call("percentage", vec![text, Expr::Atom(path), name])
         }
         Atom::Text {
             length,
@@ -1099,7 +1101,7 @@ fn atom_call(
                 )
             };
             let facets = Expr::Struct(
-                "crate::Facets".to_owned(),
+                format!("{runtime}::Facets"),
                 vec![
                     ("length".to_owned(), count(length)),
                     ("max_length".to_owned(), count(max_length)),
@@ -1107,14 +1109,12 @@ fn atom_call(
                     ("patterns".to_owned(), strings(patterns)),
                 ],
             );
-            let path = static_item(screaming, "FACETS: crate::Facets", &facets, statics);
-            Expr::call(
-                "crate::text",
-                vec![text, Expr::Atom(format!("&{path}")), name],
-            )
+            let declared = format!("FACETS: {runtime}::Facets");
+            let path = static_item(screaming, &declared, &facets, statics);
+            call("text", vec![text, Expr::Atom(format!("&{path}")), name])
         }
     };
-    (output.to_owned(), call)
+    (output.to_owned(), read)
 }
 
 /// A static the value reads with, `{screaming}_{declared}` holding `value`;
@@ -1160,7 +1160,14 @@ fn union_text(
         match &member.value {
             MemberValue::Atom(atom) => {
                 let prefix = format!("{screaming}_{}", names::screaming(&member.variant));
-                let (output, call) = atom_call(atom, &prefix, schema, statics, uses, false);
+                let (output, call) = atom_call(
+                    names.runtime(),
+                    atom,
+                    [&prefix, schema],
+                    statics,
+                    uses,
+                    false,
+                );
                 eq &= !matches!(output.as_str(), "f64" | "Measure");
                 variants.push((member.variant.clone(), output));
                 if text_member.is_none() {
@@ -1180,7 +1187,6 @@ fn union_text(
                     .iter()
                     .find(|other| &other.key == key)
                     .context("a union's member type has no newtype")?;
-                let path = names.path(found.module, &found.name);
                 let (output, borrowed) = owned_type(names, found, uses)?;
                 eq &= !matches!(output.as_str(), "f64" | "Measure")
                     && !matches!(&found.kind, Kind::Union(_));
@@ -1190,7 +1196,10 @@ fn union_text(
                         test: format!("{binding}.value()"),
                         binding,
                         owned: if borrowed { ".to_owned()" } else { "" },
-                        read: Expr::call(&path, vec![Expr::atom("self.0.clone()")]),
+                        read: Expr::call(
+                            &names.newtype(found.module, &found.name),
+                            vec![Expr::atom("self.0.clone()")],
+                        ),
                         variant: member.variant.clone(),
                     });
                 }
@@ -1203,7 +1212,13 @@ fn union_text(
             }
         }
     }
-    let [body, methods] = union_value(&member_name, schema, &trials, text_member.as_deref());
+    let [body, methods] = union_value(
+        names.runtime(),
+        &member_name,
+        schema,
+        &trials,
+        text_member.as_deref(),
+    );
     variants.sort();
     let mut definition = layout::doc(
         0,
@@ -1228,8 +1243,10 @@ fn union_text(
 
 /// A union's `value` body, and the helper methods it calls when its trials
 /// take more than `BODY_LINES` lines: each helper tries a run of the member
-/// types and gives `None` when none matches.
+/// types and gives `None` when none matches. `runtime` is the path to the
+/// runtime.
 fn union_value(
+    runtime: &str,
     member_name: &str,
     schema: &str,
     trials: &[Trial],
@@ -1245,7 +1262,7 @@ fn union_value(
         })
     };
     let invalid = Expr::call(
-        "crate::invalid",
+        &format!("{runtime}::invalid"),
         vec![Expr::atom("&self.0"), Expr::Atom(layout::string(schema))],
     );
     let mut body = String::new();

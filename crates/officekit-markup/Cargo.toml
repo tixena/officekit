@@ -12,4 +12,5 @@ repository.workspace = true
 workspace = true
 
 [dependencies]
-officekit-xml.workspace = true
+officekit-markup-base.workspace = true
+officekit-markup-ext.workspace = true

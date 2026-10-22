@@ -1,10 +1,14 @@
 //! The text of the typed tree's files: one module per namespace with its
 //! structs, enums, and newtypes, its readers in `read.rs` and writers in
-//! `write.rs` beside it, and `root.rs` declaring them.
+//! `write.rs` beside it, in the folder of its crate; each crate's
+//! `modules.rs` declaring them; and in `officekit-markup-ext`, `root.rs` and
+//! the hook modules of base's and core's namespaces; and the facade's
+//! `lib.rs`.
 
 pub mod layout;
 
 use alloc::collections::{BTreeMap, BTreeSet};
+use core::cell::RefCell;
 use core::fmt::Write as _;
 use core::iter;
 use std::path::{Path, PathBuf};
@@ -15,7 +19,7 @@ use os_shim::System;
 use self::layout::{Expr, MAX_WIDTH, doc, line, statement};
 use super::names;
 use super::structs::{Body, Catalog, EnumDef, EnumKind, Node, Occurs, Target, Value, Wildcard};
-use super::{readers, traversal, writers};
+use super::{Crate, MARKUP_PATH, readers, traversal, writers};
 
 /// The lines a generated function body holds before its work is split into
 /// helpers, below clippy's `too_many_lines`.
@@ -41,18 +45,71 @@ pub struct Names<'catalog> {
     /// Each enum's reader and writer function.
     pub enum_functions: BTreeMap<usize, String>,
     pub module: usize,
+    /// The other modules `path` was asked for.
+    pub named: RefCell<BTreeSet<usize>>,
     /// Each struct's reader and writer function.
     pub node_functions: BTreeMap<usize, String>,
 }
 
 impl Names<'_> {
-    /// The path from this module to a type of `module` named `name`.
+    /// Whether `module` is written to another crate than this module.
+    #[must_use]
+    pub fn crosses(&self, module: usize) -> bool {
+        self.catalog.crates.get(module) != self.catalog.crates.get(self.module)
+    }
+
+    /// The imports of the modules of other crates `path` gave paths into.
+    fn imports(&self, uses: &mut Uses) {
+        for module in self.named.borrow().iter() {
+            if let Some(krate) = self.catalog.crates.get(*module)
+                && self.crosses(*module)
+            {
+                uses.add(&format!(
+                    "{}::{}",
+                    krate.name(),
+                    self.catalog.modules[*module].name
+                ));
+            }
+        }
+    }
+
+    /// The constructor of a newtype of `module` named `name`: its tuple
+    /// constructor in this crate, its `From<String>` from another, where
+    /// `#[non_exhaustive]` keeps the constructor private.
+    #[must_use]
+    pub fn newtype(&self, module: usize, name: &str) -> String {
+        let path = self.path(module, name);
+        if self.crosses(module) {
+            format!("{path}::from")
+        } else {
+            path
+        }
+    }
+
+    /// The path from this module to an item of `module` named `name`: through
+    /// `super` in this crate, through the module, which the file imports,
+    /// from another.
     #[must_use]
     pub fn path(&self, module: usize, name: &str) -> String {
         if module == self.module {
-            name.to_owned()
+            return name.to_owned();
+        }
+        self.named.borrow_mut().insert(module);
+        let other = &self.catalog.modules[module].name;
+        if self.crosses(module) {
+            format!("{other}::{name}")
         } else {
-            format!("super::{}::{name}", self.catalog.modules[module].name)
+            format!("super::{other}::{name}")
+        }
+    }
+
+    /// The path from this module to the runtime: `crate` in
+    /// `officekit-markup-base`, the crate's name from core and ext.
+    #[must_use]
+    pub fn runtime(&self) -> &'static str {
+        match self.catalog.crates.get(self.module) {
+            Some(Crate::Core | Crate::Ext) => Crate::Base.name(),
+            Some(Crate::Base) | None => "crate",
         }
     }
 
@@ -83,17 +140,36 @@ impl Names<'_> {
 /// Two enums one of whose arm sets holds the other's.
 struct Pair<'pair> {
     large: &'pair EnumDef,
+    /// The larger enum's variant of each struct.
+    large_variants: BTreeMap<usize, &'pair str>,
+    /// The path to the runtime from the larger's module.
+    runtime: &'static str,
     small: &'pair EnumDef,
     /// The path to the smaller enum from the larger's module.
     small_path: String,
 }
 
 impl Pair<'_> {
+    /// The smaller enum's arm for `arm` as the larger's arm of the same
+    /// struct, `own` naming the larger enum.
+    fn converted(&self, arm: usize, own: &str) -> Expr {
+        let value = moved(
+            self.small.boxed.contains(&arm),
+            self.large.boxed.contains(&arm),
+        );
+        Expr::call(
+            &format!(
+                "{own}::{}",
+                self.large_variants.get(&arm).copied().unwrap_or_default()
+            ),
+            vec![value],
+        )
+    }
+
     /// `From<smaller> for larger`: each arm into the larger enum's arm of the
     /// same struct.
     fn impl_from(&self, helpers: &mut String) -> String {
         let (large, small, small_path) = (self.large, self.small, &self.small_path);
-        let large_variant = variants(large);
         let mut out = String::from("\n");
         out.push_str(&layout::impl_header(
             &format!("From<{small_path}>"),
@@ -105,28 +181,7 @@ impl Pair<'_> {
             &[format!("item: {small_path}")],
             "Self",
         ));
-        let converted = |arm: &usize, own: &str| {
-            let value = moved(small.boxed.contains(arm), large.boxed.contains(arm));
-            Expr::call(
-                &format!(
-                    "{own}::{}",
-                    large_variant.get(arm).copied().unwrap_or_default()
-                ),
-                vec![value],
-            )
-        };
-        let mut arms: Vec<(String, Expr)> = small
-            .arms
-            .iter()
-            .map(|(variant, arm)| (format!("{small_path}::{variant}"), converted(arm, "Self")))
-            .chain(iter::once((
-                format!("{small_path}::Other"),
-                Expr::call("Self::Other", vec![Expr::atom("node")]),
-            )))
-            .collect();
-        arms.sort_by(|left, right| left.0.cmp(&right.0));
-        let matched = match_text(&arms);
-        if matched.lines().count() < BODY_LINES {
+        if let Some(matched) = self.match_from() {
             out.push_str(&matched);
         } else {
             let steps: Vec<(String, Expr)> = small
@@ -135,7 +190,7 @@ impl Pair<'_> {
                 .map(|(variant, arm)| {
                     (
                         format!("{small_path}::{variant}"),
-                        converted(arm, &large.name),
+                        self.converted(*arm, &large.name),
                     )
                 })
                 .chain(iter::once((
@@ -157,7 +212,10 @@ impl Pair<'_> {
                 &format!("{}(Box::new(item))", functions[0]),
                 &chained(
                     &functions,
-                    "unwrap_or_else(|rest| Self::Other(crate::generic(&*rest)))",
+                    &format!(
+                        "unwrap_or_else(|rest| Self::Other({}::generic(&*rest)))",
+                        self.runtime
+                    ),
                 ),
             ));
         }
@@ -245,37 +303,63 @@ impl Pair<'_> {
         out.push_str("    }\n}\n");
         out
     }
+
+    /// `From<smaller>`'s match on the item, arm by arm, when one function
+    /// holds it.
+    fn match_from(&self) -> Option<String> {
+        let small_path = &self.small_path;
+        let mut arms: Vec<(String, Expr)> = self
+            .small
+            .arms
+            .iter()
+            .map(|(variant, arm)| {
+                (
+                    format!("{small_path}::{variant}"),
+                    self.converted(*arm, "Self"),
+                )
+            })
+            .chain(iter::once((
+                format!("{small_path}::Other"),
+                Expr::call("Self::Other", vec![Expr::atom("node")]),
+            )))
+            .collect();
+        arms.sort_by(|left, right| left.0.cmp(&right.0));
+        let matched = match_text(&arms);
+        (matched.lines().count() < BODY_LINES).then_some(matched)
+    }
 }
 
 /// The imports a module's items need: a trait for its methods
-/// (`crate::Write as _`), or one name (`officekit_xml::element::Element`),
-/// which joins the other names of its module in one `use`.
+/// (`crate::Write as _`), a module of another crate
+/// (`officekit_markup_base::common_simple_types`), or one name
+/// (`officekit_xml::element::Element`), which joins the other names of its
+/// module in one `use`.
 #[derive(Default)]
 pub struct Uses {
-    paths: BTreeSet<&'static str>,
+    paths: BTreeSet<String>,
 }
 
 impl Uses {
     /// Import `path`.
-    pub fn add(&mut self, path: &'static str) {
-        self.paths.insert(path);
+    pub fn add(&mut self, path: &str) {
+        self.paths.insert(path.to_owned());
     }
 
-    /// The imports of a file whose items are `body`: the names of
-    /// `officekit_xml` it uses, and the `Write` trait when it calls
-    /// `write_into` outside an `impl` of that trait.
+    /// The imports of a file whose items are `body`, `runtime` the path to
+    /// the runtime: the names of `officekit_xml` it uses, and the `Write`
+    /// trait when it calls `write_into` outside an `impl` of that trait.
     #[must_use]
-    pub fn of(body: &str) -> String {
+    pub fn of(runtime: &str, body: &str) -> String {
         let mut uses = Self::default();
-        uses.scan(body, body);
+        uses.scan(runtime, body, body);
         uses.text()
     }
 
     /// Import the names of `officekit_xml` `items` uses, and the `Write`
-    /// trait when `helpers`, free functions, call `write_into`.
-    fn scan(&mut self, items: &str, helpers: &str) {
+    /// trait of `runtime` when `helpers`, free functions, call `write_into`.
+    fn scan(&mut self, runtime: &str, items: &str, helpers: &str) {
         if helpers.contains(".write_into(") {
-            self.add("crate::Write as _");
+            self.add(&format!("{runtime}::Write as _"));
         }
         for (text, path) in XML_NAMES {
             if items.contains(text) {
@@ -285,7 +369,8 @@ impl Uses {
     }
 
     /// The `use` lines, in rustfmt's order.
-    fn text(&self) -> String {
+    #[must_use]
+    pub fn text(&self) -> String {
         let mut grouped: BTreeMap<&str, Vec<&str>> = BTreeMap::new();
         // Each line by its path's segments, which rustfmt sorts the lines by.
         let mut lines: Vec<(Vec<&str>, String)> = Vec::new();
@@ -325,8 +410,9 @@ struct ModuleItems {
 }
 
 impl ModuleItems {
-    /// The items of `names.module`, each list in alphabetical order.
-    fn collect(names: &Names<'_>, uses: &mut Uses) -> Result<Self> {
+    /// The items of `names.module`, each list in alphabetical order; the
+    /// enums of `opened` are not `#[non_exhaustive]`.
+    fn collect(names: &Names<'_>, uses: &mut Uses, opened: &BTreeSet<usize>) -> Result<Self> {
         let catalog = names.catalog;
         let mut parts = Self::default();
         for (index, node) in catalog.nodes.iter().enumerate() {
@@ -349,9 +435,10 @@ impl ModuleItems {
             if found.module != names.module {
                 continue;
             }
-            parts
-                .items
-                .push((found.name.clone(), enum_text(names, found)));
+            parts.items.push((
+                found.name.clone(),
+                enum_text(names, found, opened.contains(&index)),
+            ));
             let tags = tags_text(names, found, &mut parts.namespaces);
             parts.statics.push_str(&tags);
             let (text, chunks) = enum_impls(names, index, found, &mut parts.namespaces);
@@ -383,17 +470,16 @@ impl ModuleItems {
     }
 }
 
-/// Every file of the typed tree, with its path and text.
+/// Every file of the typed tree, with its path and text: each namespace
+/// module in the folder of its crate, with the hook module of a base or core
+/// namespace in `officekit-markup-ext`; each crate's `modules.rs`; `root.rs`
+/// in `officekit-markup-ext`; and the facade's `lib.rs`.
 ///
 /// # Errors
 ///
-/// A name that cannot be written, or a folder that cannot be read.
-pub fn files<S>(
-    system: &S,
-    header: &str,
-    catalog: &Catalog,
-    folder: &Path,
-) -> Result<Vec<(PathBuf, String)>>
+/// A name that cannot be written, a module with no crate, or a folder that
+/// cannot be read.
+pub fn files<S>(system: &S, header: &str, catalog: &Catalog) -> Result<Vec<(PathBuf, String)>>
 where
     S: System + ?Sized,
 {
@@ -404,16 +490,23 @@ where
             .cmp(&catalog.modules[*right].name)
     });
     let listed = traversal::listed(catalog);
+    let opened = opened(catalog)?;
+    let ext = Path::new(Crate::Ext.folder());
     let mut files = Vec::new();
     for module in &order {
         let names = functions(catalog, *module)?;
         let name = &catalog.modules[*module].name;
+        let home = *catalog
+            .crates
+            .get(*module)
+            .with_context(|| format!("{name} has no crate"))?;
+        let folder = Path::new(home.folder());
         let tests = system
             .is_file(&folder.join(name).join("tests.rs"))
             .unwrap_or(false);
         files.push((
             folder.join(format!("{name}.rs")),
-            module_text(header, &names, &listed, tests)?,
+            module_text(header, &names, [&listed, &opened], tests)?,
         ));
         files.push((
             folder.join(name).join("read.rs"),
@@ -423,20 +516,146 @@ where
             folder.join(name).join("write.rs"),
             writers::text(header, &names),
         ));
+        if home != Crate::Ext {
+            files.push((
+                ext.join(format!("{name}.rs")),
+                traversal::hooks_text(header, &names, &listed, home),
+            ));
+        }
     }
-    let mut modules = String::from(header);
-    modules.push_str(
-        "// The namespace modules, `crate::<namespace>`, brought into the crate root\n\
-         // with `include!` ahead of its imports.\n\n",
-    );
-    for module in &order {
-        let _ = writeln!(modules, "pub mod {};", catalog.modules[*module].name);
+    for krate in Crate::ALL {
+        let mut modules = String::from(header);
+        modules.push_str(
+            "// The namespace modules, `crate::<namespace>`, brought into the crate root\n\
+             // with `include!` ahead of its imports.\n\n",
+        );
+        for module in &order {
+            // Ext has a module for every namespace: base's and core's for their hooks.
+            if krate == Crate::Ext || catalog.crates.get(*module) == Some(&krate) {
+                let _ = writeln!(modules, "pub mod {};", catalog.modules[*module].name);
+            }
+        }
+        files.push((Path::new(krate.folder()).join("modules.rs"), modules));
     }
-    files.push((folder.join("modules.rs"), modules));
     let mut root = String::from(header);
     root.push_str(&traversal::root_text(catalog, &order));
-    files.push((folder.join("root.rs"), root));
+    files.push((ext.join("root.rs"), root));
+    files.push((
+        Path::new(MARKUP_PATH).join("lib.rs"),
+        facade_text(header, catalog),
+    ));
     Ok(files)
+}
+
+/// The modules each module's items name, by the paths `Names::path` gives
+/// them: through its structs' fields, its enums' arms, the `From` of the
+/// enums it converts from, its newtypes' member and item types, and the tag
+/// tables its shapes read. Its hook traits name none.
+///
+/// # Errors
+///
+/// A name that cannot be written.
+pub fn references(catalog: &Catalog) -> Result<Vec<BTreeSet<usize>>> {
+    (0..catalog.modules.len())
+        .map(|module| {
+            let names = functions(catalog, module)?;
+            ModuleItems::collect(&names, &mut Uses::default(), &BTreeSet::new())?;
+            Ok(names.named.take())
+        })
+        .collect()
+}
+
+/// The enums a `From` of another crate matches arm by arm: such a match on
+/// a `#[non_exhaustive]` enum would need the `_` arm clippy's
+/// `wildcard_enum_match_arm` refuses.
+fn opened(catalog: &Catalog) -> Result<BTreeSet<usize>> {
+    let mut opened = BTreeSet::new();
+    for (smaller, larger) in &catalog.conversions {
+        let names = functions(catalog, catalog.enums[*larger].module)?;
+        if names.crosses(catalog.enums[*smaller].module)
+            && pair(&names, *smaller, *larger).match_from().is_some()
+        {
+            opened.insert(*smaller);
+        }
+    }
+    Ok(opened)
+}
+
+/// The facade's `lib.rs`: the runtime of `officekit-markup-base` at its root,
+/// and the root hooks and every namespace module of `officekit-markup-ext`.
+fn facade_text(header: &str, catalog: &Catalog) -> String {
+    let mut items: Vec<&str> = ["Context", "Visitor"]
+        .into_iter()
+        .chain(catalog.modules.iter().map(|module| module.name.as_str()))
+        .collect();
+    items.sort_by(|left, right| {
+        version_key(left)
+            .cmp(&version_key(right))
+            .then_with(|| left.cmp(right))
+    });
+    let mut out = String::from(header);
+    out.push_str(
+        "//! `officekit-markup` is the typed tree of officekit: one module per Office Open XML namespace,\n\
+         //! `officekit_markup::<namespace>`, with its structs, enums, and simple-type newtypes, their\n\
+         //! readers in `read` and writers in `write`, and the namespace's hook traits; and the shared\n\
+         //! runtime at its root. It gathers `officekit-markup-base`, `officekit-markup-core` and\n\
+         //! `officekit-markup-ext` under these paths.\n\n",
+    );
+    let _ = writeln!(out, "pub use {}::*;", Crate::Base.name());
+    let head = format!("pub use {}::{{", Crate::Ext.name());
+    let flat = format!("{head}{}}};", items.join(", "));
+    if flat.len() <= MAX_WIDTH {
+        out.push_str(&flat);
+        out.push('\n');
+        return out;
+    }
+    out.push_str(&head);
+    let mut row = String::new();
+    for item in items {
+        // rustfmt keeps a line of a list one column short of the width.
+        if !row.is_empty() && layout::INDENT + row.len() + 1 + item.len() + 1 >= MAX_WIDTH {
+            out.push('\n');
+            layout::pad(layout::INDENT, &mut out);
+            out.push_str(&row);
+            row.clear();
+        }
+        if !row.is_empty() {
+            row.push(' ');
+        }
+        row.push_str(item);
+        row.push(',');
+    }
+    out.push('\n');
+    layout::pad(layout::INDENT, &mut out);
+    out.push_str(&row);
+    out.push_str("\n};\n");
+    out
+}
+
+/// A name's key in rustfmt's version sorting: each run of digits by its
+/// value, among the other characters as a digit, and `_` before every other
+/// character.
+fn version_key(name: &str) -> Vec<(u32, u128)> {
+    let mut key = Vec::new();
+    let mut rest = name;
+    while let Some(first) = rest.chars().next() {
+        if first.is_ascii_digit() {
+            let end = rest
+                .find(|character: char| !character.is_ascii_digit())
+                .unwrap_or(rest.len());
+            key.push((u32::from('0') + 1, rest[..end].parse().unwrap_or(u128::MAX)));
+            rest = &rest[end..];
+        } else {
+            let rank = if first == '_' {
+                0
+            } else {
+                u32::from(first) + 1
+            };
+            key.push((rank, 0));
+            rest = &rest[first.len_utf8()..];
+        }
+    }
+    key
 }
 
 /// The reader and writer function names of a module's structs and enums:
@@ -494,15 +713,18 @@ pub fn functions(catalog: &Catalog, module: usize) -> Result<Names<'_>> {
         catalog,
         enum_functions,
         module,
+        named: RefCell::default(),
         node_functions,
     })
 }
 
-/// A namespace module's file.
+/// A namespace module's file; one of `officekit-markup-ext` holds its hook
+/// traits. `listed` are the enums a list holds, `opened` those that are not
+/// `#[non_exhaustive]`.
 fn module_text(
     header: &str,
     names: &Names<'_>,
-    listed: &BTreeSet<usize>,
+    [listed, opened]: [&BTreeSet<usize>; 2],
     tests: bool,
 ) -> Result<String> {
     let catalog = names.catalog;
@@ -520,26 +742,25 @@ fn module_text(
         out.push_str("\n#[cfg(test)]\nmod tests;\n");
     }
     let mut uses = Uses::default();
-    let mut parts = ModuleItems::collect(names, &mut uses)?;
-    parts.items.push((
-        "Context".to_owned(),
-        traversal::context_trait(names, listed),
-    ));
-    parts
-        .items
-        .push(("Visitor".to_owned(), traversal::visitor_trait(names)));
-    parts.items.sort_by(|left, right| left.0.cmp(&right.0));
-    if traversal::has_nodes(names) {
-        uses.add("crate::Written");
-        uses.add("officekit_xml::stream::writer::PartWriter");
-        uses.add("std::io");
+    let mut parts = ModuleItems::collect(names, &mut uses, opened)?;
+    if catalog.crates.get(names.module) == Some(&Crate::Ext) {
+        parts.items.push((
+            "Context".to_owned(),
+            traversal::context_trait(names, listed),
+        ));
+        parts
+            .items
+            .push(("Visitor".to_owned(), traversal::visitor_trait(names)));
+        parts.items.sort_by(|left, right| left.0.cmp(&right.0));
+        traversal::hook_uses(names, &mut uses);
     }
     let mut rest = parts.statics.clone();
     for (_, text) in parts.items.iter().chain(&parts.impls) {
         rest.push_str(text);
     }
     rest.push_str(&parts.helpers);
-    uses.scan(&rest, &parts.helpers);
+    uses.scan(names.runtime(), &rest, &parts.helpers);
+    names.imports(&mut uses);
     if parts.namespaces.iter().any(Option::is_some) {
         uses.add("officekit_xml::name::NamespaceId");
     }
@@ -642,7 +863,10 @@ fn struct_text(names: &Names<'_>, index: usize, node: &Node) -> String {
             }
         }
     }
-    fields.push(("unknown".to_owned(), "crate::Unknown".to_owned()));
+    fields.push((
+        "unknown".to_owned(),
+        format!("{}::Unknown", names.runtime()),
+    ));
     fields.sort_by(|left, right| bare(&left.0).cmp(bare(&right.0)));
     let mut out = doc(0, &node.doc);
     out.push_str("#[derive(Clone, Debug, Default, Eq, PartialEq)]\n#[non_exhaustive]\n");
@@ -729,6 +953,7 @@ fn shape_text(
     namespaces: &mut BTreeSet<Option<u8>>,
 ) -> String {
     let catalog = names.catalog;
+    let runtime = names.runtime();
     let own = tag(names, node.namespace, &node.key.tag.local, namespaces);
     let attributes: Vec<Expr> = node
         .attributes
@@ -743,13 +968,13 @@ fn shape_text(
                 let slot = match (child.target, child.occurs) {
                     (Target::Node(child_index), occurs) => {
                         let function = match occurs {
-                            Occurs::List => "crate::Slot::list",
-                            Occurs::Optional => "crate::Slot::single",
-                            Occurs::Required => "crate::Slot::required",
+                            Occurs::List => "list",
+                            Occurs::Optional => "single",
+                            Occurs::Required => "required",
                         };
                         let found = &catalog.nodes[child_index];
                         Expr::call(
-                            function,
+                            &format!("{runtime}::Slot::{function}"),
                             vec![tag(
                                 names,
                                 found.namespace,
@@ -760,13 +985,13 @@ fn shape_text(
                     }
                     (Target::Enum(found), occurs) => {
                         let function = match (catalog.enums[found].kind, occurs) {
-                            (EnumKind::All, _) => "crate::Slot::once",
-                            (_, Occurs::List) => "crate::Slot::items",
-                            (_, Occurs::Optional) => "crate::Slot::choice",
-                            (_, Occurs::Required) => "crate::Slot::required_choice",
+                            (EnumKind::All, _) => "once",
+                            (_, Occurs::List) => "items",
+                            (_, Occurs::Optional) => "choice",
+                            (_, Occurs::Required) => "required_choice",
                         };
                         Expr::call(
-                            function,
+                            &format!("{runtime}::Slot::{function}"),
                             vec![Expr::reference(Expr::Atom(names.tags(found)))],
                         )
                     }
@@ -777,7 +1002,7 @@ fn shape_text(
         }
     };
     let expr = Expr::Struct(
-        "crate::Shape".to_owned(),
+        format!("{runtime}::Shape"),
         vec![
             ("attributes".to_owned(), Expr::Slice(attributes)),
             ("name".to_owned(), own),
@@ -790,7 +1015,7 @@ fn shape_text(
     );
     let mut out = String::from("\n");
     statement(
-        &format!("pub static {}: crate::Shape = ", names.shape(index)),
+        &format!("pub static {}: {runtime}::Shape = ", names.shape(index)),
         &expr,
         &mut out,
     );
@@ -800,6 +1025,7 @@ fn shape_text(
 /// An enum's tags: those of its arms, and its wildcard's namespaces.
 fn tags_text(names: &Names<'_>, found: &EnumDef, namespaces: &mut BTreeSet<Option<u8>>) -> String {
     let catalog = names.catalog;
+    let runtime = names.runtime();
     let tags: Vec<Expr> = if found.kind == EnumKind::Wildcard {
         Vec::new()
     } else {
@@ -816,17 +1042,17 @@ fn tags_text(names: &Names<'_>, found: &EnumDef, namespaces: &mut BTreeSet<Optio
         || Expr::atom("None"),
         |wildcard| {
             let inner = match wildcard {
-                Wildcard::Any => Expr::atom("crate::Wildcard::Any"),
-                Wildcard::Local => Expr::atom("crate::Wildcard::Local"),
+                Wildcard::Any => Expr::Atom(format!("{runtime}::Wildcard::Any")),
+                Wildcard::Local => Expr::Atom(format!("{runtime}::Wildcard::Local")),
                 Wildcard::Not(id) => {
                     namespaces.insert(Some(*id));
                     Expr::call(
-                        "crate::Wildcard::Not",
+                        &format!("{runtime}::Wildcard::Not"),
                         vec![Expr::atom(&layout::integer(i128::from(*id)))],
                     )
                 }
                 Wildcard::Only(ids) => Expr::call(
-                    "crate::Wildcard::Only",
+                    &format!("{runtime}::Wildcard::Only"),
                     vec![Expr::Slice(
                         ids.iter()
                             .map(|id| Expr::atom(&layout::integer(i128::from(*id))))
@@ -838,7 +1064,7 @@ fn tags_text(names: &Names<'_>, found: &EnumDef, namespaces: &mut BTreeSet<Optio
         },
     );
     let expr = Expr::Struct(
-        "crate::Accept".to_owned(),
+        format!("{runtime}::Accept"),
         vec![
             ("any".to_owned(), any),
             ("tags".to_owned(), Expr::Slice(tags)),
@@ -847,7 +1073,7 @@ fn tags_text(names: &Names<'_>, found: &EnumDef, namespaces: &mut BTreeSet<Optio
     let mut out = String::from("\n");
     statement(
         &format!(
-            "pub(crate) static {}_TAGS: crate::Accept = ",
+            "pub static {}_TAGS: {runtime}::Accept = ",
             names::screaming(&found.name)
         ),
         &expr,
@@ -856,8 +1082,8 @@ fn tags_text(names: &Names<'_>, found: &EnumDef, namespaces: &mut BTreeSet<Optio
     out
 }
 
-/// An enum's definition.
-fn enum_text(names: &Names<'_>, found: &EnumDef) -> String {
+/// An enum's definition, `#[non_exhaustive]` unless `open`.
+fn enum_text(names: &Names<'_>, found: &EnumDef, open: bool) -> String {
     let mut variants: Vec<(String, String)> = found
         .arms
         .iter()
@@ -875,7 +1101,10 @@ fn enum_text(names: &Names<'_>, found: &EnumDef) -> String {
     variants.push(("Other".to_owned(), "Node".to_owned()));
     variants.sort();
     let mut out = doc(0, &found.doc);
-    out.push_str("#[derive(Clone, Debug, Eq, PartialEq)]\n#[non_exhaustive]\n");
+    out.push_str("#[derive(Clone, Debug, Eq, PartialEq)]\n");
+    if !open {
+        out.push_str("#[non_exhaustive]\n");
+    }
     let _ = writeln!(out, "pub enum {} {{", found.name);
     for (variant, shown) in variants {
         let line = format!("    {variant}({shown}),");
@@ -897,8 +1126,12 @@ fn node_impls(names: &Names<'_>, index: usize, node: &Node) -> String {
         .get(&index)
         .cloned()
         .unwrap_or_default();
+    let runtime = names.runtime();
     let mut out = String::from("\n");
-    out.push_str(&layout::impl_header("crate::Read", &node.name));
+    out.push_str(&layout::impl_header(
+        &format!("{runtime}::Read"),
+        &node.name,
+    ));
     out.push_str("    fn read(element: &Element) -> Self {\n");
     line(
         "        ",
@@ -907,8 +1140,14 @@ fn node_impls(names: &Names<'_>, index: usize, node: &Node) -> String {
         &mut out,
     );
     out.push_str("    }\n}\n\n");
-    out.push_str(&layout::impl_header("crate::Write", &node.name));
-    out.push_str("    fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {\n");
+    out.push_str(&layout::impl_header(
+        &format!("{runtime}::Write"),
+        &node.name,
+    ));
+    let _ = writeln!(
+        out,
+        "    fn write_into(&self, writer: &mut {runtime}::Writer<'_, '_>) {{"
+    );
     statement(
         "        let element = ",
         &Expr::call(
@@ -943,7 +1182,7 @@ fn enum_impls(
         namespaces,
         &mut helpers,
     ));
-    out.push_str(&enum_write(found, &function, &mut helpers));
+    out.push_str(&enum_write(names.runtime(), found, &function, &mut helpers));
     (out, helpers)
 }
 
@@ -977,7 +1216,8 @@ fn enum_default(names: &Names<'_>, found: &EnumDef) -> String {
 }
 
 /// An enum's `Read`: the arm of the element's tag, else `Other`; past
-/// `CHUNK` arms, the match is split into helpers tried in turn.
+/// `CHUNK` arms, or `BODY_LINES` lines, the match is split into helpers tried
+/// in turn, each of at most `CHUNK / 2` arms.
 fn enum_read(
     names: &Names<'_>,
     found: &EnumDef,
@@ -986,8 +1226,12 @@ fn enum_read(
     helpers: &mut String,
 ) -> String {
     let catalog = names.catalog;
+    let runtime = names.runtime();
     let mut out = String::from("\n");
-    out.push_str(&layout::impl_header("crate::Read", &found.name));
+    out.push_str(&layout::impl_header(
+        &format!("{runtime}::Read"),
+        &found.name,
+    ));
     out.push_str(
         "    fn other(node: Node) -> Option<Self> {\n        Some(Self::Other(node))\n    }\n\n",
     );
@@ -1005,7 +1249,7 @@ fn enum_read(
         .map(|(variant, arm)| {
             let node = &catalog.nodes[*arm];
             let key = tag(names, node.namespace, &node.key.tag.local, namespaces);
-            let read = Expr::call("crate::read", vec![Expr::atom("element")]);
+            let read = Expr::call(&format!("{runtime}::read"), vec![Expr::atom("element")]);
             let value = if found.boxed.contains(arm) {
                 Expr::call("Box::new", vec![read])
             } else {
@@ -1014,21 +1258,46 @@ fn enum_read(
             (format!("Some({})", key.one_line()), variant.clone(), value)
         })
         .collect();
+    let arm_text =
+        |indent: usize, own: &str, (pattern, variant, value): &(String, String, Expr)| {
+            let body = Expr::call(&format!("{own}::{variant}"), vec![value.clone()]);
+            layout::arm(indent, &Expr::Atom(pattern.clone()), &body, false)
+        };
+    let matched = (arm_lines.len() <= CHUNK).then(|| {
+        let mut text = format!("        match {runtime}::name(element) {{\n");
+        for arm in &arm_lines {
+            text.push_str(&arm_text(12, "Self", arm));
+        }
+        text.push_str(&layout::arm(12, &Expr::atom("_"), &other, false));
+        text.push_str("        }\n");
+        text
+    });
     if arm_lines.is_empty() {
         line("        ", &other, "", &mut out);
-    } else if arm_lines.len() <= CHUNK {
-        out.push_str("        match crate::name(element) {\n");
-        for (pattern, variant, value) in &arm_lines {
-            let body = Expr::call(&format!("Self::{variant}"), vec![value.clone()]);
-            out.push_str(&layout::arm(12, &Expr::Atom(pattern.clone()), &body, false));
-        }
-        out.push_str(&layout::arm(12, &Expr::atom("_"), &other, false));
-        out.push_str("        }\n");
+    } else if let Some(text) = matched.filter(|text| text.lines().count() < BODY_LINES) {
+        out.push_str(&text);
     } else {
+        let mut chunks: Vec<String> = Vec::new();
+        let mut chunk = String::new();
+        let mut count = 0;
+        for arm in &arm_lines {
+            let text = arm_text(8, &found.name, arm);
+            if !chunk.is_empty()
+                && (count == CHUNK / 2
+                    || chunk.lines().count() + text.lines().count() >= BODY_LINES)
+            {
+                chunks.push(chunk);
+                chunk = String::new();
+                count = 0;
+            }
+            chunk.push_str(&text);
+            count += 1;
+        }
+        chunks.push(chunk);
         let mut calls = Vec::new();
-        for (chunk, lines) in arm_lines.chunks(CHUNK / 2).enumerate() {
-            let helper = format!("read_{function}_{}", chunk + 1);
-            if chunk > 0 {
+        for (index, text) in chunks.iter().enumerate() {
+            let helper = format!("read_{function}_{}", index + 1);
+            if index > 0 {
                 calls.push(format!(".or_else(|| {helper}(element))"));
             }
             let _ = write!(
@@ -1041,11 +1310,8 @@ fn enum_read(
                     &format!("Option<{}>", found.name)
                 )
             );
-            helpers.push_str("    let item = match crate::name(element) {\n");
-            for (pattern, variant, value) in lines {
-                let body = Expr::call(&format!("{}::{variant}", found.name), vec![value.clone()]);
-                helpers.push_str(&layout::arm(8, &Expr::Atom(pattern.clone()), &body, false));
-            }
+            let _ = writeln!(helpers, "    let item = match {runtime}::name(element) {{");
+            helpers.push_str(text);
             helpers.push_str("        _ => return None,\n    };\n    Some(item)\n}\n");
         }
         calls.push(format!(".unwrap_or_else(|| {})", other.one_line()));
@@ -1060,11 +1326,17 @@ fn enum_read(
 }
 
 /// An enum's `Write`: its arm's element, or its `Other` node; past `CHUNK`
-/// arms, the arms are written by helpers.
-fn enum_write(found: &EnumDef, function: &str, helpers: &mut String) -> String {
+/// arms, the arms are written by helpers. `runtime` is the path to the runtime.
+fn enum_write(runtime: &str, found: &EnumDef, function: &str, helpers: &mut String) -> String {
     let mut out = String::from("\n");
-    out.push_str(&layout::impl_header("crate::Write", &found.name));
-    out.push_str("    fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {\n");
+    out.push_str(&layout::impl_header(
+        &format!("{runtime}::Write"),
+        &found.name,
+    ));
+    let _ = writeln!(
+        out,
+        "    fn write_into(&self, writer: &mut {runtime}::Writer<'_, '_>) {{"
+    );
     if found.arms.is_empty() {
         out.push_str(
             "        let Self::Other(node) = self;\n        writer.other(node.clone());\n",
@@ -1106,7 +1378,7 @@ fn enum_write(found: &EnumDef, function: &str, helpers: &mut String) -> String {
                     &format!("fn {helper}"),
                     &[
                         format!("item: &{}", found.name),
-                        "writer: &mut crate::Writer<'_, '_>".to_owned()
+                        format!("writer: &mut {runtime}::Writer<'_, '_>")
                     ],
                     ""
                 )
@@ -1125,15 +1397,22 @@ fn enum_write(found: &EnumDef, function: &str, helpers: &mut String) -> String {
     out
 }
 
+/// The pair of enums `smaller` and `larger`, seen from the larger's module.
+fn pair<'pair>(names: &Names<'pair>, smaller: usize, larger: usize) -> Pair<'pair> {
+    let catalog = names.catalog;
+    Pair {
+        large: &catalog.enums[larger],
+        large_variants: variants(&catalog.enums[larger]),
+        runtime: names.runtime(),
+        small: &catalog.enums[smaller],
+        small_path: names.path(catalog.enums[smaller].module, &catalog.enums[smaller].name),
+    }
+}
+
 /// `From<smaller> for larger` and `TryFrom<larger> for smaller`, and the
 /// helpers either calls when its match is too long for one function.
 fn conversion(names: &Names<'_>, smaller: usize, larger: usize) -> (String, String) {
-    let catalog = names.catalog;
-    let pair = Pair {
-        large: &catalog.enums[larger],
-        small: &catalog.enums[smaller],
-        small_path: names.path(catalog.enums[smaller].module, &catalog.enums[smaller].name),
-    };
+    let pair = pair(names, smaller, larger);
     let mut helpers = String::new();
     let mut out = pair.impl_from(&mut helpers);
     out.push_str(&pair.impl_try_from(&mut helpers));

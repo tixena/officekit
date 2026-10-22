@@ -1,4 +1,7 @@
+use alloc::collections::BTreeSet;
+
 use super::render::layout::{self, Expr};
+use super::{Crate, assign};
 
 fn call(name: &str, arguments: &[&str]) -> Expr {
     Expr::call(
@@ -136,5 +139,31 @@ fn a_method_call_as_a_nested_calls_lone_argument_takes_rustfmts_comma() {
     assert_eq!(
         out,
         "        return Some(super::Model3DExtensionContent::ArcSegment(\n            arm.transform(ctx),\n        ));\n"
+    );
+}
+
+#[test]
+fn the_cycle_is_core_what_it_reaches_base_and_every_other_module_ext() {
+    // 1, 2 and 3 name each other in a cycle; 0 names the cycle, the cycle
+    // names 4, which names 5; 6 and 7 name each other, a smaller cycle; 8
+    // names nothing and nothing names it.
+    let references: Vec<BTreeSet<usize>> =
+        [&[1][..], &[2], &[3, 4], &[1], &[5], &[], &[7], &[6], &[]]
+            .into_iter()
+            .map(|named| named.iter().copied().collect())
+            .collect();
+    assert_eq!(
+        assign(&references),
+        [
+            Crate::Ext,
+            Crate::Core,
+            Crate::Core,
+            Crate::Core,
+            Crate::Base,
+            Crate::Base,
+            Crate::Ext,
+            Crate::Ext,
+            Crate::Ext,
+        ]
     );
 }

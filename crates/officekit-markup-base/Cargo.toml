@@ -1,0 +1,15 @@
+[package]
+name = "officekit-markup-base"
+description = "The typed tree's runtime, and the namespaces the typed tree's cycle depends on"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+officekit-xml.workspace = true

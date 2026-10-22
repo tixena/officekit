@@ -748,6 +748,31 @@ dependencies = [
 name = "officekit-markup"
 version = "0.1.0"
 dependencies = [
+ "officekit-markup-base",
+ "officekit-markup-ext",
+]
+
+[[package]]
+name = "officekit-markup-base"
+version = "0.1.0"
+dependencies = [
+ "officekit-xml",
+]
+
+[[package]]
+name = "officekit-markup-core"
+version = "0.1.0"
+dependencies = [
+ "officekit-markup-base",
+ "officekit-xml",
+]
+
+[[package]]
+name = "officekit-markup-ext"
+version = "0.1.0"
+dependencies = [
+ "officekit-markup-base",
+ "officekit-markup-core",
  "officekit-xml",
 ]
 

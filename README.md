@@ -148,6 +148,8 @@ just audit    # cargo audit
 ## The generator and its inputs
 
 `cargo xtask generate-schema` writes the typed tree into
+`crates/officekit-markup-base/src`, `crates/officekit-markup-core/src` and
+`crates/officekit-markup-ext/src`, and the facade's `lib.rs` into
 `crates/officekit-markup/src`, its traversals into
 `crates/officekit-traversal/src`, the conformance classes into
 `crates/officekit-transitional/src` and `crates/officekit-strict/src`, the

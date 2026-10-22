@@ -1,0 +1,17 @@
+[package]
+name = "officekit-markup-ext"
+description = "The typed tree's other namespaces, its root hooks, and every namespace's hooks"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+officekit-markup-base.workspace = true
+officekit-markup-core.workspace = true
+officekit-xml.workspace = true

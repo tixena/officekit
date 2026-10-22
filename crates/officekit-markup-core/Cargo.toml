@@ -1,0 +1,16 @@
+[package]
+name = "officekit-markup-core"
+description = "The namespaces of the typed tree that reference each other in a cycle"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+officekit-markup-base.workspace = true
+officekit-xml.workspace = true

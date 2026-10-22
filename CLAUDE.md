@@ -8,7 +8,10 @@ in either conformance class, Transitional or Strict.
 
 ```
 crates/officekit-core          library: element trees, file types
-crates/officekit-markup        library: the typed tree, one module per namespace, with readers, writers and hooks
+crates/officekit-markup        library: the typed tree's facade: officekit_markup::<namespace>, re-exported from the three crates below
+crates/officekit-markup-base   library: the runtime and the namespaces the cycle depends on
+crates/officekit-markup-core   library: the namespaces that reference each other in a cycle
+crates/officekit-markup-ext    library: the other namespaces, the root hook traits, and the hook traits of base's and core's namespaces
 crates/officekit-packaging     library: the package, part names, content types, relationships, images
 crates/officekit-parts         library: one module per part type: content type, relationship types, load and store (features `transitional` and `strict`)
 crates/officekit-strict        library: the Strict class: read and write of every node (feature `strict` of officekit-core)
@@ -49,8 +52,11 @@ markdown           a document from an archie markdown document, and back (featur
   Nothing is done until it passes. Never add `#[allow]` / `#[expect]` to get
   past a lint; fix the code or raise it.
 - **Generated files are never edited by hand**: everything under
-  `crates/officekit-markup/src` but `lib.rs`, `class_rules.rs`, and the unit
-  tests; everything under `crates/officekit-strict/src` but `lib.rs` and the
+  `crates/officekit-markup/src`, the facade's `lib.rs`; everything under
+  `crates/officekit-markup-base/src` but `lib.rs`, `class_rules.rs`, and the
+  unit tests; everything under `crates/officekit-markup-core/src` and
+  `crates/officekit-markup-ext/src` but `lib.rs` and the unit tests;
+  everything under `crates/officekit-strict/src` but `lib.rs` and the
   unit tests; everything under `crates/officekit-transitional/src` but
   `lib.rs`, `dates.rs`, and the unit tests; everything under
   `crates/officekit-traversal/src` but `lib.rs` and the unit tests; everything

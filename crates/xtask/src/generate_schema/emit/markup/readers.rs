@@ -18,6 +18,7 @@ const FIELDS: usize = 85;
 pub fn text(header: &str, names: &Names<'_>) -> String {
     let catalog = names.catalog;
     let module = &catalog.modules[names.module];
+    let runtime = names.runtime();
     let mut out = String::from(header);
     let _ = writeln!(
         out,
@@ -45,7 +46,7 @@ pub fn text(header: &str, names: &Names<'_>) -> String {
             &["element: &Element".to_owned()],
             &format!("super::{}", found.name),
         ));
-        text.push_str("    crate::read(element)\n}\n");
+        let _ = writeln!(text, "    {runtime}::read(element)\n}}");
         functions.push((function.clone(), text));
     }
     functions.sort_by(|left, right| bare(&left.0).cmp(bare(&right.0)));
@@ -54,7 +55,7 @@ pub fn text(header: &str, names: &Names<'_>) -> String {
         body.push('\n');
         body.push_str(&text);
     }
-    let imports = Uses::of(&body);
+    let imports = Uses::of(runtime, &body);
     if !imports.is_empty() {
         out.push('\n');
         out.push_str(&imports);
@@ -71,6 +72,7 @@ fn bare(name: &str) -> &str {
 fn node_reader(names: &Names<'_>, index: usize, function: &str) -> String {
     let catalog = names.catalog;
     let node = &catalog.nodes[index];
+    let runtime = names.runtime();
     let mut arms: Vec<Expr> = Vec::new();
     for attribute in &node.attributes {
         arms.push(take("field.attribute", &attribute.field));
@@ -98,7 +100,7 @@ fn node_reader(names: &Names<'_>, index: usize, function: &str) -> String {
         &format!("super::{}", node.name),
     ));
     let new_reader = Expr::call(
-        "crate::Reader::new",
+        &format!("{runtime}::Reader::new"),
         vec![
             Expr::atom("element"),
             Expr::Atom(format!("&super::{}", names.shape(index))),
@@ -134,7 +136,7 @@ fn node_reader(names: &Names<'_>, index: usize, function: &str) -> String {
         out.push_str("            _ => {}\n        }\n");
     } else {
         let _ = writeln!(out, "        {function}_1(&mut node, index, field);");
-        helpers = reader_helpers(function, &node.name, &arms);
+        helpers = reader_helpers(runtime, function, &node.name, &arms);
     }
     out.push_str("    }\n    node.unknown = reader.finish();\n    node\n}\n");
     out.push_str(&helpers);
@@ -142,8 +144,9 @@ fn node_reader(names: &Names<'_>, index: usize, function: &str) -> String {
 }
 
 /// The helpers of a reader past `FIELDS` fields: each matches its run of
-/// field indexes and hands the others to the next.
-fn reader_helpers(function: &str, node_name: &str, arms: &[Expr]) -> String {
+/// field indexes and hands the others to the next. `runtime` is the path to
+/// the runtime.
+fn reader_helpers(runtime: &str, function: &str, node_name: &str, arms: &[Expr]) -> String {
     let mut helpers = String::new();
     let chunks: Vec<&[Expr]> = arms.chunks(FIELDS).collect();
     for (chunk, lines) in chunks.iter().enumerate() {
@@ -157,7 +160,7 @@ fn reader_helpers(function: &str, node_name: &str, arms: &[Expr]) -> String {
                 &[
                     format!("node: &mut super::{node_name}"),
                     "index: usize".to_owned(),
-                    "field: crate::Field<'_>".to_owned(),
+                    format!("field: {runtime}::Field<'_>"),
                 ],
                 ""
             )

@@ -12,7 +12,7 @@ use officekit_xml::element::Node as XmlNode;
 use super::enums::{self, Entry, Placements, Position, Row};
 use super::names::{self, Heading, Overrides, Titles};
 use super::simple_types::{self, Simple};
-use super::{Data, NodeKey, Source, Summary};
+use super::{Crate, Data, NodeKey, Source, Summary};
 use crate::generate_schema::compare;
 use crate::generate_schema::emit::namespaces::Row as NamespaceRow;
 use crate::generate_schema::model::{
@@ -81,6 +81,8 @@ pub enum Body {
 pub struct Catalog {
     /// Enum pairs `(smaller, larger)`: every arm of the first is an arm of the second.
     pub conversions: Vec<(usize, usize)>,
+    /// Each module's crate, by its index.
+    pub crates: Vec<Crate>,
     pub enums: Vec<EnumDef>,
     /// Extended ECMA enums, for the summary.
     pub extended: usize,
@@ -340,6 +342,12 @@ impl Catalog {
             all_enums: self.count(EnumKind::All),
             choice_enums: self.count(EnumKind::Choice),
             conversions: self.conversions.len(),
+            crate_modules: Crate::ALL.map(|krate| {
+                self.crates
+                    .iter()
+                    .filter(|module| **module == krate)
+                    .count()
+            }),
             ecma_structs: ecma.len(),
             ecma_tags: tags.len(),
             extended_enums: self.extended,

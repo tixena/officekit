@@ -18,6 +18,7 @@ const STATEMENTS: usize = 90;
 pub fn text(header: &str, names: &Names<'_>) -> String {
     let catalog = names.catalog;
     let module = &catalog.modules[names.module];
+    let runtime = names.runtime();
     let mut out = String::from(header);
     let _ = writeln!(
         out,
@@ -43,7 +44,7 @@ pub fn text(header: &str, names: &Names<'_>) -> String {
             &format!("pub fn {function}"),
             &[
                 format!("node: &super::{}", found.name),
-                "writer: &mut crate::Writer<'_, '_>".to_owned(),
+                format!("writer: &mut {runtime}::Writer<'_, '_>"),
             ],
             "",
         ));
@@ -56,7 +57,7 @@ pub fn text(header: &str, names: &Names<'_>) -> String {
         body.push('\n');
         body.push_str(&text);
     }
-    let imports = Uses::of(&body);
+    let imports = Uses::of(runtime, &body);
     if !imports.is_empty() {
         out.push('\n');
         out.push_str(&imports);
@@ -73,6 +74,7 @@ fn bare(name: &str) -> &str {
 fn node_writer(names: &Names<'_>, index: usize, function: &str) -> String {
     let catalog = names.catalog;
     let node = &catalog.nodes[index];
+    let runtime = names.runtime();
     let mut statements: Vec<Expr> = Vec::new();
     for (position, attribute) in node.attributes.iter().enumerate() {
         statements.push(Expr::call(
@@ -114,7 +116,7 @@ fn node_writer(names: &Names<'_>, index: usize, function: &str) -> String {
         "Element",
     ));
     let new_writer = Expr::call(
-        "crate::Writer::new",
+        &format!("{runtime}::Writer::new"),
         vec![
             Expr::atom("scope"),
             Expr::Atom(format!("&super::{}", names.shape(index))),
@@ -149,7 +151,7 @@ fn node_writer(names: &Names<'_>, index: usize, function: &str) -> String {
                     &format!("fn {helper}"),
                     &[
                         format!("node: &super::{}", node.name),
-                        "writer: &mut crate::Writer<'_, '_>".to_owned(),
+                        format!("writer: &mut {runtime}::Writer<'_, '_>"),
                     ],
                     ""
                 )

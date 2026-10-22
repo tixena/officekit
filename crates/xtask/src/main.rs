@@ -255,13 +255,18 @@ fn schema_counts(out: &mut dyn Write) -> Result<()> {
 
 /// What `generate-schema` wrote of the typed tree.
 fn markup_summary(out: &mut dyn Write, summary: &markup::Summary) -> Result<()> {
+    let [in_base, in_core, in_ext] = summary.crate_modules;
     writeln!(
         out,
-        "wrote {}: {} modules; {} ECMA structs over {} tags, {} extension structs; {} choice \
-         enums ({} ECMA ones the data extends), {} xsd:all enums, {} wildcard enums over {} \
+        "wrote the typed tree: {} modules, {in_base} in {}, {in_core} in {} and {in_ext} in {}; \
+         the facade {}; {} ECMA structs over {} tags, {} extension structs; {} choice enums \
+         ({} ECMA ones the data extends), {} xsd:all enums, {} wildcard enums over {} \
          wildcard positions; {} From and TryFrom pairs; {} newtypes, {} with a member enum",
-        markup::MARKUP_PATH,
         summary.modules,
+        markup::Crate::Base.folder(),
+        markup::Crate::Core.folder(),
+        markup::Crate::Ext.folder(),
+        markup::MARKUP_PATH,
         summary.ecma_structs,
         summary.ecma_tags,
         summary.extension_structs,
