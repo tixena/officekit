@@ -244,3 +244,34 @@ all: lint build test
 # The full gate, every feature build and the audit; slower than `just check`,
 # run every so often.
 full: all audit
+
+# The release and its tag are created at HEAD when missing. The archive is named
+# as `cargo binstall` looks for it: officekit-<target>-v<version>.tgz (.zip on Windows).
+# Publish the CLI, built in release mode for this machine's target, to the version's GitHub release.
+bpublish:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if ! git diff --quiet HEAD; then echo "bpublish: the working tree has uncommitted changes" >&2; exit 1; fi
+    head=$(git rev-parse HEAD)
+    if [ -z "$(git branch -r --contains "$head")" ]; then echo "bpublish: HEAD is not pushed" >&2; exit 1; fi
+    target=$(rustc -vV | sed -n 's/^host: //p')
+    version=$(cargo pkgid -p officekit | sed 's/.*[#@]//')
+    tag="v$version"
+    name="officekit-$target-$tag"
+    case "$target" in
+        *windows*) bin=officekit.exe; archive="$name.zip" ;;
+        *) bin=officekit; archive="$name.tgz" ;;
+    esac
+    # One job keeps the build at 7.6 GB: officekit-markup-core compiles beside nothing.
+    cargo build --release --locked -j 1 -p officekit
+    rm -rf target/dist && mkdir -p "target/dist/$name"
+    cp -f "target/release/$bin" "target/dist/$name/"
+    case "$archive" in
+        *.zip) (cd target/dist && tar -a -c -f "$archive" "$name") ;;
+        *) tar -C target/dist -czf "target/dist/$archive" "$name" ;;
+    esac
+    if gh release view "$tag" >/dev/null 2>&1; then
+        gh release upload "$tag" "target/dist/$archive"
+    else
+        gh release create "$tag" "target/dist/$archive" --target "$head" --title "$tag" --notes "officekit $version"
+    fi

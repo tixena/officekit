@@ -148,6 +148,7 @@ just build
 just test     # the workspace, then officekit-core and officekit-parts with all features, then officekit-core with strict alone
 just docs     # cargo doc --workspace --no-deps
 just audit    # cargo audit
+just bpublish # build the CLI for this machine's target and add it to the GitHub release of the version
 ```
 
 `just all` never needs .NET or the generator's inputs.
