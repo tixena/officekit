@@ -19,6 +19,9 @@ lint:
     cargo clippy -p officekit-parts --all-targets --no-default-features --features strict -- -D warnings
     cargo clippy -p officekit --all-targets --no-default-features -- -D warnings
     cargo fmt --all --check
+    # rustfmt does not expand include!, so cargo fmt never reaches the files a
+    # crate root includes; rustfmt reaches every module behind each of them.
+    rustfmt --edition 2024 --check crates/*/src/modules.rs crates/officekit-markup-ext/src/root.rs crates/officekit-transitional/src/rules.rs crates/officekit-strict/src/rules.rs crates/officekit-validation/src/generated/*.rs
     find crates -name tests.rs -print0 | xargs -0 rustfmt --edition 2024 --check
 
 # Format Rust.
@@ -50,6 +53,9 @@ test:
 # adds the builds with fewer features, and the audit.
 check:
     cargo fmt --all --check
+    # rustfmt does not expand include!, so cargo fmt never reaches the files a
+    # crate root includes; rustfmt reaches every module behind each of them.
+    rustfmt --edition 2024 --check crates/*/src/modules.rs crates/officekit-markup-ext/src/root.rs crates/officekit-transitional/src/rules.rs crates/officekit-strict/src/rules.rs crates/officekit-validation/src/generated/*.rs
     find crates -name tests.rs -print0 | xargs -0 rustfmt --edition 2024 --check
     cargo clippy --workspace --all-targets --all-features -- -D warnings
     # One job: officekit-markup-core peaks at 7 GB, and officekit-markup-ext
