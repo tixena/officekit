@@ -50,7 +50,9 @@ check:
     cargo fmt --all --check
     find crates -name tests.rs -print0 | xargs -0 rustfmt --edition 2024 --check
     cargo clippy --workspace --all-targets --all-features -- -D warnings
-    cargo build --workspace --all-targets --all-features
+    # One job: officekit-markup-core peaks at 7 GB, and officekit-markup-ext
+    # compiling beside it passes the 9 GB cap.
+    cargo build --workspace --all-targets --all-features -j 1
     cargo test --workspace --all-features
 
 # Generate code coverage report (requires cargo-llvm-cov)
