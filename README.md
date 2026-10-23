@@ -135,6 +135,8 @@ example); the reason goes to standard error.
 ## Building
 
 ```bash
+just check    # the gate for each change: fmt, then clippy, build and tests of the workspace with every feature on
+just full     # the full gate: lint, build, test, audit
 just all      # lint, build, test
 just lint     # clippy (restriction + pedantic + nursery denied) on the workspace, then officekit-core and officekit-parts in each feature build; fmt check; rustfmt check of every tests.rs
 just build

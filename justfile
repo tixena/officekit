@@ -43,6 +43,16 @@ test:
     cargo test -p officekit-parts --all-features
     cargo test -p officekit-core --no-default-features --features strict
 
+# The gate for each change: fmt, then clippy, a build and a test run of the
+# whole workspace with every feature on, each over one feature set. `just full`
+# adds the builds with fewer features, and the audit.
+check:
+    cargo fmt --all --check
+    find crates -name tests.rs -print0 | xargs -0 rustfmt --edition 2024 --check
+    cargo clippy --workspace --all-targets --all-features -- -D warnings
+    cargo build --workspace --all-targets --all-features
+    cargo test --workspace --all-features
+
 # Generate code coverage report (requires cargo-llvm-cov)
 test-coverage:
     @echo "Generating code coverage report..."
@@ -220,3 +230,7 @@ inputs:
 
 # Full pipeline (standardized `all` entry point across tixena repos).
 all: lint build test
+
+# The full gate, every feature build and the audit; slower than `just check`,
+# run every so often.
+full: all audit
