@@ -75,7 +75,7 @@ dependency:
 |---|---|---|
 | `transitional` | yes | The `officekit-transitional` crate (ECMA-376 Part 1 with the migration features of Part 4): the generated read and write of every node of the typed tree as Transitional, and the conversion of date cells to number cells before a Transitional save |
 | `strict` | no | The `officekit-strict` crate (ECMA-376 Part 1): the generated read and write of every node as Strict, and the generated rules that rename, unpack, and refuse what Strict spells differently |
-| `binary-format` | yes | The `binary` module: officekit's binary form, a file's whole model as an rkyv archive, and back. It turns on rkyv and the archive of every type of the typed tree, the package and the part modules; without it none of that compiles |
+| `binary-format` | no | The `binary` module: officekit's binary form, a file's whole model as an rkyv archive, and back. It turns on rkyv and the archive of every type of the typed tree, the package and the part modules; without it none of that compiles |
 | `markdown` | no | The `markdown` module: a Word document from an archie markdown document, and a Word document written as markdown, its pictures in a folder beside the file or inside the markdown as data URIs. Turns on `transitional` |
 
 Markdown to Word and back changes five things, and nothing else:

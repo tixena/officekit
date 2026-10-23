@@ -16,7 +16,7 @@ name = "office_checks"
 required-features = ["strict", "transitional"]
 
 [features]
-default = ["transitional", "binary-format"]
+default = ["transitional"]
 transitional = ["officekit-parts/transitional", "dep:officekit-transitional"]
 strict = ["officekit-parts/strict", "dep:officekit-strict", "dep:officekit-traversal"]
 markdown = ["transitional", "dep:archie-core", "dep:image-webp", "dep:png", "dep:resvg"]
