@@ -1,5 +1,6 @@
 use std::path::{Path, PathBuf};
 
+#[cfg(feature = "binary-format")]
 use officekit_core::binary::{MAGIC, VERSION};
 use officekit_core::xlsx::Xlsx;
 use officekit_packaging::package::Package;
@@ -12,6 +13,8 @@ use os_shim::WriteMode;
 use os_shim::mock::MemorySystem;
 use serde_json::{Value, json};
 
+#[cfg(not(feature = "binary-format"))]
+use super::NO_BINARY_FORMAT;
 use super::{PackageValidator, Validate, cmd_cat, cmd_get, cmd_save, cmd_validate};
 use crate::cli::{CatArgs, Form, GetArgs, SaveArgs, ValidateArgs};
 
@@ -356,6 +359,7 @@ fn save(
     (result, out, String::from_utf8(err).unwrap())
 }
 
+#[cfg(feature = "binary-format")]
 fn binary_of(system: &MemorySystem, docx: &[u8]) -> Vec<u8> {
     let args = get_args("-", Form::Binary, None);
     let (result, bytes, _) = get(system, &args, docx);
@@ -363,6 +367,7 @@ fn binary_of(system: &MemorySystem, docx: &[u8]) -> Vec<u8> {
     bytes
 }
 
+#[cfg(feature = "binary-format")]
 #[test]
 fn save_writes_the_markdown_of_the_binary_form_from_standard_input() {
     let system = MemorySystem::new();
@@ -375,6 +380,7 @@ fn save_writes_the_markdown_of_the_binary_form_from_standard_input() {
     assert_eq!(String::from_utf8(out).unwrap(), REPORT);
 }
 
+#[cfg(feature = "binary-format")]
 #[test]
 fn save_reads_the_binary_form_from_a_file() {
     let system = MemorySystem::new();
@@ -391,6 +397,7 @@ fn save_reads_the_binary_form_from_a_file() {
     Package::open(&system, Path::new("/copy.docx")).unwrap();
 }
 
+#[cfg(feature = "binary-format")]
 #[test]
 fn save_writes_the_same_word_file_as_get() {
     let system = MemorySystem::new();
@@ -403,6 +410,7 @@ fn save_writes_the_same_word_file_as_get() {
     assert_eq!(saved, docx);
 }
 
+#[cfg(feature = "binary-format")]
 #[test]
 fn save_fails_for_bytes_that_are_not_the_binary_form() {
     let system = MemorySystem::new();
@@ -417,6 +425,7 @@ fn save_fails_for_bytes_that_are_not_the_binary_form() {
     );
 }
 
+#[cfg(feature = "binary-format")]
 #[test]
 fn save_fails_for_another_version() {
     let system = MemorySystem::new();
@@ -431,6 +440,7 @@ fn save_fails_for_another_version() {
     );
 }
 
+#[cfg(feature = "binary-format")]
 #[test]
 fn save_does_not_write_the_binary_form() {
     let system = MemorySystem::new();
@@ -442,10 +452,34 @@ fn save_does_not_write_the_binary_form() {
     );
 }
 
+#[cfg(feature = "binary-format")]
 #[test]
 fn save_fails_for_a_file_that_is_absent() {
     let system = MemorySystem::new();
     let args = save_args(Some("/absent.bin"), Form::Markdown, None);
     let (result, _, _) = save(&system, &args, b"");
     assert!(format!("{:#}", result.unwrap_err()).starts_with("reading /absent.bin"));
+}
+
+#[cfg(not(feature = "binary-format"))]
+#[test]
+fn get_refuses_the_binary_form_in_a_build_without_it() {
+    let system = MemorySystem::new();
+    let docx = report_docx(&system);
+    let args = get_args("-", Form::Binary, None);
+    let (result, out, _) = get(&system, &args, &docx);
+    assert_eq!(out, b"");
+    assert_eq!(result.unwrap_err().to_string(), NO_BINARY_FORMAT);
+}
+
+#[cfg(not(feature = "binary-format"))]
+#[test]
+fn save_refuses_every_form_in_a_build_without_the_binary_form() {
+    let system = MemorySystem::new();
+    for format in [Form::Markdown, Form::Docx, Form::Binary] {
+        let args = save_args(Some("/absent.bin"), format, None);
+        let (result, out, _) = save(&system, &args, b"");
+        assert_eq!(out, b"");
+        assert_eq!(result.unwrap_err().to_string(), NO_BINARY_FORMAT);
+    }
 }

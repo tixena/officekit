@@ -215,6 +215,7 @@
 //!
 //! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/extended-properties`.
 
+#[cfg(feature = "binary-format")]
 mod archive;
 pub mod read;
 pub mod write;
@@ -457,10 +458,12 @@ pub static APPLICATION_SPECIFIC_FILE_PROPERTIES_CONTENT_TAGS: crate::Accept = cr
 };
 
 /// 22.2.2.1 Application (Application Name): the tag `ap:Application`, schema type `string`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ApplicationName {
     pub unknown: crate::Unknown,
@@ -469,10 +472,12 @@ pub struct ApplicationName {
 
 /// 22.2.2.21 Properties (Application Specific File Properties): the tag `ap:Properties`, schema
 /// type `CT_Properties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ApplicationSpecificFileProperties {
     pub content: Vec<ApplicationSpecificFilePropertiesContent>,
@@ -514,10 +519,12 @@ pub enum ApplicationSpecificFilePropertiesContent {
 }
 
 /// 22.2.2.2 `AppVersion` (Application Version): the tag `ap:AppVersion`, schema type `string`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ApplicationVersion {
     pub unknown: crate::Unknown,
@@ -525,10 +532,12 @@ pub struct ApplicationVersion {
 }
 
 /// The tag `ap:CharactersWithSpaces`, schema type `int`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CharactersWithSpaces {
     pub unknown: crate::Unknown,
@@ -536,10 +545,12 @@ pub struct CharactersWithSpaces {
 }
 
 /// 22.2.2.6 `DigSig` (Digital Signature): the tag `ap:DigSig`, schema type `CT_DigSigBlob`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DigitalSignature {
     pub binary_blob: Box<super::document_properties_variant_types::BinaryBlob>,
@@ -547,10 +558,12 @@ pub struct DigitalSignature {
 }
 
 /// 22.2.2.7 `DocSecurity` (Document Security): the tag `ap:DocSecurity`, schema type `int`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DocumentSecurity {
     pub unknown: crate::Unknown,
@@ -559,10 +572,12 @@ pub struct DocumentSecurity {
 
 /// 22.2.2.8 `HeadingPairs` (Heading Pairs): the tag `ap:HeadingPairs`, schema type
 /// `CT_VectorVariant`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HeadingPairs {
     pub unknown: crate::Unknown,
@@ -570,10 +585,12 @@ pub struct HeadingPairs {
 }
 
 /// 22.2.2.10 `HLinks` (Hyperlink List): the tag `ap:HLinks`, schema type `CT_VectorVariant`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HyperlinkList {
     pub unknown: crate::Unknown,
@@ -582,10 +599,12 @@ pub struct HyperlinkList {
 
 /// 22.2.2.12 `HyperlinksChanged` (Hyperlinks Changed): the tag `ap:HyperlinksChanged`, schema type
 /// `boolean`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HyperlinksChanged {
     pub unknown: crate::Unknown,
@@ -594,10 +613,12 @@ pub struct HyperlinksChanged {
 
 /// 22.2.2.20 `PresentationFormat` (Intended Format of Presentation): the tag
 /// `ap:PresentationFormat`, schema type `string`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct IntendedFormatOfPresentation {
     pub unknown: crate::Unknown,
@@ -605,10 +626,12 @@ pub struct IntendedFormatOfPresentation {
 }
 
 /// 22.2.2.14 `LinksUpToDate` (Links Up-to-Date): the tag `ap:LinksUpToDate`, schema type `boolean`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LinksUpToDate {
     pub unknown: crate::Unknown,
@@ -616,10 +639,12 @@ pub struct LinksUpToDate {
 }
 
 /// 22.2.2.5 Company (Name of Company): the tag `ap:Company`, schema type `string`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NameOfCompany {
     pub unknown: crate::Unknown,
@@ -627,10 +652,12 @@ pub struct NameOfCompany {
 }
 
 /// 22.2.2.25 Template (Name of Document Template): the tag `ap:Template`, schema type `string`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NameOfDocumentTemplate {
     pub unknown: crate::Unknown,
@@ -638,10 +665,12 @@ pub struct NameOfDocumentTemplate {
 }
 
 /// 22.2.2.15 Manager (Name of Manager): the tag `ap:Manager`, schema type `string`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NameOfManager {
     pub unknown: crate::Unknown,
@@ -649,10 +678,12 @@ pub struct NameOfManager {
 }
 
 /// 22.2.2.9 `HiddenSlides` (Number of Hidden Slides): the tag `ap:HiddenSlides`, schema type `int`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NumberOfHiddenSlides {
     pub unknown: crate::Unknown,
@@ -660,10 +691,12 @@ pub struct NumberOfHiddenSlides {
 }
 
 /// 22.2.2.13 Lines (Number of Lines): the tag `ap:Lines`, schema type `int`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NumberOfLines {
     pub unknown: crate::Unknown,
@@ -671,10 +704,12 @@ pub struct NumberOfLines {
 }
 
 /// 22.2.2.17 Notes (Number of Slides Containing Notes): the tag `ap:Notes`, schema type `int`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NumberOfSlidesContainingNotes {
     pub unknown: crate::Unknown,
@@ -683,10 +718,12 @@ pub struct NumberOfSlidesContainingNotes {
 
 /// 22.2.2.26 `TitlesOfParts` (Part Titles): the tag `ap:TitlesOfParts`, schema type
 /// `CT_VectorLpstr`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PartTitles {
     pub unknown: crate::Unknown,
@@ -695,10 +732,12 @@ pub struct PartTitles {
 
 /// 22.2.2.11 `HyperlinkBase` (Relative Hyperlink Base): the tag `ap:HyperlinkBase`, schema type
 /// `string`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RelativeHyperlinkBase {
     pub unknown: crate::Unknown,
@@ -706,10 +745,12 @@ pub struct RelativeHyperlinkBase {
 }
 
 /// 22.2.2.23 `SharedDoc` (Shared Document): the tag `ap:SharedDoc`, schema type `boolean`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SharedDocument {
     pub unknown: crate::Unknown,
@@ -717,10 +758,12 @@ pub struct SharedDocument {
 }
 
 /// 22.2.2.24 Slides (Slides Metadata Element): the tag `ap:Slides`, schema type `int`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlidesMetadataElement {
     pub unknown: crate::Unknown,
@@ -728,10 +771,12 @@ pub struct SlidesMetadataElement {
 }
 
 /// 22.2.2.22 `ScaleCrop` (Thumbnail Display Mode): the tag `ap:ScaleCrop`, schema type `boolean`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ThumbnailDisplayMode {
     pub unknown: crate::Unknown,
@@ -740,10 +785,12 @@ pub struct ThumbnailDisplayMode {
 
 /// 22.2.2.27 `TotalTime` (Total Edit Time Metadata Element): the tag `ap:TotalTime`, schema type
 /// `int`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TotalEditTimeMetadataElement {
     pub unknown: crate::Unknown,
@@ -751,10 +798,12 @@ pub struct TotalEditTimeMetadataElement {
 }
 
 /// 22.2.2.3 Characters (Total Number of Characters): the tag `ap:Characters`, schema type `int`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TotalNumberOfCharacters {
     pub unknown: crate::Unknown,
@@ -762,10 +811,12 @@ pub struct TotalNumberOfCharacters {
 }
 
 /// 22.2.2.16 `MMClips` (Total Number of Multimedia Clips): the tag `ap:MMClips`, schema type `int`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TotalNumberOfMultimediaClips {
     pub unknown: crate::Unknown,
@@ -773,10 +824,12 @@ pub struct TotalNumberOfMultimediaClips {
 }
 
 /// 22.2.2.18 Pages (Total Number of Pages): the tag `ap:Pages`, schema type `int`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TotalNumberOfPages {
     pub unknown: crate::Unknown,
@@ -784,10 +837,12 @@ pub struct TotalNumberOfPages {
 }
 
 /// 22.2.2.19 Paragraphs (Total Number of Paragraphs): the tag `ap:Paragraphs`, schema type `int`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TotalNumberOfParagraphs {
     pub unknown: crate::Unknown,
@@ -795,10 +850,12 @@ pub struct TotalNumberOfParagraphs {
 }
 
 /// 22.2.2.28 Words (Word Count): the tag `ap:Words`, schema type `int`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct WordCount {
     pub unknown: crate::Unknown,

@@ -16,10 +16,12 @@ name = "office_checks"
 required-features = ["strict", "transitional"]
 
 [features]
-default = ["transitional"]
+default = ["transitional", "binary-format"]
 transitional = ["officekit-parts/transitional", "dep:officekit-transitional"]
 strict = ["officekit-parts/strict", "dep:officekit-strict", "dep:officekit-traversal"]
 markdown = ["transitional", "dep:archie-core", "dep:image-webp", "dep:png", "dep:resvg"]
+# The `binary` module: officekit's binary form, an rkyv archive of a file's model.
+binary-format = ["dep:rkyv", "officekit-parts/binary-format"]
 
 [dependencies]
 # The XML layer: element tree, names, values, markup compatibility, part reader and writer
@@ -54,7 +56,7 @@ os-shim = { workspace = true, features = ["zip"] }
 thiserror.workspace = true
 
 # officekit's binary form: the model of a whole package archived and read back
-rkyv = { workspace = true, features = ["alloc", "bytecheck"] }
+rkyv = { workspace = true, optional = true, features = ["alloc", "bytecheck"] }
 
 # A folder's manifest is JSON
 serde_json.workspace = true

@@ -1,5 +1,6 @@
 //! Qualified names: a namespace id and a local name.
 
+#[cfg(feature = "binary-format")]
 mod archive;
 pub mod table;
 
@@ -16,7 +17,7 @@ mod tests;
 pub type NamespaceId = u8;
 
 /// An Office version officekit validates against, Office 2010 to Microsoft 365.
-/// rkyv archives it through its mirror in `archive`.
+/// With `binary-format`, rkyv archives it through its mirror in `archive`.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[non_exhaustive]
 pub enum OfficeVersion {
@@ -29,7 +30,8 @@ pub enum OfficeVersion {
 }
 
 /// A name's namespace: none, one the table knows by either class's URI, or any
-/// other URI kept as written. rkyv archives it through its mirror in `archive`.
+/// other URI kept as written. With `binary-format`, rkyv archives it through
+/// its mirror in `archive`.
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[non_exhaustive]
 pub enum Namespace {
@@ -40,8 +42,12 @@ pub enum Namespace {
 
 /// A qualified name: the prefix as the part wrote it, and the namespace it
 /// stands for.
-#[derive(Clone, Debug, PartialEq, Eq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
-#[rkyv(attr(non_exhaustive))]
+#[derive(Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct QName {
     pub local: String,

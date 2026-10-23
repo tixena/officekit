@@ -215,6 +215,7 @@
 //!
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2`.
 
+#[cfg(feature = "binary-format")]
 mod archive;
 pub mod read;
 pub mod write;
@@ -587,10 +588,12 @@ pub static RICH_FILTER_COLUMN_CONTENT_TAGS: officekit_markup_base::Accept =
     };
 
 /// The tag `xlrd2:a`, schema type `CT_Array` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AArray {
     pub c: Option<String>,
@@ -600,10 +603,12 @@ pub struct AArray {
 }
 
 /// The tag `xlrd2:a`, schema type `CT_SupportingPropertyBagArray` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ASupportingPropertyBagArray {
     pub count: Option<String>,
@@ -612,10 +617,12 @@ pub struct ASupportingPropertyBagArray {
 }
 
 /// The tag `xlrd2:arrayData`, schema type `CT_ArrayData` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArrayData {
     pub a_array: Vec<AArray>,
@@ -625,10 +632,12 @@ pub struct ArrayData {
 }
 
 /// `ST_ArrayValueType`: the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArrayValueType(pub String);
 /// The members of `ST_ArrayValueType`, in alphabetical order.
@@ -1208,10 +1217,12 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `xlrd2:customFilter`, schema type `CT_CustomRichFilter` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CustomFilter {
     pub key: Option<String>,
@@ -1221,10 +1232,12 @@ pub struct CustomFilter {
 }
 
 /// The tag `xlrd2:customFilters`, schema type `CT_CustomRichFilters` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CustomFilters {
     pub and: Option<String>,
@@ -1242,10 +1255,12 @@ pub enum CustomRichFiltersContent {
 }
 
 /// The tag `xlrd2:dateGroupItem`, schema type `CT_RichDateGroupItem` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DateGroupItem {
     pub date_time_grouping: Option<spreadsheet::DateTimeGrouping>,
@@ -1260,10 +1275,12 @@ pub struct DateGroupItem {
 }
 
 /// The tag `xlrd2:dxfs`, schema type `CT_Dxfs` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Dxfs {
     pub count: Option<String>,
@@ -1272,10 +1289,12 @@ pub struct Dxfs {
 }
 
 /// The tag `xlrd2:dynamicFilter`, schema type `CT_DynamicRichFilter` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DynamicFilter {
     pub key: Option<String>,
@@ -1288,10 +1307,12 @@ pub struct DynamicFilter {
 }
 
 /// The tag `xlrd2:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
     pub extension: Vec<spreadsheet::Extension>,
@@ -1299,10 +1320,12 @@ pub struct ExtLst {
 }
 
 /// The tag `xlrd2:filter`, schema type `CT_RichFilter` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Filter {
     pub blank: Option<String>,
@@ -1313,10 +1336,12 @@ pub struct Filter {
 }
 
 /// The tag `xlrd2:filterColumn`, schema type `CT_RichFilterColumn` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FilterColumn {
     pub content: Option<Box<RichFilterColumnContent>>,
@@ -1324,10 +1349,12 @@ pub struct FilterColumn {
 }
 
 /// The tag `xlrd2:filters`, schema type `CT_RichFilters` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Filters {
     pub date_group_item: Vec<DateGroupItem>,
@@ -1337,10 +1364,12 @@ pub struct Filters {
 }
 
 /// The tag `xlrd2:flag`, schema type `CT_RichValueTypeReservedKeyFlag` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Flag {
     pub name: Option<String>,
@@ -1349,10 +1378,12 @@ pub struct Flag {
 }
 
 /// The tag `xlrd2:global`, schema type `CT_RichValueGlobalType` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Global {
     pub ext_lst: Option<Box<ExtLst>>,
@@ -1361,10 +1392,12 @@ pub struct Global {
 }
 
 /// The tag `xlrd2:k`, schema type `CT_SupportingPropertyBagKey` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct K {
     pub n: Option<String>,
@@ -1373,10 +1406,12 @@ pub struct K {
 }
 
 /// The tag `xlrd2:key`, schema type `CT_RichValueTypeReservedKey` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Key {
     pub flag: Vec<Flag>,
@@ -1385,10 +1420,12 @@ pub struct Key {
 }
 
 /// The tag `xlrd2:keyFlags`, schema type `CT_RichValueTypeKeyFlags` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct KeyFlags {
     pub key: Vec<Key>,
@@ -1396,10 +1433,12 @@ pub struct KeyFlags {
 }
 
 /// The tag `xlrd2:rPr`, schema type `CT_RichFormatProperty` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RPr {
     pub n: Option<String>,
@@ -1408,10 +1447,12 @@ pub struct RPr {
 }
 
 /// The tag `xlrd2:rSty`, schema type `CT_RichStyle` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RSty {
     pub dxfid: Option<String>,
@@ -1432,10 +1473,12 @@ pub enum RichFilterColumnContent {
 }
 
 /// `ST_RichFormatPropertyType`: the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RichFormatPropertyType(pub String);
 /// The members of `ST_RichFormatPropertyType`, in alphabetical order.
@@ -1449,10 +1492,12 @@ pub enum RichFormatPropertyTypeMember {
 }
 
 /// The tag `xlrd2:richProperties`, schema type `CT_RichFormatProperties` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RichProperties {
     pub r_pr: Vec<RPr>,
@@ -1460,10 +1505,12 @@ pub struct RichProperties {
 }
 
 /// The tag `xlrd2:richSortCondition`, schema type `CT_RichSortCondition` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RichSortCondition {
     pub custom_list: Option<String>,
@@ -1478,10 +1525,12 @@ pub struct RichSortCondition {
 }
 
 /// The tag `xlrd2:richStyleSheet`, schema type `CT_RichStylesheet` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RichStyleSheet {
     pub dxfs: Option<Box<Dxfs>>,
@@ -1492,10 +1541,12 @@ pub struct RichStyleSheet {
 }
 
 /// The tag `xlrd2:richStyles`, schema type `CT_RichStyles` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RichStyles {
     pub r_sty: Vec<RSty>,
@@ -1503,10 +1554,12 @@ pub struct RichStyles {
 }
 
 /// The tag `xlrd2:rpv`, schema type `CT_RichStylePropertyValue` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Rpv {
     pub i: Option<String>,
@@ -1515,10 +1568,12 @@ pub struct Rpv {
 }
 
 /// The tag `xlrd2:rvTypesInfo`, schema type `CT_RichValueTypesInfo` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RvTypesInfo {
     pub ext_lst: Option<Box<ExtLst>>,
@@ -1528,10 +1583,12 @@ pub struct RvTypesInfo {
 }
 
 /// The tag `xlrd2:s`, schema type `CT_SupportingPropertyBagStructure` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct S {
     pub k: Vec<K>,
@@ -1539,10 +1596,12 @@ pub struct S {
 }
 
 /// The tag `xlrd2:spb`, schema type `CT_SupportingPropertyBag` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Spb {
     pub s: Option<String>,
@@ -1551,10 +1610,12 @@ pub struct Spb {
 }
 
 /// The tag `xlrd2:spbArrays`, schema type `CT_SupportingPropertyBagArrayData` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SpbArrays {
     pub a_supporting_property_bag_array: Vec<ASupportingPropertyBagArray>,
@@ -1564,10 +1625,12 @@ pub struct SpbArrays {
 }
 
 /// The tag `xlrd2:spbData`, schema type `CT_SupportingPropertyBagData` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SpbData {
     pub count: Option<String>,
@@ -1578,10 +1641,12 @@ pub struct SpbData {
 
 /// The tag `xlrd2:spbStructures`, schema type `CT_SupportingPropertyBagStructures` of SDK 3.5.1's
 /// data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SpbStructures {
     pub count: Option<String>,
@@ -1591,10 +1656,12 @@ pub struct SpbStructures {
 }
 
 /// `ST_SupportingPropertyBagArrayValueType`: the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SupportingPropertyBagArrayValueType(pub String);
 /// The members of `ST_SupportingPropertyBagArrayValueType`, in alphabetical order.
@@ -1609,10 +1676,12 @@ pub enum SupportingPropertyBagArrayValueTypeMember {
 }
 
 /// `ST_SupportingPropertyBagValueType`: the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SupportingPropertyBagValueType(pub String);
 /// The members of `ST_SupportingPropertyBagValueType`, in alphabetical order.
@@ -1629,10 +1698,12 @@ pub enum SupportingPropertyBagValueTypeMember {
 
 /// The tag `xlrd2:supportingPropertyBags`, schema type `CT_SupportingPropertyBags` of SDK 3.5.1's
 /// data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SupportingPropertyBags {
     pub spb_arrays: Option<Box<SpbArrays>>,
@@ -1641,10 +1712,12 @@ pub struct SupportingPropertyBags {
 }
 
 /// The tag `xlrd2:top10`, schema type `CT_RichTop10` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Top10 {
     pub filter_val: Option<String>,
@@ -1656,10 +1729,12 @@ pub struct Top10 {
 }
 
 /// The tag `xlrd2:type`, schema type `CT_RichValueType` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Type {
     pub ext_lst: Option<Box<ExtLst>>,
@@ -1669,10 +1744,12 @@ pub struct Type {
 }
 
 /// The tag `xlrd2:types`, schema type `CT_RichValueTypes` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Types {
     pub r#type: Vec<Type>,
@@ -1680,10 +1757,12 @@ pub struct Types {
 }
 
 /// The tag `xlrd2:v`, schema type `CT_ArrayValue` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct VArrayValue {
     pub t: Option<ArrayValueType>,
@@ -1692,10 +1771,12 @@ pub struct VArrayValue {
 }
 
 /// The tag `xlrd2:v`, schema type `CT_SupportingPropertyBagArrayValue` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct VSupportingPropertyBagArrayValue {
     pub t: Option<SupportingPropertyBagArrayValueType>,
@@ -1704,10 +1785,12 @@ pub struct VSupportingPropertyBagArrayValue {
 }
 
 /// The tag `xlrd2:v`, schema type `CT_SupportingPropertyBagValue` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct VSupportingPropertyBagValue {
     pub unknown: officekit_markup_base::Unknown,

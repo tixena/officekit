@@ -215,6 +215,7 @@
 //!
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2018/sketchyshapes`.
 
+#[cfg(feature = "binary-format")]
 mod archive;
 pub mod read;
 pub mod write;
@@ -446,10 +447,12 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `ask:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
     pub extension: Vec<drawing::Extension>,
@@ -457,40 +460,48 @@ pub struct ExtLst {
 }
 
 /// The tag `ask:lineSketchCurved`, schema type `CT_Empty` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LineSketchCurved {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `ask:lineSketchFreehand`, schema type `CT_Empty` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LineSketchFreehand {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `ask:lineSketchNone`, schema type `CT_Empty` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LineSketchNone {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `ask:lineSketchScribble`, schema type `CT_Empty` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LineSketchScribble {
     pub unknown: officekit_markup_base::Unknown,
@@ -498,10 +509,12 @@ pub struct LineSketchScribble {
 
 /// The tag `ask:lineSketchStyleProps`, schema type `CT_LineSketchStyleProperties` of SDK 3.5.1's
 /// data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LineSketchStyleProps {
     pub content: Option<Box<drawing::GeometryContent>>,
@@ -524,10 +537,12 @@ pub enum LineSketchTypePropertiesContent {
 }
 
 /// The tag `ask:seed`, schema type `ST_LineSketchSeed` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Seed {
     pub unknown: officekit_markup_base::Unknown,
@@ -535,10 +550,12 @@ pub struct Seed {
 }
 
 /// The tag `ask:type`, schema type `CT_LineSketchTypeProperties` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Type {
     pub content: Option<Box<LineSketchTypePropertiesContent>>,

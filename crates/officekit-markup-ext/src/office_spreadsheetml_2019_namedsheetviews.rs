@@ -215,6 +215,7 @@
 //!
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2019/namedsheetviews`.
 
+#[cfg(feature = "binary-format")]
 mod archive;
 pub mod read;
 pub mod write;
@@ -364,10 +365,12 @@ pub static SORT_RULE_CONTENT_TAGS: officekit_markup_base::Accept = officekit_mar
 };
 
 /// The tag `xnsv:columnFilter`, schema type `CT_ColumnFilter` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColumnFilter {
     pub col_id: Option<String>,
@@ -558,10 +561,12 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `xnsv:dxf`, schema type `CT_Dxf` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Dxf {
     pub alignment: Option<Box<spreadsheet::Alignment>>,
@@ -575,10 +580,12 @@ pub struct Dxf {
 }
 
 /// The tag `xnsv:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
     pub extension: Vec<spreadsheet::Extension>,
@@ -586,10 +593,12 @@ pub struct ExtLst {
 }
 
 /// The tag `xnsv:filter`, schema type `CT_FilterColumn` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Filter {
     pub col_id: Option<String>,
@@ -600,10 +609,12 @@ pub struct Filter {
 }
 
 /// The tag `xnsv:namedSheetView`, schema type `CT_NamedSheetView` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NamedSheetView {
     pub ext_lst: Option<Box<ExtLst>>,
@@ -614,10 +625,12 @@ pub struct NamedSheetView {
 }
 
 /// The tag `xnsv:namedSheetViews`, schema type `CT_NamedSheetViews` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NamedSheetViews {
     pub ext_lst: Option<Box<ExtLst>>,
@@ -626,10 +639,12 @@ pub struct NamedSheetViews {
 }
 
 /// The tag `xnsv:nsvFilter`, schema type `CT_NsvFilter` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NsvFilter {
     pub column_filter: Vec<ColumnFilter>,
@@ -642,10 +657,12 @@ pub struct NsvFilter {
 }
 
 /// The tag `xnsv:richSortCondition`, schema type `CT_RichSortCondition` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RichSortCondition {
     pub custom_list: Option<String>,
@@ -660,10 +677,12 @@ pub struct RichSortCondition {
 }
 
 /// The tag `xnsv:sortCondition`, schema type `CT_SortCondition` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SortCondition {
     pub custom_list: Option<String>,
@@ -677,10 +696,12 @@ pub struct SortCondition {
 }
 
 /// The tag `xnsv:sortRule`, schema type `CT_SortRule` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SortRule {
     pub col_id: Option<String>,
@@ -700,10 +721,12 @@ pub enum SortRuleContent {
 }
 
 /// The tag `xnsv:sortRules`, schema type `CT_SortRules` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SortRules {
     pub case_sensitive: Option<String>,

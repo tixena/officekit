@@ -215,6 +215,7 @@
 //!
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2017/model3d`.
 
+#[cfg(feature = "binary-format")]
 mod archive;
 pub mod read;
 pub mod write;
@@ -791,10 +792,12 @@ pub static MODEL3D_EXTENSION_CONTENT_TAGS: officekit_markup_base::Accept =
     };
 
 /// The tag `am3d:ambientLight`, schema type `CT_AmbientLight` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AmbientLight {
     pub clr: Box<Clr>,
@@ -805,10 +808,12 @@ pub struct AmbientLight {
 }
 
 /// The tag `am3d:attrSrcUrl`, schema type `CT_PictureAttributionSourceURL` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AttrSrcUrl {
     pub id: Option<String>,
@@ -816,10 +821,12 @@ pub struct AttrSrcUrl {
 }
 
 /// The tag `am3d:blip`, schema type `CT_Blip` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Blip {
     pub content: Vec<drawing::BlipContent>,
@@ -831,10 +838,12 @@ pub struct Blip {
 }
 
 /// The tag `am3d:camera`, schema type `CT_Model3DCamera` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Camera {
     pub content: Box<Model3DCameraContent>,
@@ -846,10 +855,12 @@ pub struct Camera {
 }
 
 /// The tag `am3d:clr`, schema type `CT_Color` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Clr {
     pub content: Box<drawing::ColorContent>,
@@ -1407,10 +1418,12 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `am3d:dirLight`, schema type `CT_DirectionalLight` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DirLight {
     pub angular_rad: Option<String>,
@@ -1424,10 +1437,12 @@ pub struct DirLight {
 }
 
 /// The tag `am3d:ext`, schema type `CT_Model3DExtension` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Ext {
     pub content: Box<Model3DExtensionContent>,
@@ -1436,10 +1451,12 @@ pub struct Ext {
 }
 
 /// The tag `am3d:extLst`, schema type `CT_Model3DExtensionList` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLstModel3DExtensionList {
     pub ext: Vec<Ext>,
@@ -1447,10 +1464,12 @@ pub struct ExtLstModel3DExtensionList {
 }
 
 /// The tag `am3d:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLstOfficeArtExtensionList {
     pub extension: Vec<drawing::Extension>,
@@ -1458,30 +1477,36 @@ pub struct ExtLstOfficeArtExtensionList {
 }
 
 /// The tag `am3d:illuminance`, schema type `CT_PositiveRatio` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Illuminance {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `am3d:intensity`, schema type `CT_PositiveRatio` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Intensity {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `am3d:lookAt`, schema type `CT_Point3D` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LookAt {
     pub unknown: officekit_markup_base::Unknown,
@@ -1491,10 +1516,12 @@ pub struct LookAt {
 }
 
 /// The tag `am3d:meterPerModelUnit`, schema type `CT_PositiveRatio` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MeterPerModelUnit {
     pub unknown: officekit_markup_base::Unknown,
@@ -1717,10 +1744,12 @@ pub enum Model3DViewportContent {
 }
 
 /// The tag `am3d:model3d`, schema type `CT_Model3D` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Model3d {
     pub ambient_light: Option<Box<AmbientLight>>,
@@ -1738,10 +1767,12 @@ pub struct Model3d {
 }
 
 /// The tag `am3d:objViewport`, schema type `CT_ObjectViewport` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ObjViewport {
     pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionList>>,
@@ -1750,10 +1781,12 @@ pub struct ObjViewport {
 }
 
 /// The tag `am3d:orthographic`, schema type `CT_OrthographicProjection` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Orthographic {
     pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionList>>,
@@ -1762,10 +1795,12 @@ pub struct Orthographic {
 }
 
 /// The tag `am3d:perspective`, schema type `CT_PerspectiveProjection` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Perspective {
     pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionList>>,
@@ -1774,10 +1809,12 @@ pub struct Perspective {
 }
 
 /// The tag `am3d:pos`, schema type `CT_Point3D` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Pos {
     pub unknown: officekit_markup_base::Unknown,
@@ -1787,10 +1824,12 @@ pub struct Pos {
 }
 
 /// The tag `am3d:postTrans`, schema type `CT_Vector3D` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PostTrans {
     pub dx: Option<drawing::Coordinate>,
@@ -1800,10 +1839,12 @@ pub struct PostTrans {
 }
 
 /// The tag `am3d:preTrans`, schema type `CT_Vector3D` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PreTrans {
     pub dx: Option<drawing::Coordinate>,
@@ -1813,10 +1854,12 @@ pub struct PreTrans {
 }
 
 /// The tag `am3d:ptLight`, schema type `CT_PointLight` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PtLight {
     pub clr: Box<Clr>,
@@ -1829,10 +1872,12 @@ pub struct PtLight {
 }
 
 /// The tag `am3d:raster`, schema type `CT_Model3DRaster` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Raster {
     pub blip: Option<Box<Blip>>,
@@ -1842,10 +1887,12 @@ pub struct Raster {
 }
 
 /// The tag `am3d:rot`, schema type `CT_Rotate3D` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Rot {
     pub ax: Option<String>,
@@ -1855,10 +1902,12 @@ pub struct Rot {
 }
 
 /// The tag `am3d:scale`, schema type `CT_Scale3D` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Scale {
     pub sx: Box<Sx>,
@@ -1868,10 +1917,12 @@ pub struct Scale {
 }
 
 /// The tag `am3d:spPr`, schema type `CT_ShapeProperties` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SpPr {
     pub apply_3d_shape_properties: Option<Box<drawing::Apply3DShapeProperties>>,
@@ -1887,10 +1938,12 @@ pub struct SpPr {
 }
 
 /// The tag `am3d:spotLight`, schema type `CT_SpotLight` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SpotLight {
     pub clr: Box<Clr>,
@@ -1905,10 +1958,12 @@ pub struct SpotLight {
 }
 
 /// The tag `am3d:sx`, schema type `CT_Ratio` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Sx {
     pub d: Option<String>,
@@ -1917,10 +1972,12 @@ pub struct Sx {
 }
 
 /// The tag `am3d:sy`, schema type `CT_Ratio` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Sy {
     pub d: Option<String>,
@@ -1929,20 +1986,24 @@ pub struct Sy {
 }
 
 /// The tag `am3d:sz`, schema type `CT_PositiveRatio` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SzPositiveRatio {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `am3d:sz`, schema type `CT_Ratio` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SzRatio {
     pub d: Option<String>,
@@ -1951,10 +2012,12 @@ pub struct SzRatio {
 }
 
 /// The tag `am3d:trans`, schema type `CT_Model3DTransform` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Trans {
     pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionList>>,
@@ -1967,20 +2030,24 @@ pub struct Trans {
 }
 
 /// The tag `am3d:unkLight`, schema type `CT_UnknownLight` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct UnkLight {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `am3d:up`, schema type `CT_Vector3D` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Up {
     pub dx: Option<drawing::Coordinate>,
@@ -2164,10 +2231,12 @@ pub trait Visitor: crate::Visitor {
 }
 
 /// The tag `am3d:winViewport`, schema type `CT_WindowViewport` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct WinViewport {
     pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionList>>,

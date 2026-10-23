@@ -235,10 +235,12 @@ pub static CLASSIFICATION_SHAPE: officekit_markup_base::Shape = officekit_markup
 };
 
 /// The tag `p184:classification`, schema type `CT_ClassificationOutcome` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Classification {
     pub unknown: officekit_markup_base::Unknown,
@@ -246,10 +248,12 @@ pub struct Classification {
 }
 
 /// `ST_ClassificationOutcomeType`: the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ClassificationOutcomeType(pub String);
 /// The members of `ST_ClassificationOutcomeType`, in alphabetical order.

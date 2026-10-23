@@ -11,6 +11,10 @@ repository.workspace = true
 [lints]
 workspace = true
 
+[features]
+# rkyv and the archive of every type: officekit's binary form.
+binary-format = ["dep:rkyv", "officekit-xml/binary-format"]
+
 [dependencies]
 officekit-xml.workspace = true
-rkyv.workspace = true
+rkyv = { workspace = true, optional = true }

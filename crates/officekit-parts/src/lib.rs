@@ -350,6 +350,7 @@
 
 pub mod additional_characteristics;
 pub mod alternative_format_import;
+#[cfg(feature = "binary-format")]
 mod archive;
 pub mod audio;
 pub mod bibliography;
@@ -2026,8 +2027,8 @@ const MODEL_ROOTS: &[(NamespaceId, &str, Modeler)] = &[
     }),
 ];
 
-/// The typed root of a part, by the module that loads it. rkyv archives it through its mirror in
-/// `archive`.
+/// The typed root of a part, by the module that loads it. With `binary-format`, rkyv archives it
+/// through its mirror in `archive`.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
 pub enum PartModel {

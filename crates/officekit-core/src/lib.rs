@@ -27,6 +27,7 @@
 
 extern crate alloc;
 
+#[cfg(feature = "binary-format")]
 pub mod binary;
 pub mod compact;
 pub mod docx;

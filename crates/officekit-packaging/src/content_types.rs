@@ -18,10 +18,12 @@ pub(crate) const XML_CONTENT_TYPE: &str = "application/xml";
 
 /// `Default` entries by extension, `Override` entries by part name, in the
 /// order the file has them.
-#[derive(
-    Clone, Debug, Default, PartialEq, Eq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 pub struct ContentTypes {
     defaults: Vec<(String, String)>,
     overrides: Vec<(PartName, String)>,

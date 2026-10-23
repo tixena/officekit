@@ -215,6 +215,7 @@
 //!
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2008/diagram`.
 
+#[cfg(feature = "binary-format")]
 mod archive;
 pub mod read;
 pub mod write;
@@ -224,9 +225,13 @@ use officekit_markup_core::drawing;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
+#[cfg(feature = "binary-format")]
 use rkyv::de::Pooling;
+#[cfg(feature = "binary-format")]
 use rkyv::rancor::Source;
+#[cfg(feature = "binary-format")]
 use rkyv::ser::{Allocator, Sharing, Writer};
+#[cfg(feature = "binary-format")]
 use rkyv::validation::{ArchiveContext, SharedContext};
 use std::io;
 
@@ -418,10 +423,12 @@ pub static GROUP_SHAPE_CONTENT_TAGS: officekit_markup_base::Accept =
     };
 
 /// The tag `dsp:cNvGrpSpPr`, schema type `CT_NonVisualGroupDrawingShapeProps` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CNvGrpSpPr {
     pub extension_list: Option<Box<drawing::ExtensionList>>,
@@ -430,10 +437,12 @@ pub struct CNvGrpSpPr {
 }
 
 /// The tag `dsp:cNvPr`, schema type `CT_NonVisualDrawingProps` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CNvPr {
     pub click_hyperlink: Option<Box<drawing::ClickHyperlink>>,
@@ -448,10 +457,12 @@ pub struct CNvPr {
 }
 
 /// The tag `dsp:cNvSpPr`, schema type `CT_NonVisualDrawingShapeProps` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CNvSpPr {
     pub extension_list: Option<Box<drawing::ExtensionList>>,
@@ -697,10 +708,12 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `dsp:dataModelExt`, schema type `CT_DataModelExtBlock` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataModelExt {
     pub min_ver: Option<String>,
@@ -709,10 +722,12 @@ pub struct DataModelExt {
 }
 
 /// The tag `dsp:drawing`, schema type `CT_Drawing` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Drawing {
     pub sp_tree: Box<SpTree>,
@@ -720,10 +735,12 @@ pub struct Drawing {
 }
 
 /// The tag `dsp:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
     pub extension: Vec<drawing::Extension>,
@@ -740,16 +757,18 @@ pub enum GroupShapeContent {
 }
 
 /// The tag `dsp:grpSp`, schema type `CT_GroupShape` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GrpSp {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<GroupShapeContent>,
     pub ext_lst: Option<Box<ExtLst>>,
     pub nv_grp_sp_pr: Box<NvGrpSpPr>,
@@ -758,10 +777,12 @@ pub struct GrpSp {
 }
 
 /// The tag `dsp:grpSpPr`, schema type `CT_GroupShapeProperties` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GrpSpPr {
     pub bw_mode: Option<drawing::BlackAndWhiteMode>,
@@ -774,10 +795,12 @@ pub struct GrpSpPr {
 }
 
 /// The tag `dsp:nvGrpSpPr`, schema type `CT_GroupShapeNonVisual` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NvGrpSpPr {
     pub c: Box<CNvGrpSpPr>,
@@ -786,10 +809,12 @@ pub struct NvGrpSpPr {
 }
 
 /// The tag `dsp:nvSpPr`, schema type `CT_ShapeNonVisual` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NvSpPr {
     pub c: Box<CNvSpPr>,
@@ -798,10 +823,12 @@ pub struct NvSpPr {
 }
 
 /// The tag `dsp:sp`, schema type `CT_Shape` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Sp {
     pub ext_lst: Option<Box<ExtLst>>,
@@ -815,10 +842,12 @@ pub struct Sp {
 }
 
 /// The tag `dsp:spPr`, schema type `CT_ShapeProperties` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SpPr {
     pub apply_3d_shape_properties: Option<Box<drawing::Apply3DShapeProperties>>,
@@ -834,10 +863,12 @@ pub struct SpPr {
 }
 
 /// The tag `dsp:spTree`, schema type `CT_GroupShape` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SpTree {
     pub content: Vec<GroupShapeContent>,
@@ -848,10 +879,12 @@ pub struct SpTree {
 }
 
 /// The tag `dsp:style`, schema type `CT_ShapeStyle` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Style {
     pub effect_reference: Box<drawing::EffectReference>,
@@ -862,10 +895,12 @@ pub struct Style {
 }
 
 /// The tag `dsp:txBody`, schema type `CT_TextBody` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TxBody {
     pub properties: Box<drawing::BodyProperties>,
@@ -875,10 +910,12 @@ pub struct TxBody {
 }
 
 /// The tag `dsp:txXfrm`, schema type `CT_Transform2D` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TxXfrm {
     pub extents: Option<Box<drawing::Extents>>,

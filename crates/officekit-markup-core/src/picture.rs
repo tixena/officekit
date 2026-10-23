@@ -220,9 +220,13 @@ pub mod write;
 
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
+#[cfg(feature = "binary-format")]
 use rkyv::de::Pooling;
+#[cfg(feature = "binary-format")]
 use rkyv::rancor::Source;
+#[cfg(feature = "binary-format")]
 use rkyv::ser::{Allocator, Sharing, Writer};
+#[cfg(feature = "binary-format")]
 use rkyv::validation::{ArchiveContext, SharedContext};
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -311,22 +315,24 @@ pub static SHAPE_PROPERTIES_SHAPE: officekit_markup_base::Shape = officekit_mark
 
 /// 20.2.2.3 `cNvPr` (Non-Visual Drawing Properties): the tag `pic:cNvPr`, schema type
 /// `CT_NonVisualDrawingProps`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualDrawingProperties {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub click_hyperlink: Option<Box<super::drawing::ClickHyperlink>>,
     pub descr: Option<String>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
     pub hidden: Option<String>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHover>>,
     pub id: Option<super::drawing::DrawingElementID>,
     pub name: Option<String>,
@@ -336,18 +342,20 @@ pub struct NonVisualDrawingProperties {
 
 /// 20.2.2.2 `cNvPicPr` (Non-Visual Picture Drawing Properties): the tag `pic:cNvPicPr`, schema type
 /// `CT_NonVisualPictureProperties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualPictureDrawingProperties {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub picture_locks: Option<Box<super::drawing::PictureLocks>>,
     pub prefer_relative_resize: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
@@ -355,55 +363,61 @@ pub struct NonVisualPictureDrawingProperties {
 
 /// 20.2.2.4 `nvPicPr` (Non-Visual Picture Properties): the tag `pic:nvPicPr`, schema type
 /// `CT_PictureNonVisual`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualPictureProperties {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_picture_drawing_properties: Box<NonVisualPictureDrawingProperties>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 20.2.2.5 pic (Picture): the tag `pic:pic`, schema type `CT_Picture`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Picture {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub ext_lst: Option<Box<super::office_drawing_2010_picture::ExtLst>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub fill: Box<PictureFill>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_picture_properties: Box<NonVisualPictureProperties>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub shape_properties: Box<ShapeProperties>,
     pub style: Option<Box<super::office_drawing_2010_picture::Style>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 20.2.2.1 `blipFill` (Picture Fill): the tag `pic:blipFill`, schema type `CT_BlipFillProperties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PictureFill {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub blip: Option<Box<super::drawing::Blip>>,
     pub content: Option<Box<super::drawing::FillModeContent>>,
     pub dpi: Option<String>,
@@ -413,28 +427,30 @@ pub struct PictureFill {
 }
 
 /// 20.2.2.6 `spPr` (Shape Properties): the tag `pic:spPr`, schema type `CT_ShapeProperties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeProperties {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub apply_3d: Option<Box<super::drawing::Apply3DShapeProperties>>,
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContent>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContent>>,
     pub geometry_content: Option<Box<super::drawing::GeometryContent>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub outline: Option<Box<super::drawing::Outline>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub scene3d: Option<Box<super::drawing::Scene3d>>,
     pub unknown: officekit_markup_base::Unknown,
     pub xfrm_transform2d: Option<Box<super::drawing::XfrmTransform2D>>,

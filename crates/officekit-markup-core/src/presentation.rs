@@ -215,6 +215,7 @@
 //!
 //! The namespace is `http://schemas.openxmlformats.org/presentationml/2006/main`.
 
+#[cfg(feature = "binary-format")]
 mod archive;
 pub mod read;
 pub mod write;
@@ -223,9 +224,13 @@ use officekit_markup_base::common_simple_types;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
+#[cfg(feature = "binary-format")]
 use rkyv::de::Pooling;
+#[cfg(feature = "binary-format")]
 use rkyv::rancor::Source;
+#[cfg(feature = "binary-format")]
 use rkyv::ser::{Allocator, Sharing, Writer};
+#[cfg(feature = "binary-format")]
 use rkyv::validation::{ArchiveContext, SharedContext};
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -2740,10 +2745,12 @@ pub static SOUND_ACTION_CONTENT_TAGS: officekit_markup_base::Accept =
     };
 
 /// 19.2.2.4 guide (A Guide): the tag `p:guide`, schema type `CT_Guide`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AGuide {
     pub orient: Option<Direction>,
@@ -2752,29 +2759,33 @@ pub struct AGuide {
 }
 
 /// 19.2.1.32 `sldAll` (All Slides): the tag `p:sldAll`, schema type `CT_Empty`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AllSlides {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.5.1 anim (Animate): the tag `p:anim`, schema type `CT_TLAnimateBehavior`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Animate {
     pub bounce_end: Option<String>,
     pub by: Option<String>,
     pub calcmode: Option<TLAnimateBehaviorCalcMode>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub common_behavior: Box<CommonBehavior>,
     pub from: Option<String>,
     pub time_animated_value_list: Option<Box<TimeAnimatedValueList>>,
@@ -2785,18 +2796,20 @@ pub struct Animate {
 
 /// 19.5.2 `animClr` (Animate Color Behavior): the tag `p:animClr`, schema type
 /// `CT_TLAnimateColorBehavior`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AnimateColorBehavior {
     pub by: Option<Box<By>>,
     pub clr_spc: Option<TimeListAnimateColorSpace>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub common_behavior: Box<CommonBehavior>,
     pub dir: Option<TimeListAnimateColorDirection>,
     pub from_color: Option<Box<FromColor>>,
@@ -2815,16 +2828,18 @@ pub enum AnimateColorByContent {
 
 /// 19.5.3 `animEffect` (Animate Effect): the tag `p:animEffect`, schema type
 /// `CT_TLAnimateEffectBehavior`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AnimateEffect {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub common_behavior: Box<CommonBehavior>,
     pub filter: Option<String>,
     pub pr_lst: Option<String>,
@@ -2835,18 +2850,20 @@ pub struct AnimateEffect {
 
 /// 19.5.4 `animMotion` (Animate Motion): the tag `p:animMotion`, schema type
 /// `CT_TLAnimateMotionBehavior`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AnimateMotion {
     pub bounce_end: Option<String>,
     pub by_tl_point: Option<Box<ByTLPoint>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub common_behavior: Box<CommonBehavior>,
     pub from_tl_point: Option<Box<FromTLPoint>>,
     pub origin: Option<TLAnimateMotionBehaviorOrigin>,
@@ -2861,18 +2878,20 @@ pub struct AnimateMotion {
 
 /// 19.5.5 `animRot` (Animate Rotation): the tag `p:animRot`, schema type
 /// `CT_TLAnimateRotationBehavior`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AnimateRotation {
     pub bounce_end: Option<String>,
     pub by: Option<super::drawing::Angle>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub common_behavior: Box<CommonBehavior>,
     pub from: Option<super::drawing::Angle>,
     pub to: Option<super::drawing::Angle>,
@@ -2881,18 +2900,20 @@ pub struct AnimateRotation {
 
 /// 19.5.6 `animScale` (Animate Scale): the tag `p:animScale`, schema type
 /// `CT_TLAnimateScaleBehavior`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AnimateScale {
     pub bounce_end: Option<String>,
     pub by_tl_point: Option<Box<ByTLPoint>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub common_behavior: Box<CommonBehavior>,
     pub from_tl_point: Option<Box<FromTLPoint>>,
     pub to: Option<Box<To>>,
@@ -2901,10 +2922,12 @@ pub struct AnimateScale {
 }
 
 /// 19.7.39 `ST_TLTimeAnimateValueTime` (Animation Time): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AnimationTime(pub String);
 /// The member types of `ST_TLTimeAnimateValueTime`, in alphabetical order; `value` tries them in
@@ -2930,10 +2953,12 @@ pub enum AnimationVariantContent {
 }
 
 /// 19.5.7 `attrName` (Attribute Name): the tag `p:attrName`, schema type `string`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AttributeName {
     pub unknown: officekit_markup_base::Unknown,
@@ -2942,10 +2967,12 @@ pub struct AttributeName {
 
 /// 19.5.8 `attrNameLst` (Attribute Name List): the tag `p:attrNameLst`, schema type
 /// `CT_TLBehaviorAttributeNameList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AttributeNameList {
     pub attribute_name: Vec<AttributeName>,
@@ -2953,26 +2980,30 @@ pub struct AttributeNameList {
 }
 
 /// 19.5.9 audio (Audio): the tag `p:audio`, schema type `CT_TLMediaNodeAudio`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Audio {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub common_media_node_properties: Box<CommonMediaNodeProperties>,
     pub is_narration: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.5.10 bg (Background): the tag `p:bg`, schema type `CT_Empty`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Background {
     pub unknown: officekit_markup_base::Unknown,
@@ -2980,20 +3011,22 @@ pub struct Background {
 
 /// 19.3.1.2 `bgPr` (Background Properties): the tag `p:bgPr`, schema type
 /// `CT_BackgroundProperties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BackgroundProperties {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContent>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub fill_properties_content: Box<super::drawing::FillPropertiesContent>,
     pub shade_to_title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
@@ -3001,10 +3034,12 @@ pub struct BackgroundProperties {
 
 /// 19.3.1.3 `bgRef` (Background Style Reference): the tag `p:bgRef`, schema type
 /// `CT_StyleMatrixReference`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BackgroundStyleReference {
     pub content: Option<Box<super::drawing::ColorContent>>,
@@ -3013,10 +3048,12 @@ pub struct BackgroundStyleReference {
 }
 
 /// 19.7.27 `ST_TLBehaviorAccumulateType` (Behavior Accumulate Type): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BehaviorAccumulateType(pub String);
 /// The members of `ST_TLBehaviorAccumulateType`, in alphabetical order.
@@ -3028,10 +3065,12 @@ pub enum BehaviorAccumulateTypeMember {
 }
 
 /// 19.7.28 `ST_TLBehaviorAdditiveType` (Behavior Additive Type): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BehaviorAdditiveType(pub String);
 /// The members of `ST_TLBehaviorAdditiveType`, in alphabetical order.
@@ -3046,10 +3085,12 @@ pub enum BehaviorAdditiveTypeMember {
 }
 
 /// 19.7.29 `ST_TLBehaviorOverrideType` (Behavior Override Type): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BehaviorOverrideType(pub String);
 /// The members of `ST_TLBehaviorOverrideType`, in alphabetical order.
@@ -3061,10 +3102,12 @@ pub enum BehaviorOverrideTypeMember {
 }
 
 /// 19.7.30 `ST_TLBehaviorTransformType` (Behavior Transform Type): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BehaviorTransformType(pub String);
 /// The members of `ST_TLBehaviorTransformType`, in alphabetical order.
@@ -3077,10 +3120,12 @@ pub enum BehaviorTransformTypeMember {
 
 /// 19.5.18 blinds (Blinds Slide Transition): the tag `p:blinds`, schema type
 /// `CT_OrientationTransition`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BlindsSlideTransition {
     pub dir: Option<Direction>,
@@ -3088,10 +3133,12 @@ pub struct BlindsSlideTransition {
 }
 
 /// 19.2.1.1 bold (Bold Embedded Font): the tag `p:bold`, schema type `CT_EmbeddedFontDataId`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BoldEmbeddedFont {
     pub id: Option<String>,
@@ -3100,10 +3147,12 @@ pub struct BoldEmbeddedFont {
 
 /// 19.2.1.2 `boldItalic` (Bold Italic Embedded Font): the tag `p:boldItalic`, schema type
 /// `CT_EmbeddedFontDataId`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BoldItalicEmbeddedFont {
     pub id: Option<String>,
@@ -3111,19 +3160,23 @@ pub struct BoldItalicEmbeddedFont {
 }
 
 /// 19.7.1 `ST_BookmarkIdSeed` (Bookmark ID Seed): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BookmarkIDSeed(pub String);
 
 /// 19.5.19 `boolVal` (Boolean Variant): the tag `p:boolVal`, schema type
 /// `CT_TLAnimVariantBooleanVal`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BooleanVariant {
     pub unknown: officekit_markup_base::Unknown,
@@ -3131,10 +3184,12 @@ pub struct BooleanVariant {
 }
 
 /// 19.2.1.3 browse (Browse Slide Show Mode): the tag `p:browse`, schema type `CT_ShowInfoBrowse`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BrowseSlideShowMode {
     pub show_scrollbar: Option<String>,
@@ -3142,20 +3197,24 @@ pub struct BrowseSlideShowMode {
 }
 
 /// 19.5.11 `bldAsOne` (Build As One): the tag `p:bldAsOne`, schema type `CT_Empty`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BuildAsOne {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.5.12 `bldDgm` (Build Diagram): the tag `p:bldDgm`, schema type `CT_TLBuildDiagram`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BuildDiagram {
     pub bld: Option<DiagramBuildTypes>,
@@ -3167,10 +3226,12 @@ pub struct BuildDiagram {
 
 /// 19.5.15 `bldOleChart` (Build Embedded Chart): the tag `p:bldOleChart`, schema type
 /// `CT_TLOleBuildChart`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BuildEmbeddedChart {
     pub anim_bg: Option<String>,
@@ -3183,10 +3244,12 @@ pub struct BuildEmbeddedChart {
 
 /// 19.5.13 `bldGraphic` (Build Graphics): the tag `p:bldGraphic`, schema type
 /// `CT_TLGraphicalObjectBuild`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BuildGraphics {
     pub content: Box<BuildGraphicsContent>,
@@ -3206,10 +3269,12 @@ pub enum BuildGraphicsContent {
 }
 
 /// 19.5.14 `bldLst` (Build List): the tag `p:bldLst`, schema type `CT_BuildList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BuildList {
     pub content: Vec<BuildListContent>,
@@ -3228,10 +3293,12 @@ pub enum BuildListContent {
 }
 
 /// 19.5.16 `bldP` (Build Paragraph): the tag `p:bldP`, schema type `CT_TLBuildParagraph`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BuildParagraph {
     pub adv_auto: Option<Time>,
@@ -3249,10 +3316,12 @@ pub struct BuildParagraph {
 
 /// 19.5.17 `bldSub` (Build Sub Elements): the tag `p:bldSub`, schema type
 /// `CT_AnimationGraphicalObjectBuildProperties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BuildSubElements {
     pub content: Box<super::drawing::BuildSubElementsContent>,
@@ -3260,10 +3329,12 @@ pub struct BuildSubElements {
 }
 
 /// 19.5.20 by (By): the tag `p:by`, schema type `CT_TLByAnimateColorTransform`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct By {
     pub content: Box<AnimateColorByContent>,
@@ -3271,10 +3342,12 @@ pub struct By {
 }
 
 /// 19.5.21 by (By): the tag `p:by`, schema type `CT_TLPoint`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ByTLPoint {
     pub unknown: officekit_markup_base::Unknown,
@@ -3283,10 +3356,12 @@ pub struct ByTLPoint {
 }
 
 /// 19.5.23 `charRg` (Character Range): the tag `p:charRg`, schema type `CT_IndexRange`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CharacterRange {
     pub end: Option<Index>,
@@ -3295,10 +3370,12 @@ pub struct CharacterRange {
 }
 
 /// 19.7.31 `ST_TLChartSubelementType` (Chart Subelement Type): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ChartSubelementType(pub String);
 /// The members of `ST_TLChartSubelementType`, in alphabetical order.
@@ -3314,10 +3391,12 @@ pub enum ChartSubelementTypeMember {
 
 /// 19.5.24 checker (Checker Slide Transition): the tag `p:checker`, schema type
 /// `CT_OrientationTransition`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CheckerSlideTransition {
     pub dir: Option<Direction>,
@@ -3326,35 +3405,41 @@ pub struct CheckerSlideTransition {
 
 /// 19.5.25 `childTnLst` (Children Time Node List): the tag `p:childTnLst`, schema type
 /// `CT_TimeNodeList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ChildrenTimeNodeList {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<TimeNodeListContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.5.26 circle (Circle Slide Transition): the tag `p:circle`, schema type `CT_Empty`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CircleSlideTransition {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.2.1.4 `clrMru` (Color MRU): the tag `p:clrMru`, schema type `CT_ColorMRU`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColorMRU {
     pub content: Vec<super::drawing::ColorContent>,
@@ -3362,13 +3447,15 @@ pub struct ColorMRU {
 }
 
 /// 19.3.1.6 `clrMap` (Color Scheme Map): the tag `p:clrMap`, schema type `CT_ColorMapping`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColorSchemeMap {
     pub accent1: Option<super::drawing::ThemeColorReference>,
@@ -3379,7 +3466,7 @@ pub struct ColorSchemeMap {
     pub accent6: Option<super::drawing::ThemeColorReference>,
     pub bg1: Option<super::drawing::ThemeColorReference>,
     pub bg2: Option<super::drawing::ThemeColorReference>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
     pub fol_hlink: Option<super::drawing::ThemeColorReference>,
     pub hlink: Option<super::drawing::ThemeColorReference>,
@@ -3390,25 +3477,29 @@ pub struct ColorSchemeMap {
 
 /// 19.3.1.7 `clrMapOvr` (Color Scheme Map Override): the tag `p:clrMapOvr`, schema type
 /// `CT_ColorMappingOverride`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColorSchemeMapOverride {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Box<super::drawing::ColorSchemeMapOverrideContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.5.27 `clrVal` (Color Value): the tag `p:clrVal`, schema type `CT_Color`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColorValue {
     pub content: Box<super::drawing::ColorContent>,
@@ -3416,10 +3507,12 @@ pub struct ColorValue {
 }
 
 /// 19.5.30 comb (Comb Slide Transition): the tag `p:comb`, schema type `CT_OrientationTransition`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CombSlideTransition {
     pub dir: Option<Direction>,
@@ -3427,27 +3520,31 @@ pub struct CombSlideTransition {
 }
 
 /// 19.5.28 cmd (Command): the tag `p:cmd`, schema type `CT_TLCommandBehavior`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Command {
     pub cmd: Option<String>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub common_behavior: Box<CommonBehavior>,
     pub r#type: Option<CommandType>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.7.32 `ST_TLCommandType` (Command Type): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CommandType(pub String);
 /// The members of `ST_TLCommandType`, in alphabetical order.
@@ -3460,19 +3557,21 @@ pub enum CommandTypeMember {
 }
 
 /// 19.4.1 cm (Comment): the tag `p:cm`, schema type `CT_Comment`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Comment {
     pub author_id: Option<String>,
     pub comments_text_content: Box<CommentsTextContent>,
     pub dt: Option<String>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list_with_modification_flag: Option<Box<ExtensionListWithModificationFlag>>,
     pub idx: Option<Index>,
     pub position: Box<CommentPosition>,
@@ -3480,17 +3579,19 @@ pub struct Comment {
 }
 
 /// 19.4.2 `cmAuthor` (Comment Author): the tag `p:cmAuthor`, schema type `CT_CommentAuthor`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CommentAuthor {
     pub clr_idx: Option<String>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
     pub id: Option<String>,
     pub initials: Option<String>,
@@ -3500,25 +3601,29 @@ pub struct CommentAuthor {
 }
 
 /// 19.4.4 `cmLst` (Comment List): the tag `p:cmLst`, schema type `CT_CommentList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CommentList {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub comment: Vec<Comment>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.4.5 pos (Comment Position): the tag `p:pos`, schema type `CT_Point2D`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CommentPosition {
     pub unknown: officekit_markup_base::Unknown,
@@ -3527,10 +3632,12 @@ pub struct CommentPosition {
 }
 
 /// 19.4.6 text (Comment's Text Content): the tag `p:text`, schema type `string`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CommentsTextContent {
     pub unknown: officekit_markup_base::Unknown,
@@ -3538,20 +3645,22 @@ pub struct CommentsTextContent {
 }
 
 /// 19.5.22 `cBhvr` (Common Behavior): the tag `p:cBhvr`, schema type `CT_TLCommonBehaviorData`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CommonBehavior {
     pub accumulate: Option<BehaviorAccumulateType>,
     pub additive: Option<BehaviorAdditiveType>,
     pub attribute_name_list: Option<Box<AttributeNameList>>,
     pub by: Option<String>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub common_time_node_properties: Box<CommonTimeNodeProperties>,
     pub from: Option<String>,
     pub r#override: Option<BehaviorOverrideType>,
@@ -3564,16 +3673,18 @@ pub struct CommonBehavior {
 
 /// 19.5.29 `cMediaNode` (Common Media Node Properties): the tag `p:cMediaNode`, schema type
 /// `CT_TLCommonMediaNodeData`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CommonMediaNodeProperties {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub common_time_node_properties: Box<CommonTimeNodeProperties>,
     pub mute: Option<String>,
     pub num_sld: Option<String>,
@@ -3584,34 +3695,38 @@ pub struct CommonMediaNodeProperties {
 }
 
 /// 19.3.1.16 `cSld` (Common Slide Data): the tag `p:cSld`, schema type `CT_CommonSlideData`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CommonSlideData {
     pub customer_data_list: Option<Box<CustomerDataList>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_of_controls: Option<Box<ListOfControls>>,
     pub name: Option<String>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub shape_tree: Box<ShapeTree>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub slide_background: Option<Box<SlideBackground>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.2.2.1 `cSldViewPr` (Common Slide View Properties): the tag `p:cSldViewPr`, schema type
 /// `CT_CommonSlideViewProperties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CommonSlideViewProperties {
     pub common_view_properties: Box<CommonViewProperties>,
@@ -3624,20 +3739,22 @@ pub struct CommonSlideViewProperties {
 
 /// 19.5.33 `cTn` (Common Time Node Properties): the tag `p:cTn`, schema type
 /// `CT_TLCommonTimeNodeData`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CommonTimeNodeProperties {
     pub accel: Option<super::drawing::PositiveFixedPercentage>,
     pub after_effect: Option<String>,
     pub auto_rev: Option<String>,
     pub bld_lvl: Option<String>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub children_time_node_list: Option<Box<ChildrenTimeNodeList>>,
     pub decel: Option<super::drawing::PositiveFixedPercentage>,
     pub display: Option<String>,
@@ -3661,7 +3778,7 @@ pub struct CommonTimeNodeProperties {
     pub restart: Option<TimeNodeRestartType>,
     pub spd: Option<super::drawing::Percentage>,
     pub start_conditions_list: Option<Box<StartConditionsList>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub sub_timenodes_list: Option<Box<SubTimeNodesList>>,
     pub sync_behavior: Option<TimeNodeSyncType>,
     pub tm_filter: Option<String>,
@@ -3670,10 +3787,12 @@ pub struct CommonTimeNodeProperties {
 
 /// 19.2.2.2 `cViewPr` (Common View Properties): the tag `p:cViewPr`, schema type
 /// `CT_CommonViewProperties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CommonViewProperties {
     pub unknown: officekit_markup_base::Unknown,
@@ -3683,10 +3802,12 @@ pub struct CommonViewProperties {
 }
 
 /// 19.5.31 cond (Condition): the tag `p:cond`, schema type `CT_TLTimeCondition`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Condition {
     pub content: Option<Box<TimeConditionContent>>,
@@ -3696,30 +3817,34 @@ pub struct Condition {
 }
 
 /// 19.3.1.19 `cxnSp` (Connection Shape): the tag `p:cxnSp`, schema type `CT_Connector`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConnectionShape {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list_with_modification_flag: Option<Box<ExtensionListWithModificationFlag>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_properties: Box<NonVisualPropertiesForAConnectionShape>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub properties: Box<ShapeProperties>,
     pub style: Option<Box<ShapeStyle>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.3.1.14 `contentPart` (Content Part): the tag `p:contentPart`, schema type `CT_Rel`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ContentPart {
     pub id: Option<String>,
@@ -3728,10 +3853,12 @@ pub struct ContentPart {
 
 /// 19.5.32 cover (Cover Slide Transition): the tag `p:cover`, schema type
 /// `CT_EightDirectionTransition`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CoverSlideTransition {
     pub dir: Option<TransitionEightDirection>,
@@ -3739,10 +3866,12 @@ pub struct CoverSlideTransition {
 }
 
 /// 19.2.1.5 `custShow` (Custom Show): the tag `p:custShow`, schema type `CT_CustomShowId`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CustomShow {
     pub id: Option<String>,
@@ -3750,16 +3879,18 @@ pub struct CustomShow {
 }
 
 /// 19.2.1.6 `custShow` (Custom Show): the tag `p:custShow`, schema type `CT_CustomShow`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CustomShowCustomShow {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
     pub id: Option<String>,
     pub list_of_presentation_slides: Box<ListOfPresentationSlides>,
@@ -3768,10 +3899,12 @@ pub struct CustomShowCustomShow {
 }
 
 /// 19.3.1.17 `custData` (Customer Data): the tag `p:custData`, schema type `CT_CustomerData`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CustomerData {
     pub id: Option<String>,
@@ -3780,10 +3913,12 @@ pub struct CustomerData {
 
 /// 19.3.1.18 `custDataLst` (Customer Data List): the tag `p:custDataLst`, schema type
 /// `CT_CustomerDataList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CustomerDataList {
     pub customer_data: Vec<CustomerData>,
@@ -3792,10 +3927,12 @@ pub struct CustomerDataList {
 }
 
 /// 19.3.1.47 tags (Customer Data Tags): the tag `p:tags`, schema type `CT_TagsData`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CustomerDataTags {
     pub id: Option<String>,
@@ -3803,10 +3940,12 @@ pub struct CustomerDataTags {
 }
 
 /// 19.5.34 cut (Cut Slide Transition): the tag `p:cut`, schema type `CT_OptionalBlackTransition`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CutSlideTransition {
     pub thru_blk: Option<String>,
@@ -3814,10 +3953,12 @@ pub struct CutSlideTransition {
 }
 
 /// 19.7.12 `ST_PrintWhat` (Default print output): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DefaultPrintOutput(pub String);
 /// The members of `ST_PrintWhat`, in alphabetical order.
@@ -3836,10 +3977,12 @@ pub enum DefaultPrintOutputMember {
 }
 
 /// 19.7.33 `ST_TLDiagramBuildType` (Diagram Build Types): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DiagramBuildTypes(pub String);
 /// The members of `ST_TLDiagramBuildType`, in alphabetical order.
@@ -3866,20 +4009,24 @@ pub enum DiagramBuildTypesMember {
 }
 
 /// 19.5.35 diamond (Diamond Slide Transition): the tag `p:diamond`, schema type `CT_Empty`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DiamondSlideTransition {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.7.2 `ST_Direction` (Direction): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Direction(pub String);
 /// The members of `ST_Direction`, in alphabetical order.
@@ -3891,20 +4038,24 @@ pub enum DirectionMember {
 }
 
 /// 19.5.36 dissolve (Dissolve Slide Transition): the tag `p:dissolve`, schema type `CT_Empty`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DissolveSlideTransition {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.7.35 `ST_TLOleChartBuildType` (Embedded Chart Build Type): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EmbeddedChartBuildType(pub String);
 /// The members of `ST_TLOleChartBuildType`, in alphabetical order.
@@ -3920,10 +4071,12 @@ pub enum EmbeddedChartBuildTypeMember {
 
 /// 19.5.52 `oleChartEl` (Embedded Chart Element): the tag `p:oleChartEl`, schema type
 /// `CT_TLOleChartTargetElement`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EmbeddedChartElement {
     pub lvl: Option<String>,
@@ -3932,22 +4085,24 @@ pub struct EmbeddedChartElement {
 }
 
 /// 19.3.2.1 control (Embedded Control): the tag `p:control`, schema type `CT_Control`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EmbeddedControl {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
     pub id: Option<String>,
     pub img_h: Option<super::drawing::PositiveCoordinatePoint>,
     pub img_w: Option<super::drawing::PositiveCoordinatePoint>,
     pub name: Option<String>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub picture: Option<Box<Picture>>,
     pub show_as_icon: Option<String>,
     pub spid: Option<String>,
@@ -3956,10 +4111,12 @@ pub struct EmbeddedControl {
 
 /// 19.2.1.9 `embeddedFont` (Embedded Font): the tag `p:embeddedFont`, schema type
 /// `CT_EmbeddedFontListEntry`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EmbeddedFont {
     pub bold: Option<Box<BoldEmbeddedFont>>,
@@ -3972,10 +4129,12 @@ pub struct EmbeddedFont {
 
 /// 19.2.1.10 `embeddedFontLst` (Embedded Font List): the tag `p:embeddedFontLst`, schema type
 /// `CT_EmbeddedFontList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EmbeddedFontList {
     pub embedded_font: Vec<EmbeddedFont>,
@@ -3983,10 +4142,12 @@ pub struct EmbeddedFontList {
 }
 
 /// 19.2.1.13 font (Embedded Font Name): the tag `p:font`, schema type `CT_TextFont`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EmbeddedFontName {
     pub charset: Option<String>,
@@ -4006,16 +4167,18 @@ pub enum EmbeddedObjectContent {
 }
 
 /// 19.3.2.2 embed (Embedded Object or Control): the tag `p:embed`, schema type `CT_OleObjectEmbed`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EmbeddedObjectOrControl {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
     pub follow_color_scheme: Option<OleObjectFollowColorScheme>,
     pub unknown: officekit_markup_base::Unknown,
@@ -4023,22 +4186,24 @@ pub struct EmbeddedObjectOrControl {
 
 /// 19.3.2.4 `oleObj` (Global Element for Embedded objects and Controls): the tag `p:oleObj`, schema
 /// type `CT_OleObject`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EmbeddedObjectsAndControls {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Box<EmbeddedObjectContent>,
     pub id: Option<String>,
     pub img_h: Option<super::drawing::PositiveCoordinatePoint>,
     pub img_w: Option<super::drawing::PositiveCoordinatePoint>,
     pub name: Option<String>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub picture: Option<Box<Picture>>,
     pub prog_id: Option<String>,
     pub show_as_icon: Option<String>,
@@ -4048,10 +4213,12 @@ pub struct EmbeddedObjectsAndControls {
 
 /// 19.5.37 `endCondLst` (End Conditions List): the tag `p:endCondLst`, schema type
 /// `CT_TLTimeConditionList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EndConditionsList {
     pub condition: Vec<Condition>,
@@ -4059,10 +4226,12 @@ pub struct EndConditionsList {
 }
 
 /// 19.5.39 `endSync` (`EndSync`): the tag `p:endSync`, schema type `CT_TLTimeCondition`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EndSync {
     pub content: Option<Box<TimeConditionContent>>,
@@ -4072,63 +4241,71 @@ pub struct EndSync {
 }
 
 /// 19.5.40 excl (Exclusive): the tag `p:excl`, schema type `CT_TLTimeNodeExclusive`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Exclusive {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub common_time_node_properties: Box<CommonTimeNodeProperties>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.2.1.11 ext (Extension): the tag `p:ext`, schema type `CT_Extension`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Extension {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<super::drawing::AnyElementContent>,
     pub unknown: officekit_markup_base::Unknown,
     pub uri: Option<String>,
 }
 
 /// 19.2.1.12 `extLst` (Extension List): the tag `p:extLst`, schema type `CT_ExtensionList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtensionList {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension: Vec<Extension>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.3.1.20 `extLst` (Extension List with Modification Flag): the tag `p:extLst`, schema type
 /// `CT_ExtensionListModify`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtensionListWithModificationFlag {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension: Vec<Extension>,
     pub r#mod: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
@@ -4136,10 +4313,12 @@ pub struct ExtensionListWithModificationFlag {
 
 /// 19.5.41 fade (Fade Slide Transition): the tag `p:fade`, schema type
 /// `CT_OptionalBlackTransition`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FadeSlideTransition {
     pub thru_blk: Option<String>,
@@ -4147,10 +4326,12 @@ pub struct FadeSlideTransition {
 }
 
 /// 19.5.42 `fltVal` (Float Value): the tag `p:fltVal`, schema type `CT_TLAnimVariantFloatVal`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FloatValue {
     pub unknown: officekit_markup_base::Unknown,
@@ -4158,10 +4339,12 @@ pub struct FloatValue {
 }
 
 /// 19.5.43 from (From): the tag `p:from`, schema type `CT_Color`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FromColor {
     pub content: Box<super::drawing::ColorContent>,
@@ -4169,10 +4352,12 @@ pub struct FromColor {
 }
 
 /// 19.5.44 from (From): the tag `p:from`, schema type `CT_TLPoint`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FromTLPoint {
     pub unknown: officekit_markup_base::Unknown,
@@ -4182,10 +4367,12 @@ pub struct FromTLPoint {
 
 /// 19.5.45 `graphicEl` (Graphic Element): the tag `p:graphicEl`, schema type
 /// `CT_AnimationElementChoice`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GraphicElement {
     pub content: Box<super::drawing::GraphicElementContent>,
@@ -4194,31 +4381,35 @@ pub struct GraphicElement {
 
 /// 19.3.1.21 `graphicFrame` (Graphic Frame): the tag `p:graphicFrame`, schema type
 /// `CT_GraphicalObjectFrame`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GraphicFrame {
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list_with_modification_flag: Option<Box<ExtensionListWithModificationFlag>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub graphic_object: Box<super::drawing::GraphicObject>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_properties: Box<NonVisualPropertiesForAGraphicFrame>,
     pub unknown: officekit_markup_base::Unknown,
     pub xfrm: Box<Xfrm>,
 }
 
 /// 19.2.2.3 `gridSpacing` (Grid Spacing): the tag `p:gridSpacing`, schema type `CT_PositiveSize2D`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GridSpacing {
     pub cx: Option<super::drawing::PositiveCoordinate>,
@@ -4227,22 +4418,24 @@ pub struct GridSpacing {
 }
 
 /// 19.3.1.22 `grpSp` (Group Shape): the tag `p:grpSp`, schema type `CT_GroupShape`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GroupShape {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<GroupShapeContent>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list_with_modification_flag: Option<Box<ExtensionListWithModificationFlag>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_properties: Box<NonVisualPropertiesForAGroupShape>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub properties: Box<GroupShapeProperties>,
     pub unknown: officekit_markup_base::Unknown,
 }
@@ -4262,23 +4455,25 @@ pub enum GroupShapeContent {
 
 /// 19.3.1.23 `grpSpPr` (Group Shape Properties): the tag `p:grpSpPr`, schema type
 /// `CT_GroupShapeProperties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GroupShapeProperties {
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContent>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContent>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub scene3d: Option<Box<super::drawing::Scene3d>>,
     pub unknown: officekit_markup_base::Unknown,
     pub xfrm_group_transform2d: Option<Box<super::drawing::XfrmGroupTransform2D>>,
@@ -4286,17 +4481,19 @@ pub struct GroupShapeProperties {
 
 /// 16.3.1.1 `htmlPubPr` (HTML Publishing Properties): the tag `p:htmlPubPr`, schema type
 /// `CT_HtmlPublishProperties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HTMLPublishingProperties {
     pub content: Box<SlideListContent>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
     pub id: Option<String>,
     pub show_speaker_notes: Option<String>,
@@ -4306,10 +4503,12 @@ pub struct HTMLPublishingProperties {
 }
 
 /// 16.5.1 `ST_WebColorType` (HTML Slide Navigation Control Colors): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HTMLSlideNavigationControlColors(pub String);
 /// The members of `ST_WebColorType`, in alphabetical order.
@@ -4325,10 +4524,12 @@ pub enum HTMLSlideNavigationControlColorsMember {
 }
 
 /// 16.5.3 `ST_WebScreenSize` (HTML/Web Screen Size Target): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HTMLWebScreenSizeTarget(pub String);
 /// The members of `ST_WebScreenSize`, in alphabetical order.
@@ -4350,22 +4551,24 @@ pub enum HTMLWebScreenSizeTargetMember {
 
 /// 19.3.1.24 `handoutMaster` (Handout Master): the tag `p:handoutMaster`, schema type
 /// `CT_HandoutMaster`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HandoutMaster {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub color_scheme_map: Box<ColorSchemeMap>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub common_slide_data: Box<CommonSlideData>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list_with_modification_flag: Option<Box<ExtensionListWithModificationFlag>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub header_footer_information_for_a_slide_master:
         Option<Box<HeaderFooterInformationForASlideMaster>>,
     pub unknown: officekit_markup_base::Unknown,
@@ -4373,16 +4576,18 @@ pub struct HandoutMaster {
 
 /// 19.2.1.14 `handoutMasterId` (Handout Master ID): the tag `p:handoutMasterId`, schema type
 /// `CT_HandoutMasterIdListEntry`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HandoutMasterID {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
@@ -4390,17 +4595,19 @@ pub struct HandoutMasterID {
 
 /// 19.3.1.25 hf (Header/Footer information for a slide master): the tag `p:hf`, schema type
 /// `CT_HeaderFooter`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HeaderFooterInformationForASlideMaster {
     pub dt: Option<String>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list_with_modification_flag: Option<Box<ExtensionListWithModificationFlag>>,
     pub ftr: Option<String>,
     pub hdr: Option<String>,
@@ -4409,10 +4616,12 @@ pub struct HeaderFooterInformationForASlideMaster {
 }
 
 /// 19.5.46 hsl (HSL): the tag `p:hsl`, schema type `CT_TLByHslColorTransform`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Hsl {
     pub h: Option<super::drawing::Angle>,
@@ -4422,10 +4631,12 @@ pub struct Hsl {
 }
 
 /// 19.7.40 `ST_TLTimeIndefinite` (Indefinite Time Declaration): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct IndefiniteTimeDeclaration(pub String);
 /// The members of `ST_TLTimeIndefinite`, in alphabetical order.
@@ -4436,18 +4647,22 @@ pub enum IndefiniteTimeDeclarationMember {
 }
 
 /// 19.7.3 `ST_Index` (Index): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Index(pub String);
 
 /// 19.5.47 `inkTgt` (Ink Target): the tag `p:inkTgt`, schema type `CT_TLSubShapeId`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct InkTarget {
     pub spid: Option<String>,
@@ -4455,10 +4670,12 @@ pub struct InkTarget {
 }
 
 /// 19.5.48 `intVal` (Integer): the tag `p:intVal`, schema type `CT_TLAnimVariantIntegerVal`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Integer {
     pub unknown: officekit_markup_base::Unknown,
@@ -4467,10 +4684,12 @@ pub struct Integer {
 
 /// 19.2.1.16 italic (Italic Embedded Font): the tag `p:italic`, schema type
 /// `CT_EmbeddedFontDataId`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ItalicEmbeddedFont {
     pub id: Option<String>,
@@ -4478,10 +4697,12 @@ pub struct ItalicEmbeddedFont {
 }
 
 /// 19.5.49 iterate (Iterate): the tag `p:iterate`, schema type `CT_TLIterateData`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Iterate {
     pub backwards: Option<String>,
@@ -4500,10 +4721,12 @@ pub enum IterateContent {
 }
 
 /// 19.7.4 `ST_IterateType` (Iterate Type): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct IterateType(pub String);
 /// The members of `ST_IterateType`, in alphabetical order.
@@ -4516,10 +4739,12 @@ pub enum IterateTypeMember {
 }
 
 /// 19.2.1.17 kinsoku (Kinsoku Settings): the tag `p:kinsoku`, schema type `CT_Kinsoku`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct KinsokuSettings {
     pub inval_end_chars: Option<String>,
@@ -4529,10 +4754,12 @@ pub struct KinsokuSettings {
 }
 
 /// 19.2.1.18 kiosk (Kiosk Slide Show Mode): the tag `p:kiosk`, schema type `CT_ShowInfoKiosk`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct KioskSlideShowMode {
     pub restart: Option<String>,
@@ -4540,16 +4767,18 @@ pub struct KioskSlideShowMode {
 }
 
 /// 19.3.2.3 link (Linked Object or Control): the tag `p:link`, schema type `CT_OleObjectLink`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LinkedObjectOrControl {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
     pub unknown: officekit_markup_base::Unknown,
     pub update_automatic: Option<String>,
@@ -4557,56 +4786,64 @@ pub struct LinkedObjectOrControl {
 
 /// 19.4.3 `cmAuthorLst` (List of Comment Authors): the tag `p:cmAuthorLst`, schema type
 /// `CT_CommentAuthorList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListOfCommentAuthors {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub comment_author: Vec<CommentAuthor>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.3.1.15 controls (List of controls): the tag `p:controls`, schema type `CT_ControlList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListOfControls {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub embedded_control: Vec<EmbeddedControl>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.2.1.7 `custShowLst` (List of Custom Shows): the tag `p:custShowLst`, schema type
 /// `CT_CustomShowList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListOfCustomShows {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub custom_show_custom_show: Vec<CustomShowCustomShow>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.2.2.5 `guideLst` (List of Guides): the tag `p:guideLst`, schema type `CT_GuideList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListOfGuides {
     pub a_guide: Vec<AGuide>,
@@ -4615,42 +4852,48 @@ pub struct ListOfGuides {
 
 /// 19.2.1.15 `handoutMasterIdLst` (List of Handout Master IDs): the tag `p:handoutMasterIdLst`,
 /// schema type `CT_HandoutMasterIdList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListOfHandoutMasterIDs {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub handout_master_id: Option<Box<HandoutMasterID>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.2.1.21 `notesMasterIdLst` (List of Notes Master IDs): the tag `p:notesMasterIdLst`, schema
 /// type `CT_NotesMasterIdList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListOfNotesMasterIDs {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub notes_master_id: Option<Box<NotesMasterID>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.2.1.35 `sldLst` (List of Presentation Slides): the tag `p:sldLst`, schema type
 /// `CT_SlideRelationshipList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListOfPresentationSlides {
     pub presentation_slide: Vec<PresentationSlide>,
@@ -4659,10 +4902,12 @@ pub struct ListOfPresentationSlides {
 
 /// 19.2.2.15 `sldLst` (List of Presentation Slides): the tag `p:sldLst`, schema type
 /// `CT_OutlineViewSlideList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListOfPresentationSlidesOutlineViewSlideList {
     pub presentation_slide_outline_view_slide_entry: Vec<PresentationSlideOutlineViewSlideEntry>,
@@ -4670,57 +4915,65 @@ pub struct ListOfPresentationSlidesOutlineViewSlideList {
 }
 
 /// 19.2.1.34 `sldIdLst` (List of Slide IDs): the tag `p:sldIdLst`, schema type `CT_SlideIdList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListOfSlideIDs {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub slide_id: Vec<SlideID>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.3.1.41 `sldLayoutIdLst` (List of Slide Layouts): the tag `p:sldLayoutIdLst`, schema type
 /// `CT_SlideLayoutIdList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListOfSlideLayouts {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub slide_layout_id: Vec<SlideLayoutId>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.2.1.37 `sldMasterIdLst` (List of Slide Master IDs): the tag `p:sldMasterIdLst`, schema type
 /// `CT_SlideMasterIdList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListOfSlideMasterIDs {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub slide_master_id: Vec<SlideMasterID>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.7.55 `ST_ViewType` (List of View Types): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListOfViewTypes(pub String);
 /// The members of `ST_ViewType`, in alphabetical order.
@@ -4739,10 +4992,12 @@ pub enum ListOfViewTypesMember {
 
 /// 19.2.1.19 `modifyVerifier` (Modification Verifier): the tag `p:modifyVerifier`, schema type
 /// `CT_ModifyVerifier`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ModificationVerifier {
     pub alg_id_ext: Option<String>,
@@ -4765,20 +5020,24 @@ pub struct ModificationVerifier {
 }
 
 /// 19.5.50 newsflash (Newsflash Slide Transition): the tag `p:newsflash`, schema type `CT_Empty`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NewsflashSlideTransition {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.7.34 `ST_TLNextActionType` (Next Action Type): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NextActionType(pub String);
 /// The members of `ST_TLNextActionType`, in alphabetical order.
@@ -4791,10 +5050,12 @@ pub enum NextActionTypeMember {
 
 /// 19.5.51 `nextCondLst` (Next Conditions List): the tag `p:nextCondLst`, schema type
 /// `CT_TLTimeConditionList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NextConditionsList {
     pub condition: Vec<Condition>,
@@ -4803,42 +5064,46 @@ pub struct NextConditionsList {
 
 /// 19.3.1.8 `cNvCxnSpPr` (Non-Visual Connector Shape Drawing Properties): the tag `p:cNvCxnSpPr`,
 /// schema type `CT_NonVisualConnectorProperties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualConnectorShapeDrawingProperties {
     pub connection_end: Option<Box<super::drawing::ConnectionEnd>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub connection_shape_locks: Option<Box<super::drawing::ConnectionShapeLocks>>,
     pub connection_start: Option<Box<super::drawing::ConnectionStart>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.3.1.12 `cNvPr` (Non-Visual Drawing Properties): the tag `p:cNvPr`, schema type
 /// `CT_NonVisualDrawingProps`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualDrawingProperties {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub click_hyperlink: Option<Box<super::drawing::ClickHyperlink>>,
     pub descr: Option<String>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
     pub hidden: Option<String>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHover>>,
     pub id: Option<super::drawing::DrawingElementID>,
     pub name: Option<String>,
@@ -4848,18 +5113,20 @@ pub struct NonVisualDrawingProperties {
 
 /// 19.3.1.13 `cNvSpPr` (Non-Visual Drawing Properties for a Shape): the tag `p:cNvSpPr`, schema
 /// type `CT_NonVisualDrawingShapeProps`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualDrawingPropertiesForAShape {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub locks: Option<Box<super::drawing::ShapeLocks>>,
     pub tx_box: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
@@ -4867,54 +5134,60 @@ pub struct NonVisualDrawingPropertiesForAShape {
 
 /// 19.3.1.9 `cNvGraphicFramePr` (Non-Visual Graphic Frame Drawing Properties): the tag
 /// `p:cNvGraphicFramePr`, schema type `CT_NonVisualGraphicFrameProperties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualGraphicFrameDrawingProperties {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub graphic_frame_locks: Option<Box<super::drawing::GraphicFrameLocks>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.3.1.10 `cNvGrpSpPr` (Non-Visual Group Shape Drawing Properties): the tag `p:cNvGrpSpPr`,
 /// schema type `CT_NonVisualGroupDrawingShapeProps`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualGroupShapeDrawingProperties {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub group_shape_locks: Option<Box<super::drawing::GroupShapeLocks>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.3.1.11 `cNvPicPr` (Non-Visual Picture Drawing Properties): the tag `p:cNvPicPr`, schema type
 /// `CT_NonVisualPictureProperties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualPictureDrawingProperties {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub picture_locks: Option<Box<super::drawing::PictureLocks>>,
     pub prefer_relative_resize: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
@@ -4922,22 +5195,24 @@ pub struct NonVisualPictureDrawingProperties {
 
 /// 19.3.1.33 `nvPr` (Non-Visual Properties): the tag `p:nvPr`, schema type
 /// `CT_ApplicationNonVisualDrawingProps`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualProperties {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Option<Box<NonVisualPropertiesContent>>,
     pub customer_data_list: Option<Box<CustomerDataList>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
     pub is_photo: Option<String>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub placeholder_shape: Option<Box<PlaceholderShape>>,
     pub unknown: officekit_markup_base::Unknown,
     pub user_drawn: Option<String>,
@@ -4957,117 +5232,129 @@ pub enum NonVisualPropertiesContent {
 
 /// 19.3.1.29 `nvCxnSpPr` (Non-Visual Properties for a Connection Shape): the tag `p:nvCxnSpPr`,
 /// schema type `CT_ConnectorNonVisual`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualPropertiesForAConnectionShape {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_connector_shape_drawing_properties:
         Box<NonVisualConnectorShapeDrawingProperties>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_properties: Box<NonVisualProperties>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.3.1.30 `nvGraphicFramePr` (Non-Visual Properties for a Graphic Frame): the tag
 /// `p:nvGraphicFramePr`, schema type `CT_GraphicalObjectFrameNonVisual`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualPropertiesForAGraphicFrame {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_graphic_frame_drawing_properties: Box<NonVisualGraphicFrameDrawingProperties>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_properties: Box<NonVisualProperties>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.3.1.31 `nvGrpSpPr` (Non-Visual Properties for a Group Shape): the tag `p:nvGrpSpPr`, schema
 /// type `CT_GroupShapeNonVisual`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualPropertiesForAGroupShape {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_group_shape_drawing_properties: Box<NonVisualGroupShapeDrawingProperties>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_properties: Box<NonVisualProperties>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.3.1.32 `nvPicPr` (Non-Visual Properties for a Picture): the tag `p:nvPicPr`, schema type
 /// `CT_PictureNonVisual`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualPropertiesForAPicture {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_picture_drawing_properties: Box<NonVisualPictureDrawingProperties>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_properties: Box<NonVisualProperties>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.3.1.34 `nvSpPr` (Non-Visual Properties for a Shape): the tag `p:nvSpPr`, schema type
 /// `CT_ShapeNonVisual`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualPropertiesForAShape {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_drawing_properties_for_a_shape: Box<NonVisualDrawingPropertiesForAShape>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_properties: Box<NonVisualProperties>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.2.2.6 `normalViewPr` (Normal View Properties): the tag `p:normalViewPr`, schema type
 /// `CT_NormalViewProperties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NormalViewProperties {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
     pub horz_bar_state: Option<SplitterBarState>,
     pub normal_view_restored_left_properties: Box<NormalViewRestoredLeftProperties>,
@@ -5081,10 +5368,12 @@ pub struct NormalViewProperties {
 
 /// 19.2.2.11 `restoredLeft` (Normal View Restored Left Properties): the tag `p:restoredLeft`,
 /// schema type `CT_NormalViewPortion`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NormalViewRestoredLeftProperties {
     pub auto_adjust: Option<String>,
@@ -5094,10 +5383,12 @@ pub struct NormalViewRestoredLeftProperties {
 
 /// 19.2.2.12 `restoredTop` (Normal View Restored Top Properties): the tag `p:restoredTop`, schema
 /// type `CT_NormalViewPortion`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NormalViewRestoredTopProperties {
     pub auto_adjust: Option<String>,
@@ -5106,61 +5397,67 @@ pub struct NormalViewRestoredTopProperties {
 }
 
 /// 19.3.1.27 `notesMaster` (Notes Master): the tag `p:notesMaster`, schema type `CT_NotesMaster`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NotesMaster {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub color_scheme_map: Box<ColorSchemeMap>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub common_slide_data: Box<CommonSlideData>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list_with_modification_flag: Option<Box<ExtensionListWithModificationFlag>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub header_footer_information_for_a_slide_master:
         Option<Box<HeaderFooterInformationForASlideMaster>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub notes_text_style: Option<Box<NotesTextStyle>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.2.1.20 `notesMasterId` (Notes Master ID): the tag `p:notesMasterId`, schema type
 /// `CT_NotesMasterIdListEntry`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NotesMasterID {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.3.1.26 notes (Notes Slide): the tag `p:notes`, schema type `CT_NotesSlide`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NotesSlide {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub color_scheme_map_override: Option<Box<ColorSchemeMapOverride>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub common_slide_data: Box<CommonSlideData>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list_with_modification_flag: Option<Box<ExtensionListWithModificationFlag>>,
     pub show_master_ph_anim: Option<String>,
     pub show_master_sp: Option<String>,
@@ -5168,10 +5465,12 @@ pub struct NotesSlide {
 }
 
 /// 19.2.1.22 `notesSz` (Notes Slide Size): the tag `p:notesSz`, schema type `CT_PositiveSize2D`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NotesSlideSize {
     pub cx: Option<super::drawing::PositiveCoordinate>,
@@ -5181,79 +5480,87 @@ pub struct NotesSlideSize {
 
 /// 19.3.1.28 `notesStyle` (Notes Text Style): the tag `p:notesStyle`, schema type
 /// `CT_TextListStyle`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NotesTextStyle {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub default_paragraph_style: Option<Box<super::drawing::DefaultParagraphStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_1_text_style: Option<Box<super::drawing::ListLevel1TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_2_text_style: Option<Box<super::drawing::ListLevel2TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_3_text_style: Option<Box<super::drawing::ListLevel3TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_4_text_style: Option<Box<super::drawing::ListLevel4TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_5_text_style: Option<Box<super::drawing::ListLevel5TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_6_text_style: Option<Box<super::drawing::ListLevel6TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_7_text_style: Option<Box<super::drawing::ListLevel7TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_8_text_style: Option<Box<super::drawing::ListLevel8TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_9_text_style: Option<Box<super::drawing::ListLevel9TextStyle>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.2.2.7 `notesTextViewPr` (Notes Text View Properties): the tag `p:notesTextViewPr`, schema
 /// type `CT_NotesTextViewProperties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NotesTextViewProperties {
     pub common_view_properties: Box<CommonViewProperties>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.2.2.8 `notesViewPr` (Notes View Properties): the tag `p:notesViewPr`, schema type
 /// `CT_NotesViewProperties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NotesViewProperties {
     pub common_slide_view_properties: Box<CommonSlideViewProperties>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// `ST_OleObjectFollowColorScheme`: the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct OleObjectFollowColorScheme(pub String);
 /// The members of `ST_OleObjectFollowColorScheme`, in alphabetical order.
@@ -5267,17 +5574,19 @@ pub enum OleObjectFollowColorSchemeMember {
 
 /// 19.2.2.10 `outlineViewPr` (Outline View Properties): the tag `p:outlineViewPr`, schema type
 /// `CT_OutlineViewProperties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct OutlineViewProperties {
     pub common_view_properties: Box<CommonViewProperties>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
     pub list_of_presentation_slides_outline_view_slide_list:
         Option<Box<ListOfPresentationSlidesOutlineViewSlideList>>,
@@ -5285,10 +5594,12 @@ pub struct OutlineViewProperties {
 }
 
 /// 19.7.36 `ST_TLParaBuildType` (Paragraph Build Type): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ParagraphBuildType(pub String);
 /// The members of `ST_TLParaBuildType`, in alphabetical order.
@@ -5302,10 +5613,12 @@ pub enum ParagraphBuildTypeMember {
 }
 
 /// 19.5.56 `pRg` (Paragraph Text Range): the tag `p:pRg`, schema type `CT_IndexRange`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ParagraphTextRange {
     pub end: Option<Index>,
@@ -5314,25 +5627,29 @@ pub struct ParagraphTextRange {
 }
 
 /// 19.5.53 par (Parallel Time Node): the tag `p:par`, schema type `CT_TLTimeNodeParallel`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ParallelTimeNode {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub common_time_node_properties: Box<CommonTimeNodeProperties>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.2.1.23 `penClr` (Pen Color for Slide Show): the tag `p:penClr`, schema type `CT_Color`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PenColorForSlideShow {
     pub content: Box<super::drawing::ColorContent>,
@@ -5341,17 +5658,19 @@ pub struct PenColorForSlideShow {
 
 /// 19.2.1.24 `photoAlbum` (Photo Album Information): the tag `p:photoAlbum`, schema type
 /// `CT_PhotoAlbum`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PhotoAlbumInformation {
     pub bw: Option<String>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
     pub frame: Option<PhotoAlbumShapeForPhotoMask>,
     pub layout: Option<PhotoAlbumLayoutDefinition>,
@@ -5360,10 +5679,12 @@ pub struct PhotoAlbumInformation {
 }
 
 /// 19.7.8 `ST_PhotoAlbumLayout` (Photo Album Layout Definition): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PhotoAlbumLayoutDefinition(pub String);
 /// The members of `ST_PhotoAlbumLayout`, in alphabetical order.
@@ -5380,10 +5701,12 @@ pub enum PhotoAlbumLayoutDefinitionMember {
 }
 
 /// 19.7.7 `ST_PhotoAlbumFrameShape` (Photo Album Shape for Photo Mask): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PhotoAlbumShapeForPhotoMask(pub String);
 /// The members of `ST_PhotoAlbumFrameShape`, in alphabetical order.
@@ -5400,38 +5723,42 @@ pub enum PhotoAlbumShapeForPhotoMaskMember {
 }
 
 /// 19.3.1.37 pic (Picture): the tag `p:pic`, schema type `CT_Picture`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Picture {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list_with_modification_flag: Option<Box<ExtensionListWithModificationFlag>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub fill: Box<PictureFill>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_properties: Box<NonVisualPropertiesForAPicture>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub shape_properties: Box<ShapeProperties>,
     pub shape_style: Option<Box<ShapeStyle>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.3.1.4 `blipFill` (Picture Fill): the tag `p:blipFill`, schema type `CT_BlipFillProperties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PictureFill {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub blip: Option<Box<super::drawing::Blip>>,
     pub content: Option<Box<super::drawing::FillModeContent>>,
     pub dpi: Option<String>,
@@ -5441,10 +5768,12 @@ pub struct PictureFill {
 }
 
 /// 19.7.10 `ST_PlaceholderType` (Placeholder IDs): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PlaceholderIDs(pub String);
 /// The members of `ST_PlaceholderType`, in alphabetical order.
@@ -5470,16 +5799,18 @@ pub enum PlaceholderIDsMember {
 }
 
 /// 19.3.1.36 ph (Placeholder Shape): the tag `p:ph`, schema type `CT_Placeholder`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PlaceholderShape {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list_with_modification_flag: Option<Box<ExtensionListWithModificationFlag>>,
     pub has_custom_prompt: Option<String>,
     pub idx: Option<String>,
@@ -5490,10 +5821,12 @@ pub struct PlaceholderShape {
 }
 
 /// 19.7.9 `ST_PlaceholderSize` (Placeholder Size): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PlaceholderSize(pub String);
 /// The members of `ST_PlaceholderSize`, in alphabetical order.
@@ -5506,23 +5839,27 @@ pub enum PlaceholderSizeMember {
 }
 
 /// 19.5.54 plus (Plus Slide Transition): the tag `p:plus`, schema type `CT_Empty`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PlusSlideTransition {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.2.1.26 presentation (Presentation): the tag `p:presentation`, schema type `CT_Presentation`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Presentation {
     pub auto_compress_pictures: Option<String>,
@@ -5530,27 +5867,27 @@ pub struct Presentation {
     pub compat_mode: Option<String>,
     pub conformance: Option<common_simple_types::DocumentConformanceClassValue>,
     pub customer_data_list: Option<Box<CustomerDataList>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub default_text_style: Option<Box<PresentationDefaultTextStyle>>,
     pub embed_true_type_fonts: Option<String>,
     pub embedded_font_list: Option<Box<EmbeddedFontList>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
     pub first_slide_num: Option<String>,
     pub kinsoku_settings: Option<Box<KinsokuSettings>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_of_custom_shows: Option<Box<ListOfCustomShows>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_of_handout_master_ids: Option<Box<ListOfHandoutMasterIDs>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_of_notes_master_ids: Option<Box<ListOfNotesMasterIDs>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_of_slide_ids: Option<Box<ListOfSlideIDs>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_of_slide_master_ids: Option<Box<ListOfSlideMasterIDs>>,
     pub modification_verifier: Option<Box<ModificationVerifier>>,
     pub notes_slide_size: Box<NotesSlideSize>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub photo_album_information: Option<Box<PhotoAlbumInformation>>,
     pub remove_personal_info_on_save: Option<String>,
     pub rtl: Option<String>,
@@ -5565,46 +5902,50 @@ pub struct Presentation {
 
 /// 19.2.1.8 `defaultTextStyle` (Presentation Default Text Style): the tag `p:defaultTextStyle`,
 /// schema type `CT_TextListStyle`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresentationDefaultTextStyle {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub default_paragraph_style: Option<Box<super::drawing::DefaultParagraphStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_1_text_style: Option<Box<super::drawing::ListLevel1TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_2_text_style: Option<Box<super::drawing::ListLevel2TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_3_text_style: Option<Box<super::drawing::ListLevel3TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_4_text_style: Option<Box<super::drawing::ListLevel4TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_5_text_style: Option<Box<super::drawing::ListLevel5TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_6_text_style: Option<Box<super::drawing::ListLevel6TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_7_text_style: Option<Box<super::drawing::ListLevel7TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_8_text_style: Option<Box<super::drawing::ListLevel8TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_9_text_style: Option<Box<super::drawing::ListLevel9TextStyle>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.2.1.31 sld (Presentation Slide): the tag `p:sld`, schema type
 /// `CT_SlideRelationshipListEntry`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresentationSlide {
     pub id: Option<String>,
@@ -5612,10 +5953,12 @@ pub struct PresentationSlide {
 }
 
 /// 19.2.2.14 sld (Presentation Slide): the tag `p:sld`, schema type `CT_OutlineViewSlideEntry`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresentationSlideOutlineViewSlideEntry {
     pub collapse: Option<String>,
@@ -5624,10 +5967,12 @@ pub struct PresentationSlideOutlineViewSlideEntry {
 }
 
 /// 19.2.1.39 `sldSz` (Presentation Slide Size): the tag `p:sldSz`, schema type `CT_SlideSize`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresentationSlideSize {
     pub cx: Option<SlideSizeCoordinate>,
@@ -5637,68 +5982,74 @@ pub struct PresentationSlideSize {
 }
 
 /// 19.3.1.38 sld (Presentation Slide): the tag `p:sld`, schema type `CT_Slide`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresentationSlideSlide {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub color_scheme_map_override: Option<Box<ColorSchemeMapOverride>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub common_slide_data: Box<CommonSlideData>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list_with_modification_flag: Option<Box<ExtensionListWithModificationFlag>>,
     pub show: Option<String>,
     pub show_master_ph_anim: Option<String>,
     pub show_master_sp: Option<String>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub timing_information: Option<Box<SlideTimingInformation>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub transition_for_a_slide_layout: Option<Box<SlideTransitionForASlideLayout>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.2.1.27 `presentationPr` (Presentation-wide Properties): the tag `p:presentationPr`, schema
 /// type `CT_PresentationProperties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresentationWideProperties {
     pub color_mru: Option<Box<ColorMRU>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub html_publishing_properties: Option<Box<HTMLPublishingProperties>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub presentation_wide_show_properties: Option<Box<PresentationWideShowProperties>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub printing_properties: Option<Box<PrintingProperties>>,
     pub unknown: officekit_markup_base::Unknown,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub web_properties: Option<Box<WebProperties>>,
 }
 
 /// 19.2.1.30 `showPr` (Presentation-wide Show Properties): the tag `p:showPr`, schema type
 /// `CT_ShowProperties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresentationWideShowProperties {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
     pub r#loop: Option<String>,
     pub pen_color_for_slide_show: Option<Box<PenColorForSlideShow>>,
@@ -5712,50 +6063,56 @@ pub struct PresentationWideShowProperties {
 
 /// 19.2.2.18 `viewPr` (Presentation-wide View Properties): the tag `p:viewPr`, schema type
 /// `CT_ViewProperties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresentationWideViewProperties {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
     pub grid_spacing: Option<Box<GridSpacing>>,
     pub last_view: Option<ListOfViewTypes>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub normal_view_properties: Option<Box<NormalViewProperties>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub notes_text_view_properties: Option<Box<NotesTextViewProperties>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub notes_view_properties: Option<Box<NotesViewProperties>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub outline_view_properties: Option<Box<OutlineViewProperties>>,
     pub show_comments: Option<String>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub slide_sorter_view_properties: Option<Box<SlideSorterViewProperties>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub slide_view_properties: Option<Box<SlideViewProperties>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.2.1.25 present (Presenter Slide Show Mode): the tag `p:present`, schema type `CT_Empty`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresenterSlideShowMode {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.7.37 `ST_TLPreviousActionType` (Previous Action Type): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PreviousActionType(pub String);
 /// The members of `ST_TLPreviousActionType`, in alphabetical order.
@@ -5768,10 +6125,12 @@ pub enum PreviousActionTypeMember {
 
 /// 19.5.55 `prevCondLst` (Previous Conditions List): the tag `p:prevCondLst`, schema type
 /// `CT_TLTimeConditionList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PreviousConditionsList {
     pub condition: Vec<Condition>,
@@ -5779,10 +6138,12 @@ pub struct PreviousConditionsList {
 }
 
 /// 19.7.11 `ST_PrintColorMode` (Print Color Mode): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PrintColorMode(pub String);
 /// The members of `ST_PrintColorMode`, in alphabetical order.
@@ -5795,17 +6156,19 @@ pub enum PrintColorModeMember {
 }
 
 /// 19.2.1.28 `prnPr` (Printing Properties): the tag `p:prnPr`, schema type `CT_PrintProperties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PrintingProperties {
     pub clr_mode: Option<PrintColorMode>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
     pub frame_slides: Option<String>,
     pub hidden_slides: Option<String>,
@@ -5815,10 +6178,12 @@ pub struct PrintingProperties {
 }
 
 /// 19.3.3.1 tag (Programmable Extensibility Tag): the tag `p:tag`, schema type `CT_StringTag`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ProgrammableExtensibilityTag {
     pub name: Option<String>,
@@ -5827,10 +6192,12 @@ pub struct ProgrammableExtensibilityTag {
 }
 
 /// 19.3.3.2 `tagLst` (Programmable Tab List): the tag `p:tagLst`, schema type `CT_TagList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ProgrammableTabList {
     pub programmable_extensibility_tag: Vec<ProgrammableExtensibilityTag>,
@@ -5838,10 +6205,12 @@ pub struct ProgrammableTabList {
 }
 
 /// 19.5.57 progress (Progress): the tag `p:progress`, schema type `CT_TLAnimVariant`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Progress {
     pub content: Box<AnimationVariantContent>,
@@ -5850,10 +6219,12 @@ pub struct Progress {
 
 /// 19.5.58 pull (Pull Slide Transition): the tag `p:pull`, schema type
 /// `CT_EightDirectionTransition`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PullSlideTransition {
     pub dir: Option<TransitionEightDirection>,
@@ -5862,10 +6233,12 @@ pub struct PullSlideTransition {
 
 /// 19.5.59 push (Push Slide Transition): the tag `p:push`, schema type
 /// `CT_SideDirectionTransition`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PushSlideTransition {
     pub dir: Option<TransitionSideDirectionType>,
@@ -5874,10 +6247,12 @@ pub struct PushSlideTransition {
 
 /// 19.5.61 `randomBar` (Random Bar Slide Transition): the tag `p:randomBar`, schema type
 /// `CT_OrientationTransition`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RandomBarSlideTransition {
     pub dir: Option<Direction>,
@@ -5885,10 +6260,12 @@ pub struct RandomBarSlideTransition {
 }
 
 /// 19.5.60 random (Random Slide Transition): the tag `p:random`, schema type `CT_Empty`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RandomSlideTransition {
     pub unknown: officekit_markup_base::Unknown,
@@ -5896,10 +6273,12 @@ pub struct RandomSlideTransition {
 
 /// 19.2.1.29 regular (Regular Embedded Font): the tag `p:regular`, schema type
 /// `CT_EmbeddedFontDataId`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RegularEmbeddedFont {
     pub id: Option<String>,
@@ -5907,10 +6286,12 @@ pub struct RegularEmbeddedFont {
 }
 
 /// 19.5.63 rgb (RGB): the tag `p:rgb`, schema type `CT_TLByRgbColorTransform`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Rgb {
     pub b: Option<super::drawing::FixedPercentage>,
@@ -5920,10 +6301,12 @@ pub struct Rgb {
 }
 
 /// 19.5.62 `rCtr` (Rotation Center): the tag `p:rCtr`, schema type `CT_TLPoint`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RotationCenter {
     pub unknown: officekit_markup_base::Unknown,
@@ -5933,10 +6316,12 @@ pub struct RotationCenter {
 
 /// 19.5.64 rtn (Runtime Node Trigger Choice): the tag `p:rtn`, schema type
 /// `CT_TLTriggerRuntimeNode`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RuntimeNodeTriggerChoice {
     pub unknown: officekit_markup_base::Unknown,
@@ -5944,16 +6329,18 @@ pub struct RuntimeNodeTriggerChoice {
 }
 
 /// 19.5.65 seq (Sequence Time Node): the tag `p:seq`, schema type `CT_TLTimeNodeSequence`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SequenceTimeNode {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub common_time_node_properties: Box<CommonTimeNodeProperties>,
     pub concurrent: Option<String>,
     pub next_ac: Option<NextActionType>,
@@ -5964,77 +6351,85 @@ pub struct SequenceTimeNode {
 }
 
 /// 19.5.66 set (Set Time Node Behavior): the tag `p:set`, schema type `CT_TLSetBehavior`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SetTimeNodeBehavior {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub common_behavior: Box<CommonBehavior>,
     pub to_tl_anim_variant: Option<Box<ToTLAnimVariant>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.3.1.43 sp (Shape): the tag `p:sp`, schema type `CT_Shape`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Shape {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list_with_modification_flag: Option<Box<ExtensionListWithModificationFlag>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_properties: Box<NonVisualPropertiesForAShape>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub properties: Box<ShapeProperties>,
     pub style: Option<Box<ShapeStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_body: Option<Box<ShapeTextBody>>,
     pub unknown: officekit_markup_base::Unknown,
     pub use_bg_fill: Option<String>,
 }
 
 /// 19.3.1.44 `spPr` (Shape Properties): the tag `p:spPr`, schema type `CT_ShapeProperties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeProperties {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub apply_3d: Option<Box<super::drawing::Apply3DShapeProperties>>,
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContent>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContent>>,
     pub geometry_content: Option<Box<super::drawing::GeometryContent>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub outline: Option<Box<super::drawing::Outline>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub scene3d: Option<Box<super::drawing::Scene3d>>,
     pub unknown: officekit_markup_base::Unknown,
     pub xfrm_transform2d: Option<Box<super::drawing::XfrmTransform2D>>,
 }
 
 /// 19.3.1.46 style (Shape Style): the tag `p:style`, schema type `CT_ShapeStyle`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeStyle {
     pub effect_reference: Box<super::drawing::EffectReference>,
@@ -6045,10 +6440,12 @@ pub struct ShapeStyle {
 }
 
 /// 19.5.72 `spTgt` (Shape Target): the tag `p:spTgt`, schema type `CT_TLShapeTargetElement`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeTarget {
     pub content: Option<Box<ShapeTargetContent>>,
@@ -6069,41 +6466,45 @@ pub enum ShapeTargetContent {
 }
 
 /// 19.3.1.51 `txBody` (Shape Text Body): the tag `p:txBody`, schema type `CT_TextBody`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeTextBody {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub properties: Box<super::drawing::BodyProperties>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_list_styles: Option<Box<super::drawing::TextListStyles>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_paragraphs: Vec<super::drawing::TextParagraphs>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.3.1.45 `spTree` (Shape Tree): the tag `p:spTree`, schema type `CT_GroupShape`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeTree {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<GroupShapeContent>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list_with_modification_flag: Option<Box<ExtensionListWithModificationFlag>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub group_shape_properties: Box<GroupShapeProperties>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_properties_for_a_group_shape: Box<NonVisualPropertiesForAGroupShape>,
     pub unknown: officekit_markup_base::Unknown,
 }
@@ -6119,17 +6520,19 @@ pub enum ShowTypeContent {
 }
 
 /// 19.3.1.1 bg (Slide Background): the tag `p:bg`, schema type `CT_Background`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlideBackground {
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Box<SlideBackgroundContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
@@ -6144,16 +6547,18 @@ pub enum SlideBackgroundContent {
 }
 
 /// 19.2.1.33 `sldId` (Slide ID): the tag `p:sldId`, schema type `CT_SlideIdListEntry`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlideID {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
     pub id: Option<SlideIdentifier>,
     pub r_id: Option<String>,
@@ -6161,39 +6566,43 @@ pub struct SlideID {
 }
 
 /// 19.7.13 `ST_SlideId` (Slide Identifier): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlideIdentifier(pub String);
 
 /// 19.3.1.39 `sldLayout` (Slide Layout): the tag `p:sldLayout`, schema type `CT_SlideLayout`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlideLayout {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub color_scheme_map_override: Option<Box<ColorSchemeMapOverride>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub common_slide_data: Box<CommonSlideData>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list_with_modification_flag: Option<Box<ExtensionListWithModificationFlag>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub header_footer_information_for_a_slide_master:
         Option<Box<HeaderFooterInformationForASlideMaster>>,
     pub matching_name: Option<String>,
     pub preserve: Option<String>,
     pub show_master_ph_anim: Option<String>,
     pub show_master_sp: Option<String>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub slide_timing_information: Option<Box<SlideTimingInformation>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub slide_transition: Option<Box<SlideTransitionForASlideLayout>>,
     pub r#type: Option<SlideLayoutType>,
     pub unknown: officekit_markup_base::Unknown,
@@ -6201,25 +6610,29 @@ pub struct SlideLayout {
 }
 
 /// 19.7.14 `ST_SlideLayoutId` (Slide Layout ID): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlideLayoutID(pub String);
 
 /// 19.3.1.40 `sldLayoutId` (Slide Layout Id): the tag `p:sldLayoutId`, schema type
 /// `CT_SlideLayoutIdListEntry`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlideLayoutId {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
     pub id: Option<SlideLayoutID>,
     pub r_id: Option<String>,
@@ -6227,10 +6640,12 @@ pub struct SlideLayoutId {
 }
 
 /// 19.7.15 `ST_SlideLayoutType` (Slide Layout Type): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlideLayoutType(pub String);
 /// The members of `ST_SlideLayoutType`, in alphabetical order.
@@ -6286,83 +6701,89 @@ pub enum SlideListContent {
 }
 
 /// 19.3.1.42 `sldMaster` (Slide Master): the tag `p:sldMaster`, schema type `CT_SlideMaster`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlideMaster {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub color_scheme_map: Box<ColorSchemeMap>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub common_slide_data: Box<CommonSlideData>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list_with_modification_flag: Option<Box<ExtensionListWithModificationFlag>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub header_footer_information: Option<Box<HeaderFooterInformationForASlideMaster>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_of_slide_layouts: Option<Box<ListOfSlideLayouts>>,
     pub preserve: Option<String>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub slide_timing_information: Option<Box<SlideTimingInformation>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub slide_transition_for_a_slide_layout: Option<Box<SlideTransitionForASlideLayout>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_styles: Option<Box<SlideMasterTextStyles>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.3.1.5 `bodyStyle` (Slide Master Body Text Style): the tag `p:bodyStyle`, schema type
 /// `CT_TextListStyle`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlideMasterBodyTextStyle {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub default_paragraph_style: Option<Box<super::drawing::DefaultParagraphStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_1_text_style: Option<Box<super::drawing::ListLevel1TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_2_text_style: Option<Box<super::drawing::ListLevel2TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_3_text_style: Option<Box<super::drawing::ListLevel3TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_4_text_style: Option<Box<super::drawing::ListLevel4TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_5_text_style: Option<Box<super::drawing::ListLevel5TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_6_text_style: Option<Box<super::drawing::ListLevel6TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_7_text_style: Option<Box<super::drawing::ListLevel7TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_8_text_style: Option<Box<super::drawing::ListLevel8TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_9_text_style: Option<Box<super::drawing::ListLevel9TextStyle>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.2.1.36 `sldMasterId` (Slide Master ID): the tag `p:sldMasterId`, schema type
 /// `CT_SlideMasterIdListEntry`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlideMasterID {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
     pub id: Option<StSlideMasterId>,
     pub r_id: Option<String>,
@@ -6371,103 +6792,111 @@ pub struct SlideMasterID {
 
 /// 19.3.1.35 `otherStyle` (Slide Master Other Text Style): the tag `p:otherStyle`, schema type
 /// `CT_TextListStyle`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlideMasterOtherTextStyle {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub default_paragraph_style: Option<Box<super::drawing::DefaultParagraphStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_1_text_style: Option<Box<super::drawing::ListLevel1TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_2_text_style: Option<Box<super::drawing::ListLevel2TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_3_text_style: Option<Box<super::drawing::ListLevel3TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_4_text_style: Option<Box<super::drawing::ListLevel4TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_5_text_style: Option<Box<super::drawing::ListLevel5TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_6_text_style: Option<Box<super::drawing::ListLevel6TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_7_text_style: Option<Box<super::drawing::ListLevel7TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_8_text_style: Option<Box<super::drawing::ListLevel8TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_9_text_style: Option<Box<super::drawing::ListLevel9TextStyle>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.3.1.52 `txStyles` (Slide Master Text Styles): the tag `p:txStyles`, schema type
 /// `CT_SlideMasterTextStyles`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlideMasterTextStyles {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub slide_master_body_text_style: Option<Box<SlideMasterBodyTextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub slide_master_other_text_style: Option<Box<SlideMasterOtherTextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub slide_master_title_text_style: Option<Box<SlideMasterTitleTextStyle>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.3.1.49 `titleStyle` (Slide Master Title Text Style): the tag `p:titleStyle`, schema type
 /// `CT_TextListStyle`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlideMasterTitleTextStyle {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub default_paragraph_style: Option<Box<super::drawing::DefaultParagraphStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_1_text_style: Option<Box<super::drawing::ListLevel1TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_2_text_style: Option<Box<super::drawing::ListLevel2TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_3_text_style: Option<Box<super::drawing::ListLevel3TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_4_text_style: Option<Box<super::drawing::ListLevel4TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_5_text_style: Option<Box<super::drawing::ListLevel5TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_6_text_style: Option<Box<super::drawing::ListLevel6TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_7_text_style: Option<Box<super::drawing::ListLevel7TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_8_text_style: Option<Box<super::drawing::ListLevel8TextStyle>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_9_text_style: Option<Box<super::drawing::ListLevel9TextStyle>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.2.1.38 `sldRg` (Slide Range): the tag `p:sldRg`, schema type `CT_IndexRange`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlideRange {
     pub end: Option<Index>,
@@ -6476,18 +6905,22 @@ pub struct SlideRange {
 }
 
 /// 19.7.17 `ST_SlideSizeCoordinate` (Slide Size Coordinate): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlideSizeCoordinate(pub String);
 
 /// 19.7.18 `ST_SlideSizeType` (Slide Size Type): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlideSizeType(pub String);
 /// The members of `ST_SlideSizeType`, in alphabetical order.
@@ -6514,17 +6947,19 @@ pub enum SlideSizeTypeMember {
 
 /// 19.2.2.17 `sorterViewPr` (Slide Sorter View Properties): the tag `p:sorterViewPr`, schema type
 /// `CT_SlideSorterViewProperties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlideSorterViewProperties {
     pub common_view_properties: Box<CommonViewProperties>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
     pub show_formatting: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
@@ -6532,17 +6967,19 @@ pub struct SlideSorterViewProperties {
 
 /// 19.6.1 `sldSyncPr` (Slide Synchronization Properties): the tag `p:sldSyncPr`, schema type
 /// `CT_SlideSyncProperties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlideSynchronizationProperties {
     pub client_inserted_time: Option<String>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
     pub server_sld_id: Option<String>,
     pub server_sld_modified_time: Option<String>,
@@ -6550,10 +6987,12 @@ pub struct SlideSynchronizationProperties {
 }
 
 /// 19.5.67 `sldTgt` (Slide Target): the tag `p:sldTgt`, schema type `CT_Empty`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlideTarget {
     pub unknown: officekit_markup_base::Unknown,
@@ -6561,17 +7000,19 @@ pub struct SlideTarget {
 
 /// 19.3.1.48 timing (Slide Timing Information for a Slide Layout): the tag `p:timing`, schema type
 /// `CT_SlideTiming`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlideTimingInformation {
     pub build_list: Option<Box<BuildList>>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list_with_modification_flag: Option<Box<ExtensionListWithModificationFlag>>,
     pub time_node_list: Option<Box<TimeNodeList>>,
     pub unknown: officekit_markup_base::Unknown,
@@ -6627,20 +7068,22 @@ pub enum SlideTransitionContent {
 
 /// 19.3.1.50 transition (Slide Transition for a Slide Layout): the tag `p:transition`, schema type
 /// `CT_SlideTransition`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlideTransitionForASlideLayout {
     pub adv_click: Option<String>,
     pub adv_tm: Option<String>,
     pub content: Option<Box<SlideTransitionContent>>,
     pub dur: Option<String>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list_with_modification_flag: Option<Box<ExtensionListWithModificationFlag>>,
     pub sound_action: Option<Box<SoundAction>>,
     pub spd: Option<TransitionSpeed>,
@@ -6649,26 +7092,30 @@ pub struct SlideTransitionForASlideLayout {
 
 /// 19.2.2.16 `slideViewPr` (Slide View Properties): the tag `p:slideViewPr`, schema type
 /// `CT_SlideViewProperties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlideViewProperties {
     pub common: Box<CommonSlideViewProperties>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.2.1.40 `smartTags` (Smart Tags): the tag `p:smartTags`, schema type `CT_SmartTags`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SmartTags {
     pub id: Option<String>,
@@ -6676,10 +7123,12 @@ pub struct SmartTags {
 }
 
 /// 19.5.68 snd (Sound): the tag `p:snd`, schema type `CT_EmbeddedWAVAudioFile`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Sound {
     pub embed: Option<String>,
@@ -6688,10 +7137,12 @@ pub struct Sound {
 }
 
 /// 19.5.69 `sndAc` (Sound Action): the tag `p:sndAc`, schema type `CT_TransitionSoundAction`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SoundAction {
     pub content: Box<SoundActionContent>,
@@ -6708,10 +7159,12 @@ pub enum SoundActionContent {
 }
 
 /// 19.5.70 `sndTgt` (Sound Target): the tag `p:sndTgt`, schema type `CT_EmbeddedWAVAudioFile`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SoundTarget {
     pub embed: Option<String>,
@@ -6720,10 +7173,12 @@ pub struct SoundTarget {
 }
 
 /// 19.5.71 split (Split Slide Transition): the tag `p:split`, schema type `CT_SplitTransition`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SplitSlideTransition {
     pub dir: Option<TransitionInOutDirectionType>,
@@ -6732,10 +7187,12 @@ pub struct SplitSlideTransition {
 }
 
 /// 19.7.19 `ST_SplitterBarState` (Splitter Bar State): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SplitterBarState(pub String);
 /// The members of `ST_SplitterBarState`, in alphabetical order.
@@ -6748,19 +7205,23 @@ pub enum SplitterBarStateMember {
 }
 
 /// 19.7.16 `ST_SlideMasterId` (Slide Master ID): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StSlideMasterId(pub String);
 
 /// 19.5.73 `stCondLst` (Start Conditions List): the tag `p:stCondLst`, schema type
 /// `CT_TLTimeConditionList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StartConditionsList {
     pub condition: Vec<Condition>,
@@ -6769,10 +7230,12 @@ pub struct StartConditionsList {
 
 /// 19.5.76 `stSnd` (Start Sound Action): the tag `p:stSnd`, schema type
 /// `CT_TransitionStartSoundAction`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StartSoundAction {
     pub r#loop: Option<String>,
@@ -6781,20 +7244,24 @@ pub struct StartSoundAction {
 }
 
 /// 19.5.38 `endSnd` (Stop Sound Action): the tag `p:endSnd`, schema type `CT_Empty`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StopSoundAction {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.5.75 `strVal` (String Value): the tag `p:strVal`, schema type `CT_TLAnimVariantStringVal`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StringValue {
     pub unknown: officekit_markup_base::Unknown,
@@ -6803,10 +7270,12 @@ pub struct StringValue {
 
 /// 19.5.74 strips (Strips Slide Transition): the tag `p:strips`, schema type
 /// `CT_CornerDirectionTransition`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StripsSlideTransition {
     pub dir: Option<TransitionCornerDirectionType>,
@@ -6814,25 +7283,29 @@ pub struct StripsSlideTransition {
 }
 
 /// 19.5.78 `subTnLst` (`Sub-TimeNodes` List): the tag `p:subTnLst`, schema type `CT_TimeNodeList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SubTimeNodesList {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<TimeNodeListContent>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.5.77 `subSp` (Subshape): the tag `p:subSp`, schema type `CT_TLSubShapeId`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Subshape {
     pub spid: Option<String>,
@@ -6840,10 +7313,12 @@ pub struct Subshape {
 }
 
 /// `ST_TLAnimateBehaviorCalcMode`: the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TLAnimateBehaviorCalcMode(pub String);
 /// The members of `ST_TLAnimateBehaviorCalcMode`, in alphabetical order.
@@ -6856,10 +7331,12 @@ pub enum TLAnimateBehaviorCalcModeMember {
 }
 
 /// `ST_TLAnimateBehaviorValueType`: the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TLAnimateBehaviorValueType(pub String);
 /// The members of `ST_TLAnimateBehaviorValueType`, in alphabetical order.
@@ -6872,10 +7349,12 @@ pub enum TLAnimateBehaviorValueTypeMember {
 }
 
 /// `ST_TLAnimateMotionBehaviorOrigin`: the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TLAnimateMotionBehaviorOrigin(pub String);
 /// The members of `ST_TLAnimateMotionBehaviorOrigin`, in alphabetical order.
@@ -6887,10 +7366,12 @@ pub enum TLAnimateMotionBehaviorOriginMember {
 }
 
 /// `ST_TLAnimateMotionPathEditMode`: the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TLAnimateMotionPathEditMode(pub String);
 /// The members of `ST_TLAnimateMotionPathEditMode`, in alphabetical order.
@@ -6902,10 +7383,12 @@ pub enum TLAnimateMotionPathEditModeMember {
 }
 
 /// 19.5.81 `tgtEl` (Target Element): the tag `p:tgtEl`, schema type `CT_TLTimeTargetElement`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TargetElement {
     pub content: Box<TargetElementContent>,
@@ -6925,10 +7408,12 @@ pub enum TargetElementContent {
 }
 
 /// 19.5.84 tmpl (Template Effects): the tag `p:tmpl`, schema type `CT_TLTemplate`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TemplateEffectsTmpl {
     pub lvl: Option<String>,
@@ -6937,10 +7422,12 @@ pub struct TemplateEffectsTmpl {
 }
 
 /// 19.5.85 `tmplLst` (Template effects): the tag `p:tmplLst`, schema type `CT_TLTemplateList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TemplateEffectsTmplLst {
     pub template_effects_tmpl: Vec<TemplateEffectsTmpl>,
@@ -6948,10 +7435,12 @@ pub struct TemplateEffectsTmplLst {
 }
 
 /// 19.5.91 `txEl` (Text Element): the tag `p:txEl`, schema type `CT_TLTextTargetElement`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextElement {
     pub content: Option<Box<TextElementContent>>,
@@ -6968,10 +7457,12 @@ pub enum TextElementContent {
 }
 
 /// 19.7.38 `ST_TLTime` (Time): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Time(pub String);
 /// The member types of `ST_TLTime`, in alphabetical order; `value` tries them in the schema's
@@ -6984,10 +7475,12 @@ pub enum TimeMember {
 }
 
 /// 19.5.82 `tmAbs` (Time Absolute): the tag `p:tmAbs`, schema type `CT_TLIterateIntervalTime`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TimeAbsolute {
     pub unknown: officekit_markup_base::Unknown,
@@ -6995,10 +7488,12 @@ pub struct TimeAbsolute {
 }
 
 /// 19.5.79 tav (Time Animate Value): the tag `p:tav`, schema type `CT_TLTimeAnimateValue`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TimeAnimateValue {
     pub fmla: Option<String>,
@@ -7009,10 +7504,12 @@ pub struct TimeAnimateValue {
 
 /// 19.5.80 `tavLst` (Time Animated Value List): the tag `p:tavLst`, schema type
 /// `CT_TLTimeAnimateValueList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TimeAnimatedValueList {
     pub time_animate_value: Vec<TimeAnimateValue>,
@@ -7031,10 +7528,12 @@ pub enum TimeConditionContent {
 
 /// 19.7.22 `ST_TLAnimateColorDirection` (Time List Animate Color Direction): the text the file
 /// carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TimeListAnimateColorDirection(pub String);
 /// The members of `ST_TLAnimateColorDirection`, in alphabetical order.
@@ -7046,10 +7545,12 @@ pub enum TimeListAnimateColorDirectionMember {
 }
 
 /// 19.7.23 `ST_TLAnimateColorSpace` (Time List Animate Color Space): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TimeListAnimateColorSpace(pub String);
 /// The members of `ST_TLAnimateColorSpace`, in alphabetical order.
@@ -7062,10 +7563,12 @@ pub enum TimeListAnimateColorSpaceMember {
 
 /// 19.7.24 `ST_TLAnimateEffectTransition` (Time List Animate Effect Transition): the text the file
 /// carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TimeListAnimateEffectTransition(pub String);
 /// The members of `ST_TLAnimateEffectTransition`, in alphabetical order.
@@ -7078,10 +7581,12 @@ pub enum TimeListAnimateEffectTransitionMember {
 }
 
 /// 19.5.86 tn (Time Node): the tag `p:tn`, schema type `CT_TLTriggerTimeNodeID`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TimeNode {
     pub unknown: officekit_markup_base::Unknown,
@@ -7089,10 +7594,12 @@ pub struct TimeNode {
 }
 
 /// 19.7.41 `ST_TLTimeNodeFillType` (Time Node Fill Type): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TimeNodeFillType(pub String);
 /// The members of `ST_TLTimeNodeFillType`, in alphabetical order.
@@ -7106,18 +7613,22 @@ pub enum TimeNodeFillTypeMember {
 }
 
 /// 19.7.42 `ST_TLTimeNodeID` (Time Node ID): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TimeNodeID(pub String);
 
 /// 19.5.87 `tnLst` (Time Node List): the tag `p:tnLst`, schema type `CT_TimeNodeList`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TimeNodeList {
     pub content: Vec<TimeNodeListContent>,
@@ -7145,10 +7656,12 @@ pub enum TimeNodeListContent {
 }
 
 /// 19.7.43 `ST_TLTimeNodeMasterRelation` (Time Node Master Relation): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TimeNodeMasterRelation(pub String);
 /// The members of `ST_TLTimeNodeMasterRelation`, in alphabetical order.
@@ -7161,10 +7674,12 @@ pub enum TimeNodeMasterRelationMember {
 }
 
 /// 19.7.44 `ST_TLTimeNodePresetClassType` (Time Node Preset Class Type): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TimeNodePresetClassType(pub String);
 /// The members of `ST_TLTimeNodePresetClassType`, in alphabetical order.
@@ -7180,10 +7695,12 @@ pub enum TimeNodePresetClassTypeMember {
 }
 
 /// 19.7.45 `ST_TLTimeNodeRestartType` (Time Node Restart Type): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TimeNodeRestartType(pub String);
 /// The members of `ST_TLTimeNodeRestartType`, in alphabetical order.
@@ -7196,10 +7713,12 @@ pub enum TimeNodeRestartTypeMember {
 }
 
 /// 19.7.46 `ST_TLTimeNodeSyncType` (Time Node Sync Type): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TimeNodeSyncType(pub String);
 /// The members of `ST_TLTimeNodeSyncType`, in alphabetical order.
@@ -7211,10 +7730,12 @@ pub enum TimeNodeSyncTypeMember {
 }
 
 /// 19.7.47 `ST_TLTimeNodeType` (Time Node Type): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TimeNodeType(pub String);
 /// The members of `ST_TLTimeNodeType`, in alphabetical order.
@@ -7234,10 +7755,12 @@ pub enum TimeNodeTypeMember {
 
 /// 19.5.83 `tmPct` (Time Percentage): the tag `p:tmPct`, schema type
 /// `CT_TLIterateIntervalPercentage`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TimePercentage {
     pub unknown: officekit_markup_base::Unknown,
@@ -7245,10 +7768,12 @@ pub struct TimePercentage {
 }
 
 /// 19.5.88 to (To): the tag `p:to`, schema type `CT_TLPoint`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct To {
     pub unknown: officekit_markup_base::Unknown,
@@ -7257,10 +7782,12 @@ pub struct To {
 }
 
 /// 19.5.90 to (To): the tag `p:to`, schema type `CT_Color`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ToColor {
     pub content: Box<super::drawing::ColorContent>,
@@ -7268,10 +7795,12 @@ pub struct ToColor {
 }
 
 /// 19.5.89 to (To): the tag `p:to`, schema type `CT_TLAnimVariant`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ToTLAnimVariant {
     pub content: Box<AnimationVariantContent>,
@@ -7280,10 +7809,12 @@ pub struct ToTLAnimVariant {
 
 /// 19.7.50 `ST_TransitionCornerDirectionType` (Transition Corner Direction Type): the text the file
 /// carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TransitionCornerDirectionType(pub String);
 /// The members of `ST_TransitionCornerDirectionType`, in alphabetical order.
@@ -7298,10 +7829,12 @@ pub enum TransitionCornerDirectionTypeMember {
 
 /// 19.7.51 `ST_TransitionEightDirectionType` (Transition Eight Direction): the text the file
 /// carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TransitionEightDirection(pub String);
 /// The member types of `ST_TransitionEightDirectionType`, in alphabetical order; `value` tries them
@@ -7315,10 +7848,12 @@ pub enum TransitionEightDirectionMember {
 
 /// 19.7.52 `ST_TransitionInOutDirectionType` (Transition In/Out Direction Type): the text the file
 /// carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TransitionInOutDirectionType(pub String);
 /// The members of `ST_TransitionInOutDirectionType`, in alphabetical order.
@@ -7331,10 +7866,12 @@ pub enum TransitionInOutDirectionTypeMember {
 
 /// 19.7.53 `ST_TransitionSideDirectionType` (Transition Side Direction Type): the text the file
 /// carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TransitionSideDirectionType(pub String);
 /// The members of `ST_TransitionSideDirectionType`, in alphabetical order.
@@ -7348,10 +7885,12 @@ pub enum TransitionSideDirectionTypeMember {
 }
 
 /// 19.7.54 `ST_TransitionSpeed` (Transition Speed): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TransitionSpeed(pub String);
 /// The members of `ST_TransitionSpeed`, in alphabetical order.
@@ -7364,10 +7903,12 @@ pub enum TransitionSpeedMember {
 }
 
 /// 19.7.48 `ST_TLTriggerEvent` (Trigger Event): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TriggerEvent(pub String);
 /// The members of `ST_TLTriggerEvent`, in alphabetical order.
@@ -7388,10 +7929,12 @@ pub enum TriggerEventMember {
 }
 
 /// 19.7.49 `ST_TLTriggerRuntimeNode` (Trigger `RunTime` Node): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TriggerRunTimeNode(pub String);
 /// The members of `ST_TLTriggerRuntimeNode`, in alphabetical order.
@@ -7404,10 +7947,12 @@ pub enum TriggerRunTimeNodeMember {
 }
 
 /// 19.5.92 val (Value): the tag `p:val`, schema type `CT_TLAnimVariant`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Value {
     pub content: Box<AnimationVariantContent>,
@@ -7415,26 +7960,30 @@ pub struct Value {
 }
 
 /// 19.5.93 video (Video): the tag `p:video`, schema type `CT_TLMediaNodeVideo`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Video {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub common_media_node_properties: Box<CommonMediaNodeProperties>,
     pub full_scrn: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.2.2.9 origin (View Origin): the tag `p:origin`, schema type `CT_Point2D`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ViewOrigin {
     pub unknown: officekit_markup_base::Unknown,
@@ -7443,10 +7992,12 @@ pub struct ViewOrigin {
 }
 
 /// 19.2.2.13 scale (View Scale): the tag `p:scale`, schema type `CT_Scale2D`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ViewScale {
     pub horizontal_ratio: Box<super::drawing::HorizontalRatio>,
@@ -7455,19 +8006,21 @@ pub struct ViewScale {
 }
 
 /// 16.3.1.2 `webPr` (Web Properties): the tag `p:webPr`, schema type `CT_WebProperties`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct WebProperties {
     pub allow_png: Option<String>,
     pub clr: Option<HTMLSlideNavigationControlColors>,
     pub encoding: Option<String>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
     pub img_sz: Option<HTMLWebScreenSizeTarget>,
     pub organize_in_folders: Option<String>,
@@ -7479,20 +8032,24 @@ pub struct WebProperties {
 }
 
 /// 19.5.94 wedge (Wedge Slide Transition): the tag `p:wedge`, schema type `CT_Empty`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct WedgeSlideTransition {
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// 19.5.95 wheel (Wheel Slide Transition): the tag `p:wheel`, schema type `CT_WheelTransition`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct WheelSlideTransition {
     pub spokes: Option<String>,
@@ -7501,10 +8058,12 @@ pub struct WheelSlideTransition {
 
 /// 19.5.96 wipe (Wipe Slide Transition): the tag `p:wipe`, schema type
 /// `CT_SideDirectionTransition`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct WipeSlideTransition {
     pub dir: Option<TransitionSideDirectionType>,
@@ -7512,10 +8071,12 @@ pub struct WipeSlideTransition {
 }
 
 /// The tag `p:xfrm`, schema type `CT_Transform2D`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Xfrm {
     pub extents: Option<Box<super::drawing::Extents>>,
@@ -7527,10 +8088,12 @@ pub struct Xfrm {
 }
 
 /// 19.5.97 zoom (Zoom Slide Transition): the tag `p:zoom`, schema type `CT_InOutTransition`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ZoomSlideTransition {
     pub dir: Option<TransitionInOutDirectionType>,

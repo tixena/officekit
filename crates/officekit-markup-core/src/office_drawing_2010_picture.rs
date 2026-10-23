@@ -220,9 +220,13 @@ pub mod write;
 
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
+#[cfg(feature = "binary-format")]
 use rkyv::de::Pooling;
+#[cfg(feature = "binary-format")]
 use rkyv::rancor::Source;
+#[cfg(feature = "binary-format")]
 use rkyv::ser::{Allocator, Sharing, Writer};
+#[cfg(feature = "binary-format")]
 use rkyv::validation::{ArchiveContext, SharedContext};
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -248,25 +252,29 @@ pub static STYLE_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Sh
 };
 
 /// The tag `pic14:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension: Vec<super::drawing::Extension>,
     pub unknown: officekit_markup_base::Unknown,
 }
 
 /// The tag `pic14:style`, schema type `CT_ShapeStyle` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Style {
     pub effect_reference: Box<super::drawing::EffectReference>,

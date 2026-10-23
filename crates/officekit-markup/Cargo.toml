@@ -11,6 +11,10 @@ repository.workspace = true
 [lints]
 workspace = true
 
+[features]
+# rkyv and the archive of every type: officekit's binary form.
+binary-format = ["officekit-markup-base/binary-format", "officekit-markup-ext/binary-format"]
+
 [dependencies]
 officekit-markup-base.workspace = true
 officekit-markup-ext.workspace = true

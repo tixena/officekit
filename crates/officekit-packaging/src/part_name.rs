@@ -12,19 +12,12 @@ use crate::error::PackageError;
 /// `.`, `..`, or ends in `.`. Comparisons are exact; a package resolves names
 /// without regard to ASCII case, as the specification requires, by filing each
 /// part under its [`folded`](Self::folded) form.
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    Eq,
-    PartialOrd,
-    Ord,
-    Hash,
-    rkyv::Archive,
-    rkyv::Deserialize,
-    rkyv::Serialize,
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 pub struct PartName {
     name: String,
 }

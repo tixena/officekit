@@ -18,8 +18,17 @@ bench = false
 [lints]
 workspace = true
 
+[features]
+# rkyv and the archive of every type: officekit's binary form.
+binary-format = [
+    "dep:rkyv",
+    "officekit-markup-base/binary-format",
+    "officekit-markup-core/binary-format",
+    "officekit-xml/binary-format",
+]
+
 [dependencies]
 officekit-markup-base.workspace = true
 officekit-markup-core.workspace = true
 officekit-xml.workspace = true
-rkyv.workspace = true
+rkyv = { workspace = true, optional = true }

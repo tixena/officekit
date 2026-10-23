@@ -848,6 +848,9 @@ fn module_declarations<'joined>(
     modules.push(("pub ", "part_root"));
     modules.sort_unstable_by_key(|(_, module)| *module);
     for (visibility, module) in &modules {
+        if *module == "archive" {
+            out.push_str("#[cfg(feature = \"binary-format\")]\n");
+        }
         let _ = writeln!(out, "{visibility}mod {module};");
     }
     if tests {
@@ -951,7 +954,7 @@ fn part_model(typed: &[(&PartType, &RootText)], taken: &BTreeSet<&str>) -> Strin
     let mut out = String::from("\n");
     out.push_str(&layout::doc(
         0,
-        "The typed root of a part, by the module that loads it. rkyv archives it through its mirror in `archive`.",
+        "The typed root of a part, by the module that loads it. With `binary-format`, rkyv archives it through its mirror in `archive`.",
     ));
     out.push_str("#[derive(Clone, Debug, PartialEq)]\n#[non_exhaustive]\npub enum PartModel {\n");
     for arm in model_arms(typed, |namespace| {

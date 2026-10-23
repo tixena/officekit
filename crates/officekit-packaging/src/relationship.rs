@@ -2,6 +2,7 @@
 //! how a target resolves against its source, and the relationship types in
 //! both conformance classes' spelling.
 
+#[cfg(feature = "binary-format")]
 mod archive;
 
 use core::iter;
@@ -36,8 +37,12 @@ pub struct RelatedPart {
 }
 
 /// One `Relationship` element, as written.
-#[derive(Clone, Debug, PartialEq, Eq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
-#[rkyv(attr(non_exhaustive))]
+#[derive(Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Relationship {
     pub id: String,
@@ -64,8 +69,8 @@ pub enum Target {
     Part(PartName),
 }
 
-/// The `TargetMode` attribute of a relationship. rkyv archives it through its
-/// mirror in `archive`.
+/// The `TargetMode` attribute of a relationship. With `binary-format`, rkyv
+/// archives it through its mirror in `archive`.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum TargetMode {

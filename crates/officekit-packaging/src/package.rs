@@ -73,10 +73,12 @@ pub struct MainPart {
 }
 
 /// What a read does with the parts it parses.
-#[derive(
-    Clone, Copy, Debug, Default, PartialEq, Eq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct OpenOptions {
     pub markup_compatibility: MarkupCompatibility,

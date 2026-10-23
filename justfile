@@ -17,6 +17,7 @@ lint:
     cargo clippy -p officekit-parts --all-targets --all-features -- -D warnings
     cargo clippy -p officekit-parts --all-targets --no-default-features -- -D warnings
     cargo clippy -p officekit-parts --all-targets --no-default-features --features strict -- -D warnings
+    cargo clippy -p officekit --all-targets --no-default-features -- -D warnings
     cargo fmt --all --check
     find crates -name tests.rs -print0 | xargs -0 rustfmt --edition 2024 --check
 
@@ -30,7 +31,7 @@ build:
     cargo build --workspace
 
 # Run the test suite, officekit-core's and officekit-parts' with every class on,
-# and officekit-core's with Strict alone. officekit-markup-core builds first and
+# officekit-core's with Strict alone, and the CLI's without the binary form. officekit-markup-core builds first and
 # alone. The next line builds the libraries, binaries and examples with the
 # dev-dependencies' features, as the test run resolves them, so `cargo test
 # --workspace` compiles test targets only and no generated crate's library
@@ -42,6 +43,7 @@ test:
     cargo test -p officekit-core --all-features
     cargo test -p officekit-parts --all-features
     cargo test -p officekit-core --no-default-features --features strict
+    cargo test -p officekit --no-default-features
 
 # The gate for each change: fmt, then clippy, a build and a test run of the
 # whole workspace with every feature on, each over one feature set. `just full`

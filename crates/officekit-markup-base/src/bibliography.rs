@@ -215,6 +215,7 @@
 //!
 //! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/bibliography`.
 
+#[cfg(feature = "binary-format")]
 mod archive;
 pub mod read;
 pub mod write;
@@ -848,10 +849,12 @@ pub static SOURCE_CONTENT_TAGS: crate::Accept = crate::Accept {
 
 /// 22.6.2.1 `AbbreviatedCaseNumber` (Abbreviated Case Number): the tag `b:AbbreviatedCaseNumber`,
 /// schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AbbreviatedCaseNumber {
     pub unknown: crate::Unknown,
@@ -859,10 +862,12 @@ pub struct AbbreviatedCaseNumber {
 }
 
 /// 22.6.2.2 `AlbumTitle` (Album Title): the tag `b:AlbumTitle`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AlbumTitle {
     pub unknown: crate::Unknown,
@@ -870,10 +875,12 @@ pub struct AlbumTitle {
 }
 
 /// 22.6.2.3 Artist (Artist): the tag `b:Artist`, schema type `CT_NameType`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Artist {
     pub name_list: Box<NameList>,
@@ -881,10 +888,12 @@ pub struct Artist {
 }
 
 /// 22.6.2.5 Author (Author): the tag `b:Author`, schema type `CT_NameOrCorporateType`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Author {
     pub content: Option<Box<NameOrCorporateContent>>,
@@ -892,10 +901,12 @@ pub struct Author {
 }
 
 /// 22.6.3.1 `ST_SourceType` (Bibliographic Data Source Types): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BibliographicDataSourceTypes(pub String);
 /// The members of `ST_SourceType`, in alphabetical order.
@@ -922,10 +933,12 @@ pub enum BibliographicDataSourceTypesMember {
 }
 
 /// 22.6.2.6 `BookAuthor` (Book Author): the tag `b:BookAuthor`, schema type `CT_NameType`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BookAuthor {
     pub name_list: Box<NameList>,
@@ -933,10 +946,12 @@ pub struct BookAuthor {
 }
 
 /// 22.6.2.7 `BookTitle` (Book Title): the tag `b:BookTitle`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BookTitle {
     pub unknown: crate::Unknown,
@@ -945,10 +960,12 @@ pub struct BookTitle {
 
 /// 22.6.2.9 `BroadcastTitle` (Broadcast Title): the tag `b:BroadcastTitle`, schema type
 /// `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BroadcastTitle {
     pub unknown: crate::Unknown,
@@ -956,10 +973,12 @@ pub struct BroadcastTitle {
 }
 
 /// 22.6.2.8 Broadcaster (Broadcaster): the tag `b:Broadcaster`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Broadcaster {
     pub unknown: crate::Unknown,
@@ -967,10 +986,12 @@ pub struct Broadcaster {
 }
 
 /// 22.6.2.10 `CaseNumber` (Case Number): the tag `b:CaseNumber`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CaseNumber {
     pub unknown: crate::Unknown,
@@ -978,10 +999,12 @@ pub struct CaseNumber {
 }
 
 /// 22.6.2.11 `ChapterNumber` (Chapter Number): the tag `b:ChapterNumber`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ChapterNumber {
     pub unknown: crate::Unknown,
@@ -989,10 +1012,12 @@ pub struct ChapterNumber {
 }
 
 /// 22.6.2.12 City (City): the tag `b:City`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct City {
     pub unknown: crate::Unknown,
@@ -1000,10 +1025,12 @@ pub struct City {
 }
 
 /// 22.6.2.13 Comments (Comments): the tag `b:Comments`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Comments {
     pub unknown: crate::Unknown,
@@ -1011,10 +1038,12 @@ pub struct Comments {
 }
 
 /// 22.6.2.14 Compiler (Compiler): the tag `b:Compiler`, schema type `CT_NameType`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Compiler {
     pub name_list: Box<NameList>,
@@ -1022,10 +1051,12 @@ pub struct Compiler {
 }
 
 /// 22.6.2.15 Composer (Composer): the tag `b:Composer`, schema type `CT_NameType`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Composer {
     pub name_list: Box<NameList>,
@@ -1033,10 +1064,12 @@ pub struct Composer {
 }
 
 /// 22.6.2.16 Conductor (Conductor): the tag `b:Conductor`, schema type `CT_NameType`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Conductor {
     pub name_list: Box<NameList>,
@@ -1045,10 +1078,12 @@ pub struct Conductor {
 
 /// 22.6.2.17 `ConferenceName` (Conference or Proceedings Name): the tag `b:ConferenceName`, schema
 /// type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConferenceOrProceedingsName {
     pub unknown: crate::Unknown,
@@ -1056,10 +1091,12 @@ pub struct ConferenceOrProceedingsName {
 }
 
 /// 22.6.2.4 Author (Contributors List): the tag `b:Author`, schema type `CT_AuthorType`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ContributorsList {
     pub content: Vec<ContributorsListContent>,
@@ -1090,10 +1127,12 @@ pub enum ContributorsListContent {
 }
 
 /// 22.6.2.18 Corporate (Corporate Author): the tag `b:Corporate`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CorporateAuthor {
     pub unknown: crate::Unknown,
@@ -1101,10 +1140,12 @@ pub struct CorporateAuthor {
 }
 
 /// 22.6.2.19 Counsel (Counsel): the tag `b:Counsel`, schema type `CT_NameType`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Counsel {
     pub name_list: Box<NameList>,
@@ -1113,10 +1154,12 @@ pub struct Counsel {
 
 /// 22.6.2.20 `CountryRegion` (Country or Region): the tag `b:CountryRegion`, schema type
 /// `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CountryOrRegion {
     pub unknown: crate::Unknown,
@@ -1124,10 +1167,12 @@ pub struct CountryOrRegion {
 }
 
 /// 22.6.2.21 Court (Court): the tag `b:Court`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Court {
     pub unknown: crate::Unknown,
@@ -1135,10 +1180,12 @@ pub struct Court {
 }
 
 /// 22.6.2.22 Day (Day): the tag `b:Day`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Day {
     pub unknown: crate::Unknown,
@@ -1146,10 +1193,12 @@ pub struct Day {
 }
 
 /// 22.6.2.23 `DayAccessed` (Day Accessed): the tag `b:DayAccessed`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DayAccessed {
     pub unknown: crate::Unknown,
@@ -1157,10 +1206,12 @@ pub struct DayAccessed {
 }
 
 /// 22.6.2.24 Department (Department): the tag `b:Department`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Department {
     pub unknown: crate::Unknown,
@@ -1168,10 +1219,12 @@ pub struct Department {
 }
 
 /// 22.6.2.25 Director (Director): the tag `b:Director`, schema type `CT_NameType`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Director {
     pub name_list: Box<NameList>,
@@ -1179,10 +1232,12 @@ pub struct Director {
 }
 
 /// 22.6.2.26 Distributor (Distributor): the tag `b:Distributor`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Distributor {
     pub unknown: crate::Unknown,
@@ -1190,10 +1245,12 @@ pub struct Distributor {
 }
 
 /// 22.6.2.28 Editor (Editor): the tag `b:Editor`, schema type `CT_NameType`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Editor {
     pub name_list: Box<NameList>,
@@ -1201,10 +1258,12 @@ pub struct Editor {
 }
 
 /// 22.6.2.27 Edition (Editor): the tag `b:Edition`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EditorEdition {
     pub unknown: crate::Unknown,
@@ -1212,10 +1271,12 @@ pub struct EditorEdition {
 }
 
 /// 22.6.2.30 Guid (GUID): the tag `b:Guid`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Guid {
     pub unknown: crate::Unknown,
@@ -1223,10 +1284,12 @@ pub struct Guid {
 }
 
 /// 22.6.2.31 Institution (Institution): the tag `b:Institution`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Institution {
     pub unknown: crate::Unknown,
@@ -1235,10 +1298,12 @@ pub struct Institution {
 
 /// 22.6.2.32 `InternetSiteTitle` (Internet Site Title): the tag `b:InternetSiteTitle`, schema type
 /// `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct InternetSiteTitle {
     pub unknown: crate::Unknown,
@@ -1246,10 +1311,12 @@ pub struct InternetSiteTitle {
 }
 
 /// 22.6.2.33 Interviewee (Interviewee): the tag `b:Interviewee`, schema type `CT_NameType`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Interviewee {
     pub name_list: Box<NameList>,
@@ -1257,10 +1324,12 @@ pub struct Interviewee {
 }
 
 /// 22.6.2.34 Interviewer (Interviewer): the tag `b:Interviewer`, schema type `CT_NameType`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Interviewer {
     pub name_list: Box<NameList>,
@@ -1268,10 +1337,12 @@ pub struct Interviewer {
 }
 
 /// 22.6.2.35 Inventor (Inventor): the tag `b:Inventor`, schema type `CT_NameType`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Inventor {
     pub name_list: Box<NameList>,
@@ -1279,10 +1350,12 @@ pub struct Inventor {
 }
 
 /// 22.6.2.36 Issue (Issue): the tag `b:Issue`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Issue {
     pub unknown: crate::Unknown,
@@ -1290,10 +1363,12 @@ pub struct Issue {
 }
 
 /// 22.6.2.37 `JournalName` (Journal Name): the tag `b:JournalName`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct JournalName {
     pub unknown: crate::Unknown,
@@ -1301,10 +1376,12 @@ pub struct JournalName {
 }
 
 /// 22.6.2.39 LCID (Locale ID): the tag `b:LCID`, schema type `ST_Lang`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LocaleID {
     pub unknown: crate::Unknown,
@@ -1312,10 +1389,12 @@ pub struct LocaleID {
 }
 
 /// 22.6.2.40 Medium (Medium): the tag `b:Medium`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Medium {
     pub unknown: crate::Unknown,
@@ -1323,10 +1402,12 @@ pub struct Medium {
 }
 
 /// 22.6.2.42 Month (Month): the tag `b:Month`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Month {
     pub unknown: crate::Unknown,
@@ -1334,10 +1415,12 @@ pub struct Month {
 }
 
 /// 22.6.2.43 `MonthAccessed` (Month Accessed): the tag `b:MonthAccessed`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MonthAccessed {
     pub unknown: crate::Unknown,
@@ -1345,10 +1428,12 @@ pub struct MonthAccessed {
 }
 
 /// 22.6.2.44 `NameList` (Name List): the tag `b:NameList`, schema type `CT_NameListType`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NameList {
     pub person: Vec<Person>,
@@ -1366,10 +1451,12 @@ pub enum NameOrCorporateContent {
 
 /// 22.6.2.45 `NumberVolumes` (Number of Volumes): the tag `b:NumberVolumes`, schema type
 /// `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NumberOfVolumes {
     pub unknown: crate::Unknown,
@@ -1377,10 +1464,12 @@ pub struct NumberOfVolumes {
 }
 
 /// 22.6.2.46 Pages (Pages): the tag `b:Pages`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Pages {
     pub unknown: crate::Unknown,
@@ -1388,10 +1477,12 @@ pub struct Pages {
 }
 
 /// 22.6.2.47 `PatentNumber` (Patent Number): the tag `b:PatentNumber`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PatentNumber {
     pub unknown: crate::Unknown,
@@ -1399,10 +1490,12 @@ pub struct PatentNumber {
 }
 
 /// 22.6.2.70 Type (Patent Type): the tag `b:Type`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PatentType {
     pub unknown: crate::Unknown,
@@ -1410,10 +1503,12 @@ pub struct PatentType {
 }
 
 /// 22.6.2.48 Performer (Performer): the tag `b:Performer`, schema type `CT_NameOrCorporateType`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Performer {
     pub content: Option<Box<NameOrCorporateContent>>,
@@ -1422,10 +1517,12 @@ pub struct Performer {
 
 /// 22.6.2.49 `PeriodicalTitle` (Periodical Title): the tag `b:PeriodicalTitle`, schema type
 /// `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PeriodicalTitle {
     pub unknown: crate::Unknown,
@@ -1433,10 +1530,12 @@ pub struct PeriodicalTitle {
 }
 
 /// 22.6.2.50 Person (Person): the tag `b:Person`, schema type `CT_PersonType`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Person {
     pub persons_first_or_given_name: Vec<PersonsFirstOrGivenName>,
@@ -1446,10 +1545,12 @@ pub struct Person {
 }
 
 /// 22.6.2.29 First (Person's First, or Given, Name): the tag `b:First`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PersonsFirstOrGivenName {
     pub unknown: crate::Unknown,
@@ -1457,10 +1558,12 @@ pub struct PersonsFirstOrGivenName {
 }
 
 /// 22.6.2.38 Last (Person's Last, or Family, Name): the tag `b:Last`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PersonsLastOrFamilyName {
     pub unknown: crate::Unknown,
@@ -1468,10 +1571,12 @@ pub struct PersonsLastOrFamilyName {
 }
 
 /// 22.6.2.41 Middle (Person's Middle, or Other, Name): the tag `b:Middle`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PersonsMiddleOrOtherName {
     pub unknown: crate::Unknown,
@@ -1479,10 +1584,12 @@ pub struct PersonsMiddleOrOtherName {
 }
 
 /// 22.6.2.51 `ProducerName` (Producer Name): the tag `b:ProducerName`, schema type `CT_NameType`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ProducerName {
     pub list: Box<NameList>,
@@ -1491,10 +1598,12 @@ pub struct ProducerName {
 
 /// 22.6.2.52 `ProductionCompany` (Production Company): the tag `b:ProductionCompany`, schema type
 /// `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ProductionCompany {
     pub unknown: crate::Unknown,
@@ -1503,10 +1612,12 @@ pub struct ProductionCompany {
 
 /// 22.6.2.53 `PublicationTitle` (Publication Title): the tag `b:PublicationTitle`, schema type
 /// `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PublicationTitle {
     pub unknown: crate::Unknown,
@@ -1514,10 +1625,12 @@ pub struct PublicationTitle {
 }
 
 /// 22.6.2.54 Publisher (Publisher): the tag `b:Publisher`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Publisher {
     pub unknown: crate::Unknown,
@@ -1526,10 +1639,12 @@ pub struct Publisher {
 
 /// 22.6.2.55 `RecordingNumber` (Recording Number): the tag `b:RecordingNumber`, schema type
 /// `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RecordingNumber {
     pub unknown: crate::Unknown,
@@ -1537,10 +1652,12 @@ pub struct RecordingNumber {
 }
 
 /// 22.6.2.56 `RefOrder` (Reference Order): the tag `b:RefOrder`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ReferenceOrder {
     pub unknown: crate::Unknown,
@@ -1548,10 +1665,12 @@ pub struct ReferenceOrder {
 }
 
 /// 22.6.2.57 Reporter (Reporter): the tag `b:Reporter`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Reporter {
     pub unknown: crate::Unknown,
@@ -1559,10 +1678,12 @@ pub struct Reporter {
 }
 
 /// 22.6.2.58 `ShortTitle` (Short Title): the tag `b:ShortTitle`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShortTitle {
     pub unknown: crate::Unknown,
@@ -1570,10 +1691,12 @@ pub struct ShortTitle {
 }
 
 /// 22.6.2.59 Source (Source): the tag `b:Source`, schema type `CT_SourceType`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Source {
     pub content: Vec<SourceContent>,
@@ -1640,10 +1763,12 @@ pub enum SourceContent {
 }
 
 /// 22.6.2.61 `SourceType` (Source Type): the tag `b:SourceType`, schema type `ST_SourceType`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SourceType {
     pub unknown: crate::Unknown,
@@ -1651,10 +1776,12 @@ pub struct SourceType {
 }
 
 /// 22.6.2.60 Sources (Sources): the tag `b:Sources`, schema type `CT_Sources`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Sources {
     pub selected_style: Option<String>,
@@ -1666,10 +1793,12 @@ pub struct Sources {
 
 /// 22.6.2.62 `StandardNumber` (Standard Number): the tag `b:StandardNumber`, schema type
 /// `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StandardNumber {
     pub unknown: crate::Unknown,
@@ -1678,10 +1807,12 @@ pub struct StandardNumber {
 
 /// 22.6.2.63 `StateProvince` (State or Province): the tag `b:StateProvince`, schema type
 /// `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StateOrProvince {
     pub unknown: crate::Unknown,
@@ -1689,10 +1820,12 @@ pub struct StateOrProvince {
 }
 
 /// 22.6.2.64 Station (Station): the tag `b:Station`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Station {
     pub unknown: crate::Unknown,
@@ -1700,10 +1833,12 @@ pub struct Station {
 }
 
 /// 22.6.2.65 Tag (Tag): the tag `b:Tag`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Tag {
     pub unknown: crate::Unknown,
@@ -1711,10 +1846,12 @@ pub struct Tag {
 }
 
 /// 22.6.2.66 Theater (Theater): the tag `b:Theater`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Theater {
     pub unknown: crate::Unknown,
@@ -1722,10 +1859,12 @@ pub struct Theater {
 }
 
 /// 22.6.2.67 `ThesisType` (Thesis Type): the tag `b:ThesisType`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ThesisType {
     pub unknown: crate::Unknown,
@@ -1733,10 +1872,12 @@ pub struct ThesisType {
 }
 
 /// 22.6.2.68 Title (Title): the tag `b:Title`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Title {
     pub unknown: crate::Unknown,
@@ -1744,10 +1885,12 @@ pub struct Title {
 }
 
 /// 22.6.2.69 Translator (Translator): the tag `b:Translator`, schema type `CT_NameType`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Translator {
     pub name_list: Box<NameList>,
@@ -1755,10 +1898,12 @@ pub struct Translator {
 }
 
 /// 22.6.2.71 URL (URL): the tag `b:URL`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Url {
     pub unknown: crate::Unknown,
@@ -1766,10 +1911,12 @@ pub struct Url {
 }
 
 /// 22.6.2.72 Version (Version): the tag `b:Version`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Version {
     pub unknown: crate::Unknown,
@@ -1777,10 +1924,12 @@ pub struct Version {
 }
 
 /// 22.6.2.73 Volume (Volume): the tag `b:Volume`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Volume {
     pub unknown: crate::Unknown,
@@ -1788,10 +1937,12 @@ pub struct Volume {
 }
 
 /// 22.6.2.74 Writer (Writer): the tag `b:Writer`, schema type `CT_NameType`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Writer {
     pub name_list: Box<NameList>,
@@ -1799,10 +1950,12 @@ pub struct Writer {
 }
 
 /// 22.6.2.75 Year (Year): the tag `b:Year`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Year {
     pub unknown: crate::Unknown,
@@ -1810,10 +1963,12 @@ pub struct Year {
 }
 
 /// 22.6.2.76 `YearAccessed` (Year Accessed): the tag `b:YearAccessed`, schema type `ST_String`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct YearAccessed {
     pub unknown: crate::Unknown,

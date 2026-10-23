@@ -244,10 +244,12 @@ pub static SINGLE_CHARACTERISTIC_SHAPE: crate::Shape = crate::Shape {
 };
 
 /// 22.7.3.1 `ST_Relation` (Characteristic Relationship Types): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CharacteristicRelationshipTypes(pub String);
 /// The members of `ST_Relation`, in alphabetical order.
@@ -263,10 +265,12 @@ pub enum CharacteristicRelationshipTypesMember {
 
 /// 22.7.2.1 `additionalCharacteristics` (Set of Additional Characteristics): the tag
 /// `ac:additionalCharacteristics`, schema type `CT_AdditionalCharacteristics`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SetOfAdditionalCharacteristics {
     pub single_characteristic: Vec<SingleCharacteristic>,
@@ -275,10 +279,12 @@ pub struct SetOfAdditionalCharacteristics {
 
 /// 22.7.2.2 characteristic (Single Characteristic): the tag `ac:characteristic`, schema type
 /// `CT_Characteristic`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SingleCharacteristic {
     pub name: Option<String>,

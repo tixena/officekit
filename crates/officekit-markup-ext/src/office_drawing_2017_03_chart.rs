@@ -288,10 +288,12 @@ pub trait Context: crate::Context {
 }
 
 /// The tag `c16r3:dataDisplayOptions16`, schema type `CT_DataDisplayOptions16` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataDisplayOptions16 {
     pub disp_na_as_blank: Option<Box<DispNaAsBlank>>,
@@ -299,10 +301,12 @@ pub struct DataDisplayOptions16 {
 }
 
 /// The tag `c16r3:dispNaAsBlank`, schema type `CT_BooleanFalse` of SDK 3.5.1's data.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DispNaAsBlank {
     pub unknown: officekit_markup_base::Unknown,

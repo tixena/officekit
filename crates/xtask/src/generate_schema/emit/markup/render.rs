@@ -337,6 +337,8 @@ impl Pair<'_> {
 /// module in one `use`.
 #[derive(Default)]
 pub struct Uses {
+    /// The paths only the `binary-format` feature uses.
+    gated: BTreeSet<String>,
     paths: BTreeSet<String>,
 }
 
@@ -344,6 +346,11 @@ impl Uses {
     /// Import `path`.
     pub fn add(&mut self, path: &str) {
         self.paths.insert(path.to_owned());
+    }
+
+    /// Import `path` under the `binary-format` feature.
+    pub fn add_gated(&mut self, path: &str) {
+        self.gated.insert(path.to_owned());
     }
 
     /// The imports of a file whose items are `body`, `runtime` the path to
@@ -372,27 +379,14 @@ impl Uses {
     /// The `use` lines, in rustfmt's order.
     #[must_use]
     pub fn text(&self) -> String {
-        let mut grouped: BTreeMap<&str, Vec<&str>> = BTreeMap::new();
         // Each line by its path's segments, which rustfmt sorts the lines by.
         let mut lines: Vec<(Vec<&str>, String)> = Vec::new();
-        for path in &self.paths {
-            match path.rsplit_once("::") {
-                Some((parent, name)) if parent.contains("::") && !name.contains(' ') => {
-                    grouped.entry(parent).or_default().push(name);
-                }
-                _ => lines.push((path.split("::").collect(), format!("use {path};\n"))),
-            }
-        }
-        for (parent, names) in grouped {
-            let line = if let [only] = names.as_slice() {
-                format!("use {parent}::{only};\n")
-            } else {
-                format!("use {parent}::{{{}}};\n", names.join(", "))
-            };
-            let mut key: Vec<&str> = parent.split("::").collect();
-            key.extend(names.first());
-            lines.push((key, line));
-        }
+        use_lines(&self.paths, "", &mut lines);
+        use_lines(
+            &self.gated,
+            "#[cfg(feature = \"binary-format\")]\n",
+            &mut lines,
+        );
         lines.sort();
         lines.into_iter().map(|(_, line)| line).collect()
     }
@@ -755,7 +749,7 @@ fn module_text(
         .iter()
         .any(|found| found.module == names.module)
     {
-        out.push_str("mod archive;\n");
+        out.push_str("#[cfg(feature = \"binary-format\")]\nmod archive;\n");
     }
     out.push_str("pub mod read;\npub mod write;\n");
     if tests {
@@ -904,7 +898,7 @@ fn struct_text(
     let bounded = fields.iter().any(|(_, _, recursive)| *recursive);
     if bounded {
         for name in archive::BOUND_NAMES {
-            uses.add(name);
+            uses.add_gated(name);
         }
     }
     let mut out = doc(0, &node.doc);
@@ -915,7 +909,7 @@ fn struct_text(
     let _ = writeln!(out, "pub struct {} {{", node.name);
     for (field, shown, recursive) in fields {
         if recursive {
-            let _ = writeln!(out, "    {}", archive::OMIT_BOUNDS);
+            let _ = writeln!(out, "    {}", archive::GATED_OMIT_BOUNDS);
         }
         let line = format!("    pub {field}: {shown},");
         if line.len() <= MAX_WIDTH {
@@ -1564,6 +1558,37 @@ fn steps_helpers(
         functions.push(function);
     }
     functions
+}
+
+/// The `use` lines of `paths`, each after `attribute`, with their sort keys:
+/// the names of one module join in one line.
+fn use_lines<'paths>(
+    paths: &'paths BTreeSet<String>,
+    attribute: &str,
+    lines: &mut Vec<(Vec<&'paths str>, String)>,
+) {
+    let mut grouped: BTreeMap<&str, Vec<&str>> = BTreeMap::new();
+    for path in paths {
+        match path.rsplit_once("::") {
+            Some((parent, name)) if parent.contains("::") && !name.contains(' ') => {
+                grouped.entry(parent).or_default().push(name);
+            }
+            _ => lines.push((
+                path.split("::").collect(),
+                format!("{attribute}use {path};\n"),
+            )),
+        }
+    }
+    for (parent, names) in grouped {
+        let line = if let [only] = names.as_slice() {
+            format!("{attribute}use {parent}::{only};\n")
+        } else {
+            format!("{attribute}use {parent}::{{{}}};\n", names.join(", "))
+        };
+        let mut key: Vec<&str> = parent.split("::").collect();
+        key.extend(names.first());
+        lines.push((key, line));
+    }
 }
 
 #[cfg(test)]

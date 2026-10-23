@@ -11,6 +11,10 @@ repository.workspace = true
 [lints]
 workspace = true
 
+[features]
+# rkyv and the archive of every type: officekit's binary form.
+binary-format = ["dep:rkyv", "officekit-xml/binary-format"]
+
 [dependencies]
 # The XML layer: the element tree every content-types and relationship part parses into
 officekit-xml.workspace = true
@@ -23,7 +27,7 @@ os-shim = { workspace = true, features = ["zip"] }
 thiserror.workspace = true
 
 # The content types, part names and relationships archived, as officekit's binary form holds them
-rkyv = { workspace = true, features = ["alloc"] }
+rkyv = { workspace = true, optional = true, features = ["alloc"] }
 
 # Reads an image's pixel size from its header; no pixel decoding
 imagesize = { workspace = true, features = ["bmp", "gif", "jpeg", "png", "tiff"] }

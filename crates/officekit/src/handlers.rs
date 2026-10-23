@@ -9,6 +9,7 @@ use archie_core::writer::{self, WriteOptions};
 use os_shim::{System, WriteMode};
 use serde_json::{Value, json};
 
+#[cfg(feature = "binary-format")]
 use officekit_core::binary;
 use officekit_core::folder::{self, DownOptions, UpOptions};
 use officekit_core::markdown::MarkdownOptions;
@@ -27,6 +28,10 @@ use crate::dispatch::EXIT_ERROR;
 
 #[cfg(test)]
 mod tests;
+
+/// What `get -f binary` and `save` answer in a build without the binary form.
+#[cfg(not(feature = "binary-format"))]
+const NO_BINARY_FORMAT: &str = "officekit was built without the `binary-format` feature; build it with that feature to read or write the binary form";
 
 /// What the `validate` handler needs from the validator; the handler's tests
 /// give it one that returns fixed errors.
@@ -165,6 +170,7 @@ where
 }
 
 /// `officekit save -f <FORM>`: the binary form, from `-i` or standard input, written in `FORM`.
+#[cfg(feature = "binary-format")]
 pub fn cmd_save<S>(
     system: &S,
     args: &SaveArgs,
@@ -198,6 +204,21 @@ where
     emit(system, args.output.as_deref(), &output, stdout)
 }
 
+/// `officekit save` in a build without the binary form, the only form it reads.
+#[cfg(not(feature = "binary-format"))]
+pub fn cmd_save<S>(
+    _system: &S,
+    _args: &SaveArgs,
+    _stdin: &mut dyn Read,
+    _stdout: &mut dyn Write,
+    _stderr: &mut dyn Write,
+) -> Result<()>
+where
+    S: System + ?Sized,
+{
+    bail!(NO_BINARY_FORMAT)
+}
+
 fn write_form(
     file: &OfficeFile,
     form: Form,
@@ -205,7 +226,10 @@ fn write_form(
     stderr: &mut dyn Write,
 ) -> Result<Vec<u8>> {
     Ok(match (form, file) {
+        #[cfg(feature = "binary-format")]
         (Form::Binary, _) => binary::encode(file)?,
+        #[cfg(not(feature = "binary-format"))]
+        (Form::Binary, _) => bail!(NO_BINARY_FORMAT),
         (Form::Markdown, OfficeFile::Word(docx)) => {
             let exported = docx.to_archie("media", markdown)?;
             writer::write(

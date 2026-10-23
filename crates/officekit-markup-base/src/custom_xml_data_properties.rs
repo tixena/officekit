@@ -246,10 +246,12 @@ pub static SET_OF_ASSOCIATED_XML_SCHEMAS_SHAPE: crate::Shape = crate::Shape {
 
 /// 22.5.2.2 `schemaRef` (Associated XML Schema): the tag `ds:schemaRef`, schema type
 /// `CT_DatastoreSchemaRef`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AssociatedXMLSchema {
     pub unknown: crate::Unknown,
@@ -258,10 +260,12 @@ pub struct AssociatedXMLSchema {
 
 /// 22.5.2.1 `datastoreItem` (Custom XML Data Properties): the tag `ds:datastoreItem`, schema type
 /// `CT_DatastoreItem`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CustomXMLDataProperties {
     pub item_id: Option<super::common_simple_types::Guid>,
@@ -271,10 +275,12 @@ pub struct CustomXMLDataProperties {
 
 /// 22.5.2.3 `schemaRefs` (Set of Associated XML Schemas): the tag `ds:schemaRefs`, schema type
 /// `CT_DatastoreSchemaRefs`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SetOfAssociatedXMLSchemas {
     pub associated_xml_schema: Vec<AssociatedXMLSchema>,

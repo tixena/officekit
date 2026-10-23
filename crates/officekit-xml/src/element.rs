@@ -1,11 +1,16 @@
 //! The generic element tree: every XML part parses into it, the typed tree is
 //! built from it and written through it, and the validator walks it.
 
+#[cfg(feature = "binary-format")]
 mod archive;
 
+#[cfg(feature = "binary-format")]
 use rkyv::de::Pooling;
+#[cfg(feature = "binary-format")]
 use rkyv::rancor::Source;
+#[cfg(feature = "binary-format")]
 use rkyv::ser::{Allocator, Sharing, Writer};
+#[cfg(feature = "binary-format")]
 use rkyv::validation::{ArchiveContext, SharedContext};
 
 use super::conformance::ConformanceClass;
@@ -17,8 +22,12 @@ use super::write::{self, WriteOptions};
 mod tests;
 
 /// An attribute: its qualified name and its value, unescaped.
-#[derive(Clone, Debug, PartialEq, Eq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
-#[rkyv(attr(non_exhaustive))]
+#[derive(Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Attribute {
     pub name: QName,
@@ -39,15 +48,19 @@ pub struct Document {
 
 /// One element: attributes and namespace declarations, each in document
 /// order, and children in order.
-#[derive(Clone, Debug, PartialEq, Eq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
-#[rkyv(attr(non_exhaustive))]
+#[derive(Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Element {
     pub attributes: Vec<Attribute>,
-    #[rkyv(omit_bounds)]
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub children: Vec<Node>,
     pub name: QName,
     pub namespace_declarations: Vec<NamespaceDeclaration>,
@@ -55,8 +68,12 @@ pub struct Element {
 
 /// An `xmlns` or `xmlns:prefix` attribute, with the URI exactly as written, in
 /// either class.
-#[derive(Clone, Debug, PartialEq, Eq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
-#[rkyv(attr(non_exhaustive))]
+#[derive(Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NamespaceDeclaration {
     pub prefix: String,
@@ -64,8 +81,8 @@ pub struct NamespaceDeclaration {
 }
 
 /// A node of the tree. Text is unescaped; a comment, a CDATA section, and a
-/// processing instruction hold their content as written. rkyv archives it
-/// through its mirror in `archive`.
+/// processing instruction hold their content as written. With
+/// `binary-format`, rkyv archives it through its mirror in `archive`.
 #[derive(Clone, Debug, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum Node {

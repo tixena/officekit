@@ -15,8 +15,13 @@ workspace = true
 name = "officekit"
 path = "src/main.rs"
 
+[features]
+default = ["binary-format"]
+# get -f binary and save: officekit's binary form.
+binary-format = ["officekit-core/binary-format"]
+
 [dependencies]
-officekit-core = { workspace = true, features = ["markdown"] }
+officekit-core = { workspace = true, default-features = false, features = ["markdown"] }
 
 # Writing the markdown text
 archie-core.workspace = true

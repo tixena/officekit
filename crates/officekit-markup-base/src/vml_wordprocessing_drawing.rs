@@ -273,20 +273,24 @@ pub static TEXT_WRAPPING_SHAPE: crate::Shape = crate::Shape {
 
 /// 19.3.2.1 anchorlock (Anchor Location Is Locked): the tag `w10:anchorlock`, schema type
 /// `CT_AnchorLock`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AnchorLocationIsLocked {
     pub unknown: crate::Unknown,
 }
 
 /// 19.3.3.1 `ST_BorderShadow` (Border Shadow Type): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BorderShadowType(pub String);
 /// The members of `ST_BorderShadow`, in alphabetical order.
@@ -300,10 +304,12 @@ pub enum BorderShadowTypeMember {
 }
 
 /// 19.3.3.2 `ST_BorderType` (Border Type): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BorderType(pub String);
 /// The members of `ST_BorderType`, in alphabetical order.
@@ -340,10 +346,12 @@ pub enum BorderTypeMember {
 }
 
 /// 19.3.2.2 borderbottom (Bottom Border): the tag `w10:borderbottom`, schema type `CT_Border`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BottomBorder {
     pub shadow: Option<BorderShadowType>,
@@ -353,10 +361,12 @@ pub struct BottomBorder {
 }
 
 /// 19.3.3.3 `ST_HorizontalAnchor` (Horizontal Anchor Type): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HorizontalAnchorType(pub String);
 /// The members of `ST_HorizontalAnchor`, in alphabetical order.
@@ -370,10 +380,12 @@ pub enum HorizontalAnchorTypeMember {
 }
 
 /// 19.3.2.3 borderleft (Left Border): the tag `w10:borderleft`, schema type `CT_Border`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LeftBorder {
     pub shadow: Option<BorderShadowType>,
@@ -383,10 +395,12 @@ pub struct LeftBorder {
 }
 
 /// 19.3.2.4 borderright (Right Border): the tag `w10:borderright`, schema type `CT_Border`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RightBorder {
     pub shadow: Option<BorderShadowType>,
@@ -396,10 +410,12 @@ pub struct RightBorder {
 }
 
 /// 19.3.2.6 wrap (Text Wrapping): the tag `w10:wrap`, schema type `CT_Wrap`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextWrapping {
     pub anchorx: Option<HorizontalAnchorType>,
@@ -410,10 +426,12 @@ pub struct TextWrapping {
 }
 
 /// 19.3.3.5 `ST_WrapSide` (Text Wrapping Side): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextWrappingSide(pub String);
 /// The members of `ST_WrapSide`, in alphabetical order.
@@ -427,10 +445,12 @@ pub enum TextWrappingSideMember {
 }
 
 /// 19.3.3.6 `ST_WrapType` (Text Wrapping Type): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextWrappingType(pub String);
 /// The members of `ST_WrapType`, in alphabetical order.
@@ -445,10 +465,12 @@ pub enum TextWrappingTypeMember {
 }
 
 /// 19.3.2.5 bordertop (Top Border): the tag `w10:bordertop`, schema type `CT_Border`.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TopBorder {
     pub shadow: Option<BorderShadowType>,
@@ -458,10 +480,12 @@ pub struct TopBorder {
 }
 
 /// 19.3.3.4 `ST_VerticalAnchor` (Vertical Anchor Type): the text the file carried.
-#[derive(
-    Clone, Debug, Default, Eq, PartialEq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
 )]
-#[rkyv(attr(non_exhaustive))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct VerticalAnchorType(pub String);
 /// The members of `ST_VerticalAnchor`, in alphabetical order.

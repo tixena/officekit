@@ -11,8 +11,12 @@ repository.workspace = true
 [lints]
 workspace = true
 
+[features]
+# rkyv and the archive of every type: officekit's binary form.
+binary-format = ["dep:rkyv"]
+
 [dependencies]
 quick-xml.workspace = true
 thiserror.workspace = true
 regex = { workspace = true, features = ["unicode-perl"] }
-rkyv = { workspace = true, features = ["alloc", "bytecheck"] }
+rkyv = { workspace = true, optional = true, features = ["alloc", "bytecheck"] }

@@ -15,6 +15,13 @@ workspace = true
 default = ["transitional"]
 transitional = ["dep:officekit-transitional"]
 strict = ["dep:officekit-strict"]
+# rkyv and the archive of every part's typed root: officekit's binary form.
+binary-format = [
+    "dep:rkyv",
+    "officekit-markup/binary-format",
+    "officekit-packaging/binary-format",
+    "officekit-xml/binary-format",
+]
 
 [dependencies]
 officekit-markup.workspace = true
@@ -22,4 +29,4 @@ officekit-packaging.workspace = true
 officekit-xml.workspace = true
 officekit-transitional = { workspace = true, optional = true }
 officekit-strict = { workspace = true, optional = true }
-rkyv = { workspace = true, features = ["alloc"] }
+rkyv = { workspace = true, optional = true, features = ["alloc"] }

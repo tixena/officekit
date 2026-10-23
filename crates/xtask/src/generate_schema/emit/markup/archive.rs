@@ -1,7 +1,8 @@
-//! What rkyv archives the typed tree through: the derives of each struct and
-//! newtype, the bounds a type that holds itself through its fields takes, and
-//! each namespace's private `archive` module, in the namespace's own crate,
-//! whose mirrors archive its enums.
+//! What rkyv archives the typed tree through, under the `binary-format`
+//! feature: the derives of each struct and newtype, the bounds a type that
+//! holds itself through its fields takes, and each namespace's private
+//! `archive` module, in the namespace's own crate, whose mirrors archive its
+//! enums.
 //!
 //! An enum does not derive rkyv's traits itself: the resolver enum the derive
 //! writes beside it would be public and exhaustive. Its mirror, a remote derive
@@ -37,6 +38,16 @@ pub const BOUND_NAMES: [&str; 7] = [
 
 /// The field attribute of a field that closes a cycle of types.
 pub const OMIT_BOUNDS: &str = "#[rkyv(omit_bounds)]";
+
+/// `BOUNDS` on a type outside the `archive` module, each line under the
+/// `binary-format` feature.
+const GATED_BOUNDS: &str = "#[cfg_attr(feature = \"binary-format\", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]\n\
+#[cfg_attr(feature = \"binary-format\", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]\n\
+#[cfg_attr(feature = \"binary-format\", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]\n";
+
+/// `OMIT_BOUNDS` on a field outside the `archive` module, under the
+/// `binary-format` feature.
+pub const GATED_OMIT_BOUNDS: &str = "#[cfg_attr(feature = \"binary-format\", rkyv(omit_bounds))]";
 
 /// The strongly connected components of the typed tree's types: a struct
 /// leads to the types of its child fields, an enum to its arms' structs. A
@@ -89,20 +100,25 @@ pub struct MirrorArm {
     pub variant: String,
 }
 
-/// The derive and rkyv attributes of a struct or newtype deriving `own`, with
-/// `BOUNDS` when one of its fields closes a cycle.
+/// The derive and rkyv attributes of a struct or newtype deriving `own`, the
+/// rkyv ones under the `binary-format` feature, with `GATED_BOUNDS` when one
+/// of its fields closes a cycle.
 #[must_use]
 pub fn attributes(own: &str, bounded: bool) -> String {
-    let derives = format!("{own}, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize");
-    let mut out = if derives.len() + "#[derive()]".len() <= DERIVE_WIDTH {
-        format!("#[derive({derives})]\n")
+    let mut out = if own.len() + "#[derive()]".len() <= DERIVE_WIDTH {
+        format!("#[derive({own})]\n")
     } else {
-        format!("#[derive(\n    {derives},\n)]\n")
+        format!("#[derive(\n    {own},\n)]\n")
     };
+    out.push_str(
+        "#[cfg_attr(\n    feature = \"binary-format\",\n    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)\n)]\n",
+    );
     if bounded {
-        out.push_str(BOUNDS);
+        out.push_str(GATED_BOUNDS);
     }
-    out.push_str("#[rkyv(attr(non_exhaustive))]\n#[non_exhaustive]\n");
+    out.push_str(
+        "#[cfg_attr(feature = \"binary-format\", rkyv(attr(non_exhaustive)))]\n#[non_exhaustive]\n",
+    );
     out
 }
 
