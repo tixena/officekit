@@ -121,6 +121,16 @@ impl OfficeFile {
         }
     }
 
+    /// The options the file was opened with.
+    #[must_use]
+    pub const fn options(&self) -> OpenOptions {
+        match self {
+            Self::Excel(xlsx) => xlsx.options(),
+            Self::PowerPoint(pptx) => pptx.options(),
+            Self::Word(docx) => docx.options(),
+        }
+    }
+
     /// The file in the Transitional class, and the warnings of the save.
     ///
     /// # Errors

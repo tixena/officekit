@@ -10,6 +10,10 @@ use officekit_parts::kinds::PresentationKind;
 use officekit_parts::{slide_layout, slide_master, theme};
 use officekit_xml::conformance::ConformanceClass;
 #[cfg(feature = "transitional")]
+use officekit_xml::mc::MarkupCompatibility;
+#[cfg(feature = "transitional")]
+use officekit_xml::name::OfficeVersion;
+#[cfg(feature = "transitional")]
 use os_shim::mock::MemorySystem;
 
 use super::Pptx;
@@ -126,6 +130,21 @@ fn the_seven_kinds_reopen_with_their_kind() {
         assert_eq!(reopened.kind(), kind);
         reopened.presentation().unwrap();
     }
+}
+
+#[cfg(feature = "transitional")]
+#[test]
+fn options_are_those_the_file_was_opened_with() {
+    let bytes = Pptx::new(PresentationKind::Presentation)
+        .unwrap()
+        .package()
+        .to_bytes()
+        .unwrap();
+    let mut options = OpenOptions::default();
+    options.markup_compatibility = MarkupCompatibility::Process {
+        target: OfficeVersion::Office2016,
+    };
+    assert_eq!(Pptx::from_bytes(bytes, options).unwrap().options(), options);
 }
 
 #[cfg(feature = "transitional")]

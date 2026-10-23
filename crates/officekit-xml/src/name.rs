@@ -16,6 +16,7 @@ mod tests;
 pub type NamespaceId = u8;
 
 /// An Office version officekit validates against, Office 2010 to Microsoft 365.
+/// rkyv archives it through its mirror in `archive`.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[non_exhaustive]
 pub enum OfficeVersion {

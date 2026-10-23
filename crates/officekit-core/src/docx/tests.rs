@@ -198,6 +198,21 @@ fn the_four_kinds_reopen_with_their_kind() {
 
 #[cfg(feature = "transitional")]
 #[test]
+fn options_are_those_the_file_was_opened_with() {
+    let bytes = Docx::new(WordprocessingKind::Document)
+        .unwrap()
+        .package()
+        .to_bytes()
+        .unwrap();
+    let mut options = OpenOptions::default();
+    options.markup_compatibility = MarkupCompatibility::Process {
+        target: OfficeVersion::Office2016,
+    };
+    assert_eq!(Docx::from_bytes(bytes, options).unwrap().options(), options);
+}
+
+#[cfg(feature = "transitional")]
+#[test]
 fn create_writes_the_new_document_through_the_system() {
     let system = MemorySystem::new().with_dir("/out").unwrap();
     let path = Path::new("/out/new.dotm");

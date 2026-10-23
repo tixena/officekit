@@ -1,6 +1,8 @@
 //! Markup compatibility (ECMA-376 Part 3): `mc:AlternateContent` and
 //! ignorable content resolved for an Office version.
 
+mod archive;
+
 use alloc::borrow::Cow;
 use alloc::collections::{BTreeSet, VecDeque};
 use core::mem;
@@ -23,7 +25,8 @@ struct Context {
     process_content: BTreeSet<(Namespace, String)>,
 }
 
-/// What a read does with markup compatibility.
+/// What a read does with markup compatibility. rkyv archives it through its
+/// mirror in `archive`.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum MarkupCompatibility {

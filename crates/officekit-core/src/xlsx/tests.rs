@@ -22,8 +22,12 @@ use officekit_transitional::dates::SaveWarning;
 use officekit_xml::conformance::ConformanceClass;
 #[cfg(feature = "strict")]
 use officekit_xml::element::Element;
+#[cfg(feature = "transitional")]
+use officekit_xml::mc::MarkupCompatibility;
 #[cfg(feature = "strict")]
 use officekit_xml::name::Namespace;
+#[cfg(feature = "transitional")]
+use officekit_xml::name::OfficeVersion;
 #[cfg(feature = "strict")]
 use officekit_xml::parse::parse;
 #[cfg(feature = "transitional")]
@@ -165,6 +169,21 @@ fn the_five_kinds_reopen_with_their_kind() {
         let reopened = Xlsx::from_bytes(bytes, OpenOptions::default()).unwrap();
         assert_eq!(reopened.kind(), kind);
     }
+}
+
+#[cfg(feature = "transitional")]
+#[test]
+fn options_are_those_the_file_was_opened_with() {
+    let bytes = Xlsx::new(SpreadsheetKind::Workbook)
+        .unwrap()
+        .package()
+        .to_bytes()
+        .unwrap();
+    let mut options = OpenOptions::default();
+    options.markup_compatibility = MarkupCompatibility::Process {
+        target: OfficeVersion::Office2016,
+    };
+    assert_eq!(Xlsx::from_bytes(bytes, options).unwrap().options(), options);
 }
 
 #[cfg(feature = "transitional")]

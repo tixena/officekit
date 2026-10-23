@@ -296,6 +296,12 @@ impl Docx {
         Self::from_package(Package::open(system, path)?, options)
     }
 
+    /// The options every typed read of this file applies.
+    #[must_use]
+    pub const fn options(&self) -> OpenOptions {
+        self.options
+    }
+
     /// The package, whose parts the generated part modules' `load` and `store_*` read and write.
     #[must_use]
     pub const fn package(&self) -> &Package {

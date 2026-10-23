@@ -425,7 +425,10 @@ fn save_fails_for_another_version() {
 
     let args = save_args(None, Form::Markdown, None);
     let (result, _, _) = save(&system, &args, &bytes);
-    assert!(format!("{:#}", result.unwrap_err()).starts_with("officekit's binary form version 2"),);
+    assert!(
+        format!("{:#}", result.unwrap_err())
+            .starts_with(&format!("officekit's binary form version {}", VERSION + 1))
+    );
 }
 
 #[test]

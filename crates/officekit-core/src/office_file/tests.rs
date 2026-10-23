@@ -15,6 +15,10 @@ use officekit_packaging::relationship::RelationshipType;
 use officekit_parts::kinds::{PresentationKind, SpreadsheetKind, WordprocessingKind};
 #[cfg(feature = "transitional")]
 use officekit_xml::conformance::ConformanceClass;
+#[cfg(feature = "transitional")]
+use officekit_xml::mc::MarkupCompatibility;
+#[cfg(feature = "transitional")]
+use officekit_xml::name::OfficeVersion;
 #[cfg(feature = "markdown")]
 use os_shim::System as _;
 #[cfg(feature = "markdown")]
@@ -169,6 +173,29 @@ fn a_new_word_excel_and_powerpoint_file_open_as_their_kind_and_save_again() {
         let (again, _) = file.to_bytes_transitional().unwrap();
         let reopened = OfficeFile::from_bytes(again, OpenOptions::default()).unwrap();
         assert!(matches!(reopened, OfficeFile::PowerPoint(pptx) if pptx.kind() == kind));
+    }
+}
+
+#[cfg(feature = "transitional")]
+#[test]
+fn options_are_those_a_word_excel_or_powerpoint_file_was_opened_with() {
+    let mut options = OpenOptions::default();
+    options.markup_compatibility = MarkupCompatibility::Process {
+        target: OfficeVersion::Office2016,
+    };
+    for bytes in [
+        Docx::new(WordprocessingKind::Document)
+            .unwrap()
+            .to_bytes_transitional(),
+        Xlsx::new(SpreadsheetKind::Workbook)
+            .unwrap()
+            .to_bytes_transitional(),
+        Pptx::new(PresentationKind::Presentation)
+            .unwrap()
+            .to_bytes_transitional(),
+    ] {
+        let file = OfficeFile::from_bytes(bytes.unwrap().0, options).unwrap();
+        assert_eq!(file.options(), options);
     }
 }
 

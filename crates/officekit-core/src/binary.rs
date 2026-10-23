@@ -27,7 +27,7 @@ pub const MAGIC: &[u8; 10] = b"officekit\0";
 const PACKAGE_RELATIONSHIPS: &str = "/_rels/.rels";
 
 /// The version of the binary form this officekit writes and reads.
-pub const VERSION: u8 = 1;
+pub const VERSION: u8 = 2;
 
 /// Why bytes are not a file in officekit's binary form, or a file cannot go into it.
 #[derive(Debug, thiserror::Error)]
@@ -47,6 +47,8 @@ pub enum BinaryError {
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 struct Model {
     content_types: ContentTypes,
+    /// The options the file was opened with, which `decode` opens it with again.
+    options: OpenOptions,
     parts: Vec<(PartName, Part)>,
     /// As `Package::relationship_sets` returns them; `None` is the package itself.
     relationships: Vec<(Option<PartName>, Vec<Relationship>)>,
@@ -63,7 +65,7 @@ enum Part {
 ///
 /// Each typed part is written in the class of the package's main part; the package is rebuilt
 /// with its content types and relationships as they were, and opened as
-/// [`OfficeFile::from_bytes`] opens a package.
+/// [`OfficeFile::from_bytes`] opens a package, with the options the file was opened with.
 ///
 /// # Errors
 ///
@@ -98,11 +100,14 @@ pub fn decode(bytes: &[u8]) -> Result<OfficeFile, BinaryError> {
         })
         .collect::<Result<Vec<_>, PackageError>>()?;
     let package = Package::from_parts(model.content_types, model.relationships, parts)?;
-    Ok(OfficeFile::from_package(package, OpenOptions::default())?)
+    Ok(OfficeFile::from_package(package, model.options)?)
 }
 
 /// `file` in officekit's binary form: [`MAGIC`], [`VERSION`], then the archive of its package's
-/// model. Every part a module takes is stored as its typed root, every other part as its bytes.
+/// model and of its options.
+///
+/// Every part a module takes is stored as its typed root, read with markup compatibility kept
+/// whatever the options, every other part as its bytes.
 ///
 /// # Errors
 ///
@@ -123,6 +128,7 @@ pub fn encode(file: &OfficeFile) -> Result<Vec<u8>, BinaryError> {
         .collect::<Result<Vec<_>, PackageError>>()?;
     let model = Model {
         content_types: package.content_types().clone(),
+        options: file.options(),
         parts,
         relationships: package.relationship_sets(),
     };

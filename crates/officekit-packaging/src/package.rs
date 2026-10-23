@@ -73,7 +73,10 @@ pub struct MainPart {
 }
 
 /// What a read does with the parts it parses.
-#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+#[derive(
+    Clone, Copy, Debug, Default, PartialEq, Eq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize,
+)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct OpenOptions {
     pub markup_compatibility: MarkupCompatibility,
