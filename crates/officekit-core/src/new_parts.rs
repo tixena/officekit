@@ -38,6 +38,14 @@ const POWERPOINT_PRESENTATION: &str = concat!(
     r#"><p:sldMasterIdLst><p:sldMasterId id="2147483648" r:id="rId1"/></p:sldMasterIdLst><p:sldSz cx="12192000" cy="6858000"/><p:notesSz cx="6858000" cy="9144000"/></p:presentation>"#,
 );
 
+/// The presentation part of a new add-in: the slide and notes sizes, and no slide master, which
+/// `PowerPoint` refuses in an add-in.
+const POWERPOINT_ADD_IN: &str = concat!(
+    "<p:presentation ",
+    presentation_namespaces!(),
+    r#"><p:sldSz cx="12192000" cy="6858000"/><p:notesSz cx="6858000" cy="9144000"/></p:presentation>"#,
+);
+
 /// The slide master of a new presentation: its blank layout, relationship `rId1`.
 const POWERPOINT_SLIDE_MASTER: &str = concat!(
     "<p:sldMaster ",
@@ -100,6 +108,20 @@ pub fn excel(content_type: &str) -> Result<(Package, PartName), PackageError> {
         &sheet,
         worksheet::RELATIONSHIP_TYPE.transitional,
     )?;
+    Ok((package, main))
+}
+
+/// A new add-in's package, its main part of `content_type`: the presentation part alone; returns
+/// the package and its main part.
+///
+/// # Errors
+///
+/// The errors of [`Package::set_part_bytes`] and [`Package::relate`].
+pub fn powerpoint_add_in(content_type: &str) -> Result<(Package, PartName), PackageError> {
+    let mut package = Package::new();
+    let main = PartName::new("/ppt/presentation.xml")?;
+    put(&mut package, &main, content_type, POWERPOINT_ADD_IN)?;
+    package.relate(None, &main, presentation::RELATIONSHIP_TYPE.transitional)?;
     Ok((package, main))
 }
 

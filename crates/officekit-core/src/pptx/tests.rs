@@ -1,3 +1,4 @@
+use core::slice::from_ref;
 #[cfg(feature = "transitional")]
 use std::path::Path;
 
@@ -119,6 +120,46 @@ fn a_new_presentation_holds_a_master_a_blank_layout_and_a_theme_and_no_slide() {
         relationships(package, &layout),
         [("rId1".to_owned(), Target::Part(master), master_type)]
     );
+}
+
+#[test]
+fn a_new_add_in_holds_its_presentation_part_alone() {
+    let pptx = Pptx::new(PresentationKind::AddIn).unwrap();
+    let package = pptx.package();
+    let main = name("/ppt/presentation.xml");
+    assert_eq!(package.part_names().unwrap(), from_ref(&main));
+    assert_eq!(
+        package.content_type(&main),
+        Some(PresentationKind::AddIn.main_content_type())
+    );
+    let presentation = text(package, &main);
+    assert!(
+        presentation.contains(
+            "<p:sldSz cx=\"12192000\" cy=\"6858000\"/><p:notesSz cx=\"6858000\" cy=\"9144000\"/>"
+        ),
+        "{presentation}"
+    );
+    assert!(!presentation.contains("sldMasterIdLst"), "{presentation}");
+    assert_eq!(
+        relationships(package, &main),
+        Vec::<(String, Target, String)>::new()
+    );
+}
+
+#[test]
+fn the_other_presentation_kinds_keep_their_master_layout_and_theme() {
+    for kind in PresentationKind::ALL {
+        if kind == PresentationKind::AddIn {
+            continue;
+        }
+        let pptx = Pptx::new(kind).unwrap();
+        let names = pptx.package().part_names().unwrap();
+        assert_eq!(names.len(), 4, "{kind:?}: {names:?}");
+        assert!(
+            text(pptx.package(), &name("/ppt/presentation.xml")).contains("sldMasterIdLst"),
+            "{kind:?}"
+        );
+    }
 }
 
 #[cfg(feature = "transitional")]

@@ -110,13 +110,20 @@ impl Pptx {
 
     /// A new Transitional presentation of `kind`, in memory, with no slides: its presentation part,
     /// with the kind's content type, a 16:9 slide size, one slide master with one blank layout, and
-    /// the theme the presentation and the master relate to.
+    /// the theme the presentation and the master relate to. A new [`PresentationKind::AddIn`] is its
+    /// presentation part alone, with the slide and notes sizes and no master, layout or theme:
+    /// `PowerPoint` loads it once a VBA project is added.
     ///
     /// # Errors
     ///
     /// The errors of [`Package::set_part_bytes`] and [`Package::relate`].
     pub fn new(kind: PresentationKind) -> Result<Self, PackageError> {
-        let (package, main) = new_parts::powerpoint(kind.main_content_type())?;
+        let content_type = kind.main_content_type();
+        let (package, main) = if kind == PresentationKind::AddIn {
+            new_parts::powerpoint_add_in(content_type)?
+        } else {
+            new_parts::powerpoint(content_type)?
+        };
         Ok(Self {
             class: ConformanceClass::Transitional,
             kind,
