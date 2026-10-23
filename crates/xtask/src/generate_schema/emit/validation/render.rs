@@ -98,6 +98,7 @@ struct Lists {
     attributes_text: String,
     checks: BTreeMap<String, String>,
     checks_text: String,
+    items: BTreeMap<String, String>,
     particles: BTreeMap<String, String>,
     particles_text: String,
     strict_checks: BTreeMap<String, String>,
@@ -252,6 +253,69 @@ impl Lists {
         name
     }
 
+    /// The name of a composite's items, written on first use.
+    fn items(&mut self, items: &[Particle], type_ids: &BTreeMap<&str, usize>) -> Result<String> {
+        let key = format!("{items:?}");
+        if let Some(name) = self.items.get(&key) {
+            return Ok(name.clone());
+        }
+        let rows = items
+            .iter()
+            .map(|item| self.particle(item, type_ids))
+            .collect::<Result<Vec<Expr>>>()?;
+        let name = format!("ITEMS_{}", self.items.len() + 1);
+        statement(
+            &format!("const {name}: &[Particle] = "),
+            &Expr::Slice(rows),
+            separated(&mut self.particles_text),
+        );
+        self.items.insert(key, name.clone());
+        Ok(name)
+    }
+
+    fn particle(&mut self, row: &Particle, type_ids: &BTreeMap<&str, usize>) -> Result<Expr> {
+        Ok(match row {
+            Particle::Any {
+                max,
+                min,
+                namespace,
+            } => Expr::Struct(
+                "Particle::Any",
+                vec![
+                    ("max", integer(u64::from(*max))),
+                    ("min", integer(u64::from(*min))),
+                    ("namespace", any_namespace(namespace)),
+                ],
+            ),
+            Particle::Composite {
+                items,
+                kind,
+                max,
+                min,
+            } => Expr::Struct(
+                "Particle::Composite",
+                vec![
+                    ("items", Expr::Atom(self.items(items, type_ids)?)),
+                    ("kind", Expr::Atom(composite_kind(*kind).to_owned())),
+                    ("max", integer(u64::from(*max))),
+                    ("min", integer(u64::from(*min))),
+                ],
+            ),
+            Particle::Element {
+                max,
+                min,
+                type_name,
+            } => Expr::Struct(
+                "Particle::Element",
+                vec![
+                    ("max", integer(u64::from(*max))),
+                    ("min", integer(u64::from(*min))),
+                    ("type_id", type_id(type_ids, type_name)?),
+                ],
+            ),
+        })
+    }
+
     /// The name of a type's content models, written on first use.
     fn particles(
         &mut self,
@@ -270,7 +334,7 @@ impl Lists {
                     option(
                         model
                             .as_ref()
-                            .map(|row| particle(row, type_ids))
+                            .map(|row| self.particle(row, type_ids))
                             .transpose()?,
                     ),
                 ]))
@@ -696,57 +760,6 @@ pub fn option(value: Option<Expr>) -> Expr {
 
 fn pad(width: usize, out: &mut String) {
     out.extend(iter::repeat_n(' ', width));
-}
-
-fn particle(row: &Particle, type_ids: &BTreeMap<&str, usize>) -> Result<Expr> {
-    Ok(match row {
-        Particle::Any {
-            max,
-            min,
-            namespace,
-        } => Expr::Struct(
-            "Particle::Any",
-            vec![
-                ("max", integer(u64::from(*max))),
-                ("min", integer(u64::from(*min))),
-                ("namespace", any_namespace(namespace)),
-            ],
-        ),
-        Particle::Composite {
-            items,
-            kind,
-            max,
-            min,
-        } => Expr::Struct(
-            "Particle::Composite",
-            vec![
-                (
-                    "items",
-                    Expr::Slice(
-                        items
-                            .iter()
-                            .map(|item| particle(item, type_ids))
-                            .collect::<Result<Vec<Expr>>>()?,
-                    ),
-                ),
-                ("kind", Expr::Atom(composite_kind(*kind).to_owned())),
-                ("max", integer(u64::from(*max))),
-                ("min", integer(u64::from(*min))),
-            ],
-        ),
-        Particle::Element {
-            max,
-            min,
-            type_name,
-        } => Expr::Struct(
-            "Particle::Element",
-            vec![
-                ("max", integer(u64::from(*max))),
-                ("min", integer(u64::from(*min))),
-                ("type_id", type_id(type_ids, type_name)?),
-            ],
-        ),
-    })
 }
 
 /// The part rules; a child names a rule by its index, or none for a data part reference.
