@@ -8,6 +8,13 @@ authors.workspace = true
 license.workspace = true
 repository.workspace = true
 
+[lib]
+# The crate has no tests; a unit-test or bench target would compile the whole
+# crate a second time, beside the library.
+test = false
+doctest = false
+bench = false
+
 [lints]
 workspace = true
 
