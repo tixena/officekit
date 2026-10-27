@@ -3,7 +3,7 @@
 //! into the file, every entry with its sizes in a data descriptor.
 //!
 //! ```text
-//! cargo run -p officekit-core --example stream_generate -- 100000 target/stream.docx
+//! cargo run -p officekit --example stream_generate -- 100000 target/stream.docx
 //! ```
 
 #[path = "../tests/stream_generation/generation.rs"]

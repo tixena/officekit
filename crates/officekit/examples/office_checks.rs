@@ -3,7 +3,7 @@
 //! the row it belongs to.
 //!
 //! ```text
-//! cargo run -p officekit-core --example office_checks --features strict -- notes/samples <out-dir>
+//! cargo run -p officekit --example office_checks --features strict -- notes/samples <out-dir>
 //! ```
 
 #[path = "../tests/stream_generation/generation.rs"]
@@ -14,12 +14,12 @@ use std::io::{Read as _, Write as _, stdout};
 use std::path::PathBuf;
 
 use clap::Parser;
-use officekit_core::docx::Docx;
-use officekit_core::docx::chart::ChartRanges;
-use officekit_core::docx::image::PictureFit;
-use officekit_core::embedded::{self, Embedded};
-use officekit_core::pptx::Pptx;
-use officekit_core::xlsx::Xlsx;
+use officekit::docx::Docx;
+use officekit::docx::chart::ChartRanges;
+use officekit::docx::image::PictureFit;
+use officekit::embedded::{self, Embedded};
+use officekit::pptx::Pptx;
+use officekit::xlsx::Xlsx;
 use officekit_markup::Read as _;
 use officekit_markup::wordprocessing::{
     DocumentProtectionTypesMember, Header, HeaderOrFooterTypeMember, TextRun, write,

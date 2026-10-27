@@ -9,7 +9,7 @@ use os_shim::WriteMode;
 use os_shim::real::RealSystem;
 use tempfile::TempDir;
 
-use officekit_core::xlsx::Xlsx;
+use officekit::xlsx::Xlsx;
 use officekit_packaging::package::Package;
 use officekit_parts::kinds::SpreadsheetKind;
 

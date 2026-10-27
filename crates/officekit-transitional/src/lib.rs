@@ -1,5 +1,5 @@
 //! `officekit-transitional` is the Transitional conformance class (ECMA-376
-//! Part 1 with the migration features of Part 4), which `officekit-core`'s
+//! Part 1 with the migration features of Part 4), which `officekit`'s
 //! feature `transitional`, on by default, turns on.
 //!
 //! Every node reads Transitional with the reader both classes share and

@@ -9,7 +9,7 @@
 
 Officekit reads, edits, writes, and validates Office Open XML files in either
 conformance class of ECMA-376, Transitional or Strict. It ships as a library
-(`officekit-core`) and a CLI (`officekit`). The typed tree and the part modules
+(`officekit`) and a CLI (`officekit-cli`). The typed tree and the part modules
 are generated from the ECMA-376 schemas and the extension schema data of the
 [Open XML SDK](https://github.com/dotnet/Open-XML-SDK); the validator is
 checked against SDK 3.5.1, which serves as its oracle.
@@ -35,7 +35,7 @@ Built and tested:
 ## Layout
 
 ```
-crates/officekit-core          library: element trees, file types
+crates/officekit               library: element trees, file types
 crates/officekit-markup        library: the typed tree, one module per namespace, with readers, writers and hooks
 crates/officekit-packaging     library: the package, part names, content types, relationships, images
 crates/officekit-parts         library: one module per part type: content type, relationship types, load and store
@@ -44,13 +44,13 @@ crates/officekit-transitional  library: the Transitional class: read and write o
 crates/officekit-traversal     library: the typed tree's transforms, visitors and write-through
 crates/officekit-validation    library: the validator and its generated tables
 crates/officekit-xml           library: element tree, names, values, part reader and writer
-crates/officekit               CLI binary
+crates/officekit-cli           CLI binary
 crates/xtask                   dev tooling (`cargo xtask <subcommand>`), never installed
 ```
 
 ## Modules
 
-`officekit-core` is organized by what each part of a document is:
+`officekit` is organized by what each part of a document is:
 
 | Module | Covers | Holds |
 |---|---|---|
@@ -66,8 +66,8 @@ classes' spelling, and the load and store of its root.
 
 ## Features
 
-`officekit-core` has four features and `officekit-parts` three; the two class
-features of `officekit-core` turn on those of `officekit-parts`, and so does
+`officekit` has four features and `officekit-parts` three; the two class
+features of `officekit` turn on those of `officekit-parts`, and so does
 `binary-format`. Each class feature turns on its class crate as an optional
 dependency:
 
@@ -89,9 +89,9 @@ Markdown to Word and back changes five things, and nothing else:
 Pictures also come back under the media folder (`report_media/image1.png`), and a WebP as a PNG.
 
 ```bash
-cargo build -p officekit-core                                             # transitional
-cargo build -p officekit-core --no-default-features --features strict    # strict only
-cargo build -p officekit-core --all-features                              # both
+cargo build -p officekit                                                 # transitional
+cargo build -p officekit --no-default-features --features strict         # strict only
+cargo build -p officekit --all-features                                  # both
 cargo build -p officekit-parts --no-default-features --features strict   # the part modules, strict only
 ```
 
@@ -143,9 +143,9 @@ example); the reason goes to standard error.
 just check    # the gate for each change: fmt, then clippy, build and tests of the workspace with every feature on
 just full     # the full gate: lint, build, test, audit
 just all      # lint, build, test
-just lint     # clippy (restriction + pedantic + nursery denied) on the workspace, then officekit-core and officekit-parts in each feature build; fmt check; rustfmt check of every tests.rs
+just lint     # clippy (restriction + pedantic + nursery denied) on the workspace, then officekit and officekit-parts in each feature build; fmt check; rustfmt check of every tests.rs
 just build
-just test     # the workspace, then officekit-core and officekit-parts with all features, then officekit-core with strict alone
+just test     # the workspace, then officekit and officekit-parts with all features, then officekit with strict alone
 just docs     # cargo doc --workspace --no-deps
 just audit    # cargo audit
 just bpublish # build the CLI for this machine's target and add it to the GitHub release of the version

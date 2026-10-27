@@ -1,8 +1,8 @@
 use std::path::{Path, PathBuf};
 
 #[cfg(feature = "binary-format")]
-use officekit_core::binary::{MAGIC, VERSION};
-use officekit_core::xlsx::Xlsx;
+use officekit::binary::{MAGIC, VERSION};
+use officekit::xlsx::Xlsx;
 use officekit_packaging::package::Package;
 use officekit_packaging::part_name::PartName;
 use officekit_parts::kinds::SpreadsheetKind;

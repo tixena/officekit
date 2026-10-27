@@ -1,6 +1,6 @@
 [workspace]
-members = ["crates/officekit", "crates/officekit-core", "crates/officekit-markup", "crates/officekit-markup-base", "crates/officekit-markup-core", "crates/officekit-markup-ext", "crates/officekit-packaging", "crates/officekit-parts", "crates/officekit-strict", "crates/officekit-transitional", "crates/officekit-traversal", "crates/officekit-validation", "crates/officekit-xml", "crates/xtask"]
-default-members = ["crates/officekit", "crates/officekit-core", "crates/officekit-markup", "crates/officekit-markup-base", "crates/officekit-markup-core", "crates/officekit-markup-ext", "crates/officekit-packaging", "crates/officekit-parts", "crates/officekit-strict", "crates/officekit-transitional", "crates/officekit-traversal", "crates/officekit-validation", "crates/officekit-xml"]
+members = ["crates/officekit", "crates/officekit-cli", "crates/officekit-markup", "crates/officekit-markup-base", "crates/officekit-markup-core", "crates/officekit-markup-ext", "crates/officekit-packaging", "crates/officekit-parts", "crates/officekit-strict", "crates/officekit-transitional", "crates/officekit-traversal", "crates/officekit-validation", "crates/officekit-xml", "crates/xtask"]
+default-members = ["crates/officekit", "crates/officekit-cli", "crates/officekit-markup", "crates/officekit-markup-base", "crates/officekit-markup-core", "crates/officekit-markup-ext", "crates/officekit-packaging", "crates/officekit-parts", "crates/officekit-strict", "crates/officekit-transitional", "crates/officekit-traversal", "crates/officekit-validation", "crates/officekit-xml"]
 resolver = "2"
 
 [workspace.package]
@@ -14,7 +14,7 @@ repository = "https://github.com/eburgos/officekit"
 [workspace.dependencies]
 # Every entry turns its default features off: each crate turns on the
 # features it uses, and no more.
-officekit-core = { path = "crates/officekit-core", default-features = false }
+officekit = { path = "crates/officekit", default-features = false }
 officekit-markup = { path = "crates/officekit-markup" }
 officekit-markup-base = { path = "crates/officekit-markup-base" }
 officekit-markup-core = { path = "crates/officekit-markup-core" }

@@ -10,10 +10,10 @@ use os_shim::{System, WriteMode};
 use serde_json::{Value, json};
 
 #[cfg(feature = "binary-format")]
-use officekit_core::binary;
-use officekit_core::folder::{self, DownOptions, UpOptions};
-use officekit_core::markdown::MarkdownOptions;
-use officekit_core::office_file::OfficeFile;
+use officekit::binary;
+use officekit::folder::{self, DownOptions, UpOptions};
+use officekit::markdown::MarkdownOptions;
+use officekit::office_file::OfficeFile;
 use officekit_packaging::package::OpenOptions;
 use officekit_packaging::package::Package;
 use officekit_packaging::part_name::PartName;

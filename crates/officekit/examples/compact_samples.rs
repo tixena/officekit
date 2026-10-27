@@ -9,7 +9,7 @@
 //! says do not change rendering. Proofing and comment anchors render nothing.
 //!
 //! ```text
-//! cargo run -p officekit-core --example compact_samples -- notes/samples
+//! cargo run -p officekit --example compact_samples -- notes/samples
 //! ```
 
 use core::error::Error;
@@ -18,7 +18,7 @@ use std::io::{Cursor, Read as _, Write, stdout};
 use std::path::{Path, PathBuf};
 
 use clap::Parser;
-use officekit_core::compact::{Comments, compact_tree};
+use officekit::compact::{Comments, compact_tree};
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::table::NAMESPACES;

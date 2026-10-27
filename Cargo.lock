@@ -707,24 +707,6 @@ dependencies = [
 name = "officekit"
 version = "0.1.0"
 dependencies = [
- "anyhow",
- "arky",
- "assert_cmd",
- "clap",
- "officekit-core",
- "officekit-packaging",
- "officekit-parts",
- "officekit-validation",
- "officekit-xml",
- "os-shim",
- "serde_json",
- "tempfile",
-]
-
-[[package]]
-name = "officekit-core"
-version = "0.1.0"
-dependencies = [
  "arky",
  "base64 0.22.1",
  "clap",
@@ -747,6 +729,24 @@ dependencies = [
  "sha1",
  "thiserror",
  "zip",
+]
+
+[[package]]
+name = "officekit-cli"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "arky",
+ "assert_cmd",
+ "clap",
+ "officekit",
+ "officekit-packaging",
+ "officekit-parts",
+ "officekit-validation",
+ "officekit-xml",
+ "os-shim",
+ "serde_json",
+ "tempfile",
 ]
 
 [[package]]

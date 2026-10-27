@@ -6,7 +6,7 @@
 //! with each file's SHA-1 so that a later run shows it timed the same files.
 //!
 //! ```text
-//! cargo run --release -p officekit-core --example traversal_speed -- notes/samples
+//! cargo run --release -p officekit --example traversal_speed -- notes/samples
 //! ```
 
 use core::error::Error;

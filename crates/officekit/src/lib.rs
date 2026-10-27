@@ -1,4 +1,4 @@
-//! `officekit-core` reads, edits, writes, and validates Office Open XML files (`.docx`, `.xlsx`,
+//! `officekit` reads, edits, writes, and validates Office Open XML files (`.docx`, `.xlsx`,
 //! `.pptx`) in either conformance class, over the typed tree of `officekit_markup`. The classes
 //! are `officekit_transitional` and `officekit_strict`, each turned on by the feature of its name;
 //! the part modules are `officekit_parts`.

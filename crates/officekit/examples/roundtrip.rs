@@ -14,7 +14,7 @@
 //! `word/document.xml`.
 //!
 //! ```text
-//! cargo run -p officekit-core --example roundtrip -- notes/samples
+//! cargo run -p officekit --example roundtrip -- notes/samples
 //! ```
 
 use core::error::Error;

@@ -6,7 +6,7 @@
 //!
 //! Subcommands:
 //!
-//! - `generate-schema` -- regenerate the generated modules of `officekit-core`
+//! - `generate-schema` -- regenerate the generated modules of `officekit`
 //!   from the inputs under `inputs/`. Writes the namespace table, the
 //!   validation tables, the semantic constraint table, the typed tree, and
 //!   the conformance classes' impls and tables.

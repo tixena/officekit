@@ -3,8 +3,8 @@ use std::path::Path;
 
 use arky::parser::parse;
 use arky::writer::{WriteOptions, write};
-use officekit_core::docx::Docx;
-use officekit_core::markdown::{self, FRONTMATTER_RELATIONSHIP, MarkdownOptions};
+use officekit::docx::Docx;
+use officekit::markdown::{self, FRONTMATTER_RELATIONSHIP, MarkdownOptions};
 use officekit_packaging::package::OpenOptions;
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::RelationshipType;

@@ -2,7 +2,7 @@
 default:
     @just --list
 
-# Lint Rust: clippy across the whole workspace, then officekit-core and
+# Lint Rust: clippy across the whole workspace, then officekit and
 # officekit-parts in every feature combination, then fmt check, and rustfmt
 # over every test file, which reaches the ones `include!` hides. `--workspace`
 # because `default-members` excludes `crates/xtask`. officekit-markup-core is
@@ -11,13 +11,13 @@ default:
 lint:
     cargo clippy -p officekit-markup-core --all-targets -- -D warnings
     cargo clippy --workspace --all-targets -- -D warnings
-    cargo clippy -p officekit-core --all-targets --all-features -- -D warnings
-    cargo clippy -p officekit-core --all-targets --no-default-features -- -D warnings
-    cargo clippy -p officekit-core --all-targets --no-default-features --features strict -- -D warnings
+    cargo clippy -p officekit --all-targets --all-features -- -D warnings
+    cargo clippy -p officekit --all-targets --no-default-features -- -D warnings
+    cargo clippy -p officekit --all-targets --no-default-features --features strict -- -D warnings
     cargo clippy -p officekit-parts --all-targets --all-features -- -D warnings
     cargo clippy -p officekit-parts --all-targets --no-default-features -- -D warnings
     cargo clippy -p officekit-parts --all-targets --no-default-features --features strict -- -D warnings
-    cargo clippy -p officekit --all-targets --no-default-features -- -D warnings
+    cargo clippy -p officekit-cli --all-targets --no-default-features -- -D warnings
     cargo fmt --all --check
     # rustfmt does not expand include!, so cargo fmt never reaches the files a
     # crate root includes; rustfmt reaches every module behind each of them.
@@ -33,8 +33,8 @@ build:
     cargo build -p officekit-markup-core
     cargo build --workspace
 
-# Run the test suite, officekit-core's and officekit-parts' with every class on,
-# officekit-core's with Strict alone, and the CLI's without the binary form. officekit-markup-core builds first and
+# Run the test suite, officekit's and officekit-parts' with every class on,
+# officekit's with Strict alone, and the CLI's without the binary form. officekit-markup-core builds first and
 # alone. The next line builds the libraries, binaries and examples with the
 # dev-dependencies' features, as the test run resolves them, so `cargo test
 # --workspace` compiles test targets only and no generated crate's library
@@ -43,10 +43,10 @@ test:
     cargo build -p officekit-markup-core
     cargo build --workspace --lib --bins --examples
     cargo test --workspace
-    cargo test -p officekit-core --all-features
+    cargo test -p officekit --all-features
     cargo test -p officekit-parts --all-features
-    cargo test -p officekit-core --no-default-features --features strict
-    cargo test -p officekit --no-default-features
+    cargo test -p officekit --no-default-features --features strict
+    cargo test -p officekit-cli --no-default-features
 
 # The gate for each change: fmt, then clippy, a build and a test run of the
 # whole workspace with every feature on, each over one feature set. `just full`
@@ -100,7 +100,7 @@ parity DIR kinds="schema,markup-compatibility":
     files=("{{DIR}}"/*.docx "{{DIR}}"/*.xlsx "{{DIR}}"/*.pptx)
     if [ "${#files[@]}" -eq 0 ]; then echo "no .docx, .xlsx, or .pptx file in {{DIR}}" >&2; exit 2; fi
     rm -rf target/parity && mkdir -p target/parity/officekit
-    cargo build -q -p officekit
+    cargo build -q -p officekit-cli
     dotnet run --project oracle -c Release -- "${files[@]}" > target/parity/oracle.json
     for f in "${files[@]}"; do for t in 2010 2013 2016 2019 2021 365; do
       target/debug/officekit validate --json --max-errors 0 --target "$t" "$f" > "target/parity/officekit/$(basename "$f").$t.json" \
@@ -246,7 +246,7 @@ all: lint build test
 full: all audit
 
 # The release and its tag are created at HEAD when missing. The archive is named
-# as `cargo binstall` looks for it: officekit-<target>-v<version>.tgz (.zip on Windows).
+# as `cargo binstall` looks for it: officekit-cli-<target>-v<version>.tgz (.zip on Windows).
 # Publish the CLI, built in release mode for this machine's target, to the version's GitHub release.
 bpublish:
     #!/usr/bin/env bash
@@ -255,15 +255,15 @@ bpublish:
     head=$(git rev-parse HEAD)
     if [ -z "$(git branch -r --contains "$head")" ]; then echo "bpublish: HEAD is not pushed" >&2; exit 1; fi
     target=$(rustc -vV | sed -n 's/^host: //p')
-    version=$(cargo pkgid -p officekit | sed 's/.*[#@]//')
+    version=$(cargo pkgid -p officekit-cli | sed 's/.*[#@]//')
     tag="v$version"
-    name="officekit-$target-$tag"
+    name="officekit-cli-$target-$tag"
     case "$target" in
         *windows*) bin=officekit.exe; archive="$name.zip" ;;
         *) bin=officekit; archive="$name.tgz" ;;
     esac
     # One job keeps the build at 7.6 GB: officekit-markup-core compiles beside nothing.
-    cargo build --release --locked -j 1 -p officekit
+    cargo build --release --locked -j 1 -p officekit-cli
     rm -rf target/dist && mkdir -p "target/dist/$name"
     cp -f "target/release/$bin" "target/dist/$name/"
     case "$archive" in

@@ -1,5 +1,5 @@
 //! `officekit-strict` is the Strict conformance class (ECMA-376 Part 1),
-//! which `officekit-core`'s feature `strict` turns on.
+//! which `officekit`'s feature `strict` turns on.
 //!
 //! Every node reads Strict with the reader both classes share and writes it
 //! with the shared writer; one walk over the written element then applies the

@@ -1,0 +1,54 @@
+[package]
+name = "officekit-cli"
+description = "The officekit command line: inspect and edit Office Open XML documents"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[lints]
+workspace = true
+
+[[bin]]
+name = "officekit"
+path = "src/main.rs"
+doc = false
+
+[features]
+default = ["binary-format"]
+# get -f binary and save: officekit's binary form.
+binary-format = ["officekit/binary-format", "arky/binary-format"]
+
+[dependencies]
+officekit = { workspace = true, default-features = false, features = ["markdown"] }
+
+# Writing the markdown text
+arky.workspace = true
+
+# Packages, part names and relationships
+officekit-packaging.workspace = true
+
+# The validator
+officekit-validation.workspace = true
+
+# The Office versions a file is validated against
+officekit-xml.workspace = true
+
+# CLI framework
+clap = { workspace = true, features = ["std", "derive", "error-context", "help", "usage"] }
+
+# JSON output
+serde_json.workspace = true
+
+# System abstraction (filesystem, env, temp dirs)
+os-shim.workspace = true
+
+# Error handling
+anyhow.workspace = true
+
+[dev-dependencies]
+assert_cmd.workspace = true
+officekit-parts.workspace = true
+tempfile.workspace = true

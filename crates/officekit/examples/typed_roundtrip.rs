@@ -6,7 +6,7 @@
 //! layout writes them.
 //!
 //! ```text
-//! cargo run -p officekit-core --example typed_roundtrip -- notes/samples
+//! cargo run -p officekit --example typed_roundtrip -- notes/samples
 //! ```
 
 use core::error::Error;
