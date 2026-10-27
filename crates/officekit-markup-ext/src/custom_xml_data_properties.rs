@@ -212,8 +212,11 @@
 //! The hooks of the `ds` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_base::custom_xml_data_properties`.
 //!
-//! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/customXml`.
+//! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/customXml`. Its prefix, `ds`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_base::custom_xml_data_properties::*;
 
 use officekit_markup_base::Written;
@@ -229,6 +232,8 @@ use std::io;
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::custom_xml_data_properties` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `AssociatedXMLSchema`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn associated_xml_schema(
         &mut self,
         _node: &AssociatedXMLSchema,
@@ -236,6 +241,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `CustomXMLDataProperties`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn custom_xml_data_properties(
         &mut self,
         _node: &CustomXMLDataProperties,
@@ -243,6 +250,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `SetOfAssociatedXMLSchemas`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn set_of_associated_xml_schemas(
         &mut self,
         _node: &SetOfAssociatedXMLSchemas,
@@ -250,9 +259,12 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked when a `AssociatedXMLSchema` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_associated_xml_schema(
         &mut self,
         _node: &AssociatedXMLSchema,
@@ -261,9 +273,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CustomXMLDataProperties` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_custom_xml_data_properties(
         &mut self,
         _node: &CustomXMLDataProperties,
@@ -272,9 +287,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SetOfAssociatedXMLSchemas` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_set_of_associated_xml_schemas(
         &mut self,
         _node: &SetOfAssociatedXMLSchemas,
@@ -290,6 +308,8 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::custom_xml_data_properties` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `AssociatedXMLSchema`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn associated_xml_schema(
         &mut self,
         _node: &AssociatedXMLSchema,
@@ -297,6 +317,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CustomXMLDataProperties`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn custom_xml_data_properties(
         &mut self,
         _node: &CustomXMLDataProperties,
@@ -304,6 +326,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SetOfAssociatedXMLSchemas`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn set_of_associated_xml_schemas(
         &mut self,
         _node: &SetOfAssociatedXMLSchemas,

@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `x16` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/spreadsheetml/2014/11/main`, which files write with the prefix `x16`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2014/11/main`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -265,7 +267,8 @@ pub static MODEL_TIME_GROUPINGS_SHAPE: officekit_markup_base::Shape =
         text: false,
     };
 
-/// The tag `x16:calculatedTimeColumn`, schema type `CT_CalculatedTimeColumn` of SDK 3.5.1's data.
+/// The `x16:calculatedTimeColumn` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_CalculatedTimeColumn`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -274,10 +277,15 @@ pub static MODEL_TIME_GROUPINGS_SHAPE: officekit_markup_base::Shape =
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CalculatedTimeColumn {
+    /// The attribute `columnId`, when the element has it.
     pub column_id: Option<String>,
+    /// The attribute `columnName`, when the element has it.
     pub column_name: Option<String>,
+    /// The attribute `contentType`, when the element has it.
     pub content_type: Option<ModelTimeGroupingContentType>,
+    /// The attribute `isSelected`, when the element has it.
     pub is_selected: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -290,6 +298,8 @@ pub struct CalculatedTimeColumn {
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_spreadsheetml_2014_11_main` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `CalculatedTimeColumn`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn calculated_time_column(
         &mut self,
         _node: &CalculatedTimeColumn,
@@ -297,17 +307,24 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ModelTimeGrouping`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn model_time_grouping(&mut self, _node: &ModelTimeGrouping) -> Option<ModelTimeGrouping> {
         None
     }
 
+    /// Asked for each `ModelTimeGroupings`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn model_time_groupings(&mut self, _node: &ModelTimeGroupings) -> Option<ModelTimeGroupings> {
         None
     }
 
+    /// Asked when a `CalculatedTimeColumn` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_calculated_time_column(
         &mut self,
         _node: &CalculatedTimeColumn,
@@ -316,9 +333,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ModelTimeGrouping` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_model_time_grouping(
         &mut self,
         _node: &ModelTimeGrouping,
@@ -327,9 +347,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ModelTimeGroupings` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_model_time_groupings(
         &mut self,
         _node: &ModelTimeGroupings,
@@ -339,7 +362,8 @@ pub trait Context: crate::Context {
     }
 }
 
-/// The tag `x16:modelTimeGrouping`, schema type `CT_ModelTimeGrouping` of SDK 3.5.1's data.
+/// The `x16:modelTimeGrouping` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_ModelTimeGrouping`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -348,14 +372,22 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ModelTimeGrouping {
+    /// The children that are `CalculatedTimeColumn`, in order.
     pub calculated_time_column: Vec<CalculatedTimeColumn>,
+    /// The attribute `columnId`, when the element has it.
     pub column_id: Option<String>,
+    /// The attribute `columnName`, when the element has it.
     pub column_name: Option<String>,
+    /// The attribute `tableName`, when the element has it.
     pub table_name: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_ModelTimeGroupingContentType`: the text the file carried.
+/// The simple type `ST_ModelTimeGroupingContentType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -364,22 +396,33 @@ pub struct ModelTimeGrouping {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ModelTimeGroupingContentType(pub String);
-/// The members of `ST_ModelTimeGroupingContentType`, in alphabetical order.
+/// The members of the enumeration `ST_ModelTimeGroupingContentType`, in alphabetical order.
+/// `as_str` gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ModelTimeGroupingContentTypeMember {
+    /// The member written `days`.
     Days,
+    /// The member written `daysindex`.
     Daysindex,
+    /// The member written `hours`.
     Hours,
+    /// The member written `minutes`.
     Minutes,
+    /// The member written `months`.
     Months,
+    /// The member written `monthsindex`.
     Monthsindex,
+    /// The member written `quarters`.
     Quarters,
+    /// The member written `seconds`.
     Seconds,
+    /// The member written `years`.
     Years,
 }
 
-/// The tag `x16:modelTimeGroupings`, schema type `CT_ModelTimeGroupings` of SDK 3.5.1's data.
+/// The `x16:modelTimeGroupings` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_ModelTimeGroupings`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -388,7 +431,9 @@ pub enum ModelTimeGroupingContentTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ModelTimeGroupings {
+    /// The children that are `ModelTimeGrouping`, in order.
     pub model_time_grouping: Vec<ModelTimeGrouping>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -398,6 +443,8 @@ pub struct ModelTimeGroupings {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_spreadsheetml_2014_11_main` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `CalculatedTimeColumn`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn calculated_time_column(
         &mut self,
         _node: &CalculatedTimeColumn,
@@ -405,10 +452,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ModelTimeGrouping`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn model_time_grouping(&mut self, _node: &ModelTimeGrouping) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ModelTimeGroupings`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn model_time_groupings(
         &mut self,
         _node: &ModelTimeGroupings,
@@ -515,7 +566,7 @@ impl ModelTimeGroupingContentTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

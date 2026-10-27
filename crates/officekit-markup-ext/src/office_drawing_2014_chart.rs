@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `c16` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/drawing/2014/chart`, which files write with the prefix `c16`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/drawing/2014/chart`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -442,7 +444,8 @@ pub static PTIDX_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Sh
     text: true,
 };
 
-/// The tag `c16:bubble3D`, schema type `CT_Boolean` of SDK 3.5.1's data.
+/// The `c16:bubble3D` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Boolean`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -451,12 +454,14 @@ pub static PTIDX_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Sh
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Bubble3D {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `c16:categoryFilterException`, schema type `CT_CategoryFilterException` of SDK 3.5.1's
-/// data.
+/// The `c16:categoryFilterException` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_CategoryFilterException`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -465,18 +470,26 @@ pub struct Bubble3D {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CategoryFilterException {
+    /// The child that is `Bubble3D`, when there is one.
     pub bubble3d: Option<Box<Bubble3D>>,
+    /// The child that is `DLbl`, when there is one.
     pub d_lbl: Option<Box<DLbl>>,
+    /// The child that is `Explosion`, when there is one.
     pub explosion: Option<Box<Explosion>>,
+    /// The child that is `InvertIfNegative`, when there is one.
     pub invert_if_negative: Option<Box<InvertIfNegative>>,
+    /// The child that is `Marker`, when there is one.
     pub marker: Option<Box<Marker>>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// The child that is `UniqueId`, which the schema requires.
     pub unique_id: Box<UniqueId>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c16:categoryFilterExceptions`, schema type `CT_CategoryFilterExceptions` of SDK 3.5.1's
-/// data.
+/// The `c16:categoryFilterExceptions` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_CategoryFilterExceptions`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -485,7 +498,9 @@ pub struct CategoryFilterException {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CategoryFilterExceptions {
+    /// The children that are `CategoryFilterException`, in order.
     pub category_filter_exception: Vec<CategoryFilterException>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -498,10 +513,14 @@ pub struct CategoryFilterExceptions {
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_drawing_2014_chart` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `Bubble3D`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn bubble3d(&mut self, _node: &Bubble3D) -> Option<Bubble3D> {
         None
     }
 
+    /// Asked for each `CategoryFilterException`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn category_filter_exception(
         &mut self,
         _node: &CategoryFilterException,
@@ -509,6 +528,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `CategoryFilterExceptions`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn category_filter_exceptions(
         &mut self,
         _node: &CategoryFilterExceptions,
@@ -516,10 +537,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `DLbl`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn d_lbl(&mut self, _node: &DLbl) -> Option<DLbl> {
         None
     }
 
+    /// Asked for each `Datapointuniqueidmap`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn datapointuniqueidmap(
         &mut self,
         _node: &Datapointuniqueidmap,
@@ -527,10 +552,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Explosion`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn explosion(&mut self, _node: &Explosion) -> Option<Explosion> {
         None
     }
 
+    /// Asked for each `FilteredLitCacheMultiLvlStrFilteredLiteralCache`. `None` rebuilds it from
+    /// its transformed children, and `Some` puts the node it holds in its place.
     fn filtered_lit_cache_multi_lvl_str_filtered_literal_cache(
         &mut self,
         _node: &FilteredLitCacheMultiLvlStrFilteredLiteralCache,
@@ -538,6 +567,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `FilteredLitCacheNumFilteredLiteralCache`. `None` rebuilds it from its
+    /// transformed children, and `Some` puts the node it holds in its place.
     fn filtered_lit_cache_num_filtered_literal_cache(
         &mut self,
         _node: &FilteredLitCacheNumFilteredLiteralCache,
@@ -545,6 +576,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `FilteredLitCacheStrFilteredLiteralCache`. `None` rebuilds it from its
+    /// transformed children, and `Some` puts the node it holds in its place.
     fn filtered_lit_cache_str_filtered_literal_cache(
         &mut self,
         _node: &FilteredLitCacheStrFilteredLiteralCache,
@@ -552,38 +585,56 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `InvertIfNegative`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn invert_if_negative(&mut self, _node: &InvertIfNegative) -> Option<InvertIfNegative> {
         None
     }
 
+    /// Asked for each `LiteralDataChart`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn literal_data_chart(&mut self, _node: &LiteralDataChart) -> Option<LiteralDataChart> {
         None
     }
 
+    /// Asked for each `Marker`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn marker(&mut self, _node: &Marker) -> Option<Marker> {
         None
     }
 
+    /// Asked for each `MultiLvlStrCache`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn multi_lvl_str_cache(&mut self, _node: &MultiLvlStrCache) -> Option<MultiLvlStrCache> {
         None
     }
 
+    /// Asked for each `NumCache`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn num_cache(&mut self, _node: &NumCache) -> Option<NumCache> {
         None
     }
 
+    /// Asked for each `PivotOptions16`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn pivot_options16(&mut self, _node: &PivotOptions16) -> Option<PivotOptions16> {
         None
     }
 
+    /// Asked for each `Ptentry`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ptentry(&mut self, _node: &Ptentry) -> Option<Ptentry> {
         None
     }
 
+    /// Asked for each `Ptidx`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ptidx(&mut self, _node: &Ptidx) -> Option<Ptidx> {
         None
     }
 
+    /// Asked for each `ShowExpandCollapseFieldButtons`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn show_expand_collapse_field_buttons(
         &mut self,
         _node: &ShowExpandCollapseFieldButtons,
@@ -591,25 +642,36 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `SpPr`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn sp_pr(&mut self, _node: &SpPr) -> Option<SpPr> {
         None
     }
 
+    /// Asked for each `StrCache`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn str_cache(&mut self, _node: &StrCache) -> Option<StrCache> {
         None
     }
 
+    /// Asked for each `UniqueID`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn unique_id(&mut self, _node: &UniqueID) -> Option<UniqueID> {
         None
     }
 
+    /// Asked for each `UniqueId`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn unique_id_2(&mut self, _node: &UniqueId) -> Option<UniqueId> {
         None
     }
 
+    /// Asked when a `Bubble3D` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_bubble3d(
         &mut self,
         _node: &Bubble3D,
@@ -618,9 +680,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CategoryFilterException` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_category_filter_exception(
         &mut self,
         _node: &CategoryFilterException,
@@ -629,9 +694,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CategoryFilterExceptions` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_category_filter_exceptions(
         &mut self,
         _node: &CategoryFilterExceptions,
@@ -640,16 +708,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DLbl` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_d_lbl(&mut self, _node: &DLbl, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Datapointuniqueidmap` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_datapointuniqueidmap(
         &mut self,
         _node: &Datapointuniqueidmap,
@@ -658,9 +732,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Explosion` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_explosion(
         &mut self,
         _node: &Explosion,
@@ -669,9 +746,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FilteredLitCacheMultiLvlStrFilteredLiteralCache` is written through.
+    /// `Written::Yes` means the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_filtered_lit_cache_multi_lvl_str_filtered_literal_cache(
         &mut self,
         _node: &FilteredLitCacheMultiLvlStrFilteredLiteralCache,
@@ -680,9 +760,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FilteredLitCacheNumFilteredLiteralCache` is written through. `Written::Yes`
+    /// means the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_filtered_lit_cache_num_filtered_literal_cache(
         &mut self,
         _node: &FilteredLitCacheNumFilteredLiteralCache,
@@ -691,9 +774,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FilteredLitCacheStrFilteredLiteralCache` is written through. `Written::Yes`
+    /// means the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_filtered_lit_cache_str_filtered_literal_cache(
         &mut self,
         _node: &FilteredLitCacheStrFilteredLiteralCache,
@@ -702,9 +788,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `InvertIfNegative` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_invert_if_negative(
         &mut self,
         _node: &InvertIfNegative,
@@ -713,9 +802,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LiteralDataChart` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_literal_data_chart(
         &mut self,
         _node: &LiteralDataChart,
@@ -724,16 +816,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Marker` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_marker(&mut self, _node: &Marker, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `MultiLvlStrCache` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_multi_lvl_str_cache(
         &mut self,
         _node: &MultiLvlStrCache,
@@ -742,9 +840,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NumCache` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_num_cache(
         &mut self,
         _node: &NumCache,
@@ -753,9 +854,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotOptions16` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_options16(
         &mut self,
         _node: &PivotOptions16,
@@ -764,23 +868,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Ptentry` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ptentry(&mut self, _node: &Ptentry, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Ptidx` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ptidx(&mut self, _node: &Ptidx, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShowExpandCollapseFieldButtons` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_show_expand_collapse_field_buttons(
         &mut self,
         _node: &ShowExpandCollapseFieldButtons,
@@ -789,16 +902,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SpPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sp_pr(&mut self, _node: &SpPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `StrCache` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_str_cache(
         &mut self,
         _node: &StrCache,
@@ -807,9 +926,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `UniqueID` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_unique_id(
         &mut self,
         _node: &UniqueID,
@@ -818,9 +940,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `UniqueId` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_unique_id_2(
         &mut self,
         _node: &UniqueId,
@@ -830,7 +955,8 @@ pub trait Context: crate::Context {
     }
 }
 
-/// The tag `c16:dLbl`, schema type `CT_DLbl` of SDK 3.5.1's data.
+/// The `c16:dLbl` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_DLbl`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -839,14 +965,18 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DLbl {
+    /// The child that is `chart::ChartExtensibility`, when there is one.
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
+    /// The children that are an item of `chart::DataLabelContent`, in order.
     pub content: Vec<chart::DataLabelContent>,
+    /// The child that is `chart::Index`, which the schema requires.
     pub index: Box<chart::Index>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c16:datapointuniqueidmap`, schema type `CT_ChartDataPointUniqueIDMap` of SDK 3.5.1's
-/// data.
+/// The `c16:datapointuniqueidmap` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_ChartDataPointUniqueIDMap`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -855,11 +985,14 @@ pub struct DLbl {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Datapointuniqueidmap {
+    /// The children that are `Ptentry`, in order.
     pub ptentry: Vec<Ptentry>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c16:explosion`, schema type `CT_UnsignedInt` of SDK 3.5.1's data.
+/// The `c16:explosion` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_UnsignedInt`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -868,12 +1001,14 @@ pub struct Datapointuniqueidmap {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Explosion {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `c16:filteredLitCache`, schema type `CT_MultiLvlStrFilteredLiteralCache` of SDK 3.5.1's
-/// data.
+/// The `c16:filteredLitCache` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_MultiLvlStrFilteredLiteralCache`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -882,11 +1017,14 @@ pub struct Explosion {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FilteredLitCacheMultiLvlStrFilteredLiteralCache {
+    /// The child that is `MultiLvlStrCache`, which the schema requires.
     pub multi_lvl_str_cache: Box<MultiLvlStrCache>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c16:filteredLitCache`, schema type `CT_NumFilteredLiteralCache` of SDK 3.5.1's data.
+/// The `c16:filteredLitCache` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_NumFilteredLiteralCache`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -895,11 +1033,14 @@ pub struct FilteredLitCacheMultiLvlStrFilteredLiteralCache {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FilteredLitCacheNumFilteredLiteralCache {
+    /// The child that is `NumCache`, which the schema requires.
     pub num_cache: Box<NumCache>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c16:filteredLitCache`, schema type `CT_StrFilteredLiteralCache` of SDK 3.5.1's data.
+/// The `c16:filteredLitCache` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_StrFilteredLiteralCache`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -908,11 +1049,14 @@ pub struct FilteredLitCacheNumFilteredLiteralCache {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FilteredLitCacheStrFilteredLiteralCache {
+    /// The child that is `StrCache`, which the schema requires.
     pub str_cache: Box<StrCache>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c16:invertIfNegative`, schema type `CT_Boolean` of SDK 3.5.1's data.
+/// The `c16:invertIfNegative` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_Boolean`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -921,11 +1065,14 @@ pub struct FilteredLitCacheStrFilteredLiteralCache {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct InvertIfNegative {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `c16:literalDataChart`, schema type `CT_LiteralDataChart` of SDK 3.5.1's data.
+/// The `c16:literalDataChart` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_LiteralDataChart`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -934,11 +1081,14 @@ pub struct InvertIfNegative {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LiteralDataChart {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `c16:marker`, schema type `CT_Marker` of SDK 3.5.1's data.
+/// The `c16:marker` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Marker`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -947,14 +1097,20 @@ pub struct LiteralDataChart {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Marker {
+    /// The child that is `chart::ChartExtensibility`, when there is one.
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
+    /// The child that is `chart::ShapeProperties`, when there is one.
     pub shape_properties: Option<Box<chart::ShapeProperties>>,
+    /// The child that is `chart::Size`, when there is one.
     pub size: Option<Box<chart::Size>>,
+    /// The child that is `chart::Symbol`, when there is one.
     pub symbol: Option<Box<chart::Symbol>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c16:multiLvlStrCache`, schema type `CT_MultiLvlStrData` of SDK 3.5.1's data.
+/// The `c16:multiLvlStrCache` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_MultiLvlStrData`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -963,13 +1119,18 @@ pub struct Marker {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MultiLvlStrCache {
+    /// The child that is `chart::ChartExtensibility`, when there is one.
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
+    /// The children that are `chart::Level`, in order.
     pub level: Vec<chart::Level>,
+    /// The child that is `chart::PointCount`, when there is one.
     pub point_count: Option<Box<chart::PointCount>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c16:numCache`, schema type `CT_NumData` of SDK 3.5.1's data.
+/// The `c16:numCache` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_NumData`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -978,14 +1139,20 @@ pub struct MultiLvlStrCache {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NumCache {
+    /// The child that is `chart::ChartExtensibility`, when there is one.
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
+    /// The child that is `chart::FormatCode`, when there is one.
     pub format_code: Option<Box<chart::FormatCode>>,
+    /// The children that are `chart::NumericPoint`, in order.
     pub numeric_point: Vec<chart::NumericPoint>,
+    /// The child that is `chart::PointCount`, when there is one.
     pub point_count: Option<Box<chart::PointCount>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c16:pivotOptions16`, schema type `CT_PivotOptions16` of SDK 3.5.1's data.
+/// The `c16:pivotOptions16` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_PivotOptions16`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -994,11 +1161,14 @@ pub struct NumCache {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PivotOptions16 {
+    /// The child that is `ShowExpandCollapseFieldButtons`, when there is one.
     pub show_expand_collapse_field_buttons: Option<Box<ShowExpandCollapseFieldButtons>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c16:ptentry`, schema type `CT_ChartDataPointUniqueIDMapEntry` of SDK 3.5.1's data.
+/// The `c16:ptentry` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ChartDataPointUniqueIDMapEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1007,12 +1177,16 @@ pub struct PivotOptions16 {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Ptentry {
+    /// The child that is `Ptidx`, which the schema requires.
     pub ptidx: Box<Ptidx>,
+    /// The child that is `UniqueID`, which the schema requires.
     pub unique_id: Box<UniqueID>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c16:ptidx`, schema type `unsignedInt` of SDK 3.5.1's data.
+/// The `c16:ptidx` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `unsignedInt`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1021,11 +1195,14 @@ pub struct Ptentry {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Ptidx {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `c16:showExpandCollapseFieldButtons`, schema type `CT_BooleanFalse` of SDK 3.5.1's data.
+/// The `c16:showExpandCollapseFieldButtons` element, declared by the schema data of the Open XML
+/// SDK, version 3.5.1. Its schema type is `CT_BooleanFalse`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1034,11 +1211,14 @@ pub struct Ptidx {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShowExpandCollapseFieldButtons {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `c16:spPr`, schema type `CT_ShapeProperties` of SDK 3.5.1's data.
+/// The `c16:spPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ShapeProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1047,19 +1227,30 @@ pub struct ShowExpandCollapseFieldButtons {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SpPr {
+    /// The child that is `drawing::Apply3DShapeProperties`, when there is one.
     pub apply_3d_shape_properties: Option<Box<drawing::Apply3DShapeProperties>>,
+    /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<drawing::BlackAndWhiteMode>,
+    /// The child that is an item of `drawing::EffectPropertiesContent`, when there is one.
     pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
+    /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionList>>,
+    /// The child that is an item of `drawing::FillPropertiesContent`, when there is one.
     pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
+    /// The child that is an item of `drawing::GeometryContent`, when there is one.
     pub geometry_content: Option<Box<drawing::GeometryContent>>,
+    /// The child that is `drawing::Outline`, when there is one.
     pub outline: Option<Box<drawing::Outline>>,
+    /// The child that is `drawing::Scene3d`, when there is one.
     pub scene3d: Option<Box<drawing::Scene3d>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `drawing::XfrmTransform2D`, when there is one.
     pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2D>>,
 }
 
-/// The tag `c16:strCache`, schema type `CT_StrData` of SDK 3.5.1's data.
+/// The `c16:strCache` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StrData`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1068,13 +1259,18 @@ pub struct SpPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StrCache {
+    /// The child that is `chart::ChartExtensibility`, when there is one.
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
+    /// The child that is `chart::PointCount`, when there is one.
     pub point_count: Option<Box<chart::PointCount>>,
+    /// The children that are `chart::StringPoint`, in order.
     pub string_point: Vec<chart::StringPoint>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c16:uniqueID`, schema type `CT_ChartUniqueID` of SDK 3.5.1's data.
+/// The `c16:uniqueID` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ChartUniqueID`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1083,10 +1279,12 @@ pub struct StrCache {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct UniqueID {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c16:uniqueId`, schema type `CT_ChartUniqueID` of SDK 3.5.1's data.
+/// The `c16:uniqueId` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ChartUniqueID`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1095,6 +1293,7 @@ pub struct UniqueID {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct UniqueId {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -1104,10 +1303,13 @@ pub struct UniqueId {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_drawing_2014_chart` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `Bubble3D`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn bubble3d(&mut self, _node: &Bubble3D) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CategoryFilterException`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn category_filter_exception(
         &mut self,
         _node: &CategoryFilterException,
@@ -1115,6 +1317,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CategoryFilterExceptions`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn category_filter_exceptions(
         &mut self,
         _node: &CategoryFilterExceptions,
@@ -1122,10 +1326,13 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DLbl`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn d_lbl(&mut self, _node: &DLbl) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Datapointuniqueidmap`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn datapointuniqueidmap(
         &mut self,
         _node: &Datapointuniqueidmap,
@@ -1133,10 +1340,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Explosion`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn explosion(&mut self, _node: &Explosion) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FilteredLitCacheMultiLvlStrFilteredLiteralCache`. `Descend::Yes` walks into its
+    /// children, and `Descend::No` skips them.
     fn filtered_lit_cache_multi_lvl_str_filtered_literal_cache(
         &mut self,
         _node: &FilteredLitCacheMultiLvlStrFilteredLiteralCache,
@@ -1144,6 +1355,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FilteredLitCacheNumFilteredLiteralCache`. `Descend::Yes` walks into its
+    /// children, and `Descend::No` skips them.
     fn filtered_lit_cache_num_filtered_literal_cache(
         &mut self,
         _node: &FilteredLitCacheNumFilteredLiteralCache,
@@ -1151,6 +1364,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FilteredLitCacheStrFilteredLiteralCache`. `Descend::Yes` walks into its
+    /// children, and `Descend::No` skips them.
     fn filtered_lit_cache_str_filtered_literal_cache(
         &mut self,
         _node: &FilteredLitCacheStrFilteredLiteralCache,
@@ -1158,38 +1373,52 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `InvertIfNegative`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn invert_if_negative(&mut self, _node: &InvertIfNegative) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LiteralDataChart`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn literal_data_chart(&mut self, _node: &LiteralDataChart) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Marker`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn marker(&mut self, _node: &Marker) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MultiLvlStrCache`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn multi_lvl_str_cache(&mut self, _node: &MultiLvlStrCache) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NumCache`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn num_cache(&mut self, _node: &NumCache) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotOptions16`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn pivot_options16(&mut self, _node: &PivotOptions16) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Ptentry`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ptentry(&mut self, _node: &Ptentry) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Ptidx`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ptidx(&mut self, _node: &Ptidx) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShowExpandCollapseFieldButtons`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn show_expand_collapse_field_buttons(
         &mut self,
         _node: &ShowExpandCollapseFieldButtons,
@@ -1197,18 +1426,22 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SpPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sp_pr(&mut self, _node: &SpPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `StrCache`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn str_cache(&mut self, _node: &StrCache) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `UniqueID`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn unique_id(&mut self, _node: &UniqueID) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `UniqueId`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn unique_id_2(&mut self, _node: &UniqueId) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

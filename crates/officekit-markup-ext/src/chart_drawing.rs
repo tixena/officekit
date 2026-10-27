@@ -212,8 +212,11 @@
 //! The hooks of the `cdr` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_core::chart_drawing`.
 //!
-//! The namespace is `http://schemas.openxmlformats.org/drawingml/2006/chartDrawing`.
+//! The namespace is `http://schemas.openxmlformats.org/drawingml/2006/chartDrawing`. Its prefix, `cdr`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_core::chart_drawing::*;
 
 use officekit_markup_base::Written;
@@ -229,6 +232,8 @@ use std::io;
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::chart_drawing` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `AbsoluteAnchorShapeSize`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn absolute_anchor_shape_size(
         &mut self,
         _node: &AbsoluteAnchorShapeSize,
@@ -236,10 +241,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ConnectionShape`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn connection_shape(&mut self, _node: &ConnectionShape) -> Option<ConnectionShape> {
         None
     }
 
+    /// Asked for each `ConnectorNonVisualProperties`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn connector_non_visual_properties(
         &mut self,
         _node: &ConnectorNonVisualProperties,
@@ -247,14 +256,20 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `EndingAnchorPoint`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn ending_anchor_point(&mut self, _node: &EndingAnchorPoint) -> Option<EndingAnchorPoint> {
         None
     }
 
+    /// Asked for each `GraphicFrame`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn graphic_frame(&mut self, _node: &GraphicFrame) -> Option<GraphicFrame> {
         None
     }
 
+    /// Asked for each `GraphicFrameTransform`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn graphic_frame_transform(
         &mut self,
         _node: &GraphicFrameTransform,
@@ -262,10 +277,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `GroupShape`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn group_shape(&mut self, _node: &GroupShape) -> Option<GroupShape> {
         None
     }
 
+    /// Asked for each `GroupShapeProperties`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn group_shape_properties(
         &mut self,
         _node: &GroupShapeProperties,
@@ -273,6 +292,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `NonVisualConnectionShapeDrawingProperties`. `None` rebuilds it from its
+    /// transformed children, and `Some` puts the node it holds in its place.
     fn non_visual_connection_shape_drawing_properties(
         &mut self,
         _node: &NonVisualConnectionShapeDrawingProperties,
@@ -280,6 +301,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `NonVisualDrawingProperties`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn non_visual_drawing_properties(
         &mut self,
         _node: &NonVisualDrawingProperties,
@@ -287,6 +310,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `NonVisualGraphicFrameDrawingProperties`. `None` rebuilds it from its
+    /// transformed children, and `Some` puts the node it holds in its place.
     fn non_visual_graphic_frame_drawing_properties(
         &mut self,
         _node: &NonVisualGraphicFrameDrawingProperties,
@@ -294,6 +319,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `NonVisualGraphicFrameProperties`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn non_visual_graphic_frame_properties(
         &mut self,
         _node: &NonVisualGraphicFrameProperties,
@@ -301,6 +328,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `NonVisualGroupShapeDrawingProperties`. `None` rebuilds it from its
+    /// transformed children, and `Some` puts the node it holds in its place.
     fn non_visual_group_shape_drawing_properties(
         &mut self,
         _node: &NonVisualGroupShapeDrawingProperties,
@@ -308,6 +337,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `NonVisualGroupShapeProperties`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn non_visual_group_shape_properties(
         &mut self,
         _node: &NonVisualGroupShapeProperties,
@@ -315,6 +346,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `NonVisualPictureDrawingProperties`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn non_visual_picture_drawing_properties(
         &mut self,
         _node: &NonVisualPictureDrawingProperties,
@@ -322,6 +355,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `NonVisualPictureProperties`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn non_visual_picture_properties(
         &mut self,
         _node: &NonVisualPictureProperties,
@@ -329,6 +364,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `NonVisualShapeDrawingProperties`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn non_visual_shape_drawing_properties(
         &mut self,
         _node: &NonVisualShapeDrawingProperties,
@@ -336,6 +373,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `NonVisualShapeProperties`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn non_visual_shape_properties(
         &mut self,
         _node: &NonVisualShapeProperties,
@@ -343,22 +382,32 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ObjectContent`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn object(&mut self, _node: &ObjectContent) -> Option<ObjectContent> {
         None
     }
 
+    /// Asked for each `ObjectContent` in a list. `None` leaves the item to its own `transform`, and
+    /// `Some` puts the items it holds, any number of them, in its place.
     fn object_items(&mut self, _node: &ObjectContent) -> Option<Vec<ObjectContent>> {
         None
     }
 
+    /// Asked for each `Picture`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn picture(&mut self, _node: &Picture) -> Option<Picture> {
         None
     }
 
+    /// Asked for each `PictureFill`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn picture_fill(&mut self, _node: &PictureFill) -> Option<PictureFill> {
         None
     }
 
+    /// Asked for each `RelativeAnchorShapeSize`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn relative_anchor_shape_size(
         &mut self,
         _node: &RelativeAnchorShapeSize,
@@ -366,6 +415,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `RelativeXCoordinate`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn relative_x_coordinate(
         &mut self,
         _node: &RelativeXCoordinate,
@@ -373,6 +424,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `RelativeYCoordinate`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn relative_y_coordinate(
         &mut self,
         _node: &RelativeYCoordinate,
@@ -380,26 +433,38 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Shape`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn shape(&mut self, _node: &Shape) -> Option<Shape> {
         None
     }
 
+    /// Asked for each `ShapeExtent`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn shape_extent(&mut self, _node: &ShapeExtent) -> Option<ShapeExtent> {
         None
     }
 
+    /// Asked for each `ShapeProperties`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn shape_properties(&mut self, _node: &ShapeProperties) -> Option<ShapeProperties> {
         None
     }
 
+    /// Asked for each `ShapeStyle`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn shape_style(&mut self, _node: &ShapeStyle) -> Option<ShapeStyle> {
         None
     }
 
+    /// Asked for each `ShapeTextBody`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn shape_text_body(&mut self, _node: &ShapeTextBody) -> Option<ShapeTextBody> {
         None
     }
 
+    /// Asked for each `StartingAnchorPoint`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn starting_anchor_point(
         &mut self,
         _node: &StartingAnchorPoint,
@@ -407,17 +472,24 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `UserShapesContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn user_shapes(&mut self, _node: &UserShapesContent) -> Option<UserShapesContent> {
         None
     }
 
+    /// Asked for each `UserShapesContent` in a list. `None` leaves the item to its own `transform`,
+    /// and `Some` puts the items it holds, any number of them, in its place.
     fn user_shapes_items(&mut self, _node: &UserShapesContent) -> Option<Vec<UserShapesContent>> {
         None
     }
 
+    /// Asked when a `AbsoluteAnchorShapeSize` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_absolute_anchor_shape_size(
         &mut self,
         _node: &AbsoluteAnchorShapeSize,
@@ -426,9 +498,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ConnectionShape` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_connection_shape(
         &mut self,
         _node: &ConnectionShape,
@@ -437,9 +512,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ConnectorNonVisualProperties` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_connector_non_visual_properties(
         &mut self,
         _node: &ConnectorNonVisualProperties,
@@ -448,9 +526,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `EndingAnchorPoint` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ending_anchor_point(
         &mut self,
         _node: &EndingAnchorPoint,
@@ -459,9 +540,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `GraphicFrame` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_graphic_frame(
         &mut self,
         _node: &GraphicFrame,
@@ -470,9 +554,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `GraphicFrameTransform` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_graphic_frame_transform(
         &mut self,
         _node: &GraphicFrameTransform,
@@ -481,9 +568,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `GroupShape` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_group_shape(
         &mut self,
         _node: &GroupShape,
@@ -492,9 +582,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `GroupShapeProperties` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_group_shape_properties(
         &mut self,
         _node: &GroupShapeProperties,
@@ -503,9 +596,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NonVisualConnectionShapeDrawingProperties` is written through. `Written::Yes`
+    /// means the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_non_visual_connection_shape_drawing_properties(
         &mut self,
         _node: &NonVisualConnectionShapeDrawingProperties,
@@ -514,9 +610,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NonVisualDrawingProperties` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_non_visual_drawing_properties(
         &mut self,
         _node: &NonVisualDrawingProperties,
@@ -525,9 +624,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NonVisualGraphicFrameDrawingProperties` is written through. `Written::Yes`
+    /// means the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_non_visual_graphic_frame_drawing_properties(
         &mut self,
         _node: &NonVisualGraphicFrameDrawingProperties,
@@ -536,9 +638,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NonVisualGraphicFrameProperties` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_non_visual_graphic_frame_properties(
         &mut self,
         _node: &NonVisualGraphicFrameProperties,
@@ -547,9 +652,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NonVisualGroupShapeDrawingProperties` is written through. `Written::Yes` means
+    /// the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_non_visual_group_shape_drawing_properties(
         &mut self,
         _node: &NonVisualGroupShapeDrawingProperties,
@@ -558,9 +666,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NonVisualGroupShapeProperties` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_non_visual_group_shape_properties(
         &mut self,
         _node: &NonVisualGroupShapeProperties,
@@ -569,9 +680,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NonVisualPictureDrawingProperties` is written through. `Written::Yes` means
+    /// the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_non_visual_picture_drawing_properties(
         &mut self,
         _node: &NonVisualPictureDrawingProperties,
@@ -580,9 +694,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NonVisualPictureProperties` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_non_visual_picture_properties(
         &mut self,
         _node: &NonVisualPictureProperties,
@@ -591,9 +708,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NonVisualShapeDrawingProperties` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_non_visual_shape_drawing_properties(
         &mut self,
         _node: &NonVisualShapeDrawingProperties,
@@ -602,9 +722,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NonVisualShapeProperties` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_non_visual_shape_properties(
         &mut self,
         _node: &NonVisualShapeProperties,
@@ -613,9 +736,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ObjectContent` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_object(
         &mut self,
         _node: &ObjectContent,
@@ -624,9 +750,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ObjectContent` in a list is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_object_items(
         &mut self,
         _node: &ObjectContent,
@@ -635,16 +764,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Picture` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_picture(&mut self, _node: &Picture, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `PictureFill` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_picture_fill(
         &mut self,
         _node: &PictureFill,
@@ -653,9 +788,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RelativeAnchorShapeSize` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_relative_anchor_shape_size(
         &mut self,
         _node: &RelativeAnchorShapeSize,
@@ -664,9 +802,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RelativeXCoordinate` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_relative_x_coordinate(
         &mut self,
         _node: &RelativeXCoordinate,
@@ -675,9 +816,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RelativeYCoordinate` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_relative_y_coordinate(
         &mut self,
         _node: &RelativeYCoordinate,
@@ -686,16 +830,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Shape` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape(&mut self, _node: &Shape, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeExtent` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_extent(
         &mut self,
         _node: &ShapeExtent,
@@ -704,9 +854,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeProperties` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_properties(
         &mut self,
         _node: &ShapeProperties,
@@ -715,9 +868,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeStyle` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_style(
         &mut self,
         _node: &ShapeStyle,
@@ -726,9 +882,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeTextBody` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_text_body(
         &mut self,
         _node: &ShapeTextBody,
@@ -737,9 +896,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `StartingAnchorPoint` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_starting_anchor_point(
         &mut self,
         _node: &StartingAnchorPoint,
@@ -748,9 +910,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `UserShapesContent` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_user_shapes(
         &mut self,
         _node: &UserShapesContent,
@@ -759,9 +924,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `UserShapesContent` in a list is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_user_shapes_items(
         &mut self,
         _node: &UserShapesContent,
@@ -777,6 +945,8 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::chart_drawing` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `AbsoluteAnchorShapeSize`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn absolute_anchor_shape_size(
         &mut self,
         _node: &AbsoluteAnchorShapeSize,
@@ -784,10 +954,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ConnectionShape`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn connection_shape(&mut self, _node: &ConnectionShape) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ConnectorNonVisualProperties`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn connector_non_visual_properties(
         &mut self,
         _node: &ConnectorNonVisualProperties,
@@ -795,14 +969,20 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `EndingAnchorPoint`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn ending_anchor_point(&mut self, _node: &EndingAnchorPoint) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `GraphicFrame`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn graphic_frame(&mut self, _node: &GraphicFrame) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `GraphicFrameTransform`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn graphic_frame_transform(
         &mut self,
         _node: &GraphicFrameTransform,
@@ -810,10 +990,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `GroupShape`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn group_shape(&mut self, _node: &GroupShape) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `GroupShapeProperties`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn group_shape_properties(
         &mut self,
         _node: &GroupShapeProperties,
@@ -821,6 +1005,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NonVisualConnectionShapeDrawingProperties`. `Descend::Yes` walks into its
+    /// children, and `Descend::No` skips them.
     fn non_visual_connection_shape_drawing_properties(
         &mut self,
         _node: &NonVisualConnectionShapeDrawingProperties,
@@ -828,6 +1014,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NonVisualDrawingProperties`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn non_visual_drawing_properties(
         &mut self,
         _node: &NonVisualDrawingProperties,
@@ -835,6 +1023,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NonVisualGraphicFrameDrawingProperties`. `Descend::Yes` walks into its children,
+    /// and `Descend::No` skips them.
     fn non_visual_graphic_frame_drawing_properties(
         &mut self,
         _node: &NonVisualGraphicFrameDrawingProperties,
@@ -842,6 +1032,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NonVisualGraphicFrameProperties`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn non_visual_graphic_frame_properties(
         &mut self,
         _node: &NonVisualGraphicFrameProperties,
@@ -849,6 +1041,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NonVisualGroupShapeDrawingProperties`. `Descend::Yes` walks into its children,
+    /// and `Descend::No` skips them.
     fn non_visual_group_shape_drawing_properties(
         &mut self,
         _node: &NonVisualGroupShapeDrawingProperties,
@@ -856,6 +1050,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NonVisualGroupShapeProperties`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn non_visual_group_shape_properties(
         &mut self,
         _node: &NonVisualGroupShapeProperties,
@@ -863,6 +1059,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NonVisualPictureDrawingProperties`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn non_visual_picture_drawing_properties(
         &mut self,
         _node: &NonVisualPictureDrawingProperties,
@@ -870,6 +1068,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NonVisualPictureProperties`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn non_visual_picture_properties(
         &mut self,
         _node: &NonVisualPictureProperties,
@@ -877,6 +1077,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NonVisualShapeDrawingProperties`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn non_visual_shape_drawing_properties(
         &mut self,
         _node: &NonVisualShapeDrawingProperties,
@@ -884,6 +1086,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NonVisualShapeProperties`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn non_visual_shape_properties(
         &mut self,
         _node: &NonVisualShapeProperties,
@@ -891,18 +1095,25 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ObjectContent`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn object(&mut self, _node: &ObjectContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Picture`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn picture(&mut self, _node: &Picture) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PictureFill`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn picture_fill(&mut self, _node: &PictureFill) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RelativeAnchorShapeSize`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn relative_anchor_shape_size(
         &mut self,
         _node: &RelativeAnchorShapeSize,
@@ -910,6 +1121,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RelativeXCoordinate`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn relative_x_coordinate(
         &mut self,
         _node: &RelativeXCoordinate,
@@ -917,6 +1130,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RelativeYCoordinate`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn relative_y_coordinate(
         &mut self,
         _node: &RelativeYCoordinate,
@@ -924,26 +1139,37 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Shape`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn shape(&mut self, _node: &Shape) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShapeExtent`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn shape_extent(&mut self, _node: &ShapeExtent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShapeProperties`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn shape_properties(&mut self, _node: &ShapeProperties) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShapeStyle`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn shape_style(&mut self, _node: &ShapeStyle) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShapeTextBody`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn shape_text_body(&mut self, _node: &ShapeTextBody) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `StartingAnchorPoint`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn starting_anchor_point(
         &mut self,
         _node: &StartingAnchorPoint,
@@ -951,6 +1177,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `UserShapesContent`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn user_shapes(&mut self, _node: &UserShapesContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

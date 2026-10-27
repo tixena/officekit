@@ -212,8 +212,11 @@
 //! The hooks of the `sl` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_base::custom_xml_schema_properties`.
 //!
-//! The namespace is `http://schemas.openxmlformats.org/schemaLibrary/2006/main`.
+//! The namespace is `http://schemas.openxmlformats.org/schemaLibrary/2006/main`. Its prefix, `sl`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_base::custom_xml_schema_properties::*;
 
 use officekit_markup_base::Written;
@@ -229,6 +232,8 @@ use std::io;
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::custom_xml_schema_properties` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `CustomXMLSchemaReference`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn custom_xml_schema_reference(
         &mut self,
         _node: &CustomXMLSchemaReference,
@@ -236,6 +241,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `EmbeddedCustomXMLSchemaSupplementaryData`. `None` rebuilds it from its
+    /// transformed children, and `Some` puts the node it holds in its place.
     fn embedded_custom_xml_schema_supplementary_data(
         &mut self,
         _node: &EmbeddedCustomXMLSchemaSupplementaryData,
@@ -243,9 +250,12 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked when a `CustomXMLSchemaReference` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_custom_xml_schema_reference(
         &mut self,
         _node: &CustomXMLSchemaReference,
@@ -254,9 +264,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `EmbeddedCustomXMLSchemaSupplementaryData` is written through. `Written::Yes`
+    /// means the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_embedded_custom_xml_schema_supplementary_data(
         &mut self,
         _node: &EmbeddedCustomXMLSchemaSupplementaryData,
@@ -272,6 +285,8 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::custom_xml_schema_properties` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `CustomXMLSchemaReference`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn custom_xml_schema_reference(
         &mut self,
         _node: &CustomXMLSchemaReference,
@@ -279,6 +294,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `EmbeddedCustomXMLSchemaSupplementaryData`. `Descend::Yes` walks into its
+    /// children, and `Descend::No` skips them.
     fn embedded_custom_xml_schema_supplementary_data(
         &mut self,
         _node: &EmbeddedCustomXMLSchemaSupplementaryData,

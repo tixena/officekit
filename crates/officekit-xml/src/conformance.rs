@@ -5,6 +5,9 @@
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 #[non_exhaustive]
 pub enum ConformanceClass {
+    /// Strict: the class without the features kept for older files. Its namespaces and
+    /// relationship types have their own URIs.
     Strict,
+    /// Transitional: Strict plus the features older Office files use.
     Transitional,
 }

@@ -225,9 +225,26 @@ fn hook_text(name: &str, parameters: &[String], output: &str, answer: &str) -> S
     text
 }
 
-/// A write hook, `Written::No` by default.
-fn write_hook_text(name: &str, node: &str) -> String {
-    let mut text = String::from("    /// # Errors\n    ///\n    /// The sink's.\n");
+/// A hook preceded by its doc.
+fn documented(doc: &str, text: &str) -> String {
+    format!("{}{text}", layout::doc(4, doc))
+}
+
+/// A write hook, `Written::No` by default; `list` for the write hook of a list.
+fn write_hook_text(name: &str, node: &str, list: bool) -> String {
+    let what = if list {
+        format!("a `{node}` in a list")
+    } else {
+        format!("a `{node}`")
+    };
+    let mut text = layout::doc(
+        4,
+        &format!(
+            "Asked when {what} is written through. `Written::Yes` means the hook wrote it, and \
+             `Written::No` leaves it to the tree hook.\n\n# Errors\n\nThe errors of the sink the \
+             part is written to."
+        ),
+    );
     text.push_str(&hook_text(
         name,
         &[
@@ -251,28 +268,44 @@ pub fn context_trait(names: &Names<'_>, listed: &BTreeSet<usize>) -> String {
         let own = format!("_node: &{node}");
         entries.push((
             bare(&hook).to_owned(),
-            hook_text(
-                &hook,
-                &["&mut self".to_owned(), own.clone()],
-                &format!("Option<{node}>"),
-                "None",
+            documented(
+                &format!(
+                    "Asked for each `{node}`. `None` rebuilds it from its transformed children, \
+                     and `Some` puts the node it holds in its place."
+                ),
+                &hook_text(
+                    &hook,
+                    &["&mut self".to_owned(), own.clone()],
+                    &format!("Option<{node}>"),
+                    "None",
+                ),
             ),
         ));
         let write = format!("write_{}", bare(&hook));
-        entries.push((write.clone(), write_hook_text(&write, node)));
+        entries.push((write.clone(), write_hook_text(&write, node, false)));
         if list {
             let items = format!("{}_items", bare(&hook));
             entries.push((
                 items.clone(),
-                hook_text(
-                    &items,
-                    &["&mut self".to_owned(), own],
-                    &format!("Option<Vec<{node}>>"),
-                    "None",
+                documented(
+                    &format!(
+                        "Asked for each `{node}` in a list. `None` leaves the item to its own \
+                         `transform`, and `Some` puts the items it holds, any number of them, in \
+                         its place."
+                    ),
+                    &hook_text(
+                        &items,
+                        &["&mut self".to_owned(), own],
+                        &format!("Option<Vec<{node}>>"),
+                        "None",
+                    ),
                 ),
             ));
             let write_items = format!("write_{items}");
-            entries.push((write_items.clone(), write_hook_text(&write_items, node)));
+            entries.push((
+                write_items.clone(),
+                write_hook_text(&write_items, node, true),
+            ));
         }
     }
     let mut out = layout::doc(
@@ -312,11 +345,17 @@ pub fn visitor_trait(names: &Names<'_>) -> String {
         .map(|(hook, node, _)| {
             (
                 bare(&hook).to_owned(),
-                hook_text(
-                    &hook,
-                    &["&mut self".to_owned(), format!("_node: &{node}")],
-                    &descend,
-                    &format!("{descend}::Yes"),
+                documented(
+                    &format!(
+                        "Shown each `{node}`. `Descend::Yes` walks into its children, and \
+                         `Descend::No` skips them."
+                    ),
+                    &hook_text(
+                        &hook,
+                        &["&mut self".to_owned(), format!("_node: &{node}")],
+                        &descend,
+                        &format!("{descend}::Yes"),
+                    ),
                 ),
             )
         })
@@ -360,13 +399,21 @@ pub fn hooks_text(
     let _ = writeln!(
         out,
         "//! The hooks of the `{}` namespace, `Context` and `Visitor`, beside its typed\n\
-         //! tree, re-exported from `{}::{}`.\n//!\n//! The namespace is `{}`.\n",
+         //! tree, re-exported from `{}::{}`.\n//!\n//! The namespace is `{}`. Its prefix, `{}`, is the\n\
+         //! short name a file gives it in the names of its elements. `Context` replaces nodes,\n\
+         //! `Visitor` looks at them, and `officekit-traversal` calls both.\n",
         module.prefix,
         home.name(),
         module.name,
-        module.uri
+        module.uri,
+        module.prefix
     );
-    let _ = writeln!(out, "pub use {}::{}::*;", home.name(), module.name);
+    let _ = writeln!(
+        out,
+        "#[doc(no_inline)]\npub use {}::{}::*;",
+        home.name(),
+        module.name
+    );
     let mut uses = Uses::default();
     hook_uses(names, &mut uses);
     let use_text = uses.text();
@@ -387,11 +434,16 @@ pub fn hooks_text(
 #[must_use]
 pub fn root_text(catalog: &Catalog, order: &[usize]) -> String {
     let accessor = |module: &str, hooks: &str| {
-        hook_text(
-            module,
-            &["&mut self".to_owned()],
-            &format!("Option<&mut dyn {module}::{hooks}>"),
-            "None",
+        documented(
+            &format!(
+                "The `{module}::{hooks}` hooks. `None` until this opts in by returning `Some(self)`."
+            ),
+            &hook_text(
+                module,
+                &["&mut self".to_owned()],
+                &format!("Option<&mut dyn {module}::{hooks}>"),
+                "None",
+            ),
         )
     };
     let mut context: Vec<(String, String)> = ELEMENT_HOOKS
@@ -413,7 +465,10 @@ pub fn root_text(catalog: &Catalog, order: &[usize]) -> String {
         "The root of every context, which each namespace's `Context` extends and no other \
          trait.\n\nIt holds the hooks for content the schemas do not declare, and one accessor \
          per namespace, through which a context opts into that namespace's hooks by returning \
-         itself.",
+         `Some(self)`. An accessor answers `None` by default, so a context is never asked about \
+         a namespace it did not opt into.\n\nThe `officekit-traversal` crate calls the hooks: \
+         `Transform` asks the tree and list hooks, and `WriteThrough` asks the write hooks. \
+         `read` and `write` never do.",
     ));
     out.push_str("pub trait Context {\n");
     out.push_str(&joined(context));
@@ -423,7 +478,9 @@ pub fn root_text(catalog: &Catalog, order: &[usize]) -> String {
         "The root of every visitor, which each namespace's `Visitor` extends and no other \
          trait.\n\nIt holds the hook for content the schemas do not declare, and one accessor \
          per namespace, through which a visitor opts into that namespace's hooks by returning \
-         itself.",
+         `Some(self)`. An accessor answers `None` by default, so a visitor is never shown a \
+         namespace it did not opt into.\n\nThe `officekit-traversal` crate calls the hooks \
+         through `Visit`.",
     ));
     out.push_str("pub trait Visitor {\n");
     out.push_str(&joined(visitor));

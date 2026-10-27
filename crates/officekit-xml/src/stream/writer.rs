@@ -105,6 +105,7 @@ impl<'sink> PartWriter<'sink> {
         }
     }
 
+    /// A writer into `sink`, in `layout`, before anything is written.
     #[must_use]
     pub fn new(sink: &'sink mut dyn Write, layout: Layout) -> Self {
         let writer = match layout {
@@ -171,6 +172,8 @@ impl<'sink> PartWriter<'sink> {
         self.writer.get_mut().write_all(markup)
     }
 
+    /// The namespace declarations in scope, which a typed node written through this writer takes
+    /// its prefixes from.
     pub const fn scope(&mut self) -> &mut Scope {
         &mut self.scope
     }

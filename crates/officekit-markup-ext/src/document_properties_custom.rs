@@ -212,8 +212,11 @@
 //! The hooks of the `op` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_base::document_properties_custom`.
 //!
-//! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/custom-properties`.
+//! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/custom-properties`. Its prefix, `op`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_base::document_properties_custom::*;
 
 use officekit_markup_base::Written;
@@ -229,6 +232,8 @@ use std::io;
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::document_properties_custom` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `CustomFileProperties`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn custom_file_properties(
         &mut self,
         _node: &CustomFileProperties,
@@ -236,10 +241,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `CustomFileProperty`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn custom_file_property(&mut self, _node: &CustomFileProperty) -> Option<CustomFileProperty> {
         None
     }
 
+    /// Asked for each `CustomFilePropertyContent`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn custom_file_property_content(
         &mut self,
         _node: &CustomFilePropertyContent,
@@ -247,9 +256,12 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked when a `CustomFileProperties` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_custom_file_properties(
         &mut self,
         _node: &CustomFileProperties,
@@ -258,9 +270,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CustomFileProperty` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_custom_file_property(
         &mut self,
         _node: &CustomFileProperty,
@@ -269,9 +284,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CustomFilePropertyContent` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_custom_file_property_content(
         &mut self,
         _node: &CustomFilePropertyContent,
@@ -287,6 +305,8 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::document_properties_custom` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `CustomFileProperties`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn custom_file_properties(
         &mut self,
         _node: &CustomFileProperties,
@@ -294,6 +314,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CustomFileProperty`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn custom_file_property(
         &mut self,
         _node: &CustomFileProperty,
@@ -301,6 +323,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CustomFilePropertyContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn custom_file_property_content(
         &mut self,
         _node: &CustomFilePropertyContent,

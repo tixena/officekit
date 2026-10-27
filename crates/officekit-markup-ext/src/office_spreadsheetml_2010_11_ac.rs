@@ -212,8 +212,11 @@
 //! The hooks of the `x15ac` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_base::office_spreadsheetml_2010_11_ac`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2010/11/ac`.
+//! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2010/11/ac`. Its prefix, `x15ac`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_base::office_spreadsheetml_2010_11_ac::*;
 
 use officekit_markup_base::Written;
@@ -229,13 +232,18 @@ use std::io;
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_spreadsheetml_2010_11_ac` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `AbsPath`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn abs_path(&mut self, _node: &AbsPath) -> Option<AbsPath> {
         None
     }
 
+    /// Asked when a `AbsPath` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_abs_path(
         &mut self,
         _node: &AbsPath,
@@ -251,6 +259,7 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_spreadsheetml_2010_11_ac` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `AbsPath`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn abs_path(&mut self, _node: &AbsPath) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

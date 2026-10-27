@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `w15` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/word/2012/wordml`, which files write with the prefix `w15`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/word/2012/wordml`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 pub mod read;
 pub mod write;
@@ -376,7 +376,8 @@ pub static SECTION_TITLE_SHAPE: officekit_markup_base::Shape = officekit_markup_
     text: false,
 };
 
-/// The tag `w15:appearance`, schema type `CT_SdtAppearance` of SDK 3.5.1's data.
+/// The `w15:appearance` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_SdtAppearance`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -385,11 +386,14 @@ pub static SECTION_TITLE_SHAPE: officekit_markup_base::Shape = officekit_markup_
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Appearance {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w15:val`, when the element has it.
     pub val: Option<SdtAppearance>,
 }
 
-/// The tag `w15:chartTrackingRefBased`, schema type `CT_OnOff` of SDK 3.5.1's data.
+/// The `w15:chartTrackingRefBased` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -398,11 +402,14 @@ pub struct Appearance {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ChartTrackingRefBased {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// The tag `w15:collapsed`, schema type `CT_OnOff` of SDK 3.5.1's data.
+/// The `w15:collapsed` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -411,11 +418,14 @@ pub struct ChartTrackingRefBased {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Collapsed {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// The tag `w15:color`, schema type `CT_Color` of SDK 3.5.1's data.
+/// The `w15:color` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -424,14 +434,20 @@ pub struct Collapsed {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Color {
+    /// The attribute `w:themeColor`, when the element has it.
     pub theme_color: Option<super::wordprocessing::ThemeColor>,
+    /// The attribute `w:themeShade`, when the element has it.
     pub theme_shade: Option<super::wordprocessing::TwoDigitHexadecimalValue>,
+    /// The attribute `w:themeTint`, when the element has it.
     pub theme_tint: Option<super::wordprocessing::TwoDigitHexadecimalValue>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w:val`, when the element has it.
     pub val: Option<super::wordprocessing::ColorValue>,
 }
 
-/// The tag `w15:commentEx`, schema type `CT_CommentEx` of SDK 3.5.1's data.
+/// The `w15:commentEx` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_CommentEx`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -440,13 +456,18 @@ pub struct Color {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CommentEx {
+    /// The attribute `w15:done`, when the element has it.
     pub done: Option<common_simple_types::OnOffValue>,
+    /// The attribute `w15:paraId`, when the element has it.
     pub para_id: Option<String>,
+    /// The attribute `w15:paraIdParent`, when the element has it.
     pub para_id_parent: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w15:commentsEx`, schema type `CT_CommentsEx` of SDK 3.5.1's data.
+/// The `w15:commentsEx` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_CommentsEx`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -455,11 +476,14 @@ pub struct CommentEx {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CommentsEx {
+    /// The children that are `CommentEx`, in order.
     pub comment_ex: Vec<CommentEx>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w15:dataBinding`, schema type `CT_DataBinding` of SDK 3.5.1's data.
+/// The `w15:dataBinding` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_DataBinding`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -468,13 +492,18 @@ pub struct CommentsEx {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataBinding {
+    /// The attribute `w:prefixMappings`, when the element has it.
     pub prefix_mappings: Option<String>,
+    /// The attribute `w:storeItemID`, when the element has it.
     pub store_item_id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w:xpath`, when the element has it.
     pub xpath: Option<String>,
 }
 
-/// The tag `w15:doNotAllowInsertDeleteSection`, schema type `CT_OnOff` of SDK 3.5.1's data.
+/// The `w15:doNotAllowInsertDeleteSection` element, declared by the schema data of the Open XML
+/// SDK, version 3.5.1. Its schema type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -483,11 +512,14 @@ pub struct DataBinding {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DoNotAllowInsertDeleteSection {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// The tag `w15:docId`, schema type `CT_Guid` of SDK 3.5.1's data.
+/// The `w15:docId` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Guid`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -496,11 +528,14 @@ pub struct DoNotAllowInsertDeleteSection {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DocId {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w15:val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `w15:footnoteColumns`, schema type `CT_DecimalNumber` of SDK 3.5.1's data.
+/// The `w15:footnoteColumns` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_DecimalNumber`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -509,11 +544,14 @@ pub struct DocId {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FootnoteColumns {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w:val`, when the element has it.
     pub val: Option<super::wordprocessing::DecimalNumberValue>,
 }
 
-/// The tag `w15:people`, schema type `CT_People` of SDK 3.5.1's data.
+/// The `w15:people` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_People`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -522,11 +560,14 @@ pub struct FootnoteColumns {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct People {
+    /// The children that are `Person`, in order.
     pub person: Vec<Person>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w15:person`, schema type `CT_Person` of SDK 3.5.1's data.
+/// The `w15:person` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Person`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -535,12 +576,16 @@ pub struct People {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Person {
+    /// The attribute `w15:author`, when the element has it.
     pub author: Option<String>,
+    /// The child that is `PresenceInfo`, when there is one.
     pub presence_info: Option<Box<PresenceInfo>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w15:presenceInfo`, schema type `CT_PresenceInfo` of SDK 3.5.1's data.
+/// The `w15:presenceInfo` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_PresenceInfo`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -549,12 +594,16 @@ pub struct Person {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresenceInfo {
+    /// The attribute `w15:providerId`, when the element has it.
     pub provider_id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w15:userId`, when the element has it.
     pub user_id: Option<String>,
 }
 
-/// The tag `w15:repeatingSection`, schema type `CT_SdtRepeatedSection` of SDK 3.5.1's data.
+/// The `w15:repeatingSection` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_SdtRepeatedSection`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -563,12 +612,16 @@ pub struct PresenceInfo {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RepeatingSection {
+    /// The child that is `DoNotAllowInsertDeleteSection`, when there is one.
     pub do_not_allow_insert_delete_section: Option<Box<DoNotAllowInsertDeleteSection>>,
+    /// The child that is `SectionTitle`, when there is one.
     pub title: Option<Box<SectionTitle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w15:repeatingSectionItem`, schema type `CT_Empty` of SDK 3.5.1's data.
+/// The `w15:repeatingSectionItem` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_Empty`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -577,10 +630,14 @@ pub struct RepeatingSection {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RepeatingSectionItem {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_SdtAppearance`: the text the file carried.
+/// The simple type `ST_SdtAppearance`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -589,16 +646,21 @@ pub struct RepeatingSectionItem {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SdtAppearance(pub String);
-/// The members of `ST_SdtAppearance`, in alphabetical order.
+/// The members of the enumeration `ST_SdtAppearance`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum SdtAppearanceMember {
+    /// The member written `boundingBox`.
     BoundingBox,
+    /// The member written `hidden`.
     Hidden,
+    /// The member written `tags`.
     Tags,
 }
 
-/// The tag `w15:sectionTitle`, schema type `CT_String` of SDK 3.5.1's data.
+/// The `w15:sectionTitle` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -607,11 +669,14 @@ pub enum SdtAppearanceMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SectionTitle {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w:val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `w15:webExtensionCreated`, schema type `CT_OnOff` of SDK 3.5.1's data.
+/// The `w15:webExtensionCreated` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -620,11 +685,14 @@ pub struct SectionTitle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct WebExtensionCreated {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// The tag `w15:webExtensionLinked`, schema type `CT_OnOff` of SDK 3.5.1's data.
+/// The `w15:webExtensionLinked` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -633,7 +701,9 @@ pub struct WebExtensionCreated {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct WebExtensionLinked {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1028,7 +1098,7 @@ impl SdtAppearanceMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

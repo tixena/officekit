@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `op` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.openxmlformats.org/officeDocument/2006/custom-properties`, which files write with the prefix `op`.
 //!
-//! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/custom-properties`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -286,8 +286,8 @@ pub static CUSTOM_FILE_PROPERTY_CONTENT_TAGS: crate::Accept = crate::Accept {
     ],
 };
 
-/// 22.3.2.1 Properties (Custom File Properties): the tag `op:Properties`, schema type
-/// `CT_Properties`.
+/// The `op:Properties` element, Custom File Properties (ECMA-376 Part 1, section 22.3.2.1). Its
+/// schema type is `CT_Properties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -296,11 +296,14 @@ pub static CUSTOM_FILE_PROPERTY_CONTENT_TAGS: crate::Accept = crate::Accept {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CustomFileProperties {
+    /// The children that are `CustomFileProperty`, in order.
     pub custom_file_property: Vec<CustomFileProperty>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 22.3.2.2 property (Custom File Property): the tag `op:property`, schema type `CT_Property`.
+/// The `op:property` element, Custom File Property (ECMA-376 Part 1, section 22.3.2.2). Its schema
+/// type is `CT_Property`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -309,50 +312,94 @@ pub struct CustomFileProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CustomFileProperty {
+    /// The child that is an item of `CustomFilePropertyContent`, which the schema requires.
     pub content: Box<CustomFilePropertyContent>,
+    /// The attribute `fmtid`, when the element has it.
     pub fmtid: Option<super::common_simple_types::Guid>,
+    /// The attribute `linkTarget`, when the element has it.
     pub link_target: Option<String>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `pid`, when the element has it.
     pub pid: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// One item of `CT_Property`: local choice in `CT_Property`.
+/// One child element of a choice: local choice in `CT_Property`.
+///
+/// The schema types that hold it: `CT_Property`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum CustomFilePropertyContent {
+    /// The element `vt:array`, a `Array`.
     Array(super::document_properties_variant_types::Array),
+    /// The element `vt:bstr`, a `BasicString`.
     BasicString(super::document_properties_variant_types::BasicString),
+    /// The element `vt:blob`, a `BinaryBlob`.
     BinaryBlob(super::document_properties_variant_types::BinaryBlob),
+    /// The element `vt:oblob`, a `BinaryBlobObject`.
     BinaryBlobObject(super::document_properties_variant_types::BinaryBlobObject),
+    /// The element `vt:storage`, a `BinaryStorage`.
     BinaryStorage(super::document_properties_variant_types::BinaryStorage),
+    /// The element `vt:ostorage`, a `BinaryStorageObject`.
     BinaryStorageObject(super::document_properties_variant_types::BinaryStorageObject),
+    /// The element `vt:stream`, a `BinaryStream`.
     BinaryStream(super::document_properties_variant_types::BinaryStream),
+    /// The element `vt:ostream`, a `BinaryStreamObject`.
     BinaryStreamObject(super::document_properties_variant_types::BinaryStreamObject),
+    /// The element `vt:vstream`, a `BinaryVersionedStream`.
     BinaryVersionedStream(super::document_properties_variant_types::BinaryVersionedStream),
+    /// The element `vt:bool`, a `Boolean`.
     Boolean(super::document_properties_variant_types::Boolean),
+    /// The element `vt:clsid`, a `ClassID`.
     ClassID(super::document_properties_variant_types::ClassID),
+    /// The element `vt:cy`, a `Currency`.
     Currency(super::document_properties_variant_types::Currency),
+    /// The element `vt:date`, a `DateAndTime`.
     DateAndTime(super::document_properties_variant_types::DateAndTime),
+    /// The element `vt:decimal`, a `Decimal`.
     Decimal(super::document_properties_variant_types::Decimal),
+    /// The element `vt:empty`, a `Empty`.
     Empty(super::document_properties_variant_types::Empty),
+    /// The element `vt:error`, a `ErrorStatusCode`.
     ErrorStatusCode(super::document_properties_variant_types::ErrorStatusCode),
+    /// The element `vt:filetime`, a `FileTime`.
     FileTime(super::document_properties_variant_types::FileTime),
+    /// The element `vt:i1`, a `I1`.
     I1(super::document_properties_variant_types::I1),
+    /// The element `vt:i2`, a `I2`.
     I2(super::document_properties_variant_types::I2),
+    /// The element `vt:i4`, a `I4`.
     I4(super::document_properties_variant_types::I4),
+    /// The element `vt:i8`, a `I8`.
     I8(super::document_properties_variant_types::I8),
+    /// The element `vt:int`, a `Integer`.
     Integer(super::document_properties_variant_types::Integer),
+    /// The element `vt:lpstr`, a `Lpstr`.
     Lpstr(super::document_properties_variant_types::Lpstr),
+    /// The element `vt:lpwstr`, a `Lpwstr`.
     Lpwstr(super::document_properties_variant_types::Lpwstr),
+    /// The element `vt:null`, a `Null`.
     Null(super::document_properties_variant_types::Null),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `vt:r4`, a `R4`.
     R4(super::document_properties_variant_types::R4),
+    /// The element `vt:r8`, a `R8`.
     R8(super::document_properties_variant_types::R8),
+    /// The element `vt:ui1`, a `Ui1`.
     Ui1(super::document_properties_variant_types::Ui1),
+    /// The element `vt:ui2`, a `Ui2`.
     Ui2(super::document_properties_variant_types::Ui2),
+    /// The element `vt:ui4`, a `Ui4`.
     Ui4(super::document_properties_variant_types::Ui4),
+    /// The element `vt:ui8`, a `Ui8`.
     Ui8(super::document_properties_variant_types::Ui8),
+    /// The element `vt:uint`, a `UnsignedInteger`.
     UnsignedInteger(super::document_properties_variant_types::UnsignedInteger),
+    /// The element `vt:vector`, a `Vector`.
     Vector(super::document_properties_variant_types::Vector),
 }
 

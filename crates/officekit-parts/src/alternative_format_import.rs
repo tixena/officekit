@@ -339,7 +339,8 @@
 //   e26c4528f8340924ff27391d34681ecde1f597fc5ce3dbf2d354edc9c6071a52  crates/xtask/data/part_roots.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! ECMA-376 Part 1, 11.3.1 "Alternative Format Import Part", and Part 4, 9.2.1.
+//! The Alternative Format Import Part, defined in ECMA-376 Part 1, section 11.3.1, and restated in
+//! Part 4, section 9.2.1.
 //!
 //! The module holds its relationship type and the load of its bytes.
 
@@ -348,7 +349,8 @@ use officekit_packaging::package::Package;
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::RelationshipType;
 
-/// Part 1, 11.3.1, and Part 4, 9.2.1.
+/// The relationship type that names this part, in both classes' spelling: Strict from ECMA-376 Part
+/// 1, section 11.3.1, Transitional from Part 4, section 9.2.1.
 pub const RELATIONSHIP_TYPE: RelationshipType = RelationshipType::A_F_CHUNK;
 
 /// The part's bytes.

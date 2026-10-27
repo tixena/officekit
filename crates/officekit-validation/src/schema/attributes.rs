@@ -54,7 +54,9 @@ pub enum Failure {
 #[derive(Clone, Debug, PartialEq, Eq)]
 #[non_exhaustive]
 pub struct Problem {
+    /// The values that fill the code's message template, by placeholder name.
     pub arguments: Vec<(&'static str, String)>,
+    /// What was found.
     pub code: ErrorCode,
 }
 

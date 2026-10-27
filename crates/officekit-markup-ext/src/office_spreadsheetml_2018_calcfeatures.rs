@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `xcalcf` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/spreadsheetml/2018/calcfeatures`, which files write with the prefix `xcalcf`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2018/calcfeatures`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -240,7 +242,8 @@ pub static CALC_FEATURES_SHAPE: officekit_markup_base::Shape = officekit_markup_
     text: false,
 };
 
-/// The tag `xcalcf:calcFeatures`, schema type `CT_CalcFeatures` of SDK 3.5.1's data.
+/// The `xcalcf:calcFeatures` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_CalcFeatures`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -249,7 +252,9 @@ pub static CALC_FEATURES_SHAPE: officekit_markup_base::Shape = officekit_markup_
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CalcFeatures {
+    /// The children that are `Feature`, in order.
     pub feature: Vec<Feature>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -262,17 +267,24 @@ pub struct CalcFeatures {
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_spreadsheetml_2018_calcfeatures` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `CalcFeatures`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn calc_features(&mut self, _node: &CalcFeatures) -> Option<CalcFeatures> {
         None
     }
 
+    /// Asked for each `Feature`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn feature(&mut self, _node: &Feature) -> Option<Feature> {
         None
     }
 
+    /// Asked when a `CalcFeatures` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_calc_features(
         &mut self,
         _node: &CalcFeatures,
@@ -281,15 +293,19 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Feature` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_feature(&mut self, _node: &Feature, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 }
 
-/// The tag `xcalcf:feature`, schema type `CT_CalcFeature` of SDK 3.5.1's data.
+/// The `xcalcf:feature` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_CalcFeature`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -298,7 +314,9 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Feature {
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -308,10 +326,13 @@ pub struct Feature {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_spreadsheetml_2018_calcfeatures` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `CalcFeatures`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn calc_features(&mut self, _node: &CalcFeatures) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Feature`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn feature(&mut self, _node: &Feature) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `p173` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/powerpoint/2017/3/main`, which files write with the prefix `p173`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/powerpoint/2017/3/main`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -264,28 +266,40 @@ pub static TRACKS_INFO_SHAPE: officekit_markup_base::Shape = officekit_markup_ba
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_powerpoint_2017_3_main` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `Track`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn track(&mut self, _node: &Track) -> Option<Track> {
         None
     }
 
+    /// Asked for each `TrackLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn track_lst(&mut self, _node: &TrackLst) -> Option<TrackLst> {
         None
     }
 
+    /// Asked for each `TracksInfo`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn tracks_info(&mut self, _node: &TracksInfo) -> Option<TracksInfo> {
         None
     }
 
+    /// Asked when a `Track` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_track(&mut self, _node: &Track, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `TrackLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_track_lst(
         &mut self,
         _node: &TrackLst,
@@ -294,9 +308,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TracksInfo` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_tracks_info(
         &mut self,
         _node: &TracksInfo,
@@ -306,7 +323,10 @@ pub trait Context: crate::Context {
     }
 }
 
-/// `ST_DisplayLocation`: the text the file carried.
+/// The simple type `ST_DisplayLocation`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -315,15 +335,19 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DisplayLocation(pub String);
-/// The members of `ST_DisplayLocation`, in alphabetical order.
+/// The members of the enumeration `ST_DisplayLocation`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum DisplayLocationMember {
+    /// The member written `media`.
     Media,
+    /// The member written `slide`.
     Slide,
 }
 
-/// The tag `p173:track`, schema type `CT_Track` of SDK 3.5.1's data.
+/// The `p173:track` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Track`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -332,15 +356,22 @@ pub enum DisplayLocationMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Track {
+    /// The attribute `r:embed`, when the element has it.
     pub embed: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `lang`, when the element has it.
     pub lang: Option<String>,
+    /// The attribute `r:link`, when the element has it.
     pub link: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p173:trackLst`, schema type `CT_TrackList` of SDK 3.5.1's data.
+/// The `p173:trackLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TrackList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -349,11 +380,14 @@ pub struct Track {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TrackLst {
+    /// The children that are `Track`, in order.
     pub track: Vec<Track>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p173:tracksInfo`, schema type `CT_TracksInfo` of SDK 3.5.1's data.
+/// The `p173:tracksInfo` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_TracksInfo`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -362,8 +396,11 @@ pub struct TrackLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TracksInfo {
+    /// The attribute `displayLoc`, when the element has it.
     pub display_loc: Option<DisplayLocation>,
+    /// The child that is `TrackLst`, when there is one.
     pub track_lst: Option<Box<TrackLst>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -373,14 +410,18 @@ pub struct TracksInfo {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_powerpoint_2017_3_main` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `Track`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn track(&mut self, _node: &Track) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TrackLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn track_lst(&mut self, _node: &TrackLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TracksInfo`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn tracks_info(&mut self, _node: &TracksInfo) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
@@ -416,7 +457,7 @@ impl DisplayLocationMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `wpg` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/word/2010/wordprocessingGroup`, which files write with the prefix `wpg`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/word/2010/wordprocessingGroup`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -361,7 +363,8 @@ pub static WORDPROCESSING_GROUP_CONTENT_TAGS: officekit_markup_base::Accept =
         ],
     };
 
-/// The tag `wpg:cNvFrPr`, schema type `CT_NonVisualGraphicFrameProperties` of SDK 3.5.1's data.
+/// The `wpg:cNvFrPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_NonVisualGraphicFrameProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -370,12 +373,16 @@ pub static WORDPROCESSING_GROUP_CONTENT_TAGS: officekit_markup_base::Accept =
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CNvFrPr {
+    /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionList>>,
+    /// The child that is `drawing::GraphicFrameLocks`, when there is one.
     pub graphic_frame_locks: Option<Box<drawing::GraphicFrameLocks>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `wpg:cNvGrpSpPr`, schema type `CT_NonVisualGroupDrawingShapeProps` of SDK 3.5.1's data.
+/// The `wpg:cNvGrpSpPr` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_NonVisualGroupDrawingShapeProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -384,12 +391,16 @@ pub struct CNvFrPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CNvGrpSpPr {
+    /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionList>>,
+    /// The child that is `drawing::GroupShapeLocks`, when there is one.
     pub group_shape_locks: Option<Box<drawing::GroupShapeLocks>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `wpg:cNvPr`, schema type `CT_NonVisualDrawingProps` of SDK 3.5.1's data.
+/// The `wpg:cNvPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_NonVisualDrawingProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -398,14 +409,23 @@ pub struct CNvGrpSpPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CNvPr {
+    /// The child that is `drawing::ClickHyperlink`, when there is one.
     pub click_hyperlink: Option<Box<drawing::ClickHyperlink>>,
+    /// The attribute `descr`, when the element has it.
     pub descr: Option<String>,
+    /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionList>>,
+    /// The attribute `hidden`, when the element has it.
     pub hidden: Option<String>,
+    /// The child that is `drawing::HyperlinkForHover`, when there is one.
     pub hyperlink_for_hover: Option<Box<drawing::HyperlinkForHover>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<drawing::DrawingElementID>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -418,38 +438,56 @@ pub struct CNvPr {
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_word_2010_wordprocessing_group` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `CNvFrPr`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn c_nv_fr_pr(&mut self, _node: &CNvFrPr) -> Option<CNvFrPr> {
         None
     }
 
+    /// Asked for each `CNvGrpSpPr`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn c_nv_grp_sp_pr(&mut self, _node: &CNvGrpSpPr) -> Option<CNvGrpSpPr> {
         None
     }
 
+    /// Asked for each `CNvPr`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn c_nv_pr(&mut self, _node: &CNvPr) -> Option<CNvPr> {
         None
     }
 
+    /// Asked for each `ExtLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
         None
     }
 
+    /// Asked for each `GraphicFrame`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn graphic_frame(&mut self, _node: &GraphicFrame) -> Option<GraphicFrame> {
         None
     }
 
+    /// Asked for each `GrpSp`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn grp_sp(&mut self, _node: &GrpSp) -> Option<GrpSp> {
         None
     }
 
+    /// Asked for each `GrpSpPr`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn grp_sp_pr(&mut self, _node: &GrpSpPr) -> Option<GrpSpPr> {
         None
     }
 
+    /// Asked for each `Wgp`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn wgp(&mut self, _node: &Wgp) -> Option<Wgp> {
         None
     }
 
+    /// Asked for each `WordprocessingGroupContent`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn wordprocessing_group(
         &mut self,
         _node: &WordprocessingGroupContent,
@@ -457,6 +495,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `WordprocessingGroupContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn wordprocessing_group_items(
         &mut self,
         _node: &WordprocessingGroupContent,
@@ -464,9 +504,12 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked when a `CNvFrPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_c_nv_fr_pr(
         &mut self,
         _node: &CNvFrPr,
@@ -475,9 +518,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CNvGrpSpPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_c_nv_grp_sp_pr(
         &mut self,
         _node: &CNvGrpSpPr,
@@ -486,23 +532,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CNvPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_c_nv_pr(&mut self, _node: &CNvPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `GraphicFrame` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_graphic_frame(
         &mut self,
         _node: &GraphicFrame,
@@ -511,16 +566,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `GrpSp` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_grp_sp(&mut self, _node: &GrpSp, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `GrpSpPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_grp_sp_pr(
         &mut self,
         _node: &GrpSpPr,
@@ -529,16 +590,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Wgp` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_wgp(&mut self, _node: &Wgp, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `WordprocessingGroupContent` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_wordprocessing_group(
         &mut self,
         _node: &WordprocessingGroupContent,
@@ -547,9 +614,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `WordprocessingGroupContent` in a list is written through. `Written::Yes` means
+    /// the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_wordprocessing_group_items(
         &mut self,
         _node: &WordprocessingGroupContent,
@@ -558,19 +628,25 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Xfrm` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_xfrm(&mut self, _node: &Xfrm, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked for each `Xfrm`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn xfrm(&mut self, _node: &Xfrm) -> Option<Xfrm> {
         None
     }
 }
 
-/// The tag `wpg:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
+/// The `wpg:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -579,11 +655,14 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
+    /// The children that are `drawing::Extension`, in order.
     pub extension: Vec<drawing::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `wpg:graphicFrame`, schema type `CT_GraphicFrame` of SDK 3.5.1's data.
+/// The `wpg:graphicFrame` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_GraphicFrame`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -592,15 +671,22 @@ pub struct ExtLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GraphicFrame {
+    /// The child that is `CNvFrPr`, which the schema requires.
     pub c_nv_fr_pr: Box<CNvFrPr>,
+    /// The child that is `CNvPr`, which the schema requires.
     pub c_nv_pr: Box<CNvPr>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `drawing::GraphicObject`, which the schema requires.
     pub graphic_object: Box<drawing::GraphicObject>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `Xfrm`, which the schema requires.
     pub xfrm: Box<Xfrm>,
 }
 
-/// The tag `wpg:grpSp`, schema type `CT_WordprocessingGroup` of SDK 3.5.1's data.
+/// The `wpg:grpSp` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_WordprocessingGroup`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -612,16 +698,23 @@ pub struct GraphicFrame {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GrpSp {
+    /// The child that is `CNvGrpSpPr`, which the schema requires.
     pub c_nv_grp_sp_pr: Box<CNvGrpSpPr>,
+    /// The child that is `CNvPr`, when there is one.
     pub c_nv_pr: Option<Box<CNvPr>>,
+    /// The children that are an item of `WordprocessingGroupContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<WordprocessingGroupContent>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `GrpSpPr`, which the schema requires.
     pub pr: Box<GrpSpPr>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `wpg:grpSpPr`, schema type `CT_GroupShapeProperties` of SDK 3.5.1's data.
+/// The `wpg:grpSpPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_GroupShapeProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -630,12 +723,19 @@ pub struct GrpSp {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GrpSpPr {
+    /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<drawing::BlackAndWhiteMode>,
+    /// The child that is an item of `drawing::EffectPropertiesContent`, when there is one.
     pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
+    /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionList>>,
+    /// The child that is an item of `drawing::FillPropertiesContent`, when there is one.
     pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
+    /// The child that is `drawing::Scene3d`, when there is one.
     pub scene3d: Option<Box<drawing::Scene3d>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `drawing::XfrmGroupTransform2D`, when there is one.
     pub xfrm_group_transform2d: Option<Box<drawing::XfrmGroupTransform2D>>,
 }
 
@@ -645,38 +745,50 @@ pub struct GrpSpPr {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_word_2010_wordprocessing_group` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `CNvFrPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn c_nv_fr_pr(&mut self, _node: &CNvFrPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CNvGrpSpPr`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn c_nv_grp_sp_pr(&mut self, _node: &CNvGrpSpPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CNvPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn c_nv_pr(&mut self, _node: &CNvPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext_lst(&mut self, _node: &ExtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `GraphicFrame`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn graphic_frame(&mut self, _node: &GraphicFrame) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `GrpSp`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn grp_sp(&mut self, _node: &GrpSp) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `GrpSpPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn grp_sp_pr(&mut self, _node: &GrpSpPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Wgp`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn wgp(&mut self, _node: &Wgp) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `WordprocessingGroupContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn wordprocessing_group(
         &mut self,
         _node: &WordprocessingGroupContent,
@@ -684,12 +796,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Xfrm`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn xfrm(&mut self, _node: &Xfrm) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 }
 
-/// The tag `wpg:wgp`, schema type `CT_WordprocessingGroup` of SDK 3.5.1's data.
+/// The `wpg:wgp` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_WordprocessingGroup`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -698,27 +812,44 @@ pub trait Visitor: crate::Visitor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Wgp {
+    /// The child that is `CNvGrpSpPr`, which the schema requires.
     pub c_nv_grp_sp_pr: Box<CNvGrpSpPr>,
+    /// The child that is `CNvPr`, when there is one.
     pub c_nv_pr: Option<Box<CNvPr>>,
+    /// The children that are an item of `WordprocessingGroupContent`, in order.
     pub content: Vec<WordprocessingGroupContent>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `GrpSpPr`, which the schema requires.
     pub grp_sp_pr: Box<GrpSpPr>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_WordprocessingGroup`: choice in `CT_WordprocessingGroup`.
+/// One child element of a choice: choice in `CT_WordprocessingGroup`.
+///
+/// The schema types that hold it: `CT_WordprocessingGroup`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum WordprocessingGroupContent {
+    /// The element `w14:contentPart`, a `ContentPart`.
     ContentPart(office_word_2010_wordml::ContentPart),
+    /// The element `wpg:graphicFrame`, a `GraphicFrame`.
     GraphicFrame(GraphicFrame),
+    /// The element `wpg:grpSp`, a `GrpSp`.
     GrpSp(GrpSp),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `pic:pic`, a `Picture`.
     Picture(picture::Picture),
+    /// The element `wps:wsp`, a `Wsp`.
     Wsp(super::office_word_2010_wordprocessing_shape::Wsp),
 }
 
-/// The tag `wpg:xfrm`, schema type `CT_Transform2D` of SDK 3.5.1's data.
+/// The `wpg:xfrm` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Transform2D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -727,11 +858,17 @@ pub enum WordprocessingGroupContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Xfrm {
+    /// The child that is `drawing::Extents`, when there is one.
     pub extents: Option<Box<drawing::Extents>>,
+    /// The attribute `flipH`, when the element has it.
     pub flip_h: Option<String>,
+    /// The attribute `flipV`, when the element has it.
     pub flip_v: Option<String>,
+    /// The child that is `drawing::Offset`, when there is one.
     pub offset: Option<Box<drawing::Offset>>,
+    /// The attribute `rot`, when the element has it.
     pub rot: Option<drawing::Angle>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 

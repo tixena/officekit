@@ -1,16 +1,103 @@
-//! `officekit-strict` is the Strict conformance class (ECMA-376 Part 1),
-//! which `officekit`'s feature `strict` turns on.
+//! `officekit-strict` is the Strict conformance class of officekit (ECMA-376 Part 1): it reads
+//! and writes every node of the typed tree in Strict.
 //!
-//! Every node reads Strict with the reader both classes share and writes it
-//! with the shared writer; one walk over the written element then applies the
-//! generated tables of `rules.rs`. Transitional-only children and
-//! attributes take their Strict names, bitmasks unpack into the attributes
-//! they pack, values take Strict's spelling, and content Strict has no form
-//! for fails the write with its name. The rules are keyed by tag, so the
-//! walk also reaches content the typed tree keeps unknown, such as the
-//! branches of `mc:AlternateContent`. Word's text box, Microsoft's `wps:wsp`
-//! holding `w:txbxContent`, is written as ECMA's `wp:wsp` holding
-//! `wp:txbxContent`, in place of the `mc:AlternateContent` around it.
+//! Office Open XML has two conformance classes. Transitional is what Word, Excel and `PowerPoint`
+//! have always written. Strict is the other form: other namespace URIs, other names for some
+//! attributes and values, and no legacy content. A file says which one it is in the
+//! relationship that names its main part.
+//!
+//! Most code does not name this crate. The `officekit` crate turns it on with its feature
+//! `strict`, and its `save_strict` and `to_bytes_strict` write a whole file in Strict. Use this
+//! crate to write one node, or one part, in Strict.
+//!
+//! # The [`Strict`] trait
+//!
+//! [`Strict`] is implemented for every node of every namespace of `officekit_markup`.
+//!
+//! - [`Strict::from_strict`] reads a node from a generic element. It reads Strict and
+//!   Transitional alike, because both classes read through the same reader: a paragraph in the
+//!   Strict namespace and the same paragraph in the Transitional one read into equal structs.
+//!   Only the tag is checked.
+//! - [`Strict::to_strict`] writes the node as a Strict element. It writes with the writer both
+//!   classes share, then walks the element once and applies the generated rules of this crate.
+//!
+//! The rules of the walk:
+//!
+//! - Every known namespace takes its Strict URI.
+//! - A Transitional-only attribute or child takes its Strict name, and values that Strict
+//!   spells otherwise take its spelling. For instance, the alignment `left` is `start`.
+//! - A bitmask unpacks into the attributes it packs.
+//! - A serial date-time becomes an ISO 8601 text (see [`iso_date_time`]), a character-set code
+//!   becomes its name, and a bare number becomes a measure with a unit.
+//! - The root of a main part (a `w:document`, `x:workbook` or `p:presentation`) gets the
+//!   attribute `conformance="strict"`.
+//! - Content that has no Strict form fails the write with
+//!   [`WriteError::NotInClass`], which names the
+//!   content.
+//!
+//! The rules are keyed by tag, so the walk also reaches content the typed tree keeps as unknown,
+//! such as the branches of `mc:AlternateContent`. Word saves a text box as `mc:AlternateContent`
+//! around Microsoft's `wps:wsp` holding `w:txbxContent`. Strict writes it as ECMA's `wp:wsp`
+//! holding `wp:txbxContent`, in place of the `mc:AlternateContent`. A text box inside a group or
+//! in VML has no Strict form.
+//!
+//! A date cell (`t="d"`) exists only in Strict, so the Strict write keeps it as it is. The
+//! `officekit-transitional` crate refuses it and has a function that converts it.
+//!
+//! # Example
+//!
+//! Write a Transitional paragraph and a document root in Strict, and see the write refuse a
+//! legacy setting.
+//!
+//! ```
+//! use officekit_markup::wordprocessing::{CompatibilitySettings, Document, Paragraph};
+//! use officekit_strict::Strict as _;
+//! use officekit_xml::element::{Document as Part, Element};
+//! use officekit_xml::error::WriteError;
+//! use officekit_xml::parse::parse;
+//! use officekit_xml::write::{Layout, WriteOptions};
+//!
+//! const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+//! const W_STRICT: &str = "http://purl.oclc.org/ooxml/wordprocessingml/main";
+//!
+//! # fn element(text: &str) -> Element {
+//! #     parse(text.as_bytes()).expect("well-formed XML").root
+//! # }
+//! # fn text(root: Element) -> String {
+//! #     let mut part = Part::new("", root);
+//! #     part.declaration = None;
+//! #     part.prolog.clear();
+//! #     String::from_utf8(part.to_xml(WriteOptions::new(Layout::Compact, false))).expect("UTF-8")
+//! # }
+//! let paragraph = Paragraph::from_strict(&element(&format!(
+//!     "<w:p xmlns:w=\"{W}\"><w:pPr><w:jc w:val=\"left\"/></w:pPr><w:r><w:t>Hello</w:t></w:r></w:p>"
+//! )))
+//! .expect("a paragraph");
+//! assert_eq!(
+//!     text(paragraph.to_strict().expect("Strict has a form for it")),
+//!     format!(
+//!         "<w:p xmlns:w=\"{W_STRICT}\"><w:pPr><w:jc w:val=\"start\"/></w:pPr><w:r><w:t>Hello</w:t></w:r></w:p>"
+//!     )
+//! );
+//!
+//! let document = Document::from_strict(&element(&format!(
+//!     "<w:document xmlns:w=\"{W}\"><w:body/></w:document>"
+//! )))
+//! .expect("a document");
+//! assert_eq!(
+//!     text(document.to_strict().expect("Strict has a form for it")),
+//!     format!("<w:document xmlns:w=\"{W_STRICT}\" w:conformance=\"strict\"><w:body/></w:document>")
+//! );
+//!
+//! let legacy = CompatibilitySettings::from_strict(&element(&format!(
+//!     "<w:compat xmlns:w=\"{W}\"><w:useFELayout/></w:compat>"
+//! )))
+//! .expect("compatibility settings");
+//! assert!(matches!(
+//!     legacy.to_strict(),
+//!     Err(WriteError::NotInClass { tag: "useFELayout", .. })
+//! ));
+//! ```
 
 // The namespace modules, `officekit_strict::<namespace>`, generated in a file of their own.
 include!("modules.rs");
@@ -125,6 +212,9 @@ enum Spelling {
 }
 
 /// A node of the typed tree read from, and written to, the Strict class.
+///
+/// It is implemented for every node of every namespace of `officekit_markup`, and is in
+/// scope as `Trait as _` to call its two methods.
 pub trait Strict: Sized {
     /// The node `element` holds, read as either class reads it.
     ///
@@ -437,6 +527,18 @@ fn holds_word_shape(element: &Element) -> bool {
 /// The serial counts days from the base date of the 1900 date system, or of
 /// the 1904 one when `date1904` (ECMA-376 Part 1, 18.17.4.1). `None` when the
 /// text is no number or the date falls outside 0001-01-01 to 9999-12-31.
+///
+/// The text is `YYYY-MM-DDTHH:MM:SS`, with `.mmm` added when the milliseconds are not zero.
+///
+/// ```
+/// use officekit_strict::iso_date_time;
+///
+/// assert_eq!(
+///     iso_date_time("45292.5", false).as_deref(),
+///     Some("2024-01-01T12:00:00")
+/// );
+/// assert_eq!(iso_date_time("today", false), None);
+/// ```
 #[must_use]
 pub fn iso_date_time(serial: &str, date1904: bool) -> Option<String> {
     let milliseconds = serial_milliseconds(serial)?;

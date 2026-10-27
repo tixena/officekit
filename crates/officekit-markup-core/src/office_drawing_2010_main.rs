@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `a14` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/drawing/2010/main`, which files write with the prefix `a14`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/drawing/2010/main`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -699,7 +699,8 @@ pub static PICTURE_EFFECT_CONTENT_TAGS: officekit_markup_base::Accept =
         ],
     };
 
-/// The tag `a14:artisticBlur`, schema type `CT_PictureEffectBlur` of SDK 3.5.1's data.
+/// The `a14:artisticBlur` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_PictureEffectBlur`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -708,11 +709,14 @@ pub static PICTURE_EFFECT_CONTENT_TAGS: officekit_markup_base::Accept =
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArtisticBlur {
+    /// The attribute `radius`, when the element has it.
     pub radius: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:artisticCement`, schema type `CT_PictureEffectCement` of SDK 3.5.1's data.
+/// The `a14:artisticCement` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_PictureEffectCement`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -721,13 +725,16 @@ pub struct ArtisticBlur {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArtisticCement {
+    /// The attribute `crackSpacing`, when the element has it.
     pub crack_spacing: Option<String>,
+    /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:artisticChalkSketch`, schema type `CT_PictureEffectChalkSketch` of SDK 3.5.1's
-/// data.
+/// The `a14:artisticChalkSketch` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_PictureEffectChalkSketch`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -736,13 +743,16 @@ pub struct ArtisticCement {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArtisticChalkSketch {
+    /// The attribute `pressure`, when the element has it.
     pub pressure: Option<String>,
+    /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:artisticCrisscrossEtching`, schema type `CT_PictureEffectCrisscrossEtching` of SDK
-/// 3.5.1's data.
+/// The `a14:artisticCrisscrossEtching` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_PictureEffectCrisscrossEtching`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -751,12 +761,16 @@ pub struct ArtisticChalkSketch {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArtisticCrisscrossEtching {
+    /// The attribute `pressure`, when the element has it.
     pub pressure: Option<String>,
+    /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:artisticCutout`, schema type `CT_PictureEffectCutout` of SDK 3.5.1's data.
+/// The `a14:artisticCutout` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_PictureEffectCutout`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -765,12 +779,16 @@ pub struct ArtisticCrisscrossEtching {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArtisticCutout {
+    /// The attribute `numberOfShades`, when the element has it.
     pub number_of_shades: Option<String>,
+    /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:artisticFilmGrain`, schema type `CT_PictureEffectFilmGrain` of SDK 3.5.1's data.
+/// The `a14:artisticFilmGrain` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_PictureEffectFilmGrain`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -779,12 +797,16 @@ pub struct ArtisticCutout {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArtisticFilmGrain {
+    /// The attribute `grainSize`, when the element has it.
     pub grain_size: Option<String>,
+    /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:artisticGlass`, schema type `CT_PictureEffectGlass` of SDK 3.5.1's data.
+/// The `a14:artisticGlass` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_PictureEffectGlass`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -793,13 +815,16 @@ pub struct ArtisticFilmGrain {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArtisticGlass {
+    /// The attribute `scaling`, when the element has it.
     pub scaling: Option<String>,
+    /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:artisticGlowDiffused`, schema type `CT_PictureEffectGlowDiffused` of SDK 3.5.1's
-/// data.
+/// The `a14:artisticGlowDiffused` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_PictureEffectGlowDiffused`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -808,12 +833,16 @@ pub struct ArtisticGlass {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArtisticGlowDiffused {
+    /// The attribute `intensity`, when the element has it.
     pub intensity: Option<String>,
+    /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:artisticGlowEdges`, schema type `CT_PictureEffectGlowEdges` of SDK 3.5.1's data.
+/// The `a14:artisticGlowEdges` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_PictureEffectGlowEdges`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -822,13 +851,16 @@ pub struct ArtisticGlowDiffused {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArtisticGlowEdges {
+    /// The attribute `smoothness`, when the element has it.
     pub smoothness: Option<String>,
+    /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:artisticLightScreen`, schema type `CT_PictureEffectLightScreen` of SDK 3.5.1's
-/// data.
+/// The `a14:artisticLightScreen` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_PictureEffectLightScreen`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -837,13 +869,16 @@ pub struct ArtisticGlowEdges {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArtisticLightScreen {
+    /// The attribute `gridSize`, when the element has it.
     pub grid_size: Option<String>,
+    /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:artisticLineDrawing`, schema type `CT_PictureEffectLineDrawing` of SDK 3.5.1's
-/// data.
+/// The `a14:artisticLineDrawing` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_PictureEffectLineDrawing`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -852,12 +887,16 @@ pub struct ArtisticLightScreen {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArtisticLineDrawing {
+    /// The attribute `pencilSize`, when the element has it.
     pub pencil_size: Option<String>,
+    /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:artisticMarker`, schema type `CT_PictureEffectMarker` of SDK 3.5.1's data.
+/// The `a14:artisticMarker` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_PictureEffectMarker`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -866,13 +905,16 @@ pub struct ArtisticLineDrawing {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArtisticMarker {
+    /// The attribute `size`, when the element has it.
     pub size: Option<String>,
+    /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:artisticMosiaicBubbles`, schema type `CT_PictureEffectMosiaicBubbles` of SDK
-/// 3.5.1's data.
+/// The `a14:artisticMosiaicBubbles` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_PictureEffectMosiaicBubbles`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -881,12 +923,16 @@ pub struct ArtisticMarker {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArtisticMosiaicBubbles {
+    /// The attribute `pressure`, when the element has it.
     pub pressure: Option<String>,
+    /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:artisticPaintBrush`, schema type `CT_PictureEffectPaintBrush` of SDK 3.5.1's data.
+/// The `a14:artisticPaintBrush` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_PictureEffectPaintBrush`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -895,13 +941,16 @@ pub struct ArtisticMosiaicBubbles {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArtisticPaintBrush {
+    /// The attribute `brushSize`, when the element has it.
     pub brush_size: Option<String>,
+    /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:artisticPaintStrokes`, schema type `CT_PictureEffectPaintStrokes` of SDK 3.5.1's
-/// data.
+/// The `a14:artisticPaintStrokes` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_PictureEffectPaintStrokes`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -910,13 +959,16 @@ pub struct ArtisticPaintBrush {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArtisticPaintStrokes {
+    /// The attribute `intensity`, when the element has it.
     pub intensity: Option<String>,
+    /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:artisticPastelsSmooth`, schema type `CT_PictureEffectPastelsSmooth` of SDK 3.5.1's
-/// data.
+/// The `a14:artisticPastelsSmooth` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_PictureEffectPastelsSmooth`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -925,13 +977,16 @@ pub struct ArtisticPaintStrokes {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArtisticPastelsSmooth {
+    /// The attribute `scaling`, when the element has it.
     pub scaling: Option<String>,
+    /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:artisticPencilGrayscale`, schema type `CT_PictureEffectPencilGrayscale` of SDK
-/// 3.5.1's data.
+/// The `a14:artisticPencilGrayscale` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_PictureEffectPencilGrayscale`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -940,13 +995,16 @@ pub struct ArtisticPastelsSmooth {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArtisticPencilGrayscale {
+    /// The attribute `pencilSize`, when the element has it.
     pub pencil_size: Option<String>,
+    /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:artisticPencilSketch`, schema type `CT_PictureEffectPencilSketch` of SDK 3.5.1's
-/// data.
+/// The `a14:artisticPencilSketch` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_PictureEffectPencilSketch`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -955,12 +1013,16 @@ pub struct ArtisticPencilGrayscale {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArtisticPencilSketch {
+    /// The attribute `pressure`, when the element has it.
     pub pressure: Option<String>,
+    /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:artisticPhotocopy`, schema type `CT_PictureEffectPhotocopy` of SDK 3.5.1's data.
+/// The `a14:artisticPhotocopy` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_PictureEffectPhotocopy`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -969,13 +1031,16 @@ pub struct ArtisticPencilSketch {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArtisticPhotocopy {
+    /// The attribute `detail`, when the element has it.
     pub detail: Option<String>,
+    /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:artisticPlasticWrap`, schema type `CT_PictureEffectPlasticWrap` of SDK 3.5.1's
-/// data.
+/// The `a14:artisticPlasticWrap` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_PictureEffectPlasticWrap`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -984,12 +1049,16 @@ pub struct ArtisticPhotocopy {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArtisticPlasticWrap {
+    /// The attribute `smoothness`, when the element has it.
     pub smoothness: Option<String>,
+    /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:artisticTexturizer`, schema type `CT_PictureEffectTexturizer` of SDK 3.5.1's data.
+/// The `a14:artisticTexturizer` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_PictureEffectTexturizer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -998,13 +1067,16 @@ pub struct ArtisticPlasticWrap {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArtisticTexturizer {
+    /// The attribute `scaling`, when the element has it.
     pub scaling: Option<String>,
+    /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:artisticWatercolorSponge`, schema type `CT_PictureEffectWatercolorSponge` of SDK
-/// 3.5.1's data.
+/// The `a14:artisticWatercolorSponge` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_PictureEffectWatercolorSponge`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1013,13 +1085,16 @@ pub struct ArtisticTexturizer {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArtisticWatercolorSponge {
+    /// The attribute `brushSize`, when the element has it.
     pub brush_size: Option<String>,
+    /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:backgroundMark`, schema type `CT_PictureEffectBackgroundRemovalBackgroundMark` of
-/// SDK 3.5.1's data.
+/// The `a14:backgroundMark` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_PictureEffectBackgroundRemovalBackgroundMark`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1028,15 +1103,20 @@ pub struct ArtisticWatercolorSponge {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BackgroundMark {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `x1`, when the element has it.
     pub x1: Option<String>,
+    /// The attribute `x2`, when the element has it.
     pub x2: Option<String>,
+    /// The attribute `y1`, when the element has it.
     pub y1: Option<String>,
+    /// The attribute `y2`, when the element has it.
     pub y2: Option<String>,
 }
 
-/// The tag `a14:backgroundRemoval`, schema type `CT_PictureEffectBackgroundRemoval` of SDK 3.5.1's
-/// data.
+/// The `a14:backgroundRemoval` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_PictureEffectBackgroundRemoval`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1045,17 +1125,24 @@ pub struct BackgroundMark {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BackgroundRemoval {
+    /// The attribute `b`, when the element has it.
     pub b: Option<String>,
+    /// The children that are `BackgroundMark`, in order.
     pub background_mark: Vec<BackgroundMark>,
+    /// The children that are `ForegroundMark`, in order.
     pub foreground_mark: Vec<ForegroundMark>,
+    /// The attribute `l`, when the element has it.
     pub l: Option<String>,
+    /// The attribute `r`, when the element has it.
     pub r: Option<String>,
+    /// The attribute `t`, when the element has it.
     pub t: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:brightnessContrast`, schema type `CT_PictureEffectBrightnessContrast` of SDK
-/// 3.5.1's data.
+/// The `a14:brightnessContrast` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_PictureEffectBrightnessContrast`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1064,13 +1151,16 @@ pub struct BackgroundRemoval {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BrightnessContrast {
+    /// The attribute `bright`, when the element has it.
     pub bright: Option<String>,
+    /// The attribute `contrast`, when the element has it.
     pub contrast: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:cNvContentPartPr`, schema type `CT_NonVisualInkContentPartProperties` of SDK
-/// 3.5.1's data.
+/// The `a14:cNvContentPartPr` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_NonVisualInkContentPartProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1082,15 +1172,20 @@ pub struct BrightnessContrast {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CNvContentPartPr {
+    /// The child that is `CpLocks`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub cp_locks: Option<Box<CpLocks>>,
+    /// The child that is `ExtLst`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The attribute `isComment`, when the element has it.
     pub is_comment: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:cNvPr`, schema type `CT_NonVisualDrawingProps` of SDK 3.5.1's data.
+/// The `a14:cNvPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_NonVisualDrawingProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1102,21 +1197,31 @@ pub struct CNvContentPartPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CNvPr {
+    /// The child that is `super::drawing::ClickHyperlink`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub click_hyperlink: Option<Box<super::drawing::ClickHyperlink>>,
+    /// The attribute `descr`, when the element has it.
     pub descr: Option<String>,
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The attribute `hidden`, when the element has it.
     pub hidden: Option<String>,
+    /// The child that is `super::drawing::HyperlinkForHover`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHover>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<super::drawing::DrawingElementID>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:cameraTool`, schema type `CT_CameraTool` of SDK 3.5.1's data.
+/// The `a14:cameraTool` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_CameraTool`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1125,13 +1230,16 @@ pub struct CNvPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CameraTool {
+    /// The attribute `cellRange`, when the element has it.
     pub cell_range: Option<String>,
+    /// The attribute `spid`, when the element has it.
     pub spid: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:colorTemperature`, schema type `CT_PictureEffectColorTemperature` of SDK 3.5.1's
-/// data.
+/// The `a14:colorTemperature` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_PictureEffectColorTemperature`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1140,11 +1248,14 @@ pub struct CameraTool {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColorTemperature {
+    /// The attribute `colorTemp`, when the element has it.
     pub color_temp: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:compatExt`, schema type `CT_CompatExt` of SDK 3.5.1's data.
+/// The `a14:compatExt` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_CompatExt`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1153,11 +1264,14 @@ pub struct ColorTemperature {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CompatExt {
+    /// The attribute `spid`, when the element has it.
     pub spid: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:contentPart`, schema type `CT_GvmlContentPart` of SDK 3.5.1's data.
+/// The `a14:contentPart` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_GvmlContentPart`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1169,17 +1283,24 @@ pub struct CompatExt {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ContentPart {
+    /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
+    /// The child that is `ExtLst`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
+    /// The child that is `NvContentPartPr`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub nv_content_part_pr: Option<Box<NvContentPartPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `Xfrm`, when there is one.
     pub xfrm: Option<Box<Xfrm>>,
 }
 
-/// The tag `a14:cpLocks`, schema type `CT_ContentPartLocking` of SDK 3.5.1's data.
+/// The `a14:cpLocks` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ContentPartLocking`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1191,22 +1312,35 @@ pub struct ContentPart {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CpLocks {
+    /// The child that is `ExtLst`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The attribute `noAdjustHandles`, when the element has it.
     pub no_adjust_handles: Option<String>,
+    /// The attribute `noChangeArrowheads`, when the element has it.
     pub no_change_arrowheads: Option<String>,
+    /// The attribute `noChangeAspect`, when the element has it.
     pub no_change_aspect: Option<String>,
+    /// The attribute `noChangeShapeType`, when the element has it.
     pub no_change_shape_type: Option<String>,
+    /// The attribute `noEditPoints`, when the element has it.
     pub no_edit_points: Option<String>,
+    /// The attribute `noGrp`, when the element has it.
     pub no_grp: Option<String>,
+    /// The attribute `noMove`, when the element has it.
     pub no_move: Option<String>,
+    /// The attribute `noResize`, when the element has it.
     pub no_resize: Option<String>,
+    /// The attribute `noRot`, when the element has it.
     pub no_rot: Option<String>,
+    /// The attribute `noSelect`, when the element has it.
     pub no_select: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
+/// The `a14:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1218,13 +1352,15 @@ pub struct CpLocks {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
+    /// The children that are `super::drawing::Extension`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension: Vec<super::drawing::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:foregroundMark`, schema type `CT_PictureEffectBackgroundRemovalForegroundMark` of
-/// SDK 3.5.1's data.
+/// The `a14:foregroundMark` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_PictureEffectBackgroundRemovalForegroundMark`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1233,14 +1369,20 @@ pub struct ExtLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ForegroundMark {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `x1`, when the element has it.
     pub x1: Option<String>,
+    /// The attribute `x2`, when the element has it.
     pub x2: Option<String>,
+    /// The attribute `y1`, when the element has it.
     pub y1: Option<String>,
+    /// The attribute `y2`, when the element has it.
     pub y2: Option<String>,
 }
 
-/// The tag `a14:hiddenEffects`, schema type `CT_EffectProperties` of SDK 3.5.1's data.
+/// The `a14:hiddenEffects` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_EffectProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1249,11 +1391,15 @@ pub struct ForegroundMark {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HiddenEffects {
+    /// The child that is an item of `super::drawing::EffectPropertiesContent`, which the schema
+    /// requires.
     pub content: Box<super::drawing::EffectPropertiesContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:hiddenFill`, schema type `CT_FillProperties` of SDK 3.5.1's data.
+/// The `a14:hiddenFill` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_FillProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1262,11 +1408,15 @@ pub struct HiddenEffects {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HiddenFill {
+    /// The child that is an item of `super::drawing::FillPropertiesContent`, which the schema
+    /// requires.
     pub content: Box<super::drawing::FillPropertiesContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:hiddenLine`, schema type `CT_LineProperties` of SDK 3.5.1's data.
+/// The `a14:hiddenLine` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_LineProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1275,20 +1425,32 @@ pub struct HiddenFill {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HiddenLine {
+    /// The attribute `algn`, when the element has it.
     pub algn: Option<super::drawing::AlignmentType>,
+    /// The attribute `cap`, when the element has it.
     pub cap: Option<super::drawing::EndLineCap>,
+    /// The attribute `cmpd`, when the element has it.
     pub cmpd: Option<super::drawing::CompoundLineType>,
+    /// The child that is an item of `super::drawing::LineDashContent`, when there is one.
     pub dash_content: Option<Box<super::drawing::LineDashContent>>,
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The child that is an item of `super::drawing::LineFillContent`, when there is one.
     pub fill_content: Option<Box<super::drawing::LineFillContent>>,
+    /// The child that is `super::drawing::LineHeadEndStyle`, when there is one.
     pub head_end_style: Option<Box<super::drawing::LineHeadEndStyle>>,
+    /// The child that is an item of `super::drawing::LineJoinContent`, when there is one.
     pub join_content: Option<Box<super::drawing::LineJoinContent>>,
+    /// The child that is `super::drawing::TailLineEndStyle`, when there is one.
     pub tail_line_end_style: Option<Box<super::drawing::TailLineEndStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w`, when the element has it.
     pub w: Option<super::drawing::LineWidth>,
 }
 
-/// The tag `a14:hiddenScene3d`, schema type `CT_Scene3D` of SDK 3.5.1's data.
+/// The `a14:hiddenScene3d` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_Scene3D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1297,14 +1459,20 @@ pub struct HiddenLine {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HiddenScene3d {
+    /// The child that is `super::drawing::BackdropPlane`, when there is one.
     pub backdrop_plane: Option<Box<super::drawing::BackdropPlane>>,
+    /// The child that is `super::drawing::Camera`, which the schema requires.
     pub camera: Box<super::drawing::Camera>,
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The child that is `super::drawing::LightRig`, which the schema requires.
     pub light_rig: Box<super::drawing::LightRig>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:hiddenSp3d`, schema type `CT_Shape3D` of SDK 3.5.1's data.
+/// The `a14:hiddenSp3d` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_Shape3D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1313,19 +1481,30 @@ pub struct HiddenScene3d {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HiddenSp3d {
+    /// The child that is `super::drawing::BottomBevel`, when there is one.
     pub bottom_bevel: Option<Box<super::drawing::BottomBevel>>,
+    /// The child that is `super::drawing::ContourColor`, when there is one.
     pub contour_color: Option<Box<super::drawing::ContourColor>>,
+    /// The attribute `contourW`, when the element has it.
     pub contour_w: Option<super::drawing::PositiveCoordinate>,
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The child that is `super::drawing::ExtrusionColor`, when there is one.
     pub extrusion_color: Option<Box<super::drawing::ExtrusionColor>>,
+    /// The attribute `extrusionH`, when the element has it.
     pub extrusion_h: Option<super::drawing::PositiveCoordinate>,
+    /// The attribute `prstMaterial`, when the element has it.
     pub prst_material: Option<super::drawing::PresetMaterialType>,
+    /// The child that is `super::drawing::TopBevel`, when there is one.
     pub top_bevel: Option<Box<super::drawing::TopBevel>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `z`, when the element has it.
     pub z: Option<super::drawing::Coordinate>,
 }
 
-/// The tag `a14:imgEffect`, schema type `CT_PictureEffect` of SDK 3.5.1's data.
+/// The `a14:imgEffect` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_PictureEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1334,12 +1513,16 @@ pub struct HiddenSp3d {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ImgEffect {
+    /// The child that is an item of `PictureEffectContent`, which the schema requires.
     pub content: Box<PictureEffectContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `a14:imgLayer`, schema type `CT_PictureLayer` of SDK 3.5.1's data.
+/// The `a14:imgLayer` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_PictureLayer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1348,12 +1531,16 @@ pub struct ImgEffect {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ImgLayer {
+    /// The attribute `r:embed`, when the element has it.
     pub embed: Option<String>,
+    /// The children that are `ImgEffect`, in order.
     pub img_effect: Vec<ImgEffect>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:imgProps`, schema type `CT_Photo` of SDK 3.5.1's data.
+/// The `a14:imgProps` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Photo`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1362,11 +1549,14 @@ pub struct ImgLayer {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ImgProps {
+    /// The child that is `ImgLayer`, which the schema requires.
     pub img_layer: Box<ImgLayer>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:isCanvas`, schema type `CT_IsGvmlCanvas` of SDK 3.5.1's data.
+/// The `a14:isCanvas` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_IsGvmlCanvas`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1375,11 +1565,14 @@ pub struct ImgProps {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct IsCanvas {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `a14:m`, schema type `CT_TextMath` of SDK 3.5.1's data.
+/// The `a14:m` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `CT_TextMath`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1388,10 +1581,12 @@ pub struct IsCanvas {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct M {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:nvContentPartPr`, schema type `CT_GvmlContentPartNonVisual` of SDK 3.5.1's data.
+/// The `a14:nvContentPartPr` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_GvmlContentPartNonVisual`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1403,48 +1598,84 @@ pub struct M {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NvContentPartPr {
+    /// The child that is `CNvContentPartPr`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub c: Option<Box<CNvContentPartPr>>,
+    /// The child that is `CNvPr`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub c_nv_pr: Box<CNvPr>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_PictureEffect`: choice in `CT_PictureEffect`.
+/// One child element of a choice: choice in `CT_PictureEffect`.
+///
+/// The schema types that hold it: `CT_PictureEffect`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum PictureEffectContent {
+    /// The element `a14:artisticBlur`, a `ArtisticBlur`.
     ArtisticBlur(ArtisticBlur),
+    /// The element `a14:artisticCement`, a `ArtisticCement`.
     ArtisticCement(ArtisticCement),
+    /// The element `a14:artisticChalkSketch`, a `ArtisticChalkSketch`.
     ArtisticChalkSketch(ArtisticChalkSketch),
+    /// The element `a14:artisticCrisscrossEtching`, a `ArtisticCrisscrossEtching`.
     ArtisticCrisscrossEtching(ArtisticCrisscrossEtching),
+    /// The element `a14:artisticCutout`, a `ArtisticCutout`.
     ArtisticCutout(ArtisticCutout),
+    /// The element `a14:artisticFilmGrain`, a `ArtisticFilmGrain`.
     ArtisticFilmGrain(ArtisticFilmGrain),
+    /// The element `a14:artisticGlass`, a `ArtisticGlass`.
     ArtisticGlass(ArtisticGlass),
+    /// The element `a14:artisticGlowDiffused`, a `ArtisticGlowDiffused`.
     ArtisticGlowDiffused(ArtisticGlowDiffused),
+    /// The element `a14:artisticGlowEdges`, a `ArtisticGlowEdges`.
     ArtisticGlowEdges(ArtisticGlowEdges),
+    /// The element `a14:artisticLightScreen`, a `ArtisticLightScreen`.
     ArtisticLightScreen(ArtisticLightScreen),
+    /// The element `a14:artisticLineDrawing`, a `ArtisticLineDrawing`.
     ArtisticLineDrawing(ArtisticLineDrawing),
+    /// The element `a14:artisticMarker`, a `ArtisticMarker`.
     ArtisticMarker(ArtisticMarker),
+    /// The element `a14:artisticMosiaicBubbles`, a `ArtisticMosiaicBubbles`.
     ArtisticMosiaicBubbles(ArtisticMosiaicBubbles),
+    /// The element `a14:artisticPaintBrush`, a `ArtisticPaintBrush`.
     ArtisticPaintBrush(ArtisticPaintBrush),
+    /// The element `a14:artisticPaintStrokes`, a `ArtisticPaintStrokes`.
     ArtisticPaintStrokes(ArtisticPaintStrokes),
+    /// The element `a14:artisticPastelsSmooth`, a `ArtisticPastelsSmooth`.
     ArtisticPastelsSmooth(ArtisticPastelsSmooth),
+    /// The element `a14:artisticPencilGrayscale`, a `ArtisticPencilGrayscale`.
     ArtisticPencilGrayscale(ArtisticPencilGrayscale),
+    /// The element `a14:artisticPencilSketch`, a `ArtisticPencilSketch`.
     ArtisticPencilSketch(ArtisticPencilSketch),
+    /// The element `a14:artisticPhotocopy`, a `ArtisticPhotocopy`.
     ArtisticPhotocopy(ArtisticPhotocopy),
+    /// The element `a14:artisticPlasticWrap`, a `ArtisticPlasticWrap`.
     ArtisticPlasticWrap(ArtisticPlasticWrap),
+    /// The element `a14:artisticTexturizer`, a `ArtisticTexturizer`.
     ArtisticTexturizer(ArtisticTexturizer),
+    /// The element `a14:artisticWatercolorSponge`, a `ArtisticWatercolorSponge`.
     ArtisticWatercolorSponge(ArtisticWatercolorSponge),
+    /// The element `a14:backgroundRemoval`, a `BackgroundRemoval`.
     BackgroundRemoval(BackgroundRemoval),
+    /// The element `a14:brightnessContrast`, a `BrightnessContrast`.
     BrightnessContrast(BrightnessContrast),
+    /// The element `a14:colorTemperature`, a `ColorTemperature`.
     ColorTemperature(ColorTemperature),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `a14:saturation`, a `Saturation`.
     Saturation(Saturation),
+    /// The element `a14:sharpenSoften`, a `SharpenSoften`.
     SharpenSoften(SharpenSoften),
 }
 
-/// The tag `a14:saturation`, schema type `CT_PictureEffectSaturation` of SDK 3.5.1's data.
+/// The `a14:saturation` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_PictureEffectSaturation`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1453,11 +1684,14 @@ pub enum PictureEffectContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Saturation {
+    /// The attribute `sat`, when the element has it.
     pub sat: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:shadowObscured`, schema type `CT_ShadowObscured` of SDK 3.5.1's data.
+/// The `a14:shadowObscured` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_ShadowObscured`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1466,11 +1700,14 @@ pub struct Saturation {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShadowObscured {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `a14:sharpenSoften`, schema type `CT_PictureEffectSharpenSoften` of SDK 3.5.1's data.
+/// The `a14:sharpenSoften` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_PictureEffectSharpenSoften`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1479,11 +1716,14 @@ pub struct ShadowObscured {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SharpenSoften {
+    /// The attribute `amount`, when the element has it.
     pub amount: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a14:useLocalDpi`, schema type `CT_UseLocalDpi` of SDK 3.5.1's data.
+/// The `a14:useLocalDpi` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_UseLocalDpi`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1492,11 +1732,14 @@ pub struct SharpenSoften {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct UseLocalDpi {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `a14:xfrm`, schema type `CT_Transform2D` of SDK 3.5.1's data.
+/// The `a14:xfrm` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Transform2D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1505,11 +1748,17 @@ pub struct UseLocalDpi {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Xfrm {
+    /// The child that is `super::drawing::Extents`, when there is one.
     pub extents: Option<Box<super::drawing::Extents>>,
+    /// The attribute `flipH`, when the element has it.
     pub flip_h: Option<String>,
+    /// The attribute `flipV`, when the element has it.
     pub flip_v: Option<String>,
+    /// The child that is `super::drawing::Offset`, when there is one.
     pub offset: Option<Box<super::drawing::Offset>>,
+    /// The attribute `rot`, when the element has it.
     pub rot: Option<super::drawing::Angle>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 

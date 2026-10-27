@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `a15` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/drawing/2012/main`, which files write with the prefix `a15`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/drawing/2012/main`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -275,7 +277,8 @@ pub static SIGNATURE_LINE_SHAPE: officekit_markup_base::Shape = officekit_markup
     text: false,
 };
 
-/// The tag `a15:backgroundPr`, schema type `CT_BackgroundPr` of SDK 3.5.1's data.
+/// The `a15:backgroundPr` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_BackgroundPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -284,10 +287,15 @@ pub static SIGNATURE_LINE_SHAPE: officekit_markup_base::Shape = officekit_markup
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BackgroundPr {
+    /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<drawing::BlackAndWhiteMode>,
+    /// The attribute `bwNormal`, when the element has it.
     pub bw_normal: Option<drawing::BlackAndWhiteMode>,
+    /// The attribute `bwPure`, when the element has it.
     pub bw_pure: Option<drawing::BlackAndWhiteMode>,
+    /// The attribute `targetScreenSize`, when the element has it.
     pub target_screen_size: Option<TargetScreenSz>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -300,10 +308,14 @@ pub struct BackgroundPr {
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_drawing_2012_main` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `BackgroundPr`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn background_pr(&mut self, _node: &BackgroundPr) -> Option<BackgroundPr> {
         None
     }
 
+    /// Asked for each `NonVisualGroupProps`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn non_visual_group_props(
         &mut self,
         _node: &NonVisualGroupProps,
@@ -311,17 +323,24 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ObjectPr`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn object_pr(&mut self, _node: &ObjectPr) -> Option<ObjectPr> {
         None
     }
 
+    /// Asked for each `SignatureLine`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn signature_line(&mut self, _node: &SignatureLine) -> Option<SignatureLine> {
         None
     }
 
+    /// Asked when a `BackgroundPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_background_pr(
         &mut self,
         _node: &BackgroundPr,
@@ -330,9 +349,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NonVisualGroupProps` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_non_visual_group_props(
         &mut self,
         _node: &NonVisualGroupProps,
@@ -341,9 +363,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ObjectPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_object_pr(
         &mut self,
         _node: &ObjectPr,
@@ -352,9 +377,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SignatureLine` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_signature_line(
         &mut self,
         _node: &SignatureLine,
@@ -364,7 +392,8 @@ pub trait Context: crate::Context {
     }
 }
 
-/// The tag `a15:nonVisualGroupProps`, schema type `CT_NonVisualGroupProps` of SDK 3.5.1's data.
+/// The `a15:nonVisualGroupProps` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_NonVisualGroupProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -373,11 +402,14 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualGroupProps {
+    /// The attribute `isLegacyGroup`, when the element has it.
     pub is_legacy_group: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a15:objectPr`, schema type `CT_ObjectPr` of SDK 3.5.1's data.
+/// The `a15:objectPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ObjectPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -386,13 +418,18 @@ pub struct NonVisualGroupProps {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ObjectPr {
+    /// The attribute `isActiveX`, when the element has it.
     pub is_active_x: Option<String>,
+    /// The attribute `linkType`, when the element has it.
     pub link_type: Option<String>,
+    /// The attribute `objectId`, when the element has it.
     pub object_id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a15:signatureLine`, schema type `CT_SignatureLine` of SDK 3.5.1's data.
+/// The `a15:signatureLine` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_SignatureLine`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -401,22 +438,38 @@ pub struct ObjectPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SignatureLine {
+    /// The attribute `addlXml`, when the element has it.
     pub addl_xml: Option<String>,
+    /// The attribute `allowComments`, when the element has it.
     pub allow_comments: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `isSignatureLine`, when the element has it.
     pub is_signature_line: Option<String>,
+    /// The attribute `provId`, when the element has it.
     pub prov_id: Option<String>,
+    /// The attribute `showSignDate`, when the element has it.
     pub show_sign_date: Option<String>,
+    /// The attribute `sigProvUrl`, when the element has it.
     pub sig_prov_url: Option<String>,
+    /// The attribute `signingInstructions`, when the element has it.
     pub signing_instructions: Option<String>,
+    /// The attribute `signingInstructionsSet`, when the element has it.
     pub signing_instructions_set: Option<String>,
+    /// The attribute `suggestedSigner`, when the element has it.
     pub suggested_signer: Option<String>,
+    /// The attribute `suggestedSigner2`, when the element has it.
     pub suggested_signer2: Option<String>,
+    /// The attribute `suggestedSignerEmail`, when the element has it.
     pub suggested_signer_email: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_TargetScreenSz`: the text the file carried.
+/// The simple type `ST_TargetScreenSz`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -425,20 +478,32 @@ pub struct SignatureLine {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TargetScreenSz(pub String);
-/// The members of `ST_TargetScreenSz`, in alphabetical order.
+/// The members of the enumeration `ST_TargetScreenSz`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TargetScreenSzMember {
+    /// The member written `1024x768`.
     Value1024x768,
+    /// The member written `1152x882`.
     Value1152x882,
+    /// The member written `1152x900`.
     Value1152x900,
+    /// The member written `1280x1024`.
     Value1280x1024,
+    /// The member written `1600x1200`.
     Value1600x1200,
+    /// The member written `1800x1440`.
     Value1800x1440,
+    /// The member written `1920x1200`.
     Value1920x1200,
+    /// The member written `544x376`.
     Value544x376,
+    /// The member written `640x480`.
     Value640x480,
+    /// The member written `720x512`.
     Value720x512,
+    /// The member written `800x600`.
     Value800x600,
 }
 
@@ -448,10 +513,14 @@ pub enum TargetScreenSzMember {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_drawing_2012_main` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `BackgroundPr`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn background_pr(&mut self, _node: &BackgroundPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NonVisualGroupProps`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn non_visual_group_props(
         &mut self,
         _node: &NonVisualGroupProps,
@@ -459,10 +528,13 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ObjectPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn object_pr(&mut self, _node: &ObjectPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SignatureLine`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn signature_line(&mut self, _node: &SignatureLine) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
@@ -663,7 +735,7 @@ impl TargetScreenSzMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

@@ -23,7 +23,9 @@ pub fn text(header: &str, names: &Names<'_>) -> String {
     let _ = writeln!(
         out,
         "//! The writers of `crate::{}`: each struct written as its generic\n\
-         //! element, its unknown content at its place.",
+         //! element, its unknown content at its place.\n//!\n\
+         //! A write gives back, at their places, the attributes and elements a read kept as unknown.\n\
+         //! The `officekit-strict` and `officekit-transitional` crates write a node in one class.",
         module.name
     );
     let mut functions: Vec<(String, String)> = Vec::new();

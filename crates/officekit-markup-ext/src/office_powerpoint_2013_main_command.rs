@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `pc` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/powerpoint/2013/main/command`, which files write with the prefix `pc`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/powerpoint/2013/main/command`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -443,7 +445,8 @@ pub static TOC_MK_LST_SHAPE: officekit_markup_base::Shape = officekit_markup_bas
     text: false,
 };
 
-/// The tag `pc:animEffectMkLst`, schema type `CT_AnimationEffectMonikerList` of SDK 3.5.1's data.
+/// The `pc:animEffectMkLst` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_AnimationEffectMonikerList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -452,12 +455,14 @@ pub static TOC_MK_LST_SHAPE: officekit_markup_base::Shape = officekit_markup_bas
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AnimEffectMkLst {
+    /// The children that are an item of `drawing::AnyElementContent`, in order.
     pub content: Vec<drawing::AnyElementContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `pc:animEffectParentMkLst`, schema type `CT_AnimationEffectMonikerList` of SDK 3.5.1's
-/// data.
+/// The `pc:animEffectParentMkLst` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_AnimationEffectMonikerList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -466,11 +471,14 @@ pub struct AnimEffectMkLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AnimEffectParentMkLst {
+    /// The children that are an item of `drawing::AnyElementContent`, in order.
     pub content: Vec<drawing::AnyElementContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `pc:cXmlMkLst`, schema type `CT_CustomXmlPartMonikerList` of SDK 3.5.1's data.
+/// The `pc:cXmlMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_CustomXmlPartMonikerList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -479,11 +487,14 @@ pub struct AnimEffectParentMkLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CXmlMkLst {
+    /// The children that are an item of `drawing::AnyElementContent`, in order.
     pub content: Vec<drawing::AnyElementContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `pc:cmAuthorMkLst`, schema type `CT_CommentAuthorMonikerList` of SDK 3.5.1's data.
+/// The `pc:cmAuthorMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_CommentAuthorMonikerList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -492,11 +503,14 @@ pub struct CXmlMkLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CmAuthorMkLst {
+    /// The children that are an item of `drawing::AnyElementContent`, in order.
     pub content: Vec<drawing::AnyElementContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `pc:cmMkLst`, schema type `CT_CommentMonikerList` of SDK 3.5.1's data.
+/// The `pc:cmMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_CommentMonikerList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -505,7 +519,9 @@ pub struct CmAuthorMkLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CmMkLst {
+    /// The children that are an item of `drawing::AnyElementContent`, in order.
     pub content: Vec<drawing::AnyElementContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -518,10 +534,14 @@ pub struct CmMkLst {
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_powerpoint_2013_main_command` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `AnimEffectMkLst`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn anim_effect_mk_lst(&mut self, _node: &AnimEffectMkLst) -> Option<AnimEffectMkLst> {
         None
     }
 
+    /// Asked for each `AnimEffectParentMkLst`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn anim_effect_parent_mk_lst(
         &mut self,
         _node: &AnimEffectParentMkLst,
@@ -529,97 +549,144 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `CXmlMkLst`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn c_xml_mk_lst(&mut self, _node: &CXmlMkLst) -> Option<CXmlMkLst> {
         None
     }
 
+    /// Asked for each `CmAuthorMkLst`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn cm_author_mk_lst(&mut self, _node: &CmAuthorMkLst) -> Option<CmAuthorMkLst> {
         None
     }
 
+    /// Asked for each `CmMkLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn cm_mk_lst(&mut self, _node: &CmMkLst) -> Option<CmMkLst> {
         None
     }
 
+    /// Asked for each `CustShowMkLst`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn cust_show_mk_lst(&mut self, _node: &CustShowMkLst) -> Option<CustShowMkLst> {
         None
     }
 
+    /// Asked for each `DesignTagMkLst`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn design_tag_mk_lst(&mut self, _node: &DesignTagMkLst) -> Option<DesignTagMkLst> {
         None
     }
 
+    /// Asked for each `DocMk`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn doc_mk(&mut self, _node: &DocMk) -> Option<DocMk> {
         None
     }
 
+    /// Asked for each `DocMkLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn doc_mk_lst(&mut self, _node: &DocMkLst) -> Option<DocMkLst> {
         None
     }
 
+    /// Asked for each `HandoutMkLst`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn handout_mk_lst(&mut self, _node: &HandoutMkLst) -> Option<HandoutMkLst> {
         None
     }
 
+    /// Asked for each `NotesMasterMkLst`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn notes_master_mk_lst(&mut self, _node: &NotesMasterMkLst) -> Option<NotesMasterMkLst> {
         None
     }
 
+    /// Asked for each `NotesMkLst`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn notes_mk_lst(&mut self, _node: &NotesMkLst) -> Option<NotesMkLst> {
         None
     }
 
+    /// Asked for each `NotesTxtMkLst`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn notes_txt_mk_lst(&mut self, _node: &NotesTxtMkLst) -> Option<NotesTxtMkLst> {
         None
     }
 
+    /// Asked for each `SectionLnkObjMkLst`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn section_lnk_obj_mk_lst(&mut self, _node: &SectionLnkObjMkLst) -> Option<SectionLnkObjMkLst> {
         None
     }
 
+    /// Asked for each `SectionMkLst`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn section_mk_lst(&mut self, _node: &SectionMkLst) -> Option<SectionMkLst> {
         None
     }
 
+    /// Asked for each `SldBaseMkLst`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn sld_base_mk_lst(&mut self, _node: &SldBaseMkLst) -> Option<SldBaseMkLst> {
         None
     }
 
+    /// Asked for each `SldLayoutMkLst`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn sld_layout_mk_lst(&mut self, _node: &SldLayoutMkLst) -> Option<SldLayoutMkLst> {
         None
     }
 
+    /// Asked for each `SldMasterMkLst`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn sld_master_mk_lst(&mut self, _node: &SldMasterMkLst) -> Option<SldMasterMkLst> {
         None
     }
 
+    /// Asked for each `SldMk`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn sld_mk(&mut self, _node: &SldMk) -> Option<SldMk> {
         None
     }
 
+    /// Asked for each `SldMkLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn sld_mk_lst(&mut self, _node: &SldMkLst) -> Option<SldMkLst> {
         None
     }
 
+    /// Asked for each `SldPosMkLst`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn sld_pos_mk_lst(&mut self, _node: &SldPosMkLst) -> Option<SldPosMkLst> {
         None
     }
 
+    /// Asked for each `TagMkLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn tag_mk_lst(&mut self, _node: &TagMkLst) -> Option<TagMkLst> {
         None
     }
 
+    /// Asked for each `TkAppMkLst`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn tk_app_mk_lst(&mut self, _node: &TkAppMkLst) -> Option<TkAppMkLst> {
         None
     }
 
+    /// Asked for each `TocMkLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn toc_mk_lst(&mut self, _node: &TocMkLst) -> Option<TocMkLst> {
         None
     }
 
+    /// Asked when a `AnimEffectMkLst` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_anim_effect_mk_lst(
         &mut self,
         _node: &AnimEffectMkLst,
@@ -628,9 +695,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `AnimEffectParentMkLst` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_anim_effect_parent_mk_lst(
         &mut self,
         _node: &AnimEffectParentMkLst,
@@ -639,9 +709,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CXmlMkLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_c_xml_mk_lst(
         &mut self,
         _node: &CXmlMkLst,
@@ -650,9 +723,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CmAuthorMkLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cm_author_mk_lst(
         &mut self,
         _node: &CmAuthorMkLst,
@@ -661,9 +737,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CmMkLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cm_mk_lst(
         &mut self,
         _node: &CmMkLst,
@@ -672,9 +751,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CustShowMkLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cust_show_mk_lst(
         &mut self,
         _node: &CustShowMkLst,
@@ -683,9 +765,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DesignTagMkLst` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_design_tag_mk_lst(
         &mut self,
         _node: &DesignTagMkLst,
@@ -694,16 +779,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DocMk` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_doc_mk(&mut self, _node: &DocMk, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `DocMkLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_doc_mk_lst(
         &mut self,
         _node: &DocMkLst,
@@ -712,9 +803,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `HandoutMkLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_handout_mk_lst(
         &mut self,
         _node: &HandoutMkLst,
@@ -723,9 +817,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NotesMasterMkLst` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_notes_master_mk_lst(
         &mut self,
         _node: &NotesMasterMkLst,
@@ -734,9 +831,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NotesMkLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_notes_mk_lst(
         &mut self,
         _node: &NotesMkLst,
@@ -745,9 +845,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NotesTxtMkLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_notes_txt_mk_lst(
         &mut self,
         _node: &NotesTxtMkLst,
@@ -756,9 +859,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SectionLnkObjMkLst` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_section_lnk_obj_mk_lst(
         &mut self,
         _node: &SectionLnkObjMkLst,
@@ -767,9 +873,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SectionMkLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_section_mk_lst(
         &mut self,
         _node: &SectionMkLst,
@@ -778,9 +887,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SldBaseMkLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sld_base_mk_lst(
         &mut self,
         _node: &SldBaseMkLst,
@@ -789,9 +901,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SldLayoutMkLst` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sld_layout_mk_lst(
         &mut self,
         _node: &SldLayoutMkLst,
@@ -800,9 +915,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SldMasterMkLst` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sld_master_mk_lst(
         &mut self,
         _node: &SldMasterMkLst,
@@ -811,16 +929,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SldMk` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sld_mk(&mut self, _node: &SldMk, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `SldMkLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sld_mk_lst(
         &mut self,
         _node: &SldMkLst,
@@ -829,9 +953,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SldPosMkLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sld_pos_mk_lst(
         &mut self,
         _node: &SldPosMkLst,
@@ -840,9 +967,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TagMkLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_tag_mk_lst(
         &mut self,
         _node: &TagMkLst,
@@ -851,9 +981,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TkAppMkLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_tk_app_mk_lst(
         &mut self,
         _node: &TkAppMkLst,
@@ -862,9 +995,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TocMkLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_toc_mk_lst(
         &mut self,
         _node: &TocMkLst,
@@ -874,7 +1010,8 @@ pub trait Context: crate::Context {
     }
 }
 
-/// The tag `pc:custShowMkLst`, schema type `CT_CustomShowMonikerList` of SDK 3.5.1's data.
+/// The `pc:custShowMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_CustomShowMonikerList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -883,11 +1020,14 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CustShowMkLst {
+    /// The children that are an item of `drawing::AnyElementContent`, in order.
     pub content: Vec<drawing::AnyElementContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `pc:designTagMkLst`, schema type `CT_DesignerTagMonikerList` of SDK 3.5.1's data.
+/// The `pc:designTagMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_DesignerTagMonikerList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -896,11 +1036,14 @@ pub struct CustShowMkLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DesignTagMkLst {
+    /// The children that are an item of `drawing::AnyElementContent`, in order.
     pub content: Vec<drawing::AnyElementContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `pc:docMk`, schema type `CT_DocumentMoniker` of SDK 3.5.1's data.
+/// The `pc:docMk` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_DocumentMoniker`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -909,10 +1052,12 @@ pub struct DesignTagMkLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DocMk {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `pc:docMkLst`, schema type `CT_DocumentMonikerList` of SDK 3.5.1's data.
+/// The `pc:docMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_DocumentMonikerList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -921,11 +1066,14 @@ pub struct DocMk {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DocMkLst {
+    /// The children that are an item of `drawing::AnyElementContent`, in order.
     pub content: Vec<drawing::AnyElementContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `pc:handoutMkLst`, schema type `CT_HandoutMonikerList` of SDK 3.5.1's data.
+/// The `pc:handoutMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_HandoutMonikerList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -934,11 +1082,14 @@ pub struct DocMkLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HandoutMkLst {
+    /// The children that are an item of `drawing::AnyElementContent`, in order.
     pub content: Vec<drawing::AnyElementContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `pc:notesMasterMkLst`, schema type `CT_NotesMasterMonikerList` of SDK 3.5.1's data.
+/// The `pc:notesMasterMkLst` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_NotesMasterMonikerList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -947,11 +1098,14 @@ pub struct HandoutMkLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NotesMasterMkLst {
+    /// The children that are an item of `drawing::AnyElementContent`, in order.
     pub content: Vec<drawing::AnyElementContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `pc:notesMkLst`, schema type `CT_NotesMonikerList` of SDK 3.5.1's data.
+/// The `pc:notesMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_NotesMonikerList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -960,11 +1114,14 @@ pub struct NotesMasterMkLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NotesMkLst {
+    /// The children that are an item of `drawing::AnyElementContent`, in order.
     pub content: Vec<drawing::AnyElementContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `pc:notesTxtMkLst`, schema type `CT_NotesTextMonikerList` of SDK 3.5.1's data.
+/// The `pc:notesTxtMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_NotesTextMonikerList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -973,11 +1130,14 @@ pub struct NotesMkLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NotesTxtMkLst {
+    /// The children that are an item of `drawing::AnyElementContent`, in order.
     pub content: Vec<drawing::AnyElementContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `pc:sectionLnkObjMkLst`, schema type `CT_SectionLinkObjMonikerList` of SDK 3.5.1's data.
+/// The `pc:sectionLnkObjMkLst` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_SectionLinkObjMonikerList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -986,11 +1146,14 @@ pub struct NotesTxtMkLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SectionLnkObjMkLst {
+    /// The children that are an item of `drawing::AnyElementContent`, in order.
     pub content: Vec<drawing::AnyElementContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `pc:sectionMkLst`, schema type `CT_SectionMonikerList` of SDK 3.5.1's data.
+/// The `pc:sectionMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_SectionMonikerList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -999,11 +1162,14 @@ pub struct SectionLnkObjMkLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SectionMkLst {
+    /// The children that are an item of `drawing::AnyElementContent`, in order.
     pub content: Vec<drawing::AnyElementContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `pc:sldBaseMkLst`, schema type `CT_SlideBaseMonikerList` of SDK 3.5.1's data.
+/// The `pc:sldBaseMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_SlideBaseMonikerList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1012,11 +1178,14 @@ pub struct SectionMkLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SldBaseMkLst {
+    /// The children that are an item of `drawing::AnyElementContent`, in order.
     pub content: Vec<drawing::AnyElementContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `pc:sldLayoutMkLst`, schema type `CT_SlideLayoutMonikerList` of SDK 3.5.1's data.
+/// The `pc:sldLayoutMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_SlideLayoutMonikerList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1025,11 +1194,14 @@ pub struct SldBaseMkLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SldLayoutMkLst {
+    /// The children that are an item of `drawing::AnyElementContent`, in order.
     pub content: Vec<drawing::AnyElementContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `pc:sldMasterMkLst`, schema type `CT_MainMasterMonikerList` of SDK 3.5.1's data.
+/// The `pc:sldMasterMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_MainMasterMonikerList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1038,11 +1210,14 @@ pub struct SldLayoutMkLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SldMasterMkLst {
+    /// The children that are an item of `drawing::AnyElementContent`, in order.
     pub content: Vec<drawing::AnyElementContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `pc:sldMk`, schema type `CT_SlideMoniker` of SDK 3.5.1's data.
+/// The `pc:sldMk` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SlideMoniker`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1051,12 +1226,16 @@ pub struct SldMasterMkLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SldMk {
+    /// The attribute `cId`, when the element has it.
     pub c_id: Option<String>,
+    /// The attribute `sldId`, when the element has it.
     pub sld_id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `pc:sldMkLst`, schema type `CT_SlideMonikerList` of SDK 3.5.1's data.
+/// The `pc:sldMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SlideMonikerList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1065,13 +1244,18 @@ pub struct SldMk {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SldMkLst {
+    /// The children that are an item of `drawing::AnyElementContent`, in order.
     pub content: Vec<drawing::AnyElementContent>,
+    /// The child that is `DocMk`, which the schema requires.
     pub doc_mk: Box<DocMk>,
+    /// The child that is `SldMk`, which the schema requires.
     pub sld_mk: Box<SldMk>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `pc:sldPosMkLst`, schema type `CT_SlidePosMonikerList` of SDK 3.5.1's data.
+/// The `pc:sldPosMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_SlidePosMonikerList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1080,11 +1264,14 @@ pub struct SldMkLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SldPosMkLst {
+    /// The children that are an item of `drawing::AnyElementContent`, in order.
     pub content: Vec<drawing::AnyElementContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `pc:tagMkLst`, schema type `CT_StringTagMonikerList` of SDK 3.5.1's data.
+/// The `pc:tagMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StringTagMonikerList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1093,11 +1280,14 @@ pub struct SldPosMkLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TagMkLst {
+    /// The children that are an item of `drawing::AnyElementContent`, in order.
     pub content: Vec<drawing::AnyElementContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `pc:tkAppMkLst`, schema type `CT_OsfTaskPaneAppMonikerList` of SDK 3.5.1's data.
+/// The `pc:tkAppMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OsfTaskPaneAppMonikerList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1106,11 +1296,14 @@ pub struct TagMkLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TkAppMkLst {
+    /// The children that are an item of `drawing::AnyElementContent`, in order.
     pub content: Vec<drawing::AnyElementContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `pc:tocMkLst`, schema type `CT_SummaryZoomMonikerList` of SDK 3.5.1's data.
+/// The `pc:tocMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SummaryZoomMonikerList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1119,7 +1312,9 @@ pub struct TkAppMkLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TocMkLst {
+    /// The children that are an item of `drawing::AnyElementContent`, in order.
     pub content: Vec<drawing::AnyElementContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -1129,10 +1324,14 @@ pub struct TocMkLst {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_powerpoint_2013_main_command` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `AnimEffectMkLst`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn anim_effect_mk_lst(&mut self, _node: &AnimEffectMkLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `AnimEffectParentMkLst`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn anim_effect_parent_mk_lst(
         &mut self,
         _node: &AnimEffectParentMkLst,
@@ -1140,50 +1339,71 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CXmlMkLst`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn c_xml_mk_lst(&mut self, _node: &CXmlMkLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CmAuthorMkLst`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn cm_author_mk_lst(&mut self, _node: &CmAuthorMkLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CmMkLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn cm_mk_lst(&mut self, _node: &CmMkLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CustShowMkLst`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn cust_show_mk_lst(&mut self, _node: &CustShowMkLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DesignTagMkLst`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn design_tag_mk_lst(&mut self, _node: &DesignTagMkLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DocMk`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn doc_mk(&mut self, _node: &DocMk) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DocMkLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn doc_mk_lst(&mut self, _node: &DocMkLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `HandoutMkLst`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn handout_mk_lst(&mut self, _node: &HandoutMkLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NotesMasterMkLst`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn notes_master_mk_lst(&mut self, _node: &NotesMasterMkLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NotesMkLst`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn notes_mk_lst(&mut self, _node: &NotesMkLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NotesTxtMkLst`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn notes_txt_mk_lst(&mut self, _node: &NotesTxtMkLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SectionLnkObjMkLst`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn section_lnk_obj_mk_lst(
         &mut self,
         _node: &SectionLnkObjMkLst,
@@ -1191,42 +1411,58 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SectionMkLst`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn section_mk_lst(&mut self, _node: &SectionMkLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SldBaseMkLst`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn sld_base_mk_lst(&mut self, _node: &SldBaseMkLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SldLayoutMkLst`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn sld_layout_mk_lst(&mut self, _node: &SldLayoutMkLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SldMasterMkLst`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn sld_master_mk_lst(&mut self, _node: &SldMasterMkLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SldMk`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sld_mk(&mut self, _node: &SldMk) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SldMkLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sld_mk_lst(&mut self, _node: &SldMkLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SldPosMkLst`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn sld_pos_mk_lst(&mut self, _node: &SldPosMkLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TagMkLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn tag_mk_lst(&mut self, _node: &TagMkLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TkAppMkLst`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn tk_app_mk_lst(&mut self, _node: &TkAppMkLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TocMkLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn toc_mk_lst(&mut self, _node: &TocMkLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

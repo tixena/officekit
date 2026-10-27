@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `sl` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.openxmlformats.org/schemaLibrary/2006/main`, which files write with the prefix `sl`.
 //!
-//! The namespace is `http://schemas.openxmlformats.org/schemaLibrary/2006/main`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 pub mod read;
 pub mod write;
@@ -242,7 +242,8 @@ pub static EMBEDDED_CUSTOM_XML_SCHEMA_SUPPLEMENTARY_DATA_SHAPE: crate::Shape = c
     text: false,
 };
 
-/// 23.2.1 schema (Custom XML Schema Reference): the tag `sl:schema`, schema type `CT_Schema`.
+/// The `sl:schema` element, Custom XML Schema Reference (ECMA-376 Part 1, section 23.2.1). Its
+/// schema type is `CT_Schema`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -251,15 +252,20 @@ pub static EMBEDDED_CUSTOM_XML_SCHEMA_SUPPLEMENTARY_DATA_SHAPE: crate::Shape = c
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CustomXMLSchemaReference {
+    /// The attribute `sl:manifestLocation`, when the element has it.
     pub manifest_location: Option<String>,
+    /// The attribute `sl:schemaLanguage`, when the element has it.
     pub schema_language: Option<String>,
+    /// The attribute `sl:schemaLocation`, when the element has it.
     pub schema_location: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The attribute `sl:uri`, when the element has it.
     pub uri: Option<String>,
 }
 
-/// 23.2.2 `schemaLibrary` (Embedded Custom XML Schema Supplementary Data): the tag
-/// `sl:schemaLibrary`, schema type `CT_SchemaLibrary`.
+/// The `sl:schemaLibrary` element, Embedded Custom XML Schema Supplementary Data (ECMA-376 Part 1,
+/// section 23.2.2). Its schema type is `CT_SchemaLibrary`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -268,7 +274,9 @@ pub struct CustomXMLSchemaReference {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EmbeddedCustomXMLSchemaSupplementaryData {
+    /// The children that are `CustomXMLSchemaReference`, in order.
     pub custom_xml_schema_reference: Vec<CustomXMLSchemaReference>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 

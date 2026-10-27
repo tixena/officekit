@@ -344,13 +344,18 @@
 //!
 //! Part 1 states the Strict type of each part and Part 4 the Transitional one; the types of the
 //! parts Part 2 defines and of Microsoft's extensions are one URI in both classes.
+//!
+//! A relationship type is a URI that says what a relationship points at. `RelationshipType` holds
+//! the Strict and the Transitional spelling of one. `ALL` lists the constants, `find` gives the
+//! type a URI spells, `in_class` gives the spelling a class writes, and `matches` tests a URI
+//! against either spelling.
 
 use crate::relationship::RelationshipType;
 use officekit_xml::conformance::ConformanceClass;
 
 impl RelationshipType {
-    /// The relationship type of `embedded_control_persistence_binary_data`; one URI in both
-    /// classes.
+    /// The relationship type of the module `embedded_control_persistence_binary_data`; one URI in
+    /// both classes.
     pub const ACTIVE_X_CONTROL_BINARY: Self = Self {
         strict: "http://schemas.microsoft.com/office/2006/relationships/activeXControlBinary",
         transitional: "http://schemas.microsoft.com/office/2006/relationships/activeXControlBinary",
@@ -493,205 +498,206 @@ impl RelationshipType {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/attachedTemplate",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/attachedTemplate",
     };
-    /// The relationship type of `excel_attached_toolbars` and `word_attached_toolbars`; one URI in
-    /// both classes.
+    /// The relationship type of the modules `excel_attached_toolbars` and `word_attached_toolbars`;
+    /// one URI in both classes.
     pub const ATTACHED_TOOLBARS: Self = Self {
         strict: "http://schemas.microsoft.com/office/2006/relationships/attachedToolbars",
         transitional: "http://schemas.microsoft.com/office/2006/relationships/attachedToolbars",
     };
-    /// The relationship type of `audio`.
+    /// The relationship type of the module `audio`.
     pub const AUDIO: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/audio",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/audio",
     };
-    /// The relationship type of `power_point_authors`; one URI in both classes.
+    /// The relationship type of the module `power_point_authors`; one URI in both classes.
     pub const AUTHORS: Self = Self {
         strict: "http://schemas.microsoft.com/office/2018/10/relationships/authors",
         transitional: "http://schemas.microsoft.com/office/2018/10/relationships/authors",
     };
-    /// The relationship type of `alternative_format_import`.
+    /// The relationship type of the module `alternative_format_import`.
     pub const A_F_CHUNK: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/aFChunk",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/aFChunk",
     };
-    /// The relationship type of `calculation_chain`.
+    /// The relationship type of the module `calculation_chain`.
     pub const CALC_CHAIN: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/calcChain",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/calcChain",
     };
-    /// The relationship type of `chart`.
+    /// The relationship type of the module `chart`.
     pub const CHART: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/chart",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart",
     };
-    /// The relationship type of `chartsheet`.
+    /// The relationship type of the module `chartsheet`.
     pub const CHARTSHEET: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/chartsheet",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/chartsheet",
     };
-    /// The relationship type of `chart_color_style`; one URI in both classes.
+    /// The relationship type of the module `chart_color_style`; one URI in both classes.
     pub const CHART_COLOR_STYLE: Self = Self {
         strict: "http://schemas.microsoft.com/office/2011/relationships/chartColorStyle",
         transitional: "http://schemas.microsoft.com/office/2011/relationships/chartColorStyle",
     };
-    /// The relationship type of `extended_chart`; one URI in both classes.
+    /// The relationship type of the module `extended_chart`; one URI in both classes.
     pub const CHART_EX: Self = Self {
         strict: "http://schemas.microsoft.com/office/2014/relationships/chartEx",
         transitional: "http://schemas.microsoft.com/office/2014/relationships/chartEx",
     };
-    /// The relationship type of `chart_style`; one URI in both classes.
+    /// The relationship type of the module `chart_style`; one URI in both classes.
     pub const CHART_STYLE: Self = Self {
         strict: "http://schemas.microsoft.com/office/2011/relationships/chartStyle",
         transitional: "http://schemas.microsoft.com/office/2011/relationships/chartStyle",
     };
-    /// The relationship type of `chart_drawing`.
+    /// The relationship type of the module `chart_drawing`.
     pub const CHART_USER_SHAPES: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/chartUserShapes",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/chartUserShapes",
     };
-    /// The relationship type of `label_info`; one URI in both classes.
+    /// The relationship type of the module `label_info`; one URI in both classes.
     pub const CLASSIFICATIONLABELS: Self = Self {
         strict: "http://schemas.microsoft.com/office/2020/02/relationships/classificationlabels",
         transitional: "http://schemas.microsoft.com/office/2020/02/relationships/classificationlabels",
     };
-    /// The relationship type of `wordprocessing_comments`, `spreadsheet_comments`, and
+    /// The relationship type of the modules `wordprocessing_comments`, `spreadsheet_comments`, and
     /// `presentation_comments`.
     pub const COMMENTS: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/comments",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments",
     };
-    /// The relationship type of `wordprocessing_comments_ex`; one URI in both classes.
+    /// The relationship type of the module `wordprocessing_comments_ex`; one URI in both classes.
     pub const COMMENTS_EXTENDED: Self = Self {
         strict: "http://schemas.microsoft.com/office/2011/relationships/commentsExtended",
         transitional: "http://schemas.microsoft.com/office/2011/relationships/commentsExtended",
     };
-    /// The relationship type of `word_comments_extensible`; one URI in both classes.
+    /// The relationship type of the module `word_comments_extensible`; one URI in both classes.
     pub const COMMENTS_EXTENSIBLE: Self = Self {
         strict: "http://schemas.microsoft.com/office/2018/08/relationships/commentsExtensible",
         transitional: "http://schemas.microsoft.com/office/2018/08/relationships/commentsExtensible",
     };
-    /// The relationship type of `wordprocessing_comments_ids`; one URI in both classes.
+    /// The relationship type of the module `wordprocessing_comments_ids`; one URI in both classes.
     pub const COMMENTS_IDS: Self = Self {
         strict: "http://schemas.microsoft.com/office/2016/09/relationships/commentsIds",
         transitional: "http://schemas.microsoft.com/office/2016/09/relationships/commentsIds",
     };
-    /// The relationship type of `comment_authors`.
+    /// The relationship type of the module `comment_authors`.
     pub const COMMENT_AUTHORS: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/commentAuthors",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/commentAuthors",
     };
-    /// The relationship type of `connections`.
+    /// The relationship type of the module `connections`.
     pub const CONNECTIONS: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/connections",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/connections",
     };
-    /// The relationship type of `embedded_control_persistence`.
+    /// The relationship type of the module `embedded_control_persistence`.
     pub const CONTROL: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/control",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/control",
     };
-    /// The relationship type of `core_file_properties`; one URI in both classes.
+    /// The relationship type of the module `core_file_properties`; one URI in both classes.
     pub const CORE_PROPERTIES: Self = Self {
         strict: "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties",
         transitional: "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties",
     };
-    /// The relationship type of `control_properties`; one URI in both classes.
+    /// The relationship type of the module `control_properties`; one URI in both classes.
     pub const CTRL_PROP: Self = Self {
         strict: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/ctrlProp",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/ctrlProp",
     };
-    /// The relationship type of `custom_data`; one URI in both classes.
+    /// The relationship type of the module `custom_data`; one URI in both classes.
     pub const CUSTOM_DATA: Self = Self {
         strict: "http://schemas.microsoft.com/office/2007/relationships/customData",
         transitional: "http://schemas.microsoft.com/office/2007/relationships/customData",
     };
-    /// The relationship type of `custom_data_properties`; one URI in both classes.
+    /// The relationship type of the module `custom_data_properties`; one URI in both classes.
     pub const CUSTOM_DATA_PROPERTIES: Self = Self {
         strict: "http://schemas.microsoft.com/office/2007/relationships/customDataProps",
         transitional: "http://schemas.microsoft.com/office/2007/relationships/customDataProps",
     };
-    /// The relationship type of `custom_file_properties`.
+    /// The relationship type of the module `custom_file_properties`.
     pub const CUSTOM_PROPERTIES: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/customProperties",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/custom-properties",
     };
-    /// The relationship type of `custom_property`.
+    /// The relationship type of the module `custom_property`.
     pub const CUSTOM_PROPERTY: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/customProperty",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/customProperty",
     };
-    /// The relationship type of `additional_characteristics`, `bibliography`, `content`, and
-    /// `custom_xml_data_storage`.
+    /// The relationship type of the modules `additional_characteristics`, `bibliography`,
+    /// `content`, and `custom_xml_data_storage`.
     pub const CUSTOM_XML: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/customXml",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/customXml",
     };
-    /// The relationship type of `custom_xml_data_storage_properties`.
+    /// The relationship type of the module `custom_xml_data_storage_properties`.
     pub const CUSTOM_XML_PROPERTIES: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/customXmlProps",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/customXmlProps",
     };
-    /// The relationship type of `diagram_colors`.
+    /// The relationship type of the module `diagram_colors`.
     pub const DIAGRAM_COLORS: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/diagramColors",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/diagramColors",
     };
-    /// The relationship type of `diagram_data`.
+    /// The relationship type of the module `diagram_data`.
     pub const DIAGRAM_DATA: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/diagramData",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/diagramData",
     };
-    /// The relationship type of `diagram_persist_layout`; one URI in both classes.
+    /// The relationship type of the module `diagram_persist_layout`; one URI in both classes.
     pub const DIAGRAM_DRAWING: Self = Self {
         strict: "http://schemas.microsoft.com/office/2007/relationships/diagramDrawing",
         transitional: "http://schemas.microsoft.com/office/2007/relationships/diagramDrawing",
     };
-    /// The relationship type of `diagram_layout_definition`.
+    /// The relationship type of the module `diagram_layout_definition`.
     pub const DIAGRAM_LAYOUT: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/diagramLayout",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/diagramLayout",
     };
-    /// The relationship type of `diagram_style`.
+    /// The relationship type of the module `diagram_style`.
     pub const DIAGRAM_QUICK_STYLE: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/diagramQuickStyle",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/diagramQuickStyle",
     };
-    /// The relationship type of `dialogsheet`.
+    /// The relationship type of the module `dialogsheet`.
     pub const DIALOGSHEET: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/dialogsheet",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/dialogsheet",
     };
-    /// The relationship type of `digital_signature_origin`; one URI in both classes.
+    /// The relationship type of the module `digital_signature_origin`; one URI in both classes.
     pub const DIGITAL_SIGNATURE_ORIGIN: Self = Self {
         strict: "http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/origin",
         transitional: "http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/origin",
     };
-    /// The relationship type of `digital_signature_xml_signature`; one URI in both classes.
+    /// The relationship type of the module `digital_signature_xml_signature`; one URI in both
+    /// classes.
     pub const DIGITAL_SIGNATURE_SIGNATURE: Self = Self {
         strict: "http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/signature",
         transitional: "http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/signature",
     };
-    /// The relationship type of `document_tasks`; one URI in both classes.
+    /// The relationship type of the module `document_tasks`; one URI in both classes.
     pub const DOCUMENTTASKS: Self = Self {
         strict: "http://schemas.microsoft.com/office/2019/05/relationships/documenttasks",
         transitional: "http://schemas.microsoft.com/office/2019/05/relationships/documenttasks",
     };
-    /// The relationship type of `drawings`.
+    /// The relationship type of the module `drawings`.
     pub const DRAWING: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/drawing",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/drawing",
     };
-    /// The relationship type of `endnotes`.
+    /// The relationship type of the module `endnotes`.
     pub const ENDNOTES: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/endnotes",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/endnotes",
     };
-    /// The relationship type of `extended_file_properties`.
+    /// The relationship type of the module `extended_file_properties`.
     pub const EXTENDED_PROPERTIES: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/extendedProperties",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties",
     };
-    /// The relationship type of `external_workbook_references`.
+    /// The relationship type of the module `external_workbook_references`.
     pub const EXTERNAL_LINK: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/externalLink",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/externalLink",
@@ -702,27 +708,27 @@ impl RelationshipType {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/externalLinkPath",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/externalLinkPath",
     };
-    /// The relationship type of `feature_property_bags`; one URI in both classes.
+    /// The relationship type of the module `feature_property_bags`; one URI in both classes.
     pub const FEATURE_PROPERTY_BAG: Self = Self {
         strict: "http://schemas.microsoft.com/office/2022/11/relationships/FeaturePropertyBag",
         transitional: "http://schemas.microsoft.com/office/2022/11/relationships/FeaturePropertyBag",
     };
-    /// The relationship type of `font`.
+    /// The relationship type of the module `font`.
     pub const FONT: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/font",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/font",
     };
-    /// The relationship type of `font_table`.
+    /// The relationship type of the module `font_table`.
     pub const FONT_TABLE: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/fontTable",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable",
     };
-    /// The relationship type of `footer`.
+    /// The relationship type of the module `footer`.
     pub const FOOTER: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/footer",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer",
     };
-    /// The relationship type of `footnotes`.
+    /// The relationship type of the module `footnotes`.
     pub const FOOTNOTES: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/footnotes",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/footnotes",
@@ -732,17 +738,17 @@ impl RelationshipType {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/frame",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/frame",
     };
-    /// The relationship type of `glossary_document`.
+    /// The relationship type of the module `glossary_document`.
     pub const GLOSSARY_DOCUMENT: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/glossaryDocument",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/glossaryDocument",
     };
-    /// The relationship type of `handout_master`.
+    /// The relationship type of the module `handout_master`.
     pub const HANDOUT_MASTER: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/handoutMaster",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/handoutMaster",
     };
-    /// The relationship type of `header`.
+    /// The relationship type of the module `header`.
     pub const HEADER: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/header",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/header",
@@ -758,22 +764,22 @@ impl RelationshipType {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/hyperlink",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
     };
-    /// The relationship type of `image`.
+    /// The relationship type of the module `image`.
     pub const IMAGE: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/image",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image",
     };
-    /// The relationship type of `customization`; one URI in both classes.
+    /// The relationship type of the module `customization`; one URI in both classes.
     pub const KEY_MAP_CUSTOMIZATIONS: Self = Self {
         strict: "http://schemas.microsoft.com/office/2006/relationships/keyMapCustomizations",
         transitional: "http://schemas.microsoft.com/office/2006/relationships/keyMapCustomizations",
     };
-    /// The relationship type of `legacy_diagram_text`; one URI in both classes.
+    /// The relationship type of the module `legacy_diagram_text`; one URI in both classes.
     pub const LEGACY_DIAGRAM_TEXT: Self = Self {
         strict: "http://schemas.microsoft.com/office/2006/relationships/legacyDiagramText",
         transitional: "http://schemas.microsoft.com/office/2006/relationships/legacyDiagramText",
     };
-    /// The relationship type of `legacy_diagram_text_info`; one URI in both classes.
+    /// The relationship type of the module `legacy_diagram_text_info`; one URI in both classes.
     pub const LEGACY_DOC_TEXT_INFO: Self = Self {
         strict: "http://schemas.microsoft.com/office/2006/relationships/legacyDocTextInfo",
         transitional: "http://schemas.microsoft.com/office/2006/relationships/legacyDocTextInfo",
@@ -790,197 +796,200 @@ impl RelationshipType {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/mailMergeSource",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/mailMergeSource",
     };
-    /// The relationship type of `model3d_reference_relationship`; one URI in both classes.
+    /// The relationship type of the module `model3d_reference_relationship`; one URI in both
+    /// classes.
     pub const MODEL3D: Self = Self {
         strict: "http://schemas.microsoft.com/office/2017/06/relationships/model3d",
         transitional: "http://schemas.microsoft.com/office/2017/06/relationships/model3d",
     };
-    /// The relationship type of `named_sheet_views`; one URI in both classes.
+    /// The relationship type of the module `named_sheet_views`; one URI in both classes.
     pub const NAMED_SHEET_VIEW: Self = Self {
         strict: "http://schemas.microsoft.com/office/2019/04/relationships/namedSheetView",
         transitional: "http://schemas.microsoft.com/office/2019/04/relationships/namedSheetView",
     };
-    /// The relationship type of `notes_master`.
+    /// The relationship type of the module `notes_master`.
     pub const NOTES_MASTER: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/notesMaster",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/notesMaster",
     };
-    /// The relationship type of `notes_slide`.
+    /// The relationship type of the module `notes_slide`.
     pub const NOTES_SLIDE: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/notesSlide",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/notesSlide",
     };
-    /// The relationship type of `numbering_definitions`.
+    /// The relationship type of the module `numbering_definitions`.
     pub const NUMBERING: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/numbering",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/numbering",
     };
-    /// The relationship type of `main_document`, `workbook`, and `presentation`.
+    /// The relationship type of the modules `main_document`, `workbook`, and `presentation`.
     pub const OFFICE_DOCUMENT: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/officeDocument",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument",
     };
-    /// The relationship type of `embedded_object`.
+    /// The relationship type of the module `embedded_object`.
     pub const OLE_OBJECT: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/oleObject",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/oleObject",
     };
-    /// The relationship type of `embedded_package`.
+    /// The relationship type of the module `embedded_package`.
     pub const PACKAGE: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/package",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/package",
     };
-    /// The relationship type of `wordprocessing_people`; one URI in both classes.
+    /// The relationship type of the module `wordprocessing_people`; one URI in both classes.
     pub const PEOPLE: Self = Self {
         strict: "http://schemas.microsoft.com/office/2011/relationships/people",
         transitional: "http://schemas.microsoft.com/office/2011/relationships/people",
     };
-    /// The relationship type of `workbook_person`; one URI in both classes.
+    /// The relationship type of the module `workbook_person`; one URI in both classes.
     pub const PERSON: Self = Self {
         strict: "http://schemas.microsoft.com/office/2017/10/relationships/person",
         transitional: "http://schemas.microsoft.com/office/2017/10/relationships/person",
     };
-    /// The relationship type of `pivot_table_cache_definition`.
+    /// The relationship type of the module `pivot_table_cache_definition`.
     pub const PIVOT_CACHE_DEFINITION: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/pivotCacheDefinition",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/pivotCacheDefinition",
     };
-    /// The relationship type of `pivot_table_cache_records`.
+    /// The relationship type of the module `pivot_table_cache_records`.
     pub const PIVOT_CACHE_RECORDS: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/pivotCacheRecords",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/pivotCacheRecords",
     };
-    /// The relationship type of `pivot_table`.
+    /// The relationship type of the module `pivot_table`.
     pub const PIVOT_TABLE: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/pivotTable",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/pivotTable",
     };
-    /// The relationship type of `power_point_comment`; one URI in both classes.
+    /// The relationship type of the module `power_point_comment`; one URI in both classes.
     pub const POWER_POINT_COMMENT: Self = Self {
         strict: "http://schemas.microsoft.com/office/2018/10/relationships/comments",
         transitional: "http://schemas.microsoft.com/office/2018/10/relationships/comments",
     };
-    /// The relationship type of `presentation_properties`.
+    /// The relationship type of the module `presentation_properties`.
     pub const PRES_PROPERTIES: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/presProps",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/presProps",
     };
-    /// The relationship type of `printer_settings`.
+    /// The relationship type of the module `printer_settings`.
     pub const PRINTER_SETTINGS: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/printerSettings",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/printerSettings",
     };
-    /// The relationship type of `query_table`.
+    /// The relationship type of the module `query_table`.
     pub const QUERY_TABLE: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/queryTable",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/queryTable",
     };
-    /// The relationship type of `rd_array`; one URI in both classes.
+    /// The relationship type of the module `rd_array`; one URI in both classes.
     pub const RD_ARRAY: Self = Self {
         strict: "http://schemas.microsoft.com/office/2017/06/relationships/rdArray",
         transitional: "http://schemas.microsoft.com/office/2017/06/relationships/rdArray",
     };
-    /// The relationship type of `rd_rich_value`; one URI in both classes.
+    /// The relationship type of the module `rd_rich_value`; one URI in both classes.
     pub const RD_RICH_VALUE: Self = Self {
         strict: "http://schemas.microsoft.com/office/2017/06/relationships/rdRichValue",
         transitional: "http://schemas.microsoft.com/office/2017/06/relationships/rdRichValue",
     };
-    /// The relationship type of `rd_rich_value_structure`; one URI in both classes.
+    /// The relationship type of the module `rd_rich_value_structure`; one URI in both classes.
     pub const RD_RICH_VALUE_STRUCTURE: Self = Self {
         strict: "http://schemas.microsoft.com/office/2017/06/relationships/rdRichValueStructure",
         transitional: "http://schemas.microsoft.com/office/2017/06/relationships/rdRichValueStructure",
     };
-    /// The relationship type of `rd_rich_value_types`; one URI in both classes.
+    /// The relationship type of the module `rd_rich_value_types`; one URI in both classes.
     pub const RD_RICH_VALUE_TYPES: Self = Self {
         strict: "http://schemas.microsoft.com/office/2017/06/relationships/rdRichValueTypes",
         transitional: "http://schemas.microsoft.com/office/2017/06/relationships/rdRichValueTypes",
     };
-    /// The relationship type of `rd_rich_value_web_image`; one URI in both classes.
+    /// The relationship type of the module `rd_rich_value_web_image`; one URI in both classes.
     pub const RD_RICH_VALUE_WEB_IMAGE: Self = Self {
         strict: "http://schemas.microsoft.com/office/2020/07/relationships/rdRichValueWebImage",
         transitional: "http://schemas.microsoft.com/office/2020/07/relationships/rdRichValueWebImage",
     };
-    /// The relationship type of `rd_supporting_property_bag`; one URI in both classes.
+    /// The relationship type of the module `rd_supporting_property_bag`; one URI in both classes.
     pub const RD_SUPPORTING_PROPERTY_BAG: Self = Self {
         strict: "http://schemas.microsoft.com/office/2017/06/relationships/rdSupportingPropertyBag",
         transitional: "http://schemas.microsoft.com/office/2017/06/relationships/rdSupportingPropertyBag",
     };
-    /// The relationship type of `rd_supporting_property_bag_structure`; one URI in both classes.
+    /// The relationship type of the module `rd_supporting_property_bag_structure`; one URI in both
+    /// classes.
     pub const RD_SUPPORTING_PROPERTY_BAG_STRUCTURE: Self = Self {
         strict: "http://schemas.microsoft.com/office/2017/06/relationships/rdSupportingPropertyBagStructure",
         transitional: "http://schemas.microsoft.com/office/2017/06/relationships/rdSupportingPropertyBagStructure",
     };
-    /// The relationship type of `mail_merge_recipient_data`; one URI in both classes.
+    /// The relationship type of the module `mail_merge_recipient_data`; one URI in both classes.
     pub const RECIPIENT_DATA: Self = Self {
         strict: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/recipientData",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/recipientData",
     };
-    /// The relationship type of `shared_workbook_revision_headers`.
+    /// The relationship type of the module `shared_workbook_revision_headers`.
     pub const REVISION_HEADERS: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/revisionHeaders",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/revisionHeaders",
     };
-    /// The relationship type of `shared_workbook_revision_log`.
+    /// The relationship type of the module `shared_workbook_revision_log`.
     pub const REVISION_LOG: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/revisionLog",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/revisionLog",
     };
-    /// The relationship type of `ribbon_and_backstage_customizations`; one URI in both classes.
+    /// The relationship type of the module `ribbon_and_backstage_customizations`; one URI in both
+    /// classes.
     pub const RIBBON_AND_BACKSTAGE_CUSTOMIZATIONS: Self = Self {
         strict: "http://schemas.microsoft.com/office/2007/relationships/ui/extensibility",
         transitional: "http://schemas.microsoft.com/office/2007/relationships/ui/extensibility",
     };
-    /// The relationship type of `ribbon_extensibility`; one URI in both classes.
+    /// The relationship type of the module `ribbon_extensibility`; one URI in both classes.
     pub const RIBBON_EXTENSIBILITY: Self = Self {
         strict: "http://schemas.microsoft.com/office/2006/relationships/ui/extensibility",
         transitional: "http://schemas.microsoft.com/office/2006/relationships/ui/extensibility",
     };
-    /// The relationship type of `rich_styles`; one URI in both classes.
+    /// The relationship type of the module `rich_styles`; one URI in both classes.
     pub const RICH_STYLES: Self = Self {
         strict: "http://schemas.microsoft.com/office/2017/06/relationships/richStyles",
         transitional: "http://schemas.microsoft.com/office/2017/06/relationships/richStyles",
     };
-    /// The relationship type of `document_settings`.
+    /// The relationship type of the module `document_settings`.
     pub const SETTINGS: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/settings",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings",
     };
-    /// The relationship type of `shared_string_table`.
+    /// The relationship type of the module `shared_string_table`.
     pub const SHARED_STRINGS: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/sharedStrings",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings",
     };
-    /// The relationship type of `metadata`.
+    /// The relationship type of the module `metadata`.
     pub const SHEET_METADATA: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/sheetMetadata",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sheetMetadata",
     };
-    /// The relationship type of `slicers`; one URI in both classes.
+    /// The relationship type of the module `slicers`; one URI in both classes.
     pub const SLICER: Self = Self {
         strict: "http://schemas.microsoft.com/office/2007/relationships/slicer",
         transitional: "http://schemas.microsoft.com/office/2007/relationships/slicer",
     };
-    /// The relationship type of `slicer_cache`; one URI in both classes.
+    /// The relationship type of the module `slicer_cache`; one URI in both classes.
     pub const SLICER_CACHE: Self = Self {
         strict: "http://schemas.microsoft.com/office/2007/relationships/slicerCache",
         transitional: "http://schemas.microsoft.com/office/2007/relationships/slicerCache",
     };
-    /// The relationship type of `slide`.
+    /// The relationship type of the module `slide`.
     pub const SLIDE: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/slide",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide",
     };
-    /// The relationship type of `slide_layout`.
+    /// The relationship type of the module `slide_layout`.
     pub const SLIDE_LAYOUT: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/slideLayout",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout",
     };
-    /// The relationship type of `slide_master`.
+    /// The relationship type of the module `slide_master`.
     pub const SLIDE_MASTER: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/slideMaster",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster",
     };
-    /// The relationship type of `slide_synchronization_data`.
+    /// The relationship type of the module `slide_synchronization_data`.
     pub const SLIDE_UPDATE_INFO: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/slideUpdateInfo",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideUpdateInfo",
@@ -991,12 +1000,12 @@ impl RelationshipType {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/slideUpdateUrl",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideUpdateUrl",
     };
-    /// The relationship type of `style_definitions` and `styles`.
+    /// The relationship type of the modules `style_definitions` and `styles`.
     pub const STYLES: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/styles",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles",
     };
-    /// The relationship type of `styles_with_effects`; one URI in both classes.
+    /// The relationship type of the module `styles_with_effects`; one URI in both classes.
     pub const STYLES_WITH_EFFECTS: Self = Self {
         strict: "http://schemas.microsoft.com/office/2007/relationships/stylesWithEffects",
         transitional: "http://schemas.microsoft.com/office/2007/relationships/stylesWithEffects",
@@ -1007,52 +1016,52 @@ impl RelationshipType {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/subDocument",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/subDocument",
     };
-    /// The relationship type of `table_definition`.
+    /// The relationship type of the module `table_definition`.
     pub const TABLE: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/table",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/table",
     };
-    /// The relationship type of `single_cell_table_definitions`.
+    /// The relationship type of the module `single_cell_table_definitions`.
     pub const TABLE_SINGLE_CELLS: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/tableSingleCells",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/tableSingleCells",
     };
-    /// The relationship type of `table_styles`.
+    /// The relationship type of the module `table_styles`.
     pub const TABLE_STYLES: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/tableStyles",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/tableStyles",
     };
-    /// The relationship type of `user_defined_tags`.
+    /// The relationship type of the module `user_defined_tags`.
     pub const TAGS: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/tags",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/tags",
     };
-    /// The relationship type of `theme`.
+    /// The relationship type of the module `theme`.
     pub const THEME: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/theme",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme",
     };
-    /// The relationship type of `theme_override`.
+    /// The relationship type of the module `theme_override`.
     pub const THEME_OVERRIDE: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/themeOverride",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/themeOverride",
     };
-    /// The relationship type of `worksheet_threaded_comments`; one URI in both classes.
+    /// The relationship type of the module `worksheet_threaded_comments`; one URI in both classes.
     pub const THREADED_COMMENT: Self = Self {
         strict: "http://schemas.microsoft.com/office/2017/10/relationships/threadedComment",
         transitional: "http://schemas.microsoft.com/office/2017/10/relationships/threadedComment",
     };
-    /// The relationship type of `thumbnail`.
+    /// The relationship type of the module `thumbnail`.
     pub const THUMBNAIL: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/metadata/thumbnail",
         transitional: "http://schemas.openxmlformats.org/package/2006/relationships/metadata/thumbnail",
     };
-    /// The relationship type of `time_line`; one URI in both classes.
+    /// The relationship type of the module `time_line`; one URI in both classes.
     pub const TIMELINE: Self = Self {
         strict: "http://schemas.microsoft.com/office/2011/relationships/timeline",
         transitional: "http://schemas.microsoft.com/office/2011/relationships/timeline",
     };
-    /// The relationship type of `time_line_cache`; one URI in both classes.
+    /// The relationship type of the module `time_line_cache`; one URI in both classes.
     pub const TIMELINE_CACHE: Self = Self {
         strict: "http://schemas.microsoft.com/office/2011/relationships/timelineCache",
         transitional: "http://schemas.microsoft.com/office/2011/relationships/timelineCache",
@@ -1062,82 +1071,83 @@ impl RelationshipType {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/transform",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/transform",
     };
-    /// The relationship type of `quick_access_toolbar_customizations`; one URI in both classes.
+    /// The relationship type of the module `quick_access_toolbar_customizations`; one URI in both
+    /// classes.
     pub const UI_USER_CUSTOMIZATION: Self = Self {
         strict: "http://schemas.microsoft.com/office/2006/relationships/ui/userCustomization",
         transitional: "http://schemas.microsoft.com/office/2006/relationships/ui/userCustomization",
     };
-    /// The relationship type of `shared_workbook_user_data`.
+    /// The relationship type of the module `shared_workbook_user_data`.
     pub const USERNAMES: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/usernames",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/usernames",
     };
-    /// The relationship type of `vba_project`; one URI in both classes.
+    /// The relationship type of the module `vba_project`; one URI in both classes.
     pub const VBA_PROJECT: Self = Self {
         strict: "http://schemas.microsoft.com/office/2006/relationships/vbaProject",
         transitional: "http://schemas.microsoft.com/office/2006/relationships/vbaProject",
     };
-    /// The relationship type of `video`.
+    /// The relationship type of the module `video`.
     pub const VIDEO: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/video",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/video",
     };
-    /// The relationship type of `view_properties`.
+    /// The relationship type of the module `view_properties`.
     pub const VIEW_PROPERTIES: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/viewProps",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/viewProps",
     };
-    /// The relationship type of `vml_drawing`; one URI in both classes.
+    /// The relationship type of the module `vml_drawing`; one URI in both classes.
     pub const VML_DRAWING: Self = Self {
         strict: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/vmlDrawing",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/vmlDrawing",
     };
-    /// The relationship type of `volatile_dependencies`.
+    /// The relationship type of the module `volatile_dependencies`.
     pub const VOLATILE_DEPENDENCIES: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/volatileDependencies",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/volatileDependencies",
     };
-    /// The relationship type of `web_extension`; one URI in both classes.
+    /// The relationship type of the module `web_extension`; one URI in both classes.
     pub const WEBEXTENSION: Self = Self {
         strict: "http://schemas.microsoft.com/office/2011/relationships/webextension",
         transitional: "http://schemas.microsoft.com/office/2011/relationships/webextension",
     };
-    /// The relationship type of `web_ex_taskpanes`; one URI in both classes.
+    /// The relationship type of the module `web_ex_taskpanes`; one URI in both classes.
     pub const WEBEXTENSIONTASKPANES: Self = Self {
         strict: "http://schemas.microsoft.com/office/2011/relationships/webextensiontaskpanes",
         transitional: "http://schemas.microsoft.com/office/2011/relationships/webextensiontaskpanes",
     };
-    /// The relationship type of `web_settings`.
+    /// The relationship type of the module `web_settings`.
     pub const WEB_SETTINGS: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/webSettings",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/webSettings",
     };
-    /// The relationship type of `vba_data`; one URI in both classes.
+    /// The relationship type of the module `vba_data`; one URI in both classes.
     pub const WORD_VBA_DATA: Self = Self {
         strict: "http://schemas.microsoft.com/office/2006/relationships/wordVbaData",
         transitional: "http://schemas.microsoft.com/office/2006/relationships/wordVbaData",
     };
-    /// The relationship type of `worksheet`.
+    /// The relationship type of the module `worksheet`.
     pub const WORKSHEET: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/worksheet",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet",
     };
-    /// The relationship type of `worksheet_sort_map`; one URI in both classes.
+    /// The relationship type of the module `worksheet_sort_map`; one URI in both classes.
     pub const WS_SORT_MAP: Self = Self {
         strict: "http://schemas.microsoft.com/office/2006/relationships/wsSortMap",
         transitional: "http://schemas.microsoft.com/office/2006/relationships/wsSortMap",
     };
-    /// The relationship type of `international_macro_sheet`; one URI in both classes.
+    /// The relationship type of the module `international_macro_sheet`; one URI in both classes.
     pub const XL_INTL_MACROSHEET: Self = Self {
         strict: "http://schemas.microsoft.com/office/2006/relationships/xlIntlMacrosheet",
         transitional: "http://schemas.microsoft.com/office/2006/relationships/xlIntlMacrosheet",
     };
-    /// The relationship type of `macro_sheet`; one URI in both classes.
+    /// The relationship type of the module `macro_sheet`; one URI in both classes.
     pub const XL_MACROSHEET: Self = Self {
         strict: "http://schemas.microsoft.com/office/2006/relationships/xlMacrosheet",
         transitional: "http://schemas.microsoft.com/office/2006/relationships/xlMacrosheet",
     };
-    /// The relationship type of `custom_xml_mappings`.
+    /// The relationship type of the module `custom_xml_mappings`.
     pub const XML_MAPS: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/xmlMaps",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/xmlMaps",

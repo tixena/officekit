@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `xlrd2` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2`, which files write with the prefix `xlrd2`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -587,7 +589,8 @@ pub static RICH_FILTER_COLUMN_CONTENT_TAGS: officekit_markup_base::Accept =
         ],
     };
 
-/// The tag `xlrd2:a`, schema type `CT_Array` of SDK 3.5.1's data.
+/// The `xlrd2:a` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Array`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -596,13 +599,18 @@ pub static RICH_FILTER_COLUMN_CONTENT_TAGS: officekit_markup_base::Accept =
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AArray {
+    /// The attribute `c`, when the element has it.
     pub c: Option<String>,
+    /// The attribute `r`, when the element has it.
     pub r: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The children that are `VArrayValue`, in order.
     pub v_array_value: Vec<VArrayValue>,
 }
 
-/// The tag `xlrd2:a`, schema type `CT_SupportingPropertyBagArray` of SDK 3.5.1's data.
+/// The `xlrd2:a` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SupportingPropertyBagArray`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -611,12 +619,16 @@ pub struct AArray {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ASupportingPropertyBagArray {
+    /// The attribute `count`, when the element has it.
     pub count: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The children that are `VSupportingPropertyBagArrayValue`, in order.
     pub v_supporting_property_bag_array_value: Vec<VSupportingPropertyBagArrayValue>,
 }
 
-/// The tag `xlrd2:arrayData`, schema type `CT_ArrayData` of SDK 3.5.1's data.
+/// The `xlrd2:arrayData` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_ArrayData`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -625,13 +637,20 @@ pub struct ASupportingPropertyBagArray {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArrayData {
+    /// The children that are `AArray`, in order.
     pub a_array: Vec<AArray>,
+    /// The attribute `count`, when the element has it.
     pub count: Option<String>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_ArrayValueType`: the text the file carried.
+/// The simple type `ST_ArrayValueType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -640,16 +659,24 @@ pub struct ArrayData {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArrayValueType(pub String);
-/// The members of `ST_ArrayValueType`, in alphabetical order.
+/// The members of the enumeration `ST_ArrayValueType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ArrayValueTypeMember {
+    /// The member written `a`.
     A,
+    /// The member written `b`.
     B,
+    /// The member written `d`.
     D,
+    /// The member written `e`.
     E,
+    /// The member written `i`.
     I,
+    /// The member written `r`.
     R,
+    /// The member written `s`.
     S,
 }
 
@@ -662,10 +689,14 @@ pub enum ArrayValueTypeMember {
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_spreadsheetml_2017_richdata2` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `AArray`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn a_array(&mut self, _node: &AArray) -> Option<AArray> {
         None
     }
 
+    /// Asked for each `ASupportingPropertyBagArray`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn a_supporting_property_bag_array(
         &mut self,
         _node: &ASupportingPropertyBagArray,
@@ -673,18 +704,26 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ArrayData`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn array_data(&mut self, _node: &ArrayData) -> Option<ArrayData> {
         None
     }
 
+    /// Asked for each `CustomFilter`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn custom_filter(&mut self, _node: &CustomFilter) -> Option<CustomFilter> {
         None
     }
 
+    /// Asked for each `CustomFilters`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn custom_filters(&mut self, _node: &CustomFilters) -> Option<CustomFilters> {
         None
     }
 
+    /// Asked for each `CustomRichFiltersContent`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn custom_rich_filters(
         &mut self,
         _node: &CustomRichFiltersContent,
@@ -692,6 +731,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `CustomRichFiltersContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn custom_rich_filters_items(
         &mut self,
         _node: &CustomRichFiltersContent,
@@ -699,62 +740,92 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `DateGroupItem`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn date_group_item(&mut self, _node: &DateGroupItem) -> Option<DateGroupItem> {
         None
     }
 
+    /// Asked for each `Dxfs`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn dxfs(&mut self, _node: &Dxfs) -> Option<Dxfs> {
         None
     }
 
+    /// Asked for each `DynamicFilter`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn dynamic_filter(&mut self, _node: &DynamicFilter) -> Option<DynamicFilter> {
         None
     }
 
+    /// Asked for each `ExtLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
         None
     }
 
+    /// Asked for each `Filter`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn filter(&mut self, _node: &Filter) -> Option<Filter> {
         None
     }
 
+    /// Asked for each `FilterColumn`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn filter_column(&mut self, _node: &FilterColumn) -> Option<FilterColumn> {
         None
     }
 
+    /// Asked for each `Filters`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn filters(&mut self, _node: &Filters) -> Option<Filters> {
         None
     }
 
+    /// Asked for each `Flag`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn flag(&mut self, _node: &Flag) -> Option<Flag> {
         None
     }
 
+    /// Asked for each `Global`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn global(&mut self, _node: &Global) -> Option<Global> {
         None
     }
 
+    /// Asked for each `K`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn k(&mut self, _node: &K) -> Option<K> {
         None
     }
 
+    /// Asked for each `Key`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn key(&mut self, _node: &Key) -> Option<Key> {
         None
     }
 
+    /// Asked for each `KeyFlags`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn key_flags(&mut self, _node: &KeyFlags) -> Option<KeyFlags> {
         None
     }
 
+    /// Asked for each `RPr`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn r_pr(&mut self, _node: &RPr) -> Option<RPr> {
         None
     }
 
+    /// Asked for each `RSty`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn r_sty(&mut self, _node: &RSty) -> Option<RSty> {
         None
     }
 
+    /// Asked for each `RichFilterColumnContent`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn rich_filter_column(
         &mut self,
         _node: &RichFilterColumnContent,
@@ -762,50 +833,74 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `RichProperties`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn rich_properties(&mut self, _node: &RichProperties) -> Option<RichProperties> {
         None
     }
 
+    /// Asked for each `RichSortCondition`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn rich_sort_condition(&mut self, _node: &RichSortCondition) -> Option<RichSortCondition> {
         None
     }
 
+    /// Asked for each `RichStyleSheet`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn rich_style_sheet(&mut self, _node: &RichStyleSheet) -> Option<RichStyleSheet> {
         None
     }
 
+    /// Asked for each `RichStyles`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn rich_styles(&mut self, _node: &RichStyles) -> Option<RichStyles> {
         None
     }
 
+    /// Asked for each `Rpv`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn rpv(&mut self, _node: &Rpv) -> Option<Rpv> {
         None
     }
 
+    /// Asked for each `RvTypesInfo`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn rv_types_info(&mut self, _node: &RvTypesInfo) -> Option<RvTypesInfo> {
         None
     }
 
+    /// Asked for each `S`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn s(&mut self, _node: &S) -> Option<S> {
         None
     }
 
+    /// Asked for each `Spb`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn spb(&mut self, _node: &Spb) -> Option<Spb> {
         None
     }
 
+    /// Asked for each `SpbArrays`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn spb_arrays(&mut self, _node: &SpbArrays) -> Option<SpbArrays> {
         None
     }
 
+    /// Asked for each `SpbData`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn spb_data(&mut self, _node: &SpbData) -> Option<SpbData> {
         None
     }
 
+    /// Asked for each `SpbStructures`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn spb_structures(&mut self, _node: &SpbStructures) -> Option<SpbStructures> {
         None
     }
 
+    /// Asked for each `SupportingPropertyBags`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn supporting_property_bags(
         &mut self,
         _node: &SupportingPropertyBags,
@@ -813,22 +908,32 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Top10`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn top10(&mut self, _node: &Top10) -> Option<Top10> {
         None
     }
 
+    /// Asked for each `Type`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn r#type(&mut self, _node: &Type) -> Option<Type> {
         None
     }
 
+    /// Asked for each `Types`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn types(&mut self, _node: &Types) -> Option<Types> {
         None
     }
 
+    /// Asked for each `VArrayValue`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn v_array_value(&mut self, _node: &VArrayValue) -> Option<VArrayValue> {
         None
     }
 
+    /// Asked for each `VSupportingPropertyBagArrayValue`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn v_supporting_property_bag_array_value(
         &mut self,
         _node: &VSupportingPropertyBagArrayValue,
@@ -836,6 +941,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `VSupportingPropertyBagValue`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn v_supporting_property_bag_value(
         &mut self,
         _node: &VSupportingPropertyBagValue,
@@ -843,16 +950,22 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked when a `AArray` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_a_array(&mut self, _node: &AArray, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ASupportingPropertyBagArray` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_a_supporting_property_bag_array(
         &mut self,
         _node: &ASupportingPropertyBagArray,
@@ -861,9 +974,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ArrayData` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_array_data(
         &mut self,
         _node: &ArrayData,
@@ -872,9 +988,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CustomFilter` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_custom_filter(
         &mut self,
         _node: &CustomFilter,
@@ -883,9 +1002,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CustomFilters` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_custom_filters(
         &mut self,
         _node: &CustomFilters,
@@ -894,9 +1016,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CustomRichFiltersContent` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_custom_rich_filters(
         &mut self,
         _node: &CustomRichFiltersContent,
@@ -905,9 +1030,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CustomRichFiltersContent` in a list is written through. `Written::Yes` means
+    /// the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_custom_rich_filters_items(
         &mut self,
         _node: &CustomRichFiltersContent,
@@ -916,9 +1044,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DateGroupItem` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_date_group_item(
         &mut self,
         _node: &DateGroupItem,
@@ -927,16 +1058,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Dxfs` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_dxfs(&mut self, _node: &Dxfs, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `DynamicFilter` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_dynamic_filter(
         &mut self,
         _node: &DynamicFilter,
@@ -945,23 +1082,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Filter` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_filter(&mut self, _node: &Filter, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `FilterColumn` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_filter_column(
         &mut self,
         _node: &FilterColumn,
@@ -970,44 +1116,62 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Filters` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_filters(&mut self, _node: &Filters, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Flag` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_flag(&mut self, _node: &Flag, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Global` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_global(&mut self, _node: &Global, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `K` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_k(&mut self, _node: &K, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Key` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_key(&mut self, _node: &Key, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `KeyFlags` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_key_flags(
         &mut self,
         _node: &KeyFlags,
@@ -1016,23 +1180,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_r_pr(&mut self, _node: &RPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `RSty` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_r_sty(&mut self, _node: &RSty, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `RichFilterColumnContent` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_rich_filter_column(
         &mut self,
         _node: &RichFilterColumnContent,
@@ -1041,9 +1214,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RichProperties` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_rich_properties(
         &mut self,
         _node: &RichProperties,
@@ -1052,9 +1228,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RichSortCondition` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_rich_sort_condition(
         &mut self,
         _node: &RichSortCondition,
@@ -1063,9 +1242,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RichStyleSheet` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_rich_style_sheet(
         &mut self,
         _node: &RichStyleSheet,
@@ -1074,9 +1256,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RichStyles` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_rich_styles(
         &mut self,
         _node: &RichStyles,
@@ -1085,16 +1270,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Rpv` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_rpv(&mut self, _node: &Rpv, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `RvTypesInfo` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_rv_types_info(
         &mut self,
         _node: &RvTypesInfo,
@@ -1103,23 +1294,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `S` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_s(&mut self, _node: &S, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Spb` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_spb(&mut self, _node: &Spb, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `SpbArrays` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_spb_arrays(
         &mut self,
         _node: &SpbArrays,
@@ -1128,9 +1328,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SpbData` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_spb_data(
         &mut self,
         _node: &SpbData,
@@ -1139,9 +1342,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SpbStructures` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_spb_structures(
         &mut self,
         _node: &SpbStructures,
@@ -1150,9 +1356,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SupportingPropertyBags` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_supporting_property_bags(
         &mut self,
         _node: &SupportingPropertyBags,
@@ -1161,30 +1370,42 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Top10` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_top10(&mut self, _node: &Top10, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Type` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_type(&mut self, _node: &Type, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Types` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_types(&mut self, _node: &Types, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `VArrayValue` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_v_array_value(
         &mut self,
         _node: &VArrayValue,
@@ -1193,9 +1414,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `VSupportingPropertyBagArrayValue` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_v_supporting_property_bag_array_value(
         &mut self,
         _node: &VSupportingPropertyBagArrayValue,
@@ -1204,9 +1428,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `VSupportingPropertyBagValue` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_v_supporting_property_bag_value(
         &mut self,
         _node: &VSupportingPropertyBagValue,
@@ -1216,7 +1443,8 @@ pub trait Context: crate::Context {
     }
 }
 
-/// The tag `xlrd2:customFilter`, schema type `CT_CustomRichFilter` of SDK 3.5.1's data.
+/// The `xlrd2:customFilter` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_CustomRichFilter`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1225,13 +1453,18 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CustomFilter {
+    /// The attribute `key`, when the element has it.
     pub key: Option<String>,
+    /// The attribute `operator`, when the element has it.
     pub operator: Option<spreadsheet::FilterOperator>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `xlrd2:customFilters`, schema type `CT_CustomRichFilters` of SDK 3.5.1's data.
+/// The `xlrd2:customFilters` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_CustomRichFilters`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1240,21 +1473,32 @@ pub struct CustomFilter {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CustomFilters {
+    /// The attribute `and`, when the element has it.
     pub and: Option<String>,
+    /// The children that are an item of `CustomRichFiltersContent`, in order.
     pub content: Vec<CustomRichFiltersContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_CustomRichFilters`: choice in `CT_CustomRichFilters`.
+/// One child element of a choice: choice in `CT_CustomRichFilters`.
+///
+/// The schema types that hold it: `CT_CustomRichFilters`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum CustomRichFiltersContent {
+    /// The element `xlrd2:customFilter`, a `CustomFilter`.
     CustomFilter(CustomFilter),
+    /// The element `xlrd2:extLst`, a `ExtLst`.
     ExtLst(ExtLst),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
 }
 
-/// The tag `xlrd2:dateGroupItem`, schema type `CT_RichDateGroupItem` of SDK 3.5.1's data.
+/// The `xlrd2:dateGroupItem` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_RichDateGroupItem`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1263,18 +1507,28 @@ pub enum CustomRichFiltersContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DateGroupItem {
+    /// The attribute `dateTimeGrouping`, when the element has it.
     pub date_time_grouping: Option<spreadsheet::DateTimeGrouping>,
+    /// The attribute `day`, when the element has it.
     pub day: Option<String>,
+    /// The attribute `hour`, when the element has it.
     pub hour: Option<String>,
+    /// The attribute `key`, when the element has it.
     pub key: Option<String>,
+    /// The attribute `minute`, when the element has it.
     pub minute: Option<String>,
+    /// The attribute `month`, when the element has it.
     pub month: Option<String>,
+    /// The attribute `second`, when the element has it.
     pub second: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `year`, when the element has it.
     pub year: Option<String>,
 }
 
-/// The tag `xlrd2:dxfs`, schema type `CT_Dxfs` of SDK 3.5.1's data.
+/// The `xlrd2:dxfs` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Dxfs`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1283,12 +1537,16 @@ pub struct DateGroupItem {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Dxfs {
+    /// The attribute `count`, when the element has it.
     pub count: Option<String>,
+    /// The children that are `spreadsheet::Formatting`, in order.
     pub formatting: Vec<spreadsheet::Formatting>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrd2:dynamicFilter`, schema type `CT_DynamicRichFilter` of SDK 3.5.1's data.
+/// The `xlrd2:dynamicFilter` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_DynamicRichFilter`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1297,16 +1555,24 @@ pub struct Dxfs {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DynamicFilter {
+    /// The attribute `key`, when the element has it.
     pub key: Option<String>,
+    /// The attribute `maxVal`, when the element has it.
     pub max_val: Option<String>,
+    /// The attribute `maxValIso`, when the element has it.
     pub max_val_iso: Option<String>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<spreadsheet::StDynamicFilterType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
+    /// The attribute `valIso`, when the element has it.
     pub val_iso: Option<String>,
 }
 
-/// The tag `xlrd2:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
+/// The `xlrd2:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1315,11 +1581,14 @@ pub struct DynamicFilter {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
+    /// The children that are `spreadsheet::Extension`, in order.
     pub extension: Vec<spreadsheet::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrd2:filter`, schema type `CT_RichFilter` of SDK 3.5.1's data.
+/// The `xlrd2:filter` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RichFilter`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1328,14 +1597,20 @@ pub struct ExtLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Filter {
+    /// The attribute `blank`, when the element has it.
     pub blank: Option<String>,
+    /// The attribute `key`, when the element has it.
     pub key: Option<String>,
+    /// The attribute `nodata`, when the element has it.
     pub nodata: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `xlrd2:filterColumn`, schema type `CT_RichFilterColumn` of SDK 3.5.1's data.
+/// The `xlrd2:filterColumn` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_RichFilterColumn`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1344,11 +1619,14 @@ pub struct Filter {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FilterColumn {
+    /// The child that is an item of `RichFilterColumnContent`, when there is one.
     pub content: Option<Box<RichFilterColumnContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrd2:filters`, schema type `CT_RichFilters` of SDK 3.5.1's data.
+/// The `xlrd2:filters` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RichFilters`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1357,13 +1635,18 @@ pub struct FilterColumn {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Filters {
+    /// The children that are `DateGroupItem`, in order.
     pub date_group_item: Vec<DateGroupItem>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The children that are `Filter`, in order.
     pub filter: Vec<Filter>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrd2:flag`, schema type `CT_RichValueTypeReservedKeyFlag` of SDK 3.5.1's data.
+/// The `xlrd2:flag` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RichValueTypeReservedKeyFlag`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1372,12 +1655,16 @@ pub struct Filters {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Flag {
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `value`, when the element has it.
     pub value: Option<String>,
 }
 
-/// The tag `xlrd2:global`, schema type `CT_RichValueGlobalType` of SDK 3.5.1's data.
+/// The `xlrd2:global` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RichValueGlobalType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1386,12 +1673,16 @@ pub struct Flag {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Global {
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `KeyFlags`, when there is one.
     pub key_flags: Option<Box<KeyFlags>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrd2:k`, schema type `CT_SupportingPropertyBagKey` of SDK 3.5.1's data.
+/// The `xlrd2:k` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SupportingPropertyBagKey`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1400,12 +1691,16 @@ pub struct Global {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct K {
+    /// The attribute `n`, when the element has it.
     pub n: Option<String>,
+    /// The attribute `t`, when the element has it.
     pub t: Option<SupportingPropertyBagValueType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrd2:key`, schema type `CT_RichValueTypeReservedKey` of SDK 3.5.1's data.
+/// The `xlrd2:key` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RichValueTypeReservedKey`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1414,12 +1709,16 @@ pub struct K {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Key {
+    /// The children that are `Flag`, in order.
     pub flag: Vec<Flag>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrd2:keyFlags`, schema type `CT_RichValueTypeKeyFlags` of SDK 3.5.1's data.
+/// The `xlrd2:keyFlags` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_RichValueTypeKeyFlags`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1428,11 +1727,14 @@ pub struct Key {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct KeyFlags {
+    /// The children that are `Key`, in order.
     pub key: Vec<Key>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrd2:rPr`, schema type `CT_RichFormatProperty` of SDK 3.5.1's data.
+/// The `xlrd2:rPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RichFormatProperty`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1441,12 +1743,16 @@ pub struct KeyFlags {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RPr {
+    /// The attribute `n`, when the element has it.
     pub n: Option<String>,
+    /// The attribute `t`, when the element has it.
     pub t: Option<RichFormatPropertyType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrd2:rSty`, schema type `CT_RichStyle` of SDK 3.5.1's data.
+/// The `xlrd2:rSty` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RichStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1455,24 +1761,40 @@ pub struct RPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RSty {
+    /// The attribute `dxfid`, when the element has it.
     pub dxfid: Option<String>,
+    /// The children that are `Rpv`, in order.
     pub rpv: Vec<Rpv>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_RichFilterColumn`: choice in `CT_RichFilterColumn`.
+/// One child element of a choice: choice in `CT_RichFilterColumn`.
+///
+/// The schema types that hold it: `CT_RichFilterColumn`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum RichFilterColumnContent {
+    /// The element `xlrd2:customFilters`, a `CustomFilters`.
     CustomFilters(CustomFilters),
+    /// The element `xlrd2:dynamicFilter`, a `DynamicFilter`.
     DynamicFilter(DynamicFilter),
+    /// The element `xlrd2:extLst`, a `ExtLst`.
     ExtLst(ExtLst),
+    /// The element `xlrd2:filters`, a `Filters`.
     Filters(Filters),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `xlrd2:top10`, a `Top10`.
     Top10(Top10),
 }
 
-/// `ST_RichFormatPropertyType`: the text the file carried.
+/// The simple type `ST_RichFormatPropertyType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1481,17 +1803,23 @@ pub enum RichFilterColumnContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RichFormatPropertyType(pub String);
-/// The members of `ST_RichFormatPropertyType`, in alphabetical order.
+/// The members of the enumeration `ST_RichFormatPropertyType`, in alphabetical order. `as_str`
+/// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum RichFormatPropertyTypeMember {
+    /// The member written `b`.
     B,
+    /// The member written `i`.
     I,
+    /// The member written `n`.
     N,
+    /// The member written `s`.
     S,
 }
 
-/// The tag `xlrd2:richProperties`, schema type `CT_RichFormatProperties` of SDK 3.5.1's data.
+/// The `xlrd2:richProperties` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_RichFormatProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1500,11 +1828,14 @@ pub enum RichFormatPropertyTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RichProperties {
+    /// The children that are `RPr`, in order.
     pub r_pr: Vec<RPr>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrd2:richSortCondition`, schema type `CT_RichSortCondition` of SDK 3.5.1's data.
+/// The `xlrd2:richSortCondition` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_RichSortCondition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1513,18 +1844,28 @@ pub struct RichProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RichSortCondition {
+    /// The attribute `customList`, when the element has it.
     pub custom_list: Option<String>,
+    /// The attribute `descending`, when the element has it.
     pub descending: Option<String>,
+    /// The attribute `dxfId`, when the element has it.
     pub dxf_id: Option<String>,
+    /// The attribute `iconId`, when the element has it.
     pub icon_id: Option<String>,
+    /// The attribute `iconSet`, when the element has it.
     pub icon_set: Option<office_spreadsheetml_2009_9_main::IconSetType>,
+    /// The attribute `ref`, when the element has it.
     pub r#ref: Option<String>,
+    /// The attribute `richSortKey`, when the element has it.
     pub rich_sort_key: Option<String>,
+    /// The attribute `sortBy`, when the element has it.
     pub sort_by: Option<spreadsheet::SortBy>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrd2:richStyleSheet`, schema type `CT_RichStylesheet` of SDK 3.5.1's data.
+/// The `xlrd2:richStyleSheet` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_RichStylesheet`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1533,14 +1874,20 @@ pub struct RichSortCondition {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RichStyleSheet {
+    /// The child that is `Dxfs`, when there is one.
     pub dxfs: Option<Box<Dxfs>>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `RichProperties`, when there is one.
     pub rich_properties: Option<Box<RichProperties>>,
+    /// The child that is `RichStyles`, when there is one.
     pub rich_styles: Option<Box<RichStyles>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrd2:richStyles`, schema type `CT_RichStyles` of SDK 3.5.1's data.
+/// The `xlrd2:richStyles` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_RichStyles`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1549,11 +1896,14 @@ pub struct RichStyleSheet {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RichStyles {
+    /// The children that are `RSty`, in order.
     pub r_sty: Vec<RSty>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrd2:rpv`, schema type `CT_RichStylePropertyValue` of SDK 3.5.1's data.
+/// The `xlrd2:rpv` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RichStylePropertyValue`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1562,12 +1912,16 @@ pub struct RichStyles {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Rpv {
+    /// The attribute `i`, when the element has it.
     pub i: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `xlrd2:rvTypesInfo`, schema type `CT_RichValueTypesInfo` of SDK 3.5.1's data.
+/// The `xlrd2:rvTypesInfo` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_RichValueTypesInfo`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1576,13 +1930,18 @@ pub struct Rpv {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RvTypesInfo {
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `Global`, when there is one.
     pub global: Option<Box<Global>>,
+    /// The child that is `Types`, when there is one.
     pub types: Option<Box<Types>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrd2:s`, schema type `CT_SupportingPropertyBagStructure` of SDK 3.5.1's data.
+/// The `xlrd2:s` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SupportingPropertyBagStructure`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1591,11 +1950,14 @@ pub struct RvTypesInfo {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct S {
+    /// The children that are `K`, in order.
     pub k: Vec<K>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrd2:spb`, schema type `CT_SupportingPropertyBag` of SDK 3.5.1's data.
+/// The `xlrd2:spb` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SupportingPropertyBag`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1604,12 +1966,16 @@ pub struct S {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Spb {
+    /// The attribute `s`, when the element has it.
     pub s: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The children that are `VSupportingPropertyBagValue`, in order.
     pub v_supporting_property_bag_value: Vec<VSupportingPropertyBagValue>,
 }
 
-/// The tag `xlrd2:spbArrays`, schema type `CT_SupportingPropertyBagArrayData` of SDK 3.5.1's data.
+/// The `xlrd2:spbArrays` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_SupportingPropertyBagArrayData`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1618,13 +1984,18 @@ pub struct Spb {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SpbArrays {
+    /// The children that are `ASupportingPropertyBagArray`, in order.
     pub a_supporting_property_bag_array: Vec<ASupportingPropertyBagArray>,
+    /// The attribute `count`, when the element has it.
     pub count: Option<String>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrd2:spbData`, schema type `CT_SupportingPropertyBagData` of SDK 3.5.1's data.
+/// The `xlrd2:spbData` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SupportingPropertyBagData`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1633,14 +2004,18 @@ pub struct SpbArrays {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SpbData {
+    /// The attribute `count`, when the element has it.
     pub count: Option<String>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The children that are `Spb`, in order.
     pub spb: Vec<Spb>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrd2:spbStructures`, schema type `CT_SupportingPropertyBagStructures` of SDK 3.5.1's
-/// data.
+/// The `xlrd2:spbStructures` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_SupportingPropertyBagStructures`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1649,13 +2024,20 @@ pub struct SpbData {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SpbStructures {
+    /// The attribute `count`, when the element has it.
     pub count: Option<String>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The children that are `S`, in order.
     pub s: Vec<S>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_SupportingPropertyBagArrayValueType`: the text the file carried.
+/// The simple type `ST_SupportingPropertyBagArrayValueType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1664,18 +2046,27 @@ pub struct SpbStructures {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SupportingPropertyBagArrayValueType(pub String);
-/// The members of `ST_SupportingPropertyBagArrayValueType`, in alphabetical order.
+/// The members of the enumeration `ST_SupportingPropertyBagArrayValueType`, in alphabetical order.
+/// `as_str` gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum SupportingPropertyBagArrayValueTypeMember {
+    /// The member written `b`.
     B,
+    /// The member written `d`.
     D,
+    /// The member written `i`.
     I,
+    /// The member written `s`.
     S,
+    /// The member written `spb`.
     Spb,
 }
 
-/// `ST_SupportingPropertyBagValueType`: the text the file carried.
+/// The simple type `ST_SupportingPropertyBagValueType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1684,20 +2075,27 @@ pub enum SupportingPropertyBagArrayValueTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SupportingPropertyBagValueType(pub String);
-/// The members of `ST_SupportingPropertyBagValueType`, in alphabetical order.
+/// The members of the enumeration `ST_SupportingPropertyBagValueType`, in alphabetical order.
+/// `as_str` gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum SupportingPropertyBagValueTypeMember {
+    /// The member written `b`.
     B,
+    /// The member written `d`.
     D,
+    /// The member written `i`.
     I,
+    /// The member written `s`.
     S,
+    /// The member written `spb`.
     Spb,
+    /// The member written `spba`.
     Spba,
 }
 
-/// The tag `xlrd2:supportingPropertyBags`, schema type `CT_SupportingPropertyBags` of SDK 3.5.1's
-/// data.
+/// The `xlrd2:supportingPropertyBags` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_SupportingPropertyBags`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1706,12 +2104,16 @@ pub enum SupportingPropertyBagValueTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SupportingPropertyBags {
+    /// The child that is `SpbArrays`, when there is one.
     pub spb_arrays: Option<Box<SpbArrays>>,
+    /// The child that is `SpbData`, which the schema requires.
     pub spb_data: Box<SpbData>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrd2:top10`, schema type `CT_RichTop10` of SDK 3.5.1's data.
+/// The `xlrd2:top10` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RichTop10`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1720,15 +2122,22 @@ pub struct SupportingPropertyBags {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Top10 {
+    /// The attribute `filterVal`, when the element has it.
     pub filter_val: Option<String>,
+    /// The attribute `key`, when the element has it.
     pub key: Option<String>,
+    /// The attribute `percent`, when the element has it.
     pub percent: Option<String>,
+    /// The attribute `top`, when the element has it.
     pub top: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `xlrd2:type`, schema type `CT_RichValueType` of SDK 3.5.1's data.
+/// The `xlrd2:type` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RichValueType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1737,13 +2146,18 @@ pub struct Top10 {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Type {
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `KeyFlags`, when there is one.
     pub key_flags: Option<Box<KeyFlags>>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrd2:types`, schema type `CT_RichValueTypes` of SDK 3.5.1's data.
+/// The `xlrd2:types` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RichValueTypes`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1752,11 +2166,14 @@ pub struct Type {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Types {
+    /// The children that are `Type`, in order.
     pub r#type: Vec<Type>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrd2:v`, schema type `CT_ArrayValue` of SDK 3.5.1's data.
+/// The `xlrd2:v` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ArrayValue`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1765,12 +2182,16 @@ pub struct Types {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct VArrayValue {
+    /// The attribute `t`, when the element has it.
     pub t: Option<ArrayValueType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `xlrd2:v`, schema type `CT_SupportingPropertyBagArrayValue` of SDK 3.5.1's data.
+/// The `xlrd2:v` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SupportingPropertyBagArrayValue`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1779,12 +2200,16 @@ pub struct VArrayValue {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct VSupportingPropertyBagArrayValue {
+    /// The attribute `t`, when the element has it.
     pub t: Option<SupportingPropertyBagArrayValueType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `xlrd2:v`, schema type `CT_SupportingPropertyBagValue` of SDK 3.5.1's data.
+/// The `xlrd2:v` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SupportingPropertyBagValue`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1793,7 +2218,9 @@ pub struct VSupportingPropertyBagArrayValue {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct VSupportingPropertyBagValue {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
@@ -1803,10 +2230,13 @@ pub struct VSupportingPropertyBagValue {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_spreadsheetml_2017_richdata2` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `AArray`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn a_array(&mut self, _node: &AArray) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ASupportingPropertyBagArray`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn a_supporting_property_bag_array(
         &mut self,
         _node: &ASupportingPropertyBagArray,
@@ -1814,18 +2244,26 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ArrayData`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn array_data(&mut self, _node: &ArrayData) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CustomFilter`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn custom_filter(&mut self, _node: &CustomFilter) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CustomFilters`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn custom_filters(&mut self, _node: &CustomFilters) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CustomRichFiltersContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn custom_rich_filters(
         &mut self,
         _node: &CustomRichFiltersContent,
@@ -1833,62 +2271,81 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DateGroupItem`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn date_group_item(&mut self, _node: &DateGroupItem) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Dxfs`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn dxfs(&mut self, _node: &Dxfs) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DynamicFilter`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn dynamic_filter(&mut self, _node: &DynamicFilter) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext_lst(&mut self, _node: &ExtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Filter`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn filter(&mut self, _node: &Filter) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FilterColumn`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn filter_column(&mut self, _node: &FilterColumn) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Filters`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn filters(&mut self, _node: &Filters) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Flag`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn flag(&mut self, _node: &Flag) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Global`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn global(&mut self, _node: &Global) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `K`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn k(&mut self, _node: &K) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Key`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn key(&mut self, _node: &Key) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `KeyFlags`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn key_flags(&mut self, _node: &KeyFlags) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn r_pr(&mut self, _node: &RPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RSty`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn r_sty(&mut self, _node: &RSty) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RichFilterColumnContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn rich_filter_column(
         &mut self,
         _node: &RichFilterColumnContent,
@@ -1896,50 +2353,70 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RichProperties`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn rich_properties(&mut self, _node: &RichProperties) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RichSortCondition`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn rich_sort_condition(&mut self, _node: &RichSortCondition) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RichStyleSheet`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn rich_style_sheet(&mut self, _node: &RichStyleSheet) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RichStyles`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn rich_styles(&mut self, _node: &RichStyles) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Rpv`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn rpv(&mut self, _node: &Rpv) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RvTypesInfo`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn rv_types_info(&mut self, _node: &RvTypesInfo) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `S`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn s(&mut self, _node: &S) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Spb`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn spb(&mut self, _node: &Spb) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SpbArrays`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn spb_arrays(&mut self, _node: &SpbArrays) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SpbData`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn spb_data(&mut self, _node: &SpbData) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SpbStructures`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn spb_structures(&mut self, _node: &SpbStructures) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SupportingPropertyBags`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn supporting_property_bags(
         &mut self,
         _node: &SupportingPropertyBags,
@@ -1947,22 +2424,29 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Top10`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn top10(&mut self, _node: &Top10) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Type`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn r#type(&mut self, _node: &Type) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Types`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn types(&mut self, _node: &Types) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `VArrayValue`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn v_array_value(&mut self, _node: &VArrayValue) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `VSupportingPropertyBagArrayValue`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn v_supporting_property_bag_array_value(
         &mut self,
         _node: &VSupportingPropertyBagArrayValue,
@@ -1970,6 +2454,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `VSupportingPropertyBagValue`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn v_supporting_property_bag_value(
         &mut self,
         _node: &VSupportingPropertyBagValue,
@@ -2086,7 +2572,7 @@ impl ArrayValueTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -2586,7 +3072,7 @@ impl RichFormatPropertyTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -2899,7 +3385,7 @@ impl SupportingPropertyBagArrayValueTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -2956,7 +3442,7 @@ impl SupportingPropertyBagValueTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

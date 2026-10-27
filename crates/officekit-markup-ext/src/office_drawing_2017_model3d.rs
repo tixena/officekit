@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `am3d` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/drawing/2017/model3d`, which files write with the prefix `am3d`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/drawing/2017/model3d`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -791,7 +793,8 @@ pub static MODEL3D_EXTENSION_CONTENT_TAGS: officekit_markup_base::Accept =
         ],
     };
 
-/// The tag `am3d:ambientLight`, schema type `CT_AmbientLight` of SDK 3.5.1's data.
+/// The `am3d:ambientLight` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_AmbientLight`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -800,14 +803,20 @@ pub static MODEL3D_EXTENSION_CONTENT_TAGS: officekit_markup_base::Accept =
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AmbientLight {
+    /// The child that is `Clr`, which the schema requires.
     pub clr: Box<Clr>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The child that is `ExtLstOfficeArtExtensionList`, when there is one.
     pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionList>>,
+    /// The child that is `Illuminance`, which the schema requires.
     pub illuminance: Box<Illuminance>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `am3d:attrSrcUrl`, schema type `CT_PictureAttributionSourceURL` of SDK 3.5.1's data.
+/// The `am3d:attrSrcUrl` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_PictureAttributionSourceURL`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -816,11 +825,14 @@ pub struct AmbientLight {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AttrSrcUrl {
+    /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `am3d:blip`, schema type `CT_Blip` of SDK 3.5.1's data.
+/// The `am3d:blip` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Blip`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -829,15 +841,22 @@ pub struct AttrSrcUrl {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Blip {
+    /// The children that are an item of `drawing::BlipContent`, in order.
     pub content: Vec<drawing::BlipContent>,
+    /// The attribute `cstate`, when the element has it.
     pub cstate: Option<drawing::BlipCompressionType>,
+    /// The attribute `r:embed`, when the element has it.
     pub embed: Option<String>,
+    /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionList>>,
+    /// The attribute `r:link`, when the element has it.
     pub link: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `am3d:camera`, schema type `CT_Model3DCamera` of SDK 3.5.1's data.
+/// The `am3d:camera` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Model3DCamera`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -846,15 +865,22 @@ pub struct Blip {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Camera {
+    /// The child that is an item of `Model3DCameraContent`, which the schema requires.
     pub content: Box<Model3DCameraContent>,
+    /// The child that is `ExtLstOfficeArtExtensionList`, when there is one.
     pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionList>>,
+    /// The child that is `LookAt`, which the schema requires.
     pub look_at: Box<LookAt>,
+    /// The child that is `Pos`, which the schema requires.
     pub pos: Box<Pos>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `Up`, which the schema requires.
     pub up: Box<Up>,
 }
 
-/// The tag `am3d:clr`, schema type `CT_Color` of SDK 3.5.1's data.
+/// The `am3d:clr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -863,7 +889,9 @@ pub struct Camera {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Clr {
+    /// The child that is an item of `drawing::ColorContent`, which the schema requires.
     pub content: Box<drawing::ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -876,34 +904,50 @@ pub struct Clr {
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_drawing_2017_model3d` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `AmbientLight`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn ambient_light(&mut self, _node: &AmbientLight) -> Option<AmbientLight> {
         None
     }
 
+    /// Asked for each `AttrSrcUrl`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn attr_src_url(&mut self, _node: &AttrSrcUrl) -> Option<AttrSrcUrl> {
         None
     }
 
+    /// Asked for each `Blip`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn blip(&mut self, _node: &Blip) -> Option<Blip> {
         None
     }
 
+    /// Asked for each `Camera`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn camera(&mut self, _node: &Camera) -> Option<Camera> {
         None
     }
 
+    /// Asked for each `Clr`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn clr(&mut self, _node: &Clr) -> Option<Clr> {
         None
     }
 
+    /// Asked for each `DirLight`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn dir_light(&mut self, _node: &DirLight) -> Option<DirLight> {
         None
     }
 
+    /// Asked for each `Ext`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn ext(&mut self, _node: &Ext) -> Option<Ext> {
         None
     }
 
+    /// Asked for each `ExtLstModel3DExtensionList`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn ext_lst_model3d_extension_list(
         &mut self,
         _node: &ExtLstModel3DExtensionList,
@@ -911,6 +955,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ExtLstOfficeArtExtensionList`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn ext_lst_office_art_extension_list(
         &mut self,
         _node: &ExtLstOfficeArtExtensionList,
@@ -918,30 +964,44 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Illuminance`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn illuminance(&mut self, _node: &Illuminance) -> Option<Illuminance> {
         None
     }
 
+    /// Asked for each `Intensity`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn intensity(&mut self, _node: &Intensity) -> Option<Intensity> {
         None
     }
 
+    /// Asked for each `LookAt`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn look_at(&mut self, _node: &LookAt) -> Option<LookAt> {
         None
     }
 
+    /// Asked for each `MeterPerModelUnit`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn meter_per_model_unit(&mut self, _node: &MeterPerModelUnit) -> Option<MeterPerModelUnit> {
         None
     }
 
+    /// Asked for each `Model3d`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn model3d(&mut self, _node: &Model3d) -> Option<Model3d> {
         None
     }
 
+    /// Asked for each `Model3DCameraContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn model3d_camera(&mut self, _node: &Model3DCameraContent) -> Option<Model3DCameraContent> {
         None
     }
 
+    /// Asked for each `Model3DExtensionContent`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn model3d_extension(
         &mut self,
         _node: &Model3DExtensionContent,
@@ -949,10 +1009,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Model3DLightContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn model3d_light(&mut self, _node: &Model3DLightContent) -> Option<Model3DLightContent> {
         None
     }
 
+    /// Asked for each `Model3DLightContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn model3d_light_items(
         &mut self,
         _node: &Model3DLightContent,
@@ -960,6 +1024,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Model3DViewportContent`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn model3d_viewport(
         &mut self,
         _node: &Model3DViewportContent,
@@ -967,89 +1033,132 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ObjViewport`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn obj_viewport(&mut self, _node: &ObjViewport) -> Option<ObjViewport> {
         None
     }
 
+    /// Asked for each `Orthographic`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn orthographic(&mut self, _node: &Orthographic) -> Option<Orthographic> {
         None
     }
 
+    /// Asked for each `Perspective`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn perspective(&mut self, _node: &Perspective) -> Option<Perspective> {
         None
     }
 
+    /// Asked for each `Pos`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn pos(&mut self, _node: &Pos) -> Option<Pos> {
         None
     }
 
+    /// Asked for each `PostTrans`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn post_trans(&mut self, _node: &PostTrans) -> Option<PostTrans> {
         None
     }
 
+    /// Asked for each `PreTrans`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn pre_trans(&mut self, _node: &PreTrans) -> Option<PreTrans> {
         None
     }
 
+    /// Asked for each `PtLight`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn pt_light(&mut self, _node: &PtLight) -> Option<PtLight> {
         None
     }
 
+    /// Asked for each `Raster`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn raster(&mut self, _node: &Raster) -> Option<Raster> {
         None
     }
 
+    /// Asked for each `Rot`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn rot(&mut self, _node: &Rot) -> Option<Rot> {
         None
     }
 
+    /// Asked for each `Scale`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn scale(&mut self, _node: &Scale) -> Option<Scale> {
         None
     }
 
+    /// Asked for each `SpPr`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn sp_pr(&mut self, _node: &SpPr) -> Option<SpPr> {
         None
     }
 
+    /// Asked for each `SpotLight`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn spot_light(&mut self, _node: &SpotLight) -> Option<SpotLight> {
         None
     }
 
+    /// Asked for each `Sx`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn sx(&mut self, _node: &Sx) -> Option<Sx> {
         None
     }
 
+    /// Asked for each `Sy`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn sy(&mut self, _node: &Sy) -> Option<Sy> {
         None
     }
 
+    /// Asked for each `SzPositiveRatio`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn sz_positive_ratio(&mut self, _node: &SzPositiveRatio) -> Option<SzPositiveRatio> {
         None
     }
 
+    /// Asked for each `SzRatio`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn sz_ratio(&mut self, _node: &SzRatio) -> Option<SzRatio> {
         None
     }
 
+    /// Asked for each `Trans`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn trans(&mut self, _node: &Trans) -> Option<Trans> {
         None
     }
 
+    /// Asked for each `UnkLight`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn unk_light(&mut self, _node: &UnkLight) -> Option<UnkLight> {
         None
     }
 
+    /// Asked for each `Up`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn up(&mut self, _node: &Up) -> Option<Up> {
         None
     }
 
+    /// Asked for each `WinViewport`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn win_viewport(&mut self, _node: &WinViewport) -> Option<WinViewport> {
         None
     }
 
+    /// Asked when a `AmbientLight` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ambient_light(
         &mut self,
         _node: &AmbientLight,
@@ -1058,9 +1167,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `AttrSrcUrl` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_attr_src_url(
         &mut self,
         _node: &AttrSrcUrl,
@@ -1069,30 +1181,42 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Blip` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_blip(&mut self, _node: &Blip, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Camera` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_camera(&mut self, _node: &Camera, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Clr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_clr(&mut self, _node: &Clr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `DirLight` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_dir_light(
         &mut self,
         _node: &DirLight,
@@ -1101,16 +1225,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Ext` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext(&mut self, _node: &Ext, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExtLstModel3DExtensionList` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst_model3d_extension_list(
         &mut self,
         _node: &ExtLstModel3DExtensionList,
@@ -1119,9 +1249,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExtLstOfficeArtExtensionList` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst_office_art_extension_list(
         &mut self,
         _node: &ExtLstOfficeArtExtensionList,
@@ -1130,9 +1263,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Illuminance` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_illuminance(
         &mut self,
         _node: &Illuminance,
@@ -1141,9 +1277,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Intensity` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_intensity(
         &mut self,
         _node: &Intensity,
@@ -1152,16 +1291,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LookAt` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_look_at(&mut self, _node: &LookAt, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `MeterPerModelUnit` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_meter_per_model_unit(
         &mut self,
         _node: &MeterPerModelUnit,
@@ -1170,16 +1315,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Model3d` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_model3d(&mut self, _node: &Model3d, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Model3DCameraContent` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_model3d_camera(
         &mut self,
         _node: &Model3DCameraContent,
@@ -1188,9 +1339,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Model3DExtensionContent` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_model3d_extension(
         &mut self,
         _node: &Model3DExtensionContent,
@@ -1199,9 +1353,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Model3DLightContent` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_model3d_light(
         &mut self,
         _node: &Model3DLightContent,
@@ -1210,9 +1367,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Model3DLightContent` in a list is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_model3d_light_items(
         &mut self,
         _node: &Model3DLightContent,
@@ -1221,9 +1381,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Model3DViewportContent` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_model3d_viewport(
         &mut self,
         _node: &Model3DViewportContent,
@@ -1232,9 +1395,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ObjViewport` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_obj_viewport(
         &mut self,
         _node: &ObjViewport,
@@ -1243,9 +1409,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Orthographic` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_orthographic(
         &mut self,
         _node: &Orthographic,
@@ -1254,9 +1423,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Perspective` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_perspective(
         &mut self,
         _node: &Perspective,
@@ -1265,16 +1437,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Pos` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pos(&mut self, _node: &Pos, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `PostTrans` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_post_trans(
         &mut self,
         _node: &PostTrans,
@@ -1283,9 +1461,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PreTrans` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pre_trans(
         &mut self,
         _node: &PreTrans,
@@ -1294,9 +1475,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PtLight` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pt_light(
         &mut self,
         _node: &PtLight,
@@ -1305,37 +1489,52 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Raster` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_raster(&mut self, _node: &Raster, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Rot` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_rot(&mut self, _node: &Rot, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Scale` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_scale(&mut self, _node: &Scale, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `SpPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sp_pr(&mut self, _node: &SpPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `SpotLight` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_spot_light(
         &mut self,
         _node: &SpotLight,
@@ -1344,23 +1543,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Sx` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sx(&mut self, _node: &Sx, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Sy` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sy(&mut self, _node: &Sy, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `SzPositiveRatio` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sz_positive_ratio(
         &mut self,
         _node: &SzPositiveRatio,
@@ -1369,9 +1577,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SzRatio` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sz_ratio(
         &mut self,
         _node: &SzRatio,
@@ -1380,16 +1591,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Trans` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_trans(&mut self, _node: &Trans, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `UnkLight` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_unk_light(
         &mut self,
         _node: &UnkLight,
@@ -1398,16 +1615,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Up` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_up(&mut self, _node: &Up, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `WinViewport` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_win_viewport(
         &mut self,
         _node: &WinViewport,
@@ -1417,7 +1640,8 @@ pub trait Context: crate::Context {
     }
 }
 
-/// The tag `am3d:dirLight`, schema type `CT_DirectionalLight` of SDK 3.5.1's data.
+/// The `am3d:dirLight` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_DirectionalLight`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1426,17 +1650,26 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DirLight {
+    /// The attribute `angularRad`, when the element has it.
     pub angular_rad: Option<String>,
+    /// The child that is `Clr`, which the schema requires.
     pub clr: Box<Clr>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The child that is `ExtLstOfficeArtExtensionList`, when there is one.
     pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionList>>,
+    /// The child that is `Illuminance`, which the schema requires.
     pub illuminance: Box<Illuminance>,
+    /// The child that is `LookAt`, which the schema requires.
     pub look_at: Box<LookAt>,
+    /// The child that is `Pos`, which the schema requires.
     pub pos: Box<Pos>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `am3d:ext`, schema type `CT_Model3DExtension` of SDK 3.5.1's data.
+/// The `am3d:ext` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Model3DExtension`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1445,12 +1678,16 @@ pub struct DirLight {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Ext {
+    /// The child that is an item of `Model3DExtensionContent`, which the schema requires.
     pub content: Box<Model3DExtensionContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `uri`, when the element has it.
     pub uri: Option<String>,
 }
 
-/// The tag `am3d:extLst`, schema type `CT_Model3DExtensionList` of SDK 3.5.1's data.
+/// The `am3d:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Model3DExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1459,11 +1696,14 @@ pub struct Ext {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLstModel3DExtensionList {
+    /// The children that are `Ext`, in order.
     pub ext: Vec<Ext>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `am3d:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
+/// The `am3d:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1472,11 +1712,14 @@ pub struct ExtLstModel3DExtensionList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLstOfficeArtExtensionList {
+    /// The children that are `drawing::Extension`, in order.
     pub extension: Vec<drawing::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `am3d:illuminance`, schema type `CT_PositiveRatio` of SDK 3.5.1's data.
+/// The `am3d:illuminance` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_PositiveRatio`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1485,10 +1728,12 @@ pub struct ExtLstOfficeArtExtensionList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Illuminance {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `am3d:intensity`, schema type `CT_PositiveRatio` of SDK 3.5.1's data.
+/// The `am3d:intensity` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_PositiveRatio`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1497,10 +1742,12 @@ pub struct Illuminance {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Intensity {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `am3d:lookAt`, schema type `CT_Point3D` of SDK 3.5.1's data.
+/// The `am3d:lookAt` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Point3D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1509,13 +1756,18 @@ pub struct Intensity {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LookAt {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `x`, when the element has it.
     pub x: Option<drawing::Coordinate>,
+    /// The attribute `y`, when the element has it.
     pub y: Option<drawing::Coordinate>,
+    /// The attribute `z`, when the element has it.
     pub z: Option<drawing::Coordinate>,
 }
 
-/// The tag `am3d:meterPerModelUnit`, schema type `CT_PositiveRatio` of SDK 3.5.1's data.
+/// The `am3d:meterPerModelUnit` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_PositiveRatio`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1524,226 +1776,432 @@ pub struct LookAt {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MeterPerModelUnit {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_Model3DCamera`: choice in `CT_Model3DCamera`.
+/// One child element of a choice: choice in `CT_Model3DCamera`.
+///
+/// The schema types that hold it: `CT_Model3DCamera`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum Model3DCameraContent {
+    /// The element `am3d:orthographic`, a `Orthographic`.
     Orthographic(Orthographic),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `am3d:perspective`, a `Perspective`.
     Perspective(Perspective),
 }
 
-/// One item of `CT_Model3DExtension`: choice in `CT_Model3DExtension`.
+/// One child element of a choice: choice in `CT_Model3DExtension`.
+///
+/// The schema types that hold it: `CT_Model3DExtension`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum Model3DExtensionContent {
+    /// The element `wp:anchor`, a `AnchorForFloatingDrawingMLObject`.
     AnchorForFloatingDrawingMLObject(wordprocessing_drawing::AnchorForFloatingDrawingMLObject),
+    /// The element `w10:anchorlock`, a `AnchorLocationIsLocked`.
     AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLocked),
+    /// The element `ap:Properties`, a `ApplicationSpecificFileProperties`.
     ApplicationSpecificFileProperties(
         document_properties_extended::ApplicationSpecificFileProperties,
     ),
+    /// The element `v:arc`, a `ArcSegment`.
     ArcSegment(vml::ArcSegment),
+    /// The element `vt:array`, a `Array`.
     Array(document_properties_variant_types::Array),
+    /// The element `xvml:ClientData`, a `AttachedObjectData`.
     AttachedObjectData(vml_spreadsheet_drawing::AttachedObjectData),
+    /// The element `vt:bstr`, a `BasicString`.
     BasicString(document_properties_variant_types::BasicString),
+    /// The element `v:curve`, a `BezierCurve`.
     BezierCurve(vml::BezierCurve),
+    /// The element `vt:blob`, a `BinaryBlob`.
     BinaryBlob(document_properties_variant_types::BinaryBlob),
+    /// The element `vt:oblob`, a `BinaryBlobObject`.
     BinaryBlobObject(document_properties_variant_types::BinaryBlobObject),
+    /// The element `vt:storage`, a `BinaryStorage`.
     BinaryStorage(document_properties_variant_types::BinaryStorage),
+    /// The element `vt:ostorage`, a `BinaryStorageObject`.
     BinaryStorageObject(document_properties_variant_types::BinaryStorageObject),
+    /// The element `vt:stream`, a `BinaryStream`.
     BinaryStream(document_properties_variant_types::BinaryStream),
+    /// The element `vt:ostream`, a `BinaryStreamObject`.
     BinaryStreamObject(document_properties_variant_types::BinaryStreamObject),
+    /// The element `vt:vstream`, a `BinaryVersionedStream`.
     BinaryVersionedStream(document_properties_variant_types::BinaryVersionedStream),
+    /// The element `a:blip`, a `Blip`.
     Blip(drawing::Blip),
+    /// The element `vt:bool`, a `Boolean`.
     Boolean(document_properties_variant_types::Boolean),
+    /// The element `w10:borderbottom`, a `BottomBorder`.
     BottomBorder(vml_wordprocessing_drawing::BottomBorder),
+    /// The element `x:calcChain`, a `CalculationChainInfo`.
     CalculationChainInfo(spreadsheet::CalculationChainInfo),
+    /// The element `o:callout`, a `Callout`.
     Callout(vml_office_drawing::Callout),
+    /// The element `x:chartsheet`, a `ChartSheet`.
     ChartSheet(spreadsheet::ChartSheet),
+    /// The element `c:chartSpace`, a `ChartSpace`.
     ChartSpace(chart::ChartSpace),
+    /// The element `vt:clsid`, a `ClassID`.
     ClassID(document_properties_variant_types::ClassID),
+    /// The element `dgm:colorsDefHdr`, a `ColorTransformDefinitionHeader`.
     ColorTransformDefinitionHeader(diagram::ColorTransformDefinitionHeader),
+    /// The element `dgm:colorsDef`, a `ColorTransformDefinitions`.
     ColorTransformDefinitions(diagram::ColorTransformDefinitions),
+    /// The element `dgm:colorsDefHdrLst`, a `ColorTransformHeaderList`.
     ColorTransformHeaderList(diagram::ColorTransformHeaderList),
+    /// The element `p:cmLst`, a `CommentList`.
     CommentList(presentation::CommentList),
+    /// The element `x:comments`, a `Comments`.
     Comments(spreadsheet::Comments),
+    /// The element `w:comments`, a `CommentsCollection`.
     CommentsCollection(wordprocessing::CommentsCollection),
+    /// The element `o:complex`, a `Complex`.
     Complex(vml_office_drawing::Complex),
+    /// The element `x:connections`, a `Connections`.
     Connections(spreadsheet::Connections),
+    /// The element `vt:cy`, a `Currency`.
     Currency(document_properties_variant_types::Currency),
+    /// The element `op:Properties`, a `CustomFileProperties`.
     CustomFileProperties(document_properties_custom::CustomFileProperties),
+    /// The element `ds:datastoreItem`, a `CustomXMLDataProperties`.
     CustomXMLDataProperties(custom_xml_data_properties::CustomXMLDataProperties),
+    /// The element `dgm:dataModel`, a `DataModel`.
     DataModel(diagram::DataModel),
+    /// The element `vt:date`, a `DateAndTime`.
     DateAndTime(document_properties_variant_types::DateAndTime),
+    /// The element `vt:decimal`, a `Decimal`.
     Decimal(document_properties_variant_types::Decimal),
+    /// The element `dgm:layoutDefHdrLst`, a `DiagramLayoutHeaderList`.
     DiagramLayoutHeaderList(diagram::DiagramLayoutHeaderList),
+    /// The element `x:dialogsheet`, a `DialogSheet`.
     DialogSheet(spreadsheet::DialogSheet),
+    /// The element `o:signatureline`, a `DigitalSignatureLine`.
     DigitalSignatureLine(vml_office_drawing::DigitalSignatureLine),
+    /// The element `w:document`, a `Document`.
     Document(wordprocessing::Document),
+    /// The element `v:background`, a `DocumentBackground`.
     DocumentBackground(vml::DocumentBackground),
+    /// The element `w:endnotes`, a `DocumentEndnotes`.
     DocumentEndnotes(wordprocessing::DocumentEndnotes),
+    /// The element `w:footnotes`, a `DocumentFootnotes`.
     DocumentFootnotes(wordprocessing::DocumentFootnotes),
+    /// The element `w:settings`, a `DocumentSettings`.
     DocumentSettings(wordprocessing::DocumentSettings),
+    /// The element `a:tbl`, a `Table`.
     DrawingTable(drawing::Table),
+    /// The element `a3danim:embedAnim`, a `EmbedAnim`.
     EmbedAnim(super::office_drawing_2018_animation_model3d::EmbedAnim),
+    /// The element `sl:schemaLibrary`, a `EmbeddedCustomXMLSchemaSupplementaryData`.
     EmbeddedCustomXMLSchemaSupplementaryData(
         custom_xml_schema_properties::EmbeddedCustomXMLSchemaSupplementaryData,
     ),
+    /// The element `o:OLEObject`, a `EmbeddedOLEObject`.
     EmbeddedOLEObject(vml_office_drawing::EmbeddedOLEObject),
+    /// The element `p:oleObj`, a `EmbeddedObjectsAndControls`.
     EmbeddedObjectsAndControls(presentation::EmbeddedObjectsAndControls),
+    /// The element `vt:empty`, a `Empty`.
     Empty(document_properties_variant_types::Empty),
+    /// The element `xdr:to`, a `EndingAnchorPoint`.
     EndingAnchorPoint(spreadsheet_drawing::EndingAnchorPoint),
+    /// The element `vt:error`, a `ErrorStatusCode`.
     ErrorStatusCode(document_properties_variant_types::ErrorStatusCode),
+    /// The element `dgm:relIds`, a `ExplicitRelationshipsToDiagramParts`.
     ExplicitRelationshipsToDiagramParts(diagram::ExplicitRelationshipsToDiagramParts),
+    /// The element `x:externalLink`, a `ExternalReferenceExternalLink`.
     ExternalReferenceExternalLink(spreadsheet::ExternalReferenceExternalLink),
+    /// The element `o:extrusion`, a `Extrusion`.
     Extrusion(vml_office_drawing::Extrusion),
+    /// The element `vt:filetime`, a `FileTime`.
     FileTime(document_properties_variant_types::FileTime),
+    /// The element `w:fonts`, a `FontTableRootElement`.
     FontTableRootElement(wordprocessing::FontTableRootElement),
+    /// The element `w:ftr`, a `Footer`.
     Footer(wordprocessing::Footer),
+    /// The element `w:glossaryDocument`, a `GlossaryDocumentRootElement`.
     GlossaryDocumentRootElement(wordprocessing::GlossaryDocumentRootElement),
+    /// The element `a:graphic`, a `GraphicObject`.
     GraphicObject(drawing::GraphicObject),
+    /// The element `p:handoutMaster`, a `HandoutMaster`.
     HandoutMaster(presentation::HandoutMaster),
+    /// The element `w:hdr`, a `Header`.
     Header(wordprocessing::Header),
+    /// The element `vt:i1`, a `I1`.
     I1(document_properties_variant_types::I1),
+    /// The element `vt:i2`, a `I2`.
     I2(document_properties_variant_types::I2),
+    /// The element `vt:i4`, a `I4`.
     I4(document_properties_variant_types::I4),
+    /// The element `vt:i8`, a `I8`.
     I8(document_properties_variant_types::I8),
+    /// The element `v:imagedata`, a `ImageData`.
     ImageData(vml::ImageData),
+    /// The element `v:image`, a `ImageFile`.
     ImageFile(vml::ImageFile),
+    /// The element `w:recipients`, a `InclusionExclusionDataForDataSource`.
     InclusionExclusionDataForDataSource(wordprocessing::InclusionExclusionDataForDataSource),
+    /// The element `o:ink`, a `Ink`.
     Ink(vml_office_drawing::Ink),
+    /// The element `pvml:iscomment`, a `InkAnnotationFlag`.
     InkAnnotationFlag(vml_presentation_drawing::InkAnnotationFlag),
+    /// The element `wp:inline`, a `InlineDrawingMLObject`.
     InlineDrawingMLObject(wordprocessing_drawing::InlineDrawingMLObject),
+    /// The element `vt:int`, a `Integer`.
     Integer(document_properties_variant_types::Integer),
+    /// The element `dgm:layoutDef`, a `LayoutDefinition`.
     LayoutDefinition(diagram::LayoutDefinition),
+    /// The element `dgm:layoutDefHdr`, a `LayoutDefinitionHeader`.
     LayoutDefinitionHeader(diagram::LayoutDefinitionHeader),
+    /// The element `w10:borderleft`, a `LeftBorder`.
     LeftBorder(vml_wordprocessing_drawing::LeftBorder),
+    /// The element `v:line`, a `Line`.
     Line(vml::Line),
+    /// The element `v:stroke`, a `LineStrokeSettings`.
     LineStrokeSettings(vml::LineStrokeSettings),
+    /// The element `p:cmAuthorLst`, a `ListOfCommentAuthors`.
     ListOfCommentAuthors(presentation::ListOfCommentAuthors),
+    /// The element `dgm:styleDefHdrLst`, a `ListOfStyleDefinitionHeaders`.
     ListOfStyleDefinitionHeaders(diagram::ListOfStyleDefinitionHeaders),
+    /// The element `lc:lockedCanvas`, a `LockedCanvasContainer`.
     LockedCanvasContainer(locked_canvas::LockedCanvasContainer),
+    /// The element `vt:lpstr`, a `Lpstr`.
     Lpstr(document_properties_variant_types::Lpstr),
+    /// The element `vt:lpwstr`, a `Lpwstr`.
     Lpwstr(document_properties_variant_types::Lpwstr),
+    /// The element `m:mathPr`, a `MathProperties`.
     MathProperties(math::MathProperties),
+    /// The element `x:metadata`, a `Metadata`.
     Metadata(spreadsheet::Metadata),
+    /// The element `v:polyline`, a `MultiplePathLine`.
     MultiplePathLine(vml::MultiplePathLine),
+    /// The element `o:shapedefaults`, a `NewShapeDefaults`.
     NewShapeDefaults(vml_office_drawing::NewShapeDefaults),
+    /// The element `p:notesMaster`, a `NotesMaster`.
     NotesMaster(presentation::NotesMaster),
+    /// The element `p:notes`, a `NotesSlide`.
     NotesSlide(presentation::NotesSlide),
+    /// The element `vt:null`, a `Null`.
     Null(document_properties_variant_types::Null),
+    /// The element `w:numbering`, a `NumberingDefinitions`.
     NumberingDefinitions(wordprocessing::NumberingDefinitions),
+    /// The element `m:oMath`, a `OfficeMath`.
     OfficeMath(math::OfficeMath),
+    /// The element `m:oMathPara`, a `OfficeMathParagraph`.
     OfficeMathParagraph(math::OfficeMathParagraph),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `v:oval`, a `Oval`.
     Oval(vml::Oval),
+    /// The element `pic:pic`, a `Picture`.
     Picture(picture::Picture),
+    /// The element `x:pivotCacheDefinition`, a `PivotCacheDefinition`.
     PivotCacheDefinition(spreadsheet::PivotCacheDefinition),
+    /// The element `x:pivotCacheRecords`, a `PivotCacheRecords`.
     PivotCacheRecords(spreadsheet::PivotCacheRecords),
+    /// The element `x:pivotTableDefinition`, a `PivotTableDefinition`.
     PivotTableDefinition(Box<spreadsheet::PivotTableDefinition>),
+    /// The element `a3danim:posterFrame`, a `PosterFrame`.
     PosterFrame(super::office_drawing_2018_animation_model3d::PosterFrame),
+    /// The element `p:presentation`, a `Presentation`.
     Presentation(presentation::Presentation),
+    /// The element `p:sld`, a `PresentationSlideSlide`.
     PresentationSlideSlide(presentation::PresentationSlideSlide),
+    /// The element `p:presentationPr`, a `PresentationWideProperties`.
     PresentationWideProperties(presentation::PresentationWideProperties),
+    /// The element `p:viewPr`, a `PresentationWideViewProperties`.
     PresentationWideViewProperties(presentation::PresentationWideViewProperties),
+    /// The element `p:tagLst`, a `ProgrammableTabList`.
     ProgrammableTabList(presentation::ProgrammableTabList),
+    /// The element `x:queryTable`, a `QueryTable`.
     QueryTable(spreadsheet::QueryTable),
+    /// The element `vt:r4`, a `R4`.
     R4(document_properties_variant_types::R4),
+    /// The element `vt:r8`, a `R8`.
     R8(document_properties_variant_types::R8),
+    /// The element `v:rect`, a `Rectangle`.
     Rectangle(vml::Rectangle),
+    /// The element `c:chart`, a `ReferenceToChartPart`.
     ReferenceToChartPart(chart::ReferenceToChartPart),
+    /// The element `x:headers`, a `RevisionHeaders`.
     RevisionHeaders(spreadsheet::RevisionHeaders),
+    /// The element `x:revisions`, a `Revisions`.
     Revisions(spreadsheet::Revisions),
+    /// The element `w:txbxContent`, a `RichTextBoxContentContainer`.
     RichTextBoxContentContainer(wordprocessing::RichTextBoxContentContainer),
+    /// The element `w10:borderright`, a `RightBorder`.
     RightBorder(vml_wordprocessing_drawing::RightBorder),
+    /// The element `v:roundrect`, a `RoundedRectangle`.
     RoundedRectangle(vml::RoundedRectangle),
+    /// The element `ac:additionalCharacteristics`, a `SetOfAdditionalCharacteristics`.
     SetOfAdditionalCharacteristics(additional_characteristics::SetOfAdditionalCharacteristics),
+    /// The element `v:formulas`, a `SetOfFormulas`.
     SetOfFormulas(vml::SetOfFormulas),
+    /// The element `v:handles`, a `SetOfHandles`.
     SetOfHandles(vml::SetOfHandles),
+    /// The element `v:shadow`, a `ShadowEffect`.
     ShadowEffect(vml::ShadowEffect),
+    /// The element `o:clippath`, a `ShapeClippingPath`.
     ShapeClippingPath(vml_office_drawing::ShapeClippingPath),
+    /// The element `v:shape`, a `ShapeDefinition`.
     ShapeDefinition(vml::ShapeDefinition),
+    /// The element `o:fill`, a `ShapeFillExtendedProperties`.
     ShapeFillExtendedProperties(vml_office_drawing::ShapeFillExtendedProperties),
+    /// The element `v:fill`, a `ShapeFillProperties`.
     ShapeFillProperties(vml::ShapeFillProperties),
+    /// The element `v:group`, a `ShapeGroup`.
     ShapeGroup(vml::ShapeGroup),
+    /// The element `o:shapelayout`, a `ShapeLayoutProperties`.
     ShapeLayoutProperties(vml_office_drawing::ShapeLayoutProperties),
+    /// The element `v:path`, a `ShapePath`.
     ShapePath(vml::ShapePath),
+    /// The element `o:lock`, a `ShapeProtections`.
     ShapeProtections(vml_office_drawing::ShapeProtections),
+    /// The element `v:shapetype`, a `ShapeTemplate`.
     ShapeTemplate(vml::ShapeTemplate),
+    /// The element `x:sst`, a `SharedStringTable`.
     SharedStringTable(spreadsheet::SharedStringTable),
+    /// The element `x:singleXmlCells`, a `SingleCells`.
     SingleCells(spreadsheet::SingleCells),
+    /// The element `o:skew`, a `SkewTransform`.
     SkewTransform(vml_office_drawing::SkewTransform),
+    /// The element `p:sldLayout`, a `SlideLayout`.
     SlideLayout(presentation::SlideLayout),
+    /// The element `p:sldMaster`, a `SlideMaster`.
     SlideMaster(presentation::SlideMaster),
+    /// The element `p:sldSyncPr`, a `SlideSynchronizationProperties`.
     SlideSynchronizationProperties(presentation::SlideSynchronizationProperties),
+    /// The element `b:Sources`, a `Sources`.
     Sources(bibliography::Sources),
+    /// The element `x:table`, a `Table`.
     SpreadsheetTable(spreadsheet::Table),
+    /// The element `xdr:from`, a `StartingAnchorPoint`.
     StartingAnchorPoint(spreadsheet_drawing::StartingAnchorPoint),
+    /// The element `o:equationxml`, a `StorageForAlternateMathContent`.
     StorageForAlternateMathContent(vml_office_drawing::StorageForAlternateMathContent),
+    /// The element `dgm:styleDef`, a `StyleDefinition`.
     StyleDefinition(diagram::StyleDefinition),
+    /// The element `dgm:styleDefHdr`, a `StyleDefinitionHeader`.
     StyleDefinitionHeader(diagram::StyleDefinitionHeader),
+    /// The element `w:styles`, a `StyleDefinitions`.
     StyleDefinitions(wordprocessing::StyleDefinitions),
+    /// The element `x:styleSheet`, a `StyleSheet`.
     StyleSheet(spreadsheet::StyleSheet),
+    /// The element `a:tblStyleLst`, a `TableStyleList`.
     TableStyleList(drawing::TableStyleList),
+    /// The element `v:textbox`, a `TextBox`.
     TextBox(vml::TextBox),
+    /// The element `o:bottom`, a `TextBoxBottomStroke`.
     TextBoxBottomStroke(vml_office_drawing::TextBoxBottomStroke),
+    /// The element `o:column`, a `TextBoxInteriorStroke`.
     TextBoxInteriorStroke(vml_office_drawing::TextBoxInteriorStroke),
+    /// The element `o:left`, a `TextBoxLeftStroke`.
     TextBoxLeftStroke(vml_office_drawing::TextBoxLeftStroke),
+    /// The element `o:right`, a `TextBoxRightStroke`.
     TextBoxRightStroke(vml_office_drawing::TextBoxRightStroke),
+    /// The element `o:top`, a `TextBoxTopStroke`.
     TextBoxTopStroke(vml_office_drawing::TextBoxTopStroke),
+    /// The element `v:textpath`, a `TextLayoutPath`.
     TextLayoutPath(vml::TextLayoutPath),
+    /// The element `w10:wrap`, a `TextWrapping`.
     TextWrapping(vml_wordprocessing_drawing::TextWrapping),
+    /// The element `a:theme`, a `Theme`.
     Theme(drawing::Theme),
+    /// The element `a:themeManager`, a `ThemeManager`.
     ThemeManager(drawing::ThemeManager),
+    /// The element `a:themeOverride`, a `ThemeOverride`.
     ThemeOverride(drawing::ThemeOverride),
+    /// The element `w10:bordertop`, a `TopBorder`.
     TopBorder(vml_wordprocessing_drawing::TopBorder),
+    /// The element `vt:ui1`, a `Ui1`.
     Ui1(document_properties_variant_types::Ui1),
+    /// The element `vt:ui2`, a `Ui2`.
     Ui2(document_properties_variant_types::Ui2),
+    /// The element `vt:ui4`, a `Ui4`.
     Ui4(document_properties_variant_types::Ui4),
+    /// The element `vt:ui8`, a `Ui8`.
     Ui8(document_properties_variant_types::Ui8),
+    /// The element `vt:uint`, a `UnsignedInteger`.
     UnsignedInteger(document_properties_variant_types::UnsignedInteger),
+    /// The element `x:users`, a `UserList`.
     UserList(spreadsheet::UserList),
+    /// The element `c:userShapes`, a `UserShapes`.
     UserShapes(chart::UserShapes),
+    /// The element `o:diagram`, a `VMLDiagram`.
     VMLDiagram(vml_office_drawing::VMLDiagram),
+    /// The element `pvml:textdata`, a `VMLDiagramText`.
     VMLDiagramText(vml_presentation_drawing::VMLDiagramText),
+    /// The element `vt:variant`, a `Variant`.
     Variant(document_properties_variant_types::Variant),
+    /// The element `vt:vector`, a `Vector`.
     Vector(document_properties_variant_types::Vector),
+    /// The element `a:videoFile`, a `VideoFromFile`.
     VideoFromFile(drawing::VideoFromFile),
+    /// The element `x:volTypes`, a `VolatileDependencyTypes`.
     VolatileDependencyTypes(spreadsheet::VolatileDependencyTypes),
+    /// The element `w:webSettings`, a `WebPageSettings`.
     WebPageSettings(wordprocessing::WebPageSettings),
+    /// The element `wp:wpc`, a `WordprocessingMLDrawingCanvas`.
     WordprocessingMLDrawingCanvas(wordprocessing_drawing::WordprocessingMLDrawingCanvas),
+    /// The element `wp:wsp`, a `WordprocessingMLShape`.
     WordprocessingMLShape(wordprocessing_drawing::WordprocessingMLShape),
+    /// The element `wp:wgp`, a `WordprocessingMLShapeGroup`.
     WordprocessingMLShapeGroup(wordprocessing_drawing::WordprocessingMLShapeGroup),
+    /// The element `x:workbook`, a `Workbook`.
     Workbook(spreadsheet::Workbook),
+    /// The element `x:worksheet`, a `Worksheet`.
     Worksheet(spreadsheet::Worksheet),
+    /// The element `xdr:wsDr`, a `WorksheetDrawing`.
     WorksheetDrawing(spreadsheet_drawing::WorksheetDrawing),
+    /// The element `x:MapInfo`, a `XMLMappingMapInfo`.
     XMLMappingMapInfo(spreadsheet::XMLMappingMapInfo),
 }
 
-/// One item of `CT_Model3D`: choice in `CT_Model3D`.
+/// One child element of a choice: choice in `CT_Model3D`.
+///
+/// The schema types that hold it: `CT_Model3D`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum Model3DLightContent {
+    /// The element `am3d:dirLight`, a `DirLight`.
     DirLight(DirLight),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `am3d:ptLight`, a `PtLight`.
     PtLight(PtLight),
+    /// The element `am3d:spotLight`, a `SpotLight`.
     SpotLight(SpotLight),
+    /// The element `am3d:unkLight`, a `UnkLight`.
     UnkLight(UnkLight),
 }
 
-/// One item of `CT_Model3D`: choice in `CT_Model3D`.
+/// One child element of a choice: choice in `CT_Model3D`.
+///
+/// The schema types that hold it: `CT_Model3D`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum Model3DViewportContent {
+    /// The element `am3d:objViewport`, a `ObjViewport`.
     ObjViewport(ObjViewport),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `am3d:winViewport`, a `WinViewport`.
     WinViewport(WinViewport),
 }
 
-/// The tag `am3d:model3d`, schema type `CT_Model3D` of SDK 3.5.1's data.
+/// The `am3d:model3d` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Model3D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1752,21 +2210,34 @@ pub enum Model3DViewportContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Model3d {
+    /// The child that is `AmbientLight`, when there is one.
     pub ambient_light: Option<Box<AmbientLight>>,
+    /// The child that is `AttrSrcUrl`, when there is one.
     pub attr_src_url: Option<Box<AttrSrcUrl>>,
+    /// The child that is `Camera`, which the schema requires.
     pub camera: Box<Camera>,
+    /// The attribute `r:embed`, when the element has it.
     pub embed: Option<String>,
+    /// The child that is `ExtLstModel3DExtensionList`, when there is one.
     pub ext_lst_model3d_extension_list: Option<Box<ExtLstModel3DExtensionList>>,
+    /// The children that are an item of `Model3DLightContent`, in order.
     pub light_content: Vec<Model3DLightContent>,
+    /// The attribute `r:link`, when the element has it.
     pub link: Option<String>,
+    /// The child that is `Raster`, when there is one.
     pub raster: Option<Box<Raster>>,
+    /// The child that is `SpPr`, which the schema requires.
     pub sp_pr: Box<SpPr>,
+    /// The child that is `Trans`, which the schema requires.
     pub trans: Box<Trans>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is an item of `Model3DViewportContent`, which the schema requires.
     pub viewport_content: Box<Model3DViewportContent>,
 }
 
-/// The tag `am3d:objViewport`, schema type `CT_ObjectViewport` of SDK 3.5.1's data.
+/// The `am3d:objViewport` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_ObjectViewport`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1775,12 +2246,16 @@ pub struct Model3d {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ObjViewport {
+    /// The child that is `ExtLstOfficeArtExtensionList`, when there is one.
     pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionList>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `viewportSz`, when the element has it.
     pub viewport_sz: Option<String>,
 }
 
-/// The tag `am3d:orthographic`, schema type `CT_OrthographicProjection` of SDK 3.5.1's data.
+/// The `am3d:orthographic` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_OrthographicProjection`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1789,12 +2264,16 @@ pub struct ObjViewport {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Orthographic {
+    /// The child that is `ExtLstOfficeArtExtensionList`, when there is one.
     pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionList>>,
+    /// The child that is `SzPositiveRatio`, which the schema requires.
     pub sz_positive_ratio: Box<SzPositiveRatio>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `am3d:perspective`, schema type `CT_PerspectiveProjection` of SDK 3.5.1's data.
+/// The `am3d:perspective` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_PerspectiveProjection`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1803,12 +2282,16 @@ pub struct Orthographic {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Perspective {
+    /// The child that is `ExtLstOfficeArtExtensionList`, when there is one.
     pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionList>>,
+    /// The attribute `fov`, when the element has it.
     pub fov: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `am3d:pos`, schema type `CT_Point3D` of SDK 3.5.1's data.
+/// The `am3d:pos` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Point3D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1817,13 +2300,18 @@ pub struct Perspective {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Pos {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `x`, when the element has it.
     pub x: Option<drawing::Coordinate>,
+    /// The attribute `y`, when the element has it.
     pub y: Option<drawing::Coordinate>,
+    /// The attribute `z`, when the element has it.
     pub z: Option<drawing::Coordinate>,
 }
 
-/// The tag `am3d:postTrans`, schema type `CT_Vector3D` of SDK 3.5.1's data.
+/// The `am3d:postTrans` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_Vector3D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1832,13 +2320,18 @@ pub struct Pos {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PostTrans {
+    /// The attribute `dx`, when the element has it.
     pub dx: Option<drawing::Coordinate>,
+    /// The attribute `dy`, when the element has it.
     pub dy: Option<drawing::Coordinate>,
+    /// The attribute `dz`, when the element has it.
     pub dz: Option<drawing::Coordinate>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `am3d:preTrans`, schema type `CT_Vector3D` of SDK 3.5.1's data.
+/// The `am3d:preTrans` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Vector3D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1847,13 +2340,18 @@ pub struct PostTrans {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PreTrans {
+    /// The attribute `dx`, when the element has it.
     pub dx: Option<drawing::Coordinate>,
+    /// The attribute `dy`, when the element has it.
     pub dy: Option<drawing::Coordinate>,
+    /// The attribute `dz`, when the element has it.
     pub dz: Option<drawing::Coordinate>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `am3d:ptLight`, schema type `CT_PointLight` of SDK 3.5.1's data.
+/// The `am3d:ptLight` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_PointLight`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1862,16 +2360,24 @@ pub struct PreTrans {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PtLight {
+    /// The child that is `Clr`, which the schema requires.
     pub clr: Box<Clr>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The child that is `ExtLstOfficeArtExtensionList`, when there is one.
     pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionList>>,
+    /// The child that is `Intensity`, which the schema requires.
     pub intensity: Box<Intensity>,
+    /// The child that is `Pos`, which the schema requires.
     pub pos: Box<Pos>,
+    /// The attribute `rad`, when the element has it.
     pub rad: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `am3d:raster`, schema type `CT_Model3DRaster` of SDK 3.5.1's data.
+/// The `am3d:raster` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Model3DRaster`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1880,13 +2386,18 @@ pub struct PtLight {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Raster {
+    /// The child that is `Blip`, when there is one.
     pub blip: Option<Box<Blip>>,
+    /// The attribute `rName`, when the element has it.
     pub r_name: Option<String>,
+    /// The attribute `rVer`, when the element has it.
     pub r_ver: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `am3d:rot`, schema type `CT_Rotate3D` of SDK 3.5.1's data.
+/// The `am3d:rot` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Rotate3D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1895,13 +2406,18 @@ pub struct Raster {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Rot {
+    /// The attribute `ax`, when the element has it.
     pub ax: Option<String>,
+    /// The attribute `ay`, when the element has it.
     pub ay: Option<String>,
+    /// The attribute `az`, when the element has it.
     pub az: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `am3d:scale`, schema type `CT_Scale3D` of SDK 3.5.1's data.
+/// The `am3d:scale` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Scale3D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1910,13 +2426,18 @@ pub struct Rot {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Scale {
+    /// The child that is `Sx`, which the schema requires.
     pub sx: Box<Sx>,
+    /// The child that is `Sy`, which the schema requires.
     pub sy: Box<Sy>,
+    /// The child that is `SzRatio`, which the schema requires.
     pub sz_ratio: Box<SzRatio>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `am3d:spPr`, schema type `CT_ShapeProperties` of SDK 3.5.1's data.
+/// The `am3d:spPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ShapeProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1925,19 +2446,30 @@ pub struct Scale {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SpPr {
+    /// The child that is `drawing::Apply3DShapeProperties`, when there is one.
     pub apply_3d_shape_properties: Option<Box<drawing::Apply3DShapeProperties>>,
+    /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<drawing::BlackAndWhiteMode>,
+    /// The child that is an item of `drawing::EffectPropertiesContent`, when there is one.
     pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
+    /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionList>>,
+    /// The child that is an item of `drawing::FillPropertiesContent`, when there is one.
     pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
+    /// The child that is an item of `drawing::GeometryContent`, when there is one.
     pub geometry_content: Option<Box<drawing::GeometryContent>>,
+    /// The child that is `drawing::Outline`, when there is one.
     pub outline: Option<Box<drawing::Outline>>,
+    /// The child that is `drawing::Scene3d`, when there is one.
     pub scene3d: Option<Box<drawing::Scene3d>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `drawing::XfrmTransform2D`, when there is one.
     pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2D>>,
 }
 
-/// The tag `am3d:spotLight`, schema type `CT_SpotLight` of SDK 3.5.1's data.
+/// The `am3d:spotLight` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_SpotLight`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1946,18 +2478,28 @@ pub struct SpPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SpotLight {
+    /// The child that is `Clr`, which the schema requires.
     pub clr: Box<Clr>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The child that is `ExtLstOfficeArtExtensionList`, when there is one.
     pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionList>>,
+    /// The child that is `Intensity`, which the schema requires.
     pub intensity: Box<Intensity>,
+    /// The child that is `LookAt`, which the schema requires.
     pub look_at: Box<LookAt>,
+    /// The child that is `Pos`, which the schema requires.
     pub pos: Box<Pos>,
+    /// The attribute `rad`, when the element has it.
     pub rad: Option<String>,
+    /// The attribute `spotAng`, when the element has it.
     pub spot_ang: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `am3d:sx`, schema type `CT_Ratio` of SDK 3.5.1's data.
+/// The `am3d:sx` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Ratio`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1966,12 +2508,16 @@ pub struct SpotLight {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Sx {
+    /// The attribute `d`, when the element has it.
     pub d: Option<String>,
+    /// The attribute `n`, when the element has it.
     pub n: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `am3d:sy`, schema type `CT_Ratio` of SDK 3.5.1's data.
+/// The `am3d:sy` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Ratio`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1980,12 +2526,16 @@ pub struct Sx {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Sy {
+    /// The attribute `d`, when the element has it.
     pub d: Option<String>,
+    /// The attribute `n`, when the element has it.
     pub n: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `am3d:sz`, schema type `CT_PositiveRatio` of SDK 3.5.1's data.
+/// The `am3d:sz` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_PositiveRatio`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1994,10 +2544,12 @@ pub struct Sy {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SzPositiveRatio {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `am3d:sz`, schema type `CT_Ratio` of SDK 3.5.1's data.
+/// The `am3d:sz` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Ratio`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2006,12 +2558,16 @@ pub struct SzPositiveRatio {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SzRatio {
+    /// The attribute `d`, when the element has it.
     pub d: Option<String>,
+    /// The attribute `n`, when the element has it.
     pub n: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `am3d:trans`, schema type `CT_Model3DTransform` of SDK 3.5.1's data.
+/// The `am3d:trans` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Model3DTransform`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2020,16 +2576,24 @@ pub struct SzRatio {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Trans {
+    /// The child that is `ExtLstOfficeArtExtensionList`, when there is one.
     pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionList>>,
+    /// The child that is `MeterPerModelUnit`, when there is one.
     pub meter_per_model_unit: Option<Box<MeterPerModelUnit>>,
+    /// The child that is `PostTrans`, when there is one.
     pub post: Option<Box<PostTrans>>,
+    /// The child that is `PreTrans`, when there is one.
     pub pre: Option<Box<PreTrans>>,
+    /// The child that is `Rot`, when there is one.
     pub rot: Option<Box<Rot>>,
+    /// The child that is `Scale`, when there is one.
     pub scale: Option<Box<Scale>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `am3d:unkLight`, schema type `CT_UnknownLight` of SDK 3.5.1's data.
+/// The `am3d:unkLight` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_UnknownLight`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2038,10 +2602,12 @@ pub struct Trans {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct UnkLight {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `am3d:up`, schema type `CT_Vector3D` of SDK 3.5.1's data.
+/// The `am3d:up` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Vector3D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2050,9 +2616,13 @@ pub struct UnkLight {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Up {
+    /// The attribute `dx`, when the element has it.
     pub dx: Option<drawing::Coordinate>,
+    /// The attribute `dy`, when the element has it.
     pub dy: Option<drawing::Coordinate>,
+    /// The attribute `dz`, when the element has it.
     pub dz: Option<drawing::Coordinate>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -2062,34 +2632,45 @@ pub struct Up {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_drawing_2017_model3d` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `AmbientLight`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn ambient_light(&mut self, _node: &AmbientLight) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `AttrSrcUrl`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn attr_src_url(&mut self, _node: &AttrSrcUrl) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Blip`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn blip(&mut self, _node: &Blip) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Camera`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn camera(&mut self, _node: &Camera) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Clr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn clr(&mut self, _node: &Clr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DirLight`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn dir_light(&mut self, _node: &DirLight) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Ext`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext(&mut self, _node: &Ext) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExtLstModel3DExtensionList`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn ext_lst_model3d_extension_list(
         &mut self,
         _node: &ExtLstModel3DExtensionList,
@@ -2097,6 +2678,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExtLstOfficeArtExtensionList`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn ext_lst_office_art_extension_list(
         &mut self,
         _node: &ExtLstOfficeArtExtensionList,
@@ -2104,18 +2687,25 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Illuminance`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn illuminance(&mut self, _node: &Illuminance) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Intensity`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn intensity(&mut self, _node: &Intensity) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LookAt`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn look_at(&mut self, _node: &LookAt) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MeterPerModelUnit`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn meter_per_model_unit(
         &mut self,
         _node: &MeterPerModelUnit,
@@ -2123,14 +2713,19 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Model3d`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn model3d(&mut self, _node: &Model3d) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Model3DCameraContent`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn model3d_camera(&mut self, _node: &Model3DCameraContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Model3DExtensionContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn model3d_extension(
         &mut self,
         _node: &Model3DExtensionContent,
@@ -2138,10 +2733,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Model3DLightContent`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn model3d_light(&mut self, _node: &Model3DLightContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Model3DViewportContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn model3d_viewport(
         &mut self,
         _node: &Model3DViewportContent,
@@ -2149,88 +2748,116 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ObjViewport`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn obj_viewport(&mut self, _node: &ObjViewport) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Orthographic`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn orthographic(&mut self, _node: &Orthographic) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Perspective`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn perspective(&mut self, _node: &Perspective) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Pos`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn pos(&mut self, _node: &Pos) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PostTrans`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn post_trans(&mut self, _node: &PostTrans) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PreTrans`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn pre_trans(&mut self, _node: &PreTrans) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PtLight`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn pt_light(&mut self, _node: &PtLight) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Raster`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn raster(&mut self, _node: &Raster) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Rot`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn rot(&mut self, _node: &Rot) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Scale`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn scale(&mut self, _node: &Scale) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SpPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sp_pr(&mut self, _node: &SpPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SpotLight`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn spot_light(&mut self, _node: &SpotLight) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Sx`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sx(&mut self, _node: &Sx) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Sy`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sy(&mut self, _node: &Sy) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SzPositiveRatio`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn sz_positive_ratio(&mut self, _node: &SzPositiveRatio) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SzRatio`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sz_ratio(&mut self, _node: &SzRatio) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Trans`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn trans(&mut self, _node: &Trans) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `UnkLight`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn unk_light(&mut self, _node: &UnkLight) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Up`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn up(&mut self, _node: &Up) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `WinViewport`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn win_viewport(&mut self, _node: &WinViewport) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 }
 
-/// The tag `am3d:winViewport`, schema type `CT_WindowViewport` of SDK 3.5.1's data.
+/// The `am3d:winViewport` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_WindowViewport`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2239,7 +2866,9 @@ pub trait Visitor: crate::Visitor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct WinViewport {
+    /// The child that is `ExtLstOfficeArtExtensionList`, when there is one.
     pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionList>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 

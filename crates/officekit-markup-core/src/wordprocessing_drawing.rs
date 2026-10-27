@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `wp` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing`, which files write with the prefix `wp`.
 //!
-//! The namespace is `http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -838,8 +838,8 @@ pub static SHAPE_TEXT_CONTENT_TAGS: officekit_markup_base::Accept = officekit_ma
     tags: &[(NS_WP, "linkedTxbx"), (NS_WP, "txbx")],
 };
 
-/// 20.4.2.12 `posOffset` (Absolute Position Offset): the tag `wp:posOffset`, schema type
-/// `ST_PositionOffset`.
+/// The `wp:posOffset` element, Absolute Position Offset (ECMA-376 Part 1, section 20.4.2.12). Its
+/// schema type is `ST_PositionOffset`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -848,11 +848,17 @@ pub static SHAPE_TEXT_CONTENT_TAGS: officekit_markup_base::Accept = officekit_ma
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AbsolutePositionOffset {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: AbsolutePositionOffsetValue,
 }
 
-/// 20.4.3.3 `ST_PositionOffset` (Absolute Position Offset Value): the text the file carried.
+/// Absolute Position Offset Value, the simple type `ST_PositionOffset` (ECMA-376 Part 1, section
+/// 20.4.3.3), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -862,20 +868,30 @@ pub struct AbsolutePositionOffset {
 #[non_exhaustive]
 pub struct AbsolutePositionOffsetValue(pub String);
 
-/// One item of `CT_Anchor`: local choice in `EG_WrapType`.
+/// One child element of a choice: local choice in `EG_WrapType`.
+///
+/// The schema types that hold it: `CT_Anchor`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum AnchorContent {
+    /// The element `wp:wrapNone`, a `NoTextWrapping`.
     NoTextWrapping(NoTextWrapping),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `wp:wrapSquare`, a `SquareWrapping`.
     SquareWrapping(SquareWrapping),
+    /// The element `wp:wrapThrough`, a `ThroughWrapping`.
     ThroughWrapping(ThroughWrapping),
+    /// The element `wp:wrapTight`, a `TightWrapping`.
     TightWrapping(TightWrapping),
+    /// The element `wp:wrapTopAndBottom`, a `TopAndBottomWrapping`.
     TopAndBottomWrapping(TopAndBottomWrapping),
 }
 
-/// 20.4.2.3 anchor (Anchor for Floating `DrawingML` Object): the tag `wp:anchor`, schema type
-/// `CT_Anchor`.
+/// The `wp:anchor` element, Anchor for Floating `DrawingML` Object (ECMA-376 Part 1, section
+/// 20.4.2.3). Its schema type is `CT_Anchor`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -887,37 +903,65 @@ pub enum AnchorContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AnchorForFloatingDrawingMLObject {
+    /// The attribute `allowOverlap`, when the element has it.
     pub allow_overlap: Option<String>,
+    /// The attribute `wp14:anchorId`, when the element has it.
     pub anchor_id: Option<String>,
+    /// The attribute `behindDoc`, when the element has it.
     pub behind_doc: Option<String>,
+    /// The child that is `CommonDrawingMLNonVisualProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub common_drawingml_non_visual_properties: Option<Box<CommonDrawingMLNonVisualProperties>>,
+    /// The child that is an item of `AnchorContent`, which the schema requires.
     pub content: Box<AnchorContent>,
+    /// The attribute `distB`, when the element has it.
     pub dist_b: Option<DistanceFromText>,
+    /// The attribute `distL`, when the element has it.
     pub dist_l: Option<DistanceFromText>,
+    /// The attribute `distR`, when the element has it.
     pub dist_r: Option<DistanceFromText>,
+    /// The attribute `distT`, when the element has it.
     pub dist_t: Option<DistanceFromText>,
+    /// The child that is `DrawingObjectNonVisualProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub drawing_object_non_visual_properties: Box<DrawingObjectNonVisualProperties>,
+    /// The child that is `DrawingObjectSize`, which the schema requires.
     pub drawing_object_size: Box<DrawingObjectSize>,
+    /// The attribute `wp14:editId`, when the element has it.
     pub edit_id: Option<String>,
+    /// The child that is `ObjectExtentsIncludingEffects`, when there is one.
     pub extents_including_effects: Option<Box<ObjectExtentsIncludingEffects>>,
+    /// The child that is `super::drawing::GraphicObject`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub graphic_object: Box<super::drawing::GraphicObject>,
+    /// The attribute `hidden`, when the element has it.
     pub hidden: Option<String>,
+    /// The child that is `HorizontalPositioning`, which the schema requires.
     pub horizontal_positioning: Box<HorizontalPositioning>,
+    /// The attribute `layoutInCell`, when the element has it.
     pub layout_in_cell: Option<String>,
+    /// The attribute `locked`, when the element has it.
     pub locked: Option<String>,
+    /// The attribute `relativeHeight`, when the element has it.
     pub relative_height: Option<String>,
+    /// The attribute `simplePos`, when the element has it.
     pub simple_pos: Option<String>,
+    /// The child that is `SimplePositioningCoordinates`, which the schema requires.
     pub simple_positioning_coordinates: Box<SimplePositioningCoordinates>,
+    /// The child that is `super::office_word_2010_wordprocessing_drawing::SizeRelH`, when there is
+    /// one.
     pub size_rel_h: Option<Box<super::office_word_2010_wordprocessing_drawing::SizeRelH>>,
+    /// The child that is `super::office_word_2010_wordprocessing_drawing::SizeRelV`, when there is
+    /// one.
     pub size_rel_v: Option<Box<super::office_word_2010_wordprocessing_drawing::SizeRelV>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `VerticalPositioning`, which the schema requires.
     pub vertical_positioning: Box<VerticalPositioning>,
 }
 
-/// 20.4.2.21 bg (Background Formatting): the tag `wp:bg`, schema type `CT_BackgroundFormatting`.
+/// The `wp:bg` element, Background Formatting (ECMA-376 Part 1, section 20.4.2.21). Its schema type
+/// is `CT_BackgroundFormatting`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -929,14 +973,18 @@ pub struct AnchorForFloatingDrawingMLObject {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BackgroundFormatting {
+    /// The child that is an item of `super::drawing::EffectPropertiesContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContent>>,
+    /// The child that is an item of `super::drawing::FillPropertiesContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.4.2.22 `bodyPr` (Body Properties): the tag `wp:bodyPr`, schema type `CT_TextBodyProperties`.
+/// The `wp:bodyPr` element, Body Properties (ECMA-376 Part 1, section 20.4.2.22). Its schema type
+/// is `CT_TextBodyProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -948,38 +996,63 @@ pub struct BackgroundFormatting {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BodyProperties {
+    /// The attribute `anchor`, when the element has it.
     pub anchor: Option<super::drawing::TextAnchoringTypes>,
+    /// The attribute `anchorCtr`, when the element has it.
     pub anchor_ctr: Option<String>,
+    /// The attribute `bIns`, when the element has it.
     pub b_ins: Option<super::drawing::StCoordinate32>,
+    /// The attribute `compatLnSpc`, when the element has it.
     pub compat_ln_spc: Option<String>,
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The attribute `forceAA`, when the element has it.
     pub force_aa: Option<String>,
+    /// The attribute `fromWordArt`, when the element has it.
     pub from_word_art: Option<String>,
+    /// The attribute `horzOverflow`, when the element has it.
     pub horz_overflow: Option<super::drawing::TextHorizontalOverflowTypes>,
+    /// The attribute `lIns`, when the element has it.
     pub l_ins: Option<super::drawing::StCoordinate32>,
+    /// The attribute `numCol`, when the element has it.
     pub num_col: Option<super::drawing::TextColumnCount>,
+    /// The child that is `super::drawing::PresetTextWarp`, when there is one.
     pub preset_text_warp: Option<Box<super::drawing::PresetTextWarp>>,
+    /// The attribute `rIns`, when the element has it.
     pub r_ins: Option<super::drawing::StCoordinate32>,
+    /// The attribute `rot`, when the element has it.
     pub rot: Option<super::drawing::Angle>,
+    /// The attribute `rtlCol`, when the element has it.
     pub rtl_col: Option<String>,
+    /// The child that is `super::drawing::Scene3d`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub scene3d: Option<Box<super::drawing::Scene3d>>,
+    /// The attribute `spcCol`, when the element has it.
     pub spc_col: Option<super::drawing::PositiveCoordinatePoint>,
+    /// The attribute `spcFirstLastPara`, when the element has it.
     pub spc_first_last_para: Option<String>,
+    /// The attribute `tIns`, when the element has it.
     pub t_ins: Option<super::drawing::StCoordinate32>,
+    /// The child that is an item of `super::drawing::Text3DContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text3d_content: Option<Box<super::drawing::Text3DContent>>,
+    /// The child that is an item of `super::drawing::TextAutofitContent`, when there is one.
     pub text_autofit_content: Option<Box<super::drawing::TextAutofitContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `upright`, when the element has it.
     pub upright: Option<String>,
+    /// The attribute `vert`, when the element has it.
     pub vert: Option<super::drawing::VerticalTextTypes>,
+    /// The attribute `vertOverflow`, when the element has it.
     pub vert_overflow: Option<super::drawing::TextVerticalOverflow>,
+    /// The attribute `wrap`, when the element has it.
     pub wrap: Option<super::drawing::TextWrappingTypes>,
 }
 
-/// 20.4.2.4 `cNvGraphicFramePr` (Common `DrawingML` Non-Visual Properties): the tag
-/// `wp:cNvGraphicFramePr`, schema type `CT_NonVisualGraphicFrameProperties`.
+/// The `wp:cNvGraphicFramePr` element, Common `DrawingML` Non-Visual Properties (ECMA-376 Part 1,
+/// section 20.4.2.4). Its schema type is `CT_NonVisualGraphicFrameProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -991,15 +1064,18 @@ pub struct BodyProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CommonDrawingMLNonVisualProperties {
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The child that is `super::drawing::GraphicFrameLocks`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub graphic_frame_locks: Option<Box<super::drawing::GraphicFrameLocks>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.4.2.29 `contentPart` (Content Part): the tag `wp:contentPart`, schema type
-/// `CT_WordprocessingContentPart`.
+/// The `wp:contentPart` element, Content Part (ECMA-376 Part 1, section 20.4.2.29). Its schema type
+/// is `CT_WordprocessingContentPart`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1011,17 +1087,27 @@ pub struct CommonDrawingMLNonVisualProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ContentPart {
+    /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
+    /// The child that is `NvContentPartPr`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub nv_content_part_pr: Option<Box<NvContentPartPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `Xfrm`, when there is one.
     pub xfrm: Option<Box<Xfrm>>,
 }
 
-/// 20.4.3.6 `ST_WrapDistance` (Distance from Text): the text the file carried.
+/// Distance from Text, the simple type `ST_WrapDistance` (ECMA-376 Part 1, section 20.4.3.6), kept
+/// as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1031,20 +1117,30 @@ pub struct ContentPart {
 #[non_exhaustive]
 pub struct DistanceFromText(pub String);
 
-/// One item of `CT_WordprocessingCanvas`: local choice in `CT_WordprocessingCanvas`.
+/// One child element of a choice: local choice in `CT_WordprocessingCanvas`.
+///
+/// The schema types that hold it: `CT_WordprocessingCanvas`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum DrawingCanvasContent {
+    /// The element `wp:contentPart`, a `ContentPart`.
     ContentPart(ContentPart),
+    /// The element `wp:graphicFrame`, a `GraphicalObjectContainer`.
     GraphicalObjectContainer(GraphicalObjectContainer),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `pic:pic`, a `Picture`.
     Picture(super::picture::Picture),
+    /// The element `wp:wsp`, a `WordprocessingMLShape`.
     WordprocessingMLShape(WordprocessingMLShape),
+    /// The element `wp:wgp`, a `WordprocessingMLShapeGroup`.
     WordprocessingMLShapeGroup(WordprocessingMLShapeGroup),
 }
 
-/// 20.4.2.5 `docPr` (Drawing Object Non-Visual Properties): the tag `wp:docPr`, schema type
-/// `CT_NonVisualDrawingProps`.
+/// The `wp:docPr` element, Drawing Object Non-Visual Properties (ECMA-376 Part 1, section
+/// 20.4.2.5). Its schema type is `CT_NonVisualDrawingProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1056,21 +1152,31 @@ pub enum DrawingCanvasContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DrawingObjectNonVisualProperties {
+    /// The child that is `super::drawing::ClickHyperlink`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub click_hyperlink: Option<Box<super::drawing::ClickHyperlink>>,
+    /// The attribute `descr`, when the element has it.
     pub descr: Option<String>,
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The attribute `hidden`, when the element has it.
     pub hidden: Option<String>,
+    /// The child that is `super::drawing::HyperlinkForHover`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHover>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<super::drawing::DrawingElementID>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.4.2.7 extent (Drawing Object Size): the tag `wp:extent`, schema type `CT_PositiveSize2D`.
+/// The `wp:extent` element, Drawing Object Size (ECMA-376 Part 1, section 20.4.2.7). Its schema
+/// type is `CT_PositiveSize2D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1079,12 +1185,15 @@ pub struct DrawingObjectNonVisualProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DrawingObjectSize {
+    /// The attribute `cx`, when the element has it.
     pub cx: Option<super::drawing::PositiveCoordinate>,
+    /// The attribute `cy`, when the element has it.
     pub cy: Option<super::drawing::PositiveCoordinate>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.4.2.30 `extLst` (Extension List): the tag `wp:extLst`, schema type
+/// The `wp:extLst` element, Extension List (ECMA-376 Part 1, section 20.4.2.30). Its schema type is
 /// `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
@@ -1097,13 +1206,15 @@ pub struct DrawingObjectSize {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtensionList {
+    /// The children that are `super::drawing::Extension`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension: Vec<super::drawing::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.4.2.31 `graphicFrame` (Graphical object container): the tag `wp:graphicFrame`, schema type
-/// `CT_GraphicFrame`.
+/// The `wp:graphicFrame` element, Graphical object container (ECMA-376 Part 1, section 20.4.2.31).
+/// Its schema type is `CT_GraphicFrame`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1115,747 +1226,25 @@ pub struct ExtensionList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GraphicalObjectContainer {
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `super::drawing::GraphicObject`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub graphic_object: Box<super::drawing::GraphicObject>,
+    /// The child that is `NonVisualDrawingProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
+    /// The child that is `NonVisualGraphicFrameDrawingProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_graphic_frame_drawing_properties: Box<NonVisualGraphicFrameDrawingProperties>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `Xfrm`, which the schema requires.
     pub xfrm: Box<Xfrm>,
 }
 
-/// 20.4.2.32 `grpSp` (Group Shape): the tag `wp:grpSp`, schema type `CT_WordprocessingGroup`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct GroupShape {
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<GroupShapeContent>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_drawing_properties: Option<Box<NonVisualDrawingProperties>>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_group_shape_drawing_properties: Box<NonVisualGroupShapeDrawingProperties>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub properties: Box<GroupShapeProperties>,
-    pub unknown: officekit_markup_base::Unknown,
-}
-
-/// One item of `CT_WordprocessingGroup`: local choice in `CT_WordprocessingGroup`.
-#[derive(Clone, Debug, Eq, PartialEq)]
-#[non_exhaustive]
-pub enum GroupShapeContent {
-    ContentPart(ContentPart),
-    GraphicalObjectContainer(GraphicalObjectContainer),
-    GroupShape(GroupShape),
-    Other(Node),
-    Picture(super::picture::Picture),
-    WordprocessingMLShape(WordprocessingMLShape),
-}
-
-/// 20.4.2.33 `grpSpPr` (Group Shape Properties): the tag `wp:grpSpPr`, schema type
-/// `CT_GroupShapeProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct GroupShapeProperties {
-    pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContent>>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContent>>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub scene3d: Option<Box<super::drawing::Scene3d>>,
-    pub unknown: officekit_markup_base::Unknown,
-    pub xfrm_group_transform2d: Option<Box<super::drawing::XfrmGroupTransform2D>>,
-}
-
-/// 20.4.2.10 `positionH` (Horizontal Positioning): the tag `wp:positionH`, schema type `CT_PosH`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct HorizontalPositioning {
-    pub content: Box<HorizontalPositioningContent>,
-    pub relative_from: Option<HorizontalRelativePositioning>,
-    pub unknown: officekit_markup_base::Unknown,
-}
-
-/// One item of `CT_PosH`: local choice in `CT_PosH`.
-#[derive(Clone, Debug, Eq, PartialEq)]
-#[non_exhaustive]
-pub enum HorizontalPositioningContent {
-    AbsolutePositionOffset(AbsolutePositionOffset),
-    Other(Node),
-    PctPosHOffset(super::office_word_2010_wordprocessing_drawing::PctPosHOffset),
-    RelativeHorizontalAlignment(RelativeHorizontalAlignment),
-}
-
-/// 20.4.3.4 `ST_RelFromH` (Horizontal Relative Positioning): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct HorizontalRelativePositioning(pub String);
-/// The members of `ST_RelFromH`, in alphabetical order.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
-#[non_exhaustive]
-pub enum HorizontalRelativePositioningMember {
-    Character,
-    Column,
-    InsideMargin,
-    LeftMargin,
-    Margin,
-    OutsideMargin,
-    Page,
-    RightMargin,
-}
-
-/// 20.4.2.8 inline (Inline `DrawingML` Object): the tag `wp:inline`, schema type `CT_Inline`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct InlineDrawingMLObject {
-    pub anchor_id: Option<String>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub common_drawingml_non_visual_properties: Option<Box<CommonDrawingMLNonVisualProperties>>,
-    pub dist_b: Option<DistanceFromText>,
-    pub dist_l: Option<DistanceFromText>,
-    pub dist_r: Option<DistanceFromText>,
-    pub dist_t: Option<DistanceFromText>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub drawing_object_non_visual_properties: Box<DrawingObjectNonVisualProperties>,
-    pub drawing_object_size: Box<DrawingObjectSize>,
-    pub edit_id: Option<String>,
-    pub extents_including_effects: Option<Box<ObjectExtentsIncludingEffects>>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub graphic_object: Box<super::drawing::GraphicObject>,
-    pub unknown: officekit_markup_base::Unknown,
-}
-
-/// 20.4.2.15 `wrapNone` (No Text Wrapping): the tag `wp:wrapNone`, schema type `CT_WrapNone`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct NoTextWrapping {
-    pub unknown: officekit_markup_base::Unknown,
-}
-
-/// 20.4.2.23 `cNvCnPr` (Non-Visual Connector Shape Drawing Properties): the tag `wp:cNvCnPr`,
-/// schema type `CT_NonVisualConnectorProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct NonVisualConnectorShapeDrawingProperties {
-    pub connection_end: Option<Box<super::drawing::ConnectionEnd>>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub connection_shape_locks: Option<Box<super::drawing::ConnectionShapeLocks>>,
-    pub connection_start: Option<Box<super::drawing::ConnectionStart>>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
-    pub unknown: officekit_markup_base::Unknown,
-}
-
-/// 20.4.2.24 `cNvContentPartPr` (Non-Visual Content Part Drawing Properties): the tag
-/// `wp:cNvContentPartPr`, schema type `CT_NonVisualContentPartProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct NonVisualContentPartDrawingProperties {
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content_part_locks: Option<Box<super::drawing::ContentPartLocks>>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
-    pub is_comment: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
-}
-
-/// 20.4.2.27 `cNvPr` (Non-Visual Drawing Properties): the tag `wp:cNvPr`, schema type
-/// `CT_NonVisualDrawingProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct NonVisualDrawingProperties {
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub click_hyperlink: Option<Box<super::drawing::ClickHyperlink>>,
-    pub descr: Option<String>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
-    pub hidden: Option<String>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHover>>,
-    pub id: Option<super::drawing::DrawingElementID>,
-    pub name: Option<String>,
-    pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
-}
-
-/// 20.4.2.28 `cNvSpPr` (Non-Visual Drawing Properties for a Shape): the tag `wp:cNvSpPr`, schema
-/// type `CT_NonVisualDrawingShapeProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct NonVisualDrawingPropertiesForAShape {
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub locks: Option<Box<super::drawing::ShapeLocks>>,
-    pub tx_box: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
-}
-
-/// 20.4.2.25 `cNvFrPr` (Non-Visual Graphic Frame Drawing Properties): the tag `wp:cNvFrPr`, schema
-/// type `CT_NonVisualGraphicFrameProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct NonVisualGraphicFrameDrawingProperties {
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub graphic_frame_locks: Option<Box<super::drawing::GraphicFrameLocks>>,
-    pub unknown: officekit_markup_base::Unknown,
-}
-
-/// 20.4.2.26 `cNvGrpSpPr` (Non-Visual Group Shape Drawing Properties): the tag `wp:cNvGrpSpPr`,
-/// schema type `CT_NonVisualGroupDrawingShapeProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct NonVisualGroupShapeDrawingProperties {
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub group_shape_locks: Option<Box<super::drawing::GroupShapeLocks>>,
-    pub unknown: officekit_markup_base::Unknown,
-}
-
-/// The tag `wp:nvContentPartPr`, schema type `CT_WordprocessingContentPartNonVisual`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct NvContentPartPr {
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_content_part_drawing_properties:
-        Option<Box<NonVisualContentPartDrawingProperties>>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_drawing_properties: Option<Box<NonVisualDrawingProperties>>,
-    pub unknown: officekit_markup_base::Unknown,
-}
-
-/// 20.4.2.6 `effectExtent` (Object Extents Including Effects): the tag `wp:effectExtent`, schema
-/// type `CT_EffectExtent`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct ObjectExtentsIncludingEffects {
-    pub b: Option<super::drawing::Coordinate>,
-    pub l: Option<super::drawing::Coordinate>,
-    pub r: Option<super::drawing::Coordinate>,
-    pub t: Option<super::drawing::Coordinate>,
-    pub unknown: officekit_markup_base::Unknown,
-}
-
-/// 20.4.2.1 align (Relative Horizontal Alignment): the tag `wp:align`, schema type `ST_AlignH`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct RelativeHorizontalAlignment {
-    pub unknown: officekit_markup_base::Unknown,
-    pub value: RelativeHorizontalAlignmentPositions,
-}
-
-/// 20.4.3.1 `ST_AlignH` (Relative Horizontal Alignment Positions): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct RelativeHorizontalAlignmentPositions(pub String);
-/// The members of `ST_AlignH`, in alphabetical order.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
-#[non_exhaustive]
-pub enum RelativeHorizontalAlignmentPositionsMember {
-    Center,
-    Inside,
-    Left,
-    Outside,
-    Right,
-}
-
-/// 20.4.2.2 align (Relative Vertical Alignment): the tag `wp:align`, schema type `ST_AlignV`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct RelativeVerticalAlignment {
-    pub unknown: officekit_markup_base::Unknown,
-    pub value: VerticalAlignmentDefinition,
-}
-
-/// 20.4.2.38 `txbxContent` (Rich Text Box Content Container): the tag `wp:txbxContent`, schema type
-/// `CT_TxbxContent`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct RichTextBoxContentContainer {
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<super::wordprocessing::BlockContent>,
-    pub unknown: officekit_markup_base::Unknown,
-}
-
-/// One item of `CT_WordprocessingShape`: local choice in `CT_WordprocessingShape`.
-#[derive(Clone, Debug, Eq, PartialEq)]
-#[non_exhaustive]
-pub enum ShapeNonVisualPropertiesContent {
-    NonVisualConnectorShapeDrawingProperties(NonVisualConnectorShapeDrawingProperties),
-    NonVisualDrawingPropertiesForAShape(NonVisualDrawingPropertiesForAShape),
-    Other(Node),
-}
-
-/// 20.4.2.35 `spPr` (Shape Properties): the tag `wp:spPr`, schema type `CT_ShapeProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct ShapeProperties {
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub apply_3d: Option<Box<super::drawing::Apply3DShapeProperties>>,
-    pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContent>>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContent>>,
-    pub geometry_content: Option<Box<super::drawing::GeometryContent>>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub outline: Option<Box<super::drawing::Outline>>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub scene3d: Option<Box<super::drawing::Scene3d>>,
-    pub unknown: officekit_markup_base::Unknown,
-    pub xfrm_transform2d: Option<Box<super::drawing::XfrmTransform2D>>,
-}
-
-/// 20.4.2.36 style (Shape Style): the tag `wp:style`, schema type `CT_ShapeStyle`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct ShapeStyle {
-    pub effect_reference: Box<super::drawing::EffectReference>,
-    pub fill_reference: Box<super::drawing::FillReference>,
-    pub font_reference: Box<super::drawing::FontReference>,
-    pub line_reference: Box<super::drawing::LineReference>,
-    pub unknown: officekit_markup_base::Unknown,
-}
-
-/// One item of `CT_WordprocessingShape`: local choice in `CT_WordprocessingShape`.
-#[derive(Clone, Debug, Eq, PartialEq)]
-#[non_exhaustive]
-pub enum ShapeTextContent {
-    Other(Node),
-    TextualContentsOfShapeLinkedTxbx(TextualContentsOfShapeLinkedTxbx),
-    TextualContentsOfShapeTxbx(TextualContentsOfShapeTxbx),
-}
-
-/// 20.4.2.13 `simplePos` (Simple Positioning Coordinates): the tag `wp:simplePos`, schema type
-/// `CT_Point2D`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct SimplePositioningCoordinates {
-    pub unknown: officekit_markup_base::Unknown,
-    pub x: Option<super::drawing::Coordinate>,
-    pub y: Option<super::drawing::Coordinate>,
-}
-
-/// 20.4.2.17 `wrapSquare` (Square Wrapping): the tag `wp:wrapSquare`, schema type `CT_WrapSquare`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct SquareWrapping {
-    pub dist_b: Option<DistanceFromText>,
-    pub dist_l: Option<DistanceFromText>,
-    pub dist_r: Option<DistanceFromText>,
-    pub dist_t: Option<DistanceFromText>,
-    pub object_extents_including_effects: Option<Box<ObjectExtentsIncludingEffects>>,
-    pub unknown: officekit_markup_base::Unknown,
-    pub wrap_text: Option<TextWrappingLocation>,
-}
-
-/// 20.4.3.7 `ST_WrapText` (Text Wrapping Location): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct TextWrappingLocation(pub String);
-/// The members of `ST_WrapText`, in alphabetical order.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
-#[non_exhaustive]
-pub enum TextWrappingLocationMember {
-    BothSides,
-    Largest,
-    Left,
-    Right,
-}
-
-/// 20.4.2.34 `linkedTxbx` (Textual contents of shape): the tag `wp:linkedTxbx`, schema type
-/// `CT_LinkedTextboxInformation`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct TextualContentsOfShapeLinkedTxbx {
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
-    pub id: Option<String>,
-    pub seq: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
-}
-
-/// 20.4.2.37 txbx (Textual contents of shape): the tag `wp:txbx`, schema type `CT_TextboxInfo`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct TextualContentsOfShapeTxbx {
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
-    pub id: Option<String>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub rich_text_box_content_container: Box<RichTextBoxContentContainer>,
-    pub unknown: officekit_markup_base::Unknown,
-}
-
-/// 20.4.2.18 `wrapThrough` (Through Wrapping): the tag `wp:wrapThrough`, schema type
-/// `CT_WrapThrough`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct ThroughWrapping {
-    pub dist_l: Option<DistanceFromText>,
-    pub dist_r: Option<DistanceFromText>,
-    pub polygon: Box<WrappingPolygon>,
-    pub unknown: officekit_markup_base::Unknown,
-    pub wrap_text: Option<TextWrappingLocation>,
-}
-
-/// 20.4.2.19 `wrapTight` (Tight Wrapping): the tag `wp:wrapTight`, schema type `CT_WrapTight`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct TightWrapping {
-    pub dist_l: Option<DistanceFromText>,
-    pub dist_r: Option<DistanceFromText>,
-    pub polygon: Box<WrappingPolygon>,
-    pub unknown: officekit_markup_base::Unknown,
-    pub wrap_text: Option<TextWrappingLocation>,
-}
-
-/// 20.4.2.20 `wrapTopAndBottom` (Top and Bottom Wrapping): the tag `wp:wrapTopAndBottom`, schema
-/// type `CT_WrapTopBottom`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct TopAndBottomWrapping {
-    pub dist_b: Option<DistanceFromText>,
-    pub dist_t: Option<DistanceFromText>,
-    pub object_extents_including_effects: Option<Box<ObjectExtentsIncludingEffects>>,
-    pub unknown: officekit_markup_base::Unknown,
-}
-
-/// 20.4.3.2 `ST_AlignV` (Vertical Alignment Definition): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct VerticalAlignmentDefinition(pub String);
-/// The members of `ST_AlignV`, in alphabetical order.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
-#[non_exhaustive]
-pub enum VerticalAlignmentDefinitionMember {
-    Bottom,
-    Center,
-    Inside,
-    Outside,
-    Top,
-}
-
-/// 20.4.2.11 `positionV` (Vertical Positioning): the tag `wp:positionV`, schema type `CT_PosV`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct VerticalPositioning {
-    pub content: Box<VerticalPositioningContent>,
-    pub relative_from: Option<VerticalRelativePositioning>,
-    pub unknown: officekit_markup_base::Unknown,
-}
-
-/// One item of `CT_PosV`: local choice in `CT_PosV`.
-#[derive(Clone, Debug, Eq, PartialEq)]
-#[non_exhaustive]
-pub enum VerticalPositioningContent {
-    AbsolutePositionOffset(AbsolutePositionOffset),
-    Other(Node),
-    PctPosVOffset(super::office_word_2010_wordprocessing_drawing::PctPosVOffset),
-    RelativeVerticalAlignment(RelativeVerticalAlignment),
-}
-
-/// 20.4.3.5 `ST_RelFromV` (Vertical Relative Positioning): the text the file carried.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct VerticalRelativePositioning(pub String);
-/// The members of `ST_RelFromV`, in alphabetical order.
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
-#[non_exhaustive]
-pub enum VerticalRelativePositioningMember {
-    BottomMargin,
-    InsideMargin,
-    Line,
-    Margin,
-    OutsideMargin,
-    Page,
-    Paragraph,
-    TopMargin,
-}
-
-/// 20.4.2.40 whole (Whole E2O Formatting): the tag `wp:whole`, schema type `CT_WholeE2oFormatting`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct WholeE2OFormatting {
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Option<Box<super::drawing::EffectPropertiesContent>>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub outline: Option<Box<super::drawing::Outline>>,
-    pub unknown: officekit_markup_base::Unknown,
-}
-
-/// 20.4.2.41 wpc (`WordprocessingML` Drawing Canvas): the tag `wp:wpc`, schema type
-/// `CT_WordprocessingCanvas`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct WordprocessingMLDrawingCanvas {
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub background_formatting: Option<Box<BackgroundFormatting>>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<DrawingCanvasContent>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
-    pub unknown: officekit_markup_base::Unknown,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub whole_e2o_formatting: Option<Box<WholeE2OFormatting>>,
-}
-
-/// 20.4.2.42 wsp (`WordprocessingML` Shape): the tag `wp:wsp`, schema type
-/// `CT_WordprocessingShape`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct WordprocessingMLShape {
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub body_properties: Box<BodyProperties>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_drawing_properties: Option<Box<NonVisualDrawingProperties>>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_properties_content: Box<ShapeNonVisualPropertiesContent>,
-    pub normal_east_asian_flow: Option<String>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub properties: Box<ShapeProperties>,
-    pub style: Option<Box<ShapeStyle>>,
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub text_content: Option<Box<ShapeTextContent>>,
-    pub unknown: officekit_markup_base::Unknown,
-}
-
-/// 20.4.2.39 wgp (`WordprocessingML` Shape Group): the tag `wp:wgp`, schema type
+/// The `wp:grpSp` element, Group Shape (ECMA-376 Part 1, section 20.4.2.32). Its schema type is
 /// `CT_WordprocessingGroup`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
@@ -1867,21 +1256,1002 @@ pub struct WordprocessingMLShape {
 #[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct WordprocessingMLShapeGroup {
+pub struct GroupShape {
+    /// The children that are an item of `GroupShapeContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<GroupShapeContent>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `NonVisualDrawingProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_drawing_properties: Option<Box<NonVisualDrawingProperties>>,
+    /// The child that is `NonVisualGroupShapeDrawingProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_group_shape_drawing_properties: Box<NonVisualGroupShapeDrawingProperties>,
+    /// The child that is `GroupShapeProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub shape_properties: Box<GroupShapeProperties>,
+    pub properties: Box<GroupShapeProperties>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.4.2.16 `wrapPolygon` (Wrapping Polygon): the tag `wp:wrapPolygon`, schema type `CT_WrapPath`.
+/// One child element of a choice: local choice in `CT_WordprocessingGroup`.
+///
+/// The schema types that hold it: `CT_WordprocessingGroup`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
+#[derive(Clone, Debug, Eq, PartialEq)]
+#[non_exhaustive]
+pub enum GroupShapeContent {
+    /// The element `wp:contentPart`, a `ContentPart`.
+    ContentPart(ContentPart),
+    /// The element `wp:graphicFrame`, a `GraphicalObjectContainer`.
+    GraphicalObjectContainer(GraphicalObjectContainer),
+    /// The element `wp:grpSp`, a `GroupShape`.
+    GroupShape(GroupShape),
+    /// An element or node the schemas do not declare at this position.
+    Other(Node),
+    /// The element `pic:pic`, a `Picture`.
+    Picture(super::picture::Picture),
+    /// The element `wp:wsp`, a `WordprocessingMLShape`.
+    WordprocessingMLShape(WordprocessingMLShape),
+}
+
+/// The `wp:grpSpPr` element, Group Shape Properties (ECMA-376 Part 1, section 20.4.2.33). Its
+/// schema type is `CT_GroupShapeProperties`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct GroupShapeProperties {
+    /// The attribute `bwMode`, when the element has it.
+    pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
+    /// The child that is an item of `super::drawing::EffectPropertiesContent`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContent>>,
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The child that is an item of `super::drawing::FillPropertiesContent`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContent>>,
+    /// The child that is `super::drawing::Scene3d`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub scene3d: Option<Box<super::drawing::Scene3d>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `super::drawing::XfrmGroupTransform2D`, when there is one.
+    pub xfrm_group_transform2d: Option<Box<super::drawing::XfrmGroupTransform2D>>,
+}
+
+/// The `wp:positionH` element, Horizontal Positioning (ECMA-376 Part 1, section 20.4.2.10). Its
+/// schema type is `CT_PosH`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct HorizontalPositioning {
+    /// The child that is an item of `HorizontalPositioningContent`, which the schema requires.
+    pub content: Box<HorizontalPositioningContent>,
+    /// The attribute `relativeFrom`, when the element has it.
+    pub relative_from: Option<HorizontalRelativePositioning>,
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+/// One child element of a choice: local choice in `CT_PosH`.
+///
+/// The schema types that hold it: `CT_PosH`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
+#[derive(Clone, Debug, Eq, PartialEq)]
+#[non_exhaustive]
+pub enum HorizontalPositioningContent {
+    /// The element `wp:posOffset`, a `AbsolutePositionOffset`.
+    AbsolutePositionOffset(AbsolutePositionOffset),
+    /// An element or node the schemas do not declare at this position.
+    Other(Node),
+    /// The element `wp14:pctPosHOffset`, a `PctPosHOffset`.
+    PctPosHOffset(super::office_word_2010_wordprocessing_drawing::PctPosHOffset),
+    /// The element `wp:align`, a `RelativeHorizontalAlignment`.
+    RelativeHorizontalAlignment(RelativeHorizontalAlignment),
+}
+
+/// Horizontal Relative Positioning, the simple type `ST_RelFromH` (ECMA-376 Part 1, section
+/// 20.4.3.4), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct HorizontalRelativePositioning(pub String);
+/// The members of the enumeration `ST_RelFromH`, in alphabetical order. `as_str` gives the text of
+/// a member.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[non_exhaustive]
+pub enum HorizontalRelativePositioningMember {
+    /// The member written `character`.
+    Character,
+    /// The member written `column`.
+    Column,
+    /// The member written `insideMargin`.
+    InsideMargin,
+    /// The member written `leftMargin`.
+    LeftMargin,
+    /// The member written `margin`.
+    Margin,
+    /// The member written `outsideMargin`.
+    OutsideMargin,
+    /// The member written `page`.
+    Page,
+    /// The member written `rightMargin`.
+    RightMargin,
+}
+
+/// The `wp:inline` element, Inline `DrawingML` Object (ECMA-376 Part 1, section 20.4.2.8). Its
+/// schema type is `CT_Inline`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct InlineDrawingMLObject {
+    /// The attribute `wp14:anchorId`, when the element has it.
+    pub anchor_id: Option<String>,
+    /// The child that is `CommonDrawingMLNonVisualProperties`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub common_drawingml_non_visual_properties: Option<Box<CommonDrawingMLNonVisualProperties>>,
+    /// The attribute `distB`, when the element has it.
+    pub dist_b: Option<DistanceFromText>,
+    /// The attribute `distL`, when the element has it.
+    pub dist_l: Option<DistanceFromText>,
+    /// The attribute `distR`, when the element has it.
+    pub dist_r: Option<DistanceFromText>,
+    /// The attribute `distT`, when the element has it.
+    pub dist_t: Option<DistanceFromText>,
+    /// The child that is `DrawingObjectNonVisualProperties`, which the schema requires.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub drawing_object_non_visual_properties: Box<DrawingObjectNonVisualProperties>,
+    /// The child that is `DrawingObjectSize`, which the schema requires.
+    pub drawing_object_size: Box<DrawingObjectSize>,
+    /// The attribute `wp14:editId`, when the element has it.
+    pub edit_id: Option<String>,
+    /// The child that is `ObjectExtentsIncludingEffects`, when there is one.
+    pub extents_including_effects: Option<Box<ObjectExtentsIncludingEffects>>,
+    /// The child that is `super::drawing::GraphicObject`, which the schema requires.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub graphic_object: Box<super::drawing::GraphicObject>,
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+/// The `wp:wrapNone` element, No Text Wrapping (ECMA-376 Part 1, section 20.4.2.15). Its schema
+/// type is `CT_WrapNone`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct NoTextWrapping {
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+/// The `wp:cNvCnPr` element, Non-Visual Connector Shape Drawing Properties (ECMA-376 Part 1,
+/// section 20.4.2.23). Its schema type is `CT_NonVisualConnectorProperties`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct NonVisualConnectorShapeDrawingProperties {
+    /// The child that is `super::drawing::ConnectionEnd`, when there is one.
+    pub connection_end: Option<Box<super::drawing::ConnectionEnd>>,
+    /// The child that is `super::drawing::ConnectionShapeLocks`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub connection_shape_locks: Option<Box<super::drawing::ConnectionShapeLocks>>,
+    /// The child that is `super::drawing::ConnectionStart`, when there is one.
+    pub connection_start: Option<Box<super::drawing::ConnectionStart>>,
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+/// The `wp:cNvContentPartPr` element, Non-Visual Content Part Drawing Properties (ECMA-376 Part 1,
+/// section 20.4.2.24). Its schema type is `CT_NonVisualContentPartProperties`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct NonVisualContentPartDrawingProperties {
+    /// The child that is `super::drawing::ContentPartLocks`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub content_part_locks: Option<Box<super::drawing::ContentPartLocks>>,
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The attribute `isComment`, when the element has it.
+    pub is_comment: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+/// The `wp:cNvPr` element, Non-Visual Drawing Properties (ECMA-376 Part 1, section 20.4.2.27). Its
+/// schema type is `CT_NonVisualDrawingProps`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct NonVisualDrawingProperties {
+    /// The child that is `super::drawing::ClickHyperlink`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub click_hyperlink: Option<Box<super::drawing::ClickHyperlink>>,
+    /// The attribute `descr`, when the element has it.
+    pub descr: Option<String>,
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The attribute `hidden`, when the element has it.
+    pub hidden: Option<String>,
+    /// The child that is `super::drawing::HyperlinkForHover`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHover>>,
+    /// The attribute `id`, when the element has it.
+    pub id: Option<super::drawing::DrawingElementID>,
+    /// The attribute `name`, when the element has it.
+    pub name: Option<String>,
+    /// The attribute `title`, when the element has it.
+    pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+/// The `wp:cNvSpPr` element, Non-Visual Drawing Properties for a Shape (ECMA-376 Part 1, section
+/// 20.4.2.28). Its schema type is `CT_NonVisualDrawingShapeProps`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct NonVisualDrawingPropertiesForAShape {
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The child that is `super::drawing::ShapeLocks`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub locks: Option<Box<super::drawing::ShapeLocks>>,
+    /// The attribute `txBox`, when the element has it.
+    pub tx_box: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+/// The `wp:cNvFrPr` element, Non-Visual Graphic Frame Drawing Properties (ECMA-376 Part 1, section
+/// 20.4.2.25). Its schema type is `CT_NonVisualGraphicFrameProperties`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct NonVisualGraphicFrameDrawingProperties {
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The child that is `super::drawing::GraphicFrameLocks`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub graphic_frame_locks: Option<Box<super::drawing::GraphicFrameLocks>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+/// The `wp:cNvGrpSpPr` element, Non-Visual Group Shape Drawing Properties (ECMA-376 Part 1, section
+/// 20.4.2.26). Its schema type is `CT_NonVisualGroupDrawingShapeProps`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct NonVisualGroupShapeDrawingProperties {
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The child that is `super::drawing::GroupShapeLocks`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub group_shape_locks: Option<Box<super::drawing::GroupShapeLocks>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+/// The `wp:nvContentPartPr` element. Its schema type is `CT_WordprocessingContentPartNonVisual`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct NvContentPartPr {
+    /// The child that is `NonVisualContentPartDrawingProperties`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub non_visual_content_part_drawing_properties:
+        Option<Box<NonVisualContentPartDrawingProperties>>,
+    /// The child that is `NonVisualDrawingProperties`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub non_visual_drawing_properties: Option<Box<NonVisualDrawingProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+/// The `wp:effectExtent` element, Object Extents Including Effects (ECMA-376 Part 1, section
+/// 20.4.2.6). Its schema type is `CT_EffectExtent`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct ObjectExtentsIncludingEffects {
+    /// The attribute `b`, when the element has it.
+    pub b: Option<super::drawing::Coordinate>,
+    /// The attribute `l`, when the element has it.
+    pub l: Option<super::drawing::Coordinate>,
+    /// The attribute `r`, when the element has it.
+    pub r: Option<super::drawing::Coordinate>,
+    /// The attribute `t`, when the element has it.
+    pub t: Option<super::drawing::Coordinate>,
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+/// The `wp:align` element, Relative Horizontal Alignment (ECMA-376 Part 1, section 20.4.2.1). Its
+/// schema type is `ST_AlignH`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct RelativeHorizontalAlignment {
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
+    pub value: RelativeHorizontalAlignmentPositions,
+}
+
+/// Relative Horizontal Alignment Positions, the simple type `ST_AlignH` (ECMA-376 Part 1, section
+/// 20.4.3.1), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct RelativeHorizontalAlignmentPositions(pub String);
+/// The members of the enumeration `ST_AlignH`, in alphabetical order. `as_str` gives the text of a
+/// member.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[non_exhaustive]
+pub enum RelativeHorizontalAlignmentPositionsMember {
+    /// The member written `center`.
+    Center,
+    /// The member written `inside`.
+    Inside,
+    /// The member written `left`.
+    Left,
+    /// The member written `outside`.
+    Outside,
+    /// The member written `right`.
+    Right,
+}
+
+/// The `wp:align` element, Relative Vertical Alignment (ECMA-376 Part 1, section 20.4.2.2). Its
+/// schema type is `ST_AlignV`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct RelativeVerticalAlignment {
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
+    pub value: VerticalAlignmentDefinition,
+}
+
+/// The `wp:txbxContent` element, Rich Text Box Content Container (ECMA-376 Part 1, section
+/// 20.4.2.38). Its schema type is `CT_TxbxContent`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct RichTextBoxContentContainer {
+    /// The children that are an item of `super::wordprocessing::BlockContent`, in order.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub content: Vec<super::wordprocessing::BlockContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+/// One child element of a choice: local choice in `CT_WordprocessingShape`.
+///
+/// The schema types that hold it: `CT_WordprocessingShape`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
+#[derive(Clone, Debug, Eq, PartialEq)]
+#[non_exhaustive]
+pub enum ShapeNonVisualPropertiesContent {
+    /// The element `wp:cNvCnPr`, a `NonVisualConnectorShapeDrawingProperties`.
+    NonVisualConnectorShapeDrawingProperties(NonVisualConnectorShapeDrawingProperties),
+    /// The element `wp:cNvSpPr`, a `NonVisualDrawingPropertiesForAShape`.
+    NonVisualDrawingPropertiesForAShape(NonVisualDrawingPropertiesForAShape),
+    /// An element or node the schemas do not declare at this position.
+    Other(Node),
+}
+
+/// The `wp:spPr` element, Shape Properties (ECMA-376 Part 1, section 20.4.2.35). Its schema type is
+/// `CT_ShapeProperties`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct ShapeProperties {
+    /// The child that is `super::drawing::Apply3DShapeProperties`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub apply_3d: Option<Box<super::drawing::Apply3DShapeProperties>>,
+    /// The attribute `bwMode`, when the element has it.
+    pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
+    /// The child that is an item of `super::drawing::EffectPropertiesContent`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContent>>,
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The child that is an item of `super::drawing::FillPropertiesContent`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContent>>,
+    /// The child that is an item of `super::drawing::GeometryContent`, when there is one.
+    pub geometry_content: Option<Box<super::drawing::GeometryContent>>,
+    /// The child that is `super::drawing::Outline`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub outline: Option<Box<super::drawing::Outline>>,
+    /// The child that is `super::drawing::Scene3d`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub scene3d: Option<Box<super::drawing::Scene3d>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `super::drawing::XfrmTransform2D`, when there is one.
+    pub xfrm_transform2d: Option<Box<super::drawing::XfrmTransform2D>>,
+}
+
+/// The `wp:style` element, Shape Style (ECMA-376 Part 1, section 20.4.2.36). Its schema type is
+/// `CT_ShapeStyle`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct ShapeStyle {
+    /// The child that is `super::drawing::EffectReference`, which the schema requires.
+    pub effect_reference: Box<super::drawing::EffectReference>,
+    /// The child that is `super::drawing::FillReference`, which the schema requires.
+    pub fill_reference: Box<super::drawing::FillReference>,
+    /// The child that is `super::drawing::FontReference`, which the schema requires.
+    pub font_reference: Box<super::drawing::FontReference>,
+    /// The child that is `super::drawing::LineReference`, which the schema requires.
+    pub line_reference: Box<super::drawing::LineReference>,
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+/// One child element of a choice: local choice in `CT_WordprocessingShape`.
+///
+/// The schema types that hold it: `CT_WordprocessingShape`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
+#[derive(Clone, Debug, Eq, PartialEq)]
+#[non_exhaustive]
+pub enum ShapeTextContent {
+    /// An element or node the schemas do not declare at this position.
+    Other(Node),
+    /// The element `wp:linkedTxbx`, a `TextualContentsOfShapeLinkedTxbx`.
+    TextualContentsOfShapeLinkedTxbx(TextualContentsOfShapeLinkedTxbx),
+    /// The element `wp:txbx`, a `TextualContentsOfShapeTxbx`.
+    TextualContentsOfShapeTxbx(TextualContentsOfShapeTxbx),
+}
+
+/// The `wp:simplePos` element, Simple Positioning Coordinates (ECMA-376 Part 1, section 20.4.2.13).
+/// Its schema type is `CT_Point2D`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct SimplePositioningCoordinates {
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `x`, when the element has it.
+    pub x: Option<super::drawing::Coordinate>,
+    /// The attribute `y`, when the element has it.
+    pub y: Option<super::drawing::Coordinate>,
+}
+
+/// The `wp:wrapSquare` element, Square Wrapping (ECMA-376 Part 1, section 20.4.2.17). Its schema
+/// type is `CT_WrapSquare`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct SquareWrapping {
+    /// The attribute `distB`, when the element has it.
+    pub dist_b: Option<DistanceFromText>,
+    /// The attribute `distL`, when the element has it.
+    pub dist_l: Option<DistanceFromText>,
+    /// The attribute `distR`, when the element has it.
+    pub dist_r: Option<DistanceFromText>,
+    /// The attribute `distT`, when the element has it.
+    pub dist_t: Option<DistanceFromText>,
+    /// The child that is `ObjectExtentsIncludingEffects`, when there is one.
+    pub object_extents_including_effects: Option<Box<ObjectExtentsIncludingEffects>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `wrapText`, when the element has it.
+    pub wrap_text: Option<TextWrappingLocation>,
+}
+
+/// Text Wrapping Location, the simple type `ST_WrapText` (ECMA-376 Part 1, section 20.4.3.7), kept
+/// as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct TextWrappingLocation(pub String);
+/// The members of the enumeration `ST_WrapText`, in alphabetical order. `as_str` gives the text of
+/// a member.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[non_exhaustive]
+pub enum TextWrappingLocationMember {
+    /// The member written `bothSides`.
+    BothSides,
+    /// The member written `largest`.
+    Largest,
+    /// The member written `left`.
+    Left,
+    /// The member written `right`.
+    Right,
+}
+
+/// The `wp:linkedTxbx` element, Textual contents of shape (ECMA-376 Part 1, section 20.4.2.34). Its
+/// schema type is `CT_LinkedTextboxInformation`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct TextualContentsOfShapeLinkedTxbx {
+    /// The child that is `ExtensionList`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `id`, when the element has it.
+    pub id: Option<String>,
+    /// The attribute `seq`, when the element has it.
+    pub seq: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+/// The `wp:txbx` element, Textual contents of shape (ECMA-376 Part 1, section 20.4.2.37). Its
+/// schema type is `CT_TextboxInfo`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct TextualContentsOfShapeTxbx {
+    /// The child that is `ExtensionList`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `id`, when the element has it.
+    pub id: Option<String>,
+    /// The child that is `RichTextBoxContentContainer`, which the schema requires.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub rich_text_box_content_container: Box<RichTextBoxContentContainer>,
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+/// The `wp:wrapThrough` element, Through Wrapping (ECMA-376 Part 1, section 20.4.2.18). Its schema
+/// type is `CT_WrapThrough`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct ThroughWrapping {
+    /// The attribute `distL`, when the element has it.
+    pub dist_l: Option<DistanceFromText>,
+    /// The attribute `distR`, when the element has it.
+    pub dist_r: Option<DistanceFromText>,
+    /// The child that is `WrappingPolygon`, which the schema requires.
+    pub polygon: Box<WrappingPolygon>,
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `wrapText`, when the element has it.
+    pub wrap_text: Option<TextWrappingLocation>,
+}
+
+/// The `wp:wrapTight` element, Tight Wrapping (ECMA-376 Part 1, section 20.4.2.19). Its schema type
+/// is `CT_WrapTight`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct TightWrapping {
+    /// The attribute `distL`, when the element has it.
+    pub dist_l: Option<DistanceFromText>,
+    /// The attribute `distR`, when the element has it.
+    pub dist_r: Option<DistanceFromText>,
+    /// The child that is `WrappingPolygon`, which the schema requires.
+    pub polygon: Box<WrappingPolygon>,
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `wrapText`, when the element has it.
+    pub wrap_text: Option<TextWrappingLocation>,
+}
+
+/// The `wp:wrapTopAndBottom` element, Top and Bottom Wrapping (ECMA-376 Part 1, section 20.4.2.20).
+/// Its schema type is `CT_WrapTopBottom`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct TopAndBottomWrapping {
+    /// The attribute `distB`, when the element has it.
+    pub dist_b: Option<DistanceFromText>,
+    /// The attribute `distT`, when the element has it.
+    pub dist_t: Option<DistanceFromText>,
+    /// The child that is `ObjectExtentsIncludingEffects`, when there is one.
+    pub object_extents_including_effects: Option<Box<ObjectExtentsIncludingEffects>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+/// Vertical Alignment Definition, the simple type `ST_AlignV` (ECMA-376 Part 1, section 20.4.3.2),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct VerticalAlignmentDefinition(pub String);
+/// The members of the enumeration `ST_AlignV`, in alphabetical order. `as_str` gives the text of a
+/// member.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[non_exhaustive]
+pub enum VerticalAlignmentDefinitionMember {
+    /// The member written `bottom`.
+    Bottom,
+    /// The member written `center`.
+    Center,
+    /// The member written `inside`.
+    Inside,
+    /// The member written `outside`.
+    Outside,
+    /// The member written `top`.
+    Top,
+}
+
+/// The `wp:positionV` element, Vertical Positioning (ECMA-376 Part 1, section 20.4.2.11). Its
+/// schema type is `CT_PosV`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct VerticalPositioning {
+    /// The child that is an item of `VerticalPositioningContent`, which the schema requires.
+    pub content: Box<VerticalPositioningContent>,
+    /// The attribute `relativeFrom`, when the element has it.
+    pub relative_from: Option<VerticalRelativePositioning>,
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+/// One child element of a choice: local choice in `CT_PosV`.
+///
+/// The schema types that hold it: `CT_PosV`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
+#[derive(Clone, Debug, Eq, PartialEq)]
+#[non_exhaustive]
+pub enum VerticalPositioningContent {
+    /// The element `wp:posOffset`, a `AbsolutePositionOffset`.
+    AbsolutePositionOffset(AbsolutePositionOffset),
+    /// An element or node the schemas do not declare at this position.
+    Other(Node),
+    /// The element `wp14:pctPosVOffset`, a `PctPosVOffset`.
+    PctPosVOffset(super::office_word_2010_wordprocessing_drawing::PctPosVOffset),
+    /// The element `wp:align`, a `RelativeVerticalAlignment`.
+    RelativeVerticalAlignment(RelativeVerticalAlignment),
+}
+
+/// Vertical Relative Positioning, the simple type `ST_RelFromV` (ECMA-376 Part 1, section
+/// 20.4.3.5), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct VerticalRelativePositioning(pub String);
+/// The members of the enumeration `ST_RelFromV`, in alphabetical order. `as_str` gives the text of
+/// a member.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[non_exhaustive]
+pub enum VerticalRelativePositioningMember {
+    /// The member written `bottomMargin`.
+    BottomMargin,
+    /// The member written `insideMargin`.
+    InsideMargin,
+    /// The member written `line`.
+    Line,
+    /// The member written `margin`.
+    Margin,
+    /// The member written `outsideMargin`.
+    OutsideMargin,
+    /// The member written `page`.
+    Page,
+    /// The member written `paragraph`.
+    Paragraph,
+    /// The member written `topMargin`.
+    TopMargin,
+}
+
+/// The `wp:whole` element, Whole E2O Formatting (ECMA-376 Part 1, section 20.4.2.40). Its schema
+/// type is `CT_WholeE2oFormatting`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct WholeE2OFormatting {
+    /// The child that is an item of `super::drawing::EffectPropertiesContent`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub content: Option<Box<super::drawing::EffectPropertiesContent>>,
+    /// The child that is `super::drawing::Outline`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub outline: Option<Box<super::drawing::Outline>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+/// The `wp:wpc` element, `WordprocessingML` Drawing Canvas (ECMA-376 Part 1, section 20.4.2.41).
+/// Its schema type is `CT_WordprocessingCanvas`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct WordprocessingMLDrawingCanvas {
+    /// The child that is `BackgroundFormatting`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub background_formatting: Option<Box<BackgroundFormatting>>,
+    /// The children that are an item of `DrawingCanvasContent`, in order.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub content: Vec<DrawingCanvasContent>,
+    /// The child that is `ExtensionList`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub extension_list: Option<Box<ExtensionList>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `WholeE2OFormatting`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub whole_e2o_formatting: Option<Box<WholeE2OFormatting>>,
+}
+
+/// The `wp:wsp` element, `WordprocessingML` Shape (ECMA-376 Part 1, section 20.4.2.42). Its schema
+/// type is `CT_WordprocessingShape`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct WordprocessingMLShape {
+    /// The child that is `BodyProperties`, which the schema requires.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub body_properties: Box<BodyProperties>,
+    /// The child that is `ExtensionList`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `NonVisualDrawingProperties`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub non_visual_drawing_properties: Option<Box<NonVisualDrawingProperties>>,
+    /// The child that is an item of `ShapeNonVisualPropertiesContent`, which the schema requires.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub non_visual_properties_content: Box<ShapeNonVisualPropertiesContent>,
+    /// The attribute `normalEastAsianFlow`, when the element has it.
+    pub normal_east_asian_flow: Option<String>,
+    /// The child that is `ShapeProperties`, which the schema requires.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub properties: Box<ShapeProperties>,
+    /// The child that is `ShapeStyle`, when there is one.
+    pub style: Option<Box<ShapeStyle>>,
+    /// The child that is an item of `ShapeTextContent`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub text_content: Option<Box<ShapeTextContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+/// The `wp:wgp` element, `WordprocessingML` Shape Group (ECMA-376 Part 1, section 20.4.2.39). Its
+/// schema type is `CT_WordprocessingGroup`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct WordprocessingMLShapeGroup {
+    /// The children that are an item of `GroupShapeContent`, in order.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub content: Vec<GroupShapeContent>,
+    /// The child that is `ExtensionList`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `NonVisualDrawingProperties`, when there is one.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub non_visual_drawing_properties: Option<Box<NonVisualDrawingProperties>>,
+    /// The child that is `NonVisualGroupShapeDrawingProperties`, which the schema requires.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub non_visual_group_shape_drawing_properties: Box<NonVisualGroupShapeDrawingProperties>,
+    /// The child that is `GroupShapeProperties`, which the schema requires.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub shape_properties: Box<GroupShapeProperties>,
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+/// The `wp:wrapPolygon` element, Wrapping Polygon (ECMA-376 Part 1, section 20.4.2.16). Its schema
+/// type is `CT_WrapPath`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1890,14 +2260,18 @@ pub struct WordprocessingMLShapeGroup {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct WrappingPolygon {
+    /// The attribute `edited`, when the element has it.
     pub edited: Option<String>,
+    /// The children that are `WrappingPolygonLineEndPosition`, in order.
     pub line_end_position: Vec<WrappingPolygonLineEndPosition>,
+    /// The child that is `WrappingPolygonStart`, which the schema requires.
     pub start: Box<WrappingPolygonStart>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.4.2.9 `lineTo` (Wrapping Polygon Line End Position): the tag `wp:lineTo`, schema type
-/// `CT_Point2D`.
+/// The `wp:lineTo` element, Wrapping Polygon Line End Position (ECMA-376 Part 1, section 20.4.2.9).
+/// Its schema type is `CT_Point2D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1906,12 +2280,16 @@ pub struct WrappingPolygon {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct WrappingPolygonLineEndPosition {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `x`, when the element has it.
     pub x: Option<super::drawing::Coordinate>,
+    /// The attribute `y`, when the element has it.
     pub y: Option<super::drawing::Coordinate>,
 }
 
-/// 20.4.2.14 start (Wrapping Polygon Start): the tag `wp:start`, schema type `CT_Point2D`.
+/// The `wp:start` element, Wrapping Polygon Start (ECMA-376 Part 1, section 20.4.2.14). Its schema
+/// type is `CT_Point2D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1920,12 +2298,15 @@ pub struct WrappingPolygonLineEndPosition {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct WrappingPolygonStart {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `x`, when the element has it.
     pub x: Option<super::drawing::Coordinate>,
+    /// The attribute `y`, when the element has it.
     pub y: Option<super::drawing::Coordinate>,
 }
 
-/// The tag `wp:xfrm`, schema type `CT_Transform2D`.
+/// The `wp:xfrm` element. Its schema type is `CT_Transform2D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1934,11 +2315,17 @@ pub struct WrappingPolygonStart {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Xfrm {
+    /// The child that is `super::drawing::Extents`, when there is one.
     pub extents: Option<Box<super::drawing::Extents>>,
+    /// The attribute `flipH`, when the element has it.
     pub flip_h: Option<String>,
+    /// The attribute `flipV`, when the element has it.
     pub flip_v: Option<String>,
+    /// The child that is `super::drawing::Offset`, when there is one.
     pub offset: Option<Box<super::drawing::Offset>>,
+    /// The attribute `rot`, when the element has it.
     pub rot: Option<super::drawing::Angle>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -2507,7 +2894,7 @@ impl HorizontalRelativePositioningMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -2824,7 +3211,7 @@ impl RelativeHorizontalAlignmentPositionsMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -3086,7 +3473,7 @@ impl TextWrappingLocationMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -3264,7 +3651,7 @@ impl VerticalAlignmentDefinitionMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -3385,7 +3772,7 @@ impl VerticalRelativePositioningMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

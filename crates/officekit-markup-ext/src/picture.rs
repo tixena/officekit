@@ -212,8 +212,11 @@
 //! The hooks of the `pic` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_core::picture`.
 //!
-//! The namespace is `http://schemas.openxmlformats.org/drawingml/2006/picture`.
+//! The namespace is `http://schemas.openxmlformats.org/drawingml/2006/picture`. Its prefix, `pic`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_core::picture::*;
 
 use officekit_markup_base::Written;
@@ -229,6 +232,8 @@ use std::io;
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::picture` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `NonVisualDrawingProperties`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn non_visual_drawing_properties(
         &mut self,
         _node: &NonVisualDrawingProperties,
@@ -236,6 +241,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `NonVisualPictureDrawingProperties`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn non_visual_picture_drawing_properties(
         &mut self,
         _node: &NonVisualPictureDrawingProperties,
@@ -243,6 +250,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `NonVisualPictureProperties`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn non_visual_picture_properties(
         &mut self,
         _node: &NonVisualPictureProperties,
@@ -250,21 +259,30 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Picture`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn picture(&mut self, _node: &Picture) -> Option<Picture> {
         None
     }
 
+    /// Asked for each `PictureFill`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn picture_fill(&mut self, _node: &PictureFill) -> Option<PictureFill> {
         None
     }
 
+    /// Asked for each `ShapeProperties`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn shape_properties(&mut self, _node: &ShapeProperties) -> Option<ShapeProperties> {
         None
     }
 
+    /// Asked when a `NonVisualDrawingProperties` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_non_visual_drawing_properties(
         &mut self,
         _node: &NonVisualDrawingProperties,
@@ -273,9 +291,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NonVisualPictureDrawingProperties` is written through. `Written::Yes` means
+    /// the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_non_visual_picture_drawing_properties(
         &mut self,
         _node: &NonVisualPictureDrawingProperties,
@@ -284,9 +305,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NonVisualPictureProperties` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_non_visual_picture_properties(
         &mut self,
         _node: &NonVisualPictureProperties,
@@ -295,16 +319,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Picture` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_picture(&mut self, _node: &Picture, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `PictureFill` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_picture_fill(
         &mut self,
         _node: &PictureFill,
@@ -313,9 +343,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeProperties` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_properties(
         &mut self,
         _node: &ShapeProperties,
@@ -331,6 +364,8 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from `crate::Visitor::picture`
 /// is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `NonVisualDrawingProperties`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn non_visual_drawing_properties(
         &mut self,
         _node: &NonVisualDrawingProperties,
@@ -338,6 +373,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NonVisualPictureDrawingProperties`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn non_visual_picture_drawing_properties(
         &mut self,
         _node: &NonVisualPictureDrawingProperties,
@@ -345,6 +382,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NonVisualPictureProperties`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn non_visual_picture_properties(
         &mut self,
         _node: &NonVisualPictureProperties,
@@ -352,14 +391,19 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Picture`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn picture(&mut self, _node: &Picture) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PictureFill`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn picture_fill(&mut self, _node: &PictureFill) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShapeProperties`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn shape_properties(&mut self, _node: &ShapeProperties) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

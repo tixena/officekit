@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `xlmsforms` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/spreadsheetml/2023/msForms`, which files write with the prefix `xlmsforms`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2023/msForms`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -276,39 +278,56 @@ pub static QUESTION_SHAPE: officekit_markup_base::Shape = officekit_markup_base:
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_spreadsheetml_2023_ms_forms` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `ExtLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
         None
     }
 
+    /// Asked for each `MsForm`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ms_form(&mut self, _node: &MsForm) -> Option<MsForm> {
         None
     }
 
+    /// Asked for each `Question`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn question(&mut self, _node: &Question) -> Option<Question> {
         None
     }
 
+    /// Asked for each `SyncedQuestionId`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn synced_question_id(&mut self, _node: &SyncedQuestionId) -> Option<SyncedQuestionId> {
         None
     }
 
+    /// Asked when a `ExtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `MsForm` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ms_form(&mut self, _node: &MsForm, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Question` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_question(
         &mut self,
         _node: &Question,
@@ -317,9 +336,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SyncedQuestionId` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_synced_question_id(
         &mut self,
         _node: &SyncedQuestionId,
@@ -329,7 +351,8 @@ pub trait Context: crate::Context {
     }
 }
 
-/// The tag `xlmsforms:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
+/// The `xlmsforms:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -338,11 +361,14 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
+    /// The children that are `spreadsheet::Extension`, in order.
     pub extension: Vec<spreadsheet::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlmsforms:msForm`, schema type `CT_MsForm` of SDK 3.5.1's data.
+/// The `xlmsforms:msForm` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_MsForm`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -351,16 +377,24 @@ pub struct ExtLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MsForm {
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `isFormConnected`, when the element has it.
     pub is_form_connected: Option<String>,
+    /// The attribute `latestEventMarker`, when the element has it.
     pub latest_event_marker: Option<String>,
+    /// The attribute `maxResponseId`, when the element has it.
     pub max_response_id: Option<String>,
+    /// The children that are `SyncedQuestionId`, in order.
     pub synced_question_id: Vec<SyncedQuestionId>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlmsforms:question`, schema type `CT_Question` of SDK 3.5.1's data.
+/// The `xlmsforms:question` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_Question`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -369,12 +403,16 @@ pub struct MsForm {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Question {
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlmsforms:syncedQuestionId`, schema type `ST_Xstring` of SDK 3.5.1's data.
+/// The `xlmsforms:syncedQuestionId` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `ST_Xstring`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -383,7 +421,9 @@ pub struct Question {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SyncedQuestionId {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
@@ -393,18 +433,23 @@ pub struct SyncedQuestionId {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_spreadsheetml_2023_ms_forms` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `ExtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext_lst(&mut self, _node: &ExtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MsForm`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ms_form(&mut self, _node: &MsForm) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Question`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn question(&mut self, _node: &Question) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SyncedQuestionId`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn synced_question_id(&mut self, _node: &SyncedQuestionId) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

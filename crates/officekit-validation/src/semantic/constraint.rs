@@ -15,8 +15,11 @@ pub type Slot = u8;
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum Application {
+    /// A workbook.
     Excel,
+    /// A presentation.
     PowerPoint,
+    /// A word-processing document.
     Word,
 }
 
@@ -31,7 +34,9 @@ pub struct Applications(pub u8);
 #[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
 #[non_exhaustive]
 pub struct AttributeName {
+    /// The local name.
     pub local: &'static str,
+    /// The namespace; `None` for an unprefixed attribute.
     pub namespace: Option<NamespaceId>,
 }
 
@@ -139,7 +144,9 @@ pub enum Constraint {
 #[derive(Clone, Copy, Debug, Eq, Ord, PartialEq, PartialOrd)]
 #[non_exhaustive]
 pub struct ElementName {
+    /// The local name.
     pub local: &'static str,
+    /// The namespace.
     pub namespace: NamespaceId,
 }
 
@@ -147,8 +154,11 @@ pub struct ElementName {
 #[derive(Clone, Copy, Debug, PartialEq)]
 #[non_exhaustive]
 pub struct Registration {
+    /// The document kinds it applies to.
     pub applications: Applications,
+    /// The constraint.
     pub constraint: Constraint,
+    /// The element type it is registered on, an index into `SCHEMA_TYPES`.
     pub type_id: TypeId,
     /// The targets it applies at: its version and every later one.
     pub versions: Versions,

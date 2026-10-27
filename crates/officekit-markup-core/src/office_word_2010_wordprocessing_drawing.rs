@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `wp14` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing`, which files write with the prefix `wp14`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 pub mod read;
 pub mod write;
@@ -269,7 +269,8 @@ pub static SIZE_REL_V_SHAPE: officekit_markup_base::Shape = officekit_markup_bas
     text: false,
 };
 
-/// The tag `wp14:pctHeight`, schema type `ST_PositivePercentage` of SDK 3.5.1's data.
+/// The `wp14:pctHeight` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `ST_PositivePercentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -278,11 +279,14 @@ pub static SIZE_REL_V_SHAPE: officekit_markup_base::Shape = officekit_markup_bas
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PctHeight {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: super::drawing::PositivePercentageValueWithSign,
 }
 
-/// The tag `wp14:pctPosHOffset`, schema type `ST_Percentage` of SDK 3.5.1's data.
+/// The `wp14:pctPosHOffset` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `ST_Percentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -291,11 +295,14 @@ pub struct PctHeight {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PctPosHOffset {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: super::drawing::Percentage,
 }
 
-/// The tag `wp14:pctPosVOffset`, schema type `ST_Percentage` of SDK 3.5.1's data.
+/// The `wp14:pctPosVOffset` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `ST_Percentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -304,11 +311,14 @@ pub struct PctPosHOffset {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PctPosVOffset {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: super::drawing::Percentage,
 }
 
-/// The tag `wp14:pctWidth`, schema type `ST_PositivePercentage` of SDK 3.5.1's data.
+/// The `wp14:pctWidth` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `ST_PositivePercentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -317,11 +327,16 @@ pub struct PctPosVOffset {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PctWidth {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: super::drawing::PositivePercentageValueWithSign,
 }
 
-/// `ST_SizeRelFromH`: the text the file carried.
+/// The simple type `ST_SizeRelFromH`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -330,19 +345,29 @@ pub struct PctWidth {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SizeRelFromH(pub String);
-/// The members of `ST_SizeRelFromH`, in alphabetical order.
+/// The members of the enumeration `ST_SizeRelFromH`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum SizeRelFromHMember {
+    /// The member written `insideMargin`.
     InsideMargin,
+    /// The member written `leftMargin`.
     LeftMargin,
+    /// The member written `margin`.
     Margin,
+    /// The member written `outsideMargin`.
     OutsideMargin,
+    /// The member written `page`.
     Page,
+    /// The member written `rightMargin`.
     RightMargin,
 }
 
-/// `ST_SizeRelFromV`: the text the file carried.
+/// The simple type `ST_SizeRelFromV`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -351,19 +376,27 @@ pub enum SizeRelFromHMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SizeRelFromV(pub String);
-/// The members of `ST_SizeRelFromV`, in alphabetical order.
+/// The members of the enumeration `ST_SizeRelFromV`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum SizeRelFromVMember {
+    /// The member written `bottomMargin`.
     BottomMargin,
+    /// The member written `insideMargin`.
     InsideMargin,
+    /// The member written `margin`.
     Margin,
+    /// The member written `outsideMargin`.
     OutsideMargin,
+    /// The member written `page`.
     Page,
+    /// The member written `topMargin`.
     TopMargin,
 }
 
-/// The tag `wp14:sizeRelH`, schema type `CT_SizeRelH` of SDK 3.5.1's data.
+/// The `wp14:sizeRelH` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SizeRelH`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -372,12 +405,16 @@ pub enum SizeRelFromVMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SizeRelH {
+    /// The child that is `PctWidth`, which the schema requires.
     pub pct_width: Box<PctWidth>,
+    /// The attribute `relativeFrom`, when the element has it.
     pub relative_from: Option<SizeRelFromH>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `wp14:sizeRelV`, schema type `CT_SizeRelV` of SDK 3.5.1's data.
+/// The `wp14:sizeRelV` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SizeRelV`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -386,8 +423,11 @@ pub struct SizeRelH {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SizeRelV {
+    /// The child that is `PctHeight`, which the schema requires.
     pub pct_height: Box<PctHeight>,
+    /// The attribute `relativeFrom`, when the element has it.
     pub relative_from: Option<SizeRelFromV>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -537,7 +577,7 @@ impl SizeRelFromHMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -606,7 +646,7 @@ impl SizeRelFromVMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

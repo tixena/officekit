@@ -212,8 +212,11 @@
 //! The hooks of the `ac` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_base::additional_characteristics`.
 //!
-//! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/characteristics`.
+//! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/characteristics`. Its prefix, `ac`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_base::additional_characteristics::*;
 
 use officekit_markup_base::Written;
@@ -229,6 +232,8 @@ use std::io;
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::additional_characteristics` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `SetOfAdditionalCharacteristics`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn set_of_additional_characteristics(
         &mut self,
         _node: &SetOfAdditionalCharacteristics,
@@ -236,6 +241,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `SingleCharacteristic`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn single_characteristic(
         &mut self,
         _node: &SingleCharacteristic,
@@ -243,9 +250,12 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked when a `SetOfAdditionalCharacteristics` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_set_of_additional_characteristics(
         &mut self,
         _node: &SetOfAdditionalCharacteristics,
@@ -254,9 +264,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SingleCharacteristic` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_single_characteristic(
         &mut self,
         _node: &SingleCharacteristic,
@@ -272,6 +285,8 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::additional_characteristics` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `SetOfAdditionalCharacteristics`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn set_of_additional_characteristics(
         &mut self,
         _node: &SetOfAdditionalCharacteristics,
@@ -279,6 +294,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SingleCharacteristic`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn single_characteristic(
         &mut self,
         _node: &SingleCharacteristic,

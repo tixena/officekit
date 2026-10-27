@@ -276,6 +276,7 @@ impl<'checks, 'package> PartChecks<'checks, 'package> {
         })
     }
 
+    /// The checks of the part `part`, whose part rule is `rule`, reading across parts through `run`.
     #[must_use]
     pub const fn new(
         run: &'checks mut Run<'package>,

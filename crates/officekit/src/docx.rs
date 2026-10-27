@@ -41,6 +41,46 @@ use crate::markdown::{self, Exported, MarkdownError, MarkdownOptions};
 use crate::new_parts;
 
 /// A `.docx`-family file: its package, its main document part, and the class and kind they give.
+///
+/// Make one with [`new`](Self::new), or open one with [`open`](Self::open) or
+/// [`from_bytes`](Self::from_bytes). Read the main document as a typed tree with
+/// [`main_document`](Self::main_document), change the tree, and store it back with
+/// [`set_main_document`](Self::set_main_document). The saves write the file in either class.
+///
+/// This adds a table to a new document and reads it back.
+///
+/// ```rust
+/// use officekit::docx::Docx;
+/// use officekit::docx::table::TableRows as _;
+/// use officekit_markup::wordprocessing::{BlockContent, Table};
+/// use officekit_parts::kinds::WordprocessingKind;
+///
+/// # fn main() -> Result<(), Box<dyn core::error::Error>> {
+/// let mut docx = Docx::new(WordprocessingKind::Document)?;
+/// let mut document = docx.main_document()?;
+///
+/// let mut table = Table::default();
+/// table.append_row(&["Item", "Price"]);
+/// table.append_row(&["Pen", "2"]);
+/// table.repeat_header_rows(1);
+/// document
+///     .body
+///     .as_mut()
+///     .ok_or("the document has no body")?
+///     .content
+///     .push(BlockContent::Table(table));
+/// docx.set_main_document(&document)?;
+///
+/// let again = docx.main_document()?;
+/// let body = again.body.as_ref().ok_or("the document has no body")?;
+/// let rows = body.content.iter().find_map(|block| match block {
+///     BlockContent::Table(table) => Some(table.table_rows().count()),
+///     _ => None,
+/// });
+/// assert_eq!(rows, Some(2));
+/// # Ok(())
+/// # }
+/// ```
 #[derive(Debug)]
 pub struct Docx {
     class: ConformanceClass,
@@ -119,7 +159,8 @@ impl Docx {
         self.class
     }
 
-    /// A new document of `kind`, as [`new`](Self::new) makes it, written to `path`.
+    /// A new document of `kind`, as [`new`](Self::new) makes it, written to `path` as the package
+    /// is built, with no change of class. Needs the feature `transitional`.
     ///
     /// # Errors
     ///
@@ -149,7 +190,7 @@ impl Docx {
     }
 
     /// A new Word document holding `document`. Local picture targets are read through `system`,
-    /// relative to `base`.
+    /// relative to `base`. Needs the feature `markdown`.
     ///
     /// # Errors
     ///
@@ -225,12 +266,14 @@ impl Docx {
             .related_by_type(Some(&self.main), &RelationshipType::HEADER)
     }
 
-    /// `source`'s body blocks without its final `w:sectPr`, rewritten so that every id they use
-    /// resolves in this file, for its main document `document`: each relationship, comment,
-    /// footnote, endnote, style, list, range, and drawing id the blocks use names a part or entry
-    /// this package holds, copied from `source` when it is not this file's own. `document`'s root
-    /// gains the source root's namespace declarations and ignorable prefixes; the caller places
-    /// the blocks and stores `document`.
+    /// Copy the body of `source` into this file so that it keeps working there.
+    ///
+    /// The result is `source`'s body blocks without its final `w:sectPr` (the section settings),
+    /// rewritten so that every id they use resolves in this file, for its main document
+    /// `document`: each relationship, comment, footnote, endnote, style, list, range, and drawing
+    /// id the blocks use names a part or entry this package holds, copied from `source` when it is
+    /// not this file's own. `document`'s root gains the source root's namespace declarations and
+    /// ignorable prefixes; the caller places the blocks and stores `document`.
     ///
     /// # Errors
     ///
@@ -308,14 +351,18 @@ impl Docx {
         &self.package
     }
 
+    /// The package, to change its parts, relationships and content types directly.
     pub const fn package_mut(&mut self) -> &mut Package {
         &mut self.package
     }
 
-    /// Put one `w:documentProtection` entry into the settings part, in place of the one there or
-    /// else at its place in the schema's order, making and relating the part when the file has
-    /// none. `class` picks the form of the hash (see [`entry`](protection::entry)); an empty
-    /// `password` gives the restriction alone.
+    /// Restrict how the document may be edited, with a password or without one.
+    ///
+    /// This puts one `w:documentProtection` entry into the settings part, in place of the one
+    /// there or else at its place in the schema's order, making and relating the part when the
+    /// file has none. `class` picks the form of the hash (see [`entry`](protection::entry)); an
+    /// empty `password` gives the restriction alone. The setting does not encrypt the file, and
+    /// the caller gives the 16 bytes of `salt`.
     ///
     /// # Errors
     ///
@@ -369,11 +416,14 @@ impl Docx {
         )
     }
 
-    /// Refill every `c:numCache` and `c:strCache` of the chart part `chart` from the workbook
-    /// embedded in it, the target of the chart's `package` relationship: `c:ptCount` is the number
-    /// of cells the `c:f` names, and each cell holding a value gives one `c:pt` at its place in the
-    /// area, counted row by row. A `c:f` that is not one area of one sheet of the workbook (several
-    /// areas, a defined name, a missing sheet) leaves its cache as it is. The workbook is not
+    /// Update the values a chart shows from the workbook embedded in it.
+    ///
+    /// This refills every `c:numCache` and `c:strCache` (the copies of the cell values a chart
+    /// keeps) of the chart part `chart` from the workbook embedded in it, the target of the
+    /// chart's `package` relationship: `c:ptCount` is the number of cells the `c:f` names, and
+    /// each cell holding a value gives one `c:pt` at its place in the area, counted row by row.
+    /// A `c:f` that is not one area of one sheet of the workbook (several areas, a defined name,
+    /// a missing sheet) leaves its cache as it is. The workbook is not
     /// changed; the chart is stored back with the file's write options.
     ///
     /// # Errors
@@ -420,7 +470,8 @@ impl Docx {
         header_footer::remove(self, section, kind, header_footer::Which::Header)
     }
 
-    /// Write the file to `path` in the Strict class; nothing is written when it fails.
+    /// Write the file to `path` in the Strict class; nothing is written when it fails. Needs the
+    /// feature `strict`.
     ///
     /// # Errors
     ///
@@ -437,6 +488,8 @@ impl Docx {
     }
 
     /// Write the file to `path` in the Transitional class; nothing is written when it fails.
+    /// Returns the warnings of the save, which are always empty for a Word file. Needs the feature
+    /// `transitional`.
     ///
     /// # Errors
     ///
@@ -488,12 +541,14 @@ impl Docx {
         )
     }
 
-    /// Put `image` into a new image part related from `part` (`media/image{n}.<extension>` beside
-    /// it), point the run's first `a:blip` at it through `r:embed`, and size the picture's frame as
-    /// `fit` says. The blip is the first one inside a `w:drawing`, in typed content or in the
-    /// markup compatibility around one. Returns the relationship id the blip named before; it and
-    /// its part stay, for the caller to remove with [`Package::remove_relationship`] once no
-    /// markup names it.
+    /// Replace the picture a run holds with `image`.
+    ///
+    /// This puts `image` into a new image part related from `part` (`media/image{n}.<extension>`
+    /// beside it), points the run's first `a:blip` (the drawing element that names an image) at
+    /// it through `r:embed`, and sizes the picture's frame as `fit` says. The blip is the first
+    /// one inside a `w:drawing`, in typed content or in the markup compatibility around one.
+    /// Returns the relationship id the blip named before; it and its part stay, for the caller to
+    /// remove with [`Package::remove_relationship`] once no markup names it.
     ///
     /// # Errors
     ///
@@ -515,7 +570,7 @@ impl Docx {
     }
 
     /// The main document as an arky document. Each picture's target is `{media}/{file name}`,
-    /// the file name that of its image part (`image1.png`).
+    /// the file name that of its image part (`image1.png`). Needs the feature `markdown`.
     ///
     /// # Errors
     ///
@@ -533,7 +588,7 @@ impl Docx {
 
     /// The file's bytes in the Strict class: as they are when it was read Strict, else every
     /// part a part module knows written again in Strict, every relationship type in Strict's
-    /// spelling, and every other part as it is.
+    /// spelling, and every other part as it is. Needs the feature `strict`.
     ///
     /// # Errors
     ///
@@ -551,10 +606,14 @@ impl Docx {
         )
     }
 
-    /// The file's bytes in the Transitional class: as they are when it was read Transitional,
-    /// else every part a part module knows written again in Transitional, every relationship type
-    /// in Transitional's spelling, and every other part as it is. The list of warnings is empty:
-    /// an embedded workbook is a part carried as it is.
+    /// The file's bytes in the Transitional class. Needs the feature `transitional`.
+    ///
+    /// They are the package as it is when the file was read Transitional. Otherwise every part a
+    /// part module knows is written again in Transitional, every relationship type takes
+    /// Transitional's spelling, and every other part stays as it is.
+    ///
+    /// The list of warnings is always empty: a Word file has no date cells to convert, and an
+    /// embedded workbook is a part carried as it is.
     ///
     /// # Errors
     ///

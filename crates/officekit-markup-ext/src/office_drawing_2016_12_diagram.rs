@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `dgm1612` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/drawing/2016/12/diagram`, which files write with the prefix `dgm1612`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/drawing/2016/12/diagram`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -272,17 +274,24 @@ pub static LST_STYLE_SHAPE: officekit_markup_base::Shape = officekit_markup_base
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_drawing_2016_12_diagram` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `LstStyle`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn lst_style(&mut self, _node: &LstStyle) -> Option<LstStyle> {
         None
     }
 
+    /// Asked for each `SpPr`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn sp_pr(&mut self, _node: &SpPr) -> Option<SpPr> {
         None
     }
 
+    /// Asked when a `LstStyle` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_lst_style(
         &mut self,
         _node: &LstStyle,
@@ -291,15 +300,19 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SpPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sp_pr(&mut self, _node: &SpPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 }
 
-/// The tag `dgm1612:lstStyle`, schema type `CT_TextListStyle` of SDK 3.5.1's data.
+/// The `dgm1612:lstStyle` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_TextListStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -308,21 +321,34 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LstStyle {
+    /// The child that is `drawing::DefaultParagraphStyle`, when there is one.
     pub default_paragraph_style: Option<Box<drawing::DefaultParagraphStyle>>,
+    /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionList>>,
+    /// The child that is `drawing::ListLevel1TextStyle`, when there is one.
     pub list_level_1_text_style: Option<Box<drawing::ListLevel1TextStyle>>,
+    /// The child that is `drawing::ListLevel2TextStyle`, when there is one.
     pub list_level_2_text_style: Option<Box<drawing::ListLevel2TextStyle>>,
+    /// The child that is `drawing::ListLevel3TextStyle`, when there is one.
     pub list_level_3_text_style: Option<Box<drawing::ListLevel3TextStyle>>,
+    /// The child that is `drawing::ListLevel4TextStyle`, when there is one.
     pub list_level_4_text_style: Option<Box<drawing::ListLevel4TextStyle>>,
+    /// The child that is `drawing::ListLevel5TextStyle`, when there is one.
     pub list_level_5_text_style: Option<Box<drawing::ListLevel5TextStyle>>,
+    /// The child that is `drawing::ListLevel6TextStyle`, when there is one.
     pub list_level_6_text_style: Option<Box<drawing::ListLevel6TextStyle>>,
+    /// The child that is `drawing::ListLevel7TextStyle`, when there is one.
     pub list_level_7_text_style: Option<Box<drawing::ListLevel7TextStyle>>,
+    /// The child that is `drawing::ListLevel8TextStyle`, when there is one.
     pub list_level_8_text_style: Option<Box<drawing::ListLevel8TextStyle>>,
+    /// The child that is `drawing::ListLevel9TextStyle`, when there is one.
     pub list_level_9_text_style: Option<Box<drawing::ListLevel9TextStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `dgm1612:spPr`, schema type `CT_ShapeProperties` of SDK 3.5.1's data.
+/// The `dgm1612:spPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ShapeProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -331,15 +357,25 @@ pub struct LstStyle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SpPr {
+    /// The child that is `drawing::Apply3DShapeProperties`, when there is one.
     pub apply_3d_shape_properties: Option<Box<drawing::Apply3DShapeProperties>>,
+    /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<drawing::BlackAndWhiteMode>,
+    /// The child that is an item of `drawing::EffectPropertiesContent`, when there is one.
     pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
+    /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionList>>,
+    /// The child that is an item of `drawing::FillPropertiesContent`, when there is one.
     pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
+    /// The child that is an item of `drawing::GeometryContent`, when there is one.
     pub geometry_content: Option<Box<drawing::GeometryContent>>,
+    /// The child that is `drawing::Outline`, when there is one.
     pub outline: Option<Box<drawing::Outline>>,
+    /// The child that is `drawing::Scene3d`, when there is one.
     pub scene3d: Option<Box<drawing::Scene3d>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `drawing::XfrmTransform2D`, when there is one.
     pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2D>>,
 }
 
@@ -349,10 +385,12 @@ pub struct SpPr {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_drawing_2016_12_diagram` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `LstStyle`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn lst_style(&mut self, _node: &LstStyle) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SpPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sp_pr(&mut self, _node: &SpPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

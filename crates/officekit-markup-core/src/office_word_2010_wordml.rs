@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `w14` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/word/2010/wordml`, which files write with the prefix `w14`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/word/2010/wordml`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -854,7 +854,8 @@ pub static LINE_JOIN_CONTENT_TAGS: officekit_markup_base::Accept = officekit_mar
     tags: &[(NS_W14, "bevel"), (NS_W14, "miter"), (NS_W14, "round")],
 };
 
-/// The tag `w14:alpha`, schema type `CT_PositiveFixedPercentage` of SDK 3.5.1's data.
+/// The `w14:alpha` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_PositiveFixedPercentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -863,10 +864,12 @@ pub static LINE_JOIN_CONTENT_TAGS: officekit_markup_base::Accept = officekit_mar
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Alpha {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:bevel`, schema type `CT_Empty` of SDK 3.5.1's data.
+/// The `w14:bevel` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Empty`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -875,10 +878,12 @@ pub struct Alpha {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Bevel {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:bevelB`, schema type `CT_Bevel` of SDK 3.5.1's data.
+/// The `w14:bevelB` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Bevel`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -887,10 +892,12 @@ pub struct Bevel {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BevelB {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:bevelT`, schema type `CT_Bevel` of SDK 3.5.1's data.
+/// The `w14:bevelT` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Bevel`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -899,11 +906,12 @@ pub struct BevelB {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BevelT {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:cNvContentPartPr`, schema type `CT_NonVisualInkContentPartProperties` of SDK
-/// 3.5.1's data.
+/// The `w14:cNvContentPartPr` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_NonVisualInkContentPartProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -912,13 +920,18 @@ pub struct BevelT {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CNvContentPartPr {
+    /// The child that is `super::office_drawing_2010_main::CpLocks`, when there is one.
     pub cp_locks: Option<Box<super::office_drawing_2010_main::CpLocks>>,
+    /// The child that is `super::office_drawing_2010_main::ExtLst`, when there is one.
     pub ext_lst: Option<Box<super::office_drawing_2010_main::ExtLst>>,
+    /// The attribute `isComment`, when the element has it.
     pub is_comment: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:cNvPr`, schema type `CT_NonVisualDrawingProps` of SDK 3.5.1's data.
+/// The `w14:cNvPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_NonVisualDrawingProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -927,18 +940,28 @@ pub struct CNvContentPartPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CNvPr {
+    /// The child that is `super::drawing::ClickHyperlink`, when there is one.
     pub click_hyperlink: Option<Box<super::drawing::ClickHyperlink>>,
+    /// The attribute `descr`, when the element has it.
     pub descr: Option<String>,
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The attribute `hidden`, when the element has it.
     pub hidden: Option<String>,
+    /// The child that is `super::drawing::HyperlinkForHover`, when there is one.
     pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHover>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<super::drawing::DrawingElementID>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:camera`, schema type `CT_Camera` of SDK 3.5.1's data.
+/// The `w14:camera` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Camera`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -947,11 +970,14 @@ pub struct CNvPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Camera {
+    /// The attribute `w14:prst`, when the element has it.
     pub prst: Option<PresetCameraType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:checkbox`, schema type `CT_SdtCheckbox` of SDK 3.5.1's data.
+/// The `w14:checkbox` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SdtCheckbox`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -960,13 +986,18 @@ pub struct Camera {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Checkbox {
+    /// The child that is `Checked`, when there is one.
     pub checked: Option<Box<Checked>>,
+    /// The child that is `CheckedState`, when there is one.
     pub checked_state: Option<Box<CheckedState>>,
+    /// The child that is `UncheckedState`, when there is one.
     pub unchecked_state: Option<Box<UncheckedState>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:checked`, schema type `CT_OnOff` of SDK 3.5.1's data.
+/// The `w14:checked` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -975,10 +1006,12 @@ pub struct Checkbox {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Checked {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:checkedState`, schema type `CT_SdtCheckboxSymbol` of SDK 3.5.1's data.
+/// The `w14:checkedState` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_SdtCheckboxSymbol`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -987,10 +1020,12 @@ pub struct Checked {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CheckedState {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:cntxtAlts`, schema type `CT_OnOff` of SDK 3.5.1's data.
+/// The `w14:cntxtAlts` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -999,40 +1034,64 @@ pub struct CheckedState {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CntxtAlts {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of choice in `CT_SolidColorFillProperties`, choice in `CT_Glow`, choice in `CT_Shadow`,
-/// choice in `CT_GradientStop`, choice in `CT_Color`.
+/// One child element of a choice: choice in `CT_SolidColorFillProperties`, choice in `CT_Glow`,
+/// choice in `CT_Shadow`, choice in `CT_GradientStop`, choice in `CT_Color`.
 ///
-/// Its types: `CT_Color`, `CT_Glow`, `CT_GradientStop`, `CT_Shadow`, `CT_SolidColorFillProperties`.
+/// The schema types that hold it: `CT_Color`, `CT_Glow`, `CT_GradientStop`, `CT_Shadow`,
+/// `CT_SolidColorFillProperties`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ColorContent {
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `w14:schemeClr`, a `SchemeClr`.
     SchemeClr(SchemeClr),
+    /// The element `w14:srgbClr`, a `SrgbClr`.
     SrgbClr(SrgbClr),
 }
 
-/// One item of `CT_SRgbColor`, `CT_SchemeColor`: choice in `CT_SRgbColor`, choice in
-/// `CT_SchemeColor`.
+/// One child element of a choice: choice in `CT_SRgbColor`, choice in `CT_SchemeColor`.
+///
+/// The schema types that hold it: `CT_SRgbColor`, `CT_SchemeColor`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ColorTransformContent {
+    /// The element `w14:alpha`, a `Alpha`.
     Alpha(Alpha),
+    /// The element `w14:hueMod`, a `HueMod`.
     HueMod(HueMod),
+    /// The element `w14:lum`, a `Lum`.
     Lum(Lum),
+    /// The element `w14:lumMod`, a `LumMod`.
     LumMod(LumMod),
+    /// The element `w14:lumOff`, a `LumOff`.
     LumOff(LumOff),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `w14:sat`, a `Sat`.
     Sat(Sat),
+    /// The element `w14:satMod`, a `SatMod`.
     SatMod(SatMod),
+    /// The element `w14:satOff`, a `SatOff`.
     SatOff(SatOff),
+    /// The element `w14:shade`, a `Shade`.
     Shade(Shade),
+    /// The element `w14:tint`, a `Tint`.
     Tint(Tint),
 }
 
-/// `ST_CompoundLine`: the text the file carried.
+/// The simple type `ST_CompoundLine`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1041,18 +1100,25 @@ pub enum ColorTransformContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CompoundLine(pub String);
-/// The members of `ST_CompoundLine`, in alphabetical order.
+/// The members of the enumeration `ST_CompoundLine`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum CompoundLineMember {
+    /// The member written `dbl`.
     Dbl,
+    /// The member written `sng`.
     Sng,
+    /// The member written `thickThin`.
     ThickThin,
+    /// The member written `thinThick`.
     ThinThick,
+    /// The member written `tri`.
     Tri,
 }
 
-/// The tag `w14:conflictDel`, schema type `CT_RunTrackChange` of SDK 3.5.1's data.
+/// The `w14:conflictDel` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_RunTrackChange`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1064,15 +1130,21 @@ pub enum CompoundLineMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConflictDelRunTrackChange {
+    /// The attribute `w:author`, when the element has it.
     pub author: Option<String>,
+    /// The children that are an item of `super::wordprocessing::TrackedRunContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<super::wordprocessing::TrackedRunContent>,
+    /// The attribute `w:date`, when the element has it.
     pub date: Option<super::wordprocessing::StandardDateAndTimeStorageFormat>,
+    /// The attribute `w:id`, when the element has it.
     pub id: Option<super::wordprocessing::DecimalNumberValue>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:conflictDel`, schema type `CT_TrackChange` of SDK 3.5.1's data.
+/// The `w14:conflictDel` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_TrackChange`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1081,13 +1153,18 @@ pub struct ConflictDelRunTrackChange {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConflictDelTrackChange {
+    /// The attribute `w:author`, when the element has it.
     pub author: Option<String>,
+    /// The attribute `w:date`, when the element has it.
     pub date: Option<super::wordprocessing::StandardDateAndTimeStorageFormat>,
+    /// The attribute `w:id`, when the element has it.
     pub id: Option<super::wordprocessing::DecimalNumberValue>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:conflictIns`, schema type `CT_RunTrackChange` of SDK 3.5.1's data.
+/// The `w14:conflictIns` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_RunTrackChange`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1099,15 +1176,21 @@ pub struct ConflictDelTrackChange {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConflictInsRunTrackChange {
+    /// The attribute `w:author`, when the element has it.
     pub author: Option<String>,
+    /// The children that are an item of `super::wordprocessing::TrackedRunContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<super::wordprocessing::TrackedRunContent>,
+    /// The attribute `w:date`, when the element has it.
     pub date: Option<super::wordprocessing::StandardDateAndTimeStorageFormat>,
+    /// The attribute `w:id`, when the element has it.
     pub id: Option<super::wordprocessing::DecimalNumberValue>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:conflictIns`, schema type `CT_TrackChange` of SDK 3.5.1's data.
+/// The `w14:conflictIns` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_TrackChange`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1116,13 +1199,18 @@ pub struct ConflictInsRunTrackChange {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConflictInsTrackChange {
+    /// The attribute `w:author`, when the element has it.
     pub author: Option<String>,
+    /// The attribute `w:date`, when the element has it.
     pub date: Option<super::wordprocessing::StandardDateAndTimeStorageFormat>,
+    /// The attribute `w:id`, when the element has it.
     pub id: Option<super::wordprocessing::DecimalNumberValue>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:conflictMode`, schema type `CT_OnOff` of SDK 3.5.1's data.
+/// The `w14:conflictMode` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1131,10 +1219,12 @@ pub struct ConflictInsTrackChange {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConflictMode {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:contentPart`, schema type `CT_WordContentPart` of SDK 3.5.1's data.
+/// The `w14:contentPart` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_WordContentPart`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1143,15 +1233,22 @@ pub struct ConflictMode {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ContentPart {
+    /// The attribute `w14:bwMode`, when the element has it.
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
+    /// The child that is `NvContentPartPr`, when there is one.
     pub nv_content_part_pr: Option<Box<NvContentPartPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `Xfrm`, when there is one.
     pub xfrm: Option<Box<Xfrm>>,
 }
 
-/// The tag `w14:contourClr`, schema type `CT_Color` of SDK 3.5.1's data.
+/// The `w14:contourClr` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1160,11 +1257,14 @@ pub struct ContentPart {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ContourClr {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:customXmlConflictDelRangeEnd`, schema type `CT_Markup` of SDK 3.5.1's data.
+/// The `w14:customXmlConflictDelRangeEnd` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_Markup`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1173,11 +1273,14 @@ pub struct ContourClr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CustomXmlConflictDelRangeEnd {
+    /// The attribute `w:id`, when the element has it.
     pub id: Option<super::wordprocessing::DecimalNumberValue>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:customXmlConflictDelRangeStart`, schema type `CT_TrackChange` of SDK 3.5.1's data.
+/// The `w14:customXmlConflictDelRangeStart` element, declared by the schema data of the Open XML
+/// SDK, version 3.5.1. Its schema type is `CT_TrackChange`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1186,13 +1289,18 @@ pub struct CustomXmlConflictDelRangeEnd {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CustomXmlConflictDelRangeStart {
+    /// The attribute `w:author`, when the element has it.
     pub author: Option<String>,
+    /// The attribute `w:date`, when the element has it.
     pub date: Option<super::wordprocessing::StandardDateAndTimeStorageFormat>,
+    /// The attribute `w:id`, when the element has it.
     pub id: Option<super::wordprocessing::DecimalNumberValue>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:customXmlConflictInsRangeEnd`, schema type `CT_Markup` of SDK 3.5.1's data.
+/// The `w14:customXmlConflictInsRangeEnd` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_Markup`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1201,11 +1309,14 @@ pub struct CustomXmlConflictDelRangeStart {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CustomXmlConflictInsRangeEnd {
+    /// The attribute `w:id`, when the element has it.
     pub id: Option<super::wordprocessing::DecimalNumberValue>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:customXmlConflictInsRangeStart`, schema type `CT_TrackChange` of SDK 3.5.1's data.
+/// The `w14:customXmlConflictInsRangeStart` element, declared by the schema data of the Open XML
+/// SDK, version 3.5.1. Its schema type is `CT_TrackChange`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1214,13 +1325,18 @@ pub struct CustomXmlConflictInsRangeEnd {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CustomXmlConflictInsRangeStart {
+    /// The attribute `w:author`, when the element has it.
     pub author: Option<String>,
+    /// The attribute `w:date`, when the element has it.
     pub date: Option<super::wordprocessing::StandardDateAndTimeStorageFormat>,
+    /// The attribute `w:id`, when the element has it.
     pub id: Option<super::wordprocessing::DecimalNumberValue>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:defaultImageDpi`, schema type `CT_DefaultImageDpi` of SDK 3.5.1's data.
+/// The `w14:defaultImageDpi` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_DefaultImageDpi`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1229,11 +1345,14 @@ pub struct CustomXmlConflictInsRangeStart {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DefaultImageDpi {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w14:val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `w14:discardImageEditingData`, schema type `CT_OnOff` of SDK 3.5.1's data.
+/// The `w14:discardImageEditingData` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1242,10 +1361,12 @@ pub struct DefaultImageDpi {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DiscardImageEditingData {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:docId`, schema type `CT_LongHexNumber` of SDK 3.5.1's data.
+/// The `w14:docId` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_LongHexNumber`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1254,11 +1375,14 @@ pub struct DiscardImageEditingData {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DocId {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w14:val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `w14:entityPicker`, schema type `CT_Empty` of SDK 3.5.1's data.
+/// The `w14:entityPicker` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_Empty`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1267,10 +1391,12 @@ pub struct DocId {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EntityPicker {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
+/// The `w14:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1279,11 +1405,14 @@ pub struct EntityPicker {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
+    /// The children that are `super::drawing::Extension`, in order.
     pub extension: Vec<super::drawing::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:extrusionClr`, schema type `CT_Color` of SDK 3.5.1's data.
+/// The `w14:extrusionClr` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1292,22 +1421,32 @@ pub struct ExtLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtrusionClr {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_FillTextEffect`, `CT_TextOutlineEffect`: choice in `CT_TextOutlineEffect`,
-/// choice in `CT_FillTextEffect`.
+/// One child element of a choice: choice in `CT_TextOutlineEffect`, choice in `CT_FillTextEffect`.
+///
+/// The schema types that hold it: `CT_FillTextEffect`, `CT_TextOutlineEffect`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum FillPropertiesContent {
+    /// The element `w14:gradFill`, a `GradFill`.
     GradFill(GradFill),
+    /// The element `w14:noFill`, a `NoFill`.
     NoFill(NoFill),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `w14:solidFill`, a `SolidFill`.
     SolidFill(SolidFill),
 }
 
-/// The tag `w14:fillToRect`, schema type `CT_RelativeRect` of SDK 3.5.1's data.
+/// The `w14:fillToRect` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_RelativeRect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1316,14 +1455,20 @@ pub enum FillPropertiesContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FillToRect {
+    /// The attribute `w14:b`, when the element has it.
     pub b: Option<String>,
+    /// The attribute `w14:l`, when the element has it.
     pub l: Option<String>,
+    /// The attribute `w14:r`, when the element has it.
     pub r: Option<String>,
+    /// The attribute `w14:t`, when the element has it.
     pub t: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:glow`, schema type `CT_Glow` of SDK 3.5.1's data.
+/// The `w14:glow` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Glow`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1332,12 +1477,16 @@ pub struct FillToRect {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Glow {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// The attribute `w14:rad`, when the element has it.
     pub rad: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:gradFill`, schema type `CT_GradientFillProperties` of SDK 3.5.1's data.
+/// The `w14:gradFill` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_GradientFillProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1346,21 +1495,32 @@ pub struct Glow {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GradFill {
+    /// The child that is an item of `GradientFillPropertiesContent`, when there is one.
     pub content: Option<Box<GradientFillPropertiesContent>>,
+    /// The child that is `GsLst`, when there is one.
     pub gs_lst: Option<Box<GsLst>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_GradientFillProperties`: choice in `CT_GradientFillProperties`.
+/// One child element of a choice: choice in `CT_GradientFillProperties`.
+///
+/// The schema types that hold it: `CT_GradientFillProperties`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum GradientFillPropertiesContent {
+    /// The element `w14:lin`, a `Lin`.
     Lin(Lin),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `w14:path`, a `Path`.
     Path(Path),
 }
 
-/// The tag `w14:gs`, schema type `CT_GradientStop` of SDK 3.5.1's data.
+/// The `w14:gs` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `CT_GradientStop`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1369,12 +1529,16 @@ pub enum GradientFillPropertiesContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Gs {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// The attribute `w14:pos`, when the element has it.
     pub pos: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:gsLst`, schema type `CT_GradientStopList` of SDK 3.5.1's data.
+/// The `w14:gsLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_GradientStopList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1383,11 +1547,14 @@ pub struct Gs {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GsLst {
+    /// The children that are `Gs`, in order.
     pub gs: Vec<Gs>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:hueMod`, schema type `CT_PositivePercentage` of SDK 3.5.1's data.
+/// The `w14:hueMod` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_PositivePercentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1396,11 +1563,14 @@ pub struct GsLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HueMod {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w14:val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `w14:ligatures`, schema type `CT_Ligatures` of SDK 3.5.1's data.
+/// The `w14:ligatures` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Ligatures`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1409,11 +1579,14 @@ pub struct HueMod {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Ligatures {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w14:val`, when the element has it.
     pub val: Option<StLigatures>,
 }
 
-/// The tag `w14:lightRig`, schema type `CT_LightRig` of SDK 3.5.1's data.
+/// The `w14:lightRig` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_LightRig`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1422,13 +1595,20 @@ pub struct Ligatures {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LightRig {
+    /// The attribute `w14:dir`, when the element has it.
     pub dir: Option<LightRigDirection>,
+    /// The attribute `w14:rig`, when the element has it.
     pub rig: Option<LightRigType>,
+    /// The child that is `Rot`, when there is one.
     pub rot: Option<Box<Rot>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_LightRigDirection`: the text the file carried.
+/// The simple type `ST_LightRigDirection`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1437,21 +1617,33 @@ pub struct LightRig {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LightRigDirection(pub String);
-/// The members of `ST_LightRigDirection`, in alphabetical order.
+/// The members of the enumeration `ST_LightRigDirection`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum LightRigDirectionMember {
+    /// The member written `b`.
     B,
+    /// The member written `bl`.
     Bl,
+    /// The member written `br`.
     Br,
+    /// The member written `l`.
     L,
+    /// The member written `r`.
     R,
+    /// The member written `t`.
     T,
+    /// The member written `tl`.
     Tl,
+    /// The member written `tr`.
     Tr,
 }
 
-/// `ST_LightRigType`: the text the file carried.
+/// The simple type `ST_LightRigType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1460,40 +1652,69 @@ pub enum LightRigDirectionMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LightRigType(pub String);
-/// The members of `ST_LightRigType`, in alphabetical order.
+/// The members of the enumeration `ST_LightRigType`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum LightRigTypeMember {
+    /// The member written `balanced`.
     Balanced,
+    /// The member written `brightRoom`.
     BrightRoom,
+    /// The member written `chilly`.
     Chilly,
+    /// The member written `contrasting`.
     Contrasting,
+    /// The member written `flat`.
     Flat,
+    /// The member written `flood`.
     Flood,
+    /// The member written `freezing`.
     Freezing,
+    /// The member written `glow`.
     Glow,
+    /// The member written `harsh`.
     Harsh,
+    /// The member written `legacyFlat1`.
     LegacyFlat1,
+    /// The member written `legacyFlat2`.
     LegacyFlat2,
+    /// The member written `legacyFlat3`.
     LegacyFlat3,
+    /// The member written `legacyFlat4`.
     LegacyFlat4,
+    /// The member written `legacyHarsh1`.
     LegacyHarsh1,
+    /// The member written `legacyHarsh2`.
     LegacyHarsh2,
+    /// The member written `legacyHarsh3`.
     LegacyHarsh3,
+    /// The member written `legacyHarsh4`.
     LegacyHarsh4,
+    /// The member written `legacyNormal1`.
     LegacyNormal1,
+    /// The member written `legacyNormal2`.
     LegacyNormal2,
+    /// The member written `legacyNormal3`.
     LegacyNormal3,
+    /// The member written `legacyNormal4`.
     LegacyNormal4,
+    /// The member written `morning`.
     Morning,
+    /// The member written `soft`.
     Soft,
+    /// The member written `sunrise`.
     Sunrise,
+    /// The member written `sunset`.
     Sunset,
+    /// The member written `threePt`.
     ThreePt,
+    /// The member written `twoPt`.
     TwoPt,
 }
 
-/// The tag `w14:lin`, schema type `CT_LinearShadeProperties` of SDK 3.5.1's data.
+/// The `w14:lin` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_LinearShadeProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1502,12 +1723,18 @@ pub enum LightRigTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Lin {
+    /// The attribute `w14:ang`, when the element has it.
     pub ang: Option<String>,
+    /// The attribute `w14:scaled`, when the element has it.
     pub scaled: Option<OnOff>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_LineCap`: the text the file carried.
+/// The simple type `ST_LineCap`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1516,26 +1743,39 @@ pub struct Lin {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LineCap(pub String);
-/// The members of `ST_LineCap`, in alphabetical order.
+/// The members of the enumeration `ST_LineCap`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum LineCapMember {
+    /// The member written `flat`.
     Flat,
+    /// The member written `rnd`.
     Rnd,
+    /// The member written `sq`.
     Sq,
 }
 
-/// One item of `CT_TextOutlineEffect`: choice in `CT_TextOutlineEffect`.
+/// One child element of a choice: choice in `CT_TextOutlineEffect`.
+///
+/// The schema types that hold it: `CT_TextOutlineEffect`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum LineJoinContent {
+    /// The element `w14:bevel`, a `Bevel`.
     Bevel(Bevel),
+    /// The element `w14:miter`, a `Miter`.
     Miter(Miter),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `w14:round`, a `Round`.
     Round(Round),
 }
 
-/// The tag `w14:lum`, schema type `CT_Percentage` of SDK 3.5.1's data.
+/// The `w14:lum` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Percentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1544,10 +1784,12 @@ pub enum LineJoinContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Lum {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:lumMod`, schema type `CT_Percentage` of SDK 3.5.1's data.
+/// The `w14:lumMod` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Percentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1556,10 +1798,12 @@ pub struct Lum {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LumMod {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:lumOff`, schema type `CT_Percentage` of SDK 3.5.1's data.
+/// The `w14:lumOff` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Percentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1568,10 +1812,12 @@ pub struct LumMod {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LumOff {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:miter`, schema type `CT_LineJoinMiterProperties` of SDK 3.5.1's data.
+/// The `w14:miter` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_LineJoinMiterProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1580,11 +1826,14 @@ pub struct LumOff {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Miter {
+    /// The attribute `w14:lim`, when the element has it.
     pub lim: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:noFill`, schema type `CT_Empty` of SDK 3.5.1's data.
+/// The `w14:noFill` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Empty`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1593,10 +1842,12 @@ pub struct Miter {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NoFill {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:numForm`, schema type `CT_NumForm` of SDK 3.5.1's data.
+/// The `w14:numForm` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_NumForm`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1605,11 +1856,14 @@ pub struct NoFill {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NumForm {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w14:val`, when the element has it.
     pub val: Option<StNumForm>,
 }
 
-/// The tag `w14:numSpacing`, schema type `CT_NumSpacing` of SDK 3.5.1's data.
+/// The `w14:numSpacing` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_NumSpacing`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1618,11 +1872,14 @@ pub struct NumForm {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NumSpacing {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w14:val`, when the element has it.
     pub val: Option<StNumSpacing>,
 }
 
-/// The tag `w14:nvContentPartPr`, schema type `CT_WordContentPartNonVisual` of SDK 3.5.1's data.
+/// The `w14:nvContentPartPr` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_WordContentPartNonVisual`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1631,12 +1888,18 @@ pub struct NumSpacing {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NvContentPartPr {
+    /// The child that is `CNvContentPartPr`, when there is one.
     pub c: Option<Box<CNvContentPartPr>>,
+    /// The child that is `CNvPr`, when there is one.
     pub c_nv_pr: Option<Box<CNvPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_OnOff`: the text the file carried.
+/// The simple type `ST_OnOff`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1645,17 +1908,23 @@ pub struct NvContentPartPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct OnOff(pub String);
-/// The members of `ST_OnOff`, in alphabetical order.
+/// The members of the enumeration `ST_OnOff`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum OnOffMember {
+    /// The member written `false`.
     False,
+    /// The member written `true`.
     True,
+    /// The member written `0`.
     Value0,
+    /// The member written `1`.
     Value1,
 }
 
-/// The tag `w14:path`, schema type `CT_PathShadeProperties` of SDK 3.5.1's data.
+/// The `w14:path` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_PathShadeProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1664,12 +1933,18 @@ pub enum OnOffMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Path {
+    /// The child that is `FillToRect`, when there is one.
     pub fill_to_rect: Option<Box<FillToRect>>,
+    /// The attribute `w14:path`, when the element has it.
     pub path: Option<PathShadeType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_PathShadeType`: the text the file carried.
+/// The simple type `ST_PathShadeType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1678,16 +1953,23 @@ pub struct Path {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PathShadeType(pub String);
-/// The members of `ST_PathShadeType`, in alphabetical order.
+/// The members of the enumeration `ST_PathShadeType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum PathShadeTypeMember {
+    /// The member written `circle`.
     Circle,
+    /// The member written `rect`.
     Rect,
+    /// The member written `shape`.
     Shape,
 }
 
-/// `ST_PenAlignment`: the text the file carried.
+/// The simple type `ST_PenAlignment`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1696,15 +1978,21 @@ pub enum PathShadeTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PenAlignment(pub String);
-/// The members of `ST_PenAlignment`, in alphabetical order.
+/// The members of the enumeration `ST_PenAlignment`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum PenAlignmentMember {
+    /// The member written `ctr`.
     Ctr,
+    /// The member written `in`.
     In,
 }
 
-/// `ST_PresetCameraType`: the text the file carried.
+/// The simple type `ST_PresetCameraType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1713,75 +2001,141 @@ pub enum PenAlignmentMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresetCameraType(pub String);
-/// The members of `ST_PresetCameraType`, in alphabetical order.
+/// The members of the enumeration `ST_PresetCameraType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum PresetCameraTypeMember {
+    /// The member written `isometricBottomDown`.
     IsometricBottomDown,
+    /// The member written `isometricBottomUp`.
     IsometricBottomUp,
+    /// The member written `isometricLeftDown`.
     IsometricLeftDown,
+    /// The member written `isometricLeftUp`.
     IsometricLeftUp,
+    /// The member written `isometricOffAxis1Left`.
     IsometricOffAxis1Left,
+    /// The member written `isometricOffAxis1Right`.
     IsometricOffAxis1Right,
+    /// The member written `isometricOffAxis1Top`.
     IsometricOffAxis1Top,
+    /// The member written `isometricOffAxis2Left`.
     IsometricOffAxis2Left,
+    /// The member written `isometricOffAxis2Right`.
     IsometricOffAxis2Right,
+    /// The member written `isometricOffAxis2Top`.
     IsometricOffAxis2Top,
+    /// The member written `isometricOffAxis3Bottom`.
     IsometricOffAxis3Bottom,
+    /// The member written `isometricOffAxis3Left`.
     IsometricOffAxis3Left,
+    /// The member written `isometricOffAxis3Right`.
     IsometricOffAxis3Right,
+    /// The member written `isometricOffAxis4Bottom`.
     IsometricOffAxis4Bottom,
+    /// The member written `isometricOffAxis4Left`.
     IsometricOffAxis4Left,
+    /// The member written `isometricOffAxis4Right`.
     IsometricOffAxis4Right,
+    /// The member written `isometricRightDown`.
     IsometricRightDown,
+    /// The member written `isometricRightUp`.
     IsometricRightUp,
+    /// The member written `isometricTopDown`.
     IsometricTopDown,
+    /// The member written `isometricTopUp`.
     IsometricTopUp,
+    /// The member written `legacyObliqueBottom`.
     LegacyObliqueBottom,
+    /// The member written `legacyObliqueBottomLeft`.
     LegacyObliqueBottomLeft,
+    /// The member written `legacyObliqueBottomRight`.
     LegacyObliqueBottomRight,
+    /// The member written `legacyObliqueFront`.
     LegacyObliqueFront,
+    /// The member written `legacyObliqueLeft`.
     LegacyObliqueLeft,
+    /// The member written `legacyObliqueRight`.
     LegacyObliqueRight,
+    /// The member written `legacyObliqueTop`.
     LegacyObliqueTop,
+    /// The member written `legacyObliqueTopLeft`.
     LegacyObliqueTopLeft,
+    /// The member written `legacyObliqueTopRight`.
     LegacyObliqueTopRight,
+    /// The member written `legacyPerspectiveBottom`.
     LegacyPerspectiveBottom,
+    /// The member written `legacyPerspectiveBottomLeft`.
     LegacyPerspectiveBottomLeft,
+    /// The member written `legacyPerspectiveBottomRight`.
     LegacyPerspectiveBottomRight,
+    /// The member written `legacyPerspectiveFront`.
     LegacyPerspectiveFront,
+    /// The member written `legacyPerspectiveLeft`.
     LegacyPerspectiveLeft,
+    /// The member written `legacyPerspectiveRight`.
     LegacyPerspectiveRight,
+    /// The member written `legacyPerspectiveTop`.
     LegacyPerspectiveTop,
+    /// The member written `legacyPerspectiveTopLeft`.
     LegacyPerspectiveTopLeft,
+    /// The member written `legacyPerspectiveTopRight`.
     LegacyPerspectiveTopRight,
+    /// The member written `obliqueBottom`.
     ObliqueBottom,
+    /// The member written `obliqueBottomLeft`.
     ObliqueBottomLeft,
+    /// The member written `obliqueBottomRight`.
     ObliqueBottomRight,
+    /// The member written `obliqueLeft`.
     ObliqueLeft,
+    /// The member written `obliqueRight`.
     ObliqueRight,
+    /// The member written `obliqueTop`.
     ObliqueTop,
+    /// The member written `obliqueTopLeft`.
     ObliqueTopLeft,
+    /// The member written `obliqueTopRight`.
     ObliqueTopRight,
+    /// The member written `orthographicFront`.
     OrthographicFront,
+    /// The member written `perspectiveAbove`.
     PerspectiveAbove,
+    /// The member written `perspectiveAboveLeftFacing`.
     PerspectiveAboveLeftFacing,
+    /// The member written `perspectiveAboveRightFacing`.
     PerspectiveAboveRightFacing,
+    /// The member written `perspectiveBelow`.
     PerspectiveBelow,
+    /// The member written `perspectiveContrastingLeftFacing`.
     PerspectiveContrastingLeftFacing,
+    /// The member written `perspectiveContrastingRightFacing`.
     PerspectiveContrastingRightFacing,
+    /// The member written `perspectiveFront`.
     PerspectiveFront,
+    /// The member written `perspectiveHeroicExtremeLeftFacing`.
     PerspectiveHeroicExtremeLeftFacing,
+    /// The member written `perspectiveHeroicExtremeRightFacing`.
     PerspectiveHeroicExtremeRightFacing,
+    /// The member written `perspectiveHeroicLeftFacing`.
     PerspectiveHeroicLeftFacing,
+    /// The member written `perspectiveHeroicRightFacing`.
     PerspectiveHeroicRightFacing,
+    /// The member written `perspectiveLeft`.
     PerspectiveLeft,
+    /// The member written `perspectiveRelaxed`.
     PerspectiveRelaxed,
+    /// The member written `perspectiveRelaxedModerately`.
     PerspectiveRelaxedModerately,
+    /// The member written `perspectiveRight`.
     PerspectiveRight,
 }
 
-/// `ST_PresetLineDashVal`: the text the file carried.
+/// The simple type `ST_PresetLineDashVal`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1790,24 +2144,39 @@ pub enum PresetCameraTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresetLineDashVal(pub String);
-/// The members of `ST_PresetLineDashVal`, in alphabetical order.
+/// The members of the enumeration `ST_PresetLineDashVal`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum PresetLineDashValMember {
+    /// The member written `dash`.
     Dash,
+    /// The member written `dashDot`.
     DashDot,
+    /// The member written `dot`.
     Dot,
+    /// The member written `lgDash`.
     LgDash,
+    /// The member written `lgDashDot`.
     LgDashDot,
+    /// The member written `lgDashDotDot`.
     LgDashDotDot,
+    /// The member written `solid`.
     Solid,
+    /// The member written `sysDash`.
     SysDash,
+    /// The member written `sysDashDot`.
     SysDashDot,
+    /// The member written `sysDashDotDot`.
     SysDashDotDot,
+    /// The member written `sysDot`.
     SysDot,
 }
 
-/// `ST_PresetMaterialType`: the text the file carried.
+/// The simple type `ST_PresetMaterialType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1816,29 +2185,47 @@ pub enum PresetLineDashValMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresetMaterialType(pub String);
-/// The members of `ST_PresetMaterialType`, in alphabetical order.
+/// The members of the enumeration `ST_PresetMaterialType`, in alphabetical order. `as_str` gives
+/// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum PresetMaterialTypeMember {
+    /// The member written `clear`.
     Clear,
+    /// The member written `dkEdge`.
     DkEdge,
+    /// The member written `flat`.
     Flat,
+    /// The member written `legacyMatte`.
     LegacyMatte,
+    /// The member written `legacyMetal`.
     LegacyMetal,
+    /// The member written `legacyPlastic`.
     LegacyPlastic,
+    /// The member written `legacyWireframe`.
     LegacyWireframe,
+    /// The member written `matte`.
     Matte,
+    /// The member written `metal`.
     Metal,
+    /// The member written `none`.
     None,
+    /// The member written `plastic`.
     Plastic,
+    /// The member written `powder`.
     Powder,
+    /// The member written `softEdge`.
     SoftEdge,
+    /// The member written `softmetal`.
     Softmetal,
+    /// The member written `translucentPowder`.
     TranslucentPowder,
+    /// The member written `warmMatte`.
     WarmMatte,
 }
 
-/// The tag `w14:props3d`, schema type `CT_Props3D` of SDK 3.5.1's data.
+/// The `w14:props3d` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Props3D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1847,17 +2234,26 @@ pub enum PresetMaterialTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Props3d {
+    /// The child that is `BevelB`, when there is one.
     pub bevel_b: Option<Box<BevelB>>,
+    /// The child that is `BevelT`, when there is one.
     pub bevel_t: Option<Box<BevelT>>,
+    /// The child that is `ContourClr`, when there is one.
     pub contour_clr: Option<Box<ContourClr>>,
+    /// The attribute `w14:contourW`, when the element has it.
     pub contour_w: Option<String>,
+    /// The child that is `ExtrusionClr`, when there is one.
     pub extrusion_clr: Option<Box<ExtrusionClr>>,
+    /// The attribute `w14:extrusionH`, when the element has it.
     pub extrusion_h: Option<String>,
+    /// The attribute `w14:prstMaterial`, when the element has it.
     pub prst_material: Option<PresetMaterialType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:prstDash`, schema type `CT_PresetLineDashProperties` of SDK 3.5.1's data.
+/// The `w14:prstDash` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_PresetLineDashProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1866,11 +2262,16 @@ pub struct Props3d {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PrstDash {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w14:val`, when the element has it.
     pub val: Option<PresetLineDashVal>,
 }
 
-/// `ST_RectAlignment`: the text the file carried.
+/// The simple type `ST_RectAlignment`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1879,23 +2280,35 @@ pub struct PrstDash {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RectAlignment(pub String);
-/// The members of `ST_RectAlignment`, in alphabetical order.
+/// The members of the enumeration `ST_RectAlignment`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum RectAlignmentMember {
+    /// The member written `b`.
     B,
+    /// The member written `bl`.
     Bl,
+    /// The member written `br`.
     Br,
+    /// The member written `ctr`.
     Ctr,
+    /// The member written `l`.
     L,
+    /// The member written `none`.
     None,
+    /// The member written `r`.
     R,
+    /// The member written `t`.
     T,
+    /// The member written `tl`.
     Tl,
+    /// The member written `tr`.
     Tr,
 }
 
-/// The tag `w14:reflection`, schema type `CT_Reflection` of SDK 3.5.1's data.
+/// The `w14:reflection` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_Reflection`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1904,23 +2317,38 @@ pub enum RectAlignmentMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Reflection {
+    /// The attribute `w14:algn`, when the element has it.
     pub algn: Option<RectAlignment>,
+    /// The attribute `w14:blurRad`, when the element has it.
     pub blur_rad: Option<String>,
+    /// The attribute `w14:dir`, when the element has it.
     pub dir: Option<String>,
+    /// The attribute `w14:dist`, when the element has it.
     pub dist: Option<String>,
+    /// The attribute `w14:endA`, when the element has it.
     pub end_a: Option<String>,
+    /// The attribute `w14:endPos`, when the element has it.
     pub end_pos: Option<String>,
+    /// The attribute `w14:fadeDir`, when the element has it.
     pub fade_dir: Option<String>,
+    /// The attribute `w14:kx`, when the element has it.
     pub kx: Option<String>,
+    /// The attribute `w14:ky`, when the element has it.
     pub ky: Option<String>,
+    /// The attribute `w14:stA`, when the element has it.
     pub st_a: Option<String>,
+    /// The attribute `w14:stPos`, when the element has it.
     pub st_pos: Option<String>,
+    /// The attribute `w14:sx`, when the element has it.
     pub sx: Option<String>,
+    /// The attribute `w14:sy`, when the element has it.
     pub sy: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:rot`, schema type `CT_SphereCoords` of SDK 3.5.1's data.
+/// The `w14:rot` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SphereCoords`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1929,13 +2357,18 @@ pub struct Reflection {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Rot {
+    /// The attribute `w14:lat`, when the element has it.
     pub lat: Option<String>,
+    /// The attribute `w14:lon`, when the element has it.
     pub lon: Option<String>,
+    /// The attribute `w14:rev`, when the element has it.
     pub rev: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:round`, schema type `CT_Empty` of SDK 3.5.1's data.
+/// The `w14:round` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Empty`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1944,10 +2377,12 @@ pub struct Rot {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Round {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:sat`, schema type `CT_Percentage` of SDK 3.5.1's data.
+/// The `w14:sat` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Percentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1956,10 +2391,12 @@ pub struct Round {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Sat {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:satMod`, schema type `CT_Percentage` of SDK 3.5.1's data.
+/// The `w14:satMod` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Percentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1968,10 +2405,12 @@ pub struct Sat {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SatMod {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:satOff`, schema type `CT_Percentage` of SDK 3.5.1's data.
+/// The `w14:satOff` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Percentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1980,10 +2419,12 @@ pub struct SatMod {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SatOff {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:scene3d`, schema type `CT_Scene3D` of SDK 3.5.1's data.
+/// The `w14:scene3d` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Scene3D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1992,12 +2433,16 @@ pub struct SatOff {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Scene3d {
+    /// The child that is `Camera`, which the schema requires.
     pub camera: Box<Camera>,
+    /// The child that is `LightRig`, which the schema requires.
     pub light_rig: Box<LightRig>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:schemeClr`, schema type `CT_SchemeColor` of SDK 3.5.1's data.
+/// The `w14:schemeClr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SchemeColor`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2006,12 +2451,18 @@ pub struct Scene3d {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SchemeClr {
+    /// The children that are an item of `ColorTransformContent`, in order.
     pub content: Vec<ColorTransformContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w14:val`, when the element has it.
     pub val: Option<SchemeColorVal>,
 }
 
-/// `ST_SchemeColorVal`: the text the file carried.
+/// The simple type `ST_SchemeColorVal`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2020,30 +2471,49 @@ pub struct SchemeClr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SchemeColorVal(pub String);
-/// The members of `ST_SchemeColorVal`, in alphabetical order.
+/// The members of the enumeration `ST_SchemeColorVal`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum SchemeColorValMember {
+    /// The member written `accent1`.
     Accent1,
+    /// The member written `accent2`.
     Accent2,
+    /// The member written `accent3`.
     Accent3,
+    /// The member written `accent4`.
     Accent4,
+    /// The member written `accent5`.
     Accent5,
+    /// The member written `accent6`.
     Accent6,
+    /// The member written `bg1`.
     Bg1,
+    /// The member written `bg2`.
     Bg2,
+    /// The member written `dk1`.
     Dk1,
+    /// The member written `dk2`.
     Dk2,
+    /// The member written `folHlink`.
     FolHlink,
+    /// The member written `hlink`.
     Hlink,
+    /// The member written `lt1`.
     Lt1,
+    /// The member written `lt2`.
     Lt2,
+    /// The member written `phClr`.
     PhClr,
+    /// The member written `tx1`.
     Tx1,
+    /// The member written `tx2`.
     Tx2,
 }
 
-/// The tag `w14:shade`, schema type `CT_PositiveFixedPercentage` of SDK 3.5.1's data.
+/// The `w14:shade` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_PositiveFixedPercentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2052,10 +2522,12 @@ pub enum SchemeColorValMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Shade {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:shadow`, schema type `CT_Shadow` of SDK 3.5.1's data.
+/// The `w14:shadow` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Shadow`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2064,19 +2536,30 @@ pub struct Shade {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Shadow {
+    /// The attribute `w14:algn`, when the element has it.
     pub algn: Option<RectAlignment>,
+    /// The attribute `w14:blurRad`, when the element has it.
     pub blur_rad: Option<String>,
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// The attribute `w14:dir`, when the element has it.
     pub dir: Option<String>,
+    /// The attribute `w14:dist`, when the element has it.
     pub dist: Option<String>,
+    /// The attribute `w14:kx`, when the element has it.
     pub kx: Option<String>,
+    /// The attribute `w14:ky`, when the element has it.
     pub ky: Option<String>,
+    /// The attribute `w14:sx`, when the element has it.
     pub sx: Option<String>,
+    /// The attribute `w14:sy`, when the element has it.
     pub sy: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:solidFill`, schema type `CT_SolidColorFillProperties` of SDK 3.5.1's data.
+/// The `w14:solidFill` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SolidColorFillProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2085,11 +2568,14 @@ pub struct Shadow {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SolidFill {
+    /// The child that is an item of `ColorContent`, when there is one.
     pub content: Option<Box<ColorContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:srgbClr`, schema type `CT_SRgbColor` of SDK 3.5.1's data.
+/// The `w14:srgbClr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SRgbColor`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2098,12 +2584,18 @@ pub struct SolidFill {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SrgbClr {
+    /// The children that are an item of `ColorTransformContent`, in order.
     pub content: Vec<ColorTransformContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w14:val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// `ST_Ligatures`: the text the file carried.
+/// The simple type `ST_Ligatures`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2112,29 +2604,49 @@ pub struct SrgbClr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StLigatures(pub String);
-/// The members of `ST_Ligatures`, in alphabetical order.
+/// The members of the enumeration `ST_Ligatures`, in alphabetical order. `as_str` gives the text of
+/// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum StLigaturesMember {
+    /// The member written `all`.
     All,
+    /// The member written `contextual`.
     Contextual,
+    /// The member written `contextualDiscretional`.
     ContextualDiscretional,
+    /// The member written `contextualHistorical`.
     ContextualHistorical,
+    /// The member written `contextualHistoricalDiscretional`.
     ContextualHistoricalDiscretional,
+    /// The member written `discretional`.
     Discretional,
+    /// The member written `historical`.
     Historical,
+    /// The member written `historicalDiscretional`.
     HistoricalDiscretional,
+    /// The member written `none`.
     None,
+    /// The member written `standard`.
     Standard,
+    /// The member written `standardContextual`.
     StandardContextual,
+    /// The member written `standardContextualDiscretional`.
     StandardContextualDiscretional,
+    /// The member written `standardContextualHistorical`.
     StandardContextualHistorical,
+    /// The member written `standardDiscretional`.
     StandardDiscretional,
+    /// The member written `standardHistorical`.
     StandardHistorical,
+    /// The member written `standardHistoricalDiscretional`.
     StandardHistoricalDiscretional,
 }
 
-/// `ST_NumForm`: the text the file carried.
+/// The simple type `ST_NumForm`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2143,16 +2655,23 @@ pub enum StLigaturesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StNumForm(pub String);
-/// The members of `ST_NumForm`, in alphabetical order.
+/// The members of the enumeration `ST_NumForm`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum StNumFormMember {
+    /// The member written `default`.
     Default,
+    /// The member written `lining`.
     Lining,
+    /// The member written `oldStyle`.
     OldStyle,
 }
 
-/// `ST_NumSpacing`: the text the file carried.
+/// The simple type `ST_NumSpacing`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2161,16 +2680,21 @@ pub enum StNumFormMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StNumSpacing(pub String);
-/// The members of `ST_NumSpacing`, in alphabetical order.
+/// The members of the enumeration `ST_NumSpacing`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum StNumSpacingMember {
+    /// The member written `default`.
     Default,
+    /// The member written `proportional`.
     Proportional,
+    /// The member written `tabular`.
     Tabular,
 }
 
-/// The tag `w14:styleSet`, schema type `CT_StyleSet` of SDK 3.5.1's data.
+/// The `w14:styleSet` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StyleSet`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2179,12 +2703,16 @@ pub enum StNumSpacingMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StyleSet {
+    /// The attribute `w14:id`, when the element has it.
     pub id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w14:val`, when the element has it.
     pub val: Option<OnOff>,
 }
 
-/// The tag `w14:stylisticSets`, schema type `CT_StylisticSets` of SDK 3.5.1's data.
+/// The `w14:stylisticSets` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_StylisticSets`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2193,11 +2721,14 @@ pub struct StyleSet {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StylisticSets {
+    /// The children that are `StyleSet`, in order.
     pub style_set: Vec<StyleSet>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:textFill`, schema type `CT_FillTextEffect` of SDK 3.5.1's data.
+/// The `w14:textFill` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_FillTextEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2206,11 +2737,14 @@ pub struct StylisticSets {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextFill {
+    /// The child that is an item of `FillPropertiesContent`, when there is one.
     pub content: Option<Box<FillPropertiesContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:textOutline`, schema type `CT_TextOutlineEffect` of SDK 3.5.1's data.
+/// The `w14:textOutline` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_TextOutlineEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2219,17 +2753,26 @@ pub struct TextFill {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextOutline {
+    /// The attribute `w14:algn`, when the element has it.
     pub algn: Option<PenAlignment>,
+    /// The attribute `w14:cap`, when the element has it.
     pub cap: Option<LineCap>,
+    /// The attribute `w14:cmpd`, when the element has it.
     pub cmpd: Option<CompoundLine>,
+    /// The child that is an item of `FillPropertiesContent`, when there is one.
     pub fill_properties_content: Option<Box<FillPropertiesContent>>,
+    /// The child that is an item of `LineJoinContent`, when there is one.
     pub line_join_content: Option<Box<LineJoinContent>>,
+    /// The child that is `PrstDash`, when there is one.
     pub prst_dash: Option<Box<PrstDash>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w14:w`, when the element has it.
     pub w: Option<String>,
 }
 
-/// The tag `w14:tint`, schema type `CT_PositiveFixedPercentage` of SDK 3.5.1's data.
+/// The `w14:tint` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_PositiveFixedPercentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2238,10 +2781,12 @@ pub struct TextOutline {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Tint {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:uncheckedState`, schema type `CT_SdtCheckboxSymbol` of SDK 3.5.1's data.
+/// The `w14:uncheckedState` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_SdtCheckboxSymbol`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2250,10 +2795,12 @@ pub struct Tint {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct UncheckedState {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `w14:xfrm`, schema type `CT_Transform2D` of SDK 3.5.1's data.
+/// The `w14:xfrm` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Transform2D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2262,11 +2809,17 @@ pub struct UncheckedState {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Xfrm {
+    /// The child that is `super::drawing::Extents`, when there is one.
     pub extents: Option<Box<super::drawing::Extents>>,
+    /// The attribute `flipH`, when the element has it.
     pub flip_h: Option<String>,
+    /// The attribute `flipV`, when the element has it.
     pub flip_v: Option<String>,
+    /// The child that is `super::drawing::Offset`, when there is one.
     pub offset: Option<Box<super::drawing::Offset>>,
+    /// The attribute `rot`, when the element has it.
     pub rot: Option<super::drawing::Angle>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -2625,7 +3178,7 @@ impl CompoundLineMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -3323,7 +3876,7 @@ impl LightRigDirectionMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -3457,7 +4010,7 @@ impl LightRigTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -3532,7 +4085,7 @@ impl LineCapMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -3786,7 +4339,7 @@ impl OnOffMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -3860,7 +4413,7 @@ impl PathShadeTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -3909,7 +4462,7 @@ impl PenAlignmentMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4266,7 +4819,7 @@ impl PresetCameraTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4344,7 +4897,7 @@ impl PresetLineDashValMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4439,7 +4992,7 @@ impl PresetMaterialTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4550,7 +5103,7 @@ impl RectAlignmentMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4805,7 +5358,7 @@ impl SchemeColorValMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5017,7 +5570,7 @@ impl StLigaturesMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5067,7 +5620,7 @@ impl StNumFormMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5121,7 +5674,7 @@ impl StNumSpacingMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

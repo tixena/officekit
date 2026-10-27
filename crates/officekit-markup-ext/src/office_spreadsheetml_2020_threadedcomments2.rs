@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `xltc2` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/spreadsheetml/2020/threadedcomments2`, which files write with the prefix `xltc2`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2020/threadedcomments2`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -249,7 +251,8 @@ pub static CHECKSUM_SHAPE: officekit_markup_base::Shape = officekit_markup_base:
     text: true,
 };
 
-/// The tag `xltc2:checksum`, schema type `unsignedInt` of SDK 3.5.1's data.
+/// The `xltc2:checksum` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `unsignedInt`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -258,7 +261,9 @@ pub static CHECKSUM_SHAPE: officekit_markup_base::Shape = officekit_markup_base:
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Checksum {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
@@ -272,21 +277,30 @@ pub struct Checksum {
 /// not return itself from `crate::Context::office_spreadsheetml_2020_threadedcomments2` is never
 /// asked.
 pub trait Context: crate::Context {
+    /// Asked for each `Checksum`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn checksum(&mut self, _node: &Checksum) -> Option<Checksum> {
         None
     }
 
+    /// Asked for each `ExtLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
         None
     }
 
+    /// Asked for each `Hyperlink`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn hyperlink(&mut self, _node: &Hyperlink) -> Option<Hyperlink> {
         None
     }
 
+    /// Asked when a `Checksum` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_checksum(
         &mut self,
         _node: &Checksum,
@@ -295,16 +309,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Hyperlink` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_hyperlink(
         &mut self,
         _node: &Hyperlink,
@@ -314,7 +334,8 @@ pub trait Context: crate::Context {
     }
 }
 
-/// The tag `xltc2:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
+/// The `xltc2:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -323,11 +344,14 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
+    /// The children that are `spreadsheet::Extension`, in order.
     pub extension: Vec<spreadsheet::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xltc2:hyperlink`, schema type `CT_CommentHyperlink` of SDK 3.5.1's data.
+/// The `xltc2:hyperlink` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_CommentHyperlink`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -336,10 +360,15 @@ pub struct ExtLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Hyperlink {
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The attribute `length`, when the element has it.
     pub length: Option<String>,
+    /// The attribute `startIndex`, when the element has it.
     pub start_index: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `url`, when the element has it.
     pub url: Option<String>,
 }
 
@@ -349,14 +378,18 @@ pub struct Hyperlink {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_spreadsheetml_2020_threadedcomments2` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `Checksum`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn checksum(&mut self, _node: &Checksum) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext_lst(&mut self, _node: &ExtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Hyperlink`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn hyperlink(&mut self, _node: &Hyperlink) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

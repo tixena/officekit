@@ -18,3 +18,6 @@ binary-format = ["dep:rkyv", "officekit-xml/binary-format"]
 [dependencies]
 officekit-xml.workspace = true
 rkyv = { workspace = true, optional = true }
+
+[package.metadata.docs.rs]
+all-features = true

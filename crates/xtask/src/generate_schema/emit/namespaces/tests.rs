@@ -181,7 +181,8 @@ fn a_table_past_the_range_of_a_namespace_id_is_an_error() {
 #[test]
 fn the_text_is_the_header_then_the_rows() {
     let text = render("// header\n", &table());
-    assert!(text.starts_with("// header\n\nuse super::OfficeVersion;\n"));
+    assert!(text.starts_with("// header\n\n//! The namespaces officekit knows.\n"));
+    assert!(text.contains("\nuse super::OfficeVersion;\n"));
     assert!(text.contains(
         "    NamespaceRow {\n        introduced: Some(OfficeVersion::Office2010),\n        prefix: \
          \"w14\",\n        strict_uri: None,\n        uri: \

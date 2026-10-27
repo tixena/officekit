@@ -212,8 +212,11 @@
 //! The hooks of the `s` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_base::common_simple_types`.
 //!
-//! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/sharedTypes`.
+//! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/sharedTypes`. Its prefix, `s`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_base::common_simple_types::*;
 
 /// The hooks of a context for the `s` namespace.

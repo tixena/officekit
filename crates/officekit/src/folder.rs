@@ -3,8 +3,14 @@
 //! [`down`] unpacks every `.docx` under a directory into a folder holding one
 //! file per package entry plus an `info.json` that remembers the document's
 //! file name; [`up`] zips those folders into `.docx` files again; [`format()`]
-//! re-indents the XML parts of a folder in place. Everything the library does
+//! indents the XML parts of a folder in place. Everything the library does
 //! with the operating system goes through an [`os_shim::System`].
+//!
+//! A folder is named after the file: the stem keeps its letters, digits, white
+//! space and `-_.()`, turns spaces into `_`, becomes lower case, and takes the
+//! suffix, so `Quarterly Report.docx` becomes `quarterly_report_docx`. The
+//! `info.json` in it holds the file name, as `{"name": "Quarterly Report.docx"}`
+//! with the indentation of a JSON writer. Only `.docx` files are expanded.
 
 use alloc::string::String;
 use alloc::vec::Vec;
@@ -31,6 +37,18 @@ pub const DEFAULT_SUFFIX: &str = "_docx";
 const INFO_FILE: &str = "info.json";
 
 /// What `down` writes for each `.docx`.
+///
+/// The struct is `#[non_exhaustive]`: start from `Default` and assign the fields. The default
+/// `suffix` is the empty string, not [`DEFAULT_SUFFIX`].
+///
+/// ```rust
+/// use officekit::folder::{DEFAULT_SUFFIX, DownOptions};
+///
+/// let mut options = DownOptions::default();
+/// assert_eq!(options.suffix, "");
+/// options.pretty = true;
+/// options.suffix = DEFAULT_SUFFIX;
+/// ```
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 #[non_exhaustive]
 pub struct DownOptions<'suffix> {
@@ -42,6 +60,19 @@ pub struct DownOptions<'suffix> {
 }
 
 /// What `up` writes for each folder.
+///
+/// The struct is `#[non_exhaustive]`: start from `Default` and assign the fields. The default
+/// `suffix` is the empty string, not [`DEFAULT_SUFFIX`]; with it, `up` zips every folder that
+/// holds an `info.json`.
+///
+/// ```rust
+/// use officekit::folder::{DEFAULT_SUFFIX, UpOptions};
+///
+/// let mut options = UpOptions::default();
+/// assert_eq!(options.suffix, "");
+/// options.minify = true;
+/// options.suffix = DEFAULT_SUFFIX;
+/// ```
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 #[non_exhaustive]
 pub struct UpOptions<'suffix> {
@@ -69,18 +100,28 @@ pub enum FolderError {
     /// A file or directory could not be read or written, or a `.docx` is not
     /// a zip archive.
     #[error("{}: {error}", .path.display())]
-    Io { error: io::Error, path: PathBuf },
+    Io {
+        /// The error of the file system or the archive.
+        error: io::Error,
+        /// The file or directory that failed.
+        path: PathBuf,
+    },
 
     /// An `info.json` is not JSON, or has no string `name`.
     #[error("{}: {error}", .path.display())]
     Json {
+        /// The error of the JSON reader.
         error: serde_json::Error,
+        /// The `info.json` that failed.
         path: PathBuf,
     },
 
     /// A document folder holds no `info.json`.
     #[error("{} has no {INFO_FILE}", .folder.display())]
-    MissingInfo { folder: PathBuf },
+    MissingInfo {
+        /// The folder with no `info.json`.
+        folder: PathBuf,
+    },
 
     /// The pattern that normalizes file names did not compile.
     #[error("file name pattern: {0}")]
@@ -88,7 +129,12 @@ pub enum FolderError {
 
     /// An XML part is not well-formed.
     #[error("{}: {error}", .path.display())]
-    Xml { error: XmlError, path: PathBuf },
+    Xml {
+        /// The error of the XML reader.
+        error: XmlError,
+        /// The part that failed.
+        path: PathBuf,
+    },
 }
 
 fn io_error(path: &Path) -> impl FnOnce(io::Error) -> FolderError {
@@ -98,8 +144,8 @@ fn io_error(path: &Path) -> impl FnOnce(io::Error) -> FolderError {
     }
 }
 
-/// Expand every `.docx` under `src` into a folder under `tgt`; returns the
-/// folders written.
+/// Expand every `.docx` under `src`, at any depth, into a folder under `tgt`, keeping its
+/// directory; returns the folders written. A folder that exists is replaced.
 ///
 /// # Errors
 ///
@@ -138,8 +184,10 @@ where
     Ok(written)
 }
 
-/// Zip every expanded folder under `src` back into a `.docx` under `tgt`;
-/// returns the files written.
+/// Zips every expanded folder under `src` back into a `.docx` under `tgt`.
+///
+/// Each file is named as its `info.json` says. A folder is expanded when its name ends with
+/// the suffix and it holds an `info.json`. Returns the files written.
 ///
 /// # Errors
 ///
@@ -190,7 +238,12 @@ where
     Ok(written)
 }
 
-/// Re-indent every XML part under `dir`, in place.
+/// Indent every XML part under `dir`, in place.
+///
+/// An element whose children are all elements gets each child on its own
+/// indented line. An element with text among its children, whitespace
+/// included, keeps them as they are, so a part that is already indented, even
+/// unevenly, keeps its layout.
 ///
 /// # Errors
 ///

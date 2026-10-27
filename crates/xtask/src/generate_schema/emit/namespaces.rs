@@ -180,14 +180,21 @@ pub fn render(header: &str, rows: &[Row]) -> String {
         .collect::<Vec<String>>()
         .concat();
     format!(
-        "{header}\nuse super::OfficeVersion;\n\n\
-         /// Every namespace, sorted by prefix; a namespace's id is its index.\n\
+        "{header}\n//! The namespaces officekit knows.\n//!\n\
+         //! A namespace is the group an element or attribute name belongs to. Each has a prefix,\n\
+         //! such as `w` for Word's, and a URI that files use to name it. A file in the Strict\n\
+         //! class may use another URI for the same namespace. `NAMESPACES` holds one row for each,\n\
+         //! and `NamespaceRow` is a row.\n\
+         \nuse super::OfficeVersion;\n\n\
+         /// Every namespace, sorted by prefix; a namespace's id is its index. A name that holds\n\
+         /// `Namespace::Known` holds this id.\n\
          pub static NAMESPACES: &[NamespaceRow] = &[\n{body}];\n\n\
          /// A namespace officekit knows.\n\
          #[non_exhaustive]\n\
          pub struct NamespaceRow {{\n\
          \x20   /// The Office version that brought a Microsoft extension; `None` for ECMA-376's own.\n\
          \x20   pub introduced: Option<OfficeVersion>,\n\
+         \x20   /// The prefix the schemas bind to the namespace, such as `w`.\n\
          \x20   pub prefix: &'static str,\n\
          \x20   /// The Strict URI, when the namespace has one apart from its Transitional URI.\n\
          \x20   pub strict_uri: Option<&'static str>,\n\

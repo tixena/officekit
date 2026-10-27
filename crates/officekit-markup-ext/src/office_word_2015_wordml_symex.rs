@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `w16se` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/word/2015/wordml/symex`, which files write with the prefix `w16se`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/word/2015/wordml/symex`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -242,19 +244,25 @@ pub static SYM_EX_SHAPE: officekit_markup_base::Shape = officekit_markup_base::S
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_word_2015_wordml_symex` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `SymEx`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn sym_ex(&mut self, _node: &SymEx) -> Option<SymEx> {
         None
     }
 
+    /// Asked when a `SymEx` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sym_ex(&mut self, _node: &SymEx, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 }
 
-/// The tag `w16se:symEx`, schema type `CT_SymEx` of SDK 3.5.1's data.
+/// The `w16se:symEx` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SymEx`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -263,8 +271,11 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SymEx {
+    /// The attribute `w16se:char`, when the element has it.
     pub char: Option<String>,
+    /// The attribute `w16se:font`, when the element has it.
     pub font: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -274,6 +285,7 @@ pub struct SymEx {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_word_2015_wordml_symex` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `SymEx`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sym_ex(&mut self, _node: &SymEx) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

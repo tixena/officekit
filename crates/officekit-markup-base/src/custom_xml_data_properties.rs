@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `ds` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.openxmlformats.org/officeDocument/2006/customXml`, which files write with the prefix `ds`.
 //!
-//! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/customXml`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 pub mod read;
 pub mod write;
@@ -244,8 +244,8 @@ pub static SET_OF_ASSOCIATED_XML_SCHEMAS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-/// 22.5.2.2 `schemaRef` (Associated XML Schema): the tag `ds:schemaRef`, schema type
-/// `CT_DatastoreSchemaRef`.
+/// The `ds:schemaRef` element, Associated XML Schema (ECMA-376 Part 1, section 22.5.2.2). Its
+/// schema type is `CT_DatastoreSchemaRef`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -254,12 +254,14 @@ pub static SET_OF_ASSOCIATED_XML_SCHEMAS_SHAPE: crate::Shape = crate::Shape {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AssociatedXMLSchema {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The attribute `ds:uri`, when the element has it.
     pub uri: Option<String>,
 }
 
-/// 22.5.2.1 `datastoreItem` (Custom XML Data Properties): the tag `ds:datastoreItem`, schema type
-/// `CT_DatastoreItem`.
+/// The `ds:datastoreItem` element, Custom XML Data Properties (ECMA-376 Part 1, section 22.5.2.1).
+/// Its schema type is `CT_DatastoreItem`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -268,13 +270,16 @@ pub struct AssociatedXMLSchema {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CustomXMLDataProperties {
+    /// The attribute `ds:itemID`, when the element has it.
     pub item_id: Option<super::common_simple_types::Guid>,
+    /// The child that is `SetOfAssociatedXMLSchemas`, when there is one.
     pub set_of_associated_xml_schemas: Option<Box<SetOfAssociatedXMLSchemas>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 22.5.2.3 `schemaRefs` (Set of Associated XML Schemas): the tag `ds:schemaRefs`, schema type
-/// `CT_DatastoreSchemaRefs`.
+/// The `ds:schemaRefs` element, Set of Associated XML Schemas (ECMA-376 Part 1, section 22.5.2.3).
+/// Its schema type is `CT_DatastoreSchemaRefs`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -283,7 +288,9 @@ pub struct CustomXMLDataProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SetOfAssociatedXMLSchemas {
+    /// The children that are `AssociatedXMLSchema`, in order.
     pub associated_xml_schema: Vec<AssociatedXMLSchema>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 

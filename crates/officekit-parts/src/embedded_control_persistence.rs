@@ -339,7 +339,8 @@
 //   e26c4528f8340924ff27391d34681ecde1f597fc5ce3dbf2d354edc9c6071a52  crates/xtask/data/part_roots.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! ECMA-376 Part 1, 15.2.9 "Embedded Control Persistence Part", and Part 4, 13.2.7.
+//! The Embedded Control Persistence Part, defined in ECMA-376 Part 1, section 15.2.9, and restated
+//! in Part 4, section 13.2.7.
 //!
 //! The module holds its relationship type and the load of its bytes.
 
@@ -348,7 +349,8 @@ use officekit_packaging::package::Package;
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::RelationshipType;
 
-/// Part 1, 15.2.9, and Part 4, 13.2.7.
+/// The relationship type that names this part, in both classes' spelling: Strict from ECMA-376 Part
+/// 1, section 15.2.9, Transitional from Part 4, section 13.2.7.
 pub const RELATIONSHIP_TYPE: RelationshipType = RelationshipType::CONTROL;
 
 /// The part's bytes.

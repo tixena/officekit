@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `wps` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/word/2010/wordprocessingShape`, which files write with the prefix `wps`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/word/2010/wordprocessingShape`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -382,7 +384,8 @@ pub static SHAPE_TEXT_CONTENT_TAGS: officekit_markup_base::Accept = officekit_ma
     tags: &[(NS_WPS, "linkedTxbx"), (NS_WPS, "txbx")],
 };
 
-/// The tag `wps:bodyPr`, schema type `CT_TextBodyProperties` of SDK 3.5.1's data.
+/// The `wps:bodyPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TextBodyProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -391,34 +394,60 @@ pub static SHAPE_TEXT_CONTENT_TAGS: officekit_markup_base::Accept = officekit_ma
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BodyPr {
+    /// The attribute `anchor`, when the element has it.
     pub anchor: Option<drawing::TextAnchoringTypes>,
+    /// The attribute `anchorCtr`, when the element has it.
     pub anchor_ctr: Option<String>,
+    /// The attribute `bIns`, when the element has it.
     pub b_ins: Option<drawing::StCoordinate32>,
+    /// The attribute `compatLnSpc`, when the element has it.
     pub compat_ln_spc: Option<String>,
+    /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionList>>,
+    /// The attribute `forceAA`, when the element has it.
     pub force_aa: Option<String>,
+    /// The attribute `fromWordArt`, when the element has it.
     pub from_word_art: Option<String>,
+    /// The attribute `horzOverflow`, when the element has it.
     pub horz_overflow: Option<drawing::TextHorizontalOverflowTypes>,
+    /// The attribute `lIns`, when the element has it.
     pub l_ins: Option<drawing::StCoordinate32>,
+    /// The attribute `numCol`, when the element has it.
     pub num_col: Option<drawing::TextColumnCount>,
+    /// The child that is `drawing::PresetTextWarp`, when there is one.
     pub preset_text_warp: Option<Box<drawing::PresetTextWarp>>,
+    /// The attribute `rIns`, when the element has it.
     pub r_ins: Option<drawing::StCoordinate32>,
+    /// The attribute `rot`, when the element has it.
     pub rot: Option<drawing::Angle>,
+    /// The attribute `rtlCol`, when the element has it.
     pub rtl_col: Option<String>,
+    /// The child that is `drawing::Scene3d`, when there is one.
     pub scene3d: Option<Box<drawing::Scene3d>>,
+    /// The attribute `spcCol`, when the element has it.
     pub spc_col: Option<drawing::PositiveCoordinatePoint>,
+    /// The attribute `spcFirstLastPara`, when the element has it.
     pub spc_first_last_para: Option<String>,
+    /// The attribute `tIns`, when the element has it.
     pub t_ins: Option<drawing::StCoordinate32>,
+    /// The child that is an item of `drawing::Text3DContent`, when there is one.
     pub text3d_content: Option<Box<drawing::Text3DContent>>,
+    /// The child that is an item of `drawing::TextAutofitContent`, when there is one.
     pub text_autofit_content: Option<Box<drawing::TextAutofitContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `upright`, when the element has it.
     pub upright: Option<String>,
+    /// The attribute `vert`, when the element has it.
     pub vert: Option<drawing::VerticalTextTypes>,
+    /// The attribute `vertOverflow`, when the element has it.
     pub vert_overflow: Option<drawing::TextVerticalOverflow>,
+    /// The attribute `wrap`, when the element has it.
     pub wrap: Option<drawing::TextWrappingTypes>,
 }
 
-/// The tag `wps:cNvCnPr`, schema type `CT_NonVisualConnectorProperties` of SDK 3.5.1's data.
+/// The `wps:cNvCnPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_NonVisualConnectorProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -427,14 +456,20 @@ pub struct BodyPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CNvCnPr {
+    /// The child that is `drawing::ConnectionEnd`, when there is one.
     pub connection_end: Option<Box<drawing::ConnectionEnd>>,
+    /// The child that is `drawing::ConnectionShapeLocks`, when there is one.
     pub connection_shape_locks: Option<Box<drawing::ConnectionShapeLocks>>,
+    /// The child that is `drawing::ConnectionStart`, when there is one.
     pub connection_start: Option<Box<drawing::ConnectionStart>>,
+    /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionList>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `wps:cNvPr`, schema type `CT_NonVisualDrawingProps` of SDK 3.5.1's data.
+/// The `wps:cNvPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_NonVisualDrawingProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -443,18 +478,28 @@ pub struct CNvCnPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CNvPr {
+    /// The child that is `drawing::ClickHyperlink`, when there is one.
     pub click_hyperlink: Option<Box<drawing::ClickHyperlink>>,
+    /// The attribute `descr`, when the element has it.
     pub descr: Option<String>,
+    /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionList>>,
+    /// The attribute `hidden`, when the element has it.
     pub hidden: Option<String>,
+    /// The child that is `drawing::HyperlinkForHover`, when there is one.
     pub hyperlink_for_hover: Option<Box<drawing::HyperlinkForHover>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<drawing::DrawingElementID>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `wps:cNvSpPr`, schema type `CT_NonVisualDrawingShapeProps` of SDK 3.5.1's data.
+/// The `wps:cNvSpPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_NonVisualDrawingShapeProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -463,9 +508,13 @@ pub struct CNvPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CNvSpPr {
+    /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionList>>,
+    /// The child that is `drawing::ShapeLocks`, when there is one.
     pub shape_locks: Option<Box<drawing::ShapeLocks>>,
+    /// The attribute `txBox`, when the element has it.
     pub tx_box: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -478,30 +527,44 @@ pub struct CNvSpPr {
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_word_2010_wordprocessing_shape` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `BodyPr`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn body_pr(&mut self, _node: &BodyPr) -> Option<BodyPr> {
         None
     }
 
+    /// Asked for each `CNvCnPr`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn c_nv_cn_pr(&mut self, _node: &CNvCnPr) -> Option<CNvCnPr> {
         None
     }
 
+    /// Asked for each `CNvPr`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn c_nv_pr(&mut self, _node: &CNvPr) -> Option<CNvPr> {
         None
     }
 
+    /// Asked for each `CNvSpPr`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn c_nv_sp_pr(&mut self, _node: &CNvSpPr) -> Option<CNvSpPr> {
         None
     }
 
+    /// Asked for each `ExtLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
         None
     }
 
+    /// Asked for each `LinkedTxbx`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn linked_txbx(&mut self, _node: &LinkedTxbx) -> Option<LinkedTxbx> {
         None
     }
 
+    /// Asked for each `ShapeNonVisualPropertiesContent`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn shape_non_visual_properties(
         &mut self,
         _node: &ShapeNonVisualPropertiesContent,
@@ -509,32 +572,46 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ShapeTextContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn shape_text(&mut self, _node: &ShapeTextContent) -> Option<ShapeTextContent> {
         None
     }
 
+    /// Asked for each `SpPr`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn sp_pr(&mut self, _node: &SpPr) -> Option<SpPr> {
         None
     }
 
+    /// Asked for each `Style`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn style(&mut self, _node: &Style) -> Option<Style> {
         None
     }
 
+    /// Asked for each `Txbx`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn txbx(&mut self, _node: &Txbx) -> Option<Txbx> {
         None
     }
 
+    /// Asked when a `BodyPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_body_pr(&mut self, _node: &BodyPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `CNvCnPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_c_nv_cn_pr(
         &mut self,
         _node: &CNvCnPr,
@@ -543,16 +620,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CNvPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_c_nv_pr(&mut self, _node: &CNvPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `CNvSpPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_c_nv_sp_pr(
         &mut self,
         _node: &CNvSpPr,
@@ -561,16 +644,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `LinkedTxbx` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_linked_txbx(
         &mut self,
         _node: &LinkedTxbx,
@@ -579,9 +668,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeNonVisualPropertiesContent` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_non_visual_properties(
         &mut self,
         _node: &ShapeNonVisualPropertiesContent,
@@ -590,9 +682,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeTextContent` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_text(
         &mut self,
         _node: &ShapeTextContent,
@@ -601,40 +696,55 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SpPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sp_pr(&mut self, _node: &SpPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Style` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_style(&mut self, _node: &Style, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Txbx` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_txbx(&mut self, _node: &Txbx, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Wsp` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_wsp(&mut self, _node: &Wsp, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked for each `Wsp`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn wsp(&mut self, _node: &Wsp) -> Option<Wsp> {
         None
     }
 }
 
-/// The tag `wps:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
+/// The `wps:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -643,11 +753,14 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
+    /// The children that are `drawing::Extension`, in order.
     pub extension: Vec<drawing::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `wps:linkedTxbx`, schema type `CT_LinkedTextboxInformation` of SDK 3.5.1's data.
+/// The `wps:linkedTxbx` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_LinkedTextboxInformation`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -656,31 +769,50 @@ pub struct ExtLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LinkedTxbx {
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `seq`, when the element has it.
     pub seq: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_WordprocessingShape`: choice in `CT_WordprocessingShape`.
+/// One child element of a choice: choice in `CT_WordprocessingShape`.
+///
+/// The schema types that hold it: `CT_WordprocessingShape`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ShapeNonVisualPropertiesContent {
+    /// The element `wps:cNvCnPr`, a `CNvCnPr`.
     CNvCnPr(CNvCnPr),
+    /// The element `wps:cNvSpPr`, a `CNvSpPr`.
     CNvSpPr(CNvSpPr),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
 }
 
-/// One item of `CT_WordprocessingShape`: choice in `CT_WordprocessingShape`.
+/// One child element of a choice: choice in `CT_WordprocessingShape`.
+///
+/// The schema types that hold it: `CT_WordprocessingShape`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ShapeTextContent {
+    /// The element `wps:linkedTxbx`, a `LinkedTxbx`.
     LinkedTxbx(LinkedTxbx),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `wps:txbx`, a `Txbx`.
     Txbx(Txbx),
 }
 
-/// The tag `wps:spPr`, schema type `CT_ShapeProperties` of SDK 3.5.1's data.
+/// The `wps:spPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ShapeProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -689,19 +821,30 @@ pub enum ShapeTextContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SpPr {
+    /// The child that is `drawing::Apply3DShapeProperties`, when there is one.
     pub apply_3d_shape_properties: Option<Box<drawing::Apply3DShapeProperties>>,
+    /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<drawing::BlackAndWhiteMode>,
+    /// The child that is an item of `drawing::EffectPropertiesContent`, when there is one.
     pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
+    /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionList>>,
+    /// The child that is an item of `drawing::FillPropertiesContent`, when there is one.
     pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
+    /// The child that is an item of `drawing::GeometryContent`, when there is one.
     pub geometry_content: Option<Box<drawing::GeometryContent>>,
+    /// The child that is `drawing::Outline`, when there is one.
     pub outline: Option<Box<drawing::Outline>>,
+    /// The child that is `drawing::Scene3d`, when there is one.
     pub scene3d: Option<Box<drawing::Scene3d>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `drawing::XfrmTransform2D`, when there is one.
     pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2D>>,
 }
 
-/// The tag `wps:style`, schema type `CT_ShapeStyle` of SDK 3.5.1's data.
+/// The `wps:style` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ShapeStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -710,14 +853,20 @@ pub struct SpPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Style {
+    /// The child that is `drawing::EffectReference`, which the schema requires.
     pub effect_reference: Box<drawing::EffectReference>,
+    /// The child that is `drawing::FillReference`, which the schema requires.
     pub fill_reference: Box<drawing::FillReference>,
+    /// The child that is `drawing::FontReference`, which the schema requires.
     pub font_reference: Box<drawing::FontReference>,
+    /// The child that is `drawing::LineReference`, which the schema requires.
     pub line_reference: Box<drawing::LineReference>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `wps:txbx`, schema type `CT_TextboxInfo` of SDK 3.5.1's data.
+/// The `wps:txbx` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TextboxInfo`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -726,9 +875,13 @@ pub struct Style {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Txbx {
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The child that is `wordprocessing::RichTextBoxContentContainer`, when there is one.
     pub rich_text_box_content_container: Option<Box<wordprocessing::RichTextBoxContentContainer>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -738,30 +891,39 @@ pub struct Txbx {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_word_2010_wordprocessing_shape` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `BodyPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn body_pr(&mut self, _node: &BodyPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CNvCnPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn c_nv_cn_pr(&mut self, _node: &CNvCnPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CNvPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn c_nv_pr(&mut self, _node: &CNvPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CNvSpPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn c_nv_sp_pr(&mut self, _node: &CNvSpPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext_lst(&mut self, _node: &ExtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LinkedTxbx`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn linked_txbx(&mut self, _node: &LinkedTxbx) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShapeNonVisualPropertiesContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn shape_non_visual_properties(
         &mut self,
         _node: &ShapeNonVisualPropertiesContent,
@@ -769,28 +931,35 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShapeTextContent`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn shape_text(&mut self, _node: &ShapeTextContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SpPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sp_pr(&mut self, _node: &SpPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Style`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn style(&mut self, _node: &Style) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Txbx`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn txbx(&mut self, _node: &Txbx) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Wsp`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn wsp(&mut self, _node: &Wsp) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 }
 
-/// The tag `wps:wsp`, schema type `CT_WordprocessingShape` of SDK 3.5.1's data.
+/// The `wps:wsp` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_WordprocessingShape`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -799,14 +968,23 @@ pub trait Visitor: crate::Visitor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Wsp {
+    /// The child that is `BodyPr`, which the schema requires.
     pub body_pr: Box<BodyPr>,
+    /// The child that is `CNvPr`, when there is one.
     pub c_nv_pr: Option<Box<CNvPr>>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The attribute `normalEastAsianFlow`, when the element has it.
     pub normal_east_asian_flow: Option<String>,
+    /// The child that is an item of `ShapeNonVisualPropertiesContent`, which the schema requires.
     pub shape_non_visual_properties_content: Box<ShapeNonVisualPropertiesContent>,
+    /// The child that is an item of `ShapeTextContent`, when there is one.
     pub shape_text_content: Option<Box<ShapeTextContent>>,
+    /// The child that is `SpPr`, which the schema requires.
     pub sp_pr: Box<SpPr>,
+    /// The child that is `Style`, when there is one.
     pub style: Option<Box<Style>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 

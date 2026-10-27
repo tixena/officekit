@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `ac` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.openxmlformats.org/officeDocument/2006/characteristics`, which files write with the prefix `ac`.
 //!
-//! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/characteristics`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 pub mod read;
 pub mod write;
@@ -243,7 +243,11 @@ pub static SINGLE_CHARACTERISTIC_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-/// 22.7.3.1 `ST_Relation` (Characteristic Relationship Types): the text the file carried.
+/// Characteristic Relationship Types, the simple type `ST_Relation` (ECMA-376 Part 1, section
+/// 22.7.3.1), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -252,19 +256,25 @@ pub static SINGLE_CHARACTERISTIC_SHAPE: crate::Shape = crate::Shape {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CharacteristicRelationshipTypes(pub String);
-/// The members of `ST_Relation`, in alphabetical order.
+/// The members of the enumeration `ST_Relation`, in alphabetical order. `as_str` gives the text of
+/// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum CharacteristicRelationshipTypesMember {
+    /// The member written `eq`.
     Eq,
+    /// The member written `ge`.
     Ge,
+    /// The member written `gt`.
     Gt,
+    /// The member written `le`.
     Le,
+    /// The member written `lt`.
     Lt,
 }
 
-/// 22.7.2.1 `additionalCharacteristics` (Set of Additional Characteristics): the tag
-/// `ac:additionalCharacteristics`, schema type `CT_AdditionalCharacteristics`.
+/// The `ac:additionalCharacteristics` element, Set of Additional Characteristics (ECMA-376 Part 1,
+/// section 22.7.2.1). Its schema type is `CT_AdditionalCharacteristics`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -273,12 +283,14 @@ pub enum CharacteristicRelationshipTypesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SetOfAdditionalCharacteristics {
+    /// The children that are `SingleCharacteristic`, in order.
     pub single_characteristic: Vec<SingleCharacteristic>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 22.7.2.2 characteristic (Single Characteristic): the tag `ac:characteristic`, schema type
-/// `CT_Characteristic`.
+/// The `ac:characteristic` element, Single Characteristic (ECMA-376 Part 1, section 22.7.2.2). Its
+/// schema type is `CT_Characteristic`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -287,10 +299,15 @@ pub struct SetOfAdditionalCharacteristics {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SingleCharacteristic {
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `relation`, when the element has it.
     pub relation: Option<CharacteristicRelationshipTypes>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
+    /// The attribute `vocabulary`, when the element has it.
     pub vocabulary: Option<String>,
 }
 
@@ -327,7 +344,7 @@ impl CharacteristicRelationshipTypesMember {
         crate::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

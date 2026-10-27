@@ -60,6 +60,7 @@ pub struct Scope {
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[non_exhaustive]
 pub struct WriteOptions {
+    /// Compact or pretty.
     pub layout: Layout,
     /// Remove every namespace declaration nothing in its scope uses, and its
     /// prefix from the markup-compatibility lists.
@@ -177,6 +178,9 @@ impl Scope {
 }
 
 impl WriteOptions {
+    /// Options with `layout` and, when `namespace_cleanup` is true, the cleanup on.
+    ///
+    /// [`WriteOptions::default`] is compact with the cleanup on.
     #[must_use]
     pub const fn new(layout: Layout, namespace_cleanup: bool) -> Self {
         Self {

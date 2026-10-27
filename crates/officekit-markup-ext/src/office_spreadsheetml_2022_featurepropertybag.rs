@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `xfpb` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/spreadsheetml/2022/featurepropertybag`, which files write with the prefix `xfpb`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2022/featurepropertybag`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -541,7 +543,8 @@ pub static FEATURE_PROPERTY_BAG_CONTENT_TAGS: officekit_markup_base::Accept =
         ],
     };
 
-/// The tag `xfpb:a`, schema type `CT_ArrayFeatureProperty` of SDK 3.5.1's data.
+/// The `xfpb:a` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `CT_ArrayFeatureProperty`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -550,25 +553,40 @@ pub static FEATURE_PROPERTY_BAG_CONTENT_TAGS: officekit_markup_base::Accept =
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct A {
+    /// The children that are an item of `ArrayFeaturePropertyContent`, in order.
     pub content: Vec<ArrayFeaturePropertyContent>,
+    /// The attribute `k`, when the element has it.
     pub k: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_ArrayFeatureProperty`: choice in `CT_ArrayFeatureProperty`.
+/// One child element of a choice: choice in `CT_ArrayFeatureProperty`.
+///
+/// The schema types that hold it: `CT_ArrayFeatureProperty`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ArrayFeaturePropertyContent {
+    /// The element `xfpb:b`, a `BBoolean`.
     BBoolean(BBoolean),
+    /// The element `xfpb:bagId`, a `BagIdUnsignedInt`.
     BagIdUnsignedInt(BagIdUnsignedInt),
+    /// The element `xfpb:d`, a `DDouble`.
     DDouble(DDouble),
+    /// The element `xfpb:i`, a `IInteger`.
     IInteger(IInteger),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `xfpb:rel`, a `RelString`.
     RelString(RelString),
+    /// The element `xfpb:s`, a `SString`.
     SString(SString),
 }
 
-/// The tag `xfpb:b`, schema type `CT_BoolFeatureProperty` of SDK 3.5.1's data.
+/// The `xfpb:b` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `CT_BoolFeatureProperty`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -577,12 +595,16 @@ pub enum ArrayFeaturePropertyContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BBoolFeatureProperty {
+    /// The attribute `k`, when the element has it.
     pub k: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `xfpb:b`, schema type `boolean` of SDK 3.5.1's data.
+/// The `xfpb:b` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `boolean`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -591,11 +613,14 @@ pub struct BBoolFeatureProperty {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BBoolean {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `xfpb:bag`, schema type `CT_FeaturePropertyBag` of SDK 3.5.1's data.
+/// The `xfpb:bag` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_FeaturePropertyBag`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -604,15 +629,22 @@ pub struct BBoolean {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Bag {
+    /// The attribute `att`, when the element has it.
     pub att: Option<String>,
+    /// The attribute `bagExtId`, when the element has it.
     pub bag_ext_id: Option<String>,
+    /// The children that are an item of `FeaturePropertyBagContent`, in order.
     pub content: Vec<FeaturePropertyBagContent>,
+    /// The attribute `extRef`, when the element has it.
     pub ext_ref: Option<String>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xfpb:bagExt`, schema type `CT_BagExtensions` of SDK 3.5.1's data.
+/// The `xfpb:bagExt` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_BagExtensions`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -621,11 +653,14 @@ pub struct Bag {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BagExt {
+    /// The child that is `ExtLst`, when there is one.
     pub lst: Option<Box<ExtLst>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xfpb:bagId`, schema type `CT_BagFeatureProperty` of SDK 3.5.1's data.
+/// The `xfpb:bagId` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_BagFeatureProperty`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -634,12 +669,16 @@ pub struct BagExt {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BagIdBagFeatureProperty {
+    /// The attribute `k`, when the element has it.
     pub k: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `xfpb:bagId`, schema type `unsignedInt` of SDK 3.5.1's data.
+/// The `xfpb:bagId` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `unsignedInt`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -648,11 +687,14 @@ pub struct BagIdBagFeatureProperty {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BagIdUnsignedInt {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `xfpb:columnBodyRevDxf`, schema type `CT_TableRevDxf` of SDK 3.5.1's data.
+/// The `xfpb:columnBodyRevDxf` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_TableRevDxf`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -661,12 +703,16 @@ pub struct BagIdUnsignedInt {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColumnBodyRevDxf {
+    /// The child that is `Dxf`, when there is one.
     pub dxf: Option<Box<Dxf>>,
+    /// The child that is `Fpbs`, which the schema requires.
     pub fpbs: Box<Fpbs>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xfpb:columnHeaderRevDxf`, schema type `CT_TableRevDxf` of SDK 3.5.1's data.
+/// The `xfpb:columnHeaderRevDxf` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_TableRevDxf`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -675,12 +721,16 @@ pub struct ColumnBodyRevDxf {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColumnHeaderRevDxf {
+    /// The child that is `Dxf`, when there is one.
     pub dxf: Option<Box<Dxf>>,
+    /// The child that is `Fpbs`, which the schema requires.
     pub fpbs: Box<Fpbs>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xfpb:columnTotalsRevDxf`, schema type `CT_TableRevDxf` of SDK 3.5.1's data.
+/// The `xfpb:columnTotalsRevDxf` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_TableRevDxf`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -689,8 +739,11 @@ pub struct ColumnHeaderRevDxf {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColumnTotalsRevDxf {
+    /// The child that is `Dxf`, when there is one.
     pub dxf: Option<Box<Dxf>>,
+    /// The child that is `Fpbs`, which the schema requires.
     pub fpbs: Box<Fpbs>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -704,10 +757,14 @@ pub struct ColumnTotalsRevDxf {
 /// not return itself from `crate::Context::office_spreadsheetml_2022_featurepropertybag` is never
 /// asked.
 pub trait Context: crate::Context {
+    /// Asked for each `A`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn a(&mut self, _node: &A) -> Option<A> {
         None
     }
 
+    /// Asked for each `ArrayFeaturePropertyContent`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn array_feature_property(
         &mut self,
         _node: &ArrayFeaturePropertyContent,
@@ -715,6 +772,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ArrayFeaturePropertyContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn array_feature_property_items(
         &mut self,
         _node: &ArrayFeaturePropertyContent,
@@ -722,6 +781,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `BBoolFeatureProperty`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn b_bool_feature_property(
         &mut self,
         _node: &BBoolFeatureProperty,
@@ -729,18 +790,26 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `BBoolean`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn b_boolean(&mut self, _node: &BBoolean) -> Option<BBoolean> {
         None
     }
 
+    /// Asked for each `Bag`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn bag(&mut self, _node: &Bag) -> Option<Bag> {
         None
     }
 
+    /// Asked for each `BagExt`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn bag_ext(&mut self, _node: &BagExt) -> Option<BagExt> {
         None
     }
 
+    /// Asked for each `BagIdBagFeatureProperty`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn bag_id_bag_feature_property(
         &mut self,
         _node: &BagIdBagFeatureProperty,
@@ -748,22 +817,32 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `BagIdUnsignedInt`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn bag_id_unsigned_int(&mut self, _node: &BagIdUnsignedInt) -> Option<BagIdUnsignedInt> {
         None
     }
 
+    /// Asked for each `ColumnBodyRevDxf`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn column_body_rev_dxf(&mut self, _node: &ColumnBodyRevDxf) -> Option<ColumnBodyRevDxf> {
         None
     }
 
+    /// Asked for each `ColumnHeaderRevDxf`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn column_header_rev_dxf(&mut self, _node: &ColumnHeaderRevDxf) -> Option<ColumnHeaderRevDxf> {
         None
     }
 
+    /// Asked for each `ColumnTotalsRevDxf`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn column_totals_rev_dxf(&mut self, _node: &ColumnTotalsRevDxf) -> Option<ColumnTotalsRevDxf> {
         None
     }
 
+    /// Asked for each `DDecimalFeatureProperty`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn d_decimal_feature_property(
         &mut self,
         _node: &DDecimalFeatureProperty,
@@ -771,26 +850,38 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `DDouble`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn d_double(&mut self, _node: &DDouble) -> Option<DDouble> {
         None
     }
 
+    /// Asked for each `DataRevDxf`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn data_rev_dxf(&mut self, _node: &DataRevDxf) -> Option<DataRevDxf> {
         None
     }
 
+    /// Asked for each `Dxf`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn dxf(&mut self, _node: &Dxf) -> Option<Dxf> {
         None
     }
 
+    /// Asked for each `DXFComplement`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn dxf_complement(&mut self, _node: &DXFComplement) -> Option<DXFComplement> {
         None
     }
 
+    /// Asked for each `ExtLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
         None
     }
 
+    /// Asked for each `FeaturePropertyBagContent`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn feature_property_bag(
         &mut self,
         _node: &FeaturePropertyBagContent,
@@ -798,6 +889,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `FeaturePropertyBagContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn feature_property_bag_items(
         &mut self,
         _node: &FeaturePropertyBagContent,
@@ -805,6 +898,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `FeaturePropertyBags`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn feature_property_bags(
         &mut self,
         _node: &FeaturePropertyBags,
@@ -812,10 +907,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Fpbs`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn fpbs(&mut self, _node: &Fpbs) -> Option<Fpbs> {
         None
     }
 
+    /// Asked for each `HeaderRowBorderRevDxf`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn header_row_border_rev_dxf(
         &mut self,
         _node: &HeaderRowBorderRevDxf,
@@ -823,10 +922,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `HeaderRowRevDxf`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn header_row_rev_dxf(&mut self, _node: &HeaderRowRevDxf) -> Option<HeaderRowRevDxf> {
         None
     }
 
+    /// Asked for each `IIntFeatureProperty`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn i_int_feature_property(
         &mut self,
         _node: &IIntFeatureProperty,
@@ -834,10 +937,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `IInteger`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn i_integer(&mut self, _node: &IInteger) -> Option<IInteger> {
         None
     }
 
+    /// Asked for each `RelRelFeatureProperty`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn rel_rel_feature_property(
         &mut self,
         _node: &RelRelFeatureProperty,
@@ -845,18 +952,26 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `RelString`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn rel_string(&mut self, _node: &RelString) -> Option<RelString> {
         None
     }
 
+    /// Asked for each `Revdxf`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn revdxf(&mut self, _node: &Revdxf) -> Option<Revdxf> {
         None
     }
 
+    /// Asked for each `SString`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn s_string(&mut self, _node: &SString) -> Option<SString> {
         None
     }
 
+    /// Asked for each `SStringFeatureProperty`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn s_string_feature_property(
         &mut self,
         _node: &SStringFeatureProperty,
@@ -864,10 +979,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `TableBorderRevDxf`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn table_border_rev_dxf(&mut self, _node: &TableBorderRevDxf) -> Option<TableBorderRevDxf> {
         None
     }
 
+    /// Asked for each `TotalsRowBorderRevDxf`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn totals_row_border_rev_dxf(
         &mut self,
         _node: &TotalsRowBorderRevDxf,
@@ -875,20 +994,28 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `TotalsRowRevDxf`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn totals_row_rev_dxf(&mut self, _node: &TotalsRowRevDxf) -> Option<TotalsRowRevDxf> {
         None
     }
 
+    /// Asked when a `A` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_a(&mut self, _node: &A, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ArrayFeaturePropertyContent` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_array_feature_property(
         &mut self,
         _node: &ArrayFeaturePropertyContent,
@@ -897,9 +1024,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ArrayFeaturePropertyContent` in a list is written through. `Written::Yes`
+    /// means the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_array_feature_property_items(
         &mut self,
         _node: &ArrayFeaturePropertyContent,
@@ -908,9 +1038,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BBoolFeatureProperty` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_b_bool_feature_property(
         &mut self,
         _node: &BBoolFeatureProperty,
@@ -919,9 +1052,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BBoolean` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_b_boolean(
         &mut self,
         _node: &BBoolean,
@@ -930,23 +1066,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Bag` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_bag(&mut self, _node: &Bag, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `BagExt` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_bag_ext(&mut self, _node: &BagExt, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `BagIdBagFeatureProperty` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_bag_id_bag_feature_property(
         &mut self,
         _node: &BagIdBagFeatureProperty,
@@ -955,9 +1100,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BagIdUnsignedInt` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_bag_id_unsigned_int(
         &mut self,
         _node: &BagIdUnsignedInt,
@@ -966,9 +1114,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ColumnBodyRevDxf` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_column_body_rev_dxf(
         &mut self,
         _node: &ColumnBodyRevDxf,
@@ -977,9 +1128,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ColumnHeaderRevDxf` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_column_header_rev_dxf(
         &mut self,
         _node: &ColumnHeaderRevDxf,
@@ -988,9 +1142,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ColumnTotalsRevDxf` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_column_totals_rev_dxf(
         &mut self,
         _node: &ColumnTotalsRevDxf,
@@ -999,9 +1156,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DDecimalFeatureProperty` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_d_decimal_feature_property(
         &mut self,
         _node: &DDecimalFeatureProperty,
@@ -1010,9 +1170,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DDouble` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_d_double(
         &mut self,
         _node: &DDouble,
@@ -1021,9 +1184,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DataRevDxf` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_data_rev_dxf(
         &mut self,
         _node: &DataRevDxf,
@@ -1032,16 +1198,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Dxf` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_dxf(&mut self, _node: &Dxf, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `DXFComplement` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_dxf_complement(
         &mut self,
         _node: &DXFComplement,
@@ -1050,16 +1222,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `FeaturePropertyBagContent` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_feature_property_bag(
         &mut self,
         _node: &FeaturePropertyBagContent,
@@ -1068,9 +1246,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FeaturePropertyBagContent` in a list is written through. `Written::Yes` means
+    /// the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_feature_property_bag_items(
         &mut self,
         _node: &FeaturePropertyBagContent,
@@ -1079,9 +1260,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FeaturePropertyBags` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_feature_property_bags(
         &mut self,
         _node: &FeaturePropertyBags,
@@ -1090,16 +1274,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Fpbs` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_fpbs(&mut self, _node: &Fpbs, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `HeaderRowBorderRevDxf` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_header_row_border_rev_dxf(
         &mut self,
         _node: &HeaderRowBorderRevDxf,
@@ -1108,9 +1298,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `HeaderRowRevDxf` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_header_row_rev_dxf(
         &mut self,
         _node: &HeaderRowRevDxf,
@@ -1119,9 +1312,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `IIntFeatureProperty` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_i_int_feature_property(
         &mut self,
         _node: &IIntFeatureProperty,
@@ -1130,9 +1326,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `IInteger` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_i_integer(
         &mut self,
         _node: &IInteger,
@@ -1141,9 +1340,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RelRelFeatureProperty` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_rel_rel_feature_property(
         &mut self,
         _node: &RelRelFeatureProperty,
@@ -1152,9 +1354,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RelString` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_rel_string(
         &mut self,
         _node: &RelString,
@@ -1163,16 +1368,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Revdxf` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_revdxf(&mut self, _node: &Revdxf, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `SString` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_s_string(
         &mut self,
         _node: &SString,
@@ -1181,9 +1392,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SStringFeatureProperty` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_s_string_feature_property(
         &mut self,
         _node: &SStringFeatureProperty,
@@ -1192,9 +1406,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TableBorderRevDxf` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_table_border_rev_dxf(
         &mut self,
         _node: &TableBorderRevDxf,
@@ -1203,9 +1420,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TotalsRowBorderRevDxf` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_totals_row_border_rev_dxf(
         &mut self,
         _node: &TotalsRowBorderRevDxf,
@@ -1214,9 +1434,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TotalsRowRevDxf` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_totals_row_rev_dxf(
         &mut self,
         _node: &TotalsRowRevDxf,
@@ -1225,9 +1448,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `XfComplement` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_xf_complement(
         &mut self,
         _node: &XfComplement,
@@ -1236,12 +1462,15 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked for each `XfComplement`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn xf_complement(&mut self, _node: &XfComplement) -> Option<XfComplement> {
         None
     }
 }
 
-/// The tag `xfpb:d`, schema type `CT_DecimalFeatureProperty` of SDK 3.5.1's data.
+/// The `xfpb:d` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `CT_DecimalFeatureProperty`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1250,12 +1479,16 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DDecimalFeatureProperty {
+    /// The attribute `k`, when the element has it.
     pub k: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `xfpb:d`, schema type `double` of SDK 3.5.1's data.
+/// The `xfpb:d` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `double`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1264,11 +1497,14 @@ pub struct DDecimalFeatureProperty {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DDouble {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `xfpb:DXFComplement`, schema type `CT_DXFComplement` of SDK 3.5.1's data.
+/// The `xfpb:DXFComplement` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_DXFComplement`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1277,11 +1513,14 @@ pub struct DDouble {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DXFComplement {
+    /// The attribute `i`, when the element has it.
     pub i: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xfpb:dataRevDxf`, schema type `CT_TableRevDxf` of SDK 3.5.1's data.
+/// The `xfpb:dataRevDxf` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_TableRevDxf`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1290,12 +1529,16 @@ pub struct DXFComplement {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataRevDxf {
+    /// The child that is `Dxf`, when there is one.
     pub dxf: Option<Box<Dxf>>,
+    /// The child that is `Fpbs`, which the schema requires.
     pub fpbs: Box<Fpbs>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xfpb:dxf`, schema type `CT_Dxf` of SDK 3.5.1's data.
+/// The `xfpb:dxf` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Dxf`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1304,17 +1547,26 @@ pub struct DataRevDxf {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Dxf {
+    /// The child that is `spreadsheet::Alignment`, when there is one.
     pub alignment: Option<Box<spreadsheet::Alignment>>,
+    /// The child that is `spreadsheet::Border`, when there is one.
     pub border: Option<Box<spreadsheet::Border>>,
+    /// The child that is `spreadsheet::Fill`, when there is one.
     pub fill: Option<Box<spreadsheet::Fill>>,
+    /// The child that is `spreadsheet::Font`, when there is one.
     pub font: Option<Box<spreadsheet::Font>>,
+    /// The child that is `spreadsheet::FutureFeatureDataStorageArea`, when there is one.
     pub future_feature_data_storage_area: Option<Box<spreadsheet::FutureFeatureDataStorageArea>>,
+    /// The child that is `spreadsheet::NumberFormat`, when there is one.
     pub number_format: Option<Box<spreadsheet::NumberFormat>>,
+    /// The child that is `spreadsheet::ProtectionProperties`, when there is one.
     pub protection_properties: Option<Box<spreadsheet::ProtectionProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xfpb:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
+/// The `xfpb:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1323,25 +1575,40 @@ pub struct Dxf {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
+    /// The children that are `spreadsheet::Extension`, in order.
     pub extension: Vec<spreadsheet::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_FeaturePropertyBag`: choice in `CT_FeaturePropertyBag`.
+/// One child element of a choice: choice in `CT_FeaturePropertyBag`.
+///
+/// The schema types that hold it: `CT_FeaturePropertyBag`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum FeaturePropertyBagContent {
+    /// The element `xfpb:a`, a `A`.
     A(A),
+    /// The element `xfpb:b`, a `BBoolFeatureProperty`.
     BBoolFeatureProperty(BBoolFeatureProperty),
+    /// The element `xfpb:bagId`, a `BagIdBagFeatureProperty`.
     BagIdBagFeatureProperty(BagIdBagFeatureProperty),
+    /// The element `xfpb:d`, a `DDecimalFeatureProperty`.
     DDecimalFeatureProperty(DDecimalFeatureProperty),
+    /// The element `xfpb:i`, a `IIntFeatureProperty`.
     IIntFeatureProperty(IIntFeatureProperty),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `xfpb:rel`, a `RelRelFeatureProperty`.
     RelRelFeatureProperty(RelRelFeatureProperty),
+    /// The element `xfpb:s`, a `SStringFeatureProperty`.
     SStringFeatureProperty(SStringFeatureProperty),
 }
 
-/// The tag `xfpb:FeaturePropertyBags`, schema type `CT_FeaturePropertyBags` of SDK 3.5.1's data.
+/// The `xfpb:FeaturePropertyBags` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_FeaturePropertyBags`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1350,14 +1617,20 @@ pub enum FeaturePropertyBagContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FeaturePropertyBags {
+    /// The children that are `Bag`, in order.
     pub bag: Vec<Bag>,
+    /// The children that are `BagExt`, in order.
     pub bag_ext: Vec<BagExt>,
+    /// The attribute `count`, when the element has it.
     pub count: Option<String>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xfpb:fpbs`, schema type `CT_FeaturePropertyBags` of SDK 3.5.1's data.
+/// The `xfpb:fpbs` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_FeaturePropertyBags`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1366,13 +1639,18 @@ pub struct FeaturePropertyBags {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Fpbs {
+    /// The children that are `Bag`, in order.
     pub bag: Vec<Bag>,
+    /// The children that are `BagExt`, in order.
     pub bag_ext: Vec<BagExt>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xfpb:headerRowBorderRevDxf`, schema type `CT_TableRevDxf` of SDK 3.5.1's data.
+/// The `xfpb:headerRowBorderRevDxf` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_TableRevDxf`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1381,12 +1659,16 @@ pub struct Fpbs {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HeaderRowBorderRevDxf {
+    /// The child that is `Dxf`, when there is one.
     pub dxf: Option<Box<Dxf>>,
+    /// The child that is `Fpbs`, which the schema requires.
     pub fpbs: Box<Fpbs>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xfpb:headerRowRevDxf`, schema type `CT_TableRevDxf` of SDK 3.5.1's data.
+/// The `xfpb:headerRowRevDxf` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_TableRevDxf`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1395,12 +1677,16 @@ pub struct HeaderRowBorderRevDxf {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HeaderRowRevDxf {
+    /// The child that is `Dxf`, when there is one.
     pub dxf: Option<Box<Dxf>>,
+    /// The child that is `Fpbs`, which the schema requires.
     pub fpbs: Box<Fpbs>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xfpb:i`, schema type `CT_IntFeatureProperty` of SDK 3.5.1's data.
+/// The `xfpb:i` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `CT_IntFeatureProperty`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1409,12 +1695,16 @@ pub struct HeaderRowRevDxf {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct IIntFeatureProperty {
+    /// The attribute `k`, when the element has it.
     pub k: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `xfpb:i`, schema type `integer` of SDK 3.5.1's data.
+/// The `xfpb:i` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `integer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1423,11 +1713,14 @@ pub struct IIntFeatureProperty {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct IInteger {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `xfpb:rel`, schema type `CT_RelFeatureProperty` of SDK 3.5.1's data.
+/// The `xfpb:rel` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RelFeatureProperty`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1436,12 +1729,16 @@ pub struct IInteger {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RelRelFeatureProperty {
+    /// The attribute `k`, when the element has it.
     pub k: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `xfpb:rel`, schema type `string` of SDK 3.5.1's data.
+/// The `xfpb:rel` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1450,11 +1747,14 @@ pub struct RelRelFeatureProperty {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RelString {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `xfpb:revdxf`, schema type `CT_RevDxf` of SDK 3.5.1's data.
+/// The `xfpb:revdxf` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RevDxf`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1463,12 +1763,16 @@ pub struct RelString {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Revdxf {
+    /// The child that is `Dxf`, when there is one.
     pub dxf: Option<Box<Dxf>>,
+    /// The child that is `Fpbs`, which the schema requires.
     pub fpbs: Box<Fpbs>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xfpb:s`, schema type `string` of SDK 3.5.1's data.
+/// The `xfpb:s` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1477,11 +1781,14 @@ pub struct Revdxf {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SString {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `xfpb:s`, schema type `CT_StringFeatureProperty` of SDK 3.5.1's data.
+/// The `xfpb:s` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `CT_StringFeatureProperty`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1490,12 +1797,16 @@ pub struct SString {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SStringFeatureProperty {
+    /// The attribute `k`, when the element has it.
     pub k: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `xfpb:tableBorderRevDxf`, schema type `CT_TableRevDxf` of SDK 3.5.1's data.
+/// The `xfpb:tableBorderRevDxf` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_TableRevDxf`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1504,12 +1815,16 @@ pub struct SStringFeatureProperty {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TableBorderRevDxf {
+    /// The child that is `Dxf`, when there is one.
     pub dxf: Option<Box<Dxf>>,
+    /// The child that is `Fpbs`, which the schema requires.
     pub fpbs: Box<Fpbs>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xfpb:totalsRowBorderRevDxf`, schema type `CT_TableRevDxf` of SDK 3.5.1's data.
+/// The `xfpb:totalsRowBorderRevDxf` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_TableRevDxf`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1518,12 +1833,16 @@ pub struct TableBorderRevDxf {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TotalsRowBorderRevDxf {
+    /// The child that is `Dxf`, when there is one.
     pub dxf: Option<Box<Dxf>>,
+    /// The child that is `Fpbs`, which the schema requires.
     pub fpbs: Box<Fpbs>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xfpb:totalsRowRevDxf`, schema type `CT_TableRevDxf` of SDK 3.5.1's data.
+/// The `xfpb:totalsRowRevDxf` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_TableRevDxf`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1532,8 +1851,11 @@ pub struct TotalsRowBorderRevDxf {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TotalsRowRevDxf {
+    /// The child that is `Dxf`, when there is one.
     pub dxf: Option<Box<Dxf>>,
+    /// The child that is `Fpbs`, which the schema requires.
     pub fpbs: Box<Fpbs>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -1543,10 +1865,13 @@ pub struct TotalsRowRevDxf {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_spreadsheetml_2022_featurepropertybag` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `A`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn a(&mut self, _node: &A) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ArrayFeaturePropertyContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn array_feature_property(
         &mut self,
         _node: &ArrayFeaturePropertyContent,
@@ -1554,6 +1879,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BBoolFeatureProperty`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn b_bool_feature_property(
         &mut self,
         _node: &BBoolFeatureProperty,
@@ -1561,18 +1888,23 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BBoolean`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn b_boolean(&mut self, _node: &BBoolean) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Bag`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn bag(&mut self, _node: &Bag) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BagExt`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn bag_ext(&mut self, _node: &BagExt) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BagIdBagFeatureProperty`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn bag_id_bag_feature_property(
         &mut self,
         _node: &BagIdBagFeatureProperty,
@@ -1580,14 +1912,20 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BagIdUnsignedInt`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn bag_id_unsigned_int(&mut self, _node: &BagIdUnsignedInt) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ColumnBodyRevDxf`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn column_body_rev_dxf(&mut self, _node: &ColumnBodyRevDxf) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ColumnHeaderRevDxf`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn column_header_rev_dxf(
         &mut self,
         _node: &ColumnHeaderRevDxf,
@@ -1595,6 +1933,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ColumnTotalsRevDxf`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn column_totals_rev_dxf(
         &mut self,
         _node: &ColumnTotalsRevDxf,
@@ -1602,6 +1942,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DDecimalFeatureProperty`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn d_decimal_feature_property(
         &mut self,
         _node: &DDecimalFeatureProperty,
@@ -1609,26 +1951,35 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DDouble`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn d_double(&mut self, _node: &DDouble) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DataRevDxf`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn data_rev_dxf(&mut self, _node: &DataRevDxf) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Dxf`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn dxf(&mut self, _node: &Dxf) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DXFComplement`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn dxf_complement(&mut self, _node: &DXFComplement) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext_lst(&mut self, _node: &ExtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FeaturePropertyBagContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn feature_property_bag(
         &mut self,
         _node: &FeaturePropertyBagContent,
@@ -1636,6 +1987,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FeaturePropertyBags`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn feature_property_bags(
         &mut self,
         _node: &FeaturePropertyBags,
@@ -1643,10 +1996,13 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Fpbs`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn fpbs(&mut self, _node: &Fpbs) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `HeaderRowBorderRevDxf`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn header_row_border_rev_dxf(
         &mut self,
         _node: &HeaderRowBorderRevDxf,
@@ -1654,10 +2010,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `HeaderRowRevDxf`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn header_row_rev_dxf(&mut self, _node: &HeaderRowRevDxf) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `IIntFeatureProperty`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn i_int_feature_property(
         &mut self,
         _node: &IIntFeatureProperty,
@@ -1665,10 +2025,13 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `IInteger`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn i_integer(&mut self, _node: &IInteger) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RelRelFeatureProperty`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn rel_rel_feature_property(
         &mut self,
         _node: &RelRelFeatureProperty,
@@ -1676,18 +2039,24 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RelString`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn rel_string(&mut self, _node: &RelString) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Revdxf`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn revdxf(&mut self, _node: &Revdxf) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SString`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn s_string(&mut self, _node: &SString) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SStringFeatureProperty`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn s_string_feature_property(
         &mut self,
         _node: &SStringFeatureProperty,
@@ -1695,6 +2064,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TableBorderRevDxf`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn table_border_rev_dxf(
         &mut self,
         _node: &TableBorderRevDxf,
@@ -1702,6 +2073,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TotalsRowBorderRevDxf`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn totals_row_border_rev_dxf(
         &mut self,
         _node: &TotalsRowBorderRevDxf,
@@ -1709,16 +2082,21 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TotalsRowRevDxf`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn totals_row_rev_dxf(&mut self, _node: &TotalsRowRevDxf) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `XfComplement`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn xf_complement(&mut self, _node: &XfComplement) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 }
 
-/// The tag `xfpb:xfComplement`, schema type `CT_XfComplement` of SDK 3.5.1's data.
+/// The `xfpb:xfComplement` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_XfComplement`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1727,7 +2105,9 @@ pub trait Visitor: crate::Visitor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct XfComplement {
+    /// The attribute `i`, when the element has it.
     pub i: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 

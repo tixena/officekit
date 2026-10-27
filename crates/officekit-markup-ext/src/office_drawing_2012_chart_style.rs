@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `cs` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/drawing/2012/chartStyle`, which files write with the prefix `cs`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/drawing/2012/chartStyle`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -1074,7 +1076,8 @@ pub static LINE_WIDTH_SCALE_SHAPE: officekit_markup_base::Shape = officekit_mark
     text: true,
 };
 
-/// The tag `cs:axisTitle`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:axisTitle` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1083,19 +1086,30 @@ pub static LINE_WIDTH_SCALE_SHAPE: officekit_markup_base::Shape = officekit_mark
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AxisTitle {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LineWidthScale`, when there is one.
     pub line_width_scale: Option<Box<LineWidthScale>>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:bodyPr`, schema type `CT_TextBodyProperties` of SDK 3.5.1's data.
+/// The `cs:bodyPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TextBodyProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1104,34 +1118,62 @@ pub struct AxisTitle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BodyPr {
+    /// The attribute `anchor`, when the element has it.
     pub anchor: Option<drawing::TextAnchoringTypes>,
+    /// The attribute `anchorCtr`, when the element has it.
     pub anchor_ctr: Option<String>,
+    /// The attribute `bIns`, when the element has it.
     pub b_ins: Option<drawing::StCoordinate32>,
+    /// The attribute `compatLnSpc`, when the element has it.
     pub compat_ln_spc: Option<String>,
+    /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionList>>,
+    /// The attribute `forceAA`, when the element has it.
     pub force_aa: Option<String>,
+    /// The attribute `fromWordArt`, when the element has it.
     pub from_word_art: Option<String>,
+    /// The attribute `horzOverflow`, when the element has it.
     pub horz_overflow: Option<drawing::TextHorizontalOverflowTypes>,
+    /// The attribute `lIns`, when the element has it.
     pub l_ins: Option<drawing::StCoordinate32>,
+    /// The attribute `numCol`, when the element has it.
     pub num_col: Option<drawing::TextColumnCount>,
+    /// The child that is `drawing::PresetTextWarp`, when there is one.
     pub preset_text_warp: Option<Box<drawing::PresetTextWarp>>,
+    /// The attribute `rIns`, when the element has it.
     pub r_ins: Option<drawing::StCoordinate32>,
+    /// The attribute `rot`, when the element has it.
     pub rot: Option<drawing::Angle>,
+    /// The attribute `rtlCol`, when the element has it.
     pub rtl_col: Option<String>,
+    /// The child that is `drawing::Scene3d`, when there is one.
     pub scene3d: Option<Box<drawing::Scene3d>>,
+    /// The attribute `spcCol`, when the element has it.
     pub spc_col: Option<drawing::PositiveCoordinatePoint>,
+    /// The attribute `spcFirstLastPara`, when the element has it.
     pub spc_first_last_para: Option<String>,
+    /// The attribute `tIns`, when the element has it.
     pub t_ins: Option<drawing::StCoordinate32>,
+    /// The child that is an item of `drawing::Text3DContent`, when there is one.
     pub text3d_content: Option<Box<drawing::Text3DContent>>,
+    /// The child that is an item of `drawing::TextAutofitContent`, when there is one.
     pub text_autofit_content: Option<Box<drawing::TextAutofitContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `upright`, when the element has it.
     pub upright: Option<String>,
+    /// The attribute `vert`, when the element has it.
     pub vert: Option<drawing::VerticalTextTypes>,
+    /// The attribute `vertOverflow`, when the element has it.
     pub vert_overflow: Option<drawing::TextVerticalOverflow>,
+    /// The attribute `wrap`, when the element has it.
     pub wrap: Option<drawing::TextWrappingTypes>,
 }
 
-/// `ST_Boolean`: the text the file carried.
+/// The simple type `ST_Boolean`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1140,16 +1182,21 @@ pub struct BodyPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Boolean(pub String);
-/// The members of `ST_Boolean`, in alphabetical order.
+/// The members of the enumeration `ST_Boolean`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum BooleanMember {
+    /// The member written `false`.
     False,
+    /// The member written `ninch`.
     Ninch,
+    /// The member written `true`.
     True,
 }
 
-/// The tag `cs:categoryAxis`, schema type `CT_AxisProps` of SDK 3.5.1's data.
+/// The `cs:categoryAxis` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_AxisProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1158,10 +1205,12 @@ pub enum BooleanMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CategoryAxisAxisProps {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:categoryAxis`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:categoryAxis` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1170,19 +1219,30 @@ pub struct CategoryAxisAxisProps {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CategoryAxisStyleEntry {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LineWidthScale`, when there is one.
     pub line_width_scale: Option<Box<LineWidthScale>>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:chartArea`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:chartArea` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1191,19 +1251,30 @@ pub struct CategoryAxisStyleEntry {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ChartArea {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LineWidthScale`, when there is one.
     pub line_width_scale: Option<Box<LineWidthScale>>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:chartStyle`, schema type `CT_ChartStyle` of SDK 3.5.1's data.
+/// The `cs:chartStyle` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ChartStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1212,43 +1283,78 @@ pub struct ChartArea {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ChartStyle {
+    /// The child that is `AxisTitle`, which the schema requires.
     pub axis_title: Box<AxisTitle>,
+    /// The child that is `CategoryAxisStyleEntry`, which the schema requires.
     pub category_axis_style_entry: Box<CategoryAxisStyleEntry>,
+    /// The child that is `ChartArea`, which the schema requires.
     pub chart_area: Box<ChartArea>,
+    /// The child that is `DataLabel`, which the schema requires.
     pub data_label: Box<DataLabel>,
+    /// The child that is `DataLabelCallout`, when there is one.
     pub data_label_callout: Option<Box<DataLabelCallout>>,
+    /// The child that is `DataPoint`, which the schema requires.
     pub data_point: Box<DataPoint>,
+    /// The child that is `DataPoint3D`, which the schema requires.
     pub data_point3d: Box<DataPoint3D>,
+    /// The child that is `DataPointLine`, which the schema requires.
     pub data_point_line: Box<DataPointLine>,
+    /// The child that is `DataPointMarker`, which the schema requires.
     pub data_point_marker: Box<DataPointMarker>,
+    /// The child that is `DataPointMarkerLayout`, when there is one.
     pub data_point_marker_layout: Option<Box<DataPointMarkerLayout>>,
+    /// The child that is `DataPointWireframe`, which the schema requires.
     pub data_point_wireframe: Box<DataPointWireframe>,
+    /// The child that is `DataTableStyleEntry`, which the schema requires.
     pub data_table_style_entry: Box<DataTableStyleEntry>,
+    /// The child that is `DownBar`, which the schema requires.
     pub down_bar: Box<DownBar>,
+    /// The child that is `DropLine`, which the schema requires.
     pub drop_line: Box<DropLine>,
+    /// The child that is `ErrorBar`, which the schema requires.
     pub error_bar: Box<ErrorBar>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `Floor`, which the schema requires.
     pub floor: Box<Floor>,
+    /// The child that is `GridlineMajor`, which the schema requires.
     pub gridline_major: Box<GridlineMajor>,
+    /// The child that is `GridlineMinor`, which the schema requires.
     pub gridline_minor: Box<GridlineMinor>,
+    /// The child that is `HiLoLine`, which the schema requires.
     pub hi_lo_line: Box<HiLoLine>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The child that is `LeaderLine`, which the schema requires.
     pub leader_line: Box<LeaderLine>,
+    /// The child that is `LegendStyleEntry`, which the schema requires.
     pub legend_style_entry: Box<LegendStyleEntry>,
+    /// The child that is `PlotArea`, which the schema requires.
     pub plot_area: Box<PlotArea>,
+    /// The child that is `PlotArea3D`, which the schema requires.
     pub plot_area3d: Box<PlotArea3D>,
+    /// The child that is `SeriesAxisStyleEntry`, which the schema requires.
     pub series_axis_style_entry: Box<SeriesAxisStyleEntry>,
+    /// The child that is `SeriesLine`, which the schema requires.
     pub series_line: Box<SeriesLine>,
+    /// The child that is `TitleStyleEntry`, which the schema requires.
     pub title_style_entry: Box<TitleStyleEntry>,
+    /// The child that is `TrendlineLabel`, which the schema requires.
     pub trendline_label: Box<TrendlineLabel>,
+    /// The child that is `TrendlineStyleEntry`, which the schema requires.
     pub trendline_style_entry: Box<TrendlineStyleEntry>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `UpBar`, which the schema requires.
     pub up_bar: Box<UpBar>,
+    /// The child that is `ValueAxisStyleEntry`, which the schema requires.
     pub value_axis_style_entry: Box<ValueAxisStyleEntry>,
+    /// The child that is `Wall`, which the schema requires.
     pub wall: Box<Wall>,
 }
 
-/// The tag `cs:colorStyle`, schema type `CT_ColorStyle` of SDK 3.5.1's data.
+/// The `cs:colorStyle` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ColorStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1257,11 +1363,17 @@ pub struct ChartStyle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColorStyle {
+    /// The children that are an item of `drawing::ColorContent`, in order.
     pub content: Vec<drawing::ColorContent>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `meth`, when the element has it.
     pub meth: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The children that are `Variation`, in order.
     pub variation: Vec<Variation>,
 }
 
@@ -1274,14 +1386,20 @@ pub struct ColorStyle {
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_drawing_2012_chart_style` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `AxisTitle`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn axis_title(&mut self, _node: &AxisTitle) -> Option<AxisTitle> {
         None
     }
 
+    /// Asked for each `BodyPr`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn body_pr(&mut self, _node: &BodyPr) -> Option<BodyPr> {
         None
     }
 
+    /// Asked for each `CategoryAxisAxisProps`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn category_axis_axis_props(
         &mut self,
         _node: &CategoryAxisAxisProps,
@@ -1289,6 +1407,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `CategoryAxisStyleEntry`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn category_axis_style_entry(
         &mut self,
         _node: &CategoryAxisStyleEntry,
@@ -1296,46 +1416,68 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ChartArea`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn chart_area(&mut self, _node: &ChartArea) -> Option<ChartArea> {
         None
     }
 
+    /// Asked for each `ChartStyle`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn chart_style(&mut self, _node: &ChartStyle) -> Option<ChartStyle> {
         None
     }
 
+    /// Asked for each `ColorStyle`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn color_style(&mut self, _node: &ColorStyle) -> Option<ColorStyle> {
         None
     }
 
+    /// Asked for each `DataLabel`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn data_label(&mut self, _node: &DataLabel) -> Option<DataLabel> {
         None
     }
 
+    /// Asked for each `DataLabelCallout`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn data_label_callout(&mut self, _node: &DataLabelCallout) -> Option<DataLabelCallout> {
         None
     }
 
+    /// Asked for each `DataLabels`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn data_labels(&mut self, _node: &DataLabels) -> Option<DataLabels> {
         None
     }
 
+    /// Asked for each `DataPoint`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn data_point(&mut self, _node: &DataPoint) -> Option<DataPoint> {
         None
     }
 
+    /// Asked for each `DataPoint3D`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn data_point3d(&mut self, _node: &DataPoint3D) -> Option<DataPoint3D> {
         None
     }
 
+    /// Asked for each `DataPointLine`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn data_point_line(&mut self, _node: &DataPointLine) -> Option<DataPointLine> {
         None
     }
 
+    /// Asked for each `DataPointMarker`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn data_point_marker(&mut self, _node: &DataPointMarker) -> Option<DataPointMarker> {
         None
     }
 
+    /// Asked for each `DataPointMarkerLayout`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn data_point_marker_layout(
         &mut self,
         _node: &DataPointMarkerLayout,
@@ -1343,14 +1485,20 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `DataPointWireframe`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn data_point_wireframe(&mut self, _node: &DataPointWireframe) -> Option<DataPointWireframe> {
         None
     }
 
+    /// Asked for each `DataSeries`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn data_series(&mut self, _node: &DataSeries) -> Option<DataSeries> {
         None
     }
 
+    /// Asked for each `DataTableDataTableProps`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn data_table_data_table_props(
         &mut self,
         _node: &DataTableDataTableProps,
@@ -1358,6 +1506,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `DataTableStyleEntry`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn data_table_style_entry(
         &mut self,
         _node: &DataTableStyleEntry,
@@ -1365,82 +1515,122 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `DefRPr`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn def_r_pr(&mut self, _node: &DefRPr) -> Option<DefRPr> {
         None
     }
 
+    /// Asked for each `DownBar`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn down_bar(&mut self, _node: &DownBar) -> Option<DownBar> {
         None
     }
 
+    /// Asked for each `DropLine`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn drop_line(&mut self, _node: &DropLine) -> Option<DropLine> {
         None
     }
 
+    /// Asked for each `EffectRef`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn effect_ref(&mut self, _node: &EffectRef) -> Option<EffectRef> {
         None
     }
 
+    /// Asked for each `ErrorBar`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn error_bar(&mut self, _node: &ErrorBar) -> Option<ErrorBar> {
         None
     }
 
+    /// Asked for each `ExtLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
         None
     }
 
+    /// Asked for each `FillRef`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn fill_ref(&mut self, _node: &FillRef) -> Option<FillRef> {
         None
     }
 
+    /// Asked for each `Floor`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn floor(&mut self, _node: &Floor) -> Option<Floor> {
         None
     }
 
+    /// Asked for each `FontRef`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn font_ref(&mut self, _node: &FontRef) -> Option<FontRef> {
         None
     }
 
+    /// Asked for each `GridlineMajor`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn gridline_major(&mut self, _node: &GridlineMajor) -> Option<GridlineMajor> {
         None
     }
 
+    /// Asked for each `GridlineMinor`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn gridline_minor(&mut self, _node: &GridlineMinor) -> Option<GridlineMinor> {
         None
     }
 
+    /// Asked for each `HiLoLine`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn hi_lo_line(&mut self, _node: &HiLoLine) -> Option<HiLoLine> {
         None
     }
 
+    /// Asked for each `LeaderLine`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn leader_line(&mut self, _node: &LeaderLine) -> Option<LeaderLine> {
         None
     }
 
+    /// Asked for each `LegendLegendProps`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn legend_legend_props(&mut self, _node: &LegendLegendProps) -> Option<LegendLegendProps> {
         None
     }
 
+    /// Asked for each `LegendStyleEntry`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn legend_style_entry(&mut self, _node: &LegendStyleEntry) -> Option<LegendStyleEntry> {
         None
     }
 
+    /// Asked for each `LineWidthScale`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn line_width_scale(&mut self, _node: &LineWidthScale) -> Option<LineWidthScale> {
         None
     }
 
+    /// Asked for each `LnRef`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ln_ref(&mut self, _node: &LnRef) -> Option<LnRef> {
         None
     }
 
+    /// Asked for each `PlotArea`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn plot_area(&mut self, _node: &PlotArea) -> Option<PlotArea> {
         None
     }
 
+    /// Asked for each `PlotArea3D`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn plot_area3d(&mut self, _node: &PlotArea3D) -> Option<PlotArea3D> {
         None
     }
 
+    /// Asked for each `SeriesAxisAxisProps`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn series_axis_axis_props(
         &mut self,
         _node: &SeriesAxisAxisProps,
@@ -1448,6 +1638,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `SeriesAxisStyleEntry`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn series_axis_style_entry(
         &mut self,
         _node: &SeriesAxisStyleEntry,
@@ -1455,30 +1647,44 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `SeriesLine`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn series_line(&mut self, _node: &SeriesLine) -> Option<SeriesLine> {
         None
     }
 
+    /// Asked for each `SpPr`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn sp_pr(&mut self, _node: &SpPr) -> Option<SpPr> {
         None
     }
 
+    /// Asked for each `StyleClr`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn style_clr(&mut self, _node: &StyleClr) -> Option<StyleClr> {
         None
     }
 
+    /// Asked for each `TitleStyleEntry`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn title_style_entry(&mut self, _node: &TitleStyleEntry) -> Option<TitleStyleEntry> {
         None
     }
 
+    /// Asked for each `TitleTitleProps`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn title_title_props(&mut self, _node: &TitleTitleProps) -> Option<TitleTitleProps> {
         None
     }
 
+    /// Asked for each `TrendlineLabel`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn trendline_label(&mut self, _node: &TrendlineLabel) -> Option<TrendlineLabel> {
         None
     }
 
+    /// Asked for each `TrendlineStyleEntry`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn trendline_style_entry(
         &mut self,
         _node: &TrendlineStyleEntry,
@@ -1486,6 +1692,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `TrendlineTrendlineProps`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn trendline_trendline_props(
         &mut self,
         _node: &TrendlineTrendlineProps,
@@ -1493,14 +1701,20 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `UpBar`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn up_bar(&mut self, _node: &UpBar) -> Option<UpBar> {
         None
     }
 
+    /// Asked for each `ValueAxisAxisProps`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn value_axis_axis_props(&mut self, _node: &ValueAxisAxisProps) -> Option<ValueAxisAxisProps> {
         None
     }
 
+    /// Asked for each `ValueAxisStyleEntry`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn value_axis_style_entry(
         &mut self,
         _node: &ValueAxisStyleEntry,
@@ -1508,21 +1722,30 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Variation`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn variation(&mut self, _node: &Variation) -> Option<Variation> {
         None
     }
 
+    /// Asked for each `View3D`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn view3d(&mut self, _node: &View3D) -> Option<View3D> {
         None
     }
 
+    /// Asked for each `Wall`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn wall(&mut self, _node: &Wall) -> Option<Wall> {
         None
     }
 
+    /// Asked when a `AxisTitle` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_axis_title(
         &mut self,
         _node: &AxisTitle,
@@ -1531,16 +1754,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BodyPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_body_pr(&mut self, _node: &BodyPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `CategoryAxisAxisProps` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_category_axis_axis_props(
         &mut self,
         _node: &CategoryAxisAxisProps,
@@ -1549,9 +1778,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CategoryAxisStyleEntry` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_category_axis_style_entry(
         &mut self,
         _node: &CategoryAxisStyleEntry,
@@ -1560,9 +1792,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ChartArea` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_chart_area(
         &mut self,
         _node: &ChartArea,
@@ -1571,9 +1806,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ChartStyle` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_chart_style(
         &mut self,
         _node: &ChartStyle,
@@ -1582,9 +1820,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ColorStyle` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_color_style(
         &mut self,
         _node: &ColorStyle,
@@ -1593,9 +1834,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DataLabel` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_data_label(
         &mut self,
         _node: &DataLabel,
@@ -1604,9 +1848,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DataLabelCallout` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_data_label_callout(
         &mut self,
         _node: &DataLabelCallout,
@@ -1615,9 +1862,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DataLabels` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_data_labels(
         &mut self,
         _node: &DataLabels,
@@ -1626,9 +1876,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DataPoint` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_data_point(
         &mut self,
         _node: &DataPoint,
@@ -1637,9 +1890,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DataPoint3D` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_data_point3d(
         &mut self,
         _node: &DataPoint3D,
@@ -1648,9 +1904,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DataPointLine` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_data_point_line(
         &mut self,
         _node: &DataPointLine,
@@ -1659,9 +1918,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DataPointMarker` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_data_point_marker(
         &mut self,
         _node: &DataPointMarker,
@@ -1670,9 +1932,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DataPointMarkerLayout` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_data_point_marker_layout(
         &mut self,
         _node: &DataPointMarkerLayout,
@@ -1681,9 +1946,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DataPointWireframe` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_data_point_wireframe(
         &mut self,
         _node: &DataPointWireframe,
@@ -1692,9 +1960,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DataSeries` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_data_series(
         &mut self,
         _node: &DataSeries,
@@ -1703,9 +1974,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DataTableDataTableProps` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_data_table_data_table_props(
         &mut self,
         _node: &DataTableDataTableProps,
@@ -1714,9 +1988,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DataTableStyleEntry` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_data_table_style_entry(
         &mut self,
         _node: &DataTableStyleEntry,
@@ -1725,16 +2002,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DefRPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_def_r_pr(&mut self, _node: &DefRPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `DownBar` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_down_bar(
         &mut self,
         _node: &DownBar,
@@ -1743,9 +2026,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DropLine` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_drop_line(
         &mut self,
         _node: &DropLine,
@@ -1754,9 +2040,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `EffectRef` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_effect_ref(
         &mut self,
         _node: &EffectRef,
@@ -1765,9 +2054,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ErrorBar` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_error_bar(
         &mut self,
         _node: &ErrorBar,
@@ -1776,16 +2068,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `FillRef` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_fill_ref(
         &mut self,
         _node: &FillRef,
@@ -1794,16 +2092,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Floor` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_floor(&mut self, _node: &Floor, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `FontRef` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_font_ref(
         &mut self,
         _node: &FontRef,
@@ -1812,9 +2116,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `GridlineMajor` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_gridline_major(
         &mut self,
         _node: &GridlineMajor,
@@ -1823,9 +2130,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `GridlineMinor` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_gridline_minor(
         &mut self,
         _node: &GridlineMinor,
@@ -1834,9 +2144,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `HiLoLine` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_hi_lo_line(
         &mut self,
         _node: &HiLoLine,
@@ -1845,9 +2158,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LeaderLine` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_leader_line(
         &mut self,
         _node: &LeaderLine,
@@ -1856,9 +2172,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LegendLegendProps` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_legend_legend_props(
         &mut self,
         _node: &LegendLegendProps,
@@ -1867,9 +2186,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LegendStyleEntry` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_legend_style_entry(
         &mut self,
         _node: &LegendStyleEntry,
@@ -1878,9 +2200,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LineWidthScale` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_line_width_scale(
         &mut self,
         _node: &LineWidthScale,
@@ -1889,16 +2214,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LnRef` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ln_ref(&mut self, _node: &LnRef, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `PlotArea` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_plot_area(
         &mut self,
         _node: &PlotArea,
@@ -1907,9 +2238,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PlotArea3D` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_plot_area3d(
         &mut self,
         _node: &PlotArea3D,
@@ -1918,9 +2252,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SeriesAxisAxisProps` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_series_axis_axis_props(
         &mut self,
         _node: &SeriesAxisAxisProps,
@@ -1929,9 +2266,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SeriesAxisStyleEntry` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_series_axis_style_entry(
         &mut self,
         _node: &SeriesAxisStyleEntry,
@@ -1940,9 +2280,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SeriesLine` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_series_line(
         &mut self,
         _node: &SeriesLine,
@@ -1951,16 +2294,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SpPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sp_pr(&mut self, _node: &SpPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `StyleClr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_style_clr(
         &mut self,
         _node: &StyleClr,
@@ -1969,9 +2318,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TitleStyleEntry` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_title_style_entry(
         &mut self,
         _node: &TitleStyleEntry,
@@ -1980,9 +2332,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TitleTitleProps` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_title_title_props(
         &mut self,
         _node: &TitleTitleProps,
@@ -1991,9 +2346,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TrendlineLabel` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_trendline_label(
         &mut self,
         _node: &TrendlineLabel,
@@ -2002,9 +2360,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TrendlineStyleEntry` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_trendline_style_entry(
         &mut self,
         _node: &TrendlineStyleEntry,
@@ -2013,9 +2374,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TrendlineTrendlineProps` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_trendline_trendline_props(
         &mut self,
         _node: &TrendlineTrendlineProps,
@@ -2024,16 +2388,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `UpBar` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_up_bar(&mut self, _node: &UpBar, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ValueAxisAxisProps` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_value_axis_axis_props(
         &mut self,
         _node: &ValueAxisAxisProps,
@@ -2042,9 +2412,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ValueAxisStyleEntry` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_value_axis_style_entry(
         &mut self,
         _node: &ValueAxisStyleEntry,
@@ -2053,9 +2426,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Variation` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_variation(
         &mut self,
         _node: &Variation,
@@ -2064,22 +2440,29 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `View3D` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_view3d(&mut self, _node: &View3D, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Wall` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_wall(&mut self, _node: &Wall, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 }
 
-/// The tag `cs:dataLabel`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:dataLabel` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2088,19 +2471,30 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataLabel {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LineWidthScale`, when there is one.
     pub line_width_scale: Option<Box<LineWidthScale>>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:dataLabelCallout`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:dataLabelCallout` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2109,19 +2503,30 @@ pub struct DataLabel {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataLabelCallout {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LineWidthScale`, when there is one.
     pub line_width_scale: Option<Box<LineWidthScale>>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:dataLabels`, schema type `CT_DataLabelsProps` of SDK 3.5.1's data.
+/// The `cs:dataLabels` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_DataLabelsProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2130,16 +2535,26 @@ pub struct DataLabelCallout {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataLabels {
+    /// The attribute `categoryName`, when the element has it.
     pub category_name: Option<Boolean>,
+    /// The attribute `legendKey`, when the element has it.
     pub legend_key: Option<Boolean>,
+    /// The attribute `percentage`, when the element has it.
     pub percentage: Option<Boolean>,
+    /// The attribute `position`, when the element has it.
     pub position: Option<DataLabelsPosition>,
+    /// The attribute `seriesName`, when the element has it.
     pub series_name: Option<Boolean>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `value`, when the element has it.
     pub value: Option<Boolean>,
 }
 
-/// `ST_DataLabelsPosition`: the text the file carried.
+/// The simple type `ST_DataLabelsPosition`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2148,18 +2563,25 @@ pub struct DataLabels {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataLabelsPosition(pub String);
-/// The members of `ST_DataLabelsPosition`, in alphabetical order.
+/// The members of the enumeration `ST_DataLabelsPosition`, in alphabetical order. `as_str` gives
+/// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum DataLabelsPositionMember {
+    /// The member written `center`.
     Center,
+    /// The member written `insideBase`.
     InsideBase,
+    /// The member written `insideEnd`.
     InsideEnd,
+    /// The member written `ninch`.
     Ninch,
+    /// The member written `outsideEnd`.
     OutsideEnd,
 }
 
-/// The tag `cs:dataPoint`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:dataPoint` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2168,19 +2590,30 @@ pub enum DataLabelsPositionMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataPoint {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LineWidthScale`, when there is one.
     pub line_width_scale: Option<Box<LineWidthScale>>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:dataPoint3D`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:dataPoint3D` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2189,19 +2622,30 @@ pub struct DataPoint {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataPoint3D {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LineWidthScale`, when there is one.
     pub line_width_scale: Option<Box<LineWidthScale>>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:dataPointLine`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:dataPointLine` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2210,19 +2654,30 @@ pub struct DataPoint3D {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataPointLine {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `LineWidthScale`, when there is one.
     pub width_scale: Option<Box<LineWidthScale>>,
 }
 
-/// The tag `cs:dataPointMarker`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:dataPointMarker` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2231,19 +2686,30 @@ pub struct DataPointLine {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataPointMarker {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LineWidthScale`, when there is one.
     pub line_width_scale: Option<Box<LineWidthScale>>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:dataPointMarkerLayout`, schema type `CT_MarkerLayout` of SDK 3.5.1's data.
+/// The `cs:dataPointMarkerLayout` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_MarkerLayout`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2252,12 +2718,16 @@ pub struct DataPointMarker {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataPointMarkerLayout {
+    /// The attribute `size`, when the element has it.
     pub size: Option<String>,
+    /// The attribute `symbol`, when the element has it.
     pub symbol: Option<MarkerStyle>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:dataPointWireframe`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:dataPointWireframe` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2266,19 +2736,30 @@ pub struct DataPointMarkerLayout {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataPointWireframe {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LineWidthScale`, when there is one.
     pub line_width_scale: Option<Box<LineWidthScale>>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:dataSeries`, schema type `CT_DataSeriesProps` of SDK 3.5.1's data.
+/// The `cs:dataSeries` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_DataSeriesProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2287,18 +2768,28 @@ pub struct DataPointWireframe {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataSeries {
+    /// The attribute `doughnutHoleSize`, when the element has it.
     pub doughnut_hole_size: Option<String>,
+    /// The attribute `dropLines`, when the element has it.
     pub drop_lines: Option<Boolean>,
+    /// The attribute `gapDepth`, when the element has it.
     pub gap_depth: Option<String>,
+    /// The attribute `gapWidth`, when the element has it.
     pub gap_width: Option<String>,
+    /// The attribute `hiloLines`, when the element has it.
     pub hilo_lines: Option<Boolean>,
+    /// The attribute `markerVisible`, when the element has it.
     pub marker_visible: Option<Boolean>,
+    /// The attribute `overlap`, when the element has it.
     pub overlap: Option<String>,
+    /// The attribute `seriesLines`, when the element has it.
     pub series_lines: Option<Boolean>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:dataTable`, schema type `CT_DataTableProps` of SDK 3.5.1's data.
+/// The `cs:dataTable` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_DataTableProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2307,14 +2798,20 @@ pub struct DataSeries {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataTableDataTableProps {
+    /// The attribute `horizontalBorder`, when the element has it.
     pub horizontal_border: Option<Boolean>,
+    /// The attribute `legendKeys`, when the element has it.
     pub legend_keys: Option<Boolean>,
+    /// The attribute `outlineBorder`, when the element has it.
     pub outline_border: Option<Boolean>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `verticalBorder`, when the element has it.
     pub vertical_border: Option<Boolean>,
 }
 
-/// The tag `cs:dataTable`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:dataTable` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2323,19 +2820,30 @@ pub struct DataTableDataTableProps {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataTableStyleEntry {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LineWidthScale`, when there is one.
     pub line_width_scale: Option<Box<LineWidthScale>>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:defRPr`, schema type `CT_TextCharacterProperties` of SDK 3.5.1's data.
+/// The `cs:defRPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TextCharacterProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2344,43 +2852,78 @@ pub struct DataTableStyleEntry {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DefRPr {
+    /// The attribute `altLang`, when the element has it.
     pub alt_lang: Option<String>,
+    /// The attribute `b`, when the element has it.
     pub b: Option<String>,
+    /// The attribute `baseline`, when the element has it.
     pub baseline: Option<drawing::Percentage>,
+    /// The attribute `bmk`, when the element has it.
     pub bmk: Option<String>,
+    /// The attribute `cap`, when the element has it.
     pub cap: Option<drawing::TextCapTypes>,
+    /// The child that is `drawing::ClickHyperlink`, when there is one.
     pub click_hyperlink: Option<Box<drawing::ClickHyperlink>>,
+    /// The child that is `drawing::ComplexScriptFont`, when there is one.
     pub complex_script_font: Option<Box<drawing::ComplexScriptFont>>,
+    /// The attribute `dirty`, when the element has it.
     pub dirty: Option<String>,
+    /// The child that is `drawing::EastAsianFont`, when there is one.
     pub east_asian_font: Option<Box<drawing::EastAsianFont>>,
+    /// The child that is an item of `drawing::EffectPropertiesContent`, when there is one.
     pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
+    /// The attribute `err`, when the element has it.
     pub err: Option<String>,
+    /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionList>>,
+    /// The child that is an item of `drawing::FillPropertiesContent`, when there is one.
     pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
+    /// The child that is `drawing::HighlightColor`, when there is one.
     pub highlight_color: Option<Box<drawing::HighlightColor>>,
+    /// The attribute `i`, when the element has it.
     pub i: Option<String>,
+    /// The attribute `kern`, when the element has it.
     pub kern: Option<drawing::TextNonNegativePoint>,
+    /// The attribute `kumimoji`, when the element has it.
     pub kumimoji: Option<String>,
+    /// The attribute `lang`, when the element has it.
     pub lang: Option<String>,
+    /// The child that is `drawing::LatinFont`, when there is one.
     pub latin_font: Option<Box<drawing::LatinFont>>,
+    /// The child that is `drawing::MouseOverHyperlink`, when there is one.
     pub mouse_over_hyperlink: Option<Box<drawing::MouseOverHyperlink>>,
+    /// The attribute `noProof`, when the element has it.
     pub no_proof: Option<String>,
+    /// The attribute `normalizeH`, when the element has it.
     pub normalize_h: Option<String>,
+    /// The child that is `drawing::Outline`, when there is one.
     pub outline: Option<Box<drawing::Outline>>,
+    /// The child that is `drawing::RightToLeftRun`, when there is one.
     pub right_to_left_run: Option<Box<drawing::RightToLeftRun>>,
+    /// The attribute `smtClean`, when the element has it.
     pub smt_clean: Option<String>,
+    /// The attribute `smtId`, when the element has it.
     pub smt_id: Option<String>,
+    /// The attribute `spc`, when the element has it.
     pub spc: Option<drawing::TextPoint>,
+    /// The attribute `strike`, when the element has it.
     pub strike: Option<drawing::TextStrikeType>,
+    /// The child that is `drawing::SymbolFont`, when there is one.
     pub symbol_font: Option<Box<drawing::SymbolFont>>,
+    /// The attribute `sz`, when the element has it.
     pub sz: Option<drawing::TextFontSize>,
+    /// The child that is an item of `drawing::TextUnderlineFillContent`, when there is one.
     pub text_underline_fill_content: Option<Box<drawing::TextUnderlineFillContent>>,
+    /// The child that is an item of `drawing::TextUnderlineLineContent`, when there is one.
     pub text_underline_line_content: Option<Box<drawing::TextUnderlineLineContent>>,
+    /// The attribute `u`, when the element has it.
     pub u: Option<drawing::TextUnderlineTypes>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:downBar`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:downBar` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2389,19 +2932,30 @@ pub struct DefRPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DownBar {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LineWidthScale`, when there is one.
     pub line_width_scale: Option<Box<LineWidthScale>>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:dropLine`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:dropLine` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2410,19 +2964,30 @@ pub struct DownBar {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DropLine {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `LineWidthScale`, when there is one.
     pub width_scale: Option<Box<LineWidthScale>>,
 }
 
-/// The tag `cs:effectRef`, schema type `CT_StyleReference` of SDK 3.5.1's data.
+/// The `cs:effectRef` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StyleReference`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2431,12 +2996,16 @@ pub struct DropLine {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EffectRef {
+    /// The child that is an item of `drawing::ColorContent`, when there is one.
     pub content: Option<Box<drawing::ColorContent>>,
+    /// The child that is `StyleClr`, when there is one.
     pub style_clr: Option<Box<StyleClr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:errorBar`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:errorBar` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2445,19 +3014,30 @@ pub struct EffectRef {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ErrorBar {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LineWidthScale`, when there is one.
     pub line_width_scale: Option<Box<LineWidthScale>>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
+/// The `cs:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2466,11 +3046,14 @@ pub struct ErrorBar {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
+    /// The children that are `drawing::Extension`, in order.
     pub extension: Vec<drawing::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:fillRef`, schema type `CT_StyleReference` of SDK 3.5.1's data.
+/// The `cs:fillRef` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StyleReference`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2479,12 +3062,16 @@ pub struct ExtLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FillRef {
+    /// The child that is an item of `drawing::ColorContent`, when there is one.
     pub content: Option<Box<drawing::ColorContent>>,
+    /// The child that is `StyleClr`, when there is one.
     pub style_clr: Option<Box<StyleClr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:floor`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:floor` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2493,19 +3080,30 @@ pub struct FillRef {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Floor {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LineWidthScale`, when there is one.
     pub line_width_scale: Option<Box<LineWidthScale>>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:fontRef`, schema type `CT_FontReference` of SDK 3.5.1's data.
+/// The `cs:fontRef` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_FontReference`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2514,14 +3112,20 @@ pub struct Floor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FontRef {
+    /// The child that is an item of `drawing::ColorContent`, when there is one.
     pub content: Option<Box<drawing::ColorContent>>,
+    /// The attribute `idx`, when the element has it.
     pub idx: Option<drawing::FontCollectionIndex>,
+    /// The attribute `mods`, when the element has it.
     pub mods: Option<String>,
+    /// The child that is `StyleClr`, when there is one.
     pub style_clr: Option<Box<StyleClr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:gridlineMajor`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:gridlineMajor` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2530,19 +3134,30 @@ pub struct FontRef {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GridlineMajor {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LineWidthScale`, when there is one.
     pub line_width_scale: Option<Box<LineWidthScale>>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:gridlineMinor`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:gridlineMinor` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2551,19 +3166,30 @@ pub struct GridlineMajor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GridlineMinor {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LineWidthScale`, when there is one.
     pub line_width_scale: Option<Box<LineWidthScale>>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:hiLoLine`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:hiLoLine` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2572,19 +3198,30 @@ pub struct GridlineMinor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HiLoLine {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `LineWidthScale`, when there is one.
     pub width_scale: Option<Box<LineWidthScale>>,
 }
 
-/// The tag `cs:leaderLine`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:leaderLine` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2593,19 +3230,30 @@ pub struct HiLoLine {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LeaderLine {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `LineWidthScale`, when there is one.
     pub width_scale: Option<Box<LineWidthScale>>,
 }
 
-/// The tag `cs:legend`, schema type `CT_LegendProps` of SDK 3.5.1's data.
+/// The `cs:legend` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_LegendProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2614,13 +3262,20 @@ pub struct LeaderLine {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LegendLegendProps {
+    /// The attribute `includeInLayout`, when the element has it.
     pub include_in_layout: Option<Boolean>,
+    /// The attribute `position`, when the element has it.
     pub position: Option<LegendPosition>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<Boolean>,
 }
 
-/// `ST_LegendPosition`: the text the file carried.
+/// The simple type `ST_LegendPosition`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2629,18 +3284,25 @@ pub struct LegendLegendProps {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LegendPosition(pub String);
-/// The members of `ST_LegendPosition`, in alphabetical order.
+/// The members of the enumeration `ST_LegendPosition`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum LegendPositionMember {
+    /// The member written `bottom`.
     Bottom,
+    /// The member written `left`.
     Left,
+    /// The member written `ninch`.
     Ninch,
+    /// The member written `right`.
     Right,
+    /// The member written `top`.
     Top,
 }
 
-/// The tag `cs:legend`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:legend` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2649,19 +3311,30 @@ pub enum LegendPositionMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LegendStyleEntry {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LineWidthScale`, when there is one.
     pub line_width_scale: Option<Box<LineWidthScale>>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:lineWidthScale`, schema type `double` of SDK 3.5.1's data.
+/// The `cs:lineWidthScale` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `double`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2670,11 +3343,14 @@ pub struct LegendStyleEntry {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LineWidthScale {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `cs:lnRef`, schema type `CT_StyleReference` of SDK 3.5.1's data.
+/// The `cs:lnRef` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StyleReference`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2683,12 +3359,18 @@ pub struct LineWidthScale {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LnRef {
+    /// The child that is an item of `drawing::ColorContent`, when there is one.
     pub content: Option<Box<drawing::ColorContent>>,
+    /// The child that is `StyleClr`, when there is one.
     pub style_clr: Option<Box<StyleClr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_MarkerStyle`: the text the file carried.
+/// The simple type `ST_MarkerStyle`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2697,22 +3379,33 @@ pub struct LnRef {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MarkerStyle(pub String);
-/// The members of `ST_MarkerStyle`, in alphabetical order.
+/// The members of the enumeration `ST_MarkerStyle`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum MarkerStyleMember {
+    /// The member written `circle`.
     Circle,
+    /// The member written `dash`.
     Dash,
+    /// The member written `diamond`.
     Diamond,
+    /// The member written `dot`.
     Dot,
+    /// The member written `plus`.
     Plus,
+    /// The member written `square`.
     Square,
+    /// The member written `star`.
     Star,
+    /// The member written `triangle`.
     Triangle,
+    /// The member written `x`.
     X,
 }
 
-/// The tag `cs:plotArea`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:plotArea` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2721,19 +3414,30 @@ pub enum MarkerStyleMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PlotArea {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LineWidthScale`, when there is one.
     pub line_width_scale: Option<Box<LineWidthScale>>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:plotArea3D`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:plotArea3D` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2742,19 +3446,30 @@ pub struct PlotArea {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PlotArea3D {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LineWidthScale`, when there is one.
     pub line_width_scale: Option<Box<LineWidthScale>>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:seriesAxis`, schema type `CT_AxisProps` of SDK 3.5.1's data.
+/// The `cs:seriesAxis` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_AxisProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2763,10 +3478,12 @@ pub struct PlotArea3D {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SeriesAxisAxisProps {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:seriesAxis`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:seriesAxis` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2775,19 +3492,30 @@ pub struct SeriesAxisAxisProps {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SeriesAxisStyleEntry {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LineWidthScale`, when there is one.
     pub line_width_scale: Option<Box<LineWidthScale>>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:seriesLine`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:seriesLine` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2796,19 +3524,30 @@ pub struct SeriesAxisStyleEntry {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SeriesLine {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `LineWidthScale`, when there is one.
     pub width_scale: Option<Box<LineWidthScale>>,
 }
 
-/// The tag `cs:spPr`, schema type `CT_ShapeProperties` of SDK 3.5.1's data.
+/// The `cs:spPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ShapeProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2817,19 +3556,30 @@ pub struct SeriesLine {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SpPr {
+    /// The child that is `drawing::Apply3DShapeProperties`, when there is one.
     pub apply_3d_shape_properties: Option<Box<drawing::Apply3DShapeProperties>>,
+    /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<drawing::BlackAndWhiteMode>,
+    /// The child that is an item of `drawing::EffectPropertiesContent`, when there is one.
     pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
+    /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionList>>,
+    /// The child that is an item of `drawing::FillPropertiesContent`, when there is one.
     pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
+    /// The child that is an item of `drawing::GeometryContent`, when there is one.
     pub geometry_content: Option<Box<drawing::GeometryContent>>,
+    /// The child that is `drawing::Outline`, when there is one.
     pub outline: Option<Box<drawing::Outline>>,
+    /// The child that is `drawing::Scene3d`, when there is one.
     pub scene3d: Option<Box<drawing::Scene3d>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `drawing::XfrmTransform2D`, when there is one.
     pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2D>>,
 }
 
-/// The tag `cs:styleClr`, schema type `CT_StyleColor` of SDK 3.5.1's data.
+/// The `cs:styleClr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StyleColor`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2838,12 +3588,18 @@ pub struct SpPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StyleClr {
+    /// The children that are an item of `drawing::ColorTransformContent`, in order.
     pub content: Vec<drawing::ColorTransformContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// `ST_TitlePosition`: the text the file carried.
+/// The simple type `ST_TitlePosition`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2852,17 +3608,23 @@ pub struct StyleClr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TitlePosition(pub String);
-/// The members of `ST_TitlePosition`, in alphabetical order.
+/// The members of the enumeration `ST_TitlePosition`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TitlePositionMember {
+    /// The member written `above`.
     Above,
+    /// The member written `ninch`.
     Ninch,
+    /// The member written `off`.
     Off,
+    /// The member written `overlay`.
     Overlay,
 }
 
-/// The tag `cs:title`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:title` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2871,19 +3633,30 @@ pub enum TitlePositionMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TitleStyleEntry {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LineWidthScale`, when there is one.
     pub line_width_scale: Option<Box<LineWidthScale>>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:title`, schema type `CT_TitleProps` of SDK 3.5.1's data.
+/// The `cs:title` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TitleProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2892,11 +3665,14 @@ pub struct TitleStyleEntry {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TitleTitleProps {
+    /// The attribute `position`, when the element has it.
     pub position: Option<TitlePosition>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:trendlineLabel`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:trendlineLabel` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2905,19 +3681,30 @@ pub struct TitleTitleProps {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TrendlineLabel {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LineWidthScale`, when there is one.
     pub line_width_scale: Option<Box<LineWidthScale>>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:trendline`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:trendline` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2926,19 +3713,30 @@ pub struct TrendlineLabel {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TrendlineStyleEntry {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LineWidthScale`, when there is one.
     pub line_width_scale: Option<Box<LineWidthScale>>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:trendline`, schema type `CT_TrendlineProps` of SDK 3.5.1's data.
+/// The `cs:trendline` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TrendlineProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2947,13 +3745,18 @@ pub struct TrendlineStyleEntry {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TrendlineTrendlineProps {
+    /// The attribute `add`, when the element has it.
     pub add: Option<Boolean>,
+    /// The attribute `equation`, when the element has it.
     pub equation: Option<Boolean>,
+    /// The attribute `rsquared`, when the element has it.
     pub rsquared: Option<Boolean>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:upBar`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:upBar` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2962,19 +3765,30 @@ pub struct TrendlineTrendlineProps {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct UpBar {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LineWidthScale`, when there is one.
     pub line_width_scale: Option<Box<LineWidthScale>>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:valueAxis`, schema type `CT_AxisProps` of SDK 3.5.1's data.
+/// The `cs:valueAxis` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_AxisProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2983,10 +3797,12 @@ pub struct UpBar {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ValueAxisAxisProps {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:valueAxis`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:valueAxis` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2995,19 +3811,30 @@ pub struct ValueAxisAxisProps {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ValueAxisStyleEntry {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LineWidthScale`, when there is one.
     pub line_width_scale: Option<Box<LineWidthScale>>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:variation`, schema type `CT_ColorStyleVariation` of SDK 3.5.1's data.
+/// The `cs:variation` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ColorStyleVariation`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3016,11 +3843,14 @@ pub struct ValueAxisStyleEntry {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Variation {
+    /// The children that are an item of `drawing::ColorTransformContent`, in order.
     pub content: Vec<drawing::ColorTransformContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `cs:view3D`, schema type `CT_View3DProps` of SDK 3.5.1's data.
+/// The `cs:view3D` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_View3DProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3029,12 +3859,19 @@ pub struct Variation {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct View3D {
+    /// The attribute `depthPercent`, when the element has it.
     pub depth_percent: Option<String>,
+    /// The attribute `heightPercent`, when the element has it.
     pub height_percent: Option<String>,
+    /// The attribute `perspective`, when the element has it.
     pub perspective: Option<String>,
+    /// The attribute `rAngAx`, when the element has it.
     pub r_ang_ax: Option<Boolean>,
+    /// The attribute `rotX`, when the element has it.
     pub rot_x: Option<String>,
+    /// The attribute `rotY`, when the element has it.
     pub rot_y: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -3044,14 +3881,19 @@ pub struct View3D {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_drawing_2012_chart_style` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `AxisTitle`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn axis_title(&mut self, _node: &AxisTitle) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BodyPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn body_pr(&mut self, _node: &BodyPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CategoryAxisAxisProps`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn category_axis_axis_props(
         &mut self,
         _node: &CategoryAxisAxisProps,
@@ -3059,6 +3901,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CategoryAxisStyleEntry`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn category_axis_style_entry(
         &mut self,
         _node: &CategoryAxisStyleEntry,
@@ -3066,46 +3910,68 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ChartArea`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn chart_area(&mut self, _node: &ChartArea) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ChartStyle`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn chart_style(&mut self, _node: &ChartStyle) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ColorStyle`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn color_style(&mut self, _node: &ColorStyle) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DataLabel`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn data_label(&mut self, _node: &DataLabel) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DataLabelCallout`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn data_label_callout(&mut self, _node: &DataLabelCallout) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DataLabels`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn data_labels(&mut self, _node: &DataLabels) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DataPoint`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn data_point(&mut self, _node: &DataPoint) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DataPoint3D`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn data_point3d(&mut self, _node: &DataPoint3D) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DataPointLine`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn data_point_line(&mut self, _node: &DataPointLine) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DataPointMarker`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn data_point_marker(&mut self, _node: &DataPointMarker) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DataPointMarkerLayout`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn data_point_marker_layout(
         &mut self,
         _node: &DataPointMarkerLayout,
@@ -3113,6 +3979,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DataPointWireframe`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn data_point_wireframe(
         &mut self,
         _node: &DataPointWireframe,
@@ -3120,10 +3988,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DataSeries`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn data_series(&mut self, _node: &DataSeries) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DataTableDataTableProps`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn data_table_data_table_props(
         &mut self,
         _node: &DataTableDataTableProps,
@@ -3131,6 +4003,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DataTableStyleEntry`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn data_table_style_entry(
         &mut self,
         _node: &DataTableStyleEntry,
@@ -3138,82 +4012,111 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DefRPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn def_r_pr(&mut self, _node: &DefRPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DownBar`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn down_bar(&mut self, _node: &DownBar) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DropLine`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn drop_line(&mut self, _node: &DropLine) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `EffectRef`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn effect_ref(&mut self, _node: &EffectRef) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ErrorBar`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn error_bar(&mut self, _node: &ErrorBar) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext_lst(&mut self, _node: &ExtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FillRef`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn fill_ref(&mut self, _node: &FillRef) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Floor`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn floor(&mut self, _node: &Floor) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FontRef`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn font_ref(&mut self, _node: &FontRef) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `GridlineMajor`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn gridline_major(&mut self, _node: &GridlineMajor) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `GridlineMinor`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn gridline_minor(&mut self, _node: &GridlineMinor) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `HiLoLine`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn hi_lo_line(&mut self, _node: &HiLoLine) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LeaderLine`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn leader_line(&mut self, _node: &LeaderLine) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LegendLegendProps`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn legend_legend_props(&mut self, _node: &LegendLegendProps) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LegendStyleEntry`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn legend_style_entry(&mut self, _node: &LegendStyleEntry) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LineWidthScale`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn line_width_scale(&mut self, _node: &LineWidthScale) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LnRef`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ln_ref(&mut self, _node: &LnRef) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PlotArea`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn plot_area(&mut self, _node: &PlotArea) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PlotArea3D`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn plot_area3d(&mut self, _node: &PlotArea3D) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SeriesAxisAxisProps`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn series_axis_axis_props(
         &mut self,
         _node: &SeriesAxisAxisProps,
@@ -3221,6 +4124,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SeriesAxisStyleEntry`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn series_axis_style_entry(
         &mut self,
         _node: &SeriesAxisStyleEntry,
@@ -3228,30 +4133,42 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SeriesLine`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn series_line(&mut self, _node: &SeriesLine) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SpPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sp_pr(&mut self, _node: &SpPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `StyleClr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn style_clr(&mut self, _node: &StyleClr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TitleStyleEntry`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn title_style_entry(&mut self, _node: &TitleStyleEntry) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TitleTitleProps`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn title_title_props(&mut self, _node: &TitleTitleProps) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TrendlineLabel`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn trendline_label(&mut self, _node: &TrendlineLabel) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TrendlineStyleEntry`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn trendline_style_entry(
         &mut self,
         _node: &TrendlineStyleEntry,
@@ -3259,6 +4176,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TrendlineTrendlineProps`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn trendline_trendline_props(
         &mut self,
         _node: &TrendlineTrendlineProps,
@@ -3266,10 +4185,13 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `UpBar`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn up_bar(&mut self, _node: &UpBar) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ValueAxisAxisProps`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn value_axis_axis_props(
         &mut self,
         _node: &ValueAxisAxisProps,
@@ -3277,6 +4199,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ValueAxisStyleEntry`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn value_axis_style_entry(
         &mut self,
         _node: &ValueAxisStyleEntry,
@@ -3284,20 +4208,25 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Variation`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn variation(&mut self, _node: &Variation) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `View3D`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn view3d(&mut self, _node: &View3D) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Wall`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn wall(&mut self, _node: &Wall) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 }
 
-/// The tag `cs:wall`, schema type `CT_StyleEntry` of SDK 3.5.1's data.
+/// The `cs:wall` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_StyleEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3306,15 +4235,25 @@ pub trait Visitor: crate::Visitor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Wall {
+    /// The child that is `BodyPr`, when there is one.
     pub body_pr: Option<Box<BodyPr>>,
+    /// The child that is `DefRPr`, when there is one.
     pub def_r_pr: Option<Box<DefRPr>>,
+    /// The child that is `EffectRef`, which the schema requires.
     pub effect_ref: Box<EffectRef>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `FillRef`, which the schema requires.
     pub fill_ref: Box<FillRef>,
+    /// The child that is `FontRef`, which the schema requires.
     pub font_ref: Box<FontRef>,
+    /// The child that is `LineWidthScale`, when there is one.
     pub line_width_scale: Option<Box<LineWidthScale>>,
+    /// The child that is `LnRef`, which the schema requires.
     pub ln_ref: Box<LnRef>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -3412,7 +4351,7 @@ impl BooleanMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -3659,7 +4598,7 @@ impl DataLabelsPositionMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4248,7 +5187,7 @@ impl LegendPositionMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4370,7 +5309,7 @@ impl MarkerStyleMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4574,7 +5513,7 @@ impl TitlePositionMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

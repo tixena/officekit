@@ -339,10 +339,12 @@
 //   e26c4528f8340924ff27391d34681ecde1f597fc5ce3dbf2d354edc9c6071a52  crates/xtask/data/part_roots.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! ECMA-376 Part 1, 13.3.13 "View Properties Part", and Part 4, 11.2.13.
+//! The View Properties Part, defined in ECMA-376 Part 1, section 13.3.13, and restated in Part 4,
+//! section 11.2.13.
 //!
 //! The module holds its content type, its relationship type, and the load and store of its root,
-//! `p:viewPr`.
+//! `p:viewPr`. `store_strict` needs the `strict` feature and `store_transitional` the
+//! `transitional` feature.
 
 use crate::part_root::{self, PartRoot};
 use officekit_markup::presentation;
@@ -362,11 +364,12 @@ use officekit_xml::write::Scope;
 #[cfg(any(feature = "strict", feature = "transitional"))]
 use officekit_xml::write::WriteOptions;
 
-/// The content type Part 1 lists.
+/// The content type ECMA-376 Part 1 lists for this part.
 pub const CONTENT_TYPE: &str =
     "application/vnd.openxmlformats-officedocument.presentationml.viewProps+xml";
 
-/// Part 1, 13.3.13, and Part 4, 11.2.13.
+/// The relationship type that names this part, in both classes' spelling: Strict from ECMA-376 Part
+/// 1, section 13.3.13, Transitional from Part 4, section 11.2.13.
 pub const RELATIONSHIP_TYPE: RelationshipType = RelationshipType::VIEW_PROPERTIES;
 
 impl PartRoot for presentation::PresentationWideViewProperties {
@@ -411,6 +414,8 @@ pub fn load(
 /// Store `root` into the part in the Strict class; the part keeps its
 /// content type, or takes this module's.
 ///
+/// This function needs the `strict` feature.
+///
 /// # Errors
 ///
 /// The errors of [`part_root::store`].
@@ -437,6 +442,8 @@ pub fn store_strict(
 
 /// Store `root` into the part in the Transitional class; the part keeps its
 /// content type, or takes this module's.
+///
+/// This function needs the `transitional` feature.
 ///
 /// # Errors
 ///

@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `vt` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes`, which files write with the prefix `vt`.
 //!
-//! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -575,7 +575,8 @@ static ERROR_STATUS_CODE_SIMPLE_TYPE_FACETS: crate::Facets = crate::Facets {
     patterns: &["\\s*0x[0-9A-Za-z]{8}\\s*"],
 };
 
-/// 22.4.2.1 array (Array): the tag `vt:array`, schema type `CT_Array`.
+/// The `vt:array` element, Array (ECMA-376 Part 1, section 22.4.2.1). Its schema type is
+/// `CT_Array`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -587,15 +588,24 @@ static ERROR_STATUS_CODE_SIMPLE_TYPE_FACETS: crate::Facets = crate::Facets {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Array {
+    /// The attribute `baseType`, when the element has it.
     pub base_type: Option<ArrayBaseTypeSimpleType>,
+    /// The children that are an item of `ArrayContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<ArrayContent>,
+    /// The attribute `lBounds`, when the element has it.
     pub l_bounds: Option<String>,
+    /// The attribute `uBounds`, when the element has it.
     pub u_bounds: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 22.4.3.1 `ST_ArrayBaseType` (Array Base Type Simple Type): the text the file carried.
+/// Array Base Type Simple Type, the simple type `ST_ArrayBaseType` (ECMA-376 Part 1, section
+/// 22.4.3.1), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -604,53 +614,94 @@ pub struct Array {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArrayBaseTypeSimpleType(pub String);
-/// The members of `ST_ArrayBaseType`, in alphabetical order.
+/// The members of the enumeration `ST_ArrayBaseType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ArrayBaseTypeSimpleTypeMember {
+    /// The member written `bool`.
     Bool,
+    /// The member written `bstr`.
     Bstr,
+    /// The member written `cy`.
     Cy,
+    /// The member written `date`.
     Date,
+    /// The member written `decimal`.
     Decimal,
+    /// The member written `error`.
     Error,
+    /// The member written `i1`.
     I1,
+    /// The member written `i2`.
     I2,
+    /// The member written `i4`.
     I4,
+    /// The member written `int`.
     Int,
+    /// The member written `r4`.
     R4,
+    /// The member written `r8`.
     R8,
+    /// The member written `ui1`.
     Ui1,
+    /// The member written `ui2`.
     Ui2,
+    /// The member written `ui4`.
     Ui4,
+    /// The member written `uint`.
     Uint,
+    /// The member written `variant`.
     Variant,
 }
 
-/// One item of `CT_Array`: local choice in `CT_Array`.
+/// One child element of a choice: local choice in `CT_Array`.
+///
+/// The schema types that hold it: `CT_Array`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ArrayContent {
+    /// The element `vt:bstr`, a `BasicString`.
     BasicString(BasicString),
+    /// The element `vt:bool`, a `Boolean`.
     Boolean(Boolean),
+    /// The element `vt:cy`, a `Currency`.
     Currency(Currency),
+    /// The element `vt:date`, a `DateAndTime`.
     DateAndTime(DateAndTime),
+    /// The element `vt:decimal`, a `Decimal`.
     Decimal(Decimal),
+    /// The element `vt:error`, a `ErrorStatusCode`.
     ErrorStatusCode(ErrorStatusCode),
+    /// The element `vt:i1`, a `I1`.
     I1(I1),
+    /// The element `vt:i2`, a `I2`.
     I2(I2),
+    /// The element `vt:i4`, a `I4`.
     I4(I4),
+    /// The element `vt:int`, a `Integer`.
     Integer(Integer),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `vt:r4`, a `R4`.
     R4(R4),
+    /// The element `vt:r8`, a `R8`.
     R8(R8),
+    /// The element `vt:ui1`, a `Ui1`.
     Ui1(Ui1),
+    /// The element `vt:ui2`, a `Ui2`.
     Ui2(Ui2),
+    /// The element `vt:ui4`, a `Ui4`.
     Ui4(Ui4),
+    /// The element `vt:uint`, a `UnsignedInteger`.
     UnsignedInteger(UnsignedInteger),
+    /// The element `vt:variant`, a `Variant`.
     Variant(Variant),
 }
 
-/// 22.4.2.4 bstr (Basic String): the tag `vt:bstr`, schema type `string`.
+/// The `vt:bstr` element, Basic String (ECMA-376 Part 1, section 22.4.2.4). Its schema type is
+/// `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -659,11 +710,14 @@ pub enum ArrayContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BasicString {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.4.2.2 blob (Binary Blob): the tag `vt:blob`, schema type `base64Binary`.
+/// The `vt:blob` element, Binary Blob (ECMA-376 Part 1, section 22.4.2.2). Its schema type is
+/// `base64Binary`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -672,11 +726,14 @@ pub struct BasicString {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BinaryBlob {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.4.2.20 oblob (Binary Blob Object): the tag `vt:oblob`, schema type `base64Binary`.
+/// The `vt:oblob` element, Binary Blob Object (ECMA-376 Part 1, section 22.4.2.20). Its schema type
+/// is `base64Binary`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -685,11 +742,14 @@ pub struct BinaryBlob {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BinaryBlobObject {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.4.2.25 storage (Binary Storage): the tag `vt:storage`, schema type `base64Binary`.
+/// The `vt:storage` element, Binary Storage (ECMA-376 Part 1, section 22.4.2.25). Its schema type
+/// is `base64Binary`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -698,11 +758,14 @@ pub struct BinaryBlobObject {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BinaryStorage {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.4.2.21 ostorage (Binary Storage Object): the tag `vt:ostorage`, schema type `base64Binary`.
+/// The `vt:ostorage` element, Binary Storage Object (ECMA-376 Part 1, section 22.4.2.21). Its
+/// schema type is `base64Binary`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -711,11 +774,14 @@ pub struct BinaryStorage {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BinaryStorageObject {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.4.2.26 stream (Binary Stream): the tag `vt:stream`, schema type `base64Binary`.
+/// The `vt:stream` element, Binary Stream (ECMA-376 Part 1, section 22.4.2.26). Its schema type is
+/// `base64Binary`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -724,11 +790,14 @@ pub struct BinaryStorageObject {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BinaryStream {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.4.2.22 ostream (Binary Stream Object): the tag `vt:ostream`, schema type `base64Binary`.
+/// The `vt:ostream` element, Binary Stream Object (ECMA-376 Part 1, section 22.4.2.22). Its schema
+/// type is `base64Binary`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -737,11 +806,14 @@ pub struct BinaryStream {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BinaryStreamObject {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.4.2.34 vstream (Binary Versioned Stream): the tag `vt:vstream`, schema type `CT_Vstream`.
+/// The `vt:vstream` element, Binary Versioned Stream (ECMA-376 Part 1, section 22.4.2.34). Its
+/// schema type is `CT_Vstream`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -750,12 +822,16 @@ pub struct BinaryStreamObject {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BinaryVersionedStream {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
+    /// The attribute `version`, when the element has it.
     pub version: Option<super::common_simple_types::Guid>,
 }
 
-/// 22.4.2.3 bool (Boolean): the tag `vt:bool`, schema type `boolean`.
+/// The `vt:bool` element, Boolean (ECMA-376 Part 1, section 22.4.2.3). Its schema type is
+/// `boolean`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -764,11 +840,14 @@ pub struct BinaryVersionedStream {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Boolean {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.4.2.5 clsid (Class ID): the tag `vt:clsid`, schema type `ST_Guid`.
+/// The `vt:clsid` element, Class ID (ECMA-376 Part 1, section 22.4.2.5). Its schema type is
+/// `ST_Guid`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -777,11 +856,13 @@ pub struct Boolean {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ClassID {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::Guid,
 }
 
-/// 22.4.2.6 cy (Currency): the tag `vt:cy`, schema type `ST_Cy`.
+/// The `vt:cy` element, Currency (ECMA-376 Part 1, section 22.4.2.6). Its schema type is `ST_Cy`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -790,11 +871,17 @@ pub struct ClassID {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Currency {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: CurrencySimpleType,
 }
 
-/// 22.4.3.2 `ST_Cy` (Currency Simple Type): the text the file carried.
+/// Currency Simple Type, the simple type `ST_Cy` (ECMA-376 Part 1, section 22.4.3.2), kept as the
+/// text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -804,7 +891,8 @@ pub struct Currency {
 #[non_exhaustive]
 pub struct CurrencySimpleType(pub String);
 
-/// 22.4.2.7 date (Date and Time): the tag `vt:date`, schema type `dateTime`.
+/// The `vt:date` element, Date and Time (ECMA-376 Part 1, section 22.4.2.7). Its schema type is
+/// `dateTime`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -813,11 +901,14 @@ pub struct CurrencySimpleType(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DateAndTime {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.4.2.8 decimal (Decimal): the tag `vt:decimal`, schema type `decimal`.
+/// The `vt:decimal` element, Decimal (ECMA-376 Part 1, section 22.4.2.8). Its schema type is
+/// `decimal`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -826,11 +917,14 @@ pub struct DateAndTime {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Decimal {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.4.2.9 empty (Empty): the tag `vt:empty`, schema type `CT_Empty`.
+/// The `vt:empty` element, Empty (ECMA-376 Part 1, section 22.4.2.9). Its schema type is
+/// `CT_Empty`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -839,10 +933,12 @@ pub struct Decimal {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Empty {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 22.4.2.10 error (Error Status Code): the tag `vt:error`, schema type `ST_Error`.
+/// The `vt:error` element, Error Status Code (ECMA-376 Part 1, section 22.4.2.10). Its schema type
+/// is `ST_Error`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -851,11 +947,17 @@ pub struct Empty {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ErrorStatusCode {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: ErrorStatusCodeSimpleType,
 }
 
-/// 22.4.3.3 `ST_Error` (Error Status Code Simple Type): the text the file carried.
+/// Error Status Code Simple Type, the simple type `ST_Error` (ECMA-376 Part 1, section 22.4.3.3),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -865,7 +967,8 @@ pub struct ErrorStatusCode {
 #[non_exhaustive]
 pub struct ErrorStatusCodeSimpleType(pub String);
 
-/// 22.4.2.11 filetime (File Time): the tag `vt:filetime`, schema type `dateTime`.
+/// The `vt:filetime` element, File Time (ECMA-376 Part 1, section 22.4.2.11). Its schema type is
+/// `dateTime`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -874,11 +977,13 @@ pub struct ErrorStatusCodeSimpleType(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FileTime {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `vt:i1`, schema type `byte`.
+/// The `vt:i1` element. Its schema type is `byte`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -887,11 +992,13 @@ pub struct FileTime {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct I1 {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `vt:i2`, schema type `short`.
+/// The `vt:i2` element. Its schema type is `short`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -900,11 +1007,13 @@ pub struct I1 {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct I2 {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `vt:i4`, schema type `int`.
+/// The `vt:i4` element. Its schema type is `int`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -913,11 +1022,13 @@ pub struct I2 {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct I4 {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `vt:i8`, schema type `long`.
+/// The `vt:i8` element. Its schema type is `long`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -926,11 +1037,13 @@ pub struct I4 {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct I8 {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.4.2.16 int (Integer): the tag `vt:int`, schema type `int`.
+/// The `vt:int` element, Integer (ECMA-376 Part 1, section 22.4.2.16). Its schema type is `int`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -939,11 +1052,13 @@ pub struct I8 {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Integer {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.4.2.17 lpstr (LPSTR): the tag `vt:lpstr`, schema type `string`.
+/// The `vt:lpstr` element, LPSTR (ECMA-376 Part 1, section 22.4.2.17). Its schema type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -952,11 +1067,14 @@ pub struct Integer {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Lpstr {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.4.2.18 lpwstr (LPWSTR): the tag `vt:lpwstr`, schema type `string`.
+/// The `vt:lpwstr` element, LPWSTR (ECMA-376 Part 1, section 22.4.2.18). Its schema type is
+/// `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -965,11 +1083,13 @@ pub struct Lpstr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Lpwstr {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.4.2.19 null (Null): the tag `vt:null`, schema type `CT_Null`.
+/// The `vt:null` element, Null (ECMA-376 Part 1, section 22.4.2.19). Its schema type is `CT_Null`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -978,10 +1098,11 @@ pub struct Lpwstr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Null {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// The tag `vt:r4`, schema type `float`.
+/// The `vt:r4` element. Its schema type is `float`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -990,11 +1111,13 @@ pub struct Null {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct R4 {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `vt:r8`, schema type `double`.
+/// The `vt:r8` element. Its schema type is `double`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1003,11 +1126,13 @@ pub struct R4 {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct R8 {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `vt:ui1`, schema type `unsignedByte`.
+/// The `vt:ui1` element. Its schema type is `unsignedByte`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1016,11 +1141,13 @@ pub struct R8 {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Ui1 {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `vt:ui2`, schema type `unsignedShort`.
+/// The `vt:ui2` element. Its schema type is `unsignedShort`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1029,11 +1156,13 @@ pub struct Ui1 {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Ui2 {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `vt:ui4`, schema type `unsignedInt`.
+/// The `vt:ui4` element. Its schema type is `unsignedInt`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1042,11 +1171,13 @@ pub struct Ui2 {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Ui4 {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `vt:ui8`, schema type `unsignedLong`.
+/// The `vt:ui8` element. Its schema type is `unsignedLong`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1055,11 +1186,14 @@ pub struct Ui4 {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Ui8 {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.4.2.31 uint (Unsigned Integer): the tag `vt:uint`, schema type `unsignedInt`.
+/// The `vt:uint` element, Unsigned Integer (ECMA-376 Part 1, section 22.4.2.31). Its schema type is
+/// `unsignedInt`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1068,11 +1202,14 @@ pub struct Ui8 {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct UnsignedInteger {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.4.2.32 variant (Variant): the tag `vt:variant`, schema type `CT_Variant`.
+/// The `vt:variant` element, Variant (ECMA-376 Part 1, section 22.4.2.32). Its schema type is
+/// `CT_Variant`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1084,52 +1221,94 @@ pub struct UnsignedInteger {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Variant {
+    /// The child that is an item of `VariantContent`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Box<VariantContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// One item of `CT_Variant`: local choice in `CT_Variant`.
+/// One child element of a choice: local choice in `CT_Variant`.
+///
+/// The schema types that hold it: `CT_Variant`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum VariantContent {
+    /// The element `vt:array`, a `Array`.
     Array(Array),
+    /// The element `vt:bstr`, a `BasicString`.
     BasicString(BasicString),
+    /// The element `vt:blob`, a `BinaryBlob`.
     BinaryBlob(BinaryBlob),
+    /// The element `vt:oblob`, a `BinaryBlobObject`.
     BinaryBlobObject(BinaryBlobObject),
+    /// The element `vt:storage`, a `BinaryStorage`.
     BinaryStorage(BinaryStorage),
+    /// The element `vt:ostorage`, a `BinaryStorageObject`.
     BinaryStorageObject(BinaryStorageObject),
+    /// The element `vt:stream`, a `BinaryStream`.
     BinaryStream(BinaryStream),
+    /// The element `vt:ostream`, a `BinaryStreamObject`.
     BinaryStreamObject(BinaryStreamObject),
+    /// The element `vt:vstream`, a `BinaryVersionedStream`.
     BinaryVersionedStream(BinaryVersionedStream),
+    /// The element `vt:bool`, a `Boolean`.
     Boolean(Boolean),
+    /// The element `vt:clsid`, a `ClassID`.
     ClassID(ClassID),
+    /// The element `vt:cy`, a `Currency`.
     Currency(Currency),
+    /// The element `vt:date`, a `DateAndTime`.
     DateAndTime(DateAndTime),
+    /// The element `vt:decimal`, a `Decimal`.
     Decimal(Decimal),
+    /// The element `vt:empty`, a `Empty`.
     Empty(Empty),
+    /// The element `vt:error`, a `ErrorStatusCode`.
     ErrorStatusCode(ErrorStatusCode),
+    /// The element `vt:filetime`, a `FileTime`.
     FileTime(FileTime),
+    /// The element `vt:i1`, a `I1`.
     I1(I1),
+    /// The element `vt:i2`, a `I2`.
     I2(I2),
+    /// The element `vt:i4`, a `I4`.
     I4(I4),
+    /// The element `vt:i8`, a `I8`.
     I8(I8),
+    /// The element `vt:int`, a `Integer`.
     Integer(Integer),
+    /// The element `vt:lpstr`, a `Lpstr`.
     Lpstr(Lpstr),
+    /// The element `vt:lpwstr`, a `Lpwstr`.
     Lpwstr(Lpwstr),
+    /// The element `vt:null`, a `Null`.
     Null(Null),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `vt:r4`, a `R4`.
     R4(R4),
+    /// The element `vt:r8`, a `R8`.
     R8(R8),
+    /// The element `vt:ui1`, a `Ui1`.
     Ui1(Ui1),
+    /// The element `vt:ui2`, a `Ui2`.
     Ui2(Ui2),
+    /// The element `vt:ui4`, a `Ui4`.
     Ui4(Ui4),
+    /// The element `vt:ui8`, a `Ui8`.
     Ui8(Ui8),
+    /// The element `vt:uint`, a `UnsignedInteger`.
     UnsignedInteger(UnsignedInteger),
+    /// The element `vt:variant`, a `Variant`.
     Variant(Variant),
+    /// The element `vt:vector`, a `Vector`.
     Vector(Vector),
 }
 
-/// 22.4.2.33 vector (Vector): the tag `vt:vector`, schema type `CT_Vector`.
+/// The `vt:vector` element, Vector (ECMA-376 Part 1, section 22.4.2.33). Its schema type is
+/// `CT_Vector`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1141,14 +1320,22 @@ pub enum VariantContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Vector {
+    /// The attribute `baseType`, when the element has it.
     pub base_type: Option<VectorBaseTypeSimpleType>,
+    /// The children that are an item of `VectorContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<VectorContent>,
+    /// The attribute `size`, when the element has it.
     pub size: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 22.4.3.4 `ST_VectorBaseType` (Vector Base Type Simple Type): the text the file carried.
+/// Vector Base Type Simple Type, the simple type `ST_VectorBaseType` (ECMA-376 Part 1, section
+/// 22.4.3.4), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1157,55 +1344,101 @@ pub struct Vector {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct VectorBaseTypeSimpleType(pub String);
-/// The members of `ST_VectorBaseType`, in alphabetical order.
+/// The members of the enumeration `ST_VectorBaseType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum VectorBaseTypeSimpleTypeMember {
+    /// The member written `bool`.
     Bool,
+    /// The member written `bstr`.
     Bstr,
+    /// The member written `clsid`.
     Clsid,
+    /// The member written `cy`.
     Cy,
+    /// The member written `date`.
     Date,
+    /// The member written `error`.
     Error,
+    /// The member written `filetime`.
     Filetime,
+    /// The member written `i1`.
     I1,
+    /// The member written `i2`.
     I2,
+    /// The member written `i4`.
     I4,
+    /// The member written `i8`.
     I8,
+    /// The member written `lpstr`.
     Lpstr,
+    /// The member written `lpwstr`.
     Lpwstr,
+    /// The member written `r4`.
     R4,
+    /// The member written `r8`.
     R8,
+    /// The member written `ui1`.
     Ui1,
+    /// The member written `ui2`.
     Ui2,
+    /// The member written `ui4`.
     Ui4,
+    /// The member written `ui8`.
     Ui8,
+    /// The member written `variant`.
     Variant,
 }
 
-/// One item of `CT_Vector`: local choice in `CT_Vector`.
+/// One child element of a choice: local choice in `CT_Vector`.
+///
+/// The schema types that hold it: `CT_Vector`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum VectorContent {
+    /// The element `vt:bstr`, a `BasicString`.
     BasicString(BasicString),
+    /// The element `vt:bool`, a `Boolean`.
     Boolean(Boolean),
+    /// The element `vt:clsid`, a `ClassID`.
     ClassID(ClassID),
+    /// The element `vt:cy`, a `Currency`.
     Currency(Currency),
+    /// The element `vt:date`, a `DateAndTime`.
     DateAndTime(DateAndTime),
+    /// The element `vt:error`, a `ErrorStatusCode`.
     ErrorStatusCode(ErrorStatusCode),
+    /// The element `vt:filetime`, a `FileTime`.
     FileTime(FileTime),
+    /// The element `vt:i1`, a `I1`.
     I1(I1),
+    /// The element `vt:i2`, a `I2`.
     I2(I2),
+    /// The element `vt:i4`, a `I4`.
     I4(I4),
+    /// The element `vt:i8`, a `I8`.
     I8(I8),
+    /// The element `vt:lpstr`, a `Lpstr`.
     Lpstr(Lpstr),
+    /// The element `vt:lpwstr`, a `Lpwstr`.
     Lpwstr(Lpwstr),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `vt:r4`, a `R4`.
     R4(R4),
+    /// The element `vt:r8`, a `R8`.
     R8(R8),
+    /// The element `vt:ui1`, a `Ui1`.
     Ui1(Ui1),
+    /// The element `vt:ui2`, a `Ui2`.
     Ui2(Ui2),
+    /// The element `vt:ui4`, a `Ui4`.
     Ui4(Ui4),
+    /// The element `vt:ui8`, a `Ui8`.
     Ui8(Ui8),
+    /// The element `vt:variant`, a `Variant`.
     Variant(Variant),
 }
 
@@ -1280,7 +1513,7 @@ impl ArrayBaseTypeSimpleTypeMember {
         crate::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -2531,7 +2764,7 @@ impl VectorBaseTypeSimpleTypeMember {
         crate::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

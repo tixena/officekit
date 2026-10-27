@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `b` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.openxmlformats.org/officeDocument/2006/bibliography`, which files write with the prefix `b`.
 //!
-//! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/bibliography`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -847,8 +847,8 @@ pub static SOURCE_CONTENT_TAGS: crate::Accept = crate::Accept {
     ],
 };
 
-/// 22.6.2.1 `AbbreviatedCaseNumber` (Abbreviated Case Number): the tag `b:AbbreviatedCaseNumber`,
-/// schema type `ST_String`.
+/// The `b:AbbreviatedCaseNumber` element, Abbreviated Case Number (ECMA-376 Part 1, section
+/// 22.6.2.1). Its schema type is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -857,11 +857,14 @@ pub static SOURCE_CONTENT_TAGS: crate::Accept = crate::Accept {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AbbreviatedCaseNumber {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.2 `AlbumTitle` (Album Title): the tag `b:AlbumTitle`, schema type `ST_String`.
+/// The `b:AlbumTitle` element, Album Title (ECMA-376 Part 1, section 22.6.2.2). Its schema type is
+/// `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -870,11 +873,14 @@ pub struct AbbreviatedCaseNumber {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AlbumTitle {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.3 Artist (Artist): the tag `b:Artist`, schema type `CT_NameType`.
+/// The `b:Artist` element, Artist (ECMA-376 Part 1, section 22.6.2.3). Its schema type is
+/// `CT_NameType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -883,11 +889,14 @@ pub struct AlbumTitle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Artist {
+    /// The child that is `NameList`, which the schema requires.
     pub name_list: Box<NameList>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 22.6.2.5 Author (Author): the tag `b:Author`, schema type `CT_NameOrCorporateType`.
+/// The `b:Author` element, Author (ECMA-376 Part 1, section 22.6.2.5). Its schema type is
+/// `CT_NameOrCorporateType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -896,11 +905,17 @@ pub struct Artist {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Author {
+    /// The child that is an item of `NameOrCorporateContent`, when there is one.
     pub content: Option<Box<NameOrCorporateContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 22.6.3.1 `ST_SourceType` (Bibliographic Data Source Types): the text the file carried.
+/// Bibliographic Data Source Types, the simple type `ST_SourceType` (ECMA-376 Part 1, section
+/// 22.6.3.1), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -909,30 +924,49 @@ pub struct Author {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BibliographicDataSourceTypes(pub String);
-/// The members of `ST_SourceType`, in alphabetical order.
+/// The members of the enumeration `ST_SourceType`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum BibliographicDataSourceTypesMember {
+    /// The member written `Art`.
     Art,
+    /// The member written `ArticleInAPeriodical`.
     ArticleInAPeriodical,
+    /// The member written `Book`.
     Book,
+    /// The member written `BookSection`.
     BookSection,
+    /// The member written `Case`.
     Case,
+    /// The member written `ConferenceProceedings`.
     ConferenceProceedings,
+    /// The member written `DocumentFromInternetSite`.
     DocumentFromInternetSite,
+    /// The member written `ElectronicSource`.
     ElectronicSource,
+    /// The member written `Film`.
     Film,
+    /// The member written `InternetSite`.
     InternetSite,
+    /// The member written `Interview`.
     Interview,
+    /// The member written `JournalArticle`.
     JournalArticle,
+    /// The member written `Misc`.
     Misc,
+    /// The member written `Patent`.
     Patent,
+    /// The member written `Performance`.
     Performance,
+    /// The member written `Report`.
     Report,
+    /// The member written `SoundRecording`.
     SoundRecording,
 }
 
-/// 22.6.2.6 `BookAuthor` (Book Author): the tag `b:BookAuthor`, schema type `CT_NameType`.
+/// The `b:BookAuthor` element, Book Author (ECMA-376 Part 1, section 22.6.2.6). Its schema type is
+/// `CT_NameType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -941,11 +975,14 @@ pub enum BibliographicDataSourceTypesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BookAuthor {
+    /// The child that is `NameList`, which the schema requires.
     pub name_list: Box<NameList>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 22.6.2.7 `BookTitle` (Book Title): the tag `b:BookTitle`, schema type `ST_String`.
+/// The `b:BookTitle` element, Book Title (ECMA-376 Part 1, section 22.6.2.7). Its schema type is
+/// `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -954,12 +991,14 @@ pub struct BookAuthor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BookTitle {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.9 `BroadcastTitle` (Broadcast Title): the tag `b:BroadcastTitle`, schema type
-/// `ST_String`.
+/// The `b:BroadcastTitle` element, Broadcast Title (ECMA-376 Part 1, section 22.6.2.9). Its schema
+/// type is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -968,11 +1007,14 @@ pub struct BookTitle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BroadcastTitle {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.8 Broadcaster (Broadcaster): the tag `b:Broadcaster`, schema type `ST_String`.
+/// The `b:Broadcaster` element, Broadcaster (ECMA-376 Part 1, section 22.6.2.8). Its schema type is
+/// `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -981,11 +1023,14 @@ pub struct BroadcastTitle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Broadcaster {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.10 `CaseNumber` (Case Number): the tag `b:CaseNumber`, schema type `ST_String`.
+/// The `b:CaseNumber` element, Case Number (ECMA-376 Part 1, section 22.6.2.10). Its schema type is
+/// `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -994,11 +1039,14 @@ pub struct Broadcaster {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CaseNumber {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.11 `ChapterNumber` (Chapter Number): the tag `b:ChapterNumber`, schema type `ST_String`.
+/// The `b:ChapterNumber` element, Chapter Number (ECMA-376 Part 1, section 22.6.2.11). Its schema
+/// type is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1007,11 +1055,13 @@ pub struct CaseNumber {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ChapterNumber {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.12 City (City): the tag `b:City`, schema type `ST_String`.
+/// The `b:City` element, City (ECMA-376 Part 1, section 22.6.2.12). Its schema type is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1020,11 +1070,14 @@ pub struct ChapterNumber {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct City {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.13 Comments (Comments): the tag `b:Comments`, schema type `ST_String`.
+/// The `b:Comments` element, Comments (ECMA-376 Part 1, section 22.6.2.13). Its schema type is
+/// `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1033,11 +1086,14 @@ pub struct City {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Comments {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.14 Compiler (Compiler): the tag `b:Compiler`, schema type `CT_NameType`.
+/// The `b:Compiler` element, Compiler (ECMA-376 Part 1, section 22.6.2.14). Its schema type is
+/// `CT_NameType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1046,11 +1102,14 @@ pub struct Comments {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Compiler {
+    /// The child that is `NameList`, which the schema requires.
     pub name_list: Box<NameList>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 22.6.2.15 Composer (Composer): the tag `b:Composer`, schema type `CT_NameType`.
+/// The `b:Composer` element, Composer (ECMA-376 Part 1, section 22.6.2.15). Its schema type is
+/// `CT_NameType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1059,11 +1118,14 @@ pub struct Compiler {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Composer {
+    /// The child that is `NameList`, which the schema requires.
     pub name_list: Box<NameList>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 22.6.2.16 Conductor (Conductor): the tag `b:Conductor`, schema type `CT_NameType`.
+/// The `b:Conductor` element, Conductor (ECMA-376 Part 1, section 22.6.2.16). Its schema type is
+/// `CT_NameType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1072,12 +1134,14 @@ pub struct Composer {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Conductor {
+    /// The child that is `NameList`, which the schema requires.
     pub name_list: Box<NameList>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 22.6.2.17 `ConferenceName` (Conference or Proceedings Name): the tag `b:ConferenceName`, schema
-/// type `ST_String`.
+/// The `b:ConferenceName` element, Conference or Proceedings Name (ECMA-376 Part 1, section
+/// 22.6.2.17). Its schema type is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1086,11 +1150,14 @@ pub struct Conductor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConferenceOrProceedingsName {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.4 Author (Contributors List): the tag `b:Author`, schema type `CT_AuthorType`.
+/// The `b:Author` element, Contributors List (ECMA-376 Part 1, section 22.6.2.4). Its schema type
+/// is `CT_AuthorType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1099,34 +1166,58 @@ pub struct ConferenceOrProceedingsName {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ContributorsList {
+    /// The children that are an item of `ContributorsListContent`, in order.
     pub content: Vec<ContributorsListContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// One item of `CT_AuthorType`: local choice in `CT_AuthorType`.
+/// One child element of a choice: local choice in `CT_AuthorType`.
+///
+/// The schema types that hold it: `CT_AuthorType`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ContributorsListContent {
+    /// The element `b:Artist`, a `Artist`.
     Artist(Artist),
+    /// The element `b:Author`, a `Author`.
     Author(Author),
+    /// The element `b:BookAuthor`, a `BookAuthor`.
     BookAuthor(BookAuthor),
+    /// The element `b:Compiler`, a `Compiler`.
     Compiler(Compiler),
+    /// The element `b:Composer`, a `Composer`.
     Composer(Composer),
+    /// The element `b:Conductor`, a `Conductor`.
     Conductor(Conductor),
+    /// The element `b:Counsel`, a `Counsel`.
     Counsel(Counsel),
+    /// The element `b:Director`, a `Director`.
     Director(Director),
+    /// The element `b:Editor`, a `Editor`.
     Editor(Editor),
+    /// The element `b:Interviewee`, a `Interviewee`.
     Interviewee(Interviewee),
+    /// The element `b:Interviewer`, a `Interviewer`.
     Interviewer(Interviewer),
+    /// The element `b:Inventor`, a `Inventor`.
     Inventor(Inventor),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `b:Performer`, a `Performer`.
     Performer(Performer),
+    /// The element `b:ProducerName`, a `ProducerName`.
     ProducerName(ProducerName),
+    /// The element `b:Translator`, a `Translator`.
     Translator(Translator),
+    /// The element `b:Writer`, a `Writer`.
     Writer(Writer),
 }
 
-/// 22.6.2.18 Corporate (Corporate Author): the tag `b:Corporate`, schema type `ST_String`.
+/// The `b:Corporate` element, Corporate Author (ECMA-376 Part 1, section 22.6.2.18). Its schema
+/// type is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1135,11 +1226,14 @@ pub enum ContributorsListContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CorporateAuthor {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.19 Counsel (Counsel): the tag `b:Counsel`, schema type `CT_NameType`.
+/// The `b:Counsel` element, Counsel (ECMA-376 Part 1, section 22.6.2.19). Its schema type is
+/// `CT_NameType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1148,12 +1242,14 @@ pub struct CorporateAuthor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Counsel {
+    /// The child that is `NameList`, which the schema requires.
     pub name_list: Box<NameList>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 22.6.2.20 `CountryRegion` (Country or Region): the tag `b:CountryRegion`, schema type
-/// `ST_String`.
+/// The `b:CountryRegion` element, Country or Region (ECMA-376 Part 1, section 22.6.2.20). Its
+/// schema type is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1162,11 +1258,14 @@ pub struct Counsel {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CountryOrRegion {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.21 Court (Court): the tag `b:Court`, schema type `ST_String`.
+/// The `b:Court` element, Court (ECMA-376 Part 1, section 22.6.2.21). Its schema type is
+/// `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1175,11 +1274,13 @@ pub struct CountryOrRegion {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Court {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.22 Day (Day): the tag `b:Day`, schema type `ST_String`.
+/// The `b:Day` element, Day (ECMA-376 Part 1, section 22.6.2.22). Its schema type is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1188,11 +1289,14 @@ pub struct Court {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Day {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.23 `DayAccessed` (Day Accessed): the tag `b:DayAccessed`, schema type `ST_String`.
+/// The `b:DayAccessed` element, Day Accessed (ECMA-376 Part 1, section 22.6.2.23). Its schema type
+/// is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1201,11 +1305,14 @@ pub struct Day {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DayAccessed {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.24 Department (Department): the tag `b:Department`, schema type `ST_String`.
+/// The `b:Department` element, Department (ECMA-376 Part 1, section 22.6.2.24). Its schema type is
+/// `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1214,11 +1321,14 @@ pub struct DayAccessed {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Department {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.25 Director (Director): the tag `b:Director`, schema type `CT_NameType`.
+/// The `b:Director` element, Director (ECMA-376 Part 1, section 22.6.2.25). Its schema type is
+/// `CT_NameType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1227,11 +1337,14 @@ pub struct Department {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Director {
+    /// The child that is `NameList`, which the schema requires.
     pub name_list: Box<NameList>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 22.6.2.26 Distributor (Distributor): the tag `b:Distributor`, schema type `ST_String`.
+/// The `b:Distributor` element, Distributor (ECMA-376 Part 1, section 22.6.2.26). Its schema type
+/// is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1240,11 +1353,14 @@ pub struct Director {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Distributor {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.28 Editor (Editor): the tag `b:Editor`, schema type `CT_NameType`.
+/// The `b:Editor` element, Editor (ECMA-376 Part 1, section 22.6.2.28). Its schema type is
+/// `CT_NameType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1253,11 +1369,14 @@ pub struct Distributor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Editor {
+    /// The child that is `NameList`, which the schema requires.
     pub name_list: Box<NameList>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 22.6.2.27 Edition (Editor): the tag `b:Edition`, schema type `ST_String`.
+/// The `b:Edition` element, Editor (ECMA-376 Part 1, section 22.6.2.27). Its schema type is
+/// `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1266,11 +1385,13 @@ pub struct Editor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EditorEdition {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.30 Guid (GUID): the tag `b:Guid`, schema type `ST_String`.
+/// The `b:Guid` element, GUID (ECMA-376 Part 1, section 22.6.2.30). Its schema type is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1279,11 +1400,14 @@ pub struct EditorEdition {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Guid {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.31 Institution (Institution): the tag `b:Institution`, schema type `ST_String`.
+/// The `b:Institution` element, Institution (ECMA-376 Part 1, section 22.6.2.31). Its schema type
+/// is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1292,12 +1416,14 @@ pub struct Guid {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Institution {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.32 `InternetSiteTitle` (Internet Site Title): the tag `b:InternetSiteTitle`, schema type
-/// `ST_String`.
+/// The `b:InternetSiteTitle` element, Internet Site Title (ECMA-376 Part 1, section 22.6.2.32). Its
+/// schema type is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1306,11 +1432,14 @@ pub struct Institution {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct InternetSiteTitle {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.33 Interviewee (Interviewee): the tag `b:Interviewee`, schema type `CT_NameType`.
+/// The `b:Interviewee` element, Interviewee (ECMA-376 Part 1, section 22.6.2.33). Its schema type
+/// is `CT_NameType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1319,11 +1448,14 @@ pub struct InternetSiteTitle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Interviewee {
+    /// The child that is `NameList`, which the schema requires.
     pub name_list: Box<NameList>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 22.6.2.34 Interviewer (Interviewer): the tag `b:Interviewer`, schema type `CT_NameType`.
+/// The `b:Interviewer` element, Interviewer (ECMA-376 Part 1, section 22.6.2.34). Its schema type
+/// is `CT_NameType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1332,11 +1464,14 @@ pub struct Interviewee {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Interviewer {
+    /// The child that is `NameList`, which the schema requires.
     pub name_list: Box<NameList>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 22.6.2.35 Inventor (Inventor): the tag `b:Inventor`, schema type `CT_NameType`.
+/// The `b:Inventor` element, Inventor (ECMA-376 Part 1, section 22.6.2.35). Its schema type is
+/// `CT_NameType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1345,11 +1480,14 @@ pub struct Interviewer {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Inventor {
+    /// The child that is `NameList`, which the schema requires.
     pub name_list: Box<NameList>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 22.6.2.36 Issue (Issue): the tag `b:Issue`, schema type `ST_String`.
+/// The `b:Issue` element, Issue (ECMA-376 Part 1, section 22.6.2.36). Its schema type is
+/// `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1358,11 +1496,14 @@ pub struct Inventor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Issue {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.37 `JournalName` (Journal Name): the tag `b:JournalName`, schema type `ST_String`.
+/// The `b:JournalName` element, Journal Name (ECMA-376 Part 1, section 22.6.2.37). Its schema type
+/// is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1371,11 +1512,14 @@ pub struct Issue {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct JournalName {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.39 LCID (Locale ID): the tag `b:LCID`, schema type `ST_Lang`.
+/// The `b:LCID` element, Locale ID (ECMA-376 Part 1, section 22.6.2.39). Its schema type is
+/// `ST_Lang`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1384,11 +1528,14 @@ pub struct JournalName {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LocaleID {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.40 Medium (Medium): the tag `b:Medium`, schema type `ST_String`.
+/// The `b:Medium` element, Medium (ECMA-376 Part 1, section 22.6.2.40). Its schema type is
+/// `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1397,11 +1544,14 @@ pub struct LocaleID {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Medium {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.42 Month (Month): the tag `b:Month`, schema type `ST_String`.
+/// The `b:Month` element, Month (ECMA-376 Part 1, section 22.6.2.42). Its schema type is
+/// `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1410,11 +1560,14 @@ pub struct Medium {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Month {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.43 `MonthAccessed` (Month Accessed): the tag `b:MonthAccessed`, schema type `ST_String`.
+/// The `b:MonthAccessed` element, Month Accessed (ECMA-376 Part 1, section 22.6.2.43). Its schema
+/// type is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1423,11 +1576,14 @@ pub struct Month {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MonthAccessed {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.44 `NameList` (Name List): the tag `b:NameList`, schema type `CT_NameListType`.
+/// The `b:NameList` element, Name List (ECMA-376 Part 1, section 22.6.2.44). Its schema type is
+/// `CT_NameListType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1436,21 +1592,30 @@ pub struct MonthAccessed {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NameList {
+    /// The children that are `Person`, in order.
     pub person: Vec<Person>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// One item of `CT_NameOrCorporateType`: local choice in `CT_NameOrCorporateType`.
+/// One child element of a choice: local choice in `CT_NameOrCorporateType`.
+///
+/// The schema types that hold it: `CT_NameOrCorporateType`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum NameOrCorporateContent {
+    /// The element `b:Corporate`, a `CorporateAuthor`.
     CorporateAuthor(CorporateAuthor),
+    /// The element `b:NameList`, a `NameList`.
     NameList(NameList),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
 }
 
-/// 22.6.2.45 `NumberVolumes` (Number of Volumes): the tag `b:NumberVolumes`, schema type
-/// `ST_String`.
+/// The `b:NumberVolumes` element, Number of Volumes (ECMA-376 Part 1, section 22.6.2.45). Its
+/// schema type is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1459,11 +1624,14 @@ pub enum NameOrCorporateContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NumberOfVolumes {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.46 Pages (Pages): the tag `b:Pages`, schema type `ST_String`.
+/// The `b:Pages` element, Pages (ECMA-376 Part 1, section 22.6.2.46). Its schema type is
+/// `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1472,11 +1640,14 @@ pub struct NumberOfVolumes {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Pages {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.47 `PatentNumber` (Patent Number): the tag `b:PatentNumber`, schema type `ST_String`.
+/// The `b:PatentNumber` element, Patent Number (ECMA-376 Part 1, section 22.6.2.47). Its schema
+/// type is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1485,11 +1656,14 @@ pub struct Pages {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PatentNumber {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.70 Type (Patent Type): the tag `b:Type`, schema type `ST_String`.
+/// The `b:Type` element, Patent Type (ECMA-376 Part 1, section 22.6.2.70). Its schema type is
+/// `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1498,11 +1672,14 @@ pub struct PatentNumber {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PatentType {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.48 Performer (Performer): the tag `b:Performer`, schema type `CT_NameOrCorporateType`.
+/// The `b:Performer` element, Performer (ECMA-376 Part 1, section 22.6.2.48). Its schema type is
+/// `CT_NameOrCorporateType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1511,12 +1688,14 @@ pub struct PatentType {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Performer {
+    /// The child that is an item of `NameOrCorporateContent`, when there is one.
     pub content: Option<Box<NameOrCorporateContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 22.6.2.49 `PeriodicalTitle` (Periodical Title): the tag `b:PeriodicalTitle`, schema type
-/// `ST_String`.
+/// The `b:PeriodicalTitle` element, Periodical Title (ECMA-376 Part 1, section 22.6.2.49). Its
+/// schema type is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1525,11 +1704,14 @@ pub struct Performer {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PeriodicalTitle {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.50 Person (Person): the tag `b:Person`, schema type `CT_PersonType`.
+/// The `b:Person` element, Person (ECMA-376 Part 1, section 22.6.2.50). Its schema type is
+/// `CT_PersonType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1538,13 +1720,18 @@ pub struct PeriodicalTitle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Person {
+    /// The children that are `PersonsFirstOrGivenName`, in order.
     pub persons_first_or_given_name: Vec<PersonsFirstOrGivenName>,
+    /// The children that are `PersonsLastOrFamilyName`, in order.
     pub persons_last_or_family_name: Vec<PersonsLastOrFamilyName>,
+    /// The children that are `PersonsMiddleOrOtherName`, in order.
     pub persons_middle_or_other_name: Vec<PersonsMiddleOrOtherName>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 22.6.2.29 First (Person's First, or Given, Name): the tag `b:First`, schema type `ST_String`.
+/// The `b:First` element, Person's First, or Given, Name (ECMA-376 Part 1, section 22.6.2.29). Its
+/// schema type is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1553,11 +1740,14 @@ pub struct Person {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PersonsFirstOrGivenName {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.38 Last (Person's Last, or Family, Name): the tag `b:Last`, schema type `ST_String`.
+/// The `b:Last` element, Person's Last, or Family, Name (ECMA-376 Part 1, section 22.6.2.38). Its
+/// schema type is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1566,11 +1756,14 @@ pub struct PersonsFirstOrGivenName {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PersonsLastOrFamilyName {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.41 Middle (Person's Middle, or Other, Name): the tag `b:Middle`, schema type `ST_String`.
+/// The `b:Middle` element, Person's Middle, or Other, Name (ECMA-376 Part 1, section 22.6.2.41).
+/// Its schema type is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1579,11 +1772,14 @@ pub struct PersonsLastOrFamilyName {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PersonsMiddleOrOtherName {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.51 `ProducerName` (Producer Name): the tag `b:ProducerName`, schema type `CT_NameType`.
+/// The `b:ProducerName` element, Producer Name (ECMA-376 Part 1, section 22.6.2.51). Its schema
+/// type is `CT_NameType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1592,12 +1788,14 @@ pub struct PersonsMiddleOrOtherName {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ProducerName {
+    /// The child that is `NameList`, which the schema requires.
     pub list: Box<NameList>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 22.6.2.52 `ProductionCompany` (Production Company): the tag `b:ProductionCompany`, schema type
-/// `ST_String`.
+/// The `b:ProductionCompany` element, Production Company (ECMA-376 Part 1, section 22.6.2.52). Its
+/// schema type is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1606,12 +1804,14 @@ pub struct ProducerName {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ProductionCompany {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.53 `PublicationTitle` (Publication Title): the tag `b:PublicationTitle`, schema type
-/// `ST_String`.
+/// The `b:PublicationTitle` element, Publication Title (ECMA-376 Part 1, section 22.6.2.53). Its
+/// schema type is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1620,11 +1820,14 @@ pub struct ProductionCompany {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PublicationTitle {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.54 Publisher (Publisher): the tag `b:Publisher`, schema type `ST_String`.
+/// The `b:Publisher` element, Publisher (ECMA-376 Part 1, section 22.6.2.54). Its schema type is
+/// `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1633,12 +1836,14 @@ pub struct PublicationTitle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Publisher {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.55 `RecordingNumber` (Recording Number): the tag `b:RecordingNumber`, schema type
-/// `ST_String`.
+/// The `b:RecordingNumber` element, Recording Number (ECMA-376 Part 1, section 22.6.2.55). Its
+/// schema type is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1647,11 +1852,14 @@ pub struct Publisher {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RecordingNumber {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.56 `RefOrder` (Reference Order): the tag `b:RefOrder`, schema type `ST_String`.
+/// The `b:RefOrder` element, Reference Order (ECMA-376 Part 1, section 22.6.2.56). Its schema type
+/// is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1660,11 +1868,14 @@ pub struct RecordingNumber {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ReferenceOrder {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.57 Reporter (Reporter): the tag `b:Reporter`, schema type `ST_String`.
+/// The `b:Reporter` element, Reporter (ECMA-376 Part 1, section 22.6.2.57). Its schema type is
+/// `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1673,11 +1884,14 @@ pub struct ReferenceOrder {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Reporter {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.58 `ShortTitle` (Short Title): the tag `b:ShortTitle`, schema type `ST_String`.
+/// The `b:ShortTitle` element, Short Title (ECMA-376 Part 1, section 22.6.2.58). Its schema type is
+/// `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1686,11 +1900,14 @@ pub struct Reporter {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShortTitle {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.59 Source (Source): the tag `b:Source`, schema type `CT_SourceType`.
+/// The `b:Source` element, Source (ECMA-376 Part 1, section 22.6.2.59). Its schema type is
+/// `CT_SourceType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1699,70 +1916,130 @@ pub struct ShortTitle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Source {
+    /// The children that are an item of `SourceContent`, in order.
     pub content: Vec<SourceContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// One item of `CT_SourceType`: local choice in `CT_SourceType`.
+/// One child element of a choice: local choice in `CT_SourceType`.
+///
+/// The schema types that hold it: `CT_SourceType`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum SourceContent {
+    /// The element `b:AbbreviatedCaseNumber`, a `AbbreviatedCaseNumber`.
     AbbreviatedCaseNumber(AbbreviatedCaseNumber),
+    /// The element `b:AlbumTitle`, a `AlbumTitle`.
     AlbumTitle(AlbumTitle),
+    /// The element `b:BookTitle`, a `BookTitle`.
     BookTitle(BookTitle),
+    /// The element `b:BroadcastTitle`, a `BroadcastTitle`.
     BroadcastTitle(BroadcastTitle),
+    /// The element `b:Broadcaster`, a `Broadcaster`.
     Broadcaster(Broadcaster),
+    /// The element `b:CaseNumber`, a `CaseNumber`.
     CaseNumber(CaseNumber),
+    /// The element `b:ChapterNumber`, a `ChapterNumber`.
     ChapterNumber(ChapterNumber),
+    /// The element `b:City`, a `City`.
     City(City),
+    /// The element `b:Comments`, a `Comments`.
     Comments(Comments),
+    /// The element `b:ConferenceName`, a `ConferenceOrProceedingsName`.
     ConferenceOrProceedingsName(ConferenceOrProceedingsName),
+    /// The element `b:Author`, a `ContributorsList`.
     ContributorsList(ContributorsList),
+    /// The element `b:CountryRegion`, a `CountryOrRegion`.
     CountryOrRegion(CountryOrRegion),
+    /// The element `b:Court`, a `Court`.
     Court(Court),
+    /// The element `b:Day`, a `Day`.
     Day(Day),
+    /// The element `b:DayAccessed`, a `DayAccessed`.
     DayAccessed(DayAccessed),
+    /// The element `b:Department`, a `Department`.
     Department(Department),
+    /// The element `b:Distributor`, a `Distributor`.
     Distributor(Distributor),
+    /// The element `b:Edition`, a `EditorEdition`.
     EditorEdition(EditorEdition),
+    /// The element `b:Guid`, a `Guid`.
     Guid(Guid),
+    /// The element `b:Institution`, a `Institution`.
     Institution(Institution),
+    /// The element `b:InternetSiteTitle`, a `InternetSiteTitle`.
     InternetSiteTitle(InternetSiteTitle),
+    /// The element `b:Issue`, a `Issue`.
     Issue(Issue),
+    /// The element `b:JournalName`, a `JournalName`.
     JournalName(JournalName),
+    /// The element `b:LCID`, a `LocaleID`.
     LocaleID(LocaleID),
+    /// The element `b:Medium`, a `Medium`.
     Medium(Medium),
+    /// The element `b:Month`, a `Month`.
     Month(Month),
+    /// The element `b:MonthAccessed`, a `MonthAccessed`.
     MonthAccessed(MonthAccessed),
+    /// The element `b:NumberVolumes`, a `NumberOfVolumes`.
     NumberOfVolumes(NumberOfVolumes),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `b:Pages`, a `Pages`.
     Pages(Pages),
+    /// The element `b:PatentNumber`, a `PatentNumber`.
     PatentNumber(PatentNumber),
+    /// The element `b:Type`, a `PatentType`.
     PatentType(PatentType),
+    /// The element `b:PeriodicalTitle`, a `PeriodicalTitle`.
     PeriodicalTitle(PeriodicalTitle),
+    /// The element `b:ProductionCompany`, a `ProductionCompany`.
     ProductionCompany(ProductionCompany),
+    /// The element `b:PublicationTitle`, a `PublicationTitle`.
     PublicationTitle(PublicationTitle),
+    /// The element `b:Publisher`, a `Publisher`.
     Publisher(Publisher),
+    /// The element `b:RecordingNumber`, a `RecordingNumber`.
     RecordingNumber(RecordingNumber),
+    /// The element `b:RefOrder`, a `ReferenceOrder`.
     ReferenceOrder(ReferenceOrder),
+    /// The element `b:Reporter`, a `Reporter`.
     Reporter(Reporter),
+    /// The element `b:ShortTitle`, a `ShortTitle`.
     ShortTitle(ShortTitle),
+    /// The element `b:SourceType`, a `SourceType`.
     SourceType(SourceType),
+    /// The element `b:StandardNumber`, a `StandardNumber`.
     StandardNumber(StandardNumber),
+    /// The element `b:StateProvince`, a `StateOrProvince`.
     StateOrProvince(StateOrProvince),
+    /// The element `b:Station`, a `Station`.
     Station(Station),
+    /// The element `b:Tag`, a `Tag`.
     Tag(Tag),
+    /// The element `b:Theater`, a `Theater`.
     Theater(Theater),
+    /// The element `b:ThesisType`, a `ThesisType`.
     ThesisType(ThesisType),
+    /// The element `b:Title`, a `Title`.
     Title(Title),
+    /// The element `b:URL`, a `Url`.
     Url(Url),
+    /// The element `b:Version`, a `Version`.
     Version(Version),
+    /// The element `b:Volume`, a `Volume`.
     Volume(Volume),
+    /// The element `b:Year`, a `Year`.
     Year(Year),
+    /// The element `b:YearAccessed`, a `YearAccessed`.
     YearAccessed(YearAccessed),
 }
 
-/// 22.6.2.61 `SourceType` (Source Type): the tag `b:SourceType`, schema type `ST_SourceType`.
+/// The `b:SourceType` element, Source Type (ECMA-376 Part 1, section 22.6.2.61). Its schema type is
+/// `ST_SourceType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1771,11 +2048,14 @@ pub enum SourceContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SourceType {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: BibliographicDataSourceTypes,
 }
 
-/// 22.6.2.60 Sources (Sources): the tag `b:Sources`, schema type `CT_Sources`.
+/// The `b:Sources` element, Sources (ECMA-376 Part 1, section 22.6.2.60). Its schema type is
+/// `CT_Sources`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1784,15 +2064,20 @@ pub struct SourceType {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Sources {
+    /// The attribute `SelectedStyle`, when the element has it.
     pub selected_style: Option<String>,
+    /// The children that are `Source`, in order.
     pub source: Vec<Source>,
+    /// The attribute `StyleName`, when the element has it.
     pub style_name: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The attribute `URI`, when the element has it.
     pub uri: Option<String>,
 }
 
-/// 22.6.2.62 `StandardNumber` (Standard Number): the tag `b:StandardNumber`, schema type
-/// `ST_String`.
+/// The `b:StandardNumber` element, Standard Number (ECMA-376 Part 1, section 22.6.2.62). Its schema
+/// type is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1801,12 +2086,14 @@ pub struct Sources {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StandardNumber {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.63 `StateProvince` (State or Province): the tag `b:StateProvince`, schema type
-/// `ST_String`.
+/// The `b:StateProvince` element, State or Province (ECMA-376 Part 1, section 22.6.2.63). Its
+/// schema type is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1815,11 +2102,14 @@ pub struct StandardNumber {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StateOrProvince {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.64 Station (Station): the tag `b:Station`, schema type `ST_String`.
+/// The `b:Station` element, Station (ECMA-376 Part 1, section 22.6.2.64). Its schema type is
+/// `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1828,11 +2118,13 @@ pub struct StateOrProvince {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Station {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.65 Tag (Tag): the tag `b:Tag`, schema type `ST_String`.
+/// The `b:Tag` element, Tag (ECMA-376 Part 1, section 22.6.2.65). Its schema type is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1841,11 +2133,14 @@ pub struct Station {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Tag {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.66 Theater (Theater): the tag `b:Theater`, schema type `ST_String`.
+/// The `b:Theater` element, Theater (ECMA-376 Part 1, section 22.6.2.66). Its schema type is
+/// `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1854,11 +2149,14 @@ pub struct Tag {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Theater {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.67 `ThesisType` (Thesis Type): the tag `b:ThesisType`, schema type `ST_String`.
+/// The `b:ThesisType` element, Thesis Type (ECMA-376 Part 1, section 22.6.2.67). Its schema type is
+/// `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1867,11 +2165,14 @@ pub struct Theater {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ThesisType {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.68 Title (Title): the tag `b:Title`, schema type `ST_String`.
+/// The `b:Title` element, Title (ECMA-376 Part 1, section 22.6.2.68). Its schema type is
+/// `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1880,11 +2181,14 @@ pub struct ThesisType {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Title {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.69 Translator (Translator): the tag `b:Translator`, schema type `CT_NameType`.
+/// The `b:Translator` element, Translator (ECMA-376 Part 1, section 22.6.2.69). Its schema type is
+/// `CT_NameType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1893,11 +2197,13 @@ pub struct Title {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Translator {
+    /// The child that is `NameList`, which the schema requires.
     pub name_list: Box<NameList>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 22.6.2.71 URL (URL): the tag `b:URL`, schema type `ST_String`.
+/// The `b:URL` element, URL (ECMA-376 Part 1, section 22.6.2.71). Its schema type is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1906,11 +2212,14 @@ pub struct Translator {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Url {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.72 Version (Version): the tag `b:Version`, schema type `ST_String`.
+/// The `b:Version` element, Version (ECMA-376 Part 1, section 22.6.2.72). Its schema type is
+/// `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1919,11 +2228,14 @@ pub struct Url {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Version {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.73 Volume (Volume): the tag `b:Volume`, schema type `ST_String`.
+/// The `b:Volume` element, Volume (ECMA-376 Part 1, section 22.6.2.73). Its schema type is
+/// `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1932,11 +2244,14 @@ pub struct Version {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Volume {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.74 Writer (Writer): the tag `b:Writer`, schema type `CT_NameType`.
+/// The `b:Writer` element, Writer (ECMA-376 Part 1, section 22.6.2.74). Its schema type is
+/// `CT_NameType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1945,11 +2260,13 @@ pub struct Volume {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Writer {
+    /// The child that is `NameList`, which the schema requires.
     pub name_list: Box<NameList>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 22.6.2.75 Year (Year): the tag `b:Year`, schema type `ST_String`.
+/// The `b:Year` element, Year (ECMA-376 Part 1, section 22.6.2.75). Its schema type is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1958,11 +2275,14 @@ pub struct Writer {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Year {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.6.2.76 `YearAccessed` (Year Accessed): the tag `b:YearAccessed`, schema type `ST_String`.
+/// The `b:YearAccessed` element, Year Accessed (ECMA-376 Part 1, section 22.6.2.76). Its schema
+/// type is `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1971,7 +2291,9 @@ pub struct Year {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct YearAccessed {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
@@ -2114,7 +2436,7 @@ impl BibliographicDataSourceTypesMember {
         crate::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

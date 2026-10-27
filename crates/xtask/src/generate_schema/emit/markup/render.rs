@@ -40,6 +40,64 @@ const XML_NAMES: [(&str, &str); 6] = [
     ("scope: &mut Scope", "officekit_xml::write::Scope"),
 ];
 
+/// The crate page of the facade, and the recursion limit rustdoc needs for the auto traits of
+/// the types it re-exports.
+const FACADE_PAGE: &str = "//! `officekit-markup` is the typed tree of officekit: a Rust type for each element of Office Open\n\
+//! XML, in one module for each namespace.\n\
+//!\n\
+//! A namespace is the group an element name belongs to. `wordprocessing` holds the elements of Word\n\
+//! files, `spreadsheet` those of Excel files, `presentation` those of slide decks, and\n\
+//! `drawing` and `chart` the pictures, shapes and charts all three share. The modules are\n\
+//! `officekit_markup::<namespace>`.\n\
+//!\n\
+//! # A namespace module\n\
+//!\n\
+//! A struct stands for an element with attributes and children, and its fields are the attributes\n\
+//! and children the schema declares. An enum stands for a choice among elements, such as the\n\
+//! content of a paragraph. A newtype stands for a simple type, a value written as text. It keeps the\n\
+//! text as it was read, and `value()` checks it and gives the matching member or an error.\n\
+//!\n\
+//! To get the text of a Word paragraph, loop over the `content` of the `wordprocessing::Paragraph`,\n\
+//! match `ParagraphContent::TextRun`, loop over the `content` of the `TextRun`, and match\n\
+//! `TextRunContent::Text`. Its `value` is the text.\n\
+//!\n\
+//! Each module also has a `read` module, with one function that reads an element into each struct\n\
+//! or enum, and a `write` module, with one function that writes each back to an element. The\n\
+//! elements are those of `officekit-xml`. Strict and Transitional files read the same way. The\n\
+//! `officekit-strict` and `officekit-transitional` crates write a node in one class.\n\
+//!\n\
+//! # Content the schemas do not declare\n\
+//!\n\
+//! The struct of an element has an `unknown` field, an [`Unknown`], and the enum of a choice among\n\
+//! elements an `Other` item. Elements, attributes and namespace declarations the schemas do not\n\
+//! declare go there when a node is read. A write puts them back where they were, so unfamiliar\n\
+//! content survives an edit. A newtype keeps any text, so a value that is no member of its simple\n\
+//! type stays in it, and `value()` gives an error for it.\n\
+//!\n\
+//! Every struct is `#[non_exhaustive]`, and so is every enum but a few choices among elements that\n\
+//! `officekit-markup-ext` matches. Build a struct with `Default` and assign its fields, and give a\n\
+//! `match` on an enum a wildcard arm.\n\
+//!\n\
+//! # Hooks\n\
+//!\n\
+//! [`Context`] and [`Visitor`] are the roots of the hook traits. Each has one method for every\n\
+//! namespace, which returns `None` until a context or visitor opts in by returning `Some(self)`.\n\
+//! The namespace's own `Context` and `Visitor` then have one method for each node. A `Context`\n\
+//! replaces nodes, and a `Visitor` looks at them and says with [`Descend`] whether to go into\n\
+//! their children. The `officekit-traversal` crate calls the hooks.\n\
+//!\n\
+//! # Where the items live\n\
+//!\n\
+//! The runtime is at the root of this crate: the reader, the writer, [`Unknown`] and the simple-type\n\
+//! parsers. It comes from `officekit-markup-base`, with the namespaces the cycle of\n\
+//! `officekit-markup-core` depends on. `officekit-markup-core` holds the namespaces that refer to\n\
+//! each other, and `officekit-markup-ext` the other namespaces and the hook traits. Depend on this\n\
+//! crate, not on those three.\n\
+//!\n\
+//! The `binary-format` feature adds the derives that archive every type with rkyv.\n\
+\n\
+#![recursion_limit = \"256\"]\n\n";
+
 /// The names one module's items take.
 pub struct Names<'catalog> {
     pub catalog: &'catalog Catalog,
@@ -600,14 +658,9 @@ fn facade_text(header: &str, catalog: &Catalog) -> String {
             .then_with(|| left.cmp(right))
     });
     let mut out = String::from(header);
-    out.push_str(
-        "//! `officekit-markup` is the typed tree of officekit: one module per Office Open XML namespace,\n\
-         //! `officekit_markup::<namespace>`, with its structs, enums, and simple-type newtypes, their\n\
-         //! readers in `read` and writers in `write`, and the namespace's hook traits; and the shared\n\
-         //! runtime at its root. It gathers `officekit-markup-base`, `officekit-markup-core` and\n\
-         //! `officekit-markup-ext` under these paths.\n\n",
-    );
-    let _ = writeln!(out, "pub use {}::*;", Crate::Base.name());
+    out.push_str(FACADE_PAGE);
+    let _ = writeln!(out, "#[doc(no_inline)]\npub use {}::*;", Crate::Base.name());
+    out.push_str("#[doc(no_inline)]\n");
     let head = format!("pub use {}::{{", Crate::Ext.name());
     let flat = format!("{head}{}}};", items.join(", "));
     if flat.len() <= MAX_WIDTH {
@@ -737,12 +790,19 @@ fn module_text(
     let catalog = names.catalog;
     let module = &catalog.modules[names.module];
     let mut out = String::from(header);
+    let hooks = if catalog.crates.get(names.module) == Some(&Crate::Ext) {
+        "\n//!\n//! `Context` and `Visitor` hold the hooks that replace or look at each node."
+    } else {
+        ""
+    };
     let _ = writeln!(
         out,
-        "//! The typed tree of the `{}` namespace: its structs, enums, and\n\
-         //! simple-type newtypes, with the readers in `read` and the writers in\n\
-         //! `write`.\n//!\n//! The namespace is `{}`.\n",
-        module.prefix, module.uri
+        "//! The typed tree of the namespace `{}`, which files write with the prefix `{}`.\n\
+         //!\n\
+         //! The module has the structs, enums and simple-type newtypes of the namespace's\n\
+         //! elements. The `read` module has a function that reads an element into each, and the\n\
+         //! `write` module one that writes each back to an element.{hooks}\n",
+        module.uri, module.prefix
     );
     if catalog
         .enums
@@ -855,14 +915,31 @@ fn struct_text(
     node: &Node,
     uses: &mut Uses,
 ) -> String {
-    // Each field's name, type, and whether it closes a cycle.
-    let mut fields: Vec<(String, String, bool)> = Vec::new();
+    // Each field's name, type, whether it closes a cycle, and doc.
+    let mut fields: Vec<(String, String, bool, String)> = Vec::new();
     for attribute in &node.attributes {
         let value = value_type(names, attribute.value);
-        fields.push((attribute.field.clone(), format!("Option<{value}>"), false));
+        let written = attribute
+            .namespace
+            .and_then(|id| names.catalog.prefixes.get(usize::from(id)));
+        let tag = written.map_or_else(
+            || attribute.local.clone(),
+            |prefix| format!("{prefix}:{}", attribute.local),
+        );
+        fields.push((
+            attribute.field.clone(),
+            format!("Option<{value}>"),
+            false,
+            format!("The attribute `{tag}`, when the element has it."),
+        ));
     }
     match &node.body {
-        Body::Text(value) => fields.push(("value".to_owned(), value_type(names, *value), false)),
+        Body::Text(value) => fields.push((
+            "value".to_owned(),
+            value_type(names, *value),
+            false,
+            "The element's text.".to_owned(),
+        )),
         Body::Children(children) => {
             for child in children {
                 let target = match child.target {
@@ -881,10 +958,22 @@ fn struct_text(
                     Occurs::Optional => format!("Option<Box<{target}>>"),
                     Occurs::Required => format!("Box<{target}>"),
                 };
+                let held = match child.target {
+                    Target::Node(_) => format!("`{target}`"),
+                    Target::Enum(_) => format!("an item of `{target}`"),
+                };
+                let doc = match child.occurs {
+                    Occurs::List => format!("The children that are {held}, in order."),
+                    Occurs::Optional => format!("The child that is {held}, when there is one."),
+                    Occurs::Required => {
+                        format!("The child that is {held}, which the schema requires.")
+                    }
+                };
                 fields.push((
                     child.field.clone(),
                     shown,
                     cycles.child(index, child.target),
+                    doc,
                 ));
             }
         }
@@ -893,9 +982,10 @@ fn struct_text(
         "unknown".to_owned(),
         format!("{}::Unknown", names.runtime()),
         false,
+        "What a read found that the schemas do not declare, which a write gives back.".to_owned(),
     ));
     fields.sort_by(|left, right| bare(&left.0).cmp(bare(&right.0)));
-    let bounded = fields.iter().any(|(_, _, recursive)| *recursive);
+    let bounded = fields.iter().any(|(_, _, recursive, _)| *recursive);
     if bounded {
         for name in archive::BOUND_NAMES {
             uses.add_gated(name);
@@ -907,7 +997,8 @@ fn struct_text(
         bounded,
     ));
     let _ = writeln!(out, "pub struct {} {{", node.name);
-    for (field, shown, recursive) in fields {
+    for (field, shown, recursive, field_doc) in fields {
+        out.push_str(&layout::doc(4, &field_doc));
         if recursive {
             let _ = writeln!(out, "    {}", archive::GATED_OMIT_BOUNDS);
         }
@@ -1123,7 +1214,7 @@ fn tags_text(names: &Names<'_>, found: &EnumDef, namespaces: &mut BTreeSet<Optio
 
 /// An enum's definition, `#[non_exhaustive]` unless `open`.
 fn enum_text(names: &Names<'_>, found: &EnumDef, open: bool) -> String {
-    let mut variants: Vec<(String, String)> = found
+    let mut variants: Vec<(String, String, String)> = found
         .arms
         .iter()
         .map(|(variant, arm)| {
@@ -1134,10 +1225,19 @@ fn enum_text(names: &Names<'_>, found: &EnumDef, open: bool) -> String {
             } else {
                 path
             };
-            (variant.clone(), shown)
+            let prefix = &names.catalog.modules[node.module].prefix;
+            let item = format!(
+                "The element `{prefix}:{}`, a `{}`.",
+                node.key.tag.local, node.name
+            );
+            (variant.clone(), shown, item)
         })
         .collect();
-    variants.push(("Other".to_owned(), "Node".to_owned()));
+    variants.push((
+        "Other".to_owned(),
+        "Node".to_owned(),
+        "An element or node the schemas do not declare at this position.".to_owned(),
+    ));
     variants.sort();
     let mut out = doc(0, &found.doc);
     out.push_str("#[derive(Clone, Debug, Eq, PartialEq)]\n");
@@ -1145,7 +1245,8 @@ fn enum_text(names: &Names<'_>, found: &EnumDef, open: bool) -> String {
         out.push_str("#[non_exhaustive]\n");
     }
     let _ = writeln!(out, "pub enum {} {{", found.name);
-    for (variant, shown) in variants {
+    for (variant, shown, item) in variants {
+        out.push_str(&layout::doc(4, &item));
         let line = format!("    {variant}({shown}),");
         if line.len() <= MAX_WIDTH {
             out.push_str(&line);

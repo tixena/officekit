@@ -212,8 +212,11 @@
 //! The hooks of the `wp14` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_core::office_word_2010_wordprocessing_drawing`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing`.
+//! The namespace is `http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing`. Its prefix, `wp14`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_core::office_word_2010_wordprocessing_drawing::*;
 
 use officekit_markup_base::Written;
@@ -229,33 +232,48 @@ use std::io;
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_word_2010_wordprocessing_drawing` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `PctHeight`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn pct_height(&mut self, _node: &PctHeight) -> Option<PctHeight> {
         None
     }
 
+    /// Asked for each `PctPosHOffset`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn pct_pos_h_offset(&mut self, _node: &PctPosHOffset) -> Option<PctPosHOffset> {
         None
     }
 
+    /// Asked for each `PctPosVOffset`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn pct_pos_v_offset(&mut self, _node: &PctPosVOffset) -> Option<PctPosVOffset> {
         None
     }
 
+    /// Asked for each `PctWidth`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn pct_width(&mut self, _node: &PctWidth) -> Option<PctWidth> {
         None
     }
 
+    /// Asked for each `SizeRelH`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn size_rel_h(&mut self, _node: &SizeRelH) -> Option<SizeRelH> {
         None
     }
 
+    /// Asked for each `SizeRelV`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn size_rel_v(&mut self, _node: &SizeRelV) -> Option<SizeRelV> {
         None
     }
 
+    /// Asked when a `PctHeight` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pct_height(
         &mut self,
         _node: &PctHeight,
@@ -264,9 +282,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PctPosHOffset` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pct_pos_h_offset(
         &mut self,
         _node: &PctPosHOffset,
@@ -275,9 +296,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PctPosVOffset` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pct_pos_v_offset(
         &mut self,
         _node: &PctPosVOffset,
@@ -286,9 +310,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PctWidth` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pct_width(
         &mut self,
         _node: &PctWidth,
@@ -297,9 +324,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SizeRelH` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_size_rel_h(
         &mut self,
         _node: &SizeRelH,
@@ -308,9 +338,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SizeRelV` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_size_rel_v(
         &mut self,
         _node: &SizeRelV,
@@ -326,26 +359,35 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_word_2010_wordprocessing_drawing` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `PctHeight`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn pct_height(&mut self, _node: &PctHeight) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PctPosHOffset`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn pct_pos_h_offset(&mut self, _node: &PctPosHOffset) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PctPosVOffset`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn pct_pos_v_offset(&mut self, _node: &PctPosVOffset) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PctWidth`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn pct_width(&mut self, _node: &PctWidth) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SizeRelH`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn size_rel_h(&mut self, _node: &SizeRelH) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SizeRelV`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn size_rel_v(&mut self, _node: &SizeRelV) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `wpc` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas`, which files write with the prefix `wpc`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -300,7 +302,8 @@ pub static WORDPROCESSING_CANVAS_CONTENT_TAGS: officekit_markup_base::Accept =
         ],
     };
 
-/// The tag `wpc:bg`, schema type `CT_BackgroundFormatting` of SDK 3.5.1's data.
+/// The `wpc:bg` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `CT_BackgroundFormatting`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -309,8 +312,11 @@ pub static WORDPROCESSING_CANVAS_CONTENT_TAGS: officekit_markup_base::Accept =
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Bg {
+    /// The child that is an item of `drawing::EffectPropertiesContent`, when there is one.
     pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
+    /// The child that is an item of `drawing::FillPropertiesContent`, when there is one.
     pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -323,22 +329,32 @@ pub struct Bg {
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_word_2010_wordprocessing_canvas` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `Bg`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn bg(&mut self, _node: &Bg) -> Option<Bg> {
         None
     }
 
+    /// Asked for each `ExtLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
         None
     }
 
+    /// Asked for each `GraphicFrame`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn graphic_frame(&mut self, _node: &GraphicFrame) -> Option<GraphicFrame> {
         None
     }
 
+    /// Asked for each `Whole`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn whole(&mut self, _node: &Whole) -> Option<Whole> {
         None
     }
 
+    /// Asked for each `WordprocessingCanvasContent`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn wordprocessing_canvas(
         &mut self,
         _node: &WordprocessingCanvasContent,
@@ -346,6 +362,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `WordprocessingCanvasContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn wordprocessing_canvas_items(
         &mut self,
         _node: &WordprocessingCanvasContent,
@@ -353,27 +371,38 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Wpc`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn wpc(&mut self, _node: &Wpc) -> Option<Wpc> {
         None
     }
 
+    /// Asked when a `Bg` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_bg(&mut self, _node: &Bg, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `GraphicFrame` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_graphic_frame(
         &mut self,
         _node: &GraphicFrame,
@@ -382,16 +411,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Whole` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_whole(&mut self, _node: &Whole, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `WordprocessingCanvasContent` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_wordprocessing_canvas(
         &mut self,
         _node: &WordprocessingCanvasContent,
@@ -400,9 +435,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `WordprocessingCanvasContent` in a list is written through. `Written::Yes`
+    /// means the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_wordprocessing_canvas_items(
         &mut self,
         _node: &WordprocessingCanvasContent,
@@ -411,15 +449,19 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Wpc` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_wpc(&mut self, _node: &Wpc, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 }
 
-/// The tag `wpc:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
+/// The `wpc:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -428,11 +470,14 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
+    /// The children that are `drawing::Extension`, in order.
     pub extension: Vec<drawing::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `wpc:graphicFrame`, schema type `CT_GraphicFrame` of SDK 3.5.1's data.
+/// The `wpc:graphicFrame` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_GraphicFrame`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -441,11 +486,20 @@ pub struct ExtLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GraphicFrame {
+    /// The child that is `super::office_word_2010_wordprocessing_group::CNvFrPr`, which the schema
+    /// requires.
     pub c_nv_fr_pr: Box<super::office_word_2010_wordprocessing_group::CNvFrPr>,
+    /// The child that is `super::office_word_2010_wordprocessing_group::CNvPr`, which the schema
+    /// requires.
     pub c_nv_pr: Box<super::office_word_2010_wordprocessing_group::CNvPr>,
+    /// The child that is `super::office_word_2010_wordprocessing_group::ExtLst`, when there is one.
     pub ext_lst: Option<Box<super::office_word_2010_wordprocessing_group::ExtLst>>,
+    /// The child that is `drawing::GraphicObject`, which the schema requires.
     pub graphic_object: Box<drawing::GraphicObject>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `super::office_word_2010_wordprocessing_group::Xfrm`, which the schema
+    /// requires.
     pub xfrm: Box<super::office_word_2010_wordprocessing_group::Xfrm>,
 }
 
@@ -455,22 +509,29 @@ pub struct GraphicFrame {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_word_2010_wordprocessing_canvas` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `Bg`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn bg(&mut self, _node: &Bg) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext_lst(&mut self, _node: &ExtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `GraphicFrame`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn graphic_frame(&mut self, _node: &GraphicFrame) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Whole`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn whole(&mut self, _node: &Whole) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `WordprocessingCanvasContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn wordprocessing_canvas(
         &mut self,
         _node: &WordprocessingCanvasContent,
@@ -478,12 +539,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Wpc`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn wpc(&mut self, _node: &Wpc) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 }
 
-/// The tag `wpc:whole`, schema type `CT_WholeE2oFormatting` of SDK 3.5.1's data.
+/// The `wpc:whole` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_WholeE2oFormatting`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -492,24 +555,38 @@ pub trait Visitor: crate::Visitor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Whole {
+    /// The child that is an item of `drawing::EffectPropertiesContent`, when there is one.
     pub content: Option<Box<drawing::EffectPropertiesContent>>,
+    /// The child that is `drawing::Outline`, when there is one.
     pub outline: Option<Box<drawing::Outline>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_WordprocessingCanvas`: choice in `CT_WordprocessingCanvas`.
+/// One child element of a choice: choice in `CT_WordprocessingCanvas`.
+///
+/// The schema types that hold it: `CT_WordprocessingCanvas`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum WordprocessingCanvasContent {
+    /// The element `w14:contentPart`, a `ContentPart`.
     ContentPart(office_word_2010_wordml::ContentPart),
+    /// The element `wpc:graphicFrame`, a `GraphicFrame`.
     GraphicFrame(GraphicFrame),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `pic:pic`, a `Picture`.
     Picture(picture::Picture),
+    /// The element `wpg:wgp`, a `Wgp`.
     Wgp(super::office_word_2010_wordprocessing_group::Wgp),
+    /// The element `wps:wsp`, a `Wsp`.
     Wsp(super::office_word_2010_wordprocessing_shape::Wsp),
 }
 
-/// The tag `wpc:wpc`, schema type `CT_WordprocessingCanvas` of SDK 3.5.1's data.
+/// The `wpc:wpc` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_WordprocessingCanvas`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -518,10 +595,15 @@ pub enum WordprocessingCanvasContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Wpc {
+    /// The child that is `Bg`, when there is one.
     pub bg: Option<Box<Bg>>,
+    /// The children that are an item of `WordprocessingCanvasContent`, in order.
     pub content: Vec<WordprocessingCanvasContent>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `Whole`, when there is one.
     pub whole: Option<Box<Whole>>,
 }
 

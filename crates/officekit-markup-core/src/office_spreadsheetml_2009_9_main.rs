@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `x14` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/spreadsheetml/2009/9/main`, which files write with the prefix `x14`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2009/9/main`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -1477,7 +1477,10 @@ pub static SLICER_CACHE_DATA_CONTENT_TAGS: officekit_markup_base::Accept =
         tags: &[(NS_X14, "olap"), (NS_X14, "tabular")],
     };
 
-/// `ST_AllocationMethod`: the text the file carried.
+/// The simple type `ST_AllocationMethod`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1486,18 +1489,23 @@ pub static SLICER_CACHE_DATA_CONTENT_TAGS: officekit_markup_base::Accept =
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AllocationMethod(pub String);
-/// The members of `ST_AllocationMethod`, in alphabetical order.
+/// The members of the enumeration `ST_AllocationMethod`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum AllocationMethodMember {
+    /// The member written `equalAllocation`.
     EqualAllocation,
+    /// The member written `equalIncrement`.
     EqualIncrement,
+    /// The member written `weightedAllocation`.
     WeightedAllocation,
+    /// The member written `weightedIncrement`.
     WeightedIncrement,
 }
 
-/// The tag `x14:argumentDescription`, schema type `CT_DefinedNameArgumentDescription` of SDK
-/// 3.5.1's data.
+/// The `x14:argumentDescription` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_DefinedNameArgumentDescription`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1506,13 +1514,16 @@ pub enum AllocationMethodMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArgumentDescription {
+    /// The attribute `index`, when the element has it.
     pub index: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `x14:argumentDescriptions`, schema type `CT_DefinedNameArgumentDescriptions` of SDK
-/// 3.5.1's data.
+/// The `x14:argumentDescriptions` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_DefinedNameArgumentDescriptions`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1521,12 +1532,16 @@ pub struct ArgumentDescription {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArgumentDescriptions {
+    /// The children that are `ArgumentDescription`, in order.
     pub argument_description: Vec<ArgumentDescription>,
+    /// The attribute `count`, when the element has it.
     pub count: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:axisColor`, schema type `CT_Color` of SDK 3.5.1's data.
+/// The `x14:axisColor` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1535,15 +1550,22 @@ pub struct ArgumentDescriptions {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AxisColor {
+    /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
+    /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
+    /// The attribute `rgb`, when the element has it.
     pub rgb: Option<super::spreadsheet::HexUnsignedInteger>,
+    /// The attribute `theme`, when the element has it.
     pub theme: Option<String>,
+    /// The attribute `tint`, when the element has it.
     pub tint: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:borderColor`, schema type `CT_Color` of SDK 3.5.1's data.
+/// The `x14:borderColor` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1552,15 +1574,22 @@ pub struct AxisColor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BorderColor {
+    /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
+    /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
+    /// The attribute `rgb`, when the element has it.
     pub rgb: Option<super::spreadsheet::HexUnsignedInteger>,
+    /// The attribute `theme`, when the element has it.
     pub theme: Option<String>,
+    /// The attribute `tint`, when the element has it.
     pub tint: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:cacheField`, schema type `CT_CacheField` of SDK 3.5.1's data.
+/// The `x14:cacheField` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_CacheField`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1569,11 +1598,14 @@ pub struct BorderColor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CacheField {
+    /// The attribute `ignore`, when the element has it.
     pub ignore: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:cacheHierarchy`, schema type `CT_CacheHierarchy` of SDK 3.5.1's data.
+/// The `x14:cacheHierarchy` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_CacheHierarchy`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1582,15 +1614,22 @@ pub struct CacheField {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CacheHierarchy {
+    /// The attribute `flattenHierarchies`, when the element has it.
     pub flatten_hierarchies: Option<String>,
+    /// The attribute `hierarchizeDistinct`, when the element has it.
     pub hierarchize_distinct: Option<String>,
+    /// The attribute `ignore`, when the element has it.
     pub ignore: Option<String>,
+    /// The attribute `measuresSet`, when the element has it.
     pub measures_set: Option<String>,
+    /// The child that is `SetLevels`, when there is one.
     pub set_levels: Option<Box<SetLevels>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:calculatedMember`, schema type `CT_CalculatedMember` of SDK 3.5.1's data.
+/// The `x14:calculatedMember` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_CalculatedMember`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1599,16 +1638,24 @@ pub struct CacheHierarchy {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CalculatedMember {
+    /// The attribute `displayFolder`, when the element has it.
     pub display_folder: Option<String>,
+    /// The attribute `dynamicSet`, when the element has it.
     pub dynamic_set: Option<String>,
+    /// The attribute `flattenHierarchies`, when the element has it.
     pub flatten_hierarchies: Option<String>,
+    /// The attribute `hierarchizeDistinct`, when the element has it.
     pub hierarchize_distinct: Option<String>,
+    /// The attribute `mdxLong`, when the element has it.
     pub mdx_long: Option<String>,
+    /// The child that is `TupleSet`, when there is one.
     pub tuple_set: Option<Box<TupleSet>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:calculatedMembers`, schema type `CT_CalculatedMembers` of SDK 3.5.1's data.
+/// The `x14:calculatedMembers` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_CalculatedMembers`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1617,12 +1664,16 @@ pub struct CalculatedMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CalculatedMembers {
+    /// The children that are `super::spreadsheet::CalculatedMember`, in order.
     pub calculated_member: Vec<super::spreadsheet::CalculatedMember>,
+    /// The attribute `count`, when the element has it.
     pub count: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:cfIcon`, schema type `CT_CfIcon` of SDK 3.5.1's data.
+/// The `x14:cfIcon` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_CfIcon`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1631,12 +1682,16 @@ pub struct CalculatedMembers {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CfIcon {
+    /// The attribute `iconId`, when the element has it.
     pub icon_id: Option<String>,
+    /// The attribute `iconSet`, when the element has it.
     pub icon_set: Option<IconSetType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:cfRule`, schema type `CT_CfRule` of SDK 3.5.1's data.
+/// The `x14:cfRule` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_CfRule`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1645,30 +1700,52 @@ pub struct CfIcon {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CfRule {
+    /// The attribute `aboveAverage`, when the element has it.
     pub above_average: Option<String>,
+    /// The attribute `activePresent`, when the element has it.
     pub active_present: Option<String>,
+    /// The attribute `bottom`, when the element has it.
     pub bottom: Option<String>,
+    /// The child that is `ColorScale`, when there is one.
     pub color_scale: Option<Box<ColorScale>>,
+    /// The child that is `DataBar`, when there is one.
     pub data_bar: Option<Box<DataBar>>,
+    /// The child that is `Dxf`, when there is one.
     pub dxf: Option<Box<Dxf>>,
+    /// The attribute `equalAverage`, when the element has it.
     pub equal_average: Option<String>,
+    /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionList>>,
+    /// The children that are `office_excel_2006_main::F`, in order.
     pub f: Vec<office_excel_2006_main::F>,
+    /// The child that is `IconSet`, when there is one.
     pub icon_set: Option<Box<IconSet>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `operator`, when the element has it.
     pub operator: Option<super::spreadsheet::ConditionalFormatOperators>,
+    /// The attribute `percent`, when the element has it.
     pub percent: Option<String>,
+    /// The attribute `priority`, when the element has it.
     pub priority: Option<String>,
+    /// The attribute `rank`, when the element has it.
     pub rank: Option<String>,
+    /// The attribute `stdDev`, when the element has it.
     pub std_dev: Option<String>,
+    /// The attribute `stopIfTrue`, when the element has it.
     pub stop_if_true: Option<String>,
+    /// The attribute `text`, when the element has it.
     pub text: Option<String>,
+    /// The attribute `timePeriod`, when the element has it.
     pub time_period: Option<super::spreadsheet::TimePeriodTypes>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<super::spreadsheet::ConditionalFormatType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:cfvo`, schema type `CT_Cfvo` of SDK 3.5.1's data.
+/// The `x14:cfvo` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Cfvo`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1677,14 +1754,22 @@ pub struct CfRule {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Cfvo {
+    /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionList>>,
+    /// The child that is `office_excel_2006_main::F`, when there is one.
     pub f: Option<Box<office_excel_2006_main::F>>,
+    /// The attribute `gte`, when the element has it.
     pub gte: Option<String>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<CfvoType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_CfvoType`: the text the file carried.
+/// The simple type `ST_CfvoType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1693,21 +1778,33 @@ pub struct Cfvo {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CfvoType(pub String);
-/// The members of `ST_CfvoType`, in alphabetical order.
+/// The members of the enumeration `ST_CfvoType`, in alphabetical order. `as_str` gives the text of
+/// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum CfvoTypeMember {
+    /// The member written `autoMax`.
     AutoMax,
+    /// The member written `autoMin`.
     AutoMin,
+    /// The member written `formula`.
     Formula,
+    /// The member written `max`.
     Max,
+    /// The member written `min`.
     Min,
+    /// The member written `num`.
     Num,
+    /// The member written `percent`.
     Percent,
+    /// The member written `percentile`.
     Percentile,
 }
 
-/// `ST_Checked`: the text the file carried.
+/// The simple type `ST_Checked`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1716,16 +1813,21 @@ pub enum CfvoTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Checked(pub String);
-/// The members of `ST_Checked`, in alphabetical order.
+/// The members of the enumeration `ST_Checked`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum CheckedMember {
+    /// The member written `Checked`.
     Checked,
+    /// The member written `Mixed`.
     Mixed,
+    /// The member written `Unchecked`.
     Unchecked,
 }
 
-/// The tag `x14:color`, schema type `CT_Color` of SDK 3.5.1's data.
+/// The `x14:color` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1734,15 +1836,22 @@ pub enum CheckedMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Color {
+    /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
+    /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
+    /// The attribute `rgb`, when the element has it.
     pub rgb: Option<super::spreadsheet::HexUnsignedInteger>,
+    /// The attribute `theme`, when the element has it.
     pub theme: Option<String>,
+    /// The attribute `tint`, when the element has it.
     pub tint: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:colorAxis`, schema type `CT_Color` of SDK 3.5.1's data.
+/// The `x14:colorAxis` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1751,15 +1860,22 @@ pub struct Color {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColorAxis {
+    /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
+    /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
+    /// The attribute `rgb`, when the element has it.
     pub rgb: Option<super::spreadsheet::HexUnsignedInteger>,
+    /// The attribute `theme`, when the element has it.
     pub theme: Option<String>,
+    /// The attribute `tint`, when the element has it.
     pub tint: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:colorFirst`, schema type `CT_Color` of SDK 3.5.1's data.
+/// The `x14:colorFirst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1768,15 +1884,22 @@ pub struct ColorAxis {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColorFirst {
+    /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
+    /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
+    /// The attribute `rgb`, when the element has it.
     pub rgb: Option<super::spreadsheet::HexUnsignedInteger>,
+    /// The attribute `theme`, when the element has it.
     pub theme: Option<String>,
+    /// The attribute `tint`, when the element has it.
     pub tint: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:colorHigh`, schema type `CT_Color` of SDK 3.5.1's data.
+/// The `x14:colorHigh` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1785,15 +1908,22 @@ pub struct ColorFirst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColorHigh {
+    /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
+    /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
+    /// The attribute `rgb`, when the element has it.
     pub rgb: Option<super::spreadsheet::HexUnsignedInteger>,
+    /// The attribute `theme`, when the element has it.
     pub theme: Option<String>,
+    /// The attribute `tint`, when the element has it.
     pub tint: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:colorLast`, schema type `CT_Color` of SDK 3.5.1's data.
+/// The `x14:colorLast` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1802,15 +1932,22 @@ pub struct ColorHigh {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColorLast {
+    /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
+    /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
+    /// The attribute `rgb`, when the element has it.
     pub rgb: Option<super::spreadsheet::HexUnsignedInteger>,
+    /// The attribute `theme`, when the element has it.
     pub theme: Option<String>,
+    /// The attribute `tint`, when the element has it.
     pub tint: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:colorLow`, schema type `CT_Color` of SDK 3.5.1's data.
+/// The `x14:colorLow` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1819,15 +1956,22 @@ pub struct ColorLast {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColorLow {
+    /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
+    /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
+    /// The attribute `rgb`, when the element has it.
     pub rgb: Option<super::spreadsheet::HexUnsignedInteger>,
+    /// The attribute `theme`, when the element has it.
     pub theme: Option<String>,
+    /// The attribute `tint`, when the element has it.
     pub tint: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:colorMarkers`, schema type `CT_Color` of SDK 3.5.1's data.
+/// The `x14:colorMarkers` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1836,15 +1980,22 @@ pub struct ColorLow {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColorMarkers {
+    /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
+    /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
+    /// The attribute `rgb`, when the element has it.
     pub rgb: Option<super::spreadsheet::HexUnsignedInteger>,
+    /// The attribute `theme`, when the element has it.
     pub theme: Option<String>,
+    /// The attribute `tint`, when the element has it.
     pub tint: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:colorNegative`, schema type `CT_Color` of SDK 3.5.1's data.
+/// The `x14:colorNegative` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1853,15 +2004,22 @@ pub struct ColorMarkers {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColorNegative {
+    /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
+    /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
+    /// The attribute `rgb`, when the element has it.
     pub rgb: Option<super::spreadsheet::HexUnsignedInteger>,
+    /// The attribute `theme`, when the element has it.
     pub theme: Option<String>,
+    /// The attribute `tint`, when the element has it.
     pub tint: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:colorScale`, schema type `CT_ColorScale` of SDK 3.5.1's data.
+/// The `x14:colorScale` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_ColorScale`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1870,12 +2028,16 @@ pub struct ColorNegative {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColorScale {
+    /// The children that are `Cfvo`, in order.
     pub cfvo: Vec<Cfvo>,
+    /// The children that are `Color`, in order.
     pub color: Vec<Color>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:colorSeries`, schema type `CT_Color` of SDK 3.5.1's data.
+/// The `x14:colorSeries` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1884,15 +2046,22 @@ pub struct ColorScale {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColorSeries {
+    /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
+    /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
+    /// The attribute `rgb`, when the element has it.
     pub rgb: Option<super::spreadsheet::HexUnsignedInteger>,
+    /// The attribute `theme`, when the element has it.
     pub theme: Option<String>,
+    /// The attribute `tint`, when the element has it.
     pub tint: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:conditionalFormat`, schema type `CT_ConditionalFormat` of SDK 3.5.1's data.
+/// The `x14:conditionalFormat` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_ConditionalFormat`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1901,16 +2070,24 @@ pub struct ColorSeries {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConditionalFormat {
+    /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionList>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The child that is `PivotAreas`, when there is one.
     pub pivot_areas: Option<Box<PivotAreas>>,
+    /// The attribute `priority`, when the element has it.
     pub priority: Option<String>,
+    /// The attribute `scope`, when the element has it.
     pub scope: Option<super::spreadsheet::ConditionalFormattingScope>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<super::spreadsheet::TopNEvaluationType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:conditionalFormats`, schema type `CT_ConditionalFormats` of SDK 3.5.1's data.
+/// The `x14:conditionalFormats` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_ConditionalFormats`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1919,12 +2096,16 @@ pub struct ConditionalFormat {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConditionalFormats {
+    /// The children that are `ConditionalFormat`, in order.
     pub conditional_format: Vec<ConditionalFormat>,
+    /// The attribute `count`, when the element has it.
     pub count: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:conditionalFormatting`, schema type `CT_ConditionalFormatting` of SDK 3.5.1's data.
+/// The `x14:conditionalFormatting` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_ConditionalFormatting`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1933,15 +2114,20 @@ pub struct ConditionalFormats {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConditionalFormatting {
+    /// The children that are `CfRule`, in order.
     pub cf_rule: Vec<CfRule>,
+    /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionList>>,
+    /// The attribute `pivot`, when the element has it.
     pub pivot: Option<String>,
+    /// The child that is `office_excel_2006_main::Sqref`, when there is one.
     pub sqref: Option<Box<office_excel_2006_main::Sqref>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:conditionalFormattings`, schema type `CT_ConditionalFormattings` of SDK 3.5.1's
-/// data.
+/// The `x14:conditionalFormattings` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_ConditionalFormattings`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1950,11 +2136,14 @@ pub struct ConditionalFormatting {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConditionalFormattings {
+    /// The children that are `ConditionalFormatting`, in order.
     pub conditional_formatting: Vec<ConditionalFormatting>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:connection`, schema type `CT_Connection` of SDK 3.5.1's data.
+/// The `x14:connection` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_Connection`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1963,13 +2152,18 @@ pub struct ConditionalFormattings {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Connection {
+    /// The child that is `CalculatedMembers`, when there is one.
     pub calculated_members: Option<Box<CalculatedMembers>>,
+    /// The attribute `culture`, when the element has it.
     pub culture: Option<String>,
+    /// The attribute `embeddedDataId`, when the element has it.
     pub embedded_data_id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:customFilter`, schema type `CT_CustomFilter` of SDK 3.5.1's data.
+/// The `x14:customFilter` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_CustomFilter`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1978,12 +2172,16 @@ pub struct Connection {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CustomFilter {
+    /// The attribute `operator`, when the element has it.
     pub operator: Option<super::spreadsheet::FilterOperator>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `x14:customFilters`, schema type `CT_CustomFilters` of SDK 3.5.1's data.
+/// The `x14:customFilters` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_CustomFilters`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1992,12 +2190,16 @@ pub struct CustomFilter {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CustomFilters {
+    /// The attribute `and`, when the element has it.
     pub and: Option<String>,
+    /// The children that are `CustomFilter`, in order.
     pub custom_filter: Vec<CustomFilter>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:data`, schema type `CT_SlicerCacheData` of SDK 3.5.1's data.
+/// The `x14:data` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SlicerCacheData`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2006,11 +2208,14 @@ pub struct CustomFilters {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Data {
+    /// The child that is an item of `SlicerCacheDataContent`, which the schema requires.
     pub content: Box<SlicerCacheDataContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:dataBar`, schema type `CT_DataBar` of SDK 3.5.1's data.
+/// The `x14:dataBar` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_DataBar`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2019,25 +2224,44 @@ pub struct Data {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataBar {
+    /// The child that is `AxisColor`, when there is one.
     pub axis_color: Option<Box<AxisColor>>,
+    /// The attribute `axisPosition`, when the element has it.
     pub axis_position: Option<DataBarAxisPosition>,
+    /// The attribute `border`, when the element has it.
     pub border: Option<String>,
+    /// The child that is `BorderColor`, when there is one.
     pub border_color: Option<Box<BorderColor>>,
+    /// The children that are `Cfvo`, in order.
     pub cfvo: Vec<Cfvo>,
+    /// The attribute `direction`, when the element has it.
     pub direction: Option<DataBarDirection>,
+    /// The child that is `FillColor`, when there is one.
     pub fill_color: Option<Box<FillColor>>,
+    /// The attribute `gradient`, when the element has it.
     pub gradient: Option<String>,
+    /// The attribute `maxLength`, when the element has it.
     pub max_length: Option<String>,
+    /// The attribute `minLength`, when the element has it.
     pub min_length: Option<String>,
+    /// The attribute `negativeBarBorderColorSameAsPositive`, when the element has it.
     pub negative_bar_border_color_same_as_positive: Option<String>,
+    /// The attribute `negativeBarColorSameAsPositive`, when the element has it.
     pub negative_bar_color_same_as_positive: Option<String>,
+    /// The child that is `NegativeBorderColor`, when there is one.
     pub negative_border_color: Option<Box<NegativeBorderColor>>,
+    /// The child that is `NegativeFillColor`, when there is one.
     pub negative_fill_color: Option<Box<NegativeFillColor>>,
+    /// The attribute `showValue`, when the element has it.
     pub show_value: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_DataBarAxisPosition`: the text the file carried.
+/// The simple type `ST_DataBarAxisPosition`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2046,16 +2270,23 @@ pub struct DataBar {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataBarAxisPosition(pub String);
-/// The members of `ST_DataBarAxisPosition`, in alphabetical order.
+/// The members of the enumeration `ST_DataBarAxisPosition`, in alphabetical order. `as_str` gives
+/// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum DataBarAxisPositionMember {
+    /// The member written `automatic`.
     Automatic,
+    /// The member written `middle`.
     Middle,
+    /// The member written `none`.
     None,
 }
 
-/// `ST_DataBarDirection`: the text the file carried.
+/// The simple type `ST_DataBarDirection`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2064,16 +2295,21 @@ pub enum DataBarAxisPositionMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataBarDirection(pub String);
-/// The members of `ST_DataBarDirection`, in alphabetical order.
+/// The members of the enumeration `ST_DataBarDirection`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum DataBarDirectionMember {
+    /// The member written `context`.
     Context,
+    /// The member written `leftToRight`.
     LeftToRight,
+    /// The member written `rightToLeft`.
     RightToLeft,
 }
 
-/// The tag `x14:dataField`, schema type `CT_DataField` of SDK 3.5.1's data.
+/// The `x14:dataField` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_DataField`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2082,13 +2318,18 @@ pub enum DataBarDirectionMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataField {
+    /// The attribute `pivotShowAs`, when the element has it.
     pub pivot_show_as: Option<PivotShowAs>,
+    /// The attribute `sourceField`, when the element has it.
     pub source_field: Option<String>,
+    /// The attribute `uniqueName`, when the element has it.
     pub unique_name: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:dataValidation`, schema type `CT_DataValidation` of SDK 3.5.1's data.
+/// The `x14:dataValidation` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_DataValidation`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2097,25 +2338,42 @@ pub struct DataField {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataValidation {
+    /// The attribute `allowBlank`, when the element has it.
     pub allow_blank: Option<String>,
+    /// The attribute `error`, when the element has it.
     pub error: Option<String>,
+    /// The attribute `errorStyle`, when the element has it.
     pub error_style: Option<super::spreadsheet::DataValidationErrorStyles>,
+    /// The attribute `errorTitle`, when the element has it.
     pub error_title: Option<String>,
+    /// The child that is `Formula1`, when there is one.
     pub formula1: Option<Box<Formula1>>,
+    /// The child that is `Formula2`, when there is one.
     pub formula2: Option<Box<Formula2>>,
+    /// The attribute `imeMode`, when the element has it.
     pub ime_mode: Option<super::spreadsheet::DataValidationIMEMode>,
+    /// The attribute `operator`, when the element has it.
     pub operator: Option<super::spreadsheet::DataValidationOperator>,
+    /// The attribute `prompt`, when the element has it.
     pub prompt: Option<String>,
+    /// The attribute `promptTitle`, when the element has it.
     pub prompt_title: Option<String>,
+    /// The attribute `showDropDown`, when the element has it.
     pub show_drop_down: Option<String>,
+    /// The attribute `showErrorMessage`, when the element has it.
     pub show_error_message: Option<String>,
+    /// The attribute `showInputMessage`, when the element has it.
     pub show_input_message: Option<String>,
+    /// The child that is `office_excel_2006_main::Sqref`, which the schema requires.
     pub sqref: Box<office_excel_2006_main::Sqref>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<super::spreadsheet::DataValidationType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:dataValidations`, schema type `CT_DataValidations` of SDK 3.5.1's data.
+/// The `x14:dataValidations` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_DataValidations`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2124,15 +2382,22 @@ pub struct DataValidation {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataValidations {
+    /// The attribute `count`, when the element has it.
     pub count: Option<String>,
+    /// The children that are `DataValidation`, in order.
     pub data_validation: Vec<DataValidation>,
+    /// The attribute `disablePrompts`, when the element has it.
     pub disable_prompts: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `xWindow`, when the element has it.
     pub x_window: Option<String>,
+    /// The attribute `yWindow`, when the element has it.
     pub y_window: Option<String>,
 }
 
-/// The tag `x14:datastoreItem`, schema type `CT_DatastoreItem` of SDK 3.5.1's data.
+/// The `x14:datastoreItem` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_DatastoreItem`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2141,12 +2406,16 @@ pub struct DataValidations {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DatastoreItem {
+    /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionList>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:definedName`, schema type `CT_DefinedName` of SDK 3.5.1's data.
+/// The `x14:definedName` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_DefinedName`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2155,12 +2424,16 @@ pub struct DatastoreItem {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DefinedName {
+    /// The child that is `ArgumentDescriptions`, when there is one.
     pub argument_descriptions: Option<Box<ArgumentDescriptions>>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:definedNames`, schema type `CT_DefinedNames` of SDK 3.5.1's data.
+/// The `x14:definedNames` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_DefinedNames`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2169,11 +2442,16 @@ pub struct DefinedName {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DefinedNames {
+    /// The children that are `DefinedName`, in order.
     pub defined_name: Vec<DefinedName>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_DispBlanksAs`: the text the file carried.
+/// The simple type `ST_DispBlanksAs`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2182,16 +2460,23 @@ pub struct DefinedNames {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DispBlanksAs(pub String);
-/// The members of `ST_DispBlanksAs`, in alphabetical order.
+/// The members of the enumeration `ST_DispBlanksAs`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum DispBlanksAsMember {
+    /// The member written `gap`.
     Gap,
+    /// The member written `span`.
     Span,
+    /// The member written `zero`.
     Zero,
 }
 
-/// `ST_DropStyle`: the text the file carried.
+/// The simple type `ST_DropStyle`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2200,16 +2485,21 @@ pub enum DispBlanksAsMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DropStyle(pub String);
-/// The members of `ST_DropStyle`, in alphabetical order.
+/// The members of the enumeration `ST_DropStyle`, in alphabetical order. `as_str` gives the text of
+/// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum DropStyleMember {
+    /// The member written `combo`.
     Combo,
+    /// The member written `comboedit`.
     Comboedit,
+    /// The member written `simple`.
     Simple,
 }
 
-/// The tag `x14:dxf`, schema type `CT_Dxf` of SDK 3.5.1's data.
+/// The `x14:dxf` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Dxf`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2218,18 +2508,27 @@ pub enum DropStyleMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Dxf {
+    /// The child that is `super::spreadsheet::Alignment`, when there is one.
     pub alignment: Option<Box<super::spreadsheet::Alignment>>,
+    /// The child that is `super::spreadsheet::Border`, when there is one.
     pub border: Option<Box<super::spreadsheet::Border>>,
+    /// The child that is `super::spreadsheet::Fill`, when there is one.
     pub fill: Option<Box<super::spreadsheet::Fill>>,
+    /// The child that is `super::spreadsheet::Font`, when there is one.
     pub font: Option<Box<super::spreadsheet::Font>>,
+    /// The child that is `super::spreadsheet::FutureFeatureDataStorageArea`, when there is one.
     pub future_feature_data_storage_area:
         Option<Box<super::spreadsheet::FutureFeatureDataStorageArea>>,
+    /// The child that is `super::spreadsheet::NumberFormat`, when there is one.
     pub number_format: Option<Box<super::spreadsheet::NumberFormat>>,
+    /// The child that is `super::spreadsheet::ProtectionProperties`, when there is one.
     pub protection_properties: Option<Box<super::spreadsheet::ProtectionProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:dxfs`, schema type `CT_Dxfs` of SDK 3.5.1's data.
+/// The `x14:dxfs` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Dxfs`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2238,12 +2537,18 @@ pub struct Dxf {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Dxfs {
+    /// The attribute `count`, when the element has it.
     pub count: Option<String>,
+    /// The children that are `super::spreadsheet::Formatting`, in order.
     pub formatting: Vec<super::spreadsheet::Formatting>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_EditValidation`: the text the file carried.
+/// The simple type `ST_EditValidation`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2252,18 +2557,25 @@ pub struct Dxfs {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EditValidation(pub String);
-/// The members of `ST_EditValidation`, in alphabetical order.
+/// The members of the enumeration `ST_EditValidation`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum EditValidationMember {
+    /// The member written `formula`.
     Formula,
+    /// The member written `integer`.
     Integer,
+    /// The member written `number`.
     Number,
+    /// The member written `reference`.
     Reference,
+    /// The member written `text`.
     Text,
 }
 
-/// The tag `x14:editValue`, schema type `CT_PivotEditValue` of SDK 3.5.1's data.
+/// The `x14:editValue` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_PivotEditValue`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2272,12 +2584,16 @@ pub enum EditValidationMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EditValue {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
+    /// The attribute `valueType`, when the element has it.
     pub value_type: Option<PivotEditValueType>,
 }
 
-/// The tag `x14:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
+/// The `x14:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2286,11 +2602,14 @@ pub struct EditValue {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLstExtensionList {
+    /// The children that are `super::spreadsheet::Extension`, in order.
     pub extension: Vec<super::spreadsheet::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:extLst`, schema type `CT_SlicerCacheDefinitionExtensionList` of SDK 3.5.1's data.
+/// The `x14:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SlicerCacheDefinitionExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2299,11 +2618,14 @@ pub struct ExtLstExtensionList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLstSlicerCacheDefinitionExtensionList {
+    /// The children that are `super::spreadsheet::Extension`, in order.
     pub extension: Vec<super::spreadsheet::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:fillColor`, schema type `CT_Color` of SDK 3.5.1's data.
+/// The `x14:fillColor` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2312,15 +2634,22 @@ pub struct ExtLstSlicerCacheDefinitionExtensionList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FillColor {
+    /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
+    /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
+    /// The attribute `rgb`, when the element has it.
     pub rgb: Option<super::spreadsheet::HexUnsignedInteger>,
+    /// The attribute `theme`, when the element has it.
     pub theme: Option<String>,
+    /// The attribute `tint`, when the element has it.
     pub tint: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:filter`, schema type `CT_Filter` of SDK 3.5.1's data.
+/// The `x14:filter` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Filter`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2329,11 +2658,14 @@ pub struct FillColor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Filter {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `x14:formControlPr`, schema type `CT_FormControlPr` of SDK 3.5.1's data.
+/// The `x14:formControlPr` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_FormControlPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2342,43 +2674,78 @@ pub struct Filter {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FormControlPr {
+    /// The attribute `checked`, when the element has it.
     pub checked: Option<Checked>,
+    /// The attribute `colored`, when the element has it.
     pub colored: Option<String>,
+    /// The attribute `dropLines`, when the element has it.
     pub drop_lines: Option<String>,
+    /// The attribute `dropStyle`, when the element has it.
     pub drop_style: Option<DropStyle>,
+    /// The attribute `dx`, when the element has it.
     pub dx: Option<String>,
+    /// The attribute `editVal`, when the element has it.
     pub edit_val: Option<EditValidation>,
+    /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionList>>,
+    /// The attribute `firstButton`, when the element has it.
     pub first_button: Option<String>,
+    /// The attribute `fmlaGroup`, when the element has it.
     pub fmla_group: Option<String>,
+    /// The attribute `fmlaLink`, when the element has it.
     pub fmla_link: Option<String>,
+    /// The attribute `fmlaRange`, when the element has it.
     pub fmla_range: Option<String>,
+    /// The attribute `fmlaTxbx`, when the element has it.
     pub fmla_txbx: Option<String>,
+    /// The attribute `horiz`, when the element has it.
     pub horiz: Option<String>,
+    /// The attribute `inc`, when the element has it.
     pub inc: Option<String>,
+    /// The child that is `ItemLst`, when there is one.
     pub item_lst: Option<Box<ItemLst>>,
+    /// The attribute `justLastX`, when the element has it.
     pub just_last_x: Option<String>,
+    /// The attribute `lockText`, when the element has it.
     pub lock_text: Option<String>,
+    /// The attribute `max`, when the element has it.
     pub max: Option<String>,
+    /// The attribute `min`, when the element has it.
     pub min: Option<String>,
+    /// The attribute `multiLine`, when the element has it.
     pub multi_line: Option<String>,
+    /// The attribute `multiSel`, when the element has it.
     pub multi_sel: Option<String>,
+    /// The attribute `noThreeD`, when the element has it.
     pub no_three_d: Option<String>,
+    /// The attribute `noThreeD2`, when the element has it.
     pub no_three_d2: Option<String>,
+    /// The attribute `objectType`, when the element has it.
     pub object_type: Option<ObjectType>,
+    /// The attribute `page`, when the element has it.
     pub page: Option<String>,
+    /// The attribute `passwordEdit`, when the element has it.
     pub password_edit: Option<String>,
+    /// The attribute `sel`, when the element has it.
     pub sel: Option<String>,
+    /// The attribute `seltype`, when the element has it.
     pub seltype: Option<SelType>,
+    /// The attribute `textHAlign`, when the element has it.
     pub text_h_align: Option<TextHAlign>,
+    /// The attribute `textVAlign`, when the element has it.
     pub text_v_align: Option<TextVAlign>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
+    /// The attribute `verticalBar`, when the element has it.
     pub vertical_bar: Option<String>,
+    /// The attribute `widthMin`, when the element has it.
     pub width_min: Option<String>,
 }
 
-/// The tag `x14:formula1`, schema type `CT_DataValidationFormula` of SDK 3.5.1's data.
+/// The `x14:formula1` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_DataValidationFormula`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2387,11 +2754,14 @@ pub struct FormControlPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Formula1 {
+    /// The child that is `office_excel_2006_main::F`, which the schema requires.
     pub f: Box<office_excel_2006_main::F>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:formula2`, schema type `CT_DataValidationFormula` of SDK 3.5.1's data.
+/// The `x14:formula2` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_DataValidationFormula`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2400,11 +2770,14 @@ pub struct Formula1 {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Formula2 {
+    /// The child that is `office_excel_2006_main::F`, which the schema requires.
     pub f: Box<office_excel_2006_main::F>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:header`, schema type `CT_TupleSetHeader` of SDK 3.5.1's data.
+/// The `x14:header` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TupleSetHeader`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2413,12 +2786,16 @@ pub struct Formula2 {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Header {
+    /// The attribute `hierarchyName`, when the element has it.
     pub hierarchy_name: Option<String>,
+    /// The attribute `uniqueName`, when the element has it.
     pub unique_name: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:headers`, schema type `CT_TupleSetHeaders` of SDK 3.5.1's data.
+/// The `x14:headers` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TupleSetHeaders`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2427,11 +2804,14 @@ pub struct Header {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Headers {
+    /// The children that are `Header`, in order.
     pub header: Vec<Header>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:i`, schema type `CT_OlapSlicerCacheItem` of SDK 3.5.1's data.
+/// The `x14:i` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `CT_OlapSlicerCacheItem`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2440,14 +2820,20 @@ pub struct Headers {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct IOlapSlicerCacheItem {
+    /// The attribute `c`, when the element has it.
     pub c: Option<String>,
+    /// The attribute `n`, when the element has it.
     pub n: Option<String>,
+    /// The attribute `nd`, when the element has it.
     pub nd: Option<String>,
+    /// The children that are `P`, in order.
     pub p: Vec<P>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:i`, schema type `CT_TabularSlicerCacheItem` of SDK 3.5.1's data.
+/// The `x14:i` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `CT_TabularSlicerCacheItem`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2456,13 +2842,18 @@ pub struct IOlapSlicerCacheItem {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ITabularSlicerCacheItem {
+    /// The attribute `nd`, when the element has it.
     pub nd: Option<String>,
+    /// The attribute `s`, when the element has it.
     pub s: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `x`, when the element has it.
     pub x: Option<String>,
 }
 
-/// The tag `x14:iconFilter`, schema type `CT_IconFilter` of SDK 3.5.1's data.
+/// The `x14:iconFilter` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_IconFilter`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2471,12 +2862,16 @@ pub struct ITabularSlicerCacheItem {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct IconFilter {
+    /// The attribute `iconId`, when the element has it.
     pub icon_id: Option<String>,
+    /// The attribute `iconSet`, when the element has it.
     pub icon_set: Option<IconSetType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:iconSet`, schema type `CT_IconSet` of SDK 3.5.1's data.
+/// The `x14:iconSet` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_IconSet`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2485,17 +2880,28 @@ pub struct IconFilter {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct IconSet {
+    /// The children that are `CfIcon`, in order.
     pub cf_icon: Vec<CfIcon>,
+    /// The children that are `Cfvo`, in order.
     pub cfvo: Vec<Cfvo>,
+    /// The attribute `custom`, when the element has it.
     pub custom: Option<String>,
+    /// The attribute `iconSet`, when the element has it.
     pub icon_set: Option<IconSetType>,
+    /// The attribute `percent`, when the element has it.
     pub percent: Option<String>,
+    /// The attribute `reverse`, when the element has it.
     pub reverse: Option<String>,
+    /// The attribute `showValue`, when the element has it.
     pub show_value: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_IconSetType`: the text the file carried.
+/// The simple type `ST_IconSetType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2504,34 +2910,57 @@ pub struct IconSet {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct IconSetType(pub String);
-/// The members of `ST_IconSetType`, in alphabetical order.
+/// The members of the enumeration `ST_IconSetType`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum IconSetTypeMember {
+    /// The member written `NoIcons`.
     NoIcons,
+    /// The member written `3Arrows`.
     Value3Arrows,
+    /// The member written `3ArrowsGray`.
     Value3ArrowsGray,
+    /// The member written `3Flags`.
     Value3Flags,
+    /// The member written `3Signs`.
     Value3Signs,
+    /// The member written `3Stars`.
     Value3Stars,
+    /// The member written `3Symbols`.
     Value3Symbols,
+    /// The member written `3Symbols2`.
     Value3Symbols2,
+    /// The member written `3TrafficLights1`.
     Value3TrafficLights1,
+    /// The member written `3TrafficLights2`.
     Value3TrafficLights2,
+    /// The member written `3Triangles`.
     Value3Triangles,
+    /// The member written `4Arrows`.
     Value4Arrows,
+    /// The member written `4ArrowsGray`.
     Value4ArrowsGray,
+    /// The member written `4Rating`.
     Value4Rating,
+    /// The member written `4RedToBlack`.
     Value4RedToBlack,
+    /// The member written `4TrafficLights`.
     Value4TrafficLights,
+    /// The member written `5Arrows`.
     Value5Arrows,
+    /// The member written `5ArrowsGray`.
     Value5ArrowsGray,
+    /// The member written `5Boxes`.
     Value5Boxes,
+    /// The member written `5Quarters`.
     Value5Quarters,
+    /// The member written `5Rating`.
     Value5Rating,
 }
 
-/// The tag `x14:id`, schema type `ST_Guid` of SDK 3.5.1's data.
+/// The `x14:id` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `ST_Guid`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2540,11 +2969,14 @@ pub enum IconSetTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Id {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `x14:ignoredError`, schema type `CT_IgnoredError` of SDK 3.5.1's data.
+/// The `x14:ignoredError` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_IgnoredError`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2553,20 +2985,32 @@ pub struct Id {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct IgnoredError {
+    /// The attribute `calculatedColumn`, when the element has it.
     pub calculated_column: Option<String>,
+    /// The attribute `emptyCellReference`, when the element has it.
     pub empty_cell_reference: Option<String>,
+    /// The attribute `evalError`, when the element has it.
     pub eval_error: Option<String>,
+    /// The attribute `formula`, when the element has it.
     pub formula: Option<String>,
+    /// The attribute `formulaRange`, when the element has it.
     pub formula_range: Option<String>,
+    /// The attribute `listDataValidation`, when the element has it.
     pub list_data_validation: Option<String>,
+    /// The attribute `numberStoredAsText`, when the element has it.
     pub number_stored_as_text: Option<String>,
+    /// The child that is `office_excel_2006_main::Sqref`, which the schema requires.
     pub sqref: Box<office_excel_2006_main::Sqref>,
+    /// The attribute `twoDigitTextYear`, when the element has it.
     pub two_digit_text_year: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `unlockedFormula`, when the element has it.
     pub unlocked_formula: Option<String>,
 }
 
-/// The tag `x14:ignoredErrors`, schema type `CT_IgnoredErrors` of SDK 3.5.1's data.
+/// The `x14:ignoredErrors` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_IgnoredErrors`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2575,12 +3019,16 @@ pub struct IgnoredError {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct IgnoredErrors {
+    /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionList>>,
+    /// The children that are `IgnoredError`, in order.
     pub ignored_error: Vec<IgnoredError>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:item`, schema type `CT_ListItem` of SDK 3.5.1's data.
+/// The `x14:item` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ListItem`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2589,11 +3037,14 @@ pub struct IgnoredErrors {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Item {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `x14:itemLst`, schema type `CT_ListItems` of SDK 3.5.1's data.
+/// The `x14:itemLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ListItems`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2602,12 +3053,16 @@ pub struct Item {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ItemLst {
+    /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionList>>,
+    /// The children that are `Item`, in order.
     pub item: Vec<Item>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:items`, schema type `CT_TabularSlicerCacheItems` of SDK 3.5.1's data.
+/// The `x14:items` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TabularSlicerCacheItems`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2616,12 +3071,16 @@ pub struct ItemLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Items {
+    /// The attribute `count`, when the element has it.
     pub count: Option<String>,
+    /// The children that are `ITabularSlicerCacheItem`, in order.
     pub i_tabular_slicer_cache_item: Vec<ITabularSlicerCacheItem>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:level`, schema type `CT_OlapSlicerCacheLevelData` of SDK 3.5.1's data.
+/// The `x14:level` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OlapSlicerCacheLevelData`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2630,16 +3089,24 @@ pub struct Items {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Level {
+    /// The attribute `count`, when the element has it.
     pub count: Option<String>,
+    /// The attribute `crossFilter`, when the element has it.
     pub cross_filter: Option<SlicerCacheCrossFilter>,
+    /// The child that is `Ranges`, when there is one.
     pub ranges: Option<Box<Ranges>>,
+    /// The attribute `sortOrder`, when the element has it.
     pub sort_order: Option<OlapSlicerCacheSortOrder>,
+    /// The attribute `sourceCaption`, when the element has it.
     pub source_caption: Option<String>,
+    /// The attribute `uniqueName`, when the element has it.
     pub unique_name: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:levels`, schema type `CT_OlapSlicerCacheLevelsData` of SDK 3.5.1's data.
+/// The `x14:levels` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OlapSlicerCacheLevelsData`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2648,12 +3115,16 @@ pub struct Level {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Levels {
+    /// The attribute `count`, when the element has it.
     pub count: Option<String>,
+    /// The children that are `Level`, in order.
     pub level: Vec<Level>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:negativeBorderColor`, schema type `CT_Color` of SDK 3.5.1's data.
+/// The `x14:negativeBorderColor` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2662,15 +3133,22 @@ pub struct Levels {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NegativeBorderColor {
+    /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
+    /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
+    /// The attribute `rgb`, when the element has it.
     pub rgb: Option<super::spreadsheet::HexUnsignedInteger>,
+    /// The attribute `theme`, when the element has it.
     pub theme: Option<String>,
+    /// The attribute `tint`, when the element has it.
     pub tint: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:negativeFillColor`, schema type `CT_Color` of SDK 3.5.1's data.
+/// The `x14:negativeFillColor` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2679,15 +3157,24 @@ pub struct NegativeBorderColor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NegativeFillColor {
+    /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
+    /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
+    /// The attribute `rgb`, when the element has it.
     pub rgb: Option<super::spreadsheet::HexUnsignedInteger>,
+    /// The attribute `theme`, when the element has it.
     pub theme: Option<String>,
+    /// The attribute `tint`, when the element has it.
     pub tint: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_ObjectType`: the text the file carried.
+/// The simple type `ST_ObjectType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2696,24 +3183,37 @@ pub struct NegativeFillColor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ObjectType(pub String);
-/// The members of `ST_ObjectType`, in alphabetical order.
+/// The members of the enumeration `ST_ObjectType`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ObjectTypeMember {
+    /// The member written `Button`.
     Button,
+    /// The member written `CheckBox`.
     CheckBox,
+    /// The member written `Dialog`.
     Dialog,
+    /// The member written `Drop`.
     Drop,
+    /// The member written `EditBox`.
     EditBox,
+    /// The member written `GBox`.
     GBox,
+    /// The member written `Label`.
     Label,
+    /// The member written `List`.
     List,
+    /// The member written `Radio`.
     Radio,
+    /// The member written `Scroll`.
     Scroll,
+    /// The member written `Spin`.
     Spin,
 }
 
-/// The tag `x14:olap`, schema type `CT_OlapSlicerCache` of SDK 3.5.1's data.
+/// The `x14:olap` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OlapSlicerCache`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2722,14 +3222,22 @@ pub enum ObjectTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Olap {
+    /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionList>>,
+    /// The child that is `Levels`, which the schema requires.
     pub levels: Box<Levels>,
+    /// The attribute `pivotCacheId`, when the element has it.
     pub pivot_cache_id: Option<String>,
+    /// The child that is `Selections`, which the schema requires.
     pub selections: Box<Selections>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_OlapSlicerCacheSortOrder`: the text the file carried.
+/// The simple type `ST_OlapSlicerCacheSortOrder`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2738,16 +3246,21 @@ pub struct Olap {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct OlapSlicerCacheSortOrder(pub String);
-/// The members of `ST_OlapSlicerCacheSortOrder`, in alphabetical order.
+/// The members of the enumeration `ST_OlapSlicerCacheSortOrder`, in alphabetical order. `as_str`
+/// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum OlapSlicerCacheSortOrderMember {
+    /// The member written `ascending`.
     Ascending,
+    /// The member written `descending`.
     Descending,
+    /// The member written `natural`.
     Natural,
 }
 
-/// The tag `x14:oleItem`, schema type `CT_OleItem` of SDK 3.5.1's data.
+/// The `x14:oleItem` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OleItem`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2756,15 +3269,22 @@ pub enum OlapSlicerCacheSortOrderMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct OleItem {
+    /// The attribute `advise`, when the element has it.
     pub advise: Option<String>,
+    /// The attribute `icon`, when the element has it.
     pub icon: Option<String>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `preferPic`, when the element has it.
     pub prefer_pic: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `Values`, when there is one.
     pub values: Option<Box<Values>>,
 }
 
-/// The tag `x14:p`, schema type `CT_OlapSlicerCacheItemParent` of SDK 3.5.1's data.
+/// The `x14:p` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `CT_OlapSlicerCacheItemParent`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2773,11 +3293,14 @@ pub struct OleItem {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct P {
+    /// The attribute `n`, when the element has it.
     pub n: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:pivotArea`, schema type `CT_PivotArea` of SDK 3.5.1's data.
+/// The `x14:pivotArea` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_PivotArea`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2786,25 +3309,41 @@ pub struct P {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PivotArea {
+    /// The attribute `axis`, when the element has it.
     pub axis: Option<super::spreadsheet::PivotTableAxis>,
+    /// The attribute `cacheIndex`, when the element has it.
     pub cache_index: Option<String>,
+    /// The attribute `collapsedLevelsAreSubtotals`, when the element has it.
     pub collapsed_levels_are_subtotals: Option<String>,
+    /// The attribute `dataOnly`, when the element has it.
     pub data_only: Option<String>,
+    /// The attribute `field`, when the element has it.
     pub field: Option<String>,
+    /// The attribute `fieldPosition`, when the element has it.
     pub field_position: Option<String>,
+    /// The child that is `super::spreadsheet::FutureFeatureDataStorageArea`, when there is one.
     pub future_feature_data_storage_area:
         Option<Box<super::spreadsheet::FutureFeatureDataStorageArea>>,
+    /// The attribute `grandCol`, when the element has it.
     pub grand_col: Option<String>,
+    /// The attribute `grandRow`, when the element has it.
     pub grand_row: Option<String>,
+    /// The attribute `labelOnly`, when the element has it.
     pub label_only: Option<String>,
+    /// The attribute `offset`, when the element has it.
     pub offset: Option<String>,
+    /// The attribute `outline`, when the element has it.
     pub outline: Option<String>,
+    /// The child that is `super::spreadsheet::References`, when there is one.
     pub references: Option<Box<super::spreadsheet::References>>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<super::spreadsheet::RuleType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:pivotAreas`, schema type `CT_PivotAreas` of SDK 3.5.1's data.
+/// The `x14:pivotAreas` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_PivotAreas`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2813,12 +3352,16 @@ pub struct PivotArea {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PivotAreas {
+    /// The attribute `count`, when the element has it.
     pub count: Option<String>,
+    /// The children that are `super::spreadsheet::PivotArea`, in order.
     pub pivot_area: Vec<super::spreadsheet::PivotArea>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:pivotCacheDefinition`, schema type `CT_PivotCacheDefinition` of SDK 3.5.1's data.
+/// The `x14:pivotCacheDefinition` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_PivotCacheDefinition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2827,15 +3370,22 @@ pub struct PivotAreas {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PivotCacheDefinition {
+    /// The attribute `pivotCacheId`, when the element has it.
     pub pivot_cache_id: Option<String>,
+    /// The attribute `slicerData`, when the element has it.
     pub slicer_data: Option<String>,
+    /// The attribute `supportAddCalcMems`, when the element has it.
     pub support_add_calc_mems: Option<String>,
+    /// The attribute `supportSubqueryCalcMem`, when the element has it.
     pub support_subquery_calc_mem: Option<String>,
+    /// The attribute `supportSubqueryNonVisual`, when the element has it.
     pub support_subquery_non_visual: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:pivotCaches`, schema type `CT_PivotCaches` of SDK 3.5.1's data.
+/// The `x14:pivotCaches` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_PivotCaches`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2844,11 +3394,14 @@ pub struct PivotCacheDefinition {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PivotCaches {
+    /// The children that are `super::spreadsheet::PivotCache`, in order.
     pub pivotcache: Vec<super::spreadsheet::PivotCache>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:pivotChange`, schema type `CT_PivotChange` of SDK 3.5.1's data.
+/// The `x14:pivotChange` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_PivotChange`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2857,15 +3410,22 @@ pub struct PivotCaches {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PivotChange {
+    /// The attribute `allocationMethod`, when the element has it.
     pub allocation_method: Option<AllocationMethod>,
+    /// The child that is `EditValue`, which the schema requires.
     pub edit_value: Box<EditValue>,
+    /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionList>>,
+    /// The child that is `TupleItems`, which the schema requires.
     pub tuple_items: Box<TupleItems>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `weightExpression`, when the element has it.
     pub weight_expression: Option<String>,
 }
 
-/// The tag `x14:pivotChanges`, schema type `CT_PivotChanges` of SDK 3.5.1's data.
+/// The `x14:pivotChanges` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_PivotChanges`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2874,11 +3434,14 @@ pub struct PivotChange {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PivotChanges {
+    /// The children that are `PivotChange`, in order.
     pub pivot_change: Vec<PivotChange>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:pivotEdit`, schema type `CT_PivotEdit` of SDK 3.5.1's data.
+/// The `x14:pivotEdit` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_PivotEdit`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2887,14 +3450,22 @@ pub struct PivotChanges {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PivotEdit {
+    /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionList>>,
+    /// The child that is `PivotArea`, which the schema requires.
     pub pivot_area: Box<PivotArea>,
+    /// The child that is `TupleItems`, which the schema requires.
     pub tuple_items: Box<TupleItems>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `UserEdit`, which the schema requires.
     pub user_edit: Box<UserEdit>,
 }
 
-/// `ST_PivotEditValueType`: the text the file carried.
+/// The simple type `ST_PivotEditValueType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2903,18 +3474,25 @@ pub struct PivotEdit {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PivotEditValueType(pub String);
-/// The members of `ST_PivotEditValueType`, in alphabetical order.
+/// The members of the enumeration `ST_PivotEditValueType`, in alphabetical order. `as_str` gives
+/// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum PivotEditValueTypeMember {
+    /// The member written `boolean`.
     Boolean,
+    /// The member written `dateTime`.
     DateTime,
+    /// The member written `error`.
     Error,
+    /// The member written `number`.
     Number,
+    /// The member written `string`.
     String,
 }
 
-/// The tag `x14:pivotEdits`, schema type `CT_PivotEdits` of SDK 3.5.1's data.
+/// The `x14:pivotEdits` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_PivotEdits`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2923,11 +3501,14 @@ pub enum PivotEditValueTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PivotEdits {
+    /// The children that are `PivotEdit`, in order.
     pub pivot_edit: Vec<PivotEdit>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:pivotField`, schema type `CT_PivotField` of SDK 3.5.1's data.
+/// The `x14:pivotField` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_PivotField`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2936,12 +3517,16 @@ pub struct PivotEdits {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PivotField {
+    /// The attribute `fillDownLabels`, when the element has it.
     pub fill_down_labels: Option<String>,
+    /// The attribute `ignore`, when the element has it.
     pub ignore: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:pivotHierarchy`, schema type `CT_PivotHierarchy` of SDK 3.5.1's data.
+/// The `x14:pivotHierarchy` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_PivotHierarchy`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2950,11 +3535,16 @@ pub struct PivotField {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PivotHierarchy {
+    /// The attribute `ignore`, when the element has it.
     pub ignore: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_PivotShowAs`: the text the file carried.
+/// The simple type `ST_PivotShowAs`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2963,19 +3553,27 @@ pub struct PivotHierarchy {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PivotShowAs(pub String);
-/// The members of `ST_PivotShowAs`, in alphabetical order.
+/// The members of the enumeration `ST_PivotShowAs`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum PivotShowAsMember {
+    /// The member written `percentOfParent`.
     PercentOfParent,
+    /// The member written `percentOfParentCol`.
     PercentOfParentCol,
+    /// The member written `percentOfParentRow`.
     PercentOfParentRow,
+    /// The member written `percentOfRunningTotal`.
     PercentOfRunningTotal,
+    /// The member written `rankAscending`.
     RankAscending,
+    /// The member written `rankDescending`.
     RankDescending,
 }
 
-/// The tag `x14:pivotTable`, schema type `CT_SlicerCachePivotTable` of SDK 3.5.1's data.
+/// The `x14:pivotTable` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_SlicerCachePivotTable`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2984,12 +3582,16 @@ pub enum PivotShowAsMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PivotTable {
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `tabId`, when the element has it.
     pub tab_id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:pivotTableDefinition`, schema type `CT_PivotTableDefinition` of SDK 3.5.1's data.
+/// The `x14:pivotTableDefinition` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_PivotTableDefinition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2998,23 +3600,38 @@ pub struct PivotTable {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PivotTableDefinition {
+    /// The attribute `allocationMethod`, when the element has it.
     pub allocation_method: Option<AllocationMethod>,
+    /// The attribute `altText`, when the element has it.
     pub alt_text: Option<String>,
+    /// The attribute `altTextSummary`, when the element has it.
     pub alt_text_summary: Option<String>,
+    /// The attribute `autoApply`, when the element has it.
     pub auto_apply: Option<String>,
+    /// The attribute `calculatedMembersInFilters`, when the element has it.
     pub calculated_members_in_filters: Option<String>,
+    /// The child that is `ConditionalFormats`, when there is one.
     pub conditional_formats: Option<Box<ConditionalFormats>>,
+    /// The attribute `enableEdit`, when the element has it.
     pub enable_edit: Option<String>,
+    /// The attribute `fillDownLabelsDefault`, when the element has it.
     pub fill_down_labels_default: Option<String>,
+    /// The attribute `hideValuesRow`, when the element has it.
     pub hide_values_row: Option<String>,
+    /// The child that is `PivotChanges`, when there is one.
     pub pivot_changes: Option<Box<PivotChanges>>,
+    /// The child that is `PivotEdits`, when there is one.
     pub pivot_edits: Option<Box<PivotEdits>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visualTotalsForSets`, when the element has it.
     pub visual_totals_for_sets: Option<String>,
+    /// The attribute `weightExpression`, when the element has it.
     pub weight_expression: Option<String>,
 }
 
-/// The tag `x14:pivotTables`, schema type `CT_SlicerCachePivotTables` of SDK 3.5.1's data.
+/// The `x14:pivotTables` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_SlicerCachePivotTables`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3023,20 +3640,30 @@ pub struct PivotTableDefinition {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PivotTables {
+    /// The children that are `PivotTable`, in order.
     pub pivot_table: Vec<PivotTable>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_PivotUserEdit`: choice in `CT_PivotUserEdit`.
+/// One child element of a choice: choice in `CT_PivotUserEdit`.
+///
+/// The schema types that hold it: `CT_PivotUserEdit`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum PivotUserEditContent {
+    /// The element `x14:editValue`, a `EditValue`.
     EditValue(EditValue),
+    /// The element `xne:f`, a `F`.
     F(office_excel_2006_main::F),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
 }
 
-/// The tag `x14:protectedRange`, schema type `CT_ProtectedRange` of SDK 3.5.1's data.
+/// The `x14:protectedRange` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_ProtectedRange`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3045,18 +3672,28 @@ pub enum PivotUserEditContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ProtectedRange {
+    /// The attribute `algorithmName`, when the element has it.
     pub algorithm_name: Option<String>,
+    /// The attribute `hashValue`, when the element has it.
     pub hash_value: Option<String>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `password`, when the element has it.
     pub password: Option<String>,
+    /// The attribute `saltValue`, when the element has it.
     pub salt_value: Option<String>,
+    /// The attribute `securityDescriptor`, when the element has it.
     pub security_descriptor: Option<String>,
+    /// The attribute `spinCount`, when the element has it.
     pub spin_count: Option<String>,
+    /// The child that is `office_excel_2006_main::Sqref`, which the schema requires.
     pub sqref: Box<office_excel_2006_main::Sqref>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:protectedRanges`, schema type `CT_ProtectedRanges` of SDK 3.5.1's data.
+/// The `x14:protectedRanges` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_ProtectedRanges`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3065,11 +3702,14 @@ pub struct ProtectedRange {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ProtectedRanges {
+    /// The children that are `ProtectedRange`, in order.
     pub protected_range: Vec<ProtectedRange>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:range`, schema type `CT_OlapSlicerCacheRange` of SDK 3.5.1's data.
+/// The `x14:range` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OlapSlicerCacheRange`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3078,12 +3718,16 @@ pub struct ProtectedRanges {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Range {
+    /// The children that are `IOlapSlicerCacheItem`, in order.
     pub i_olap_slicer_cache_item: Vec<IOlapSlicerCacheItem>,
+    /// The attribute `startItem`, when the element has it.
     pub start_item: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:ranges`, schema type `CT_OlapSlicerCacheRanges` of SDK 3.5.1's data.
+/// The `x14:ranges` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OlapSlicerCacheRanges`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3092,11 +3736,14 @@ pub struct Range {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Ranges {
+    /// The children that are `Range`, in order.
     pub range: Vec<Range>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:row`, schema type `CT_TupleSetRow` of SDK 3.5.1's data.
+/// The `x14:row` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TupleSetRow`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3105,11 +3752,14 @@ pub struct Ranges {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Row {
+    /// The children that are `RowItem`, in order.
     pub item: Vec<RowItem>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:rowItem`, schema type `CT_TupleSetRowItem` of SDK 3.5.1's data.
+/// The `x14:rowItem` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TupleSetRowItem`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3118,12 +3768,16 @@ pub struct Row {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RowItem {
+    /// The attribute `d`, when the element has it.
     pub d: Option<String>,
+    /// The attribute `u`, when the element has it.
     pub u: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:rows`, schema type `CT_TupleSetRows` of SDK 3.5.1's data.
+/// The `x14:rows` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TupleSetRows`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3132,11 +3786,16 @@ pub struct RowItem {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Rows {
+    /// The children that are `Row`, in order.
     pub row: Vec<Row>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_SelType`: the text the file carried.
+/// The simple type `ST_SelType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3145,16 +3804,21 @@ pub struct Rows {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SelType(pub String);
-/// The members of `ST_SelType`, in alphabetical order.
+/// The members of the enumeration `ST_SelType`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum SelTypeMember {
+    /// The member written `extended`.
     Extended,
+    /// The member written `multi`.
     Multi,
+    /// The member written `single`.
     Single,
 }
 
-/// The tag `x14:selection`, schema type `CT_OlapSlicerCacheSelection` of SDK 3.5.1's data.
+/// The `x14:selection` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OlapSlicerCacheSelection`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3163,12 +3827,16 @@ pub enum SelTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Selection {
+    /// The attribute `n`, when the element has it.
     pub n: Option<String>,
+    /// The children that are `P`, in order.
     pub p: Vec<P>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:selections`, schema type `CT_OlapSlicerCacheSelections` of SDK 3.5.1's data.
+/// The `x14:selections` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_OlapSlicerCacheSelections`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3177,12 +3845,16 @@ pub struct Selection {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Selections {
+    /// The attribute `count`, when the element has it.
     pub count: Option<String>,
+    /// The children that are `Selection`, in order.
     pub selection: Vec<Selection>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:setLevel`, schema type `CT_SetLevel` of SDK 3.5.1's data.
+/// The `x14:setLevel` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SetLevel`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3191,11 +3863,14 @@ pub struct Selections {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SetLevel {
+    /// The attribute `hierarchy`, when the element has it.
     pub hierarchy: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:setLevels`, schema type `CT_SetLevels` of SDK 3.5.1's data.
+/// The `x14:setLevels` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SetLevels`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3204,12 +3879,16 @@ pub struct SetLevel {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SetLevels {
+    /// The attribute `count`, when the element has it.
     pub count: Option<String>,
+    /// The children that are `SetLevel`, in order.
     pub set_level: Vec<SetLevel>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:slicerCache`, schema type `CT_SlicerCache` of SDK 3.5.1's data.
+/// The `x14:slicerCache` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_SlicerCache`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3218,11 +3897,16 @@ pub struct SetLevels {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlicerCache {
+    /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_SlicerCacheCrossFilter`: the text the file carried.
+/// The simple type `ST_SlicerCacheCrossFilter`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3231,25 +3915,37 @@ pub struct SlicerCache {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlicerCacheCrossFilter(pub String);
-/// The members of `ST_SlicerCacheCrossFilter`, in alphabetical order.
+/// The members of the enumeration `ST_SlicerCacheCrossFilter`, in alphabetical order. `as_str`
+/// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum SlicerCacheCrossFilterMember {
+    /// The member written `none`.
     None,
+    /// The member written `showItemsWithDataAtTop`.
     ShowItemsWithDataAtTop,
+    /// The member written `showItemsWithNoData`.
     ShowItemsWithNoData,
 }
 
-/// One item of `CT_SlicerCacheData`: choice in `CT_SlicerCacheData`.
+/// One child element of a choice: choice in `CT_SlicerCacheData`.
+///
+/// The schema types that hold it: `CT_SlicerCacheData`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum SlicerCacheDataContent {
+    /// The element `x14:olap`, a `Olap`.
     Olap(Olap),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `x14:tabular`, a `Tabular`.
     Tabular(Tabular),
 }
 
-/// The tag `x14:slicerCacheDefinition`, schema type `CT_SlicerCacheDefinition` of SDK 3.5.1's data.
+/// The `x14:slicerCacheDefinition` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_SlicerCacheDefinition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3258,16 +3954,23 @@ pub enum SlicerCacheDataContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlicerCacheDefinition {
+    /// The child that is `Data`, when there is one.
     pub data: Option<Box<Data>>,
+    /// The child that is `ExtLstSlicerCacheDefinitionExtensionList`, when there is one.
     pub ext_lst_slicer_cache_definition_extension_list:
         Option<Box<ExtLstSlicerCacheDefinitionExtensionList>>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The child that is `PivotTables`, when there is one.
     pub pivot_tables: Option<Box<PivotTables>>,
+    /// The attribute `sourceName`, when the element has it.
     pub source_name: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:slicerCaches`, schema type `CT_SlicerCaches` of SDK 3.5.1's data.
+/// The `x14:slicerCaches` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_SlicerCaches`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3276,11 +3979,14 @@ pub struct SlicerCacheDefinition {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlicerCaches {
+    /// The children that are `SlicerCache`, in order.
     pub slicer_cache: Vec<SlicerCache>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:slicerList`, schema type `CT_SlicerRefs` of SDK 3.5.1's data.
+/// The `x14:slicerList` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_SlicerRefs`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3289,11 +3995,14 @@ pub struct SlicerCaches {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlicerList {
+    /// The children that are `SlicerSlicerRef`, in order.
     pub slicer_slicer_ref: Vec<SlicerSlicerRef>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:slicer`, schema type `CT_Slicer` of SDK 3.5.1's data.
+/// The `x14:slicer` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Slicer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3302,21 +4011,34 @@ pub struct SlicerList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlicerSlicer {
+    /// The attribute `cache`, when the element has it.
     pub cache: Option<String>,
+    /// The attribute `caption`, when the element has it.
     pub caption: Option<String>,
+    /// The attribute `columnCount`, when the element has it.
     pub column_count: Option<String>,
+    /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionList>>,
+    /// The attribute `level`, when the element has it.
     pub level: Option<String>,
+    /// The attribute `lockedPosition`, when the element has it.
     pub locked_position: Option<String>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `rowHeight`, when the element has it.
     pub row_height: Option<String>,
+    /// The attribute `showCaption`, when the element has it.
     pub show_caption: Option<String>,
+    /// The attribute `startItem`, when the element has it.
     pub start_item: Option<String>,
+    /// The attribute `style`, when the element has it.
     pub style: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:slicer`, schema type `CT_SlicerRef` of SDK 3.5.1's data.
+/// The `x14:slicer` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SlicerRef`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3325,11 +4047,14 @@ pub struct SlicerSlicer {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlicerSlicerRef {
+    /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:slicerStyle`, schema type `CT_SlicerStyle` of SDK 3.5.1's data.
+/// The `x14:slicerStyle` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_SlicerStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3338,12 +4063,16 @@ pub struct SlicerSlicerRef {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlicerStyle {
+    /// The child that is `SlicerStyleElements`, when there is one.
     pub elements: Option<Box<SlicerStyleElements>>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:slicerStyleElement`, schema type `CT_SlicerStyleElement` of SDK 3.5.1's data.
+/// The `x14:slicerStyleElement` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_SlicerStyleElement`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3352,12 +4081,16 @@ pub struct SlicerStyle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlicerStyleElement {
+    /// The attribute `dxfId`, when the element has it.
     pub dxf_id: Option<String>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<SlicerStyleType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:slicerStyleElements`, schema type `CT_SlicerStyleElements` of SDK 3.5.1's data.
+/// The `x14:slicerStyleElements` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_SlicerStyleElements`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3366,11 +4099,16 @@ pub struct SlicerStyleElement {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlicerStyleElements {
+    /// The children that are `SlicerStyleElement`, in order.
     pub slicer_style_element: Vec<SlicerStyleElement>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_SlicerStyleType`: the text the file carried.
+/// The simple type `ST_SlicerStyleType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3379,21 +4117,31 @@ pub struct SlicerStyleElements {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlicerStyleType(pub String);
-/// The members of `ST_SlicerStyleType`, in alphabetical order.
+/// The members of the enumeration `ST_SlicerStyleType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum SlicerStyleTypeMember {
+    /// The member written `hoveredSelectedItemWithData`.
     HoveredSelectedItemWithData,
+    /// The member written `hoveredSelectedItemWithNoData`.
     HoveredSelectedItemWithNoData,
+    /// The member written `hoveredUnselectedItemWithData`.
     HoveredUnselectedItemWithData,
+    /// The member written `hoveredUnselectedItemWithNoData`.
     HoveredUnselectedItemWithNoData,
+    /// The member written `selectedItemWithData`.
     SelectedItemWithData,
+    /// The member written `selectedItemWithNoData`.
     SelectedItemWithNoData,
+    /// The member written `unselectedItemWithData`.
     UnselectedItemWithData,
+    /// The member written `unselectedItemWithNoData`.
     UnselectedItemWithNoData,
 }
 
-/// The tag `x14:slicerStyles`, schema type `CT_SlicerStyles` of SDK 3.5.1's data.
+/// The `x14:slicerStyles` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_SlicerStyles`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3402,12 +4150,16 @@ pub enum SlicerStyleTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SlicerStyles {
+    /// The attribute `defaultSlicerStyle`, when the element has it.
     pub default_slicer_style: Option<String>,
+    /// The children that are `SlicerStyle`, in order.
     pub slicer_style: Vec<SlicerStyle>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:slicers`, schema type `CT_Slicers` of SDK 3.5.1's data.
+/// The `x14:slicers` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Slicers`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3416,11 +4168,14 @@ pub struct SlicerStyles {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Slicers {
+    /// The children that are `SlicerSlicer`, in order.
     pub slicer_slicer: Vec<SlicerSlicer>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:sortCondition`, schema type `CT_SortCondition` of SDK 3.5.1's data.
+/// The `x14:sortCondition` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_SortCondition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3429,17 +4184,26 @@ pub struct Slicers {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SortCondition {
+    /// The attribute `customList`, when the element has it.
     pub custom_list: Option<String>,
+    /// The attribute `descending`, when the element has it.
     pub descending: Option<String>,
+    /// The attribute `dxfId`, when the element has it.
     pub dxf_id: Option<String>,
+    /// The attribute `iconId`, when the element has it.
     pub icon_id: Option<String>,
+    /// The attribute `iconSet`, when the element has it.
     pub icon_set: Option<IconSetType>,
+    /// The attribute `ref`, when the element has it.
     pub r#ref: Option<String>,
+    /// The attribute `sortBy`, when the element has it.
     pub sort_by: Option<super::spreadsheet::SortBy>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:sourceConnection`, schema type `CT_SourceConnection` of SDK 3.5.1's data.
+/// The `x14:sourceConnection` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_SourceConnection`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3448,11 +4212,14 @@ pub struct SortCondition {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SourceConnection {
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:sparkline`, schema type `CT_Sparkline` of SDK 3.5.1's data.
+/// The `x14:sparkline` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Sparkline`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3461,12 +4228,18 @@ pub struct SourceConnection {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Sparkline {
+    /// The child that is `office_excel_2006_main::F`, when there is one.
     pub f: Option<Box<office_excel_2006_main::F>>,
+    /// The child that is `office_excel_2006_main::Sqref`, which the schema requires.
     pub sqref: Box<office_excel_2006_main::Sqref>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_SparklineAxisMinMax`: the text the file carried.
+/// The simple type `ST_SparklineAxisMinMax`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3475,16 +4248,21 @@ pub struct Sparkline {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SparklineAxisMinMax(pub String);
-/// The members of `ST_SparklineAxisMinMax`, in alphabetical order.
+/// The members of the enumeration `ST_SparklineAxisMinMax`, in alphabetical order. `as_str` gives
+/// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum SparklineAxisMinMaxMember {
+    /// The member written `custom`.
     Custom,
+    /// The member written `group`.
     Group,
+    /// The member written `individual`.
     Individual,
 }
 
-/// The tag `x14:sparklineGroup`, schema type `CT_SparklineGroup` of SDK 3.5.1's data.
+/// The `x14:sparklineGroup` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_SparklineGroup`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3493,37 +4271,66 @@ pub enum SparklineAxisMinMaxMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SparklineGroup {
+    /// The child that is `ColorAxis`, when there is one.
     pub color_axis: Option<Box<ColorAxis>>,
+    /// The child that is `ColorFirst`, when there is one.
     pub color_first: Option<Box<ColorFirst>>,
+    /// The child that is `ColorHigh`, when there is one.
     pub color_high: Option<Box<ColorHigh>>,
+    /// The child that is `ColorLast`, when there is one.
     pub color_last: Option<Box<ColorLast>>,
+    /// The child that is `ColorLow`, when there is one.
     pub color_low: Option<Box<ColorLow>>,
+    /// The child that is `ColorMarkers`, when there is one.
     pub color_markers: Option<Box<ColorMarkers>>,
+    /// The child that is `ColorNegative`, when there is one.
     pub color_negative: Option<Box<ColorNegative>>,
+    /// The child that is `ColorSeries`, when there is one.
     pub color_series: Option<Box<ColorSeries>>,
+    /// The attribute `dateAxis`, when the element has it.
     pub date_axis: Option<String>,
+    /// The attribute `displayEmptyCellsAs`, when the element has it.
     pub display_empty_cells_as: Option<DispBlanksAs>,
+    /// The attribute `displayHidden`, when the element has it.
     pub display_hidden: Option<String>,
+    /// The attribute `displayXAxis`, when the element has it.
     pub display_x_axis: Option<String>,
+    /// The child that is `office_excel_2006_main::F`, when there is one.
     pub f: Option<Box<office_excel_2006_main::F>>,
+    /// The attribute `first`, when the element has it.
     pub first: Option<String>,
+    /// The attribute `high`, when the element has it.
     pub high: Option<String>,
+    /// The attribute `last`, when the element has it.
     pub last: Option<String>,
+    /// The attribute `lineWeight`, when the element has it.
     pub line_weight: Option<String>,
+    /// The attribute `low`, when the element has it.
     pub low: Option<String>,
+    /// The attribute `manualMax`, when the element has it.
     pub manual_max: Option<String>,
+    /// The attribute `manualMin`, when the element has it.
     pub manual_min: Option<String>,
+    /// The attribute `markers`, when the element has it.
     pub markers: Option<String>,
+    /// The attribute `maxAxisType`, when the element has it.
     pub max_axis_type: Option<SparklineAxisMinMax>,
+    /// The attribute `minAxisType`, when the element has it.
     pub min_axis_type: Option<SparklineAxisMinMax>,
+    /// The attribute `negative`, when the element has it.
     pub negative: Option<String>,
+    /// The attribute `rightToLeft`, when the element has it.
     pub right_to_left: Option<String>,
+    /// The child that is `Sparklines`, which the schema requires.
     pub sparklines: Box<Sparklines>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<SparklineType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:sparklineGroups`, schema type `CT_SparklineGroups` of SDK 3.5.1's data.
+/// The `x14:sparklineGroups` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_SparklineGroups`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3532,11 +4339,16 @@ pub struct SparklineGroup {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SparklineGroups {
+    /// The children that are `SparklineGroup`, in order.
     pub sparkline_group: Vec<SparklineGroup>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_SparklineType`: the text the file carried.
+/// The simple type `ST_SparklineType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3545,16 +4357,21 @@ pub struct SparklineGroups {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SparklineType(pub String);
-/// The members of `ST_SparklineType`, in alphabetical order.
+/// The members of the enumeration `ST_SparklineType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum SparklineTypeMember {
+    /// The member written `column`.
     Column,
+    /// The member written `line`.
     Line,
+    /// The member written `stacked`.
     Stacked,
 }
 
-/// The tag `x14:sparklines`, schema type `CT_Sparklines` of SDK 3.5.1's data.
+/// The `x14:sparklines` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_Sparklines`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3563,11 +4380,14 @@ pub enum SparklineTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Sparklines {
+    /// The children that are `Sparkline`, in order.
     pub sparkline: Vec<Sparkline>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:table`, schema type `CT_Table` of SDK 3.5.1's data.
+/// The `x14:table` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Table`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3576,12 +4396,16 @@ pub struct Sparklines {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Table {
+    /// The attribute `altText`, when the element has it.
     pub alt_text: Option<String>,
+    /// The attribute `altTextSummary`, when the element has it.
     pub alt_text_summary: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:tabular`, schema type `CT_TabularSlicerCache` of SDK 3.5.1's data.
+/// The `x14:tabular` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TabularSlicerCache`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3590,17 +4414,28 @@ pub struct Table {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Tabular {
+    /// The attribute `crossFilter`, when the element has it.
     pub cross_filter: Option<SlicerCacheCrossFilter>,
+    /// The attribute `customListSort`, when the element has it.
     pub custom_list_sort: Option<String>,
+    /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionList>>,
+    /// The child that is `Items`, which the schema requires.
     pub items: Box<Items>,
+    /// The attribute `pivotCacheId`, when the element has it.
     pub pivot_cache_id: Option<String>,
+    /// The attribute `showMissing`, when the element has it.
     pub show_missing: Option<String>,
+    /// The attribute `sortOrder`, when the element has it.
     pub sort_order: Option<TabularSlicerCacheSortOrder>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_TabularSlicerCacheSortOrder`: the text the file carried.
+/// The simple type `ST_TabularSlicerCacheSortOrder`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3609,15 +4444,21 @@ pub struct Tabular {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TabularSlicerCacheSortOrder(pub String);
-/// The members of `ST_TabularSlicerCacheSortOrder`, in alphabetical order.
+/// The members of the enumeration `ST_TabularSlicerCacheSortOrder`, in alphabetical order. `as_str`
+/// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TabularSlicerCacheSortOrderMember {
+    /// The member written `ascending`.
     Ascending,
+    /// The member written `descending`.
     Descending,
 }
 
-/// `ST_TextHAlign`: the text the file carried.
+/// The simple type `ST_TextHAlign`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3626,18 +4467,27 @@ pub enum TabularSlicerCacheSortOrderMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextHAlign(pub String);
-/// The members of `ST_TextHAlign`, in alphabetical order.
+/// The members of the enumeration `ST_TextHAlign`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextHAlignMember {
+    /// The member written `center`.
     Center,
+    /// The member written `distributed`.
     Distributed,
+    /// The member written `justify`.
     Justify,
+    /// The member written `left`.
     Left,
+    /// The member written `right`.
     Right,
 }
 
-/// `ST_TextVAlign`: the text the file carried.
+/// The simple type `ST_TextVAlign`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3646,18 +4496,25 @@ pub enum TextHAlignMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextVAlign(pub String);
-/// The members of `ST_TextVAlign`, in alphabetical order.
+/// The members of the enumeration `ST_TextVAlign`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextVAlignMember {
+    /// The member written `bottom`.
     Bottom,
+    /// The member written `center`.
     Center,
+    /// The member written `distributed`.
     Distributed,
+    /// The member written `justify`.
     Justify,
+    /// The member written `top`.
     Top,
 }
 
-/// The tag `x14:tupleItem`, schema type `ST_Xstring` of SDK 3.5.1's data.
+/// The `x14:tupleItem` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `ST_Xstring`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3666,11 +4523,14 @@ pub enum TextVAlignMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TupleItem {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `x14:tupleItems`, schema type `CT_TupleItems` of SDK 3.5.1's data.
+/// The `x14:tupleItems` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_TupleItems`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3679,11 +4539,14 @@ pub struct TupleItem {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TupleItems {
+    /// The children that are `TupleItem`, in order.
     pub tuple_item: Vec<TupleItem>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:tupleSet`, schema type `CT_TupleSet` of SDK 3.5.1's data.
+/// The `x14:tupleSet` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TupleSet`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3692,14 +4555,20 @@ pub struct TupleItems {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TupleSet {
+    /// The attribute `columnCount`, when the element has it.
     pub column_count: Option<String>,
+    /// The child that is `Headers`, which the schema requires.
     pub headers: Box<Headers>,
+    /// The attribute `rowCount`, when the element has it.
     pub row_count: Option<String>,
+    /// The child that is `Rows`, which the schema requires.
     pub rows: Box<Rows>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:userEdit`, schema type `CT_PivotUserEdit` of SDK 3.5.1's data.
+/// The `x14:userEdit` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_PivotUserEdit`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3708,11 +4577,14 @@ pub struct TupleSet {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct UserEdit {
+    /// The child that is an item of `PivotUserEditContent`, which the schema requires.
     pub content: Box<PivotUserEditContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `x14:values`, schema type `CT_DdeValues` of SDK 3.5.1's data.
+/// The `x14:values` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_DdeValues`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3721,13 +4593,18 @@ pub struct UserEdit {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Values {
+    /// The attribute `cols`, when the element has it.
     pub cols: Option<String>,
+    /// The attribute `rows`, when the element has it.
     pub rows: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The children that are `super::spreadsheet::Value`, in order.
     pub value: Vec<super::spreadsheet::Value>,
 }
 
-/// The tag `x14:workbookPr`, schema type `CT_WorkbookPr` of SDK 3.5.1's data.
+/// The `x14:workbookPr` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_WorkbookPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3736,9 +4613,13 @@ pub struct Values {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct WorkbookPr {
+    /// The attribute `accuracyVersion`, when the element has it.
     pub accuracy_version: Option<String>,
+    /// The attribute `defaultImageDpi`, when the element has it.
     pub default_image_dpi: Option<String>,
+    /// The attribute `discardImageEditData`, when the element has it.
     pub discard_image_edit_data: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -3790,7 +4671,7 @@ impl AllocationMethodMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4148,7 +5029,7 @@ impl CfvoTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4202,7 +5083,7 @@ impl CheckedMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4754,7 +5635,7 @@ impl DataBarAxisPositionMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4816,7 +5697,7 @@ impl DataBarDirectionMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5027,7 +5908,7 @@ impl DispBlanksAsMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5081,7 +5962,7 @@ impl DropStyleMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5182,7 +6063,7 @@ impl EditValidationMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5680,7 +6561,7 @@ impl IconSetTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5992,7 +6873,7 @@ impl ObjectTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -6074,7 +6955,7 @@ impl OlapSlicerCacheSortOrderMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -6356,7 +7237,7 @@ impl PivotEditValueTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -6507,7 +7388,7 @@ impl PivotShowAsMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -6829,7 +7710,7 @@ impl SelTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -7007,7 +7888,7 @@ impl SlicerCacheCrossFilterMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -7322,7 +8203,7 @@ impl SlicerStyleTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -7500,7 +8381,7 @@ impl SparklineAxisMinMaxMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -7615,7 +8496,7 @@ impl SparklineTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -7746,7 +8627,7 @@ impl TabularSlicerCacheSortOrderMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -7806,7 +8687,7 @@ impl TextHAlignMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -7862,7 +8743,7 @@ impl TextVAlignMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

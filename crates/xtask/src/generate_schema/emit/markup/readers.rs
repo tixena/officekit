@@ -23,7 +23,9 @@ pub fn text(header: &str, names: &Names<'_>) -> String {
     let _ = writeln!(
         out,
         "//! The readers of `crate::{}`: each struct read from its generic\n\
-         //! element, its unknown content kept at its place.",
+         //! element, its unknown content kept at its place.\n//!\n\
+         //! A read never fails. An attribute value that is no value of its simple type stays stored\n\
+         //! as text, and `value` reports it later. Files of either class read the same way.",
         module.name
     );
     let mut functions: Vec<(String, String)> = Vec::new();

@@ -23,15 +23,25 @@ const DAY: i128 = 86_400_000_000_000;
 const PLACES: u32 = 20;
 
 /// Something a save changed that its caller may want to know.
+///
+/// It prints as one line:
+///
+/// ```text
+/// /xl/worksheets/sheet1.xml A1: the date 2026-10-14T00:00:00 was written as the number 46309
+/// ```
 #[derive(Clone, Debug, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum SaveWarning {
     /// A Strict date cell written as a number cell: the cell's reference, the
     /// date text it held, the part, and the serial date-time written.
     DateCellConverted {
+        /// The cell's reference, such as `A1`; empty when the cell had none.
         cell: String,
+        /// The date text the cell held.
         date: String,
+        /// The worksheet part the cell is in.
         part: PartName,
+        /// The serial date-time written in its place.
         serial: String,
     },
 }
@@ -98,6 +108,15 @@ pub fn convert_date_cells(
 /// the 1904 one when `date1904`, the time of day as a fraction of a day.
 /// `None` outside 0001-01-01 to 9999-12-31; a zone the date names is ignored,
 /// as a workbook's dates are local.
+///
+/// ```
+/// use officekit_transitional::dates::serial_date_time;
+/// use officekit_xml::values::DateTime;
+///
+/// let noon = DateTime::new((2024, 1, 1), (12, 0, 0, 0), None);
+/// assert_eq!(serial_date_time(&noon, false), Some(45292.5));
+/// assert_eq!(serial_date_time(&noon, true), Some(43830.5));
+/// ```
 #[must_use]
 pub fn serial_date_time(date: &DateTime, date1904: bool) -> Option<f64> {
     if !(1_i32..=9999_i32).contains(&date.year) {

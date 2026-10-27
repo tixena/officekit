@@ -15,6 +15,9 @@ workspace = true
 # rkyv and the archive of every type: officekit's binary form.
 binary-format = ["dep:rkyv", "officekit-xml/binary-format"]
 
+[package.metadata.docs.rs]
+all-features = true
+
 [dependencies]
 # The XML layer: the element tree every content-types and relationship part parses into
 officekit-xml.workspace = true

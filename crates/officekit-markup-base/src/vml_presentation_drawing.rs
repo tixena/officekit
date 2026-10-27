@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `pvml` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `urn:schemas-microsoft-com:office:powerpoint`, which files write with the prefix `pvml`.
 //!
-//! The namespace is `urn:schemas-microsoft-com:office:powerpoint`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 pub mod read;
 pub mod write;
@@ -237,7 +237,8 @@ pub static VML_DIAGRAM_TEXT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-/// 19.5.2.1 iscomment (Ink Annotation Flag): the tag `pvml:iscomment`, schema type `CT_Empty`.
+/// The `pvml:iscomment` element, Ink Annotation Flag (ECMA-376 Part 4, section 19.5.2.1). Its
+/// schema type is `CT_Empty`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -246,10 +247,12 @@ pub static VML_DIAGRAM_TEXT_SHAPE: crate::Shape = crate::Shape {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct InkAnnotationFlag {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 19.5.2.2 textdata (VML Diagram Text): the tag `pvml:textdata`, schema type `CT_Rel`.
+/// The `pvml:textdata` element, VML Diagram Text (ECMA-376 Part 4, section 19.5.2.2). Its schema
+/// type is `CT_Rel`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -258,7 +261,9 @@ pub struct InkAnnotationFlag {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct VMLDiagramText {
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 

@@ -22,6 +22,7 @@ mod tests;
 #[derive(Clone, Copy, Debug)]
 #[non_exhaustive]
 pub struct Child<'element> {
+    /// The child's name.
     pub name: &'element QName,
     /// The namespace of the element the child sits in, as the file holds it:
     /// an `mc:Choice` when the child sits in one.
@@ -31,6 +32,7 @@ pub struct Child<'element> {
 }
 
 impl<'element> Child<'element> {
+    /// A child called `name`, in an element of `parent_namespace`, whose type is `type_id`.
     #[must_use]
     pub const fn new(
         name: &'element QName,
@@ -67,6 +69,7 @@ struct Info {
 pub struct Mismatch {
     /// The child the error is about, by index; `None` for a child missing.
     pub child: Option<usize>,
+    /// What was found.
     pub code: ErrorCode,
     /// The children the model allows there, `", expected w:pPr or w:r"`, or
     /// nothing.

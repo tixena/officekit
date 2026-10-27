@@ -64,9 +64,17 @@
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 
+//! The namespaces officekit knows.
+//!
+//! A namespace is the group an element or attribute name belongs to. Each has a prefix,
+//! such as `w` for Word's, and a URI that files use to name it. A file in the Strict
+//! class may use another URI for the same namespace. `NAMESPACES` holds one row for each,
+//! and `NamespaceRow` is a row.
+
 use super::OfficeVersion;
 
-/// Every namespace, sorted by prefix; a namespace's id is its index.
+/// Every namespace, sorted by prefix; a namespace's id is its index. A name that holds
+/// `Namespace::Known` holds this id.
 pub static NAMESPACES: &[NamespaceRow] = &[
     NamespaceRow {
         introduced: None,
@@ -1083,6 +1091,7 @@ pub static NAMESPACES: &[NamespaceRow] = &[
 pub struct NamespaceRow {
     /// The Office version that brought a Microsoft extension; `None` for ECMA-376's own.
     pub introduced: Option<OfficeVersion>,
+    /// The prefix the schemas bind to the namespace, such as `w`.
     pub prefix: &'static str,
     /// The Strict URI, when the namespace has one apart from its Transitional URI.
     pub strict_uri: Option<&'static str>,

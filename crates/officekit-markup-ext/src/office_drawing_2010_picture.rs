@@ -212,8 +212,11 @@
 //! The hooks of the `pic14` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_core::office_drawing_2010_picture`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/drawing/2010/picture`.
+//! The namespace is `http://schemas.microsoft.com/office/drawing/2010/picture`. Its prefix, `pic14`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_core::office_drawing_2010_picture::*;
 
 use officekit_markup_base::Written;
@@ -229,24 +232,34 @@ use std::io;
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_drawing_2010_picture` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `ExtLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
         None
     }
 
+    /// Asked for each `Style`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn style(&mut self, _node: &Style) -> Option<Style> {
         None
     }
 
+    /// Asked when a `ExtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Style` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_style(&mut self, _node: &Style, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
@@ -258,10 +271,12 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_drawing_2010_picture` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `ExtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext_lst(&mut self, _node: &ExtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Style`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn style(&mut self, _node: &Style) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

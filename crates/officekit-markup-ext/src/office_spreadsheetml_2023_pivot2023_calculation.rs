@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `xlpcalc` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/spreadsheetml/2023/pivot2023Calculation`, which files write with the prefix `xlpcalc`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2023/pivot2023Calculation`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -292,7 +294,8 @@ pub static PIVOT_FIELD_SUBTOTAL_LINE_ITEMS_SHAPE: officekit_markup_base::Shape =
         text: false,
     };
 
-/// The tag `xlpcalc:aggregationInfo`, schema type `CT_AggregationInfo` of SDK 3.5.1's data.
+/// The `xlpcalc:aggregationInfo` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_AggregationInfo`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -301,12 +304,18 @@ pub static PIVOT_FIELD_SUBTOTAL_LINE_ITEMS_SHAPE: officekit_markup_base::Shape =
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AggregationInfo {
+    /// The attribute `aggregationType`, when the element has it.
     pub aggregation_type: Option<AggregationType>,
+    /// The attribute `sourceField`, when the element has it.
     pub source_field: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_AggregationType`: the text the file carried.
+/// The simple type `ST_AggregationType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -315,14 +324,20 @@ pub struct AggregationInfo {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AggregationType(pub String);
-/// The members of `ST_AggregationType`, in alphabetical order.
+/// The members of the enumeration `ST_AggregationType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum AggregationTypeMember {
+    /// The member written `countRepeatValues`.
     CountRepeatValues,
+    /// The member written `countValuesDuplicated`.
     CountValuesDuplicated,
+    /// The member written `distinctCount`.
     DistinctCount,
+    /// The member written `distinctDuplicates`.
     DistinctDuplicates,
+    /// The member written `median`.
     Median,
 }
 
@@ -336,14 +351,20 @@ pub enum AggregationTypeMember {
 /// not return itself from `crate::Context::office_spreadsheetml_2023_pivot2023_calculation` is
 /// never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `AggregationInfo`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn aggregation_info(&mut self, _node: &AggregationInfo) -> Option<AggregationInfo> {
         None
     }
 
+    /// Asked for each `FeatureSupportInfo`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn feature_support_info(&mut self, _node: &FeatureSupportInfo) -> Option<FeatureSupportInfo> {
         None
     }
 
+    /// Asked for each `PivotAreaReferenceSubtotals`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn pivot_area_reference_subtotals(
         &mut self,
         _node: &PivotAreaReferenceSubtotals,
@@ -351,6 +372,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `PivotFieldSubtotalLineItems`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn pivot_field_subtotal_line_items(
         &mut self,
         _node: &PivotFieldSubtotalLineItems,
@@ -358,6 +381,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `PivotFieldSubtotals`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn pivot_field_subtotals(
         &mut self,
         _node: &PivotFieldSubtotals,
@@ -365,10 +390,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `SubtotalLineItem`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn subtotal_line_item(&mut self, _node: &SubtotalLineItem) -> Option<SubtotalLineItem> {
         None
     }
 
+    /// Asked for each `SubtotalPivotItemSubtotal`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn subtotal_pivot_item_subtotal(
         &mut self,
         _node: &SubtotalPivotItemSubtotal,
@@ -376,6 +405,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `SubtotalPivotSubtotalType`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn subtotal_pivot_subtotal_type(
         &mut self,
         _node: &SubtotalPivotSubtotalType,
@@ -383,9 +414,12 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked when a `AggregationInfo` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_aggregation_info(
         &mut self,
         _node: &AggregationInfo,
@@ -394,9 +428,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FeatureSupportInfo` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_feature_support_info(
         &mut self,
         _node: &FeatureSupportInfo,
@@ -405,9 +442,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotAreaReferenceSubtotals` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_area_reference_subtotals(
         &mut self,
         _node: &PivotAreaReferenceSubtotals,
@@ -416,9 +456,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotFieldSubtotalLineItems` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_field_subtotal_line_items(
         &mut self,
         _node: &PivotFieldSubtotalLineItems,
@@ -427,9 +470,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotFieldSubtotals` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_field_subtotals(
         &mut self,
         _node: &PivotFieldSubtotals,
@@ -438,9 +484,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SubtotalLineItem` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_subtotal_line_item(
         &mut self,
         _node: &SubtotalLineItem,
@@ -449,9 +498,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SubtotalPivotItemSubtotal` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_subtotal_pivot_item_subtotal(
         &mut self,
         _node: &SubtotalPivotItemSubtotal,
@@ -460,9 +512,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SubtotalPivotSubtotalType` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_subtotal_pivot_subtotal_type(
         &mut self,
         _node: &SubtotalPivotSubtotalType,
@@ -472,7 +527,8 @@ pub trait Context: crate::Context {
     }
 }
 
-/// The tag `xlpcalc:featureSupportInfo`, schema type `CT_FeatureSupport` of SDK 3.5.1's data.
+/// The `xlpcalc:featureSupportInfo` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_FeatureSupport`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -481,12 +537,14 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FeatureSupportInfo {
+    /// The attribute `featureName`, when the element has it.
     pub feature_name: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlpcalc:pivotAreaReferenceSubtotals`, schema type `CT_PivotAreaReferenceSubtotals` of
-/// SDK 3.5.1's data.
+/// The `xlpcalc:pivotAreaReferenceSubtotals` element, declared by the schema data of the Open XML
+/// SDK, version 3.5.1. Its schema type is `CT_PivotAreaReferenceSubtotals`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -495,12 +553,14 @@ pub struct FeatureSupportInfo {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PivotAreaReferenceSubtotals {
+    /// The children that are `SubtotalPivotSubtotalType`, in order.
     pub subtotal_pivot_subtotal_type: Vec<SubtotalPivotSubtotalType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlpcalc:pivotFieldSubtotalLineItems`, schema type `CT_PivotTableSubtotalLineItems` of
-/// SDK 3.5.1's data.
+/// The `xlpcalc:pivotFieldSubtotalLineItems` element, declared by the schema data of the Open XML
+/// SDK, version 3.5.1. Its schema type is `CT_PivotTableSubtotalLineItems`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -509,11 +569,14 @@ pub struct PivotAreaReferenceSubtotals {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PivotFieldSubtotalLineItems {
+    /// The children that are `SubtotalLineItem`, in order.
     pub subtotal_line_item: Vec<SubtotalLineItem>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlpcalc:pivotFieldSubtotals`, schema type `CT_PivotFieldSubtotals` of SDK 3.5.1's data.
+/// The `xlpcalc:pivotFieldSubtotals` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_PivotFieldSubtotals`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -522,11 +585,14 @@ pub struct PivotFieldSubtotalLineItems {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PivotFieldSubtotals {
+    /// The children that are `SubtotalPivotItemSubtotal`, in order.
     pub subtotal_pivot_item_subtotal: Vec<SubtotalPivotItemSubtotal>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlpcalc:subtotalLineItem`, schema type `CT_PivotItemSubtotal` of SDK 3.5.1's data.
+/// The `xlpcalc:subtotalLineItem` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_PivotItemSubtotal`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -535,10 +601,12 @@ pub struct PivotFieldSubtotals {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SubtotalLineItem {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlpcalc:subtotal`, schema type `CT_PivotItemSubtotal` of SDK 3.5.1's data.
+/// The `xlpcalc:subtotal` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_PivotItemSubtotal`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -547,10 +615,12 @@ pub struct SubtotalLineItem {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SubtotalPivotItemSubtotal {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlpcalc:subtotal`, schema type `CT_PivotSubtotalType` of SDK 3.5.1's data.
+/// The `xlpcalc:subtotal` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_PivotSubtotalType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -559,7 +629,9 @@ pub struct SubtotalPivotItemSubtotal {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SubtotalPivotSubtotalType {
+    /// The attribute `subtotalType`, when the element has it.
     pub subtotal_type: Option<AggregationType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -569,10 +641,14 @@ pub struct SubtotalPivotSubtotalType {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_spreadsheetml_2023_pivot2023_calculation` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `AggregationInfo`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn aggregation_info(&mut self, _node: &AggregationInfo) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FeatureSupportInfo`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn feature_support_info(
         &mut self,
         _node: &FeatureSupportInfo,
@@ -580,6 +656,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotAreaReferenceSubtotals`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn pivot_area_reference_subtotals(
         &mut self,
         _node: &PivotAreaReferenceSubtotals,
@@ -587,6 +665,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotFieldSubtotalLineItems`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn pivot_field_subtotal_line_items(
         &mut self,
         _node: &PivotFieldSubtotalLineItems,
@@ -594,6 +674,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotFieldSubtotals`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn pivot_field_subtotals(
         &mut self,
         _node: &PivotFieldSubtotals,
@@ -601,10 +683,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SubtotalLineItem`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn subtotal_line_item(&mut self, _node: &SubtotalLineItem) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SubtotalPivotItemSubtotal`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn subtotal_pivot_item_subtotal(
         &mut self,
         _node: &SubtotalPivotItemSubtotal,
@@ -612,6 +698,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SubtotalPivotSubtotalType`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn subtotal_pivot_subtotal_type(
         &mut self,
         _node: &SubtotalPivotSubtotalType,
@@ -694,7 +782,7 @@ impl AggregationTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

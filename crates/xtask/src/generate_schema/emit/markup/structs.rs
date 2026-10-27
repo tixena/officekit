@@ -24,9 +24,6 @@ use crate::generate_schema::sdk_data::{DataAttribute, DataParticle, DataType, Ex
 /// (`large_enum_variant`).
 const VARIANT_SIZE_DIFFERENCE: usize = 200;
 
-/// clippy's longest first doc paragraph (`too_long_first_doc_paragraph`).
-const FIRST_PARAGRAPH: usize = 200;
-
 /// The names the generated modules use, Rust's prelude's and the hook traits':
 /// a struct or a simple type of one of them takes another name, as a
 /// collision does.
@@ -981,12 +978,12 @@ impl<'data> Builder<'data> {
                     let source = if file.is_some() {
                         ""
                     } else {
-                        " of SDK 3.5.1's data"
+                        ", declared by the schema data of the Open XML SDK, version 3.5.1"
                     };
                     (
                         local_words.clone(),
                         format!(
-                            "The tag `{}:{}`, schema type `{type_local}`{source}.",
+                            "The `{}:{}` element{source}. Its schema type is `{type_local}`.",
                             module.prefix, node.key.tag.local
                         ),
                         None,
@@ -996,12 +993,12 @@ impl<'data> Builder<'data> {
                     (
                         names::title_words(&found.title),
                         format!(
-                            "{} {} ({}): the tag `{}:{}`, schema type `{type_local}`.",
-                            found.section,
+                            "The `{}:{}` element, {} (ECMA-376 Part {}, section {}). Its schema type is `{type_local}`.",
+                            module.prefix,
                             node.key.tag.local,
                             found.title,
-                            module.prefix,
-                            node.key.tag.local
+                            found.part,
+                            found.section
                         ),
                         Some((found.part, found.section.clone())),
                     )
@@ -1846,20 +1843,18 @@ fn matching_rows(
     }
 }
 
-/// An enum's doc: the wildcard position it reads, or the types it is an
-/// item of with its row's source, in two paragraphs when one would be too
-/// long a first paragraph.
+/// An enum's doc: the wildcard position it reads, or the choice it is with its row's source, the
+/// schema types that hold it, and what `Other` is.
 fn enum_doc(types: &[String], source: &str, wildcard: bool) -> String {
     if wildcard {
         return format!("One element of a wildcard position: {source}, or `Other`.");
     }
     let shown: Vec<String> = types.iter().map(|name| format!("`{name}`")).collect();
-    let joined = format!("One item of {}: {source}.", shown.join(", "));
-    if joined.len() <= FIRST_PARAGRAPH {
-        joined
-    } else {
-        format!("One item of {source}.\n\nIts types: {}.", shown.join(", "))
-    }
+    format!(
+        "One child element of a choice: {source}.\n\nThe schema types that hold it: {}.\n\n`Other` \
+         holds an element or node the schemas do not declare at this position, in its place.",
+        shown.join(", ")
+    )
 }
 
 /// The structs two of whose fields take one name.

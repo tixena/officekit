@@ -211,6 +211,9 @@
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 //! The readers of `crate::office_spreadsheetml_2024_pivot_auto_refresh`: each struct read from its generic
 //! element, its unknown content kept at its place.
+//!
+//! A read never fails. An attribute value that is no value of its simple type stays stored
+//! as text, and `value` reports it later. Files of either class read the same way.
 
 use officekit_xml::element::Element;
 

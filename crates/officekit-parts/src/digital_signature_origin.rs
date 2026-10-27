@@ -339,20 +339,21 @@
 //   e26c4528f8340924ff27391d34681ecde1f597fc5ce3dbf2d354edc9c6071a52  crates/xtask/data/part_roots.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! ECMA-376 Part 1, 15.2.7 "Digital Signature Origin Part".
+//! The Digital Signature Origin Part, defined in ECMA-376 Part 1, section 15.2.7.
 //!
-//! Part 2 defines its fields, as SDK 3.5.1's part data gives them: its content type, its
-//! relationship type, and the load of its bytes.
+//! Part 2 defines its fields, as the part data of the Open XML SDK, version 3.5.1, gives them. The
+//! module holds its content type, its relationship type, and the load of its bytes.
 
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::Package;
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::RelationshipType;
 
-/// The content type SDK 3.5.1's part data gives.
+/// The content type the part data of the Open XML SDK, version 3.5.1, gives for this part.
 pub const CONTENT_TYPE: &str = "application/vnd.openxmlformats-package.digital-signature-origin";
 
-/// Part 2's, as SDK 3.5.1's part data gives it: one URI in both classes.
+/// The relationship type that names this part, from the part data of the Open XML SDK, version
+/// 3.5.1: one URI in both classes.
 pub const RELATIONSHIP_TYPE: RelationshipType = RelationshipType::DIGITAL_SIGNATURE_ORIGIN;
 
 /// The part's bytes.

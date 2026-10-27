@@ -342,11 +342,44 @@
 //! One module per part type: ECMA-376 Part 1's part definitions, then the parts Microsoft's
 //! extensions define.
 //!
-//! Each holds the part's content type, its relationship type in both classes' spelling, and the
-//! load and store of its root, or the load of its bytes; `kinds` holds the document kinds of each
-//! file type. `restore_through_module` stores a part again in a class through the module its
-//! content type names; `model_of` gives a part's typed root as a `PartModel`, and `bytes_of` the
-//! part's bytes from it.
+//! A package holds parts, and every part has a content type and a relationship type. A module here
+//! is for one part type. The typed root of a part is the struct of `officekit-markup` for its top
+//! element, such as `w:document` for the main part of a Word file.
+//!
+//! Each module has `RELATIONSHIP_TYPE` and `load`. When the part has a typed root, `load` gives it,
+//! and the module also has `store_strict`, which needs the `strict` feature, and
+//! `store_transitional`, which needs the `transitional` feature. Otherwise `load` gives the part's
+//! bytes. A module has `CONTENT_TYPE`, a `&str`, when its part has one content type, and
+//! `CONTENT_TYPES`, a `&[&str]`, when it has more. The modules of parts such as images, audio,
+//! video and embedded objects have neither. The `binary-format` feature archives `PartModel` with
+//! rkyv. `kinds` holds the document kinds of each file type.
+//!
+//! Three functions work over every module. `model_of` gives a part's typed root as a `PartModel`.
+//! `bytes_of` writes a `PartModel` as bytes in a class. `restore_through_module` stores a part
+//! again in a class. `MODULES` lists every module, for code that works over all part types.
+//!
+//! This builds a package in memory and loads its main part:
+//!
+//! ```
+//! use officekit_packaging::package::{OpenOptions, Package};
+//! use officekit_packaging::part_name::PartName;
+//! use officekit_parts::{PartModel, kinds::WordprocessingKind, main_document, model_of};
+//!
+//! let xml = r#"<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body><w:p/></w:body></w:document>"#;
+//! let content_type = WordprocessingKind::Document.main_content_type();
+//! assert!(main_document::CONTENT_TYPES.contains(&content_type));
+//!
+//! let name = PartName::new("/word/document.xml")?;
+//! let mut package = Package::new();
+//! package.set_part_bytes(&name, content_type, xml.as_bytes())?;
+//!
+//! let document = main_document::load(&package, &name, OpenOptions::default())?;
+//! assert!(document.body.is_some());
+//!
+//! let model = model_of(&package, &name, OpenOptions::default())?;
+//! assert!(matches!(model, Some(PartModel::MainDocument(_))));
+//! # Ok::<(), officekit_packaging::error::PackageError>(())
+//! ```
 
 pub mod additional_characteristics;
 pub mod alternative_format_import;
@@ -2032,110 +2065,209 @@ const MODEL_ROOTS: &[(NamespaceId, &str, Modeler)] = &[
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
 pub enum PartModel {
+    /// The root `ac:additionalCharacteristics` of the module `additional_characteristics`.
     AdditionalCharacteristics(additional_characteristics_markup::SetOfAdditionalCharacteristics),
+    /// The root `b:Sources` of the module `bibliography`.
     Bibliography(bibliography_markup::Sources),
+    /// The root `x:calcChain` of the module `calculation_chain`.
     CalculationChain(spreadsheet::CalculationChainInfo),
+    /// The root `c:chartSpace` of the module `chart`.
     Chart(chart_markup::ChartSpace),
+    /// The root `cs:colorStyle` of the module `chart_color_style`.
     ChartColorStyle(office_drawing_2012_chart_style::ColorStyle),
+    /// The root `c:userShapes` of the module `chart_drawing`.
     ChartDrawing(chart_markup::UserShapes),
+    /// The root `cs:chartStyle` of the module `chart_style`.
     ChartStyle(office_drawing_2012_chart_style::ChartStyle),
+    /// The root `x:chartsheet` of the module `chartsheet`.
     Chartsheet(spreadsheet::ChartSheet),
+    /// The root `p:cmAuthorLst` of the module `comment_authors`.
     CommentAuthors(presentation_markup::ListOfCommentAuthors),
+    /// The root `x:connections` of the module `connections`.
     Connections(spreadsheet::Connections),
+    /// The root `x14:formControlPr` of the module `control_properties`.
     ControlProperties(office_spreadsheetml_2009_9_main::FormControlPr),
+    /// The root `x14:datastoreItem` of the module `custom_data_properties`.
     CustomDataProperties(office_spreadsheetml_2009_9_main::DatastoreItem),
+    /// The root `op:Properties` of the module `custom_file_properties`.
     CustomFileProperties(document_properties_custom::CustomFileProperties),
+    /// The root `ds:datastoreItem` of the module `custom_xml_data_storage_properties`.
     CustomXmlDataStorageProperties(custom_xml_data_properties::CustomXMLDataProperties),
+    /// The root `x:MapInfo` of the module `custom_xml_mappings`.
     CustomXmlMappings(spreadsheet::XMLMappingMapInfo),
+    /// The root `dgm:colorsDef` of the module `diagram_colors`.
     DiagramColors(diagram::ColorTransformDefinitions),
+    /// The root `dgm:dataModel` of the module `diagram_data`.
     DiagramData(diagram::DataModel),
+    /// The root `dgm:layoutDef` of the module `diagram_layout_definition`.
     DiagramLayoutDefinition(diagram::LayoutDefinition),
+    /// The root `dsp:drawing` of the module `diagram_persist_layout`.
     DiagramPersistLayout(office_drawing_2008_diagram::Drawing),
+    /// The root `dgm:styleDef` of the module `diagram_style`.
     DiagramStyle(diagram::StyleDefinition),
+    /// The root `x:dialogsheet` of the module `dialogsheet`.
     Dialogsheet(spreadsheet::DialogSheet),
+    /// The root `w:settings` of the module `document_settings`.
     DocumentSettings(wordprocessing::DocumentSettings),
+    /// The root `t:Tasks` of the module `document_tasks`.
     DocumentTasks(office_tasks_2019_documenttasks::Tasks),
+    /// The root `xdr:wsDr` of the module `drawings`.
     Drawings(spreadsheet_drawing::WorksheetDrawing),
+    /// The root `w:endnotes` of the module `endnotes`.
     Endnotes(wordprocessing::DocumentEndnotes),
+    /// The root `cx:chartSpace` of the module `extended_chart`.
     ExtendedChart(office_drawing_2014_chartex::ChartSpace),
+    /// The root `ap:Properties` of the module `extended_file_properties`.
     ExtendedFileProperties(document_properties_extended::ApplicationSpecificFileProperties),
+    /// The root `x:externalLink` of the module `external_workbook_references`.
     ExternalWorkbookReferences(spreadsheet::ExternalReferenceExternalLink),
+    /// The root `xfpb:FeaturePropertyBags` of the module `feature_property_bags`.
     FeaturePropertyBags(office_spreadsheetml_2022_featurepropertybag::FeaturePropertyBags),
+    /// The root `w:fonts` of the module `font_table`.
     FontTable(wordprocessing::FontTableRootElement),
+    /// The root `w:ftr` of the module `footer`.
     Footer(wordprocessing::Footer),
+    /// The root `w:footnotes` of the module `footnotes`.
     Footnotes(wordprocessing::DocumentFootnotes),
+    /// The root `w:glossaryDocument` of the module `glossary_document`.
     GlossaryDocument(wordprocessing::GlossaryDocumentRootElement),
+    /// The root `p:handoutMaster` of the module `handout_master`.
     HandoutMaster(presentation_markup::HandoutMaster),
+    /// The root `w:hdr` of the module `header`.
     Header(wordprocessing::Header),
+    /// The root `clbl:labelList` of the module `label_info`.
     LabelInfo(office_2020_mip_label_metadata::LabelList),
+    /// The root `w:document` of the module `main_document`.
     MainDocument(wordprocessing::Document),
+    /// The root `x:metadata` of the module `metadata`.
     Metadata(spreadsheet::Metadata),
+    /// The root `xnsv:namedSheetViews` of the module `named_sheet_views`.
     NamedSheetViews(office_spreadsheetml_2019_namedsheetviews::NamedSheetViews),
+    /// The root `p:notesMaster` of the module `notes_master`.
     NotesMaster(presentation_markup::NotesMaster),
+    /// The root `p:notes` of the module `notes_slide`.
     NotesSlide(presentation_markup::NotesSlide),
+    /// The root `w:numbering` of the module `numbering_definitions`.
     NumberingDefinitions(wordprocessing::NumberingDefinitions),
+    /// The root `x:pivotTableDefinition` of the module `pivot_table`.
     PivotTable(Box<spreadsheet::PivotTableDefinition>),
+    /// The root `x:pivotCacheDefinition` of the module `pivot_table_cache_definition`.
     PivotTableCacheDefinition(spreadsheet::PivotCacheDefinition),
+    /// The root `x:pivotCacheRecords` of the module `pivot_table_cache_records`.
     PivotTableCacheRecords(spreadsheet::PivotCacheRecords),
+    /// The root `p188:authorLst` of the module `power_point_authors`.
     PowerPointAuthors(office_powerpoint_2018_8_main::AuthorLst),
+    /// The root `p188:cmLst` of the module `power_point_comment`.
     PowerPointComment(office_powerpoint_2018_8_main::CmLst),
+    /// The root `p:presentation` of the module `presentation`.
     Presentation(presentation_markup::Presentation),
+    /// The root `p:cmLst` of the module `presentation_comments`.
     PresentationComments(presentation_markup::CommentList),
+    /// The root `p:presentationPr` of the module `presentation_properties`.
     PresentationProperties(presentation_markup::PresentationWideProperties),
+    /// The root `x:queryTable` of the module `query_table`.
     QueryTable(spreadsheet::QueryTable),
+    /// The root `xlrd2:arrayData` of the module `rd_array`.
     RdArray(office_spreadsheetml_2017_richdata2::ArrayData),
+    /// The root `xlrd:rvData` of the module `rd_rich_value`.
     RdRichValue(office_spreadsheetml_2017_richdata::RvData),
+    /// The root `xlrd:rvStructures` of the module `rd_rich_value_structure`.
     RdRichValueStructure(office_spreadsheetml_2017_richdata::RvStructures),
+    /// The root `xlrd2:rvTypesInfo` of the module `rd_rich_value_types`.
     RdRichValueTypes(office_spreadsheetml_2017_richdata2::RvTypesInfo),
+    /// The root `xlrdwi:webImagesSrd` of the module `rd_rich_value_web_image`.
     RdRichValueWebImage(office_spreadsheetml_2020_richdatawebimage::WebImagesSrd),
+    /// The root `xlrd2:supportingPropertyBags` of the module `rd_supporting_property_bag`.
     RdSupportingPropertyBag(office_spreadsheetml_2017_richdata2::SupportingPropertyBags),
+    /// The root `xlrd2:spbStructures` of the module `rd_supporting_property_bag_structure`.
     RdSupportingPropertyBagStructure(office_spreadsheetml_2017_richdata2::SpbStructures),
+    /// The root `mso14:customUI` of the module `ribbon_and_backstage_customizations`.
     RibbonAndBackstageCustomizations(office_2009_07_customui::CustomUI),
+    /// The root `xlrd2:richStyleSheet` of the module `rich_styles`.
     RichStyles(office_spreadsheetml_2017_richdata2::RichStyleSheet),
+    /// The root `x:sst` of the module `shared_string_table`.
     SharedStringTable(spreadsheet::SharedStringTable),
+    /// The root `x:headers` of the module `shared_workbook_revision_headers`.
     SharedWorkbookRevisionHeaders(spreadsheet::RevisionHeaders),
+    /// The root `x:revisions` of the module `shared_workbook_revision_log`.
     SharedWorkbookRevisionLog(spreadsheet::Revisions),
+    /// The root `x:users` of the module `shared_workbook_user_data`.
     SharedWorkbookUserData(spreadsheet::UserList),
+    /// The root `x:singleXmlCells` of the module `single_cell_table_definitions`.
     SingleCellTableDefinitions(spreadsheet::SingleCells),
+    /// The root `x14:slicerCacheDefinition` of the module `slicer_cache`.
     SlicerCache(office_spreadsheetml_2009_9_main::SlicerCacheDefinition),
+    /// The root `x14:slicers` of the module `slicers`.
     Slicers(office_spreadsheetml_2009_9_main::Slicers),
+    /// The root `p:sld` of the module `slide`.
     Slide(presentation_markup::PresentationSlideSlide),
+    /// The root `p:sldLayout` of the module `slide_layout`.
     SlideLayout(presentation_markup::SlideLayout),
+    /// The root `p:sldMaster` of the module `slide_master`.
     SlideMaster(presentation_markup::SlideMaster),
+    /// The root `p:sldSyncPr` of the module `slide_synchronization_data`.
     SlideSynchronizationData(presentation_markup::SlideSynchronizationProperties),
+    /// The root `x:comments` of the module `spreadsheet_comments`.
     SpreadsheetComments(spreadsheet::Comments),
+    /// The root `w:styles` of the module `style_definitions`.
     StyleDefinitions(wordprocessing::StyleDefinitions),
+    /// The root `x:styleSheet` of the module `styles`.
     Styles(spreadsheet::StyleSheet),
+    /// The root `w:styles` of the module `styles_with_effects`.
     StylesWithEffects(wordprocessing::StyleDefinitions),
+    /// The root `x:table` of the module `table_definition`.
     TableDefinition(spreadsheet::Table),
+    /// The root `a:tblStyleLst` of the module `table_styles`.
     TableStyles(drawing::TableStyleList),
+    /// The root `a:theme` of the module `theme`.
     Theme(drawing::Theme),
+    /// The root `a:themeOverride` of the module `theme_override`.
     ThemeOverride(drawing::ThemeOverride),
+    /// The root `x15:timelines` of the module `time_line`.
     TimeLine(office_spreadsheetml_2010_11_main::Timelines),
+    /// The root `x15:timelineCacheDefinition` of the module `time_line_cache`.
     TimeLineCache(office_spreadsheetml_2010_11_main::TimelineCacheDefinition),
+    /// The root `p:tagLst` of the module `user_defined_tags`.
     UserDefinedTags(presentation_markup::ProgrammableTabList),
+    /// The root `p:viewPr` of the module `view_properties`.
     ViewProperties(presentation_markup::PresentationWideViewProperties),
+    /// The root `x:volTypes` of the module `volatile_dependencies`.
     VolatileDependencies(spreadsheet::VolatileDependencyTypes),
+    /// The root `wetp:taskpanes` of the module `web_ex_taskpanes`.
     WebExTaskpanes(office_webextensions_taskpanes_2010_11::Taskpanes),
+    /// The root `we:webextension` of the module `web_extension`.
     WebExtension(office_webextensions_webextension_2010_11::Webextension),
+    /// The root `w:webSettings` of the module `web_settings`.
     WebSettings(wordprocessing::WebPageSettings),
+    /// The root `w16cex:commentsExtensible` of the module `word_comments_extensible`.
     WordCommentsExtensible(office_word_2018_wordml_cex::CommentsExtensible),
+    /// The root `w:comments` of the module `wordprocessing_comments`.
     WordprocessingComments(wordprocessing::CommentsCollection),
+    /// The root `w15:commentsEx` of the module `wordprocessing_comments_ex`.
     WordprocessingCommentsEx(office_word_2012_wordml::CommentsEx),
+    /// The root `w16cid:commentsIds` of the module `wordprocessing_comments_ids`.
     WordprocessingCommentsIds(office_word_2016_wordml_cid::CommentsIds),
+    /// The root `w15:people` of the module `wordprocessing_people`.
     WordprocessingPeople(office_word_2012_wordml::People),
+    /// The root `x:workbook` of the module `workbook`.
     Workbook(spreadsheet::Workbook),
+    /// The root `xltc:personList` of the module `workbook_person`.
     WorkbookPerson(office_spreadsheetml_2018_threadedcomments::PersonList),
+    /// The root `x:worksheet` of the module `worksheet`.
     Worksheet(spreadsheet::Worksheet),
+    /// The root `xltc:ThreadedComments` of the module `worksheet_threaded_comments`.
     WorksheetThreadedComments(office_spreadsheetml_2018_threadedcomments::ThreadedComments),
 }
 
-/// A generated part module, for code that works over every part type.
+/// A part module: its name, the relationship type of its part, and where ECMA-376 defines it.
+///
+/// `MODULES` lists one for every module, for code that works over every part type.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[non_exhaustive]
 pub struct PartModule {
     /// The module's name, `main_document`.
     pub name: &'static str,
+    /// The relationship type that names the module's part, in both classes' spelling.
     pub relationship_type: RelationshipType,
     /// The section of ECMA-376 Part 1 that defines the part, `11.3.10`;
     /// `None` for a part of Microsoft's extensions.

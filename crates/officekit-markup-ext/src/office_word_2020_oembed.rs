@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `woe` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/word/2020/oembed`, which files write with the prefix `woe`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/word/2020/oembed`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -246,19 +248,25 @@ pub static OEMBED_SHAPE: officekit_markup_base::Shape = officekit_markup_base::S
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_word_2020_oembed` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `Oembed`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn oembed(&mut self, _node: &Oembed) -> Option<Oembed> {
         None
     }
 
+    /// Asked when a `Oembed` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_oembed(&mut self, _node: &Oembed, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 }
 
-/// The tag `woe:oembed`, schema type `CT_OEmbed` of SDK 3.5.1's data.
+/// The `woe:oembed` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OEmbed`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -267,9 +275,13 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Oembed {
+    /// The attribute `mediaType`, when the element has it.
     pub media_type: Option<String>,
+    /// The attribute `oEmbedUrl`, when the element has it.
     pub o_embed_url: Option<String>,
+    /// The attribute `picLocksAutoForOEmbed`, when the element has it.
     pub pic_locks_auto_for_o_embed: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -279,6 +291,7 @@ pub struct Oembed {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_word_2020_oembed` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `Oembed`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn oembed(&mut self, _node: &Oembed) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

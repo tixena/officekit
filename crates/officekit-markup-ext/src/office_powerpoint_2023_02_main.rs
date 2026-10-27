@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `p232` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/powerpoint/2023/02/main`, which files write with the prefix `p232`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/powerpoint/2023/02/main`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -264,7 +266,8 @@ pub static PLACEHOLDER_TYPE_CONTENT_TAGS: officekit_markup_base::Accept =
         tags: &[(NS_P232, "cameo"), (NS_P232, "unknown")],
     };
 
-/// The tag `p232:cameo`, schema type `CT_Empty` of SDK 3.5.1's data.
+/// The `p232:cameo` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Empty`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -273,6 +276,7 @@ pub static PLACEHOLDER_TYPE_CONTENT_TAGS: officekit_markup_base::Accept =
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Cameo {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -285,14 +289,20 @@ pub struct Cameo {
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_powerpoint_2023_02_main` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `Cameo`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn cameo(&mut self, _node: &Cameo) -> Option<Cameo> {
         None
     }
 
+    /// Asked for each `PhTypeExt`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn ph_type_ext(&mut self, _node: &PhTypeExt) -> Option<PhTypeExt> {
         None
     }
 
+    /// Asked for each `PlaceholderTypeContent`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn placeholder_type(
         &mut self,
         _node: &PlaceholderTypeContent,
@@ -300,24 +310,34 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Type`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn r#type(&mut self, _node: &Type) -> Option<Type> {
         None
     }
 
+    /// Asked for each `Unknown`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn unknown(&mut self, _node: &Unknown) -> Option<Unknown> {
         None
     }
 
+    /// Asked when a `Cameo` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cameo(&mut self, _node: &Cameo, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `PhTypeExt` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ph_type_ext(
         &mut self,
         _node: &PhTypeExt,
@@ -326,9 +346,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PlaceholderTypeContent` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_placeholder_type(
         &mut self,
         _node: &PlaceholderTypeContent,
@@ -337,22 +360,29 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Type` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_type(&mut self, _node: &Type, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Unknown` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_unknown(&mut self, _node: &Unknown, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 }
 
-/// The tag `p232:phTypeExt`, schema type `CT_PlaceholderTypeExtension` of SDK 3.5.1's data.
+/// The `p232:phTypeExt` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_PlaceholderTypeExtension`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -361,20 +391,30 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PhTypeExt {
+    /// The child that is `Type`, which the schema requires.
     pub r#type: Box<Type>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_PlaceholderTypeACB`: choice in `CT_PlaceholderTypeACB`.
+/// One child element of a choice: choice in `CT_PlaceholderTypeACB`.
+///
+/// The schema types that hold it: `CT_PlaceholderTypeACB`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum PlaceholderTypeContent {
+    /// The element `p232:cameo`, a `Cameo`.
     Cameo(Cameo),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `p232:unknown`, a `Unknown`.
     Unknown(Unknown),
 }
 
-/// The tag `p232:type`, schema type `CT_PlaceholderTypeACB` of SDK 3.5.1's data.
+/// The `p232:type` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_PlaceholderTypeACB`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -383,11 +423,14 @@ pub enum PlaceholderTypeContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Type {
+    /// The child that is an item of `PlaceholderTypeContent`, which the schema requires.
     pub content: Box<PlaceholderTypeContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p232:unknown`, schema type `CT_Empty` of SDK 3.5.1's data.
+/// The `p232:unknown` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Empty`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -396,6 +439,7 @@ pub struct Type {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Unknown {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -405,14 +449,19 @@ pub struct Unknown {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_powerpoint_2023_02_main` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `Cameo`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn cameo(&mut self, _node: &Cameo) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PhTypeExt`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn ph_type_ext(&mut self, _node: &PhTypeExt) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PlaceholderTypeContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn placeholder_type(
         &mut self,
         _node: &PlaceholderTypeContent,
@@ -420,10 +469,12 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Type`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn r#type(&mut self, _node: &Type) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Unknown`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn unknown(&mut self, _node: &Unknown) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

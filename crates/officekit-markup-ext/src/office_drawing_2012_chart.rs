@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `c15` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/drawing/2012/chart`, which files write with the prefix `c15`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/drawing/2012/chart`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -727,7 +729,8 @@ pub static TXFLD_GUID_SHAPE: officekit_markup_base::Shape = officekit_markup_bas
     text: true,
 };
 
-/// The tag `c15:autoCat`, schema type `CT_Boolean` of SDK 3.5.1's data.
+/// The `c15:autoCat` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Boolean`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -736,11 +739,14 @@ pub static TXFLD_GUID_SHAPE: officekit_markup_base::Shape = officekit_markup_bas
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AutoCat {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `c15:bubble3D`, schema type `CT_Boolean` of SDK 3.5.1's data.
+/// The `c15:bubble3D` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Boolean`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -749,11 +755,14 @@ pub struct AutoCat {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Bubble3D {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `c15:cat`, schema type `CT_AxDataSource` of SDK 3.5.1's data.
+/// The `c15:cat` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_AxDataSource`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -762,12 +771,14 @@ pub struct Bubble3D {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Cat {
+    /// The child that is an item of `chart::AxisDataSourceContent`, which the schema requires.
     pub content: Box<chart::AxisDataSourceContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:categoryFilterException`, schema type `CT_CategoryFilterException` of SDK 3.5.1's
-/// data.
+/// The `c15:categoryFilterException` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_CategoryFilterException`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -776,18 +787,26 @@ pub struct Cat {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CategoryFilterException {
+    /// The child that is `Bubble3D`, when there is one.
     pub bubble3d: Option<Box<Bubble3D>>,
+    /// The child that is `DLbl`, when there is one.
     pub d_lbl: Option<Box<DLbl>>,
+    /// The child that is `Explosion`, when there is one.
     pub explosion: Option<Box<Explosion>>,
+    /// The child that is `InvertIfNegative`, when there is one.
     pub invert_if_negative: Option<Box<InvertIfNegative>>,
+    /// The child that is `Marker`, when there is one.
     pub marker: Option<Box<Marker>>,
+    /// The child that is `SpPr`, when there is one.
     pub sp_pr: Option<Box<SpPr>>,
+    /// The child that is `Sqref`, which the schema requires.
     pub sqref: Box<Sqref>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:categoryFilterExceptions`, schema type `CT_CategoryFilterExceptions` of SDK 3.5.1's
-/// data.
+/// The `c15:categoryFilterExceptions` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_CategoryFilterExceptions`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -796,7 +815,9 @@ pub struct CategoryFilterException {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CategoryFilterExceptions {
+    /// The children that are `CategoryFilterException`, in order.
     pub category_filter_exception: Vec<CategoryFilterException>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -809,18 +830,26 @@ pub struct CategoryFilterExceptions {
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_drawing_2012_chart` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `AutoCat`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn auto_cat(&mut self, _node: &AutoCat) -> Option<AutoCat> {
         None
     }
 
+    /// Asked for each `Bubble3D`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn bubble3d(&mut self, _node: &Bubble3D) -> Option<Bubble3D> {
         None
     }
 
+    /// Asked for each `Cat`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn cat(&mut self, _node: &Cat) -> Option<Cat> {
         None
     }
 
+    /// Asked for each `CategoryFilterException`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn category_filter_exception(
         &mut self,
         _node: &CategoryFilterException,
@@ -828,6 +857,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `CategoryFilterExceptions`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn category_filter_exceptions(
         &mut self,
         _node: &CategoryFilterExceptions,
@@ -835,18 +866,26 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `DLbl`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn d_lbl(&mut self, _node: &DLbl) -> Option<DLbl> {
         None
     }
 
+    /// Asked for each `DatalabelsRange`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn datalabels_range(&mut self, _node: &DatalabelsRange) -> Option<DatalabelsRange> {
         None
     }
 
+    /// Asked for each `DlblFieldTable`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn dlbl_field_table(&mut self, _node: &DlblFieldTable) -> Option<DlblFieldTable> {
         None
     }
 
+    /// Asked for each `DlblFieldTableCache`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn dlbl_field_table_cache(
         &mut self,
         _node: &DlblFieldTableCache,
@@ -854,30 +893,44 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `DlblFTEntry`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn dlbl_ft_entry(&mut self, _node: &DlblFTEntry) -> Option<DlblFTEntry> {
         None
     }
 
+    /// Asked for each `DlblRangeCache`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn dlbl_range_cache(&mut self, _node: &DlblRangeCache) -> Option<DlblRangeCache> {
         None
     }
 
+    /// Asked for each `Explosion`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn explosion(&mut self, _node: &Explosion) -> Option<Explosion> {
         None
     }
 
+    /// Asked for each `F`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn f(&mut self, _node: &F) -> Option<F> {
         None
     }
 
+    /// Asked for each `FilteredAreaSeries`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn filtered_area_series(&mut self, _node: &FilteredAreaSeries) -> Option<FilteredAreaSeries> {
         None
     }
 
+    /// Asked for each `FilteredBarSeries`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn filtered_bar_series(&mut self, _node: &FilteredBarSeries) -> Option<FilteredBarSeries> {
         None
     }
 
+    /// Asked for each `FilteredBubbleSeries`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn filtered_bubble_series(
         &mut self,
         _node: &FilteredBubbleSeries,
@@ -885,6 +938,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `FilteredCategoryTitle`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn filtered_category_title(
         &mut self,
         _node: &FilteredCategoryTitle,
@@ -892,14 +947,20 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `FilteredLineSeries`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn filtered_line_series(&mut self, _node: &FilteredLineSeries) -> Option<FilteredLineSeries> {
         None
     }
 
+    /// Asked for each `FilteredPieSeries`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn filtered_pie_series(&mut self, _node: &FilteredPieSeries) -> Option<FilteredPieSeries> {
         None
     }
 
+    /// Asked for each `FilteredRadarSeries`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn filtered_radar_series(
         &mut self,
         _node: &FilteredRadarSeries,
@@ -907,6 +968,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `FilteredScatterSeries`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn filtered_scatter_series(
         &mut self,
         _node: &FilteredScatterSeries,
@@ -914,6 +977,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `FilteredSeriesTitle`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn filtered_series_title(
         &mut self,
         _node: &FilteredSeriesTitle,
@@ -921,6 +986,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `FilteredSurfaceSeries`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn filtered_surface_series(
         &mut self,
         _node: &FilteredSurfaceSeries,
@@ -928,74 +995,110 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `FormulaRef`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn formula_ref(&mut self, _node: &FormulaRef) -> Option<FormulaRef> {
         None
     }
 
+    /// Asked for each `FullRef`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn full_ref(&mut self, _node: &FullRef) -> Option<FullRef> {
         None
     }
 
+    /// Asked for each `InvertIfNegative`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn invert_if_negative(&mut self, _node: &InvertIfNegative) -> Option<InvertIfNegative> {
         None
     }
 
+    /// Asked for each `Layout`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn layout(&mut self, _node: &Layout) -> Option<Layout> {
         None
     }
 
+    /// Asked for each `LeaderLines`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn leader_lines(&mut self, _node: &LeaderLines) -> Option<LeaderLines> {
         None
     }
 
+    /// Asked for each `LevelRef`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn level_ref(&mut self, _node: &LevelRef) -> Option<LevelRef> {
         None
     }
 
+    /// Asked for each `Marker`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn marker(&mut self, _node: &Marker) -> Option<Marker> {
         None
     }
 
+    /// Asked for each `NumFmt`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn num_fmt(&mut self, _node: &NumFmt) -> Option<NumFmt> {
         None
     }
 
+    /// Asked for each `PivotSource`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn pivot_source(&mut self, _node: &PivotSource) -> Option<PivotSource> {
         None
     }
 
+    /// Asked for each `SerAreaSer`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn ser_area_ser(&mut self, _node: &SerAreaSer) -> Option<SerAreaSer> {
         None
     }
 
+    /// Asked for each `SerBarSer`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn ser_bar_ser(&mut self, _node: &SerBarSer) -> Option<SerBarSer> {
         None
     }
 
+    /// Asked for each `SerBubbleSer`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn ser_bubble_ser(&mut self, _node: &SerBubbleSer) -> Option<SerBubbleSer> {
         None
     }
 
+    /// Asked for each `SerLineSer`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn ser_line_ser(&mut self, _node: &SerLineSer) -> Option<SerLineSer> {
         None
     }
 
+    /// Asked for each `SerPieSer`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn ser_pie_ser(&mut self, _node: &SerPieSer) -> Option<SerPieSer> {
         None
     }
 
+    /// Asked for each `SerRadarSer`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn ser_radar_ser(&mut self, _node: &SerRadarSer) -> Option<SerRadarSer> {
         None
     }
 
+    /// Asked for each `SerScatterSer`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn ser_scatter_ser(&mut self, _node: &SerScatterSer) -> Option<SerScatterSer> {
         None
     }
 
+    /// Asked for each `SerSurfaceSer`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn ser_surface_ser(&mut self, _node: &SerSurfaceSer) -> Option<SerSurfaceSer> {
         None
     }
 
+    /// Asked for each `ShowDataLabelsRange`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn show_data_labels_range(
         &mut self,
         _node: &ShowDataLabelsRange,
@@ -1003,29 +1106,42 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ShowLeaderLines`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn show_leader_lines(&mut self, _node: &ShowLeaderLines) -> Option<ShowLeaderLines> {
         None
     }
 
+    /// Asked for each `SpPr`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn sp_pr(&mut self, _node: &SpPr) -> Option<SpPr> {
         None
     }
 
+    /// Asked for each `Sqref`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn sqref(&mut self, _node: &Sqref) -> Option<Sqref> {
         None
     }
 
+    /// Asked for each `Tx`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn tx(&mut self, _node: &Tx) -> Option<Tx> {
         None
     }
 
+    /// Asked for each `TxfldGUID`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn txfld_guid(&mut self, _node: &TxfldGUID) -> Option<TxfldGUID> {
         None
     }
 
+    /// Asked when a `AutoCat` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_auto_cat(
         &mut self,
         _node: &AutoCat,
@@ -1034,9 +1150,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Bubble3D` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_bubble3d(
         &mut self,
         _node: &Bubble3D,
@@ -1045,16 +1164,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Cat` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cat(&mut self, _node: &Cat, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `CategoryFilterException` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_category_filter_exception(
         &mut self,
         _node: &CategoryFilterException,
@@ -1063,9 +1188,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CategoryFilterExceptions` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_category_filter_exceptions(
         &mut self,
         _node: &CategoryFilterExceptions,
@@ -1074,16 +1202,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DLbl` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_d_lbl(&mut self, _node: &DLbl, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `DatalabelsRange` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_datalabels_range(
         &mut self,
         _node: &DatalabelsRange,
@@ -1092,9 +1226,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DlblFieldTable` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_dlbl_field_table(
         &mut self,
         _node: &DlblFieldTable,
@@ -1103,9 +1240,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DlblFieldTableCache` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_dlbl_field_table_cache(
         &mut self,
         _node: &DlblFieldTableCache,
@@ -1114,9 +1254,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DlblFTEntry` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_dlbl_ft_entry(
         &mut self,
         _node: &DlblFTEntry,
@@ -1125,9 +1268,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DlblRangeCache` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_dlbl_range_cache(
         &mut self,
         _node: &DlblRangeCache,
@@ -1136,9 +1282,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Explosion` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_explosion(
         &mut self,
         _node: &Explosion,
@@ -1147,16 +1296,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `F` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_f(&mut self, _node: &F, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `FilteredAreaSeries` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_filtered_area_series(
         &mut self,
         _node: &FilteredAreaSeries,
@@ -1165,9 +1320,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FilteredBarSeries` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_filtered_bar_series(
         &mut self,
         _node: &FilteredBarSeries,
@@ -1176,9 +1334,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FilteredBubbleSeries` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_filtered_bubble_series(
         &mut self,
         _node: &FilteredBubbleSeries,
@@ -1187,9 +1348,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FilteredCategoryTitle` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_filtered_category_title(
         &mut self,
         _node: &FilteredCategoryTitle,
@@ -1198,9 +1362,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FilteredLineSeries` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_filtered_line_series(
         &mut self,
         _node: &FilteredLineSeries,
@@ -1209,9 +1376,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FilteredPieSeries` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_filtered_pie_series(
         &mut self,
         _node: &FilteredPieSeries,
@@ -1220,9 +1390,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FilteredRadarSeries` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_filtered_radar_series(
         &mut self,
         _node: &FilteredRadarSeries,
@@ -1231,9 +1404,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FilteredScatterSeries` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_filtered_scatter_series(
         &mut self,
         _node: &FilteredScatterSeries,
@@ -1242,9 +1418,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FilteredSeriesTitle` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_filtered_series_title(
         &mut self,
         _node: &FilteredSeriesTitle,
@@ -1253,9 +1432,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FilteredSurfaceSeries` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_filtered_surface_series(
         &mut self,
         _node: &FilteredSurfaceSeries,
@@ -1264,9 +1446,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FormulaRef` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_formula_ref(
         &mut self,
         _node: &FormulaRef,
@@ -1275,9 +1460,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FullRef` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_full_ref(
         &mut self,
         _node: &FullRef,
@@ -1286,9 +1474,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `InvertIfNegative` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_invert_if_negative(
         &mut self,
         _node: &InvertIfNegative,
@@ -1297,16 +1488,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Layout` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_layout(&mut self, _node: &Layout, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `LeaderLines` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_leader_lines(
         &mut self,
         _node: &LeaderLines,
@@ -1315,9 +1512,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LevelRef` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_level_ref(
         &mut self,
         _node: &LevelRef,
@@ -1326,23 +1526,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Marker` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_marker(&mut self, _node: &Marker, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `NumFmt` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_num_fmt(&mut self, _node: &NumFmt, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotSource` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_source(
         &mut self,
         _node: &PivotSource,
@@ -1351,9 +1560,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SerAreaSer` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ser_area_ser(
         &mut self,
         _node: &SerAreaSer,
@@ -1362,9 +1574,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SerBarSer` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ser_bar_ser(
         &mut self,
         _node: &SerBarSer,
@@ -1373,9 +1588,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SerBubbleSer` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ser_bubble_ser(
         &mut self,
         _node: &SerBubbleSer,
@@ -1384,9 +1602,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SerLineSer` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ser_line_ser(
         &mut self,
         _node: &SerLineSer,
@@ -1395,9 +1616,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SerPieSer` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ser_pie_ser(
         &mut self,
         _node: &SerPieSer,
@@ -1406,9 +1630,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SerRadarSer` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ser_radar_ser(
         &mut self,
         _node: &SerRadarSer,
@@ -1417,9 +1644,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SerScatterSer` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ser_scatter_ser(
         &mut self,
         _node: &SerScatterSer,
@@ -1428,9 +1658,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SerSurfaceSer` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ser_surface_ser(
         &mut self,
         _node: &SerSurfaceSer,
@@ -1439,9 +1672,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShowDataLabelsRange` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_show_data_labels_range(
         &mut self,
         _node: &ShowDataLabelsRange,
@@ -1450,9 +1686,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShowLeaderLines` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_show_leader_lines(
         &mut self,
         _node: &ShowLeaderLines,
@@ -1461,30 +1700,42 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SpPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sp_pr(&mut self, _node: &SpPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Sqref` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sqref(&mut self, _node: &Sqref, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Tx` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_tx(&mut self, _node: &Tx, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `TxfldGUID` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_txfld_guid(
         &mut self,
         _node: &TxfldGUID,
@@ -1493,9 +1744,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `XForSave` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_x_for_save(
         &mut self,
         _node: &XForSave,
@@ -1504,12 +1758,15 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked for each `XForSave`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn x_for_save(&mut self, _node: &XForSave) -> Option<XForSave> {
         None
     }
 }
 
-/// The tag `c15:dLbl`, schema type `CT_DLbl` of SDK 3.5.1's data.
+/// The `c15:dLbl` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_DLbl`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1518,13 +1775,18 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DLbl {
+    /// The child that is `chart::ChartExtensibility`, when there is one.
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
+    /// The children that are an item of `chart::DataLabelContent`, in order.
     pub content: Vec<chart::DataLabelContent>,
+    /// The child that is `chart::Index`, which the schema requires.
     pub index: Box<chart::Index>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:datalabelsRange`, schema type `CT_SeriesDataLabelsRange` of SDK 3.5.1's data.
+/// The `c15:datalabelsRange` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_SeriesDataLabelsRange`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1533,12 +1795,16 @@ pub struct DLbl {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DatalabelsRange {
+    /// The child that is `DlblRangeCache`, when there is one.
     pub dlbl_range_cache: Option<Box<DlblRangeCache>>,
+    /// The child that is `F`, which the schema requires.
     pub f: Box<F>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:dlblFTEntry`, schema type `CT_DataLabelFieldTableEntry` of SDK 3.5.1's data.
+/// The `c15:dlblFTEntry` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_DataLabelFieldTableEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1547,13 +1813,18 @@ pub struct DatalabelsRange {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DlblFTEntry {
+    /// The child that is `DlblFieldTableCache`, when there is one.
     pub dlbl_field_table_cache: Option<Box<DlblFieldTableCache>>,
+    /// The child that is `F`, which the schema requires.
     pub f: Box<F>,
+    /// The child that is `TxfldGUID`, which the schema requires.
     pub txfld_guid: Box<TxfldGUID>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:dlblFieldTable`, schema type `CT_DataLabelFieldTable` of SDK 3.5.1's data.
+/// The `c15:dlblFieldTable` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_DataLabelFieldTable`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1562,11 +1833,14 @@ pub struct DlblFTEntry {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DlblFieldTable {
+    /// The children that are `DlblFTEntry`, in order.
     pub dlbl_ft_entry: Vec<DlblFTEntry>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:dlblFieldTableCache`, schema type `CT_StrData` of SDK 3.5.1's data.
+/// The `c15:dlblFieldTableCache` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_StrData`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1575,13 +1849,18 @@ pub struct DlblFieldTable {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DlblFieldTableCache {
+    /// The child that is `chart::ChartExtensibility`, when there is one.
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
+    /// The child that is `chart::PointCount`, when there is one.
     pub point_count: Option<Box<chart::PointCount>>,
+    /// The children that are `chart::StringPoint`, in order.
     pub string_point: Vec<chart::StringPoint>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:dlblRangeCache`, schema type `CT_StrData` of SDK 3.5.1's data.
+/// The `c15:dlblRangeCache` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_StrData`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1590,13 +1869,18 @@ pub struct DlblFieldTableCache {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DlblRangeCache {
+    /// The child that is `chart::ChartExtensibility`, when there is one.
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
+    /// The child that is `chart::PointCount`, when there is one.
     pub point_count: Option<Box<chart::PointCount>>,
+    /// The children that are `chart::StringPoint`, in order.
     pub string_point: Vec<chart::StringPoint>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:explosion`, schema type `CT_UnsignedInt` of SDK 3.5.1's data.
+/// The `c15:explosion` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_UnsignedInt`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1605,11 +1889,14 @@ pub struct DlblRangeCache {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Explosion {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `c15:f`, schema type `string` of SDK 3.5.1's data.
+/// The `c15:f` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1618,11 +1905,14 @@ pub struct Explosion {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct F {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `c15:filteredAreaSeries`, schema type `CT_FilteredAreaSer` of SDK 3.5.1's data.
+/// The `c15:filteredAreaSeries` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_FilteredAreaSer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1631,11 +1921,14 @@ pub struct F {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FilteredAreaSeries {
+    /// The child that is `SerAreaSer`, which the schema requires.
     pub ser_area_ser: Box<SerAreaSer>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:filteredBarSeries`, schema type `CT_FilteredBarSer` of SDK 3.5.1's data.
+/// The `c15:filteredBarSeries` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_FilteredBarSer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1644,11 +1937,14 @@ pub struct FilteredAreaSeries {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FilteredBarSeries {
+    /// The child that is `SerBarSer`, which the schema requires.
     pub ser_bar_ser: Box<SerBarSer>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:filteredBubbleSeries`, schema type `CT_FilteredBubbleSer` of SDK 3.5.1's data.
+/// The `c15:filteredBubbleSeries` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_FilteredBubbleSer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1657,11 +1953,14 @@ pub struct FilteredBarSeries {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FilteredBubbleSeries {
+    /// The child that is `SerBubbleSer`, which the schema requires.
     pub ser_bubble_ser: Box<SerBubbleSer>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:filteredCategoryTitle`, schema type `CT_FilteredCategoryTitle` of SDK 3.5.1's data.
+/// The `c15:filteredCategoryTitle` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_FilteredCategoryTitle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1670,11 +1969,14 @@ pub struct FilteredBubbleSeries {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FilteredCategoryTitle {
+    /// The child that is `Cat`, which the schema requires.
     pub cat: Box<Cat>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:filteredLineSeries`, schema type `CT_FilteredLineSer` of SDK 3.5.1's data.
+/// The `c15:filteredLineSeries` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_FilteredLineSer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1683,11 +1985,14 @@ pub struct FilteredCategoryTitle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FilteredLineSeries {
+    /// The child that is `SerLineSer`, which the schema requires.
     pub ser_line_ser: Box<SerLineSer>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:filteredPieSeries`, schema type `CT_FilteredPieSer` of SDK 3.5.1's data.
+/// The `c15:filteredPieSeries` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_FilteredPieSer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1696,11 +2001,14 @@ pub struct FilteredLineSeries {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FilteredPieSeries {
+    /// The child that is `SerPieSer`, which the schema requires.
     pub ser_pie_ser: Box<SerPieSer>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:filteredRadarSeries`, schema type `CT_FilteredRadarSer` of SDK 3.5.1's data.
+/// The `c15:filteredRadarSeries` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_FilteredRadarSer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1709,11 +2017,14 @@ pub struct FilteredPieSeries {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FilteredRadarSeries {
+    /// The child that is `SerRadarSer`, which the schema requires.
     pub ser_radar_ser: Box<SerRadarSer>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:filteredScatterSeries`, schema type `CT_FilteredScatterSer` of SDK 3.5.1's data.
+/// The `c15:filteredScatterSeries` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_FilteredScatterSer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1722,11 +2033,14 @@ pub struct FilteredRadarSeries {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FilteredScatterSeries {
+    /// The child that is `SerScatterSer`, which the schema requires.
     pub ser_scatter_ser: Box<SerScatterSer>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:filteredSeriesTitle`, schema type `CT_FilteredSeriesTitle` of SDK 3.5.1's data.
+/// The `c15:filteredSeriesTitle` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_FilteredSeriesTitle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1735,11 +2049,14 @@ pub struct FilteredScatterSeries {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FilteredSeriesTitle {
+    /// The child that is `Tx`, which the schema requires.
     pub tx: Box<Tx>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:filteredSurfaceSeries`, schema type `CT_FilteredSurfaceSer` of SDK 3.5.1's data.
+/// The `c15:filteredSurfaceSeries` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_FilteredSurfaceSer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1748,11 +2065,14 @@ pub struct FilteredSeriesTitle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FilteredSurfaceSeries {
+    /// The child that is `SerSurfaceSer`, which the schema requires.
     pub ser_surface_ser: Box<SerSurfaceSer>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:formulaRef`, schema type `CT_FormulaRef` of SDK 3.5.1's data.
+/// The `c15:formulaRef` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_FormulaRef`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1761,11 +2081,14 @@ pub struct FilteredSurfaceSeries {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FormulaRef {
+    /// The child that is `Sqref`, which the schema requires.
     pub sqref: Box<Sqref>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:fullRef`, schema type `CT_FullRef` of SDK 3.5.1's data.
+/// The `c15:fullRef` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_FullRef`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1774,11 +2097,14 @@ pub struct FormulaRef {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FullRef {
+    /// The child that is `Sqref`, which the schema requires.
     pub sqref: Box<Sqref>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:invertIfNegative`, schema type `CT_Boolean` of SDK 3.5.1's data.
+/// The `c15:invertIfNegative` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_Boolean`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1787,11 +2113,14 @@ pub struct FullRef {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct InvertIfNegative {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `c15:layout`, schema type `CT_Layout` of SDK 3.5.1's data.
+/// The `c15:layout` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Layout`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1800,12 +2129,16 @@ pub struct InvertIfNegative {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Layout {
+    /// The child that is `chart::ChartExtensibility`, when there is one.
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
+    /// The child that is `chart::ManualLayout`, when there is one.
     pub manual: Option<Box<chart::ManualLayout>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:leaderLines`, schema type `CT_ChartLines` of SDK 3.5.1's data.
+/// The `c15:leaderLines` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_ChartLines`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1814,11 +2147,14 @@ pub struct Layout {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LeaderLines {
+    /// The child that is `chart::ShapeProperties`, when there is one.
     pub shape_properties: Option<Box<chart::ShapeProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:levelRef`, schema type `CT_LevelRef` of SDK 3.5.1's data.
+/// The `c15:levelRef` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_LevelRef`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1827,11 +2163,14 @@ pub struct LeaderLines {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LevelRef {
+    /// The child that is `Sqref`, which the schema requires.
     pub sqref: Box<Sqref>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:marker`, schema type `CT_Marker` of SDK 3.5.1's data.
+/// The `c15:marker` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Marker`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1840,14 +2179,20 @@ pub struct LevelRef {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Marker {
+    /// The child that is `chart::ChartExtensibility`, when there is one.
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
+    /// The child that is `chart::ShapeProperties`, when there is one.
     pub shape_properties: Option<Box<chart::ShapeProperties>>,
+    /// The child that is `chart::Size`, when there is one.
     pub size: Option<Box<chart::Size>>,
+    /// The child that is `chart::Symbol`, when there is one.
     pub symbol: Option<Box<chart::Symbol>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:numFmt`, schema type `CT_NumFmt` of SDK 3.5.1's data.
+/// The `c15:numFmt` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_NumFmt`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1856,12 +2201,16 @@ pub struct Marker {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NumFmt {
+    /// The attribute `formatCode`, when the element has it.
     pub format_code: Option<String>,
+    /// The attribute `sourceLinked`, when the element has it.
     pub source_linked: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:pivotSource`, schema type `CT_PivotSource` of SDK 3.5.1's data.
+/// The `c15:pivotSource` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_PivotSource`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1870,13 +2219,18 @@ pub struct NumFmt {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PivotSource {
+    /// The children that are `chart::ChartExtensibility`, in order.
     pub chart_extensibility: Vec<chart::ChartExtensibility>,
+    /// The child that is `chart::FormatID`, which the schema requires.
     pub format_id: Box<chart::FormatID>,
+    /// The child that is `chart::PivotName`, which the schema requires.
     pub pivot_name: Box<chart::PivotName>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:ser`, schema type `CT_AreaSer` of SDK 3.5.1's data.
+/// The `c15:ser` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_AreaSer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1885,22 +2239,36 @@ pub struct PivotSource {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SerAreaSer {
+    /// The child that is `chart::CategoryAxisDataCat`, when there is one.
     pub category_axis_data_cat: Option<Box<chart::CategoryAxisDataCat>>,
+    /// The child that is `chart::ChartExtensibility`, when there is one.
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
+    /// The child that is `chart::DataLabels`, when there is one.
     pub data_labels: Option<Box<chart::DataLabels>>,
+    /// The children that are `chart::DataPoint`, in order.
     pub data_point: Vec<chart::DataPoint>,
+    /// The children that are `chart::ErrorBars`, in order.
     pub error_bars: Vec<chart::ErrorBars>,
+    /// The child that is `chart::Index`, which the schema requires.
     pub index: Box<chart::Index>,
+    /// The child that is `chart::Order`, which the schema requires.
     pub order: Box<chart::Order>,
+    /// The child that is `chart::PictureOptions`, when there is one.
     pub picture_options: Option<Box<chart::PictureOptions>>,
+    /// The child that is `chart::SeriesText`, when there is one.
     pub series_text: Option<Box<chart::SeriesText>>,
+    /// The child that is `chart::ShapeProperties`, when there is one.
     pub shape_properties: Option<Box<chart::ShapeProperties>>,
+    /// The children that are `chart::Trendlines`, in order.
     pub trendlines: Vec<chart::Trendlines>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `chart::Values`, when there is one.
     pub values: Option<Box<chart::Values>>,
 }
 
-/// The tag `c15:ser`, schema type `CT_BarSer` of SDK 3.5.1's data.
+/// The `c15:ser` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_BarSer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1909,24 +2277,40 @@ pub struct SerAreaSer {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SerBarSer {
+    /// The child that is `chart::CategoryAxisDataCat`, when there is one.
     pub category_axis_data_cat: Option<Box<chart::CategoryAxisDataCat>>,
+    /// The child that is `chart::ChartExtensibility`, when there is one.
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
+    /// The child that is `chart::DataLabels`, when there is one.
     pub data_labels: Option<Box<chart::DataLabels>>,
+    /// The children that are `chart::DataPoint`, in order.
     pub data_point: Vec<chart::DataPoint>,
+    /// The child that is `chart::ErrorBars`, when there is one.
     pub error_bars: Option<Box<chart::ErrorBars>>,
+    /// The child that is `chart::Index`, which the schema requires.
     pub index: Box<chart::Index>,
+    /// The child that is `chart::InvertIfNegative`, when there is one.
     pub invert_if_negative: Option<Box<chart::InvertIfNegative>>,
+    /// The child that is `chart::Order`, which the schema requires.
     pub order: Box<chart::Order>,
+    /// The child that is `chart::PictureOptions`, when there is one.
     pub picture_options: Option<Box<chart::PictureOptions>>,
+    /// The child that is `chart::SeriesText`, when there is one.
     pub series_text: Option<Box<chart::SeriesText>>,
+    /// The child that is `chart::Shape`, when there is one.
     pub shape: Option<Box<chart::Shape>>,
+    /// The child that is `chart::ShapeProperties`, when there is one.
     pub shape_properties: Option<Box<chart::ShapeProperties>>,
+    /// The children that are `chart::Trendlines`, in order.
     pub trendlines: Vec<chart::Trendlines>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `chart::Values`, when there is one.
     pub values: Option<Box<chart::Values>>,
 }
 
-/// The tag `c15:ser`, schema type `CT_BubbleSer` of SDK 3.5.1's data.
+/// The `c15:ser` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_BubbleSer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1935,24 +2319,40 @@ pub struct SerBarSer {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SerBubbleSer {
+    /// The child that is `chart::Bubble3D`, when there is one.
     pub bubble3d: Option<Box<chart::Bubble3D>>,
+    /// The child that is `chart::BubbleSize`, when there is one.
     pub bubble_size: Option<Box<chart::BubbleSize>>,
+    /// The child that is `chart::ChartExtensibility`, when there is one.
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
+    /// The child that is `chart::DataLabels`, when there is one.
     pub data_labels: Option<Box<chart::DataLabels>>,
+    /// The children that are `chart::DataPoint`, in order.
     pub data_point: Vec<chart::DataPoint>,
+    /// The children that are `chart::ErrorBars`, in order.
     pub error_bars: Vec<chart::ErrorBars>,
+    /// The child that is `chart::Index`, which the schema requires.
     pub index: Box<chart::Index>,
+    /// The child that is `chart::InvertIfNegative`, when there is one.
     pub invert_if_negative: Option<Box<chart::InvertIfNegative>>,
+    /// The child that is `chart::Order`, which the schema requires.
     pub order: Box<chart::Order>,
+    /// The child that is `chart::SeriesText`, when there is one.
     pub series_text: Option<Box<chart::SeriesText>>,
+    /// The child that is `chart::ShapeProperties`, when there is one.
     pub shape_properties: Option<Box<chart::ShapeProperties>>,
+    /// The children that are `chart::Trendlines`, in order.
     pub trendlines: Vec<chart::Trendlines>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `chart::XValues`, when there is one.
     pub x_values: Option<Box<chart::XValues>>,
+    /// The child that is `chart::YValues`, when there is one.
     pub y_values: Option<Box<chart::YValues>>,
 }
 
-/// The tag `c15:ser`, schema type `CT_LineSer` of SDK 3.5.1's data.
+/// The `c15:ser` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_LineSer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1961,23 +2361,38 @@ pub struct SerBubbleSer {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SerLineSer {
+    /// The child that is `chart::CategoryAxisDataCat`, when there is one.
     pub category_axis_data_cat: Option<Box<chart::CategoryAxisDataCat>>,
+    /// The child that is `chart::ChartExtensibility`, when there is one.
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
+    /// The child that is `chart::DataLabels`, when there is one.
     pub data_labels: Option<Box<chart::DataLabels>>,
+    /// The children that are `chart::DataPoint`, in order.
     pub data_point: Vec<chart::DataPoint>,
+    /// The child that is `chart::ErrorBars`, when there is one.
     pub error_bars: Option<Box<chart::ErrorBars>>,
+    /// The child that is `chart::Index`, which the schema requires.
     pub index: Box<chart::Index>,
+    /// The child that is `chart::Marker`, when there is one.
     pub marker: Option<Box<chart::Marker>>,
+    /// The child that is `chart::Order`, which the schema requires.
     pub order: Box<chart::Order>,
+    /// The child that is `chart::SeriesText`, when there is one.
     pub series_text: Option<Box<chart::SeriesText>>,
+    /// The child that is `chart::ShapeProperties`, when there is one.
     pub shape_properties: Option<Box<chart::ShapeProperties>>,
+    /// The child that is `chart::Smoothing`, when there is one.
     pub smoothing: Option<Box<chart::Smoothing>>,
+    /// The children that are `chart::Trendlines`, in order.
     pub trendlines: Vec<chart::Trendlines>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `chart::Values`, when there is one.
     pub values: Option<Box<chart::Values>>,
 }
 
-/// The tag `c15:ser`, schema type `CT_PieSer` of SDK 3.5.1's data.
+/// The `c15:ser` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_PieSer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1986,20 +2401,32 @@ pub struct SerLineSer {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SerPieSer {
+    /// The child that is `chart::CategoryAxisDataCat`, when there is one.
     pub category_axis_data_cat: Option<Box<chart::CategoryAxisDataCat>>,
+    /// The child that is `chart::ChartExtensibility`, when there is one.
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
+    /// The child that is `chart::DataLabels`, when there is one.
     pub data_labels: Option<Box<chart::DataLabels>>,
+    /// The children that are `chart::DataPoint`, in order.
     pub data_point: Vec<chart::DataPoint>,
+    /// The child that is `chart::Explosion`, when there is one.
     pub explosion: Option<Box<chart::Explosion>>,
+    /// The child that is `chart::Index`, which the schema requires.
     pub index: Box<chart::Index>,
+    /// The child that is `chart::Order`, which the schema requires.
     pub order: Box<chart::Order>,
+    /// The child that is `chart::SeriesText`, when there is one.
     pub series_text: Option<Box<chart::SeriesText>>,
+    /// The child that is `chart::ShapeProperties`, when there is one.
     pub shape_properties: Option<Box<chart::ShapeProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `chart::Values`, when there is one.
     pub values: Option<Box<chart::Values>>,
 }
 
-/// The tag `c15:ser`, schema type `CT_RadarSer` of SDK 3.5.1's data.
+/// The `c15:ser` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RadarSer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2008,20 +2435,32 @@ pub struct SerPieSer {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SerRadarSer {
+    /// The child that is `chart::CategoryAxisDataCat`, when there is one.
     pub category_axis_data_cat: Option<Box<chart::CategoryAxisDataCat>>,
+    /// The child that is `chart::ChartExtensibility`, when there is one.
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
+    /// The child that is `chart::DataLabels`, when there is one.
     pub data_labels: Option<Box<chart::DataLabels>>,
+    /// The children that are `chart::DataPoint`, in order.
     pub data_point: Vec<chart::DataPoint>,
+    /// The child that is `chart::Index`, which the schema requires.
     pub index: Box<chart::Index>,
+    /// The child that is `chart::Marker`, when there is one.
     pub marker: Option<Box<chart::Marker>>,
+    /// The child that is `chart::Order`, which the schema requires.
     pub order: Box<chart::Order>,
+    /// The child that is `chart::SeriesText`, when there is one.
     pub series_text: Option<Box<chart::SeriesText>>,
+    /// The child that is `chart::ShapeProperties`, when there is one.
     pub shape_properties: Option<Box<chart::ShapeProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `chart::Values`, when there is one.
     pub values: Option<Box<chart::Values>>,
 }
 
-/// The tag `c15:ser`, schema type `CT_ScatterSer` of SDK 3.5.1's data.
+/// The `c15:ser` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ScatterSer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2030,23 +2469,38 @@ pub struct SerRadarSer {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SerScatterSer {
+    /// The child that is `chart::ChartExtensibility`, when there is one.
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
+    /// The child that is `chart::DataLabels`, when there is one.
     pub data_labels: Option<Box<chart::DataLabels>>,
+    /// The children that are `chart::DataPoint`, in order.
     pub data_point: Vec<chart::DataPoint>,
+    /// The children that are `chart::ErrorBars`, in order.
     pub error_bars: Vec<chart::ErrorBars>,
+    /// The child that is `chart::Index`, which the schema requires.
     pub index: Box<chart::Index>,
+    /// The child that is `chart::Marker`, when there is one.
     pub marker: Option<Box<chart::Marker>>,
+    /// The child that is `chart::Order`, which the schema requires.
     pub order: Box<chart::Order>,
+    /// The child that is `chart::SeriesText`, when there is one.
     pub series_text: Option<Box<chart::SeriesText>>,
+    /// The child that is `chart::ShapeProperties`, when there is one.
     pub shape_properties: Option<Box<chart::ShapeProperties>>,
+    /// The child that is `chart::Smoothing`, when there is one.
     pub smoothing: Option<Box<chart::Smoothing>>,
+    /// The children that are `chart::Trendlines`, in order.
     pub trendlines: Vec<chart::Trendlines>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `chart::XValues`, when there is one.
     pub x_values: Option<Box<chart::XValues>>,
+    /// The child that is `chart::YValues`, when there is one.
     pub y_values: Option<Box<chart::YValues>>,
 }
 
-/// The tag `c15:ser`, schema type `CT_SurfaceSer` of SDK 3.5.1's data.
+/// The `c15:ser` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SurfaceSer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2055,17 +2509,26 @@ pub struct SerScatterSer {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SerSurfaceSer {
+    /// The child that is `chart::CategoryAxisDataCat`, when there is one.
     pub category_axis_data_cat: Option<Box<chart::CategoryAxisDataCat>>,
+    /// The child that is `chart::ChartExtensibility`, when there is one.
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
+    /// The child that is `chart::Index`, which the schema requires.
     pub index: Box<chart::Index>,
+    /// The child that is `chart::Order`, which the schema requires.
     pub order: Box<chart::Order>,
+    /// The child that is `chart::SeriesText`, when there is one.
     pub series_text: Option<Box<chart::SeriesText>>,
+    /// The child that is `chart::ShapeProperties`, when there is one.
     pub shape_properties: Option<Box<chart::ShapeProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `chart::Values`, when there is one.
     pub values: Option<Box<chart::Values>>,
 }
 
-/// The tag `c15:showDataLabelsRange`, schema type `CT_Boolean` of SDK 3.5.1's data.
+/// The `c15:showDataLabelsRange` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_Boolean`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2074,11 +2537,14 @@ pub struct SerSurfaceSer {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShowDataLabelsRange {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `c15:showLeaderLines`, schema type `CT_Boolean` of SDK 3.5.1's data.
+/// The `c15:showLeaderLines` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_Boolean`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2087,11 +2553,14 @@ pub struct ShowDataLabelsRange {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShowLeaderLines {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `c15:spPr`, schema type `CT_ShapeProperties` of SDK 3.5.1's data.
+/// The `c15:spPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ShapeProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2100,19 +2569,30 @@ pub struct ShowLeaderLines {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SpPr {
+    /// The child that is `drawing::Apply3DShapeProperties`, when there is one.
     pub apply_3d_shape_properties: Option<Box<drawing::Apply3DShapeProperties>>,
+    /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<drawing::BlackAndWhiteMode>,
+    /// The child that is an item of `drawing::EffectPropertiesContent`, when there is one.
     pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
+    /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionList>>,
+    /// The child that is an item of `drawing::FillPropertiesContent`, when there is one.
     pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
+    /// The child that is an item of `drawing::GeometryContent`, when there is one.
     pub geometry_content: Option<Box<drawing::GeometryContent>>,
+    /// The child that is `drawing::Outline`, when there is one.
     pub outline: Option<Box<drawing::Outline>>,
+    /// The child that is `drawing::Scene3d`, when there is one.
     pub scene3d: Option<Box<drawing::Scene3d>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `drawing::XfrmTransform2D`, when there is one.
     pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2D>>,
 }
 
-/// The tag `c15:sqref`, schema type `string` of SDK 3.5.1's data.
+/// The `c15:sqref` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2121,11 +2601,14 @@ pub struct SpPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Sqref {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `c15:tx`, schema type `CT_Tx` of SDK 3.5.1's data.
+/// The `c15:tx` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `CT_Tx`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2134,11 +2617,14 @@ pub struct Sqref {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Tx {
+    /// The child that is an item of `chart::ChartTextContent`, which the schema requires.
     pub content: Box<chart::ChartTextContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c15:txfldGUID`, schema type `string` of SDK 3.5.1's data.
+/// The `c15:txfldGUID` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2147,7 +2633,9 @@ pub struct Tx {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TxfldGUID {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
@@ -2157,18 +2645,23 @@ pub struct TxfldGUID {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_drawing_2012_chart` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `AutoCat`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn auto_cat(&mut self, _node: &AutoCat) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Bubble3D`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn bubble3d(&mut self, _node: &Bubble3D) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Cat`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn cat(&mut self, _node: &Cat) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CategoryFilterException`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn category_filter_exception(
         &mut self,
         _node: &CategoryFilterException,
@@ -2176,6 +2669,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CategoryFilterExceptions`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn category_filter_exceptions(
         &mut self,
         _node: &CategoryFilterExceptions,
@@ -2183,18 +2678,25 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DLbl`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn d_lbl(&mut self, _node: &DLbl) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DatalabelsRange`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn datalabels_range(&mut self, _node: &DatalabelsRange) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DlblFieldTable`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn dlbl_field_table(&mut self, _node: &DlblFieldTable) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DlblFieldTableCache`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn dlbl_field_table_cache(
         &mut self,
         _node: &DlblFieldTableCache,
@@ -2202,22 +2704,31 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DlblFTEntry`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn dlbl_ft_entry(&mut self, _node: &DlblFTEntry) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DlblRangeCache`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn dlbl_range_cache(&mut self, _node: &DlblRangeCache) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Explosion`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn explosion(&mut self, _node: &Explosion) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `F`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn f(&mut self, _node: &F) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FilteredAreaSeries`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn filtered_area_series(
         &mut self,
         _node: &FilteredAreaSeries,
@@ -2225,10 +2736,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FilteredBarSeries`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn filtered_bar_series(&mut self, _node: &FilteredBarSeries) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FilteredBubbleSeries`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn filtered_bubble_series(
         &mut self,
         _node: &FilteredBubbleSeries,
@@ -2236,6 +2751,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FilteredCategoryTitle`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn filtered_category_title(
         &mut self,
         _node: &FilteredCategoryTitle,
@@ -2243,6 +2760,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FilteredLineSeries`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn filtered_line_series(
         &mut self,
         _node: &FilteredLineSeries,
@@ -2250,10 +2769,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FilteredPieSeries`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn filtered_pie_series(&mut self, _node: &FilteredPieSeries) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FilteredRadarSeries`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn filtered_radar_series(
         &mut self,
         _node: &FilteredRadarSeries,
@@ -2261,6 +2784,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FilteredScatterSeries`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn filtered_scatter_series(
         &mut self,
         _node: &FilteredScatterSeries,
@@ -2268,6 +2793,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FilteredSeriesTitle`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn filtered_series_title(
         &mut self,
         _node: &FilteredSeriesTitle,
@@ -2275,6 +2802,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FilteredSurfaceSeries`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn filtered_surface_series(
         &mut self,
         _node: &FilteredSurfaceSeries,
@@ -2282,74 +2811,105 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FormulaRef`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn formula_ref(&mut self, _node: &FormulaRef) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FullRef`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn full_ref(&mut self, _node: &FullRef) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `InvertIfNegative`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn invert_if_negative(&mut self, _node: &InvertIfNegative) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Layout`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn layout(&mut self, _node: &Layout) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LeaderLines`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn leader_lines(&mut self, _node: &LeaderLines) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LevelRef`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn level_ref(&mut self, _node: &LevelRef) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Marker`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn marker(&mut self, _node: &Marker) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NumFmt`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn num_fmt(&mut self, _node: &NumFmt) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotSource`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn pivot_source(&mut self, _node: &PivotSource) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SerAreaSer`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn ser_area_ser(&mut self, _node: &SerAreaSer) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SerBarSer`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn ser_bar_ser(&mut self, _node: &SerBarSer) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SerBubbleSer`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn ser_bubble_ser(&mut self, _node: &SerBubbleSer) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SerLineSer`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn ser_line_ser(&mut self, _node: &SerLineSer) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SerPieSer`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn ser_pie_ser(&mut self, _node: &SerPieSer) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SerRadarSer`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn ser_radar_ser(&mut self, _node: &SerRadarSer) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SerScatterSer`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn ser_scatter_ser(&mut self, _node: &SerScatterSer) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SerSurfaceSer`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn ser_surface_ser(&mut self, _node: &SerSurfaceSer) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShowDataLabelsRange`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn show_data_labels_range(
         &mut self,
         _node: &ShowDataLabelsRange,
@@ -2357,32 +2917,41 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShowLeaderLines`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn show_leader_lines(&mut self, _node: &ShowLeaderLines) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SpPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sp_pr(&mut self, _node: &SpPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Sqref`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sqref(&mut self, _node: &Sqref) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Tx`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn tx(&mut self, _node: &Tx) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TxfldGUID`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn txfld_guid(&mut self, _node: &TxfldGUID) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `XForSave`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn x_for_save(&mut self, _node: &XForSave) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 }
 
-/// The tag `c15:xForSave`, schema type `CT_Boolean` of SDK 3.5.1's data.
+/// The `c15:xForSave` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Boolean`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2391,7 +2960,9 @@ pub trait Visitor: crate::Visitor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct XForSave {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 

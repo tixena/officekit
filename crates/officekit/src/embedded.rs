@@ -16,12 +16,43 @@ use crate::xlsx::Xlsx;
 #[derive(Debug)]
 #[non_exhaustive]
 pub enum Embedded {
+    /// An embedded Word document.
     Docx(Docx),
+    /// An embedded presentation.
     Pptx(Pptx),
+    /// An embedded workbook, such as the data behind a chart.
     Xlsx(Xlsx),
 }
 
 /// Open the document a part of `package` holds, by its main part's content type.
+///
+#[cfg_attr(
+    feature = "transitional",
+    doc = r#"
+```rust
+use officekit::docx::Docx;
+use officekit::embedded::{self, Embedded};
+use officekit::xlsx::Xlsx;
+use officekit_packaging::package::OpenOptions;
+use officekit_packaging::part_name::PartName;
+use officekit_parts::kinds::{SpreadsheetKind, WordprocessingKind};
+
+# fn main() -> Result<(), Box<dyn core::error::Error>> {
+let workbook = Xlsx::new(SpreadsheetKind::Workbook)?;
+let mut docx = Docx::new(WordprocessingKind::Document)?;
+
+let name = PartName::new("/word/embeddings/budget.xlsx")?;
+let content_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+docx.package_mut()
+    .set_part_bytes(&name, content_type, &workbook.package().to_bytes()?)?;
+
+let found = embedded::open(docx.package(), &name, OpenOptions::default())?;
+assert!(matches!(found, Embedded::Xlsx(_)));
+# Ok(())
+# }
+```
+"#
+)]
 ///
 /// # Errors
 ///
@@ -64,7 +95,7 @@ pub fn open(
 }
 
 /// Write a document back into the part of `package`, saved as Strict; the part keeps its name
-/// and content type.
+/// and content type. Needs the feature `strict`.
 ///
 /// # Errors
 ///
@@ -89,7 +120,7 @@ pub fn store_strict(
 }
 
 /// Write a document back into the part of `package`, saved as Transitional; the part keeps its
-/// name and content type. Returns the save's warnings.
+/// name and content type. Returns the save's warnings. Needs the feature `transitional`.
 ///
 /// # Errors
 ///

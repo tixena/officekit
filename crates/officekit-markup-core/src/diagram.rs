@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `dgm` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.openxmlformats.org/drawingml/2006/diagram`, which files write with the prefix `dgm`.
 //!
-//! The namespace is `http://schemas.openxmlformats.org/drawingml/2006/diagram`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -1091,7 +1091,8 @@ static PARAMETER_VALUES_STRING_FACETS: officekit_markup_base::Facets =
         patterns: &[],
     };
 
-/// 21.4.2.3 alg (Algorithm): the tag `dgm:alg`, schema type `CT_Algorithm`.
+/// The `dgm:alg` element, Algorithm (ECMA-376 Part 1, section 21.4.2.3). Its schema type is
+/// `CT_Algorithm`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1103,15 +1104,24 @@ static PARAMETER_VALUES_STRING_FACETS: officekit_markup_base::Facets =
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Algorithm {
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The children that are `Parameter`, in order.
     pub parameter: Vec<Parameter>,
+    /// The attribute `rev`, when the element has it.
     pub rev: Option<String>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<AlgorithmTypes>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.7.1 `ST_AlgorithmType` (Algorithm Types): the text the file carried.
+/// Algorithm Types, the simple type `ST_AlgorithmType` (ECMA-376 Part 1, section 21.4.7.1), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1120,23 +1130,38 @@ pub struct Algorithm {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AlgorithmTypes(pub String);
-/// The members of `ST_AlgorithmType`, in alphabetical order.
+/// The members of the enumeration `ST_AlgorithmType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum AlgorithmTypesMember {
+    /// The member written `composite`.
     Composite,
+    /// The member written `conn`.
     Conn,
+    /// The member written `cycle`.
     Cycle,
+    /// The member written `hierChild`.
     HierChild,
+    /// The member written `hierRoot`.
     HierRoot,
+    /// The member written `lin`.
     Lin,
+    /// The member written `pyra`.
     Pyra,
+    /// The member written `snake`.
     Snake,
+    /// The member written `sp`.
     Sp,
+    /// The member written `tx`.
     Tx,
 }
 
-/// 21.4.7.2 `ST_AnimLvlStr` (Animation Level String Definition): the text the file carried.
+/// Animation Level String Definition, the simple type `ST_AnimLvlStr` (ECMA-376 Part 1, section
+/// 21.4.7.2), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1145,16 +1170,24 @@ pub enum AlgorithmTypesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AnimationLevelStringDefinition(pub String);
-/// The members of `ST_AnimLvlStr`, in alphabetical order.
+/// The members of the enumeration `ST_AnimLvlStr`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum AnimationLevelStringDefinitionMember {
+    /// The member written `ctr`.
     Ctr,
+    /// The member written `lvl`.
     Lvl,
+    /// The member written `none`.
     None,
 }
 
-/// 21.4.7.4 `ST_ArrowheadStyle` (Arrowhead Styles): the text the file carried.
+/// Arrowhead Styles, the simple type `ST_ArrowheadStyle` (ECMA-376 Part 1, section 21.4.7.4), kept
+/// as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1163,16 +1196,24 @@ pub enum AnimationLevelStringDefinitionMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArrowheadStyles(pub String);
-/// The members of `ST_ArrowheadStyle`, in alphabetical order.
+/// The members of the enumeration `ST_ArrowheadStyle`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ArrowheadStylesMember {
+    /// The member written `arr`.
     Arr,
+    /// The member written `auto`.
     Auto,
+    /// The member written `noArr`.
     NoArr,
 }
 
-/// 21.4.7.5 `ST_AutoTextRotation` (Auto Text Rotation): the text the file carried.
+/// Auto Text Rotation, the simple type `ST_AutoTextRotation` (ECMA-376 Part 1, section 21.4.7.5),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1181,16 +1222,24 @@ pub enum ArrowheadStylesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AutoTextRotation(pub String);
-/// The members of `ST_AutoTextRotation`, in alphabetical order.
+/// The members of the enumeration `ST_AutoTextRotation`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum AutoTextRotationMember {
+    /// The member written `grav`.
     Grav,
+    /// The member written `none`.
     None,
+    /// The member written `upr`.
     Upr,
 }
 
-/// 21.4.7.6 `ST_AxisType` (Axis Type): the text the file carried.
+/// Axis Type, the simple type `ST_AxisType` (ECMA-376 Part 1, section 21.4.7.6), kept as the text
+/// the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1199,26 +1248,44 @@ pub enum AutoTextRotationMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AxisType(pub String);
-/// The members of `ST_AxisType`, in alphabetical order.
+/// The members of the enumeration `ST_AxisType`, in alphabetical order. `as_str` gives the text of
+/// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum AxisTypeMember {
+    /// The member written `ancst`.
     Ancst,
+    /// The member written `ancstOrSelf`.
     AncstOrSelf,
+    /// The member written `ch`.
     Ch,
+    /// The member written `des`.
     Des,
+    /// The member written `desOrSelf`.
     DesOrSelf,
+    /// The member written `follow`.
     Follow,
+    /// The member written `followSib`.
     FollowSib,
+    /// The member written `none`.
     None,
+    /// The member written `par`.
     Par,
+    /// The member written `preced`.
     Preced,
+    /// The member written `precedSib`.
     PrecedSib,
+    /// The member written `root`.
     Root,
+    /// The member written `self`.
     SelfValue,
 }
 
-/// 21.4.7.7 `ST_AxisTypes` (Axis Type List): the text the file carried.
+/// Axis Type List, the simple type `ST_AxisTypes` (ECMA-376 Part 1, section 21.4.7.7), kept as the
+/// text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1228,7 +1295,8 @@ pub enum AxisTypeMember {
 #[non_exhaustive]
 pub struct AxisTypeList(pub String);
 
-/// 21.4.3.1 bg (Background Formatting): the tag `dgm:bg`, schema type `CT_BackgroundFormatting`.
+/// The `dgm:bg` element, Background Formatting (ECMA-376 Part 1, section 21.4.3.1). Its schema type
+/// is `CT_BackgroundFormatting`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1240,14 +1308,21 @@ pub struct AxisTypeList(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BackgroundFormatting {
+    /// The child that is an item of `super::drawing::EffectPropertiesContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContent>>,
+    /// The child that is an item of `super::drawing::FillPropertiesContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.7.8 `ST_BendPoint` (Bend Point): the text the file carried.
+/// Bend Point, the simple type `ST_BendPoint` (ECMA-376 Part 1, section 21.4.7.8), kept as the text
+/// the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1256,16 +1331,24 @@ pub struct BackgroundFormatting {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BendPoint(pub String);
-/// The members of `ST_BendPoint`, in alphabetical order.
+/// The members of the enumeration `ST_BendPoint`, in alphabetical order. `as_str` gives the text of
+/// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum BendPointMember {
+    /// The member written `beg`.
     Beg,
+    /// The member written `def`.
     Def,
+    /// The member written `end`.
     End,
 }
 
-/// 21.4.7.10 `ST_BoolOperator` (Boolean Constraint): the text the file carried.
+/// Boolean Constraint, the simple type `ST_BoolOperator` (ECMA-376 Part 1, section 21.4.7.10), kept
+/// as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1274,17 +1357,26 @@ pub enum BendPointMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BooleanConstraint(pub String);
-/// The members of `ST_BoolOperator`, in alphabetical order.
+/// The members of the enumeration `ST_BoolOperator`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum BooleanConstraintMember {
+    /// The member written `equ`.
     Equ,
+    /// The member written `gte`.
     Gte,
+    /// The member written `lte`.
     Lte,
+    /// The member written `none`.
     None,
 }
 
-/// 21.4.7.9 `ST_Booleans` (Boolean List.): the text the file carried.
+/// Boolean List., the simple type `ST_Booleans` (ECMA-376 Part 1, section 21.4.7.9), kept as the
+/// text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1294,7 +1386,11 @@ pub enum BooleanConstraintMember {
 #[non_exhaustive]
 pub struct BooleanList(pub String);
 
-/// 21.4.7.11 `ST_Breakpoint` (Breakpoint): the text the file carried.
+/// Breakpoint, the simple type `ST_Breakpoint` (ECMA-376 Part 1, section 21.4.7.11), kept as the
+/// text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1303,16 +1399,21 @@ pub struct BooleanList(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Breakpoint(pub String);
-/// The members of `ST_Breakpoint`, in alphabetical order.
+/// The members of the enumeration `ST_Breakpoint`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum BreakpointMember {
+    /// The member written `bal`.
     Bal,
+    /// The member written `endCnv`.
     EndCnv,
+    /// The member written `fixed`.
     Fixed,
 }
 
-/// 21.4.2.4 cat (Category): the tag `dgm:cat`, schema type `CT_Category`.
+/// The `dgm:cat` element, Category (ECMA-376 Part 1, section 21.4.2.4). Its schema type is
+/// `CT_Category`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1321,12 +1422,16 @@ pub enum BreakpointMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Category {
+    /// The attribute `pri`, when the element has it.
     pub pri: Option<String>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.2.5 `catLst` (Category List): the tag `dgm:catLst`, schema type `CT_Categories`.
+/// The `dgm:catLst` element, Category List (ECMA-376 Part 1, section 21.4.2.5). Its schema type is
+/// `CT_Categories`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1335,11 +1440,14 @@ pub struct Category {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CategoryList {
+    /// The children that are `Category`, in order.
     pub category: Vec<Category>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.5.2 `catLst` (Category List): the tag `dgm:catLst`, schema type `CT_SDCategories`.
+/// The `dgm:catLst` element, Category List (ECMA-376 Part 1, section 21.4.5.2). Its schema type is
+/// `CT_SDCategories`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1348,11 +1456,14 @@ pub struct CategoryList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CategoryListSDCategories {
+    /// The children that are `CategorySDCategory`, in order.
     pub category_sd_category: Vec<CategorySDCategory>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.5.1 cat (Category): the tag `dgm:cat`, schema type `CT_SDCategory`.
+/// The `dgm:cat` element, Category (ECMA-376 Part 1, section 21.4.5.1). Its schema type is
+/// `CT_SDCategory`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1361,12 +1472,19 @@ pub struct CategoryListSDCategories {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CategorySDCategory {
+    /// The attribute `pri`, when the element has it.
     pub pri: Option<String>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.7.12 `ST_CenterShapeMapping` (Center Shape Mapping): the text the file carried.
+/// Center Shape Mapping, the simple type `ST_CenterShapeMapping` (ECMA-376 Part 1, section
+/// 21.4.7.12), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1375,15 +1493,22 @@ pub struct CategorySDCategory {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CenterShapeMapping(pub String);
-/// The members of `ST_CenterShapeMapping`, in alphabetical order.
+/// The members of the enumeration `ST_CenterShapeMapping`, in alphabetical order. `as_str` gives
+/// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum CenterShapeMappingMember {
+    /// The member written `fNode`.
     FNode,
+    /// The member written `none`.
     None,
 }
 
-/// 21.4.7.13 `ST_ChildAlignment` (Child Alignment): the text the file carried.
+/// Child Alignment, the simple type `ST_ChildAlignment` (ECMA-376 Part 1, section 21.4.7.13), kept
+/// as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1392,17 +1517,26 @@ pub enum CenterShapeMappingMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ChildAlignment(pub String);
-/// The members of `ST_ChildAlignment`, in alphabetical order.
+/// The members of the enumeration `ST_ChildAlignment`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ChildAlignmentMember {
+    /// The member written `b`.
     B,
+    /// The member written `l`.
     L,
+    /// The member written `r`.
     R,
+    /// The member written `t`.
     T,
 }
 
-/// 21.4.7.14 `ST_ChildDirection` (Child Direction): the text the file carried.
+/// Child Direction, the simple type `ST_ChildDirection` (ECMA-376 Part 1, section 21.4.7.14), kept
+/// as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1411,15 +1545,22 @@ pub enum ChildAlignmentMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ChildDirection(pub String);
-/// The members of `ST_ChildDirection`, in alphabetical order.
+/// The members of the enumeration `ST_ChildDirection`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ChildDirectionMember {
+    /// The member written `horz`.
     Horz,
+    /// The member written `vert`.
     Vert,
 }
 
-/// 21.4.7.15 `ST_ChildOrderType` (Child Order): the text the file carried.
+/// Child Order, the simple type `ST_ChildOrderType` (ECMA-376 Part 1, section 21.4.7.15), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1428,15 +1569,19 @@ pub enum ChildDirectionMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ChildOrder(pub String);
-/// The members of `ST_ChildOrderType`, in alphabetical order.
+/// The members of the enumeration `ST_ChildOrderType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ChildOrderMember {
+    /// The member written `b`.
     B,
+    /// The member written `t`.
     T,
 }
 
-/// 21.4.2.6 choose (Choose Element): the tag `dgm:choose`, schema type `CT_Choose`.
+/// The `dgm:choose` element, Choose Element (ECMA-376 Part 1, section 21.4.2.6). Its schema type is
+/// `CT_Choose`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1448,15 +1593,23 @@ pub enum ChildOrderMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ChooseElement {
+    /// The child that is `Else`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub r#else: Option<Box<Else>>,
+    /// The children that are `If`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub r#if: Vec<If>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.7.16 `ST_ClrAppMethod` (Color Application Method Type): the text the file carried.
+/// Color Application Method Type, the simple type `ST_ClrAppMethod` (ECMA-376 Part 1, section
+/// 21.4.7.16), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1465,16 +1618,21 @@ pub struct ChooseElement {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColorApplicationMethodType(pub String);
-/// The members of `ST_ClrAppMethod`, in alphabetical order.
+/// The members of the enumeration `ST_ClrAppMethod`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ColorApplicationMethodTypeMember {
+    /// The member written `cycle`.
     Cycle,
+    /// The member written `repeat`.
     Repeat,
+    /// The member written `span`.
     Span,
 }
 
-/// 21.4.4.1 cat (Color Transform Category): the tag `dgm:cat`, schema type `CT_CTCategory`.
+/// The `dgm:cat` element, Color Transform Category (ECMA-376 Part 1, section 21.4.4.1). Its schema
+/// type is `CT_CTCategory`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1483,13 +1641,16 @@ pub enum ColorApplicationMethodTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColorTransformCategory {
+    /// The attribute `pri`, when the element has it.
     pub pri: Option<String>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.4.2 `catLst` (Color Transform Category List): the tag `dgm:catLst`, schema type
-/// `CT_CTCategories`.
+/// The `dgm:catLst` element, Color Transform Category List (ECMA-376 Part 1, section 21.4.4.2). Its
+/// schema type is `CT_CTCategories`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1498,12 +1659,14 @@ pub struct ColorTransformCategory {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColorTransformCategoryList {
+    /// The children that are `ColorTransformCategory`, in order.
     pub color_transform_category: Vec<ColorTransformCategory>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.4.4 `colorsDefHdr` (Color Transform Definition Header): the tag `dgm:colorsDefHdr`, schema
-/// type `CT_ColorTransformHeader`.
+/// The `dgm:colorsDefHdr` element, Color Transform Definition Header (ECMA-376 Part 1, section
+/// 21.4.4.4). Its schema type is `CT_ColorTransformHeader`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1515,19 +1678,27 @@ pub struct ColorTransformCategoryList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColorTransformDefinitionHeader {
+    /// The child that is `ColorTransformCategoryList`, when there is one.
     pub color_transform_category_list: Option<Box<ColorTransformCategoryList>>,
+    /// The children that are `DescriptionCTDescription`, in order.
     pub description_ct_description: Vec<DescriptionCTDescription>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `minVer`, when the element has it.
     pub min_ver: Option<String>,
+    /// The attribute `resId`, when the element has it.
     pub res_id: Option<String>,
+    /// The children that are `TitleCTName`, in order.
     pub title_ct_name: Vec<TitleCTName>,
+    /// The attribute `uniqueId`, when the element has it.
     pub unique_id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.4.3 `colorsDef` (Color Transform Definitions): the tag `dgm:colorsDef`, schema type
-/// `CT_ColorTransform`.
+/// The `dgm:colorsDef` element, Color Transform Definitions (ECMA-376 Part 1, section 21.4.4.3).
+/// Its schema type is `CT_ColorTransform`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1539,20 +1710,28 @@ pub struct ColorTransformDefinitionHeader {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColorTransformDefinitions {
+    /// The child that is `ColorTransformCategoryList`, when there is one.
     pub color_transform_category_list: Option<Box<ColorTransformCategoryList>>,
+    /// The children that are `DescriptionCTDescription`, in order.
     pub description_ct_description: Vec<DescriptionCTDescription>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `minVer`, when the element has it.
     pub min_ver: Option<String>,
+    /// The children that are `StyleLabel`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub style_label: Vec<StyleLabel>,
+    /// The children that are `TitleCTName`, in order.
     pub title_ct_name: Vec<TitleCTName>,
+    /// The attribute `uniqueId`, when the element has it.
     pub unique_id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.4.5 `colorsDefHdrLst` (Color Transform Header List): the tag `dgm:colorsDefHdrLst`, schema
-/// type `CT_ColorTransformHeaderLst`.
+/// The `dgm:colorsDefHdrLst` element, Color Transform Header List (ECMA-376 Part 1, section
+/// 21.4.4.5). Its schema type is `CT_ColorTransformHeaderLst`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1564,13 +1743,15 @@ pub struct ColorTransformDefinitions {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColorTransformHeaderList {
+    /// The children that are `ColorTransformDefinitionHeader`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub color_transform_definition_header: Vec<ColorTransformDefinitionHeader>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.2.7 `clrData` (Color Transform Sample Data): the tag `dgm:clrData`, schema type
-/// `CT_SampleData`.
+/// The `dgm:clrData` element, Color Transform Sample Data (ECMA-376 Part 1, section 21.4.2.7). Its
+/// schema type is `CT_SampleData`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1582,13 +1763,17 @@ pub struct ColorTransformHeaderList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColorTransformSampleData {
+    /// The child that is `DataModel`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub model: Option<Box<DataModel>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `useDef`, when the element has it.
     pub use_def: Option<String>,
 }
 
-/// 21.4.3.2 cxn (Connection): the tag `dgm:cxn`, schema type `CT_Cxn`.
+/// The `dgm:cxn` element, Connection (ECMA-376 Part 1, section 21.4.3.2). Its schema type is
+/// `CT_Cxn`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1600,21 +1785,33 @@ pub struct ColorTransformSampleData {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Connection {
+    /// The attribute `destId`, when the element has it.
     pub dest_id: Option<ModelIdentifier>,
+    /// The attribute `destOrd`, when the element has it.
     pub dest_ord: Option<String>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `modelId`, when the element has it.
     pub model_id: Option<ModelIdentifier>,
+    /// The attribute `parTransId`, when the element has it.
     pub par_trans_id: Option<ModelIdentifier>,
+    /// The attribute `presId`, when the element has it.
     pub pres_id: Option<String>,
+    /// The attribute `sibTransId`, when the element has it.
     pub sib_trans_id: Option<ModelIdentifier>,
+    /// The attribute `srcId`, when the element has it.
     pub src_id: Option<ModelIdentifier>,
+    /// The attribute `srcOrd`, when the element has it.
     pub src_ord: Option<String>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<ConnectionType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.3.3 `cxnLst` (Connection List): the tag `dgm:cxnLst`, schema type `CT_CxnList`.
+/// The `dgm:cxnLst` element, Connection List (ECMA-376 Part 1, section 21.4.3.3). Its schema type
+/// is `CT_CxnList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1626,12 +1823,18 @@ pub struct Connection {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConnectionList {
+    /// The children that are `Connection`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub connection: Vec<Connection>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.7.23 `ST_CxnType` (Connection Type): the text the file carried.
+/// Connection Type, the simple type `ST_CxnType` (ECMA-376 Part 1, section 21.4.7.23), kept as the
+/// text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1640,17 +1843,26 @@ pub struct ConnectionList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConnectionType(pub String);
-/// The members of `ST_CxnType`, in alphabetical order.
+/// The members of the enumeration `ST_CxnType`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ConnectionTypeMember {
+    /// The member written `parOf`.
     ParOf,
+    /// The member written `presOf`.
     PresOf,
+    /// The member written `presParOf`.
     PresParOf,
+    /// The member written `unknownRelationship`.
     UnknownRelationship,
 }
 
-/// 21.4.7.17 `ST_ConnectorDimension` (Connector Dimension): the text the file carried.
+/// Connector Dimension, the simple type `ST_ConnectorDimension` (ECMA-376 Part 1, section
+/// 21.4.7.17), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1659,16 +1871,24 @@ pub enum ConnectionTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConnectorDimension(pub String);
-/// The members of `ST_ConnectorDimension`, in alphabetical order.
+/// The members of the enumeration `ST_ConnectorDimension`, in alphabetical order. `as_str` gives
+/// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ConnectorDimensionMember {
+    /// The member written `cust`.
     Cust,
+    /// The member written `1D`.
     Value1d,
+    /// The member written `2D`.
     Value2d,
 }
 
-/// 21.4.7.18 `ST_ConnectorPoint` (Connector Point): the text the file carried.
+/// Connector Point, the simple type `ST_ConnectorPoint` (ECMA-376 Part 1, section 21.4.7.18), kept
+/// as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1677,24 +1897,40 @@ pub enum ConnectorDimensionMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConnectorPoint(pub String);
-/// The members of `ST_ConnectorPoint`, in alphabetical order.
+/// The members of the enumeration `ST_ConnectorPoint`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ConnectorPointMember {
+    /// The member written `auto`.
     Auto,
+    /// The member written `bCtr`.
     BCtr,
+    /// The member written `bL`.
     BL,
+    /// The member written `bR`.
     BR,
+    /// The member written `ctr`.
     Ctr,
+    /// The member written `midL`.
     MidL,
+    /// The member written `midR`.
     MidR,
+    /// The member written `radial`.
     Radial,
+    /// The member written `tCtr`.
     TCtr,
+    /// The member written `tL`.
     TL,
+    /// The member written `tR`.
     TR,
 }
 
-/// 21.4.7.19 `ST_ConnectorRouting` (Connector Routing): the text the file carried.
+/// Connector Routing, the simple type `ST_ConnectorRouting` (ECMA-376 Part 1, section 21.4.7.19),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1703,17 +1939,23 @@ pub enum ConnectorPointMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConnectorRouting(pub String);
-/// The members of `ST_ConnectorRouting`, in alphabetical order.
+/// The members of the enumeration `ST_ConnectorRouting`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ConnectorRoutingMember {
+    /// The member written `bend`.
     Bend,
+    /// The member written `curve`.
     Curve,
+    /// The member written `longCurve`.
     LongCurve,
+    /// The member written `stra`.
     Stra,
 }
 
-/// 21.4.2.8 constr (Constraint): the tag `dgm:constr`, schema type `CT_Constraint`.
+/// The `dgm:constr` element, Constraint (ECMA-376 Part 1, section 21.4.2.8). Its schema type is
+/// `CT_Constraint`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1725,23 +1967,37 @@ pub enum ConnectorRoutingMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Constraint {
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `fact`, when the element has it.
     pub fact: Option<String>,
+    /// The attribute `for`, when the element has it.
     pub r#for: Option<ConstraintRelationship>,
+    /// The attribute `forName`, when the element has it.
     pub for_name: Option<String>,
+    /// The attribute `op`, when the element has it.
     pub op: Option<BooleanConstraint>,
+    /// The attribute `ptType`, when the element has it.
     pub pt_type: Option<DataPointType>,
+    /// The attribute `refFor`, when the element has it.
     pub ref_for: Option<ConstraintRelationship>,
+    /// The attribute `refForName`, when the element has it.
     pub ref_for_name: Option<String>,
+    /// The attribute `refPtType`, when the element has it.
     pub ref_pt_type: Option<DataPointType>,
+    /// The attribute `refType`, when the element has it.
     pub ref_type: Option<ConstraintType>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<ConstraintType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// 21.4.2.9 `constrLst` (Constraint List): the tag `dgm:constrLst`, schema type `CT_Constraints`.
+/// The `dgm:constrLst` element, Constraint List (ECMA-376 Part 1, section 21.4.2.9). Its schema
+/// type is `CT_Constraints`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1753,12 +2009,18 @@ pub struct Constraint {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConstraintList {
+    /// The children that are `Constraint`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub constraint: Vec<Constraint>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.7.20 `ST_ConstraintRelationship` (Constraint Relationship): the text the file carried.
+/// Constraint Relationship, the simple type `ST_ConstraintRelationship` (ECMA-376 Part 1, section
+/// 21.4.7.20), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1767,16 +2029,24 @@ pub struct ConstraintList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConstraintRelationship(pub String);
-/// The members of `ST_ConstraintRelationship`, in alphabetical order.
+/// The members of the enumeration `ST_ConstraintRelationship`, in alphabetical order. `as_str`
+/// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ConstraintRelationshipMember {
+    /// The member written `ch`.
     Ch,
+    /// The member written `des`.
     Des,
+    /// The member written `self`.
     SelfValue,
 }
 
-/// 21.4.7.21 `ST_ConstraintType` (Constraint Type): the text the file carried.
+/// Constraint Type, the simple type `ST_ConstraintType` (ECMA-376 Part 1, section 21.4.7.21), kept
+/// as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1785,77 +2055,146 @@ pub enum ConstraintRelationshipMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConstraintType(pub String);
-/// The members of `ST_ConstraintType`, in alphabetical order.
+/// The members of the enumeration `ST_ConstraintType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ConstraintTypeMember {
+    /// The member written `alignOff`.
     AlignOff,
+    /// The member written `b`.
     B,
+    /// The member written `bMarg`.
     BMarg,
+    /// The member written `bOff`.
     BOff,
+    /// The member written `begMarg`.
     BegMarg,
+    /// The member written `begPad`.
     BegPad,
+    /// The member written `bendDist`.
     BendDist,
+    /// The member written `connDist`.
     ConnDist,
+    /// The member written `ctrX`.
     CtrX,
+    /// The member written `ctrXOff`.
     CtrXOff,
+    /// The member written `ctrY`.
     CtrY,
+    /// The member written `ctrYOff`.
     CtrYOff,
+    /// The member written `diam`.
     Diam,
+    /// The member written `endMarg`.
     EndMarg,
+    /// The member written `endPad`.
     EndPad,
+    /// The member written `h`.
     H,
+    /// The member written `hArH`.
     HArH,
+    /// The member written `hOff`.
     HOff,
+    /// The member written `l`.
     L,
+    /// The member written `lMarg`.
     LMarg,
+    /// The member written `lOff`.
     LOff,
+    /// The member written `none`.
     None,
+    /// The member written `primFontSz`.
     PrimFontSz,
+    /// The member written `pyraAcctRatio`.
     PyraAcctRatio,
+    /// The member written `r`.
     R,
+    /// The member written `rMarg`.
     RMarg,
+    /// The member written `rOff`.
     ROff,
+    /// The member written `secFontSz`.
     SecFontSz,
+    /// The member written `secSibSp`.
     SecSibSp,
+    /// The member written `sibSp`.
     SibSp,
+    /// The member written `sp`.
     Sp,
+    /// The member written `stemThick`.
     StemThick,
+    /// The member written `t`.
     T,
+    /// The member written `tMarg`.
     TMarg,
+    /// The member written `tOff`.
     TOff,
+    /// The member written `userA`.
     UserA,
+    /// The member written `userB`.
     UserB,
+    /// The member written `userC`.
     UserC,
+    /// The member written `userD`.
     UserD,
+    /// The member written `userE`.
     UserE,
+    /// The member written `userF`.
     UserF,
+    /// The member written `userG`.
     UserG,
+    /// The member written `userH`.
     UserH,
+    /// The member written `userI`.
     UserI,
+    /// The member written `userJ`.
     UserJ,
+    /// The member written `userK`.
     UserK,
+    /// The member written `userL`.
     UserL,
+    /// The member written `userM`.
     UserM,
+    /// The member written `userN`.
     UserN,
+    /// The member written `userO`.
     UserO,
+    /// The member written `userP`.
     UserP,
+    /// The member written `userQ`.
     UserQ,
+    /// The member written `userR`.
     UserR,
+    /// The member written `userS`.
     UserS,
+    /// The member written `userT`.
     UserT,
+    /// The member written `userU`.
     UserU,
+    /// The member written `userV`.
     UserV,
+    /// The member written `userW`.
     UserW,
+    /// The member written `userX`.
     UserX,
+    /// The member written `userY`.
     UserY,
+    /// The member written `userZ`.
     UserZ,
+    /// The member written `w`.
     W,
+    /// The member written `wArH`.
     WArH,
+    /// The member written `wOff`.
     WOff,
 }
 
-/// 21.4.7.22 `ST_ContinueDirection` (Continue Direction): the text the file carried.
+/// Continue Direction, the simple type `ST_ContinueDirection` (ECMA-376 Part 1, section 21.4.7.22),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1864,15 +2203,19 @@ pub enum ConstraintTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ContinueDirection(pub String);
-/// The members of `ST_ContinueDirection`, in alphabetical order.
+/// The members of the enumeration `ST_ContinueDirection`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ContinueDirectionMember {
+    /// The member written `revDir`.
     RevDir,
+    /// The member written `sameDir`.
     SameDir,
 }
 
-/// 21.4.2.10 `dataModel` (Data Model): the tag `dgm:dataModel`, schema type `CT_DataModel`.
+/// The `dgm:dataModel` element, Data Model (ECMA-376 Part 1, section 21.4.2.10). Its schema type is
+/// `CT_DataModel`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1884,20 +2227,30 @@ pub enum ContinueDirectionMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataModel {
+    /// The child that is `BackgroundFormatting`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub background_formatting: Option<Box<BackgroundFormatting>>,
+    /// The child that is `ConnectionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub connection_list: Option<Box<ConnectionList>>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `PointList`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub point_list: Box<PointList>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `WholeE2OFormatting`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub whole_e2o_formatting: Option<Box<WholeE2OFormatting>>,
 }
 
-/// 21.4.7.27 `ST_ElementType` (Data Point Type): the text the file carried.
+/// Data Point Type, the simple type `ST_ElementType` (ECMA-376 Part 1, section 21.4.7.27), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1906,23 +2259,35 @@ pub struct DataModel {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataPointType(pub String);
-/// The members of `ST_ElementType`, in alphabetical order.
+/// The members of the enumeration `ST_ElementType`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum DataPointTypeMember {
+    /// The member written `all`.
     All,
+    /// The member written `asst`.
     Asst,
+    /// The member written `doc`.
     Doc,
+    /// The member written `node`.
     Node,
+    /// The member written `nonAsst`.
     NonAsst,
+    /// The member written `nonNorm`.
     NonNorm,
+    /// The member written `norm`.
     Norm,
+    /// The member written `parTrans`.
     ParTrans,
+    /// The member written `pres`.
     Pres,
+    /// The member written `sibTrans`.
     SibTrans,
 }
 
-/// 21.4.2.11 desc (Description): the tag `dgm:desc`, schema type `CT_Description`.
+/// The `dgm:desc` element, Description (ECMA-376 Part 1, section 21.4.2.11). Its schema type is
+/// `CT_Description`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1931,12 +2296,16 @@ pub enum DataPointTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Description {
+    /// The attribute `lang`, when the element has it.
     pub lang: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// 21.4.4.6 desc (Description): the tag `dgm:desc`, schema type `CT_CTDescription`.
+/// The `dgm:desc` element, Description (ECMA-376 Part 1, section 21.4.4.6). Its schema type is
+/// `CT_CTDescription`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1945,12 +2314,16 @@ pub struct Description {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DescriptionCTDescription {
+    /// The attribute `lang`, when the element has it.
     pub lang: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// 21.4.6.6 dir (Diagram Direction): the tag `dgm:dir`, schema type `CT_Direction`.
+/// The `dgm:dir` element, Diagram Direction (ECMA-376 Part 1, section 21.4.6.6). Its schema type is
+/// `CT_Direction`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1959,11 +2332,17 @@ pub struct DescriptionCTDescription {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DiagramDirection {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<DiagramDirectionDefinition>,
 }
 
-/// 21.4.7.26 `ST_Direction` (Diagram Direction Definition): the text the file carried.
+/// Diagram Direction Definition, the simple type `ST_Direction` (ECMA-376 Part 1, section
+/// 21.4.7.26), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1972,16 +2351,19 @@ pub struct DiagramDirection {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DiagramDirectionDefinition(pub String);
-/// The members of `ST_Direction`, in alphabetical order.
+/// The members of the enumeration `ST_Direction`, in alphabetical order. `as_str` gives the text of
+/// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum DiagramDirectionDefinitionMember {
+    /// The member written `norm`.
     Norm,
+    /// The member written `rev`.
     Rev,
 }
 
-/// 21.4.2.18 `layoutDefHdrLst` (Diagram Layout Header List): the tag `dgm:layoutDefHdrLst`, schema
-/// type `CT_DiagramDefinitionHeaderLst`.
+/// The `dgm:layoutDefHdrLst` element, Diagram Layout Header List (ECMA-376 Part 1, section
+/// 21.4.2.18). Its schema type is `CT_DiagramDefinitionHeaderLst`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1993,12 +2375,18 @@ pub enum DiagramDirectionDefinitionMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DiagramLayoutHeaderList {
+    /// The children that are `LayoutDefinitionHeader`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub layout_definition_header: Vec<LayoutDefinitionHeader>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.7.28 `ST_ElementTypes` (Diagream Layout Node Type List): the text the file carried.
+/// Diagream Layout Node Type List, the simple type `ST_ElementTypes` (ECMA-376 Part 1, section
+/// 21.4.7.28), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2008,8 +2396,8 @@ pub struct DiagramLayoutHeaderList {
 #[non_exhaustive]
 pub struct DiagreamLayoutNodeTypeList(pub String);
 
-/// 21.4.4.7 `effectClrLst` (Effect Color List): the tag `dgm:effectClrLst`, schema type
-/// `CT_Colors`.
+/// The `dgm:effectClrLst` element, Effect Color List (ECMA-376 Part 1, section 21.4.4.7). Its
+/// schema type is `CT_Colors`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2018,13 +2406,18 @@ pub struct DiagreamLayoutNodeTypeList(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EffectColorList {
+    /// The children that are an item of `super::drawing::ColorContent`, in order.
     pub content: Vec<super::drawing::ColorContent>,
+    /// The attribute `hueDir`, when the element has it.
     pub hue_dir: Option<HueDirection>,
+    /// The attribute `meth`, when the element has it.
     pub meth: Option<ColorApplicationMethodType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.2.12 else (Else): the tag `dgm:else`, schema type `CT_Otherwise`.
+/// The `dgm:else` element, Else (ECMA-376 Part 1, section 21.4.2.12). Its schema type is
+/// `CT_Otherwise`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2036,14 +2429,17 @@ pub struct EffectColorList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Else {
+    /// The children that are an item of `LayoutElementContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<LayoutElementContent>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.2.22 `relIds` (Explicit Relationships to Diagram Parts): the tag `dgm:relIds`, schema type
-/// `CT_RelIds`.
+/// The `dgm:relIds` element, Explicit Relationships to Diagram Parts (ECMA-376 Part 1, section
+/// 21.4.2.22). Its schema type is `CT_RelIds`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2052,15 +2448,20 @@ pub struct Else {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExplicitRelationshipsToDiagramParts {
+    /// The attribute `r:cs`, when the element has it.
     pub cs: Option<String>,
+    /// The attribute `r:dm`, when the element has it.
     pub dm: Option<String>,
+    /// The attribute `r:lo`, when the element has it.
     pub lo: Option<String>,
+    /// The attribute `r:qs`, when the element has it.
     pub qs: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.2.13 `extLst` (Extension List): the tag `dgm:extLst`, schema type
-/// `CT_OfficeArtExtensionList`.
+/// The `dgm:extLst` element, Extension List (ECMA-376 Part 1, section 21.4.2.13). Its schema type
+/// is `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2072,12 +2473,18 @@ pub struct ExplicitRelationshipsToDiagramParts {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtensionList {
+    /// The children that are `super::drawing::Extension`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension: Vec<super::drawing::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.7.29 `ST_FallbackDimension` (Fallback Dimension): the text the file carried.
+/// Fallback Dimension, the simple type `ST_FallbackDimension` (ECMA-376 Part 1, section 21.4.7.29),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2086,15 +2493,19 @@ pub struct ExtensionList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FallbackDimension(pub String);
-/// The members of `ST_FallbackDimension`, in alphabetical order.
+/// The members of the enumeration `ST_FallbackDimension`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum FallbackDimensionMember {
+    /// The member written `1D`.
     Value1d,
+    /// The member written `2D`.
     Value2d,
 }
 
-/// 21.4.4.8 `fillClrLst` (Fill Color List): the tag `dgm:fillClrLst`, schema type `CT_Colors`.
+/// The `dgm:fillClrLst` element, Fill Color List (ECMA-376 Part 1, section 21.4.4.8). Its schema
+/// type is `CT_Colors`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2103,13 +2514,21 @@ pub enum FallbackDimensionMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FillColorList {
+    /// The children that are an item of `super::drawing::ColorContent`, in order.
     pub content: Vec<super::drawing::ColorContent>,
+    /// The attribute `hueDir`, when the element has it.
     pub hue_dir: Option<HueDirection>,
+    /// The attribute `meth`, when the element has it.
     pub meth: Option<ColorApplicationMethodType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.7.30 `ST_FlowDirection` (Flow Direction): the text the file carried.
+/// Flow Direction, the simple type `ST_FlowDirection` (ECMA-376 Part 1, section 21.4.7.30), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2118,15 +2537,19 @@ pub struct FillColorList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FlowDirection(pub String);
-/// The members of `ST_FlowDirection`, in alphabetical order.
+/// The members of the enumeration `ST_FlowDirection`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum FlowDirectionMember {
+    /// The member written `col`.
     Col,
+    /// The member written `row`.
     Row,
 }
 
-/// 21.4.2.14 `forEach` (For Each): the tag `dgm:forEach`, schema type `CT_ForEach`.
+/// The `dgm:forEach` element, For Each (ECMA-376 Part 1, section 21.4.2.14). Its schema type is
+/// `CT_ForEach`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2138,20 +2561,34 @@ pub enum FlowDirectionMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ForEach {
+    /// The attribute `axis`, when the element has it.
     pub axis: Option<AxisTypeList>,
+    /// The attribute `cnt`, when the element has it.
     pub cnt: Option<UnsignedIntegerList>,
+    /// The children that are an item of `LayoutElementContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<LayoutElementContent>,
+    /// The attribute `hideLastTrans`, when the element has it.
     pub hide_last_trans: Option<BooleanList>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `ptType`, when the element has it.
     pub pt_type: Option<DiagreamLayoutNodeTypeList>,
+    /// The attribute `ref`, when the element has it.
     pub r#ref: Option<String>,
+    /// The attribute `st`, when the element has it.
     pub st: Option<IntegerList>,
+    /// The attribute `step`, when the element has it.
     pub step: Option<IntegerList>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.7.31 `ST_FunctionArgument` (Function Argument): the text the file carried.
+/// Function Argument, the simple type `ST_FunctionArgument` (ECMA-376 Part 1, section 21.4.7.31),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2165,10 +2602,15 @@ pub struct FunctionArgument(pub String);
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum FunctionArgumentMember {
+    /// A value of the member type `VariableTypeMember`.
     VariableType(VariableTypeMember),
 }
 
-/// 21.4.7.32 `ST_FunctionOperator` (Function Operator): the text the file carried.
+/// Function Operator, the simple type `ST_FunctionOperator` (ECMA-376 Part 1, section 21.4.7.32),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2177,19 +2619,30 @@ pub enum FunctionArgumentMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FunctionOperator(pub String);
-/// The members of `ST_FunctionOperator`, in alphabetical order.
+/// The members of the enumeration `ST_FunctionOperator`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum FunctionOperatorMember {
+    /// The member written `equ`.
     Equ,
+    /// The member written `gt`.
     Gt,
+    /// The member written `gte`.
     Gte,
+    /// The member written `lt`.
     Lt,
+    /// The member written `lte`.
     Lte,
+    /// The member written `neq`.
     Neq,
 }
 
-/// 21.4.7.33 `ST_FunctionType` (Function Type): the text the file carried.
+/// Function Type, the simple type `ST_FunctionType` (ECMA-376 Part 1, section 21.4.7.33), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2198,21 +2651,34 @@ pub enum FunctionOperatorMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FunctionType(pub String);
-/// The members of `ST_FunctionType`, in alphabetical order.
+/// The members of the enumeration `ST_FunctionType`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum FunctionTypeMember {
+    /// The member written `cnt`.
     Cnt,
+    /// The member written `depth`.
     Depth,
+    /// The member written `maxDepth`.
     MaxDepth,
+    /// The member written `pos`.
     Pos,
+    /// The member written `posEven`.
     PosEven,
+    /// The member written `posOdd`.
     PosOdd,
+    /// The member written `revPos`.
     RevPos,
+    /// The member written `var`.
     Var,
 }
 
-/// 21.4.7.34 `ST_FunctionValue` (Function Value): the text the file carried.
+/// Function Value, the simple type `ST_FunctionValue` (ECMA-376 Part 1, section 21.4.7.34), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2226,16 +2692,27 @@ pub struct FunctionValue(pub String);
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum FunctionValueMember {
+    /// A value of the member type `AnimationLevelStringDefinitionMember`.
     AnimationLevelStringDefinition(AnimationLevelStringDefinitionMember),
+    /// A value of the member type `bool`.
     Boolean(bool),
+    /// A value of the member type `DiagramDirectionDefinitionMember`.
     DiagramDirectionDefinition(DiagramDirectionDefinitionMember),
+    /// A value of the member type `HierarchyBranchStyleDefinitionMember`.
     HierarchyBranchStyleDefinition(HierarchyBranchStyleDefinitionMember),
+    /// A value of the member type `i64`.
     Int(i64),
+    /// A value of the member type `OneByOneAnimationValueDefinitionMember`.
     OneByOneAnimationValueDefinition(OneByOneAnimationValueDefinitionMember),
+    /// A value of the member type `ResizeHandleMember`.
     ResizeHandle(ResizeHandleMember),
 }
 
-/// 21.4.7.35 `ST_GrowDirection` (Grow Direction): the text the file carried.
+/// Grow Direction, the simple type `ST_GrowDirection` (ECMA-376 Part 1, section 21.4.7.35), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2244,17 +2721,26 @@ pub enum FunctionValueMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GrowDirection(pub String);
-/// The members of `ST_GrowDirection`, in alphabetical order.
+/// The members of the enumeration `ST_GrowDirection`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum GrowDirectionMember {
+    /// The member written `bL`.
     BL,
+    /// The member written `bR`.
     BR,
+    /// The member written `tL`.
     TL,
+    /// The member written `tR`.
     TR,
 }
 
-/// 21.4.7.36 `ST_HierarchyAlignment` (Hierarchy Alignment): the text the file carried.
+/// Hierarchy Alignment, the simple type `ST_HierarchyAlignment` (ECMA-376 Part 1, section
+/// 21.4.7.36), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2263,29 +2749,50 @@ pub enum GrowDirectionMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HierarchyAlignment(pub String);
-/// The members of `ST_HierarchyAlignment`, in alphabetical order.
+/// The members of the enumeration `ST_HierarchyAlignment`, in alphabetical order. `as_str` gives
+/// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum HierarchyAlignmentMember {
+    /// The member written `bCtrCh`.
     BCtrCh,
+    /// The member written `bCtrDes`.
     BCtrDes,
+    /// The member written `bL`.
     BL,
+    /// The member written `bR`.
     BR,
+    /// The member written `lB`.
     LB,
+    /// The member written `lCtrCh`.
     LCtrCh,
+    /// The member written `lCtrDes`.
     LCtrDes,
+    /// The member written `lT`.
     LT,
+    /// The member written `rB`.
     RB,
+    /// The member written `rCtrCh`.
     RCtrCh,
+    /// The member written `rCtrDes`.
     RCtrDes,
+    /// The member written `rT`.
     RT,
+    /// The member written `tCtrCh`.
     TCtrCh,
+    /// The member written `tCtrDes`.
     TCtrDes,
+    /// The member written `tL`.
     TL,
+    /// The member written `tR`.
     TR,
 }
 
-/// 21.4.7.37 `ST_HierBranchStyle` (Hierarchy Branch Style Definition): the text the file carried.
+/// Hierarchy Branch Style Definition, the simple type `ST_HierBranchStyle` (ECMA-376 Part 1,
+/// section 21.4.7.37), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2294,18 +2801,28 @@ pub enum HierarchyAlignmentMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HierarchyBranchStyleDefinition(pub String);
-/// The members of `ST_HierBranchStyle`, in alphabetical order.
+/// The members of the enumeration `ST_HierBranchStyle`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum HierarchyBranchStyleDefinitionMember {
+    /// The member written `hang`.
     Hang,
+    /// The member written `init`.
     Init,
+    /// The member written `l`.
     L,
+    /// The member written `r`.
     R,
+    /// The member written `std`.
     Std,
 }
 
-/// 21.4.7.24 `ST_DiagramHorizontalAlignment` (Horizontal Alignment): the text the file carried.
+/// Horizontal Alignment, the simple type `ST_DiagramHorizontalAlignment` (ECMA-376 Part 1, section
+/// 21.4.7.24), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2314,17 +2831,26 @@ pub enum HierarchyBranchStyleDefinitionMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HorizontalAlignment(pub String);
-/// The members of `ST_DiagramHorizontalAlignment`, in alphabetical order.
+/// The members of the enumeration `ST_DiagramHorizontalAlignment`, in alphabetical order. `as_str`
+/// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum HorizontalAlignmentMember {
+    /// The member written `ctr`.
     Ctr,
+    /// The member written `l`.
     L,
+    /// The member written `none`.
     None,
+    /// The member written `r`.
     R,
 }
 
-/// 21.4.7.38 `ST_HueDir` (Hue Direction): the text the file carried.
+/// Hue Direction, the simple type `ST_HueDir` (ECMA-376 Part 1, section 21.4.7.38), kept as the
+/// text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2333,15 +2859,18 @@ pub enum HorizontalAlignmentMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HueDirection(pub String);
-/// The members of `ST_HueDir`, in alphabetical order.
+/// The members of the enumeration `ST_HueDir`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum HueDirectionMember {
+    /// The member written `ccw`.
     Ccw,
+    /// The member written `cw`.
     Cw,
 }
 
-/// 21.4.2.15 if (If): the tag `dgm:if`, schema type `CT_When`.
+/// The `dgm:if` element, If (ECMA-376 Part 1, section 21.4.2.15). Its schema type is `CT_When`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2353,23 +2882,39 @@ pub enum HueDirectionMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct If {
+    /// The attribute `arg`, when the element has it.
     pub arg: Option<FunctionArgument>,
+    /// The attribute `axis`, when the element has it.
     pub axis: Option<AxisTypeList>,
+    /// The attribute `cnt`, when the element has it.
     pub cnt: Option<UnsignedIntegerList>,
+    /// The children that are an item of `LayoutElementContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<LayoutElementContent>,
+    /// The attribute `func`, when the element has it.
     pub func: Option<FunctionType>,
+    /// The attribute `hideLastTrans`, when the element has it.
     pub hide_last_trans: Option<BooleanList>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `op`, when the element has it.
     pub op: Option<FunctionOperator>,
+    /// The attribute `ptType`, when the element has it.
     pub pt_type: Option<DiagreamLayoutNodeTypeList>,
+    /// The attribute `st`, when the element has it.
     pub st: Option<IntegerList>,
+    /// The attribute `step`, when the element has it.
     pub step: Option<IntegerList>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<FunctionValue>,
 }
 
-/// `ST_Index1`: the text the file carried.
+/// The simple type `ST_Index1`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2379,7 +2924,11 @@ pub struct If {
 #[non_exhaustive]
 pub struct Index1(pub String);
 
-/// 21.4.7.40 `ST_Ints` (Integer List): the text the file carried.
+/// Integer List, the simple type `ST_Ints` (ECMA-376 Part 1, section 21.4.7.40), kept as the text
+/// the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2389,8 +2938,8 @@ pub struct Index1(pub String);
 #[non_exhaustive]
 pub struct IntegerList(pub String);
 
-/// 21.4.2.16 `layoutDef` (Layout Definition): the tag `dgm:layoutDef`, schema type
-/// `CT_DiagramDefinition`.
+/// The `dgm:layoutDef` element, Layout Definition (ECMA-376 Part 1, section 21.4.2.16). Its schema
+/// type is `CT_DiagramDefinition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2402,27 +2951,39 @@ pub struct IntegerList(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LayoutDefinition {
+    /// The child that is `CategoryList`, when there is one.
     pub category_list: Option<Box<CategoryList>>,
+    /// The child that is `ColorTransformSampleData`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub color_transform_sample_data: Option<Box<ColorTransformSampleData>>,
+    /// The attribute `defStyle`, when the element has it.
     pub def_style: Option<String>,
+    /// The children that are `Description`, in order.
     pub description: Vec<Description>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `LayoutNode`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub layout_node: Box<LayoutNode>,
+    /// The attribute `minVer`, when the element has it.
     pub min_ver: Option<String>,
+    /// The child that is `SampleData`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub sample_data: Option<Box<SampleData>>,
+    /// The child that is `StyleData`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub style_data: Option<Box<StyleData>>,
+    /// The children that are `Title`, in order.
     pub title: Vec<Title>,
+    /// The attribute `uniqueId`, when the element has it.
     pub unique_id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.2.17 `layoutDefHdr` (Layout Definition Header): the tag `dgm:layoutDefHdr`, schema type
-/// `CT_DiagramDefinitionHeader`.
+/// The `dgm:layoutDefHdr` element, Layout Definition Header (ECMA-376 Part 1, section 21.4.2.17).
+/// Its schema type is `CT_DiagramDefinitionHeader`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2434,36 +2995,60 @@ pub struct LayoutDefinition {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LayoutDefinitionHeader {
+    /// The child that is `CategoryList`, when there is one.
     pub category_list: Option<Box<CategoryList>>,
+    /// The attribute `defStyle`, when the element has it.
     pub def_style: Option<String>,
+    /// The children that are `Description`, in order.
     pub description: Vec<Description>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `minVer`, when the element has it.
     pub min_ver: Option<String>,
+    /// The attribute `resId`, when the element has it.
     pub res_id: Option<String>,
+    /// The children that are `Title`, in order.
     pub title: Vec<Title>,
+    /// The attribute `uniqueId`, when the element has it.
     pub unique_id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_ForEach`, `CT_Otherwise`, `CT_When`: local choice in `CT_ForEach`, local choice
-/// in `CT_When`, local choice in `CT_Otherwise`.
+/// One child element of a choice: local choice in `CT_ForEach`, local choice in `CT_When`, local
+/// choice in `CT_Otherwise`.
+///
+/// The schema types that hold it: `CT_ForEach`, `CT_Otherwise`, `CT_When`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum LayoutElementContent {
+    /// The element `dgm:alg`, a `Algorithm`.
     Algorithm(Algorithm),
+    /// The element `dgm:choose`, a `ChooseElement`.
     ChooseElement(ChooseElement),
+    /// The element `dgm:constrLst`, a `ConstraintList`.
     ConstraintList(ConstraintList),
+    /// The element `dgm:extLst`, a `ExtensionList`.
     ExtensionList(ExtensionList),
+    /// The element `dgm:forEach`, a `ForEach`.
     ForEach(ForEach),
+    /// The element `dgm:layoutNode`, a `LayoutNode`.
     LayoutNode(LayoutNode),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `dgm:presOf`, a `PresentationOf`.
     PresentationOf(PresentationOf),
+    /// The element `dgm:ruleLst`, a `RuleList`.
     RuleList(RuleList),
+    /// The element `dgm:shape`, a `Shape`.
     Shape(Shape),
 }
 
-/// 21.4.2.19 `layoutNode` (Layout Node): the tag `dgm:layoutNode`, schema type `CT_LayoutNode`.
+/// The `dgm:layoutNode` element, Layout Node (ECMA-376 Part 1, section 21.4.2.19). Its schema type
+/// is `CT_LayoutNode`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2475,33 +3060,58 @@ pub enum LayoutElementContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LayoutNode {
+    /// The attribute `chOrder`, when the element has it.
     pub ch_order: Option<ChildOrder>,
+    /// The children that are an item of `LayoutNodeContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<LayoutNodeContent>,
+    /// The attribute `moveWith`, when the element has it.
     pub move_with: Option<String>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `styleLbl`, when the element has it.
     pub style_lbl: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_LayoutNode`: local choice in `CT_LayoutNode`.
+/// One child element of a choice: local choice in `CT_LayoutNode`.
+///
+/// The schema types that hold it: `CT_LayoutNode`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum LayoutNodeContent {
+    /// The element `dgm:alg`, a `Algorithm`.
     Algorithm(Algorithm),
+    /// The element `dgm:choose`, a `ChooseElement`.
     ChooseElement(ChooseElement),
+    /// The element `dgm:constrLst`, a `ConstraintList`.
     ConstraintList(ConstraintList),
+    /// The element `dgm:extLst`, a `ExtensionList`.
     ExtensionList(ExtensionList),
+    /// The element `dgm:forEach`, a `ForEach`.
     ForEach(ForEach),
+    /// The element `dgm:layoutNode`, a `LayoutNode`.
     LayoutNode(LayoutNode),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `dgm:presOf`, a `PresentationOf`.
     PresentationOf(PresentationOf),
+    /// The element `dgm:ruleLst`, a `RuleList`.
     RuleList(RuleList),
+    /// The element `dgm:shape`, a `Shape`.
     Shape(Shape),
+    /// The element `dgm:varLst`, a `VariableList`.
     VariableList(VariableList),
 }
 
-/// 21.4.7.41 `ST_LayoutShapeType` (Layout Shape Type): the text the file carried.
+/// Layout Shape Type, the simple type `ST_LayoutShapeType` (ECMA-376 Part 1, section 21.4.7.41),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2515,11 +3125,14 @@ pub struct LayoutShapeType(pub String);
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum LayoutShapeTypeMember {
+    /// A value of the member type `OutputShapeTypeMember`.
     OutputShapeType(OutputShapeTypeMember),
+    /// A value of the member type `super::drawing::PresetShapeTypesMember`.
     PresetShapeTypes(super::drawing::PresetShapeTypesMember),
 }
 
-/// 21.4.6.1 `animLvl` (Level Animation): the tag `dgm:animLvl`, schema type `CT_AnimLvl`.
+/// The `dgm:animLvl` element, Level Animation (ECMA-376 Part 1, section 21.4.6.1). Its schema type
+/// is `CT_AnimLvl`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2528,11 +3141,14 @@ pub enum LayoutShapeTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LevelAnimation {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<AnimationLevelStringDefinition>,
 }
 
-/// 21.4.4.9 `linClrLst` (Line Color List): the tag `dgm:linClrLst`, schema type `CT_Colors`.
+/// The `dgm:linClrLst` element, Line Color List (ECMA-376 Part 1, section 21.4.4.9). Its schema
+/// type is `CT_Colors`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2541,13 +3157,21 @@ pub struct LevelAnimation {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LineColorList {
+    /// The children that are an item of `super::drawing::ColorContent`, in order.
     pub content: Vec<super::drawing::ColorContent>,
+    /// The attribute `hueDir`, when the element has it.
     pub hue_dir: Option<HueDirection>,
+    /// The attribute `meth`, when the element has it.
     pub meth: Option<ColorApplicationMethodType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.7.42 `ST_LinearDirection` (Linear Direction): the text the file carried.
+/// Linear Direction, the simple type `ST_LinearDirection` (ECMA-376 Part 1, section 21.4.7.42),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2556,18 +3180,23 @@ pub struct LineColorList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LinearDirection(pub String);
-/// The members of `ST_LinearDirection`, in alphabetical order.
+/// The members of the enumeration `ST_LinearDirection`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum LinearDirectionMember {
+    /// The member written `fromB`.
     FromB,
+    /// The member written `fromL`.
     FromL,
+    /// The member written `fromR`.
     FromR,
+    /// The member written `fromT`.
     FromT,
 }
 
-/// 21.4.5.9 `styleDefHdrLst` (List of Style Definition Headers): the tag `dgm:styleDefHdrLst`,
-/// schema type `CT_StyleDefinitionHeaderLst`.
+/// The `dgm:styleDefHdrLst` element, List of Style Definition Headers (ECMA-376 Part 1, section
+/// 21.4.5.9). Its schema type is `CT_StyleDefinitionHeaderLst`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2579,12 +3208,15 @@ pub enum LinearDirectionMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListOfStyleDefinitionHeaders {
+    /// The children that are `StyleDefinitionHeader`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub style_definition_header: Vec<StyleDefinitionHeader>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.6.4 `chMax` (Maximum Children): the tag `dgm:chMax`, schema type `CT_ChildMax`.
+/// The `dgm:chMax` element, Maximum Children (ECMA-376 Part 1, section 21.4.6.4). Its schema type
+/// is `CT_ChildMax`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2593,11 +3225,17 @@ pub struct ListOfStyleDefinitionHeaders {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MaximumChildren {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<NumberOfNodesDefinition>,
 }
 
-/// 21.4.7.43 `ST_ModelId` (Model Identifier): the text the file carried.
+/// Model Identifier, the simple type `ST_ModelId` (ECMA-376 Part 1, section 21.4.7.43), kept as the
+/// text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2611,11 +3249,17 @@ pub struct ModelIdentifier(pub String);
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ModelIdentifierMember {
+    /// A value of the member type `String`.
     Guid(String),
+    /// A value of the member type `i64`.
     Int(i64),
 }
 
-/// 21.4.7.45 `ST_NodeHorizontalAlignment` (Node Horizontal Alignment): the text the file carried.
+/// Node Horizontal Alignment, the simple type `ST_NodeHorizontalAlignment` (ECMA-376 Part 1,
+/// section 21.4.7.45), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2624,16 +3268,24 @@ pub enum ModelIdentifierMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NodeHorizontalAlignment(pub String);
-/// The members of `ST_NodeHorizontalAlignment`, in alphabetical order.
+/// The members of the enumeration `ST_NodeHorizontalAlignment`, in alphabetical order. `as_str`
+/// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum NodeHorizontalAlignmentMember {
+    /// The member written `ctr`.
     Ctr,
+    /// The member written `l`.
     L,
+    /// The member written `r`.
     R,
 }
 
-/// 21.4.7.46 `ST_NodeVerticalAlignment` (Node Vertical Alignment): the text the file carried.
+/// Node Vertical Alignment, the simple type `ST_NodeVerticalAlignment` (ECMA-376 Part 1, section
+/// 21.4.7.46), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2642,16 +3294,24 @@ pub enum NodeHorizontalAlignmentMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NodeVerticalAlignment(pub String);
-/// The members of `ST_NodeVerticalAlignment`, in alphabetical order.
+/// The members of the enumeration `ST_NodeVerticalAlignment`, in alphabetical order. `as_str` gives
+/// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum NodeVerticalAlignmentMember {
+    /// The member written `b`.
     B,
+    /// The member written `mid`.
     Mid,
+    /// The member written `t`.
     T,
 }
 
-/// 21.4.7.44 `ST_NodeCount` (Number of Nodes Definition): the text the file carried.
+/// Number of Nodes Definition, the simple type `ST_NodeCount` (ECMA-376 Part 1, section 21.4.7.44),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2661,7 +3321,11 @@ pub enum NodeVerticalAlignmentMember {
 #[non_exhaustive]
 pub struct NumberOfNodesDefinition(pub String);
 
-/// 21.4.7.47 `ST_Offset` (Offset): the text the file carried.
+/// Offset, the simple type `ST_Offset` (ECMA-376 Part 1, section 21.4.7.47), kept as the text the
+/// file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2670,16 +3334,19 @@ pub struct NumberOfNodesDefinition(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Offset(pub String);
-/// The members of `ST_Offset`, in alphabetical order.
+/// The members of the enumeration `ST_Offset`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum OffsetMember {
+    /// The member written `ctr`.
     Ctr,
+    /// The member written `off`.
     Off,
 }
 
-/// 21.4.6.2 `animOne` (One by One Animation String): the tag `dgm:animOne`, schema type
-/// `CT_AnimOne`.
+/// The `dgm:animOne` element, One by One Animation String (ECMA-376 Part 1, section 21.4.6.2). Its
+/// schema type is `CT_AnimOne`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2688,11 +3355,17 @@ pub enum OffsetMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct OneByOneAnimationString {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<OneByOneAnimationValueDefinition>,
 }
 
-/// 21.4.7.3 `ST_AnimOneStr` (One by One Animation Value Definition): the text the file carried.
+/// One by One Animation Value Definition, the simple type `ST_AnimOneStr` (ECMA-376 Part 1, section
+/// 21.4.7.3), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2701,17 +3374,21 @@ pub struct OneByOneAnimationString {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct OneByOneAnimationValueDefinition(pub String);
-/// The members of `ST_AnimOneStr`, in alphabetical order.
+/// The members of the enumeration `ST_AnimOneStr`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum OneByOneAnimationValueDefinitionMember {
+    /// The member written `branch`.
     Branch,
+    /// The member written `none`.
     None,
+    /// The member written `one`.
     One,
 }
 
-/// 21.4.6.7 `hierBranch` (Organization Chart Branch Style): the tag `dgm:hierBranch`, schema type
-/// `CT_HierBranchStyle`.
+/// The `dgm:hierBranch` element, Organization Chart Branch Style (ECMA-376 Part 1, section
+/// 21.4.6.7). Its schema type is `CT_HierBranchStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2720,11 +3397,17 @@ pub enum OneByOneAnimationValueDefinitionMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct OrganizationChartBranchStyle {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<HierarchyBranchStyleDefinition>,
 }
 
-/// 21.4.7.48 `ST_OutputShapeType` (Output Shape Type): the text the file carried.
+/// Output Shape Type, the simple type `ST_OutputShapeType` (ECMA-376 Part 1, section 21.4.7.48),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2733,15 +3416,19 @@ pub struct OrganizationChartBranchStyle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct OutputShapeType(pub String);
-/// The members of `ST_OutputShapeType`, in alphabetical order.
+/// The members of the enumeration `ST_OutputShapeType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum OutputShapeTypeMember {
+    /// The member written `conn`.
     Conn,
+    /// The member written `none`.
     None,
 }
 
-/// 21.4.2.20 param (Parameter): the tag `dgm:param`, schema type `CT_Parameter`.
+/// The `dgm:param` element, Parameter (ECMA-376 Part 1, section 21.4.2.20). Its schema type is
+/// `CT_Parameter`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2750,12 +3437,19 @@ pub enum OutputShapeTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Parameter {
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<ParameterIdentifier>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<ParameterValues>,
 }
 
-/// 21.4.7.49 `ST_ParameterId` (Parameter Identifier): the text the file carried.
+/// Parameter Identifier, the simple type `ST_ParameterId` (ECMA-376 Part 1, section 21.4.7.49),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2764,68 +3458,128 @@ pub struct Parameter {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ParameterIdentifier(pub String);
-/// The members of `ST_ParameterId`, in alphabetical order.
+/// The members of the enumeration `ST_ParameterId`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ParameterIdentifierMember {
+    /// The member written `alignTx`.
     AlignTx,
+    /// The member written `ar`.
     Ar,
+    /// The member written `autoTxRot`.
     AutoTxRot,
+    /// The member written `begPts`.
     BegPts,
+    /// The member written `begSty`.
     BegSty,
+    /// The member written `bendPt`.
     BendPt,
+    /// The member written `bkPtFixedVal`.
     BkPtFixedVal,
+    /// The member written `bkpt`.
     Bkpt,
+    /// The member written `chAlign`.
     ChAlign,
+    /// The member written `chDir`.
     ChDir,
+    /// The member written `connRout`.
     ConnRout,
+    /// The member written `contDir`.
     ContDir,
+    /// The member written `ctrShpMap`.
     CtrShpMap,
+    /// The member written `dim`.
     Dim,
+    /// The member written `dstNode`.
     DstNode,
+    /// The member written `endPts`.
     EndPts,
+    /// The member written `endSty`.
     EndSty,
+    /// The member written `fallback`.
     Fallback,
+    /// The member written `flowDir`.
     FlowDir,
+    /// The member written `grDir`.
     GrDir,
+    /// The member written `hierAlign`.
     HierAlign,
+    /// The member written `horzAlign`.
     HorzAlign,
+    /// The member written `linDir`.
     LinDir,
+    /// The member written `lnSpAfChP`.
     LnSpAfChP,
+    /// The member written `lnSpAfParP`.
     LnSpAfParP,
+    /// The member written `lnSpCh`.
     LnSpCh,
+    /// The member written `lnSpPar`.
     LnSpPar,
+    /// The member written `nodeHorzAlign`.
     NodeHorzAlign,
+    /// The member written `nodeVertAlign`.
     NodeVertAlign,
+    /// The member written `off`.
     Off,
+    /// The member written `parTxLTRAlign`.
     ParTxLTRAlign,
+    /// The member written `parTxRTLAlign`.
     ParTxRTLAlign,
+    /// The member written `pyraAcctBkgdNode`.
     PyraAcctBkgdNode,
+    /// The member written `pyraAcctPos`.
     PyraAcctPos,
+    /// The member written `pyraAcctTxMar`.
     PyraAcctTxMar,
+    /// The member written `pyraAcctTxNode`.
     PyraAcctTxNode,
+    /// The member written `pyraLvlNode`.
     PyraLvlNode,
+    /// The member written `rotPath`.
     RotPath,
+    /// The member written `rtShortDist`.
     RtShortDist,
+    /// The member written `secChAlign`.
     SecChAlign,
+    /// The member written `secLinDir`.
     SecLinDir,
+    /// The member written `shpTxLTRAlignCh`.
     ShpTxLTRAlignCh,
+    /// The member written `shpTxRTLAlignCh`.
     ShpTxRTLAlignCh,
+    /// The member written `spanAng`.
     SpanAng,
+    /// The member written `srcNode`.
     SrcNode,
+    /// The member written `stAng`.
     StAng,
+    /// The member written `stBulletLvl`.
     StBulletLvl,
+    /// The member written `stElem`.
     StElem,
+    /// The member written `txAnchorHorz`.
     TxAnchorHorz,
+    /// The member written `txAnchorHorzCh`.
     TxAnchorHorzCh,
+    /// The member written `txAnchorVert`.
     TxAnchorVert,
+    /// The member written `txAnchorVertCh`.
     TxAnchorVertCh,
+    /// The member written `txBlDir`.
     TxBlDir,
+    /// The member written `txDir`.
     TxDir,
+    /// The member written `vertAlign`.
     VertAlign,
 }
 
-/// 21.4.7.50 `ST_ParameterVal` (Parameter Values): the text the file carried.
+/// Parameter Values, the simple type `ST_ParameterVal` (ECMA-376 Part 1, section 21.4.7.50), kept
+/// as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2839,45 +3593,81 @@ pub struct ParameterValues(pub String);
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
 pub enum ParameterValuesMember {
+    /// A value of the member type `ArrowheadStylesMember`.
     ArrowheadStyles(ArrowheadStylesMember),
+    /// A value of the member type `AutoTextRotationMember`.
     AutoTextRotation(AutoTextRotationMember),
+    /// A value of the member type `BendPointMember`.
     BendPoint(BendPointMember),
+    /// A value of the member type `bool`.
     Boolean(bool),
+    /// A value of the member type `BreakpointMember`.
     Breakpoint(BreakpointMember),
+    /// A value of the member type `CenterShapeMappingMember`.
     CenterShapeMapping(CenterShapeMappingMember),
+    /// A value of the member type `ChildAlignmentMember`.
     ChildAlignment(ChildAlignmentMember),
+    /// A value of the member type `ChildDirectionMember`.
     ChildDirection(ChildDirectionMember),
+    /// A value of the member type `ConnectorDimensionMember`.
     ConnectorDimension(ConnectorDimensionMember),
+    /// A value of the member type `ConnectorPointMember`.
     ConnectorPoint(ConnectorPointMember),
+    /// A value of the member type `ConnectorRoutingMember`.
     ConnectorRouting(ConnectorRoutingMember),
+    /// A value of the member type `ContinueDirectionMember`.
     ContinueDirection(ContinueDirectionMember),
+    /// A value of the member type `f64`.
     Double(f64),
+    /// A value of the member type `FallbackDimensionMember`.
     FallbackDimension(FallbackDimensionMember),
+    /// A value of the member type `FlowDirectionMember`.
     FlowDirection(FlowDirectionMember),
+    /// A value of the member type `GrowDirectionMember`.
     GrowDirection(GrowDirectionMember),
+    /// A value of the member type `HierarchyAlignmentMember`.
     HierarchyAlignment(HierarchyAlignmentMember),
+    /// A value of the member type `HorizontalAlignmentMember`.
     HorizontalAlignment(HorizontalAlignmentMember),
+    /// A value of the member type `i64`.
     Int(i64),
+    /// A value of the member type `LinearDirectionMember`.
     LinearDirection(LinearDirectionMember),
+    /// A value of the member type `NodeHorizontalAlignmentMember`.
     NodeHorizontalAlignment(NodeHorizontalAlignmentMember),
+    /// A value of the member type `NodeVerticalAlignmentMember`.
     NodeVerticalAlignment(NodeVerticalAlignmentMember),
+    /// A value of the member type `OffsetMember`.
     Offset(OffsetMember),
+    /// A value of the member type `PyramidAccentPositionMember`.
     PyramidAccentPosition(PyramidAccentPositionMember),
+    /// A value of the member type `PyramidAccentTextMarginMember`.
     PyramidAccentTextMargin(PyramidAccentTextMarginMember),
+    /// A value of the member type `RotationPathMember`.
     RotationPath(RotationPathMember),
+    /// A value of the member type `SecondaryChildAlignmentMember`.
     SecondaryChildAlignment(SecondaryChildAlignmentMember),
+    /// A value of the member type `SecondaryLinearDirectionMember`.
     SecondaryLinearDirection(SecondaryLinearDirectionMember),
+    /// A value of the member type `StartingElementMember`.
     StartingElement(StartingElementMember),
+    /// A value of the member type `String`.
     String(String),
+    /// A value of the member type `TextAlignmentMember`.
     TextAlignment(TextAlignmentMember),
+    /// A value of the member type `TextAnchorHorizontalMember`.
     TextAnchorHorizontal(TextAnchorHorizontalMember),
+    /// A value of the member type `TextAnchorVerticalMember`.
     TextAnchorVertical(TextAnchorVerticalMember),
+    /// A value of the member type `TextBlockDirectionMember`.
     TextBlockDirection(TextBlockDirectionMember),
+    /// A value of the member type `TextDirectionMember`.
     TextDirection(TextDirectionMember),
+    /// A value of the member type `VerticalAlignmentMember`.
     VerticalAlignment(VerticalAlignmentMember),
 }
 
-/// 21.4.3.5 pt (Point): the tag `dgm:pt`, schema type `CT_Pt`.
+/// The `dgm:pt` element, Point (ECMA-376 Part 1, section 21.4.3.5). Its schema type is `CT_Pt`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2889,20 +3679,29 @@ pub enum ParameterValuesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Point {
+    /// The attribute `cxnId`, when the element has it.
     pub cxn_id: Option<ModelIdentifier>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `modelId`, when the element has it.
     pub model_id: Option<ModelIdentifier>,
+    /// The child that is `PropertySet`, when there is one.
     pub property_set: Option<Box<PropertySet>>,
+    /// The child that is `ShapeProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub shape_properties: Option<Box<ShapeProperties>>,
+    /// The child that is `TextBody`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_body: Option<Box<TextBody>>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<PointType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.3.6 `ptLst` (Point List): the tag `dgm:ptLst`, schema type `CT_PtList`.
+/// The `dgm:ptLst` element, Point List (ECMA-376 Part 1, section 21.4.3.6). Its schema type is
+/// `CT_PtList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2914,12 +3713,18 @@ pub struct Point {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PointList {
+    /// The children that are `Point`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub point: Vec<Point>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.7.51 `ST_PtType` (Point Type): the text the file carried.
+/// Point Type, the simple type `ST_PtType` (ECMA-376 Part 1, section 21.4.7.51), kept as the text
+/// the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2928,20 +3733,27 @@ pub struct PointList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PointType(pub String);
-/// The members of `ST_PtType`, in alphabetical order.
+/// The members of the enumeration `ST_PtType`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum PointTypeMember {
+    /// The member written `asst`.
     Asst,
+    /// The member written `doc`.
     Doc,
+    /// The member written `node`.
     Node,
+    /// The member written `parTrans`.
     ParTrans,
+    /// The member written `pres`.
     Pres,
+    /// The member written `sibTrans`.
     SibTrans,
 }
 
-/// 21.4.6.5 `chPref` (Preferred Number of Children): the tag `dgm:chPref`, schema type
-/// `CT_ChildPref`.
+/// The `dgm:chPref` element, Preferred Number of Children (ECMA-376 Part 1, section 21.4.6.5). Its
+/// schema type is `CT_ChildPref`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2950,12 +3762,14 @@ pub enum PointTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PreferredNumberOfChildren {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<NumberOfNodesDefinition>,
 }
 
-/// 21.4.5.4 `presLayoutVars` (Presentation Layout Variables): the tag `dgm:presLayoutVars`, schema
-/// type `CT_LayoutVariablePropertySet`.
+/// The `dgm:presLayoutVars` element, Presentation Layout Variables (ECMA-376 Part 1, section
+/// 21.4.5.4). Its schema type is `CT_LayoutVariablePropertySet`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2964,19 +3778,30 @@ pub struct PreferredNumberOfChildren {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresentationLayoutVariables {
+    /// The child that is `DiagramDirection`, when there is one.
     pub diagram_direction: Option<Box<DiagramDirection>>,
+    /// The child that is `LevelAnimation`, when there is one.
     pub level_animation: Option<Box<LevelAnimation>>,
+    /// The child that is `MaximumChildren`, when there is one.
     pub maximum_children: Option<Box<MaximumChildren>>,
+    /// The child that is `OneByOneAnimationString`, when there is one.
     pub one_by_one_animation_string: Option<Box<OneByOneAnimationString>>,
+    /// The child that is `OrganizationChartBranchStyle`, when there is one.
     pub organization_chart_branch_style: Option<Box<OrganizationChartBranchStyle>>,
+    /// The child that is `PreferredNumberOfChildren`, when there is one.
     pub preferred_number_of_children: Option<Box<PreferredNumberOfChildren>>,
+    /// The child that is `ShapeResizeStyle`, when there is one.
     pub shape_resize_style: Option<Box<ShapeResizeStyle>>,
+    /// The child that is `ShowInsertNode`, when there is one.
     pub show_insert_node: Option<Box<ShowInsertNode>>,
+    /// The child that is `ShowOrganizationChartUserInterface`, when there is one.
     pub show_organization_chart_user_interface: Option<Box<ShowOrganizationChartUserInterface>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.2.21 `presOf` (Presentation Of): the tag `dgm:presOf`, schema type `CT_PresentationOf`.
+/// The `dgm:presOf` element, Presentation Of (ECMA-376 Part 1, section 21.4.2.21). Its schema type
+/// is `CT_PresentationOf`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2988,18 +3813,27 @@ pub struct PresentationLayoutVariables {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresentationOf {
+    /// The attribute `axis`, when the element has it.
     pub axis: Option<AxisTypeList>,
+    /// The attribute `cnt`, when the element has it.
     pub cnt: Option<UnsignedIntegerList>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `hideLastTrans`, when the element has it.
     pub hide_last_trans: Option<BooleanList>,
+    /// The attribute `ptType`, when the element has it.
     pub pt_type: Option<DiagreamLayoutNodeTypeList>,
+    /// The attribute `st`, when the element has it.
     pub st: Option<IntegerList>,
+    /// The attribute `step`, when the element has it.
     pub step: Option<IntegerList>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.3.4 `prSet` (Property Set): the tag `dgm:prSet`, schema type `CT_ElemPropSet`.
+/// The `dgm:prSet` element, Property Set (ECMA-376 Part 1, section 21.4.3.4). Its schema type is
+/// `CT_ElemPropSet`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3008,40 +3842,75 @@ pub struct PresentationOf {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PropertySet {
+    /// The attribute `coherent3DOff`, when the element has it.
     pub coherent3_d_off: Option<String>,
+    /// The attribute `csCatId`, when the element has it.
     pub cs_cat_id: Option<String>,
+    /// The attribute `csTypeId`, when the element has it.
     pub cs_type_id: Option<String>,
+    /// The attribute `custAng`, when the element has it.
     pub cust_ang: Option<String>,
+    /// The attribute `custFlipHor`, when the element has it.
     pub cust_flip_hor: Option<String>,
+    /// The attribute `custFlipVert`, when the element has it.
     pub cust_flip_vert: Option<String>,
+    /// The attribute `custLinFactNeighborX`, when the element has it.
     pub cust_lin_fact_neighbor_x: Option<PropertySetCustomizedValue>,
+    /// The attribute `custLinFactNeighborY`, when the element has it.
     pub cust_lin_fact_neighbor_y: Option<PropertySetCustomizedValue>,
+    /// The attribute `custLinFactX`, when the element has it.
     pub cust_lin_fact_x: Option<PropertySetCustomizedValue>,
+    /// The attribute `custLinFactY`, when the element has it.
     pub cust_lin_fact_y: Option<PropertySetCustomizedValue>,
+    /// The attribute `custRadScaleInc`, when the element has it.
     pub cust_rad_scale_inc: Option<PropertySetCustomizedValue>,
+    /// The attribute `custRadScaleRad`, when the element has it.
     pub cust_rad_scale_rad: Option<PropertySetCustomizedValue>,
+    /// The attribute `custScaleX`, when the element has it.
     pub cust_scale_x: Option<PropertySetCustomizedValue>,
+    /// The attribute `custScaleY`, when the element has it.
     pub cust_scale_y: Option<PropertySetCustomizedValue>,
+    /// The attribute `custSzX`, when the element has it.
     pub cust_sz_x: Option<String>,
+    /// The attribute `custSzY`, when the element has it.
     pub cust_sz_y: Option<String>,
+    /// The attribute `custT`, when the element has it.
     pub cust_t: Option<String>,
+    /// The attribute `loCatId`, when the element has it.
     pub lo_cat_id: Option<String>,
+    /// The attribute `loTypeId`, when the element has it.
     pub lo_type_id: Option<String>,
+    /// The attribute `phldr`, when the element has it.
     pub phldr: Option<String>,
+    /// The attribute `phldrT`, when the element has it.
     pub phldr_t: Option<String>,
+    /// The attribute `presAssocID`, when the element has it.
     pub pres_assoc_id: Option<ModelIdentifier>,
+    /// The attribute `presName`, when the element has it.
     pub pres_name: Option<String>,
+    /// The attribute `presStyleCnt`, when the element has it.
     pub pres_style_cnt: Option<String>,
+    /// The attribute `presStyleIdx`, when the element has it.
     pub pres_style_idx: Option<String>,
+    /// The attribute `presStyleLbl`, when the element has it.
     pub pres_style_lbl: Option<String>,
+    /// The child that is `PresentationLayoutVariables`, when there is one.
     pub presentation_layout_variables: Option<Box<PresentationLayoutVariables>>,
+    /// The attribute `qsCatId`, when the element has it.
     pub qs_cat_id: Option<String>,
+    /// The attribute `qsTypeId`, when the element has it.
     pub qs_type_id: Option<String>,
+    /// The child that is `ShapeStyle`, when there is one.
     pub shape_style: Option<Box<ShapeStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.7.66 `ST_PrSetCustVal` (Property Set Customized Value): the text the file carried.
+/// Property Set Customized Value, the simple type `ST_PrSetCustVal` (ECMA-376 Part 1, section
+/// 21.4.7.66), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3055,11 +3924,17 @@ pub struct PropertySetCustomizedValue(pub String);
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
 pub enum PropertySetCustomizedValueMember {
+    /// A value of the member type `i64`.
     Int(i64),
+    /// A value of the member type `f64`.
     PercentageValueWithSign(f64),
 }
 
-/// 21.4.7.52 `ST_PyramidAccentPosition` (Pyramid Accent Position): the text the file carried.
+/// Pyramid Accent Position, the simple type `ST_PyramidAccentPosition` (ECMA-376 Part 1, section
+/// 21.4.7.52), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3068,15 +3943,22 @@ pub enum PropertySetCustomizedValueMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PyramidAccentPosition(pub String);
-/// The members of `ST_PyramidAccentPosition`, in alphabetical order.
+/// The members of the enumeration `ST_PyramidAccentPosition`, in alphabetical order. `as_str` gives
+/// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum PyramidAccentPositionMember {
+    /// The member written `aft`.
     Aft,
+    /// The member written `bef`.
     Bef,
 }
 
-/// 21.4.7.53 `ST_PyramidAccentTextMargin` (Pyramid Accent Text Margin): the text the file carried.
+/// Pyramid Accent Text Margin, the simple type `ST_PyramidAccentTextMargin` (ECMA-376 Part 1,
+/// section 21.4.7.53), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3085,15 +3967,22 @@ pub enum PyramidAccentPositionMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PyramidAccentTextMargin(pub String);
-/// The members of `ST_PyramidAccentTextMargin`, in alphabetical order.
+/// The members of the enumeration `ST_PyramidAccentTextMargin`, in alphabetical order. `as_str`
+/// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum PyramidAccentTextMarginMember {
+    /// The member written `stack`.
     Stack,
+    /// The member written `step`.
     Step,
 }
 
-/// 21.4.7.54 `ST_ResizeHandlesStr` (Resize Handle): the text the file carried.
+/// Resize Handle, the simple type `ST_ResizeHandlesStr` (ECMA-376 Part 1, section 21.4.7.54), kept
+/// as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3102,15 +3991,22 @@ pub enum PyramidAccentTextMarginMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ResizeHandle(pub String);
-/// The members of `ST_ResizeHandlesStr`, in alphabetical order.
+/// The members of the enumeration `ST_ResizeHandlesStr`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ResizeHandleMember {
+    /// The member written `exact`.
     Exact,
+    /// The member written `rel`.
     Rel,
 }
 
-/// 21.4.7.55 `ST_RotationPath` (Rotation Path): the text the file carried.
+/// Rotation Path, the simple type `ST_RotationPath` (ECMA-376 Part 1, section 21.4.7.55), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3119,15 +4015,19 @@ pub enum ResizeHandleMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RotationPath(pub String);
-/// The members of `ST_RotationPath`, in alphabetical order.
+/// The members of the enumeration `ST_RotationPath`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum RotationPathMember {
+    /// The member written `alongPath`.
     AlongPath,
+    /// The member written `none`.
     None,
 }
 
-/// 21.4.2.24 rule (Rule): the tag `dgm:rule`, schema type `CT_NumericRule`.
+/// The `dgm:rule` element, Rule (ECMA-376 Part 1, section 21.4.2.24). Its schema type is
+/// `CT_NumericRule`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3139,19 +4039,29 @@ pub enum RotationPathMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Rule {
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `fact`, when the element has it.
     pub fact: Option<String>,
+    /// The attribute `for`, when the element has it.
     pub r#for: Option<ConstraintRelationship>,
+    /// The attribute `forName`, when the element has it.
     pub for_name: Option<String>,
+    /// The attribute `max`, when the element has it.
     pub max: Option<String>,
+    /// The attribute `ptType`, when the element has it.
     pub pt_type: Option<DataPointType>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<ConstraintType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// 21.4.2.25 `ruleLst` (Rule List): the tag `dgm:ruleLst`, schema type `CT_Rules`.
+/// The `dgm:ruleLst` element, Rule List (ECMA-376 Part 1, section 21.4.2.25). Its schema type is
+/// `CT_Rules`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3163,12 +4073,15 @@ pub struct Rule {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RuleList {
+    /// The children that are `Rule`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub rule: Vec<Rule>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.2.26 `sampData` (Sample Data): the tag `dgm:sampData`, schema type `CT_SampleData`.
+/// The `dgm:sampData` element, Sample Data (ECMA-376 Part 1, section 21.4.2.26). Its schema type is
+/// `CT_SampleData`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3180,13 +4093,16 @@ pub struct RuleList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SampleData {
+    /// The child that is `DataModel`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub model: Option<Box<DataModel>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `useDef`, when the element has it.
     pub use_def: Option<String>,
 }
 
-/// The tag `dgm:scene3d`, schema type `CT_Scene3D`.
+/// The `dgm:scene3d` element. Its schema type is `CT_Scene3D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3198,16 +4114,25 @@ pub struct SampleData {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Scene3d {
+    /// The child that is `super::drawing::BackdropPlane`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub backdrop_plane: Option<Box<super::drawing::BackdropPlane>>,
+    /// The child that is `super::drawing::Camera`, which the schema requires.
     pub camera: Box<super::drawing::Camera>,
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The child that is `super::drawing::LightRig`, which the schema requires.
     pub light_rig: Box<super::drawing::LightRig>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.7.56 `ST_SecondaryChildAlignment` (Secondary Child Alignment): the text the file carried.
+/// Secondary Child Alignment, the simple type `ST_SecondaryChildAlignment` (ECMA-376 Part 1,
+/// section 21.4.7.56), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3216,18 +4141,28 @@ pub struct Scene3d {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SecondaryChildAlignment(pub String);
-/// The members of `ST_SecondaryChildAlignment`, in alphabetical order.
+/// The members of the enumeration `ST_SecondaryChildAlignment`, in alphabetical order. `as_str`
+/// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum SecondaryChildAlignmentMember {
+    /// The member written `b`.
     B,
+    /// The member written `l`.
     L,
+    /// The member written `none`.
     None,
+    /// The member written `r`.
     R,
+    /// The member written `t`.
     T,
 }
 
-/// 21.4.7.57 `ST_SecondaryLinearDirection` (Secondary Linear Direction): the text the file carried.
+/// Secondary Linear Direction, the simple type `ST_SecondaryLinearDirection` (ECMA-376 Part 1,
+/// section 21.4.7.57), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3236,18 +4171,25 @@ pub enum SecondaryChildAlignmentMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SecondaryLinearDirection(pub String);
-/// The members of `ST_SecondaryLinearDirection`, in alphabetical order.
+/// The members of the enumeration `ST_SecondaryLinearDirection`, in alphabetical order. `as_str`
+/// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum SecondaryLinearDirectionMember {
+    /// The member written `fromB`.
     FromB,
+    /// The member written `fromL`.
     FromL,
+    /// The member written `fromR`.
     FromR,
+    /// The member written `fromT`.
     FromT,
+    /// The member written `none`.
     None,
 }
 
-/// 21.4.2.27 shape (Shape): the tag `dgm:shape`, schema type `CT_Shape`.
+/// The `dgm:shape` element, Shape (ECMA-376 Part 1, section 21.4.2.27). Its schema type is
+/// `CT_Shape`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3259,20 +4201,31 @@ pub enum SecondaryLinearDirectionMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Shape {
+    /// The child that is `ShapeAdjustList`, when there is one.
     pub adjust_list: Option<Box<ShapeAdjustList>>,
+    /// The attribute `r:blip`, when the element has it.
     pub blip: Option<String>,
+    /// The attribute `blipPhldr`, when the element has it.
     pub blip_phldr: Option<String>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `hideGeom`, when the element has it.
     pub hide_geom: Option<String>,
+    /// The attribute `lkTxEntry`, when the element has it.
     pub lk_tx_entry: Option<String>,
+    /// The attribute `rot`, when the element has it.
     pub rot: Option<String>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<LayoutShapeType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `zOrderOff`, when the element has it.
     pub z_order_off: Option<String>,
 }
 
-/// 21.4.2.1 adj (Shape Adjust): the tag `dgm:adj`, schema type `CT_Adj`.
+/// The `dgm:adj` element, Shape Adjust (ECMA-376 Part 1, section 21.4.2.1). Its schema type is
+/// `CT_Adj`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3281,12 +4234,16 @@ pub struct Shape {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeAdjust {
+    /// The attribute `idx`, when the element has it.
     pub idx: Option<Index1>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// 21.4.2.2 `adjLst` (Shape Adjust List): the tag `dgm:adjLst`, schema type `CT_AdjLst`.
+/// The `dgm:adjLst` element, Shape Adjust List (ECMA-376 Part 1, section 21.4.2.2). Its schema type
+/// is `CT_AdjLst`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3295,11 +4252,14 @@ pub struct ShapeAdjust {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeAdjustList {
+    /// The children that are `ShapeAdjust`, in order.
     pub shape_adjust: Vec<ShapeAdjust>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.3.7 `spPr` (Shape Properties): the tag `dgm:spPr`, schema type `CT_ShapeProperties`.
+/// The `dgm:spPr` element, Shape Properties (ECMA-376 Part 1, section 21.4.3.7). Its schema type is
+/// `CT_ShapeProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3311,26 +4271,36 @@ pub struct ShapeAdjustList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeProperties {
+    /// The child that is `super::drawing::Apply3DShapeProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub apply_3d: Option<Box<super::drawing::Apply3DShapeProperties>>,
+    /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
+    /// The child that is an item of `super::drawing::EffectPropertiesContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContent>>,
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The child that is an item of `super::drawing::FillPropertiesContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContent>>,
+    /// The child that is an item of `super::drawing::GeometryContent`, when there is one.
     pub geometry_content: Option<Box<super::drawing::GeometryContent>>,
+    /// The child that is `super::drawing::Outline`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub outline: Option<Box<super::drawing::Outline>>,
+    /// The child that is `super::drawing::Scene3d`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub scene3d: Option<Box<super::drawing::Scene3d>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `super::drawing::XfrmTransform2D`, when there is one.
     pub xfrm_transform2d: Option<Box<super::drawing::XfrmTransform2D>>,
 }
 
-/// 21.4.2.23 `resizeHandles` (Shape Resize Style): the tag `dgm:resizeHandles`, schema type
-/// `CT_ResizeHandles`.
+/// The `dgm:resizeHandles` element, Shape Resize Style (ECMA-376 Part 1, section 21.4.2.23). Its
+/// schema type is `CT_ResizeHandles`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3339,11 +4309,14 @@ pub struct ShapeProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeResizeStyle {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<ResizeHandle>,
 }
 
-/// 21.4.2.28 style (Shape Style): the tag `dgm:style`, schema type `CT_ShapeStyle`.
+/// The `dgm:style` element, Shape Style (ECMA-376 Part 1, section 21.4.2.28). Its schema type is
+/// `CT_ShapeStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3352,15 +4325,20 @@ pub struct ShapeResizeStyle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeStyle {
+    /// The child that is `super::drawing::EffectReference`, which the schema requires.
     pub effect_reference: Box<super::drawing::EffectReference>,
+    /// The child that is `super::drawing::FillReference`, which the schema requires.
     pub fill_reference: Box<super::drawing::FillReference>,
+    /// The child that is `super::drawing::FontReference`, which the schema requires.
     pub font_reference: Box<super::drawing::FontReference>,
+    /// The child that is `super::drawing::LineReference`, which the schema requires.
     pub line_reference: Box<super::drawing::LineReference>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.6.3 `bulletEnabled` (Show Insert Node): the tag `dgm:bulletEnabled`, schema type
-/// `CT_BulletEnabled`.
+/// The `dgm:bulletEnabled` element, Show Insert Node (ECMA-376 Part 1, section 21.4.6.3). Its
+/// schema type is `CT_BulletEnabled`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3369,12 +4347,14 @@ pub struct ShapeStyle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShowInsertNode {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// 21.4.6.8 `orgChart` (Show Organization Chart User Interface): the tag `dgm:orgChart`, schema
-/// type `CT_OrgChart`.
+/// The `dgm:orgChart` element, Show Organization Chart User Interface (ECMA-376 Part 1, section
+/// 21.4.6.8). Its schema type is `CT_OrgChart`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3383,11 +4363,13 @@ pub struct ShowInsertNode {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShowOrganizationChartUserInterface {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `dgm:sp3d`, schema type `CT_Shape3D`.
+/// The `dgm:sp3d` element. Its schema type is `CT_Shape3D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3399,20 +4381,34 @@ pub struct ShowOrganizationChartUserInterface {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Sp3d {
+    /// The child that is `super::drawing::BottomBevel`, when there is one.
     pub bottom_bevel: Option<Box<super::drawing::BottomBevel>>,
+    /// The child that is `super::drawing::ContourColor`, when there is one.
     pub contour_color: Option<Box<super::drawing::ContourColor>>,
+    /// The attribute `contourW`, when the element has it.
     pub contour_w: Option<super::drawing::PositiveCoordinate>,
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The child that is `super::drawing::ExtrusionColor`, when there is one.
     pub extrusion_color: Option<Box<super::drawing::ExtrusionColor>>,
+    /// The attribute `extrusionH`, when the element has it.
     pub extrusion_h: Option<super::drawing::PositiveCoordinate>,
+    /// The attribute `prstMaterial`, when the element has it.
     pub prst_material: Option<super::drawing::PresetMaterialType>,
+    /// The child that is `super::drawing::TopBevel`, when there is one.
     pub top_bevel: Option<Box<super::drawing::TopBevel>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `z`, when the element has it.
     pub z: Option<super::drawing::Coordinate>,
 }
 
-/// 21.4.7.58 `ST_StartingElement` (Starting Element): the text the file carried.
+/// Starting Element, the simple type `ST_StartingElement` (ECMA-376 Part 1, section 21.4.7.58),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3421,15 +4417,19 @@ pub struct Sp3d {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StartingElement(pub String);
-/// The members of `ST_StartingElement`, in alphabetical order.
+/// The members of the enumeration `ST_StartingElement`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum StartingElementMember {
+    /// The member written `node`.
     Node,
+    /// The member written `trans`.
     Trans,
 }
 
-/// 21.4.2.29 `styleData` (Style Data): the tag `dgm:styleData`, schema type `CT_SampleData`.
+/// The `dgm:styleData` element, Style Data (ECMA-376 Part 1, section 21.4.2.29). Its schema type is
+/// `CT_SampleData`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3441,14 +4441,17 @@ pub enum StartingElementMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StyleData {
+    /// The child that is `DataModel`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub model: Option<Box<DataModel>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `useDef`, when the element has it.
     pub use_def: Option<String>,
 }
 
-/// 21.4.5.7 `styleDef` (Style Definition): the tag `dgm:styleDef`, schema type
-/// `CT_StyleDefinition`.
+/// The `dgm:styleDef` element, Style Definition (ECMA-376 Part 1, section 21.4.5.7). Its schema
+/// type is `CT_StyleDefinition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3460,22 +4463,31 @@ pub struct StyleData {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StyleDefinition {
+    /// The child that is `CategoryListSDCategories`, when there is one.
     pub category_list_sd_categories: Option<Box<CategoryListSDCategories>>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `minVer`, when the element has it.
     pub min_ver: Option<String>,
+    /// The child that is `Scene3d`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub scene3d: Option<Box<Scene3d>>,
+    /// The children that are `StyleLabelDescription`, in order.
     pub style_label_description: Vec<StyleLabelDescription>,
+    /// The children that are `StyleLabelStyleLabel`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub style_label_style_label: Vec<StyleLabelStyleLabel>,
+    /// The children that are `TitleSDName`, in order.
     pub title_sd_name: Vec<TitleSDName>,
+    /// The attribute `uniqueId`, when the element has it.
     pub unique_id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.5.8 `styleDefHdr` (Style Definition Header): the tag `dgm:styleDefHdr`, schema type
-/// `CT_StyleDefinitionHeader`.
+/// The `dgm:styleDefHdr` element, Style Definition Header (ECMA-376 Part 1, section 21.4.5.8). Its
+/// schema type is `CT_StyleDefinitionHeader`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3487,18 +4499,27 @@ pub struct StyleDefinition {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StyleDefinitionHeader {
+    /// The child that is `CategoryListSDCategories`, when there is one.
     pub category_list_sd_categories: Option<Box<CategoryListSDCategories>>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `minVer`, when the element has it.
     pub min_ver: Option<String>,
+    /// The attribute `resId`, when the element has it.
     pub res_id: Option<String>,
+    /// The children that are `StyleLabelDescription`, in order.
     pub style_label_description: Vec<StyleLabelDescription>,
+    /// The children that are `TitleSDName`, in order.
     pub title_sd_name: Vec<TitleSDName>,
+    /// The attribute `uniqueId`, when the element has it.
     pub unique_id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.4.10 `styleLbl` (Style Label): the tag `dgm:styleLbl`, schema type `CT_CTStyleLabel`.
+/// The `dgm:styleLbl` element, Style Label (ECMA-376 Part 1, section 21.4.4.10). Its schema type is
+/// `CT_CTStyleLabel`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3510,19 +4531,29 @@ pub struct StyleDefinitionHeader {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StyleLabel {
+    /// The child that is `EffectColorList`, when there is one.
     pub effect_color_list: Option<Box<EffectColorList>>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `FillColorList`, when there is one.
     pub fill_color_list: Option<Box<FillColorList>>,
+    /// The child that is `LineColorList`, when there is one.
     pub line_color_list: Option<Box<LineColorList>>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The child that is `TextEffectColorList`, when there is one.
     pub text_effect_color_list: Option<Box<TextEffectColorList>>,
+    /// The child that is `TextFillColorList`, when there is one.
     pub text_fill_color_list: Option<Box<TextFillColorList>>,
+    /// The child that is `TextLineColorList`, when there is one.
     pub text_line_color_list: Option<Box<TextLineColorList>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.5.3 desc (Style Label Description): the tag `dgm:desc`, schema type `CT_SDDescription`.
+/// The `dgm:desc` element, Style Label Description (ECMA-376 Part 1, section 21.4.5.3). Its schema
+/// type is `CT_SDDescription`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3531,12 +4562,16 @@ pub struct StyleLabel {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StyleLabelDescription {
+    /// The attribute `lang`, when the element has it.
     pub lang: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// 21.4.5.10 `styleLbl` (Style Label): the tag `dgm:styleLbl`, schema type `CT_StyleLabel`.
+/// The `dgm:styleLbl` element, Style Label (ECMA-376 Part 1, section 21.4.5.10). Its schema type is
+/// `CT_StyleLabel`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3548,20 +4583,31 @@ pub struct StyleLabelDescription {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StyleLabelStyleLabel {
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The child that is `Scene3d`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub scene3d: Option<Box<Scene3d>>,
+    /// The child that is `ShapeStyle`, when there is one.
     pub shape_style: Option<Box<ShapeStyle>>,
+    /// The child that is `Sp3d`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub sp3d: Option<Box<Sp3d>>,
+    /// The child that is `TextProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_properties: Option<Box<TextProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.7.25 `ST_DiagramTextAlignment` (Text Alignment): the text the file carried.
+/// Text Alignment, the simple type `ST_DiagramTextAlignment` (ECMA-376 Part 1, section 21.4.7.25),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3570,16 +4616,24 @@ pub struct StyleLabelStyleLabel {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextAlignment(pub String);
-/// The members of `ST_DiagramTextAlignment`, in alphabetical order.
+/// The members of the enumeration `ST_DiagramTextAlignment`, in alphabetical order. `as_str` gives
+/// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextAlignmentMember {
+    /// The member written `ctr`.
     Ctr,
+    /// The member written `l`.
     L,
+    /// The member written `r`.
     R,
 }
 
-/// 21.4.7.59 `ST_TextAnchorHorizontal` (Text Anchor Horizontal): the text the file carried.
+/// Text Anchor Horizontal, the simple type `ST_TextAnchorHorizontal` (ECMA-376 Part 1, section
+/// 21.4.7.59), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3588,15 +4642,22 @@ pub enum TextAlignmentMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextAnchorHorizontal(pub String);
-/// The members of `ST_TextAnchorHorizontal`, in alphabetical order.
+/// The members of the enumeration `ST_TextAnchorHorizontal`, in alphabetical order. `as_str` gives
+/// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextAnchorHorizontalMember {
+    /// The member written `ctr`.
     Ctr,
+    /// The member written `none`.
     None,
 }
 
-/// 21.4.7.60 `ST_TextAnchorVertical` (Text Anchor Vertical): the text the file carried.
+/// Text Anchor Vertical, the simple type `ST_TextAnchorVertical` (ECMA-376 Part 1, section
+/// 21.4.7.60), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3605,16 +4666,24 @@ pub enum TextAnchorHorizontalMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextAnchorVertical(pub String);
-/// The members of `ST_TextAnchorVertical`, in alphabetical order.
+/// The members of the enumeration `ST_TextAnchorVertical`, in alphabetical order. `as_str` gives
+/// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextAnchorVerticalMember {
+    /// The member written `b`.
     B,
+    /// The member written `mid`.
     Mid,
+    /// The member written `t`.
     T,
 }
 
-/// 21.4.7.61 `ST_TextBlockDirection` (Text Block Direction): the text the file carried.
+/// Text Block Direction, the simple type `ST_TextBlockDirection` (ECMA-376 Part 1, section
+/// 21.4.7.61), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3623,15 +4692,19 @@ pub enum TextAnchorVerticalMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextBlockDirection(pub String);
-/// The members of `ST_TextBlockDirection`, in alphabetical order.
+/// The members of the enumeration `ST_TextBlockDirection`, in alphabetical order. `as_str` gives
+/// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextBlockDirectionMember {
+    /// The member written `horz`.
     Horz,
+    /// The member written `vert`.
     Vert,
 }
 
-/// 21.4.3.8 t (Text Body): the tag `dgm:t`, schema type `CT_TextBody`.
+/// The `dgm:t` element, Text Body (ECMA-376 Part 1, section 21.4.3.8). Its schema type is
+/// `CT_TextBody`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3643,16 +4716,24 @@ pub enum TextBlockDirectionMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextBody {
+    /// The child that is `super::drawing::BodyProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub properties: Box<super::drawing::BodyProperties>,
+    /// The child that is `super::drawing::TextListStyles`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_list_styles: Option<Box<super::drawing::TextListStyles>>,
+    /// The children that are `super::drawing::TextParagraphs`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_paragraphs: Vec<super::drawing::TextParagraphs>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.7.62 `ST_TextDirection` (Text Direction): the text the file carried.
+/// Text Direction, the simple type `ST_TextDirection` (ECMA-376 Part 1, section 21.4.7.62), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3661,16 +4742,19 @@ pub struct TextBody {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextDirection(pub String);
-/// The members of `ST_TextDirection`, in alphabetical order.
+/// The members of the enumeration `ST_TextDirection`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextDirectionMember {
+    /// The member written `fromB`.
     FromB,
+    /// The member written `fromT`.
     FromT,
 }
 
-/// 21.4.4.12 `txEffectClrLst` (Text Effect Color List): the tag `dgm:txEffectClrLst`, schema type
-/// `CT_Colors`.
+/// The `dgm:txEffectClrLst` element, Text Effect Color List (ECMA-376 Part 1, section 21.4.4.12).
+/// Its schema type is `CT_Colors`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3679,14 +4763,18 @@ pub enum TextDirectionMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextEffectColorList {
+    /// The children that are an item of `super::drawing::ColorContent`, in order.
     pub content: Vec<super::drawing::ColorContent>,
+    /// The attribute `hueDir`, when the element has it.
     pub hue_dir: Option<HueDirection>,
+    /// The attribute `meth`, when the element has it.
     pub meth: Option<ColorApplicationMethodType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.4.13 `txFillClrLst` (Text Fill Color List): the tag `dgm:txFillClrLst`, schema type
-/// `CT_Colors`.
+/// The `dgm:txFillClrLst` element, Text Fill Color List (ECMA-376 Part 1, section 21.4.4.13). Its
+/// schema type is `CT_Colors`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3695,14 +4783,18 @@ pub struct TextEffectColorList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextFillColorList {
+    /// The children that are an item of `super::drawing::ColorContent`, in order.
     pub content: Vec<super::drawing::ColorContent>,
+    /// The attribute `hueDir`, when the element has it.
     pub hue_dir: Option<HueDirection>,
+    /// The attribute `meth`, when the element has it.
     pub meth: Option<ColorApplicationMethodType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.4.14 `txLinClrLst` (Text Line Color List): the tag `dgm:txLinClrLst`, schema type
-/// `CT_Colors`.
+/// The `dgm:txLinClrLst` element, Text Line Color List (ECMA-376 Part 1, section 21.4.4.14). Its
+/// schema type is `CT_Colors`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3711,13 +4803,18 @@ pub struct TextFillColorList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextLineColorList {
+    /// The children that are an item of `super::drawing::ColorContent`, in order.
     pub content: Vec<super::drawing::ColorContent>,
+    /// The attribute `hueDir`, when the element has it.
     pub hue_dir: Option<HueDirection>,
+    /// The attribute `meth`, when the element has it.
     pub meth: Option<ColorApplicationMethodType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.5.12 `txPr` (Text Properties): the tag `dgm:txPr`, schema type `CT_TextProps`.
+/// The `dgm:txPr` element, Text Properties (ECMA-376 Part 1, section 21.4.5.12). Its schema type is
+/// `CT_TextProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3729,12 +4826,15 @@ pub struct TextLineColorList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextProperties {
+    /// The child that is an item of `super::drawing::Text3DContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Option<Box<super::drawing::Text3DContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.2.30 title (Title): the tag `dgm:title`, schema type `CT_Name`.
+/// The `dgm:title` element, Title (ECMA-376 Part 1, section 21.4.2.30). Its schema type is
+/// `CT_Name`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3743,12 +4843,16 @@ pub struct TextProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Title {
+    /// The attribute `lang`, when the element has it.
     pub lang: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// 21.4.4.11 title (Title): the tag `dgm:title`, schema type `CT_CTName`.
+/// The `dgm:title` element, Title (ECMA-376 Part 1, section 21.4.4.11). Its schema type is
+/// `CT_CTName`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3757,12 +4861,16 @@ pub struct Title {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TitleCTName {
+    /// The attribute `lang`, when the element has it.
     pub lang: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// 21.4.5.11 title (Title): the tag `dgm:title`, schema type `CT_SDName`.
+/// The `dgm:title` element, Title (ECMA-376 Part 1, section 21.4.5.11). Its schema type is
+/// `CT_SDName`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3771,12 +4879,19 @@ pub struct TitleCTName {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TitleSDName {
+    /// The attribute `lang`, when the element has it.
     pub lang: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// 21.4.7.63 `ST_UnsignedInts` (Unsigned Integer List): the text the file carried.
+/// Unsigned Integer List, the simple type `ST_UnsignedInts` (ECMA-376 Part 1, section 21.4.7.63),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3786,7 +4901,7 @@ pub struct TitleSDName {
 #[non_exhaustive]
 pub struct UnsignedIntegerList(pub String);
 
-/// 21.4.2.31 `varLst` (Variable List): the tag `dgm:varLst`, schema type
+/// The `dgm:varLst` element, Variable List (ECMA-376 Part 1, section 21.4.2.31). Its schema type is
 /// `CT_LayoutVariablePropertySet`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
@@ -3796,19 +4911,33 @@ pub struct UnsignedIntegerList(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct VariableList {
+    /// The child that is `DiagramDirection`, when there is one.
     pub diagram_direction: Option<Box<DiagramDirection>>,
+    /// The child that is `LevelAnimation`, when there is one.
     pub level_animation: Option<Box<LevelAnimation>>,
+    /// The child that is `MaximumChildren`, when there is one.
     pub maximum_children: Option<Box<MaximumChildren>>,
+    /// The child that is `OneByOneAnimationString`, when there is one.
     pub one_by_one_animation_string: Option<Box<OneByOneAnimationString>>,
+    /// The child that is `OrganizationChartBranchStyle`, when there is one.
     pub organization_chart_branch_style: Option<Box<OrganizationChartBranchStyle>>,
+    /// The child that is `PreferredNumberOfChildren`, when there is one.
     pub preferred_number_of_children: Option<Box<PreferredNumberOfChildren>>,
+    /// The child that is `ShapeResizeStyle`, when there is one.
     pub shape_resize_style: Option<Box<ShapeResizeStyle>>,
+    /// The child that is `ShowInsertNode`, when there is one.
     pub show_insert_node: Option<Box<ShowInsertNode>>,
+    /// The child that is `ShowOrganizationChartUserInterface`, when there is one.
     pub show_organization_chart_user_interface: Option<Box<ShowOrganizationChartUserInterface>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.4.7.64 `ST_VariableType` (Variable Type): the text the file carried.
+/// Variable Type, the simple type `ST_VariableType` (ECMA-376 Part 1, section 21.4.7.64), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3817,23 +4946,38 @@ pub struct VariableList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct VariableType(pub String);
-/// The members of `ST_VariableType`, in alphabetical order.
+/// The members of the enumeration `ST_VariableType`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum VariableTypeMember {
+    /// The member written `animLvl`.
     AnimLvl,
+    /// The member written `animOne`.
     AnimOne,
+    /// The member written `bulEnabled`.
     BulEnabled,
+    /// The member written `chMax`.
     ChMax,
+    /// The member written `chPref`.
     ChPref,
+    /// The member written `dir`.
     Dir,
+    /// The member written `hierBranch`.
     HierBranch,
+    /// The member written `none`.
     None,
+    /// The member written `orgChart`.
     OrgChart,
+    /// The member written `resizeHandles`.
     ResizeHandles,
 }
 
-/// 21.4.7.65 `ST_VerticalAlignment` (Vertical Alignment): the text the file carried.
+/// Vertical Alignment, the simple type `ST_VerticalAlignment` (ECMA-376 Part 1, section 21.4.7.65),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3842,17 +4986,23 @@ pub enum VariableTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct VerticalAlignment(pub String);
-/// The members of `ST_VerticalAlignment`, in alphabetical order.
+/// The members of the enumeration `ST_VerticalAlignment`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum VerticalAlignmentMember {
+    /// The member written `b`.
     B,
+    /// The member written `mid`.
     Mid,
+    /// The member written `none`.
     None,
+    /// The member written `t`.
     T,
 }
 
-/// 21.4.3.9 whole (Whole E2O Formatting): the tag `dgm:whole`, schema type `CT_WholeE2oFormatting`.
+/// The `dgm:whole` element, Whole E2O Formatting (ECMA-376 Part 1, section 21.4.3.9). Its schema
+/// type is `CT_WholeE2oFormatting`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3864,10 +5014,13 @@ pub enum VerticalAlignmentMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct WholeE2OFormatting {
+    /// The child that is an item of `super::drawing::EffectPropertiesContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Option<Box<super::drawing::EffectPropertiesContent>>,
+    /// The child that is `super::drawing::Outline`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub outline: Option<Box<super::drawing::Outline>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -3934,7 +5087,7 @@ impl AlgorithmTypesMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -3984,7 +5137,7 @@ impl AnimationLevelStringDefinitionMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4038,7 +5191,7 @@ impl ArrowheadStylesMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4088,7 +5241,7 @@ impl AutoTextRotationMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4152,7 +5305,7 @@ impl AxisTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4252,7 +5405,7 @@ impl BendPointMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4303,7 +5456,7 @@ impl BooleanConstraintMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4376,7 +5529,7 @@ impl BreakpointMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4515,7 +5668,7 @@ impl CenterShapeMappingMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4570,7 +5723,7 @@ impl ChildAlignmentMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4617,7 +5770,7 @@ impl ChildDirectionMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4664,7 +5817,7 @@ impl ChildOrderMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4738,7 +5891,7 @@ impl ColorApplicationMethodTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4988,7 +6141,7 @@ impl ConnectionTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5038,7 +6191,7 @@ impl ConnectorDimensionMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5100,7 +6253,7 @@ impl ConnectorPointMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5151,7 +6304,7 @@ impl ConnectorRoutingMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5260,7 +6413,7 @@ impl ConstraintRelationshipMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5375,7 +6528,7 @@ impl ConstraintTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5424,7 +6577,7 @@ impl ContinueDirectionMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5506,7 +6659,7 @@ impl DataPointTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5627,7 +6780,7 @@ impl DiagramDirectionDefinitionMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5825,7 +6978,7 @@ impl FallbackDimensionMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5901,7 +7054,7 @@ impl FlowDirectionMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -6015,7 +7168,7 @@ impl FunctionOperatorMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -6074,7 +7227,7 @@ impl FunctionTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -6177,7 +7330,7 @@ impl GrowDirectionMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -6240,7 +7393,7 @@ impl HierarchyAlignmentMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -6296,7 +7449,7 @@ impl HierarchyBranchStyleDefinitionMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -6351,7 +7504,7 @@ impl HorizontalAlignmentMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -6402,7 +7555,7 @@ impl HueDirectionMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -6815,7 +7968,7 @@ impl LinearDirectionMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -6946,7 +8099,7 @@ impl NodeHorizontalAlignmentMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -7000,7 +8153,7 @@ impl NodeVerticalAlignmentMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -7074,7 +8227,7 @@ impl OffsetMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -7148,7 +8301,7 @@ impl OneByOneAnimationValueDefinitionMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -7223,7 +8376,7 @@ impl OutputShapeTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -7354,7 +8507,7 @@ impl ParameterIdentifierMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -7644,7 +8797,7 @@ impl PointTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -7850,7 +9003,7 @@ impl PyramidAccentPositionMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -7901,7 +9054,7 @@ impl PyramidAccentTextMarginMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -7952,7 +9105,7 @@ impl ResizeHandleMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -8001,7 +9154,7 @@ impl RotationPathMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -8149,7 +9302,7 @@ impl SecondaryChildAlignmentMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -8205,7 +9358,7 @@ impl SecondaryLinearDirectionMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -8476,7 +9629,7 @@ impl StartingElementMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -8678,7 +9831,7 @@ impl TextAlignmentMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -8729,7 +9882,7 @@ impl TextAnchorHorizontalMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -8783,7 +9936,7 @@ impl TextAnchorVerticalMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -8834,7 +9987,7 @@ impl TextBlockDirectionMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -8906,7 +10059,7 @@ impl TextDirectionMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -9178,7 +10331,7 @@ impl VariableTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -9229,7 +10382,7 @@ impl VerticalAlignmentMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

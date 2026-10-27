@@ -212,8 +212,11 @@
 //! The hooks of the `v` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_core::vml`.
 //!
-//! The namespace is `urn:schemas-microsoft-com:vml`.
+//! The namespace is `urn:schemas-microsoft-com:vml`. Its prefix, `v`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_core::vml::*;
 
 use officekit_markup_base::Written;
@@ -229,38 +232,56 @@ use std::io;
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::vml` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `ArcSegment`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn arc_segment(&mut self, _node: &ArcSegment) -> Option<ArcSegment> {
         None
     }
 
+    /// Asked for each `BezierCurve`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn bezier_curve(&mut self, _node: &BezierCurve) -> Option<BezierCurve> {
         None
     }
 
+    /// Asked for each `DocumentBackground`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn document_background(&mut self, _node: &DocumentBackground) -> Option<DocumentBackground> {
         None
     }
 
+    /// Asked for each `ImageData`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn image_data(&mut self, _node: &ImageData) -> Option<ImageData> {
         None
     }
 
+    /// Asked for each `ImageFile`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn image_file(&mut self, _node: &ImageFile) -> Option<ImageFile> {
         None
     }
 
+    /// Asked for each `Line`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn line(&mut self, _node: &Line) -> Option<Line> {
         None
     }
 
+    /// Asked for each `LineStrokeSettings`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn line_stroke_settings(&mut self, _node: &LineStrokeSettings) -> Option<LineStrokeSettings> {
         None
     }
 
+    /// Asked for each `MultiplePathLine`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn multiple_path_line(&mut self, _node: &MultiplePathLine) -> Option<MultiplePathLine> {
         None
     }
 
+    /// Asked for each `MultiplePathLineContent`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn multiple_path_line_content(
         &mut self,
         _node: &MultiplePathLineContent,
@@ -268,6 +289,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `MultiplePathLineContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn multiple_path_line_content_items(
         &mut self,
         _node: &MultiplePathLineContent,
@@ -275,34 +298,50 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Oval`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn oval(&mut self, _node: &Oval) -> Option<Oval> {
         None
     }
 
+    /// Asked for each `Rectangle`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn rectangle(&mut self, _node: &Rectangle) -> Option<Rectangle> {
         None
     }
 
+    /// Asked for each `RoundedRectangle`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn rounded_rectangle(&mut self, _node: &RoundedRectangle) -> Option<RoundedRectangle> {
         None
     }
 
+    /// Asked for each `SetOfFormulas`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn set_of_formulas(&mut self, _node: &SetOfFormulas) -> Option<SetOfFormulas> {
         None
     }
 
+    /// Asked for each `SetOfHandles`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn set_of_handles(&mut self, _node: &SetOfHandles) -> Option<SetOfHandles> {
         None
     }
 
+    /// Asked for each `ShadowEffect`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn shadow_effect(&mut self, _node: &ShadowEffect) -> Option<ShadowEffect> {
         None
     }
 
+    /// Asked for each `ShapeDefinition`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn shape_definition(&mut self, _node: &ShapeDefinition) -> Option<ShapeDefinition> {
         None
     }
 
+    /// Asked for each `ShapeDefinitionContent`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn shape_definition_content(
         &mut self,
         _node: &ShapeDefinitionContent,
@@ -310,6 +349,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ShapeDefinitionContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn shape_definition_content_items(
         &mut self,
         _node: &ShapeDefinitionContent,
@@ -317,10 +358,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ShapeElementContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn shape_element(&mut self, _node: &ShapeElementContent) -> Option<ShapeElementContent> {
         None
     }
 
+    /// Asked for each `ShapeElementContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn shape_element_items(
         &mut self,
         _node: &ShapeElementContent,
@@ -328,6 +373,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ShapeFillProperties`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn shape_fill_properties(
         &mut self,
         _node: &ShapeFillProperties,
@@ -335,14 +382,20 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ShapeGroup`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn shape_group(&mut self, _node: &ShapeGroup) -> Option<ShapeGroup> {
         None
     }
 
+    /// Asked for each `ShapeGroupContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn shape_group_content(&mut self, _node: &ShapeGroupContent) -> Option<ShapeGroupContent> {
         None
     }
 
+    /// Asked for each `ShapeGroupContent` in a list. `None` leaves the item to its own `transform`,
+    /// and `Some` puts the items it holds, any number of them, in its place.
     fn shape_group_content_items(
         &mut self,
         _node: &ShapeGroupContent,
@@ -350,37 +403,54 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ShapeHandle`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn shape_handle(&mut self, _node: &ShapeHandle) -> Option<ShapeHandle> {
         None
     }
 
+    /// Asked for each `ShapePath`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn shape_path(&mut self, _node: &ShapePath) -> Option<ShapePath> {
         None
     }
 
+    /// Asked for each `ShapeTemplate`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn shape_template(&mut self, _node: &ShapeTemplate) -> Option<ShapeTemplate> {
         None
     }
 
+    /// Asked for each `SingleFormula`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn single_formula(&mut self, _node: &SingleFormula) -> Option<SingleFormula> {
         None
     }
 
+    /// Asked for each `TextBox`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn text_box(&mut self, _node: &TextBox) -> Option<TextBox> {
         None
     }
 
+    /// Asked for each `TextBoxContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn text_box_content(&mut self, _node: &TextBoxContent) -> Option<TextBoxContent> {
         None
     }
 
+    /// Asked for each `TextLayoutPath`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn text_layout_path(&mut self, _node: &TextLayoutPath) -> Option<TextLayoutPath> {
         None
     }
 
+    /// Asked when a `ArcSegment` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_arc_segment(
         &mut self,
         _node: &ArcSegment,
@@ -389,9 +459,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BezierCurve` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_bezier_curve(
         &mut self,
         _node: &BezierCurve,
@@ -400,9 +473,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DocumentBackground` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_document_background(
         &mut self,
         _node: &DocumentBackground,
@@ -411,9 +487,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ImageData` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_image_data(
         &mut self,
         _node: &ImageData,
@@ -422,9 +501,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ImageFile` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_image_file(
         &mut self,
         _node: &ImageFile,
@@ -433,16 +515,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Line` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_line(&mut self, _node: &Line, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `LineStrokeSettings` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_line_stroke_settings(
         &mut self,
         _node: &LineStrokeSettings,
@@ -451,9 +539,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MultiplePathLine` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_multiple_path_line(
         &mut self,
         _node: &MultiplePathLine,
@@ -462,9 +553,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MultiplePathLineContent` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_multiple_path_line_content(
         &mut self,
         _node: &MultiplePathLineContent,
@@ -473,9 +567,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MultiplePathLineContent` in a list is written through. `Written::Yes` means
+    /// the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_multiple_path_line_content_items(
         &mut self,
         _node: &MultiplePathLineContent,
@@ -484,16 +581,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Oval` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_oval(&mut self, _node: &Oval, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Rectangle` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_rectangle(
         &mut self,
         _node: &Rectangle,
@@ -502,9 +605,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RoundedRectangle` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_rounded_rectangle(
         &mut self,
         _node: &RoundedRectangle,
@@ -513,9 +619,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SetOfFormulas` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_set_of_formulas(
         &mut self,
         _node: &SetOfFormulas,
@@ -524,9 +633,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SetOfHandles` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_set_of_handles(
         &mut self,
         _node: &SetOfHandles,
@@ -535,9 +647,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShadowEffect` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shadow_effect(
         &mut self,
         _node: &ShadowEffect,
@@ -546,9 +661,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeDefinition` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_definition(
         &mut self,
         _node: &ShapeDefinition,
@@ -557,9 +675,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeDefinitionContent` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_definition_content(
         &mut self,
         _node: &ShapeDefinitionContent,
@@ -568,9 +689,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeDefinitionContent` in a list is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_definition_content_items(
         &mut self,
         _node: &ShapeDefinitionContent,
@@ -579,9 +703,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeElementContent` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_element(
         &mut self,
         _node: &ShapeElementContent,
@@ -590,9 +717,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeElementContent` in a list is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_element_items(
         &mut self,
         _node: &ShapeElementContent,
@@ -601,9 +731,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeFillProperties` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_fill_properties(
         &mut self,
         _node: &ShapeFillProperties,
@@ -612,9 +745,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeGroup` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_group(
         &mut self,
         _node: &ShapeGroup,
@@ -623,9 +759,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeGroupContent` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_group_content(
         &mut self,
         _node: &ShapeGroupContent,
@@ -634,9 +773,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeGroupContent` in a list is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_group_content_items(
         &mut self,
         _node: &ShapeGroupContent,
@@ -645,9 +787,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeHandle` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_handle(
         &mut self,
         _node: &ShapeHandle,
@@ -656,9 +801,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapePath` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_path(
         &mut self,
         _node: &ShapePath,
@@ -667,9 +815,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeTemplate` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_template(
         &mut self,
         _node: &ShapeTemplate,
@@ -678,9 +829,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SingleFormula` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_single_formula(
         &mut self,
         _node: &SingleFormula,
@@ -689,9 +843,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TextBox` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_text_box(
         &mut self,
         _node: &TextBox,
@@ -700,9 +857,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TextBoxContent` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_text_box_content(
         &mut self,
         _node: &TextBoxContent,
@@ -711,9 +871,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TextLayoutPath` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_text_layout_path(
         &mut self,
         _node: &TextLayoutPath,
@@ -729,14 +892,20 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from `crate::Visitor::vml` is
 /// never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `ArcSegment`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn arc_segment(&mut self, _node: &ArcSegment) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BezierCurve`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn bezier_curve(&mut self, _node: &BezierCurve) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DocumentBackground`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn document_background(
         &mut self,
         _node: &DocumentBackground,
@@ -744,18 +913,25 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ImageData`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn image_data(&mut self, _node: &ImageData) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ImageFile`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn image_file(&mut self, _node: &ImageFile) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Line`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn line(&mut self, _node: &Line) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LineStrokeSettings`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn line_stroke_settings(
         &mut self,
         _node: &LineStrokeSettings,
@@ -763,10 +939,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MultiplePathLine`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn multiple_path_line(&mut self, _node: &MultiplePathLine) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MultiplePathLineContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn multiple_path_line_content(
         &mut self,
         _node: &MultiplePathLineContent,
@@ -774,34 +954,49 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Oval`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn oval(&mut self, _node: &Oval) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Rectangle`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn rectangle(&mut self, _node: &Rectangle) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RoundedRectangle`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn rounded_rectangle(&mut self, _node: &RoundedRectangle) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SetOfFormulas`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn set_of_formulas(&mut self, _node: &SetOfFormulas) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SetOfHandles`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn set_of_handles(&mut self, _node: &SetOfHandles) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShadowEffect`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn shadow_effect(&mut self, _node: &ShadowEffect) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShapeDefinition`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn shape_definition(&mut self, _node: &ShapeDefinition) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShapeDefinitionContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn shape_definition_content(
         &mut self,
         _node: &ShapeDefinitionContent,
@@ -809,10 +1004,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShapeElementContent`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn shape_element(&mut self, _node: &ShapeElementContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShapeFillProperties`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn shape_fill_properties(
         &mut self,
         _node: &ShapeFillProperties,
@@ -820,38 +1019,55 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShapeGroup`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn shape_group(&mut self, _node: &ShapeGroup) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShapeGroupContent`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn shape_group_content(&mut self, _node: &ShapeGroupContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShapeHandle`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn shape_handle(&mut self, _node: &ShapeHandle) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShapePath`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn shape_path(&mut self, _node: &ShapePath) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShapeTemplate`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn shape_template(&mut self, _node: &ShapeTemplate) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SingleFormula`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn single_formula(&mut self, _node: &SingleFormula) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TextBox`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn text_box(&mut self, _node: &TextBox) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TextBoxContent`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn text_box_content(&mut self, _node: &TextBoxContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TextLayoutPath`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn text_layout_path(&mut self, _node: &TextLayoutPath) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

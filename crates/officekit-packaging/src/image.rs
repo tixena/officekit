@@ -16,6 +16,9 @@ const HEADER_FORMATS: [(ImageType, ImageFormat); 5] = [
 ];
 
 /// An image part's format and bytes.
+///
+/// [`from_bytes`](Self::from_bytes) recognises a PNG, JPEG, GIF, TIFF or BMP by its header.
+/// [`with_format`](Self::with_format) takes any other format on trust.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Image {
     bytes: Vec<u8>,
@@ -27,15 +30,25 @@ pub struct Image {
 #[derive(Clone, Debug, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum ImageFormat {
+    /// Bitmap, `image/bmp`.
     Bmp,
+    /// Enhanced Metafile, `image/x-emf`.
     Emf,
+    /// `image/gif`.
     Gif,
+    /// `image/jpeg`.
     Jpeg,
+    /// JPEG XR, `image/vnd.ms-photo`.
     JpegXr,
+    /// Any other `image/` content type, held whole.
     Other(String),
+    /// `image/png`.
     Png,
+    /// Scalable Vector Graphics, `image/svg+xml`.
     Svg,
+    /// `image/tiff`.
     Tiff,
+    /// Windows Metafile, `image/x-wmf`.
     Wmf,
 }
 
@@ -43,7 +56,9 @@ pub enum ImageFormat {
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[non_exhaustive]
 pub struct PixelSize {
+    /// Rows of pixels.
     pub height: u32,
+    /// Columns of pixels.
     pub width: u32,
 }
 

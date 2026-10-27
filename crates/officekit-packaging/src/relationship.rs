@@ -31,8 +31,11 @@ pub const RELATIONSHIPS_CONTENT_TYPE: &str =
 pub struct RelatedPart {
     /// The target part's content type; `None` for an external target.
     pub content_type: Option<String>,
+    /// The relationship's id, such as `rId1`.
     pub id: String,
+    /// The part or external address the relationship points to.
     pub target: Target,
+    /// The relationship type, as the URI the file spells.
     pub type_uri: String,
 }
 
@@ -45,19 +48,28 @@ pub struct RelatedPart {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Relationship {
+    /// The `Id` attribute, such as `rId1`; empty until the relationship is added to a package.
     pub id: String,
     /// The `Target` attribute: relative to the source's folder when internal.
     pub target: String,
+    /// The `TargetMode` attribute; `Internal` when the attribute is absent.
     pub target_mode: TargetMode,
+    /// The `Type` attribute: the URI that says what the target is.
     pub type_uri: String,
 }
 
-/// A relationship type in both classes' spelling; its constants and
-/// methods are generated, in `relationship_type.rs`.
+/// A relationship type in both classes' spelling.
+///
+/// The associated constants name the standard types, such as `RelationshipType::OFFICE_DOCUMENT`,
+/// `RelationshipType::IMAGE` and `RelationshipType::STYLES`. [`ALL`](Self::ALL) lists them. Pass
+/// a constant's `transitional` or `strict` field, or [`in_class`](Self::in_class), where a method
+/// takes a type URI.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[non_exhaustive]
 pub struct RelationshipType {
+    /// The URI Strict files spell.
     pub strict: &'static str,
+    /// The URI Transitional files spell.
     pub transitional: &'static str,
 }
 
@@ -65,7 +77,9 @@ pub struct RelationshipType {
 #[derive(Clone, Debug, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum Target {
+    /// A URI outside the package, such as the address of a hyperlink.
     External(String),
+    /// A part of the same package.
     Part(PartName),
 }
 
@@ -74,7 +88,9 @@ pub enum Target {
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum TargetMode {
+    /// The target is a URI outside the package.
     External,
+    /// The target is a part of the package; this is the default when the attribute is absent.
     Internal,
 }
 

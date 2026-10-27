@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `xnsv` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/spreadsheetml/2019/namedsheetviews`, which files write with the prefix `xnsv`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2019/namedsheetviews`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -364,7 +366,8 @@ pub static SORT_RULE_CONTENT_TAGS: officekit_markup_base::Accept = officekit_mar
     tags: &[(NS_XNSV, "richSortCondition"), (NS_XNSV, "sortCondition")],
 };
 
-/// The tag `xnsv:columnFilter`, schema type `CT_ColumnFilter` of SDK 3.5.1's data.
+/// The `xnsv:columnFilter` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_ColumnFilter`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -373,11 +376,17 @@ pub static SORT_RULE_CONTENT_TAGS: officekit_markup_base::Accept = officekit_mar
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColumnFilter {
+    /// The attribute `colId`, when the element has it.
     pub col_id: Option<String>,
+    /// The child that is `Dxf`, when there is one.
     pub dxf: Option<Box<Dxf>>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The children that are `Filter`, in order.
     pub filter: Vec<Filter>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -391,57 +400,84 @@ pub struct ColumnFilter {
 /// not return itself from `crate::Context::office_spreadsheetml_2019_namedsheetviews` is never
 /// asked.
 pub trait Context: crate::Context {
+    /// Asked for each `ColumnFilter`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn column_filter(&mut self, _node: &ColumnFilter) -> Option<ColumnFilter> {
         None
     }
 
+    /// Asked for each `Dxf`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn dxf(&mut self, _node: &Dxf) -> Option<Dxf> {
         None
     }
 
+    /// Asked for each `ExtLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
         None
     }
 
+    /// Asked for each `Filter`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn filter(&mut self, _node: &Filter) -> Option<Filter> {
         None
     }
 
+    /// Asked for each `NamedSheetView`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn named_sheet_view(&mut self, _node: &NamedSheetView) -> Option<NamedSheetView> {
         None
     }
 
+    /// Asked for each `NamedSheetViews`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn named_sheet_views(&mut self, _node: &NamedSheetViews) -> Option<NamedSheetViews> {
         None
     }
 
+    /// Asked for each `NsvFilter`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn nsv_filter(&mut self, _node: &NsvFilter) -> Option<NsvFilter> {
         None
     }
 
+    /// Asked for each `RichSortCondition`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn rich_sort_condition(&mut self, _node: &RichSortCondition) -> Option<RichSortCondition> {
         None
     }
 
+    /// Asked for each `SortCondition`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn sort_condition(&mut self, _node: &SortCondition) -> Option<SortCondition> {
         None
     }
 
+    /// Asked for each `SortRule`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn sort_rule(&mut self, _node: &SortRule) -> Option<SortRule> {
         None
     }
 
+    /// Asked for each `SortRuleContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn sort_rule_content(&mut self, _node: &SortRuleContent) -> Option<SortRuleContent> {
         None
     }
 
+    /// Asked for each `SortRules`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn sort_rules(&mut self, _node: &SortRules) -> Option<SortRules> {
         None
     }
 
+    /// Asked when a `ColumnFilter` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_column_filter(
         &mut self,
         _node: &ColumnFilter,
@@ -450,30 +486,42 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Dxf` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_dxf(&mut self, _node: &Dxf, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Filter` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_filter(&mut self, _node: &Filter, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `NamedSheetView` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_named_sheet_view(
         &mut self,
         _node: &NamedSheetView,
@@ -482,9 +530,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NamedSheetViews` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_named_sheet_views(
         &mut self,
         _node: &NamedSheetViews,
@@ -493,9 +544,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NsvFilter` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_nsv_filter(
         &mut self,
         _node: &NsvFilter,
@@ -504,9 +558,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RichSortCondition` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_rich_sort_condition(
         &mut self,
         _node: &RichSortCondition,
@@ -515,9 +572,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SortCondition` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sort_condition(
         &mut self,
         _node: &SortCondition,
@@ -526,9 +586,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SortRule` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sort_rule(
         &mut self,
         _node: &SortRule,
@@ -537,9 +600,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SortRuleContent` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sort_rule_content(
         &mut self,
         _node: &SortRuleContent,
@@ -548,9 +614,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SortRules` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sort_rules(
         &mut self,
         _node: &SortRules,
@@ -560,7 +629,8 @@ pub trait Context: crate::Context {
     }
 }
 
-/// The tag `xnsv:dxf`, schema type `CT_Dxf` of SDK 3.5.1's data.
+/// The `xnsv:dxf` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Dxf`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -569,17 +639,26 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Dxf {
+    /// The child that is `spreadsheet::Alignment`, when there is one.
     pub alignment: Option<Box<spreadsheet::Alignment>>,
+    /// The child that is `spreadsheet::Border`, when there is one.
     pub border: Option<Box<spreadsheet::Border>>,
+    /// The child that is `spreadsheet::Fill`, when there is one.
     pub fill: Option<Box<spreadsheet::Fill>>,
+    /// The child that is `spreadsheet::Font`, when there is one.
     pub font: Option<Box<spreadsheet::Font>>,
+    /// The child that is `spreadsheet::FutureFeatureDataStorageArea`, when there is one.
     pub future_feature_data_storage_area: Option<Box<spreadsheet::FutureFeatureDataStorageArea>>,
+    /// The child that is `spreadsheet::NumberFormat`, when there is one.
     pub number_format: Option<Box<spreadsheet::NumberFormat>>,
+    /// The child that is `spreadsheet::ProtectionProperties`, when there is one.
     pub protection_properties: Option<Box<spreadsheet::ProtectionProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xnsv:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
+/// The `xnsv:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -588,11 +667,14 @@ pub struct Dxf {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
+    /// The children that are `spreadsheet::Extension`, in order.
     pub extension: Vec<spreadsheet::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xnsv:filter`, schema type `CT_FilterColumn` of SDK 3.5.1's data.
+/// The `xnsv:filter` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_FilterColumn`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -601,14 +683,20 @@ pub struct ExtLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Filter {
+    /// The attribute `colId`, when the element has it.
     pub col_id: Option<String>,
+    /// The child that is an item of `spreadsheet::AutoFilterColumnContent`, when there is one.
     pub content: Option<Box<spreadsheet::AutoFilterColumnContent>>,
+    /// The attribute `hiddenButton`, when the element has it.
     pub hidden_button: Option<String>,
+    /// The attribute `showButton`, when the element has it.
     pub show_button: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xnsv:namedSheetView`, schema type `CT_NamedSheetView` of SDK 3.5.1's data.
+/// The `xnsv:namedSheetView` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_NamedSheetView`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -617,14 +705,20 @@ pub struct Filter {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NamedSheetView {
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The children that are `NsvFilter`, in order.
     pub nsv_filter: Vec<NsvFilter>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xnsv:namedSheetViews`, schema type `CT_NamedSheetViews` of SDK 3.5.1's data.
+/// The `xnsv:namedSheetViews` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_NamedSheetViews`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -633,12 +727,16 @@ pub struct NamedSheetView {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NamedSheetViews {
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The children that are `NamedSheetView`, in order.
     pub named_sheet_view: Vec<NamedSheetView>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xnsv:nsvFilter`, schema type `CT_NsvFilter` of SDK 3.5.1's data.
+/// The `xnsv:nsvFilter` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_NsvFilter`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -647,16 +745,24 @@ pub struct NamedSheetViews {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NsvFilter {
+    /// The children that are `ColumnFilter`, in order.
     pub column_filter: Vec<ColumnFilter>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The attribute `filterId`, when the element has it.
     pub filter_id: Option<String>,
+    /// The attribute `ref`, when the element has it.
     pub r#ref: Option<String>,
+    /// The child that is `SortRules`, when there is one.
     pub sort_rules: Option<Box<SortRules>>,
+    /// The attribute `tableId`, when the element has it.
     pub table_id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xnsv:richSortCondition`, schema type `CT_RichSortCondition` of SDK 3.5.1's data.
+/// The `xnsv:richSortCondition` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_RichSortCondition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -665,18 +771,28 @@ pub struct NsvFilter {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RichSortCondition {
+    /// The attribute `customList`, when the element has it.
     pub custom_list: Option<String>,
+    /// The attribute `descending`, when the element has it.
     pub descending: Option<String>,
+    /// The attribute `dxfId`, when the element has it.
     pub dxf_id: Option<String>,
+    /// The attribute `iconId`, when the element has it.
     pub icon_id: Option<String>,
+    /// The attribute `iconSet`, when the element has it.
     pub icon_set: Option<office_spreadsheetml_2009_9_main::IconSetType>,
+    /// The attribute `ref`, when the element has it.
     pub r#ref: Option<String>,
+    /// The attribute `richSortKey`, when the element has it.
     pub rich_sort_key: Option<String>,
+    /// The attribute `sortBy`, when the element has it.
     pub sort_by: Option<spreadsheet::SortBy>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xnsv:sortCondition`, schema type `CT_SortCondition` of SDK 3.5.1's data.
+/// The `xnsv:sortCondition` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_SortCondition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -685,17 +801,26 @@ pub struct RichSortCondition {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SortCondition {
+    /// The attribute `customList`, when the element has it.
     pub custom_list: Option<String>,
+    /// The attribute `descending`, when the element has it.
     pub descending: Option<String>,
+    /// The attribute `dxfId`, when the element has it.
     pub dxf_id: Option<String>,
+    /// The attribute `iconId`, when the element has it.
     pub icon_id: Option<String>,
+    /// The attribute `iconSet`, when the element has it.
     pub icon_set: Option<office_spreadsheetml_2009_9_main::IconSetType>,
+    /// The attribute `ref`, when the element has it.
     pub r#ref: Option<String>,
+    /// The attribute `sortBy`, when the element has it.
     pub sort_by: Option<spreadsheet::SortBy>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xnsv:sortRule`, schema type `CT_SortRule` of SDK 3.5.1's data.
+/// The `xnsv:sortRule` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SortRule`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -704,23 +829,36 @@ pub struct SortCondition {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SortRule {
+    /// The attribute `colId`, when the element has it.
     pub col_id: Option<String>,
+    /// The child that is an item of `SortRuleContent`, when there is one.
     pub content: Option<Box<SortRuleContent>>,
+    /// The child that is `Dxf`, when there is one.
     pub dxf: Option<Box<Dxf>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_SortRule`: choice in `CT_SortRule`.
+/// One child element of a choice: choice in `CT_SortRule`.
+///
+/// The schema types that hold it: `CT_SortRule`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum SortRuleContent {
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `xnsv:richSortCondition`, a `RichSortCondition`.
     RichSortCondition(RichSortCondition),
+    /// The element `xnsv:sortCondition`, a `SortCondition`.
     SortCondition(SortCondition),
 }
 
-/// The tag `xnsv:sortRules`, schema type `CT_SortRules` of SDK 3.5.1's data.
+/// The `xnsv:sortRules` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_SortRules`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -729,10 +867,15 @@ pub enum SortRuleContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SortRules {
+    /// The attribute `caseSensitive`, when the element has it.
     pub case_sensitive: Option<String>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The attribute `sortMethod`, when the element has it.
     pub sort_method: Option<spreadsheet::SortMethod>,
+    /// The children that are `SortRule`, in order.
     pub sort_rule: Vec<SortRule>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -742,50 +885,70 @@ pub struct SortRules {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_spreadsheetml_2019_namedsheetviews` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `ColumnFilter`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn column_filter(&mut self, _node: &ColumnFilter) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Dxf`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn dxf(&mut self, _node: &Dxf) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext_lst(&mut self, _node: &ExtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Filter`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn filter(&mut self, _node: &Filter) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NamedSheetView`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn named_sheet_view(&mut self, _node: &NamedSheetView) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NamedSheetViews`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn named_sheet_views(&mut self, _node: &NamedSheetViews) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NsvFilter`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn nsv_filter(&mut self, _node: &NsvFilter) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RichSortCondition`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn rich_sort_condition(&mut self, _node: &RichSortCondition) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SortCondition`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn sort_condition(&mut self, _node: &SortCondition) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SortRule`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sort_rule(&mut self, _node: &SortRule) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SortRuleContent`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn sort_rule_content(&mut self, _node: &SortRuleContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SortRules`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn sort_rules(&mut self, _node: &SortRules) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

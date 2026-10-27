@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `pc2` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/powerpoint/2019/9/main/command`, which files write with the prefix `pc2`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/powerpoint/2019/9/main/command`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -261,7 +263,8 @@ pub static CM_MK_LST_SHAPE: officekit_markup_base::Shape = officekit_markup_base
     text: false,
 };
 
-/// The tag `pc2:cmMK`, schema type `CT_CommentV2Moniker` of SDK 3.5.1's data.
+/// The `pc2:cmMK` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_CommentV2Moniker`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -270,11 +273,14 @@ pub static CM_MK_LST_SHAPE: officekit_markup_base::Shape = officekit_markup_base
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CmMK {
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `pc2:cmMkLst`, schema type `CT_CommentV2MonikerList` of SDK 3.5.1's data.
+/// The `pc2:cmMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_CommentV2MonikerList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -283,12 +289,17 @@ pub struct CmMK {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CmMkLst {
+    /// The child that is `CmMK`, which the schema requires.
     pub cm_mk: Box<CmMK>,
+    /// The child that is `super::office_powerpoint_2013_main_command::SldMkLst`, which the schema
+    /// requires.
     pub sld_mk_lst: Box<super::office_powerpoint_2013_main_command::SldMkLst>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `pc2:cmRplyMk`, schema type `CT_CommentReplyV2Moniker` of SDK 3.5.1's data.
+/// The `pc2:cmRplyMk` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_CommentReplyV2Moniker`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -297,11 +308,14 @@ pub struct CmMkLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CmRplyMk {
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `pc2:cmRplyMkLst`, schema type `CT_CommentReplyV2MonikerList` of SDK 3.5.1's data.
+/// The `pc2:cmRplyMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_CommentReplyV2MonikerList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -310,8 +324,11 @@ pub struct CmRplyMk {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CmRplyMkLst {
+    /// The child that is `CmMkLst`, which the schema requires.
     pub cm_mk_lst: Box<CmMkLst>,
+    /// The child that is `CmRplyMk`, which the schema requires.
     pub cm_rply_mk: Box<CmRplyMk>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -324,32 +341,46 @@ pub struct CmRplyMkLst {
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_powerpoint_2019_9_main_command` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `CmMK`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn cm_mk(&mut self, _node: &CmMK) -> Option<CmMK> {
         None
     }
 
+    /// Asked for each `CmMkLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn cm_mk_lst(&mut self, _node: &CmMkLst) -> Option<CmMkLst> {
         None
     }
 
+    /// Asked for each `CmRplyMk`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn cm_rply_mk(&mut self, _node: &CmRplyMk) -> Option<CmRplyMk> {
         None
     }
 
+    /// Asked for each `CmRplyMkLst`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn cm_rply_mk_lst(&mut self, _node: &CmRplyMkLst) -> Option<CmRplyMkLst> {
         None
     }
 
+    /// Asked when a `CmMK` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cm_mk(&mut self, _node: &CmMK, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `CmMkLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cm_mk_lst(
         &mut self,
         _node: &CmMkLst,
@@ -358,9 +389,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CmRplyMk` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cm_rply_mk(
         &mut self,
         _node: &CmRplyMk,
@@ -369,9 +403,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CmRplyMkLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cm_rply_mk_lst(
         &mut self,
         _node: &CmRplyMkLst,
@@ -387,18 +424,23 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_powerpoint_2019_9_main_command` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `CmMK`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn cm_mk(&mut self, _node: &CmMK) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CmMkLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn cm_mk_lst(&mut self, _node: &CmMkLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CmRplyMk`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn cm_rply_mk(&mut self, _node: &CmRplyMk) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CmRplyMkLst`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn cm_rply_mk_lst(&mut self, _node: &CmRplyMkLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

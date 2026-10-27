@@ -348,10 +348,11 @@ use officekit_packaging::package::Package;
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::RelationshipType;
 
-/// The content type SDK 3.5.1's part data gives.
+/// The content type the part data of the Open XML SDK, version 3.5.1, gives for this part.
 pub const CONTENT_TYPE: &str = "application/xml";
 
-/// One URI in both classes.
+/// The relationship type that names this part, from Microsoft's extensions: one URI in both
+/// classes.
 pub const RELATIONSHIP_TYPE: RelationshipType = RelationshipType::UI_USER_CUSTOMIZATION;
 
 /// The part's bytes.

@@ -212,8 +212,11 @@
 //! The hooks of the `c14` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_core::office_drawing_2007_8_2_chart`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/drawing/2007/8/2/chart`.
+//! The namespace is `http://schemas.microsoft.com/office/drawing/2007/8/2/chart`. Its prefix, `c14`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_core::office_drawing_2007_8_2_chart::*;
 
 use officekit_markup_base::Written;
@@ -229,57 +232,84 @@ use std::io;
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_drawing_2007_8_2_chart` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `DropZoneCategories`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn drop_zone_categories(&mut self, _node: &DropZoneCategories) -> Option<DropZoneCategories> {
         None
     }
 
+    /// Asked for each `DropZoneData`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn drop_zone_data(&mut self, _node: &DropZoneData) -> Option<DropZoneData> {
         None
     }
 
+    /// Asked for each `DropZoneFilter`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn drop_zone_filter(&mut self, _node: &DropZoneFilter) -> Option<DropZoneFilter> {
         None
     }
 
+    /// Asked for each `DropZoneSeries`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn drop_zone_series(&mut self, _node: &DropZoneSeries) -> Option<DropZoneSeries> {
         None
     }
 
+    /// Asked for each `DropZonesVisible`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn drop_zones_visible(&mut self, _node: &DropZonesVisible) -> Option<DropZonesVisible> {
         None
     }
 
+    /// Asked for each `InSketchMode`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn in_sketch_mode(&mut self, _node: &InSketchMode) -> Option<InSketchMode> {
         None
     }
 
+    /// Asked for each `InvertSolidFillFmt`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn invert_solid_fill_fmt(&mut self, _node: &InvertSolidFillFmt) -> Option<InvertSolidFillFmt> {
         None
     }
 
+    /// Asked for each `PivotOptions`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn pivot_options(&mut self, _node: &PivotOptions) -> Option<PivotOptions> {
         None
     }
 
+    /// Asked for each `ShowSketchBtn`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn show_sketch_btn(&mut self, _node: &ShowSketchBtn) -> Option<ShowSketchBtn> {
         None
     }
 
+    /// Asked for each `SketchOptions`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn sketch_options(&mut self, _node: &SketchOptions) -> Option<SketchOptions> {
         None
     }
 
+    /// Asked for each `SpPr`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn sp_pr(&mut self, _node: &SpPr) -> Option<SpPr> {
         None
     }
 
+    /// Asked for each `Style`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn style(&mut self, _node: &Style) -> Option<Style> {
         None
     }
 
+    /// Asked when a `DropZoneCategories` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_drop_zone_categories(
         &mut self,
         _node: &DropZoneCategories,
@@ -288,9 +318,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DropZoneData` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_drop_zone_data(
         &mut self,
         _node: &DropZoneData,
@@ -299,9 +332,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DropZoneFilter` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_drop_zone_filter(
         &mut self,
         _node: &DropZoneFilter,
@@ -310,9 +346,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DropZoneSeries` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_drop_zone_series(
         &mut self,
         _node: &DropZoneSeries,
@@ -321,9 +360,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DropZonesVisible` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_drop_zones_visible(
         &mut self,
         _node: &DropZonesVisible,
@@ -332,9 +374,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `InSketchMode` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_in_sketch_mode(
         &mut self,
         _node: &InSketchMode,
@@ -343,9 +388,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `InvertSolidFillFmt` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_invert_solid_fill_fmt(
         &mut self,
         _node: &InvertSolidFillFmt,
@@ -354,9 +402,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotOptions` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_options(
         &mut self,
         _node: &PivotOptions,
@@ -365,9 +416,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShowSketchBtn` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_show_sketch_btn(
         &mut self,
         _node: &ShowSketchBtn,
@@ -376,9 +430,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SketchOptions` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sketch_options(
         &mut self,
         _node: &SketchOptions,
@@ -387,16 +444,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SpPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sp_pr(&mut self, _node: &SpPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Style` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_style(&mut self, _node: &Style, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
@@ -408,6 +471,8 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_drawing_2007_8_2_chart` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `DropZoneCategories`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn drop_zone_categories(
         &mut self,
         _node: &DropZoneCategories,
@@ -415,26 +480,38 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DropZoneData`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn drop_zone_data(&mut self, _node: &DropZoneData) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DropZoneFilter`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn drop_zone_filter(&mut self, _node: &DropZoneFilter) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DropZoneSeries`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn drop_zone_series(&mut self, _node: &DropZoneSeries) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DropZonesVisible`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn drop_zones_visible(&mut self, _node: &DropZonesVisible) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `InSketchMode`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn in_sketch_mode(&mut self, _node: &InSketchMode) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `InvertSolidFillFmt`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn invert_solid_fill_fmt(
         &mut self,
         _node: &InvertSolidFillFmt,
@@ -442,22 +519,30 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotOptions`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn pivot_options(&mut self, _node: &PivotOptions) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShowSketchBtn`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn show_sketch_btn(&mut self, _node: &ShowSketchBtn) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SketchOptions`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn sketch_options(&mut self, _node: &SketchOptions) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SpPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sp_pr(&mut self, _node: &SpPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Style`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn style(&mut self, _node: &Style) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

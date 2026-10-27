@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `com14` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/drawing/2010/compatibility`, which files write with the prefix `com14`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/drawing/2010/compatibility`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -233,7 +235,8 @@ pub static COMPAT_SP_SHAPE: officekit_markup_base::Shape = officekit_markup_base
     text: false,
 };
 
-/// The tag `com14:compatSp`, schema type `CT_CompatShape` of SDK 3.5.1's data.
+/// The `com14:compatSp` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_CompatShape`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -242,7 +245,9 @@ pub static COMPAT_SP_SHAPE: officekit_markup_base::Shape = officekit_markup_base
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CompatSp {
+    /// The attribute `spid`, when the element has it.
     pub spid: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -255,13 +260,18 @@ pub struct CompatSp {
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_drawing_2010_compatibility` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `CompatSp`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn compat_sp(&mut self, _node: &CompatSp) -> Option<CompatSp> {
         None
     }
 
+    /// Asked when a `CompatSp` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_compat_sp(
         &mut self,
         _node: &CompatSp,
@@ -277,6 +287,7 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_drawing_2010_compatibility` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `CompatSp`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn compat_sp(&mut self, _node: &CompatSp) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

@@ -1,4 +1,9 @@
 //! A Word document from an arky document and back, with the feature `markdown`.
+//!
+//! [`from_markdown`] and [`from_markdown_text`] read markdown into a [`Docx`], and
+//! [`save_markdown`] writes a [`Docx`] as markdown with its pictures. [`Docx::from_arky`] and
+//! [`Docx::to_arky`] work on arky documents directly. A TOML frontmatter block travels inside the
+//! Word file as the part `/docProps/frontmatter.toml` when [`MarkdownOptions::frontmatter`] is on.
 
 mod from_word;
 mod parts;
@@ -45,7 +50,9 @@ const TOML_FENCE: &str = "+++\n";
 #[derive(Debug, Clone, PartialEq)]
 #[non_exhaustive]
 pub struct Exported {
+    /// The document as an arky markdown document.
     pub document: Document<Markdown>,
+    /// The pictures the document names: the file name of each, and its bytes.
     pub images: Vec<(String, Vec<u8>)>,
 }
 
@@ -69,10 +76,20 @@ pub enum MarkdownError {
     Frontmatter(InvalidFrontmatter),
     /// A picture's file could not be read or is in a format officekit does not read.
     #[error("{target}: {error}")]
-    Image { target: String, error: String },
+    Image {
+        /// The picture's target, as the document names it.
+        target: String,
+        /// Why the picture failed.
+        error: String,
+    },
     /// The markdown file could not be read or written.
     #[error("{}: {error}", .path.display())]
-    Io { error: io::Error, path: PathBuf },
+    Io {
+        /// The error of the file system.
+        error: io::Error,
+        /// The file or folder that failed.
+        path: PathBuf,
+    },
     /// The Word package could not be read or written.
     #[error(transparent)]
     Package(#[from] PackageError),
@@ -169,6 +186,20 @@ where
 
 /// The Word file of the markdown `text`. A relative picture path is found from `folder`; with no
 /// folder, it fails with [`MarkdownError::Image`] naming it.
+///
+/// ```rust
+/// use officekit::markdown::{self, MarkdownOptions};
+/// use os_shim::mock::MemorySystem;
+///
+/// # fn main() -> Result<(), Box<dyn core::error::Error>> {
+/// let system = MemorySystem::new();
+/// let options = MarkdownOptions::default();
+/// let docx = markdown::from_markdown_text(&system, "one\ntwo\n", None, options)?;
+/// let body = docx.main_document()?.body;
+/// assert!(body.is_some_and(|body| !body.content.is_empty()));
+/// # Ok(())
+/// # }
+/// ```
 ///
 /// A frontmatter that does not read is passed over, and its body converted, unless
 /// `options.frontmatter` asks for the frontmatter.

@@ -348,7 +348,8 @@ use officekit_packaging::package::Package;
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::RelationshipType;
 
-/// One URI in both classes.
+/// The relationship type that names this part, from Microsoft's extensions: one URI in both
+/// classes.
 pub const RELATIONSHIP_TYPE: RelationshipType = RelationshipType::RECIPIENT_DATA;
 
 /// The part's bytes.

@@ -6,9 +6,12 @@ use crate::conformance::ConformanceClass;
 #[derive(Debug, thiserror::Error)]
 #[non_exhaustive]
 pub enum WriteError {
+    /// The node, an element or an attribute value, has no form in the class.
     #[error("{tag} has no form in {class:?}")]
     NotInClass {
+        /// The class the node was written in.
         class: ConformanceClass,
+        /// The node's tag in the namespace table, such as `c/@t`.
         tag: &'static str,
     },
 }
@@ -17,6 +20,12 @@ pub enum WriteError {
 #[derive(Debug, thiserror::Error)]
 #[non_exhaustive]
 pub enum ReadError {
+    /// The element has another tag than the node reads.
     #[error("expected the element {expected}, found {found}")]
-    UnexpectedTag { expected: String, found: String },
+    UnexpectedTag {
+        /// The tag the node reads.
+        expected: String,
+        /// The tag the element has.
+        found: String,
+    },
 }

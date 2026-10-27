@@ -20,6 +20,39 @@ use crate::generate_schema::sdk_data::DataVersion;
 /// rustfmt's widest array items on one line.
 const ARRAY_WIDTH: usize = 60;
 
+/// The crate page of `officekit-parts`.
+const PAGE: &str = r##"One module per part type: ECMA-376 Part 1's part definitions, then the parts Microsoft's extensions define.
+
+A package holds parts, and every part has a content type and a relationship type. A module here is for one part type. The typed root of a part is the struct of `officekit-markup` for its top element, such as `w:document` for the main part of a Word file.
+
+Each module has `RELATIONSHIP_TYPE` and `load`. When the part has a typed root, `load` gives it, and the module also has `store_strict`, which needs the `strict` feature, and `store_transitional`, which needs the `transitional` feature. Otherwise `load` gives the part's bytes. A module has `CONTENT_TYPE`, a `&str`, when its part has one content type, and `CONTENT_TYPES`, a `&[&str]`, when it has more. The modules of parts such as images, audio, video and embedded objects have neither. The `binary-format` feature archives `PartModel` with rkyv. `kinds` holds the document kinds of each file type.
+
+Three functions work over every module. `model_of` gives a part's typed root as a `PartModel`. `bytes_of` writes a `PartModel` as bytes in a class. `restore_through_module` stores a part again in a class. `MODULES` lists every module, for code that works over all part types.
+
+This builds a package in memory and loads its main part:
+
+```
+use officekit_packaging::package::{OpenOptions, Package};
+use officekit_packaging::part_name::PartName;
+use officekit_parts::{PartModel, kinds::WordprocessingKind, main_document, model_of};
+
+let xml = r#"<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body><w:p/></w:body></w:document>"#;
+let content_type = WordprocessingKind::Document.main_content_type();
+assert!(main_document::CONTENT_TYPES.contains(&content_type));
+
+let name = PartName::new("/word/document.xml")?;
+let mut package = Package::new();
+package.set_part_bytes(&name, content_type, xml.as_bytes())?;
+
+let document = main_document::load(&package, &name, OpenOptions::default())?;
+assert!(document.body.is_some());
+
+let model = model_of(&package, &name, OpenOptions::default())?;
+assert!(matches!(model, Some(PartModel::MainDocument(_))));
+# Ok::<(), officekit_packaging::error::PackageError>(())
+```
+"##;
+
 /// rustfmt's widest call arguments, and tuple items, on one line.
 const CALL_WIDTH: usize = 60;
 
@@ -99,12 +132,15 @@ const KIND_ENUMS: [(&str, &str, &str); 3] = [
 
 /// The struct of `lib.rs`'s `MODULES`.
 const PART_MODULE: &str = "
-/// A generated part module, for code that works over every part type.
+/// A part module: its name, the relationship type of its part, and where ECMA-376 defines it.
+///
+/// `MODULES` lists one for every module, for code that works over every part type.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[non_exhaustive]
 pub struct PartModule {
     /// The module's name, `main_document`.
     pub name: &'static str,
+    /// The relationship type that names the module's part, in both classes' spelling.
     pub relationship_type: RelationshipType,
     /// The section of ECMA-376 Part 1 that defines the part, `11.3.10`;
     /// `None` for a part of Microsoft's extensions.
@@ -407,12 +443,14 @@ fn content_type_doc(part: &PartType) -> &'static str {
         .iter()
         .any(|content_type| content_type.contains(".macroEnabled"));
     match (part.stated_in_part_1(), several, macro_enabled) {
-        (true, false, _) => "The content type Part 1 lists.",
+        (true, false, _) => "The content type ECMA-376 Part 1 lists for this part.",
         (true, true, true) => {
-            "The content types Part 1 lists, then the macro-enabled forms and add-ins of Microsoft's extensions."
+            "The content types ECMA-376 Part 1 lists for this part, then the macro-enabled forms and add-ins of Microsoft's extensions."
         }
-        (true, true, false) => "The content types Part 1 lists.",
-        (false, _, _) => "The content type SDK 3.5.1's part data gives.",
+        (true, true, false) => "The content types ECMA-376 Part 1 lists for this part.",
+        (false, _, _) => {
+            "The content type the part data of the Open XML SDK, version 3.5.1, gives for this part."
+        }
     }
 }
 
@@ -481,6 +519,42 @@ fn inner_doc(text: &str) -> String {
         })
 }
 
+/// A crate page's `//!` lines: prose filled to the line width, fenced code as it is.
+fn page_doc(text: &str) -> String {
+    fn flush(out: &mut String, prose: &mut String) {
+        let words = prose.trim();
+        if !words.is_empty() {
+            if !out.is_empty() {
+                out.push_str("//!\n");
+            }
+            out.push_str(&inner_doc(words));
+        }
+        prose.clear();
+    }
+    let mut out = String::new();
+    let mut prose = String::new();
+    let mut code = false;
+    for line in text.lines() {
+        if line.starts_with("```") {
+            if !code {
+                flush(&mut out, &mut prose);
+                out.push_str("//!\n");
+            }
+            code = !code;
+            let _ = writeln!(out, "//! {line}");
+        } else if code && line.is_empty() {
+            out.push_str("//!\n");
+        } else if code {
+            let _ = writeln!(out, "//! {line}");
+        } else {
+            prose.push_str(line);
+            prose.push('\n');
+        }
+    }
+    flush(&mut out, &mut prose);
+    out
+}
+
 /// One enum of `kinds.rs` and its `impl`: its variants in alphabetical
 /// order, with `ALL` and `main_content_type`.
 fn kind_enum(kinds: &[Kind], file: &str, name: &str, family: &str) -> (String, String) {
@@ -489,11 +563,18 @@ fn kind_enum(kinds: &[Kind], file: &str, name: &str, family: &str) -> (String, S
     let mut definition = String::from("\n");
     definition.push_str(&layout::doc(
         0,
-        &format!("The kinds of `{family}`-family file, by their main part's content type."),
+        &format!("The kinds of `{family}`-family file, by their main part's content type.\n\n`{name}::ALL` lists them and `main_content_type` gives the content type of each."),
     ));
     definition.push_str("#[derive(Clone, Copy, Debug, PartialEq, Eq)]\n#[non_exhaustive]\n");
     let _ = writeln!(definition, "pub enum {name} {{");
     for row in &rows {
+        definition.push_str(&layout::doc(
+            4,
+            &format!(
+                "A file whose main part has the content type `{}`.",
+                row.content_type
+            ),
+        ));
         let _ = writeln!(definition, "    {},", row.name);
     }
     definition.push_str("}\n");
@@ -584,7 +665,12 @@ fn module_doc(part: &PartType, root: Option<&RootText>) -> String {
     };
     let held = root.map_or_else(
         || "the load of its bytes".to_owned(),
-        |known| format!("the load and store of its root, `{}`", known.tag),
+        |known| {
+            format!(
+                "the load and store of its root, `{}`. `store_strict` needs the `strict` feature and `store_transitional` the `transitional` feature",
+                known.tag
+            )
+        },
     );
     let what = if content.is_empty() {
         format!("its relationship type and {held}.")
@@ -593,17 +679,19 @@ fn module_doc(part: &PartType, root: Option<&RootText>) -> String {
     };
     match &part.definition {
         Definition::Part1(definition) if definition.part_2 => format!(
-            "ECMA-376 Part 1, {} \"{}\".\n\nPart 2 defines its fields, as SDK 3.5.1's part data gives them: {what}",
-            definition.section, definition.title
+            "The {}, defined in ECMA-376 Part 1, section {}.\n\nPart 2 defines its fields, as the part data of the Open XML SDK, version 3.5.1, gives them. The module holds {what}",
+            definition.title, definition.section
         ),
         Definition::Part1(definition) => {
             let restated = definition
                 .part_4
                 .as_ref()
-                .map_or_else(String::new, |section| format!(", and Part 4, {section}"));
+                .map_or_else(String::new, |section| {
+                    format!(", and restated in Part 4, section {section}")
+                });
             format!(
-                "ECMA-376 Part 1, {} \"{}\"{restated}.\n\nThe module holds {what}",
-                definition.section, definition.title
+                "The {}, defined in ECMA-376 Part 1, section {}{restated}.\n\nThe module holds {what}",
+                definition.title, definition.section
             )
         }
         Definition::Extension(extension) => {
@@ -779,9 +867,7 @@ fn parts_text(header: &str, joined: &Joined, roots: &[Option<RootText>], tests: 
         })
         .collect();
     let mut out = String::from(header);
-    out.push_str(&inner_doc(
-        "One module per part type: ECMA-376 Part 1's part definitions, then the parts Microsoft's extensions define.\n\nEach holds the part's content type, its relationship type in both classes' spelling, and the load and store of its root, or the load of its bytes; `kinds` holds the document kinds of each file type. `restore_through_module` stores a part again in a class through the module its content type names; `model_of` gives a part's typed root as a `PartModel`, and `bytes_of` the part's bytes from it.",
-    ));
+    out.push_str(&page_doc(PAGE));
     out.push('\n');
     let taken = module_declarations(joined, tests, &mut out);
     lib_imports(&typed, &taken, !shared.is_empty(), &mut out);
@@ -964,6 +1050,15 @@ fn part_model(typed: &[(&PartType, &RootText)], taken: &BTreeSet<&str>) -> Strin
             namespace.to_owned()
         }
     }) {
+        if let Some((part, root)) = typed
+            .iter()
+            .find(|(part, _)| variant_name(part) == arm.variant)
+        {
+            out.push_str(&layout::doc(
+                4,
+                &format!("The root `{}` of the module `{}`.", root.tag, part.module),
+            ));
+        }
         out.push_str(&archive::variant(&arm));
     }
     out.push_str("}\n");
@@ -1172,13 +1267,25 @@ fn dispatch_tables(
 fn relationship_doc(part: &PartType) -> String {
     match &part.definition {
         Definition::Part1(definition) if definition.part_2 => {
-            "Part 2's, as SDK 3.5.1's part data gives it: one URI in both classes.".to_owned()
+            "The relationship type that names this part, from the part data of the Open XML SDK, version 3.5.1: one URI in both classes.".to_owned()
         }
         Definition::Part1(definition) => definition.part_4.as_ref().map_or_else(
-            || format!("Part 1, {}; one URI in both classes.", definition.section),
-            |restated| format!("Part 1, {}, and Part 4, {restated}.", definition.section),
+            || {
+                format!(
+                    "The relationship type that names this part, defined in ECMA-376 Part 1, section {}: one URI in both classes.",
+                    definition.section
+                )
+            },
+            |restated| {
+                format!(
+                    "The relationship type that names this part, in both classes' spelling: Strict from ECMA-376 Part 1, section {}, Transitional from Part 4, section {restated}.",
+                    definition.section
+                )
+            },
         ),
-        Definition::Extension(_) => "One URI in both classes.".to_owned(),
+        Definition::Extension(_) => {
+            "The relationship type that names this part, from Microsoft's extensions: one URI in both classes.".to_owned()
+        }
     }
 }
 
@@ -1206,7 +1313,7 @@ fn all_constant(joined: &Joined, out: &mut String) {
 fn relationship_types(header: &str, joined: &Joined) -> String {
     let mut out = String::from(header);
     out.push_str(&inner_doc(
-        "The relationship types of every part module and of the sections of Part 1 that define no part, in both classes' spelling.\n\nPart 1 states the Strict type of each part and Part 4 the Transitional one; the types of the parts Part 2 defines and of Microsoft's extensions are one URI in both classes.",
+        "The relationship types of every part module and of the sections of Part 1 that define no part, in both classes' spelling.\n\nPart 1 states the Strict type of each part and Part 4 the Transitional one; the types of the parts Part 2 defines and of Microsoft's extensions are one URI in both classes.\n\nA relationship type is a URI that says what a relationship points at. `RelationshipType` holds the Strict and the Transitional spelling of one. `ALL` lists the constants, `find` gives the type a URI spells, `in_class` gives the spelling a class writes, and `matches` tests a URI against either spelling.",
     ));
     out.push_str(
         "\nuse crate::relationship::RelationshipType;\nuse officekit_xml::conformance::ConformanceClass;\n\nimpl RelationshipType {\n",
@@ -1228,7 +1335,14 @@ fn relationship_types(header: &str, joined: &Joined) -> String {
             ""
         };
         let doc = constant.source.as_ref().map_or_else(
-            || format!("The relationship type of {}{both}.", list(&modules)),
+            || {
+                let held = if modules.len() == 1 {
+                    "the module"
+                } else {
+                    "the modules"
+                };
+                format!("The relationship type of {held} {}{both}.", list(&modules))
+            },
             |source| format!("The relationship type of {source}{both}; no part module."),
         );
         out.push_str(&layout::doc(4, &doc));
@@ -1310,7 +1424,7 @@ fn store_text(path: &str, fallback: &str) -> String {
     ] {
         let _ = write!(
             out,
-            "\n/// Store `root` into the part in the {class} class; the part keeps its\n/// content type, or takes this module's.\n///\n/// # Errors\n///\n/// The errors of [`part_root::store`].\n#[cfg(feature = \"{feature}\")]\n"
+            "\n/// Store `root` into the part in the {class} class; the part keeps its\n/// content type, or takes this module's.\n///\n/// This function needs the `{feature}` feature.\n///\n/// # Errors\n///\n/// The errors of [`part_root::store`].\n#[cfg(feature = \"{feature}\")]\n"
         );
         out.push_str(&layout::signature(
             0,

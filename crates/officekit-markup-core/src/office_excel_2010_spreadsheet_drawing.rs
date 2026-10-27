@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `xdr14` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/excel/2010/spreadsheetDrawing`, which files write with the prefix `xdr14`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/excel/2010/spreadsheetDrawing`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 pub mod read;
 pub mod write;
@@ -308,8 +308,8 @@ pub static NV_CONTENT_PART_PR_SHAPE: officekit_markup_base::Shape = officekit_ma
     text: false,
 };
 
-/// The tag `xdr14:cNvContentPartPr`, schema type `CT_NonVisualInkContentPartProperties` of SDK
-/// 3.5.1's data.
+/// The `xdr14:cNvContentPartPr` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_NonVisualInkContentPartProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -321,15 +321,20 @@ pub static NV_CONTENT_PART_PR_SHAPE: officekit_markup_base::Shape = officekit_ma
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CNvContentPartPr {
+    /// The child that is `super::office_drawing_2010_main::CpLocks`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub cp_locks: Option<Box<super::office_drawing_2010_main::CpLocks>>,
+    /// The child that is `super::office_drawing_2010_main::ExtLst`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub ext_lst: Option<Box<super::office_drawing_2010_main::ExtLst>>,
+    /// The attribute `isComment`, when the element has it.
     pub is_comment: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xdr14:cNvPr`, schema type `CT_NonVisualDrawingProps` of SDK 3.5.1's data.
+/// The `xdr14:cNvPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_NonVisualDrawingProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -341,21 +346,31 @@ pub struct CNvContentPartPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CNvPr {
+    /// The child that is `super::drawing::ClickHyperlink`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub click_hyperlink: Option<Box<super::drawing::ClickHyperlink>>,
+    /// The attribute `descr`, when the element has it.
     pub descr: Option<String>,
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The attribute `hidden`, when the element has it.
     pub hidden: Option<String>,
+    /// The child that is `super::drawing::HyperlinkForHover`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHover>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<super::drawing::DrawingElementID>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xdr14:contentPart`, schema type `CT_ContentPart` of SDK 3.5.1's data.
+/// The `xdr14:contentPart` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_ContentPart`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -367,18 +382,26 @@ pub struct CNvPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ContentPart {
+    /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
+    /// The child that is `ExtLst`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
+    /// The child that is `NvContentPartPr`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub nv_content_part_pr: Option<Box<NvContentPartPr>>,
+    /// The child that is `NvPr`, when there is one.
     pub nv_pr: Option<Box<NvPr>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `Xfrm`, when there is one.
     pub xfrm: Option<Box<Xfrm>>,
 }
 
-/// The tag `xdr14:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
+/// The `xdr14:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -390,12 +413,15 @@ pub struct ContentPart {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
+    /// The children that are `super::drawing::Extension`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension: Vec<super::drawing::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xdr14:nvContentPartPr`, schema type `CT_ContentPartNonVisual` of SDK 3.5.1's data.
+/// The `xdr14:nvContentPartPr` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_ContentPartNonVisual`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -407,14 +433,18 @@ pub struct ExtLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NvContentPartPr {
+    /// The child that is `CNvContentPartPr`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub c: Option<Box<CNvContentPartPr>>,
+    /// The child that is `CNvPr`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub c_nv_pr: Box<CNvPr>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xdr14:nvPr`, schema type `CT_ApplicationNonVisualDrawingProps` of SDK 3.5.1's data.
+/// The `xdr14:nvPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ApplicationNonVisualDrawingProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -423,12 +453,16 @@ pub struct NvContentPartPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NvPr {
+    /// The attribute `fPublished`, when the element has it.
     pub f_published: Option<String>,
+    /// The attribute `macro`, when the element has it.
     pub r#macro: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xdr14:xfrm`, schema type `CT_Transform2D` of SDK 3.5.1's data.
+/// The `xdr14:xfrm` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Transform2D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -437,11 +471,17 @@ pub struct NvPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Xfrm {
+    /// The child that is `super::drawing::Extents`, when there is one.
     pub extents: Option<Box<super::drawing::Extents>>,
+    /// The attribute `flipH`, when the element has it.
     pub flip_h: Option<String>,
+    /// The attribute `flipV`, when the element has it.
     pub flip_v: Option<String>,
+    /// The child that is `super::drawing::Offset`, when there is one.
     pub offset: Option<Box<super::drawing::Offset>>,
+    /// The attribute `rot`, when the element has it.
     pub rot: Option<super::drawing::Angle>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 

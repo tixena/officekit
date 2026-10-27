@@ -339,7 +339,8 @@
 //   e26c4528f8340924ff27391d34681ecde1f597fc5ce3dbf2d354edc9c6071a52  crates/xtask/data/part_roots.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! ECMA-376 Part 1, 15.2.5 "Custom XML Data Storage Part", and Part 4, 13.2.5.
+//! The Custom XML Data Storage Part, defined in ECMA-376 Part 1, section 15.2.5, and restated in
+//! Part 4, section 13.2.5.
 //!
 //! The module holds its content type, its relationship type, and the load of its bytes.
 
@@ -348,10 +349,11 @@ use officekit_packaging::package::Package;
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::RelationshipType;
 
-/// The content type Part 1 lists.
+/// The content type ECMA-376 Part 1 lists for this part.
 pub const CONTENT_TYPE: &str = "application/xml";
 
-/// Part 1, 15.2.5, and Part 4, 13.2.5.
+/// The relationship type that names this part, in both classes' spelling: Strict from ECMA-376 Part
+/// 1, section 15.2.5, Transitional from Part 4, section 13.2.5.
 pub const RELATIONSHIP_TYPE: RelationshipType = RelationshipType::CUSTOM_XML;
 
 /// The part's bytes.

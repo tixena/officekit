@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `we` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/webextensions/webextension/2010/11`, which files write with the prefix `we`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/webextensions/webextension/2010/11`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -315,8 +317,8 @@ pub static WEBEXTENSIONREF_SHAPE: officekit_markup_base::Shape = officekit_marku
     text: false,
 };
 
-/// The tag `we:alternateReferences`, schema type `CT_OsfWebExtensionReferenceList` of SDK 3.5.1's
-/// data.
+/// The `we:alternateReferences` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_OsfWebExtensionReferenceList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -325,11 +327,14 @@ pub static WEBEXTENSIONREF_SHAPE: officekit_markup_base::Shape = officekit_marku
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AlternateReferences {
+    /// The children that are `Reference`, in order.
     pub reference: Vec<Reference>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `we:binding`, schema type `CT_OsfWebExtensionBinding` of SDK 3.5.1's data.
+/// The `we:binding` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OsfWebExtensionBinding`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -338,14 +343,20 @@ pub struct AlternateReferences {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Binding {
+    /// The attribute `appref`, when the element has it.
     pub appref: Option<String>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `we:bindings`, schema type `CT_OsfWebExtensionBindingList` of SDK 3.5.1's data.
+/// The `we:bindings` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OsfWebExtensionBindingList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -354,7 +365,9 @@ pub struct Binding {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Bindings {
+    /// The children that are `Binding`, in order.
     pub binding: Vec<Binding>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -368,49 +381,72 @@ pub struct Bindings {
 /// not return itself from `crate::Context::office_webextensions_webextension_2010_11` is never
 /// asked.
 pub trait Context: crate::Context {
+    /// Asked for each `AlternateReferences`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn alternate_references(&mut self, _node: &AlternateReferences) -> Option<AlternateReferences> {
         None
     }
 
+    /// Asked for each `Binding`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn binding(&mut self, _node: &Binding) -> Option<Binding> {
         None
     }
 
+    /// Asked for each `Bindings`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn bindings(&mut self, _node: &Bindings) -> Option<Bindings> {
         None
     }
 
+    /// Asked for each `ExtLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
         None
     }
 
+    /// Asked for each `Properties`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn properties(&mut self, _node: &Properties) -> Option<Properties> {
         None
     }
 
+    /// Asked for each `Property`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn property(&mut self, _node: &Property) -> Option<Property> {
         None
     }
 
+    /// Asked for each `Reference`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn reference(&mut self, _node: &Reference) -> Option<Reference> {
         None
     }
 
+    /// Asked for each `Snapshot`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn snapshot(&mut self, _node: &Snapshot) -> Option<Snapshot> {
         None
     }
 
+    /// Asked for each `Webextension`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn webextension(&mut self, _node: &Webextension) -> Option<Webextension> {
         None
     }
 
+    /// Asked for each `Webextensionref`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn webextensionref(&mut self, _node: &Webextensionref) -> Option<Webextensionref> {
         None
     }
 
+    /// Asked when a `AlternateReferences` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_alternate_references(
         &mut self,
         _node: &AlternateReferences,
@@ -419,16 +455,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Binding` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_binding(&mut self, _node: &Binding, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Bindings` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_bindings(
         &mut self,
         _node: &Bindings,
@@ -437,16 +479,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Properties` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_properties(
         &mut self,
         _node: &Properties,
@@ -455,9 +503,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Property` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_property(
         &mut self,
         _node: &Property,
@@ -466,9 +517,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Reference` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_reference(
         &mut self,
         _node: &Reference,
@@ -477,9 +531,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Snapshot` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_snapshot(
         &mut self,
         _node: &Snapshot,
@@ -488,9 +545,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Webextension` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_webextension(
         &mut self,
         _node: &Webextension,
@@ -499,9 +559,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Webextensionref` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_webextensionref(
         &mut self,
         _node: &Webextensionref,
@@ -511,7 +574,8 @@ pub trait Context: crate::Context {
     }
 }
 
-/// The tag `we:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
+/// The `we:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -520,11 +584,14 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
+    /// The children that are `drawing::Extension`, in order.
     pub extension: Vec<drawing::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `we:properties`, schema type `CT_OsfWebExtensionPropertyBag` of SDK 3.5.1's data.
+/// The `we:properties` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OsfWebExtensionPropertyBag`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -533,11 +600,14 @@ pub struct ExtLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Properties {
+    /// The children that are `Property`, in order.
     pub property: Vec<Property>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `we:property`, schema type `CT_OsfWebExtensionProperty` of SDK 3.5.1's data.
+/// The `we:property` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OsfWebExtensionProperty`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -546,12 +616,16 @@ pub struct Properties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Property {
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `value`, when the element has it.
     pub value: Option<String>,
 }
 
-/// The tag `we:reference`, schema type `CT_OsfWebExtensionReference` of SDK 3.5.1's data.
+/// The `we:reference` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OsfWebExtensionReference`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -560,15 +634,22 @@ pub struct Property {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Reference {
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `store`, when the element has it.
     pub store: Option<String>,
+    /// The attribute `storeType`, when the element has it.
     pub store_type: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `version`, when the element has it.
     pub version: Option<String>,
 }
 
-/// The tag `we:snapshot`, schema type `CT_Blip` of SDK 3.5.1's data.
+/// The `we:snapshot` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Blip`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -577,11 +658,17 @@ pub struct Reference {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Snapshot {
+    /// The children that are an item of `drawing::BlipContent`, in order.
     pub content: Vec<drawing::BlipContent>,
+    /// The attribute `cstate`, when the element has it.
     pub cstate: Option<drawing::BlipCompressionType>,
+    /// The attribute `r:embed`, when the element has it.
     pub embed: Option<String>,
+    /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionList>>,
+    /// The attribute `r:link`, when the element has it.
     pub link: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -591,6 +678,8 @@ pub struct Snapshot {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_webextensions_webextension_2010_11` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `AlternateReferences`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn alternate_references(
         &mut self,
         _node: &AlternateReferences,
@@ -598,44 +687,58 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Binding`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn binding(&mut self, _node: &Binding) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Bindings`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn bindings(&mut self, _node: &Bindings) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext_lst(&mut self, _node: &ExtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Properties`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn properties(&mut self, _node: &Properties) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Property`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn property(&mut self, _node: &Property) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Reference`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn reference(&mut self, _node: &Reference) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Snapshot`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn snapshot(&mut self, _node: &Snapshot) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Webextension`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn webextension(&mut self, _node: &Webextension) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Webextensionref`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn webextensionref(&mut self, _node: &Webextensionref) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 }
 
-/// The tag `we:webextension`, schema type `CT_OsfWebExtension` of SDK 3.5.1's data.
+/// The `we:webextension` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_OsfWebExtension`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -644,18 +747,28 @@ pub trait Visitor: crate::Visitor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Webextension {
+    /// The child that is `AlternateReferences`, when there is one.
     pub alternate_references: Option<Box<AlternateReferences>>,
+    /// The child that is `Bindings`, which the schema requires.
     pub bindings: Box<Bindings>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The attribute `frozen`, when the element has it.
     pub frozen: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The child that is `Properties`, which the schema requires.
     pub properties: Box<Properties>,
+    /// The child that is `Reference`, which the schema requires.
     pub reference: Box<Reference>,
+    /// The child that is `Snapshot`, when there is one.
     pub snapshot: Option<Box<Snapshot>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `we:webextensionref`, schema type `CT_WebExtensionPartRef` of SDK 3.5.1's data.
+/// The `we:webextensionref` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_WebExtensionPartRef`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -664,7 +777,9 @@ pub struct Webextension {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Webextensionref {
+    /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 

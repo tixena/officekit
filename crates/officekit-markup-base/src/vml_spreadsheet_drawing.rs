@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `xvml` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `urn:schemas-microsoft-com:office:excel`, which files write with the prefix `xvml`.
 //!
-//! The namespace is `urn:schemas-microsoft-com:office:excel`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -775,7 +775,8 @@ pub static ATTACHED_OBJECT_DATA_CONTENT_TAGS: crate::Accept = crate::Accept {
     ],
 };
 
-/// 19.4.2.3 Anchor (Anchor): the tag `xvml:Anchor`, schema type `string`.
+/// The `xvml:Anchor` element, Anchor (ECMA-376 Part 4, section 19.4.2.3). Its schema type is
+/// `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -784,12 +785,14 @@ pub static ATTACHED_OBJECT_DATA_CONTENT_TAGS: crate::Accept = crate::Accept {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Anchor {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.12 `ClientData` (Attached Object Data): the tag `xvml:ClientData`, schema type
-/// `CT_ClientData`.
+/// The `xvml:ClientData` element, Attached Object Data (ECMA-376 Part 4, section 19.4.2.12). Its
+/// schema type is `CT_ClientData`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -798,86 +801,162 @@ pub struct Anchor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AttachedObjectData {
+    /// The children that are an item of `AttachedObjectDataContent`, in order.
     pub content: Vec<AttachedObjectDataContent>,
+    /// The attribute `ObjectType`, when the element has it.
     pub object_type: Option<ObjectType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// One item of `CT_ClientData`: local choice in `CT_ClientData`.
+/// One child element of a choice: local choice in `CT_ClientData`.
+///
+/// The schema types that hold it: `CT_ClientData`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum AttachedObjectDataContent {
+    /// The element `xvml:Anchor`, a `Anchor`.
     Anchor(Anchor),
+    /// The element `xvml:AutoFill`, a `AutoFill`.
     AutoFill(AutoFill),
+    /// The element `xvml:AutoLine`, a `AutoLine`.
     AutoLine(AutoLine),
+    /// The element `xvml:AutoPict`, a `AutomaticallySize`.
     AutomaticallySize(AutomaticallySize),
+    /// The element `xvml:LCT`, a `CallbackType`.
     CallbackType(CallbackType),
+    /// The element `xvml:FmlaPict`, a `CameraSourceRange`.
     CameraSourceRange(CameraSourceRange),
+    /// The element `xvml:Camera`, a `CameraTool`.
     CameraTool(CameraTool),
+    /// The element `xvml:Cancel`, a `CancelButton`.
     CancelButton(CancelButton),
+    /// The element `xvml:Checked`, a `Checked`.
     Checked(Checked),
+    /// The element `xvml:CF`, a `ClipboardFormat`.
     ClipboardFormat(ClipboardFormat),
+    /// The element `xvml:Column`, a `CommentColumnTarget`.
     CommentColumnTarget(CommentColumnTarget),
+    /// The element `xvml:Row`, a `CommentRowTarget`.
     CommentRowTarget(CommentRowTarget),
+    /// The element `xvml:Visible`, a `CommentVisibilityToggle`.
     CommentVisibilityToggle(CommentVisibilityToggle),
+    /// The element `xvml:ColHidden`, a `CommentsColumnIsHidden`.
     CommentsColumnIsHidden(CommentsColumnIsHidden),
+    /// The element `xvml:RowHidden`, a `CommentsRowIsHidden`.
     CommentsRowIsHidden(CommentsRowIsHidden),
+    /// The element `xvml:Default`, a `DefaultButton`.
     DefaultButton(DefaultButton),
+    /// The element `xvml:DefaultSize`, a `DefaultSizeToggle`.
     DefaultSizeToggle(DefaultSizeToggle),
+    /// The element `xvml:NoThreeD`, a `Disable3DNoThreeD`.
     Disable3DNoThreeD(Disable3DNoThreeD),
+    /// The element `xvml:NoThreeD2`, a `Disable3DNoThreeD2`.
     Disable3DNoThreeD2(Disable3DNoThreeD2),
+    /// The element `xvml:Dismiss`, a `DismissButton`.
     DismissButton(DismissButton),
+    /// The element `xvml:Colored`, a `DropdownColorToggle`.
     DropdownColorToggle(DropdownColorToggle),
+    /// The element `xvml:DropLines`, a `DropdownMaximumLines`.
     DropdownMaximumLines(DropdownMaximumLines),
+    /// The element `xvml:DropStyle`, a `DropdownStyle`.
     DropdownStyle(DropdownStyle),
+    /// The element `xvml:DDE`, a `DynamicDataExchange`.
     DynamicDataExchange(DynamicDataExchange),
+    /// The element `xvml:MapOCX`, a `EmbeddedControl`.
     EmbeddedControl(EmbeddedControl),
+    /// The element `xvml:JustLastX`, a `FarEastAlignmentToggle`.
     FarEastAlignmentToggle(FarEastAlignmentToggle),
+    /// The element `xvml:FirstButton`, a `FirstRadioButton`.
     FirstRadioButton(FirstRadioButton),
+    /// The element `xvml:AutoScale`, a `FontAutoScale`.
     FontAutoScale(FontAutoScale),
+    /// The element `xvml:ScriptExtended`, a `HTMLScriptAttributes`.
     HTMLScriptAttributes(HTMLScriptAttributes),
+    /// The element `xvml:ScriptLanguage`, a `HTMLScriptLanguage`.
     HTMLScriptLanguage(HTMLScriptLanguage),
+    /// The element `xvml:ScriptLocation`, a `HTMLScriptLocation`.
     HTMLScriptLocation(HTMLScriptLocation),
+    /// The element `xvml:ScriptText`, a `HTMLScriptText`.
     HTMLScriptText(HTMLScriptText),
+    /// The element `xvml:Help`, a `HelpButton`.
     HelpButton(HelpButton),
+    /// The element `xvml:TextHAlign`, a `HorizontalTextAlignment`.
     HorizontalTextAlignment(HorizontalTextAlignment),
+    /// The element `xvml:FmlaLink`, a `LinkedFormula`.
     LinkedFormula(LinkedFormula),
+    /// The element `xvml:FmlaGroup`, a `LinkedFormulaGroupBox`.
     LinkedFormulaGroupBox(LinkedFormulaGroupBox),
+    /// The element `xvml:FmlaRange`, a `ListItemsSourceRange`.
     ListItemsSourceRange(ListItemsSourceRange),
+    /// The element `xvml:Locked`, a `LockToggle`.
     LockToggle(LockToggle),
+    /// The element `xvml:Disabled`, a `MacroDisableToggle`.
     MacroDisableToggle(MacroDisableToggle),
+    /// The element `xvml:WidthMin`, a `MinimumWidth`.
     MinimumWidth(MinimumWidth),
+    /// The element `xvml:MoveWithCells`, a `MoveWithCells`.
     MoveWithCells(MoveWithCells),
+    /// The element `xvml:MultiLine`, a `MultiLine`.
     MultiLine(MultiLine),
+    /// The element `xvml:MultiSel`, a `MultipleSelections`.
     MultipleSelections(MultipleSelections),
+    /// The element `xvml:ListItem`, a `NonLinkedListItem`.
     NonLinkedListItem(NonLinkedListItem),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `xvml:SecretEdit`, a `PasswordEdit`.
     PasswordEdit(PasswordEdit),
+    /// The element `xvml:Accel`, a `PrimaryKeyboardAccelerator`.
     PrimaryKeyboardAccelerator(PrimaryKeyboardAccelerator),
+    /// The element `xvml:PrintObject`, a `PrintToggle`.
     PrintToggle(PrintToggle),
+    /// The element `xvml:RecalcAlways`, a `RecalculationToggle`.
     RecalculationToggle(RecalculationToggle),
+    /// The element `xvml:FmlaMacro`, a `ReferenceToCustomFunction`.
     ReferenceToCustomFunction(ReferenceToCustomFunction),
+    /// The element `xvml:SizeWithCells`, a `ResizeWithCells`.
     ResizeWithCells(ResizeWithCells),
+    /// The element `xvml:Inc`, a `ScrollBarIncrement`.
     ScrollBarIncrement(ScrollBarIncrement),
+    /// The element `xvml:Max`, a `ScrollBarMaximum`.
     ScrollBarMaximum(ScrollBarMaximum),
+    /// The element `xvml:Min`, a `ScrollBarMinimum`.
     ScrollBarMinimum(ScrollBarMinimum),
+    /// The element `xvml:Horiz`, a `ScrollBarOrientation`.
     ScrollBarOrientation(ScrollBarOrientation),
+    /// The element `xvml:Page`, a `ScrollBarPageIncrement`.
     ScrollBarPageIncrement(ScrollBarPageIncrement),
+    /// The element `xvml:Val`, a `ScrollBarPosition`.
     ScrollBarPosition(ScrollBarPosition),
+    /// The element `xvml:Dx`, a `ScrollBarWidth`.
     ScrollBarWidth(ScrollBarWidth),
+    /// The element `xvml:Accel2`, a `SecondaryKeyboardAccelerator`.
     SecondaryKeyboardAccelerator(SecondaryKeyboardAccelerator),
+    /// The element `xvml:Sel`, a `SelectedEntry`.
     SelectedEntry(SelectedEntry),
+    /// The element `xvml:SelType`, a `SelectionType`.
     SelectionType(SelectionType),
+    /// The element `xvml:FmlaTxbx`, a `TextFormula`.
     TextFormula(TextFormula),
+    /// The element `xvml:LockText`, a `TextLock`.
     TextLock(TextLock),
+    /// The element `xvml:UIObj`, a `UIObjectToggle`.
     UIObjectToggle(UIObjectToggle),
+    /// The element `xvml:ValidIds`, a `ValidID`.
     ValidID(ValidID),
+    /// The element `xvml:VTEdit`, a `ValidationType`.
     ValidationType(ValidationType),
+    /// The element `xvml:VScroll`, a `VerticalScroll`.
     VerticalScroll(VerticalScroll),
+    /// The element `xvml:TextVAlign`, a `VerticalTextAlignment`.
     VerticalTextAlignment(VerticalTextAlignment),
 }
 
-/// 19.4.2.4 `AutoFill` (`AutoFill`): the tag `xvml:AutoFill`, schema type `ST_TrueFalseBlank`.
+/// The `xvml:AutoFill` element, `AutoFill` (ECMA-376 Part 4, section 19.4.2.4). Its schema type is
+/// `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -886,11 +965,14 @@ pub enum AttachedObjectDataContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AutoFill {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.5 `AutoLine` (`AutoLine`): the tag `xvml:AutoLine`, schema type `ST_TrueFalseBlank`.
+/// The `xvml:AutoLine` element, `AutoLine` (ECMA-376 Part 4, section 19.4.2.5). Its schema type is
+/// `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -899,12 +981,14 @@ pub struct AutoFill {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AutoLine {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.6 `AutoPict` (Automatically Size): the tag `xvml:AutoPict`, schema type
-/// `ST_TrueFalseBlank`.
+/// The `xvml:AutoPict` element, Automatically Size (ECMA-376 Part 4, section 19.4.2.6). Its schema
+/// type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -913,11 +997,14 @@ pub struct AutoLine {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AutomaticallySize {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.35 LCT (Callback Type): the tag `xvml:LCT`, schema type `string`.
+/// The `xvml:LCT` element, Callback Type (ECMA-376 Part 4, section 19.4.2.35). Its schema type is
+/// `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -926,11 +1013,14 @@ pub struct AutomaticallySize {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CallbackType {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.28 `FmlaPict` (Camera Source Range): the tag `xvml:FmlaPict`, schema type `string`.
+/// The `xvml:FmlaPict` element, Camera Source Range (ECMA-376 Part 4, section 19.4.2.28). Its
+/// schema type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -939,11 +1029,14 @@ pub struct CallbackType {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CameraSourceRange {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.8 Camera (Camera Tool): the tag `xvml:Camera`, schema type `ST_TrueFalseBlank`.
+/// The `xvml:Camera` element, Camera Tool (ECMA-376 Part 4, section 19.4.2.8). Its schema type is
+/// `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -952,11 +1045,14 @@ pub struct CameraSourceRange {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CameraTool {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.9 Cancel (Cancel Button): the tag `xvml:Cancel`, schema type `ST_TrueFalseBlank`.
+/// The `xvml:Cancel` element, Cancel Button (ECMA-376 Part 4, section 19.4.2.9). Its schema type is
+/// `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -965,11 +1061,14 @@ pub struct CameraTool {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CancelButton {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.11 Checked (Checked): the tag `xvml:Checked`, schema type `integer`.
+/// The `xvml:Checked` element, Checked (ECMA-376 Part 4, section 19.4.2.11). Its schema type is
+/// `integer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -978,11 +1077,14 @@ pub struct CancelButton {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Checked {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.10 CF (Clipboard Format): the tag `xvml:CF`, schema type `ST_CF`.
+/// The `xvml:CF` element, Clipboard Format (ECMA-376 Part 4, section 19.4.2.10). Its schema type is
+/// `ST_CF`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -991,11 +1093,14 @@ pub struct Checked {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ClipboardFormat {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.15 Column (Comment Column Target): the tag `xvml:Column`, schema type `integer`.
+/// The `xvml:Column` element, Comment Column Target (ECMA-376 Part 4, section 19.4.2.15). Its
+/// schema type is `integer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1004,11 +1109,14 @@ pub struct ClipboardFormat {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CommentColumnTarget {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.50 Row (Comment Row Target): the tag `xvml:Row`, schema type `integer`.
+/// The `xvml:Row` element, Comment Row Target (ECMA-376 Part 4, section 19.4.2.50). Its schema type
+/// is `integer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1017,12 +1125,14 @@ pub struct CommentColumnTarget {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CommentRowTarget {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.65 Visible (Comment Visibility Toggle): the tag `xvml:Visible`, schema type
-/// `ST_TrueFalseBlank`.
+/// The `xvml:Visible` element, Comment Visibility Toggle (ECMA-376 Part 4, section 19.4.2.65). Its
+/// schema type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1031,12 +1141,14 @@ pub struct CommentRowTarget {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CommentVisibilityToggle {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.13 `ColHidden` (Comment's Column is Hidden): the tag `xvml:ColHidden`, schema type
-/// `ST_TrueFalseBlank`.
+/// The `xvml:ColHidden` element, Comment's Column is Hidden (ECMA-376 Part 4, section 19.4.2.13).
+/// Its schema type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1045,12 +1157,14 @@ pub struct CommentVisibilityToggle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CommentsColumnIsHidden {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.51 `RowHidden` (Comment's Row is Hidden): the tag `xvml:RowHidden`, schema type
-/// `ST_TrueFalseBlank`.
+/// The `xvml:RowHidden` element, Comment's Row is Hidden (ECMA-376 Part 4, section 19.4.2.51). Its
+/// schema type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1059,11 +1173,14 @@ pub struct CommentsColumnIsHidden {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CommentsRowIsHidden {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.17 Default (Default Button): the tag `xvml:Default`, schema type `ST_TrueFalseBlank`.
+/// The `xvml:Default` element, Default Button (ECMA-376 Part 4, section 19.4.2.17). Its schema type
+/// is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1072,12 +1189,14 @@ pub struct CommentsRowIsHidden {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DefaultButton {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.18 `DefaultSize` (Default Size Toggle): the tag `xvml:DefaultSize`, schema type
-/// `ST_TrueFalseBlank`.
+/// The `xvml:DefaultSize` element, Default Size Toggle (ECMA-376 Part 4, section 19.4.2.18). Its
+/// schema type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1086,11 +1205,14 @@ pub struct DefaultButton {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DefaultSizeToggle {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.45 `NoThreeD` (Disable 3D): the tag `xvml:NoThreeD`, schema type `ST_TrueFalseBlank`.
+/// The `xvml:NoThreeD` element, Disable 3D (ECMA-376 Part 4, section 19.4.2.45). Its schema type is
+/// `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1099,11 +1221,14 @@ pub struct DefaultSizeToggle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Disable3DNoThreeD {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.46 `NoThreeD2` (Disable 3D): the tag `xvml:NoThreeD2`, schema type `ST_TrueFalseBlank`.
+/// The `xvml:NoThreeD2` element, Disable 3D (ECMA-376 Part 4, section 19.4.2.46). Its schema type
+/// is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1112,11 +1237,14 @@ pub struct Disable3DNoThreeD {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Disable3DNoThreeD2 {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.20 Dismiss (Dismiss Button): the tag `xvml:Dismiss`, schema type `ST_TrueFalseBlank`.
+/// The `xvml:Dismiss` element, Dismiss Button (ECMA-376 Part 4, section 19.4.2.20). Its schema type
+/// is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1125,12 +1253,14 @@ pub struct Disable3DNoThreeD2 {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DismissButton {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.14 Colored (Dropdown Color Toggle): the tag `xvml:Colored`, schema type
-/// `ST_TrueFalseBlank`.
+/// The `xvml:Colored` element, Dropdown Color Toggle (ECMA-376 Part 4, section 19.4.2.14). Its
+/// schema type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1139,11 +1269,14 @@ pub struct DismissButton {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DropdownColorToggle {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.21 `DropLines` (Dropdown Maximum Lines): the tag `xvml:DropLines`, schema type `integer`.
+/// The `xvml:DropLines` element, Dropdown Maximum Lines (ECMA-376 Part 4, section 19.4.2.21). Its
+/// schema type is `integer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1152,11 +1285,14 @@ pub struct DropdownColorToggle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DropdownMaximumLines {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.22 `DropStyle` (Dropdown Style): the tag `xvml:DropStyle`, schema type `string`.
+/// The `xvml:DropStyle` element, Dropdown Style (ECMA-376 Part 4, section 19.4.2.22). Its schema
+/// type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1165,11 +1301,14 @@ pub struct DropdownMaximumLines {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DropdownStyle {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.16 DDE (Dynamic Data Exchange): the tag `xvml:DDE`, schema type `ST_TrueFalseBlank`.
+/// The `xvml:DDE` element, Dynamic Data Exchange (ECMA-376 Part 4, section 19.4.2.16). Its schema
+/// type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1178,11 +1317,14 @@ pub struct DropdownStyle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DynamicDataExchange {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.39 `MapOCX` (Embedded Control): the tag `xvml:MapOCX`, schema type `ST_TrueFalseBlank`.
+/// The `xvml:MapOCX` element, Embedded Control (ECMA-376 Part 4, section 19.4.2.39). Its schema
+/// type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1191,12 +1333,14 @@ pub struct DynamicDataExchange {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EmbeddedControl {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.34 `JustLastX` (Far East Alignment Toggle): the tag `xvml:JustLastX`, schema type
-/// `ST_TrueFalseBlank`.
+/// The `xvml:JustLastX` element, Far East Alignment Toggle (ECMA-376 Part 4, section 19.4.2.34).
+/// Its schema type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1205,12 +1349,14 @@ pub struct EmbeddedControl {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FarEastAlignmentToggle {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.24 `FirstButton` (First Radio Button): the tag `xvml:FirstButton`, schema type
-/// `ST_TrueFalseBlank`.
+/// The `xvml:FirstButton` element, First Radio Button (ECMA-376 Part 4, section 19.4.2.24). Its
+/// schema type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1219,12 +1365,14 @@ pub struct FarEastAlignmentToggle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FirstRadioButton {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.7 `AutoScale` (Font `AutoScale`): the tag `xvml:AutoScale`, schema type
-/// `ST_TrueFalseBlank`.
+/// The `xvml:AutoScale` element, Font `AutoScale` (ECMA-376 Part 4, section 19.4.2.7). Its schema
+/// type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1233,12 +1381,14 @@ pub struct FirstRadioButton {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FontAutoScale {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.52 `ScriptExtended` (HTML Script Attributes): the tag `xvml:ScriptExtended`, schema type
-/// `string`.
+/// The `xvml:ScriptExtended` element, HTML Script Attributes (ECMA-376 Part 4, section 19.4.2.52).
+/// Its schema type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1247,12 +1397,14 @@ pub struct FontAutoScale {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HTMLScriptAttributes {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.53 `ScriptLanguage` (HTML Script Language): the tag `xvml:ScriptLanguage`, schema type
-/// `nonNegativeInteger`.
+/// The `xvml:ScriptLanguage` element, HTML Script Language (ECMA-376 Part 4, section 19.4.2.53).
+/// Its schema type is `nonNegativeInteger`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1261,12 +1413,14 @@ pub struct HTMLScriptAttributes {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HTMLScriptLanguage {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.54 `ScriptLocation` (HTML Script Location): the tag `xvml:ScriptLocation`, schema type
-/// `nonNegativeInteger`.
+/// The `xvml:ScriptLocation` element, HTML Script Location (ECMA-376 Part 4, section 19.4.2.54).
+/// Its schema type is `nonNegativeInteger`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1275,11 +1429,14 @@ pub struct HTMLScriptLanguage {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HTMLScriptLocation {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.55 `ScriptText` (HTML Script Text): the tag `xvml:ScriptText`, schema type `string`.
+/// The `xvml:ScriptText` element, HTML Script Text (ECMA-376 Part 4, section 19.4.2.55). Its schema
+/// type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1288,11 +1445,14 @@ pub struct HTMLScriptLocation {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HTMLScriptText {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.31 Help (Help Button): the tag `xvml:Help`, schema type `ST_TrueFalseBlank`.
+/// The `xvml:Help` element, Help Button (ECMA-376 Part 4, section 19.4.2.31). Its schema type is
+/// `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1301,12 +1461,14 @@ pub struct HTMLScriptText {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HelpButton {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.60 `TextHAlign` (Horizontal Text Alignment): the tag `xvml:TextHAlign`, schema type
-/// `string`.
+/// The `xvml:TextHAlign` element, Horizontal Text Alignment (ECMA-376 Part 4, section 19.4.2.60).
+/// Its schema type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1315,11 +1477,14 @@ pub struct HelpButton {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HorizontalTextAlignment {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.26 `FmlaLink` (Linked Formula): the tag `xvml:FmlaLink`, schema type `string`.
+/// The `xvml:FmlaLink` element, Linked Formula (ECMA-376 Part 4, section 19.4.2.26). Its schema
+/// type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1328,12 +1493,14 @@ pub struct HorizontalTextAlignment {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LinkedFormula {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.25 `FmlaGroup` (Linked Formula - Group Box): the tag `xvml:FmlaGroup`, schema type
-/// `string`.
+/// The `xvml:FmlaGroup` element, Linked Formula - Group Box (ECMA-376 Part 4, section 19.4.2.25).
+/// Its schema type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1342,11 +1509,14 @@ pub struct LinkedFormula {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LinkedFormulaGroupBox {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.29 `FmlaRange` (List Items Source Range): the tag `xvml:FmlaRange`, schema type `string`.
+/// The `xvml:FmlaRange` element, List Items Source Range (ECMA-376 Part 4, section 19.4.2.29). Its
+/// schema type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1355,11 +1525,14 @@ pub struct LinkedFormulaGroupBox {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListItemsSourceRange {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.37 Locked (Lock Toggle): the tag `xvml:Locked`, schema type `ST_TrueFalseBlank`.
+/// The `xvml:Locked` element, Lock Toggle (ECMA-376 Part 4, section 19.4.2.37). Its schema type is
+/// `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1368,12 +1541,14 @@ pub struct ListItemsSourceRange {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LockToggle {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.19 Disabled (Macro Disable Toggle): the tag `xvml:Disabled`, schema type
-/// `ST_TrueFalseBlank`.
+/// The `xvml:Disabled` element, Macro Disable Toggle (ECMA-376 Part 4, section 19.4.2.19). Its
+/// schema type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1382,11 +1557,14 @@ pub struct LockToggle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MacroDisableToggle {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.68 `WidthMin` (Minimum Width): the tag `xvml:WidthMin`, schema type `integer`.
+/// The `xvml:WidthMin` element, Minimum Width (ECMA-376 Part 4, section 19.4.2.68). Its schema type
+/// is `integer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1395,12 +1573,14 @@ pub struct MacroDisableToggle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MinimumWidth {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.42 `MoveWithCells` (Move with Cells): the tag `xvml:MoveWithCells`, schema type
-/// `ST_TrueFalseBlank`.
+/// The `xvml:MoveWithCells` element, Move with Cells (ECMA-376 Part 4, section 19.4.2.42). Its
+/// schema type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1409,11 +1589,14 @@ pub struct MinimumWidth {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MoveWithCells {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.43 `MultiLine` (Multi-line): the tag `xvml:MultiLine`, schema type `ST_TrueFalseBlank`.
+/// The `xvml:MultiLine` element, Multi-line (ECMA-376 Part 4, section 19.4.2.43). Its schema type
+/// is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1422,11 +1605,14 @@ pub struct MoveWithCells {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MultiLine {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.44 `MultiSel` (Multiple Selections): the tag `xvml:MultiSel`, schema type `string`.
+/// The `xvml:MultiSel` element, Multiple Selections (ECMA-376 Part 4, section 19.4.2.44). Its
+/// schema type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1435,11 +1621,14 @@ pub struct MultiLine {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MultipleSelections {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.36 `ListItem` (Non-linked List Item): the tag `xvml:ListItem`, schema type `string`.
+/// The `xvml:ListItem` element, Non-linked List Item (ECMA-376 Part 4, section 19.4.2.36). Its
+/// schema type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1448,11 +1637,17 @@ pub struct MultipleSelections {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonLinkedListItem {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.3.2 `ST_ObjectType` (Object Type): the text the file carried.
+/// Object Type, the simple type `ST_ObjectType` (ECMA-376 Part 4, section 19.4.3.2), kept as the
+/// text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1461,33 +1656,53 @@ pub struct NonLinkedListItem {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ObjectType(pub String);
-/// The members of `ST_ObjectType`, in alphabetical order.
+/// The members of the enumeration `ST_ObjectType`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ObjectTypeMember {
+    /// The member written `Button`.
     Button,
+    /// The member written `Checkbox`.
     Checkbox,
+    /// The member written `Dialog`.
     Dialog,
+    /// The member written `Drop`.
     Drop,
+    /// The member written `Edit`.
     Edit,
+    /// The member written `GBox`.
     GBox,
+    /// The member written `Group`.
     Group,
+    /// The member written `Label`.
     Label,
+    /// The member written `LineA`.
     LineA,
+    /// The member written `List`.
     List,
+    /// The member written `Movie`.
     Movie,
+    /// The member written `Note`.
     Note,
+    /// The member written `Pict`.
     Pict,
+    /// The member written `Radio`.
     Radio,
+    /// The member written `Rect`.
     Rect,
+    /// The member written `RectA`.
     RectA,
+    /// The member written `Scroll`.
     Scroll,
+    /// The member written `Shape`.
     Shape,
+    /// The member written `Spin`.
     Spin,
 }
 
-/// 19.4.2.56 `SecretEdit` (Password Edit): the tag `xvml:SecretEdit`, schema type
-/// `ST_TrueFalseBlank`.
+/// The `xvml:SecretEdit` element, Password Edit (ECMA-376 Part 4, section 19.4.2.56). Its schema
+/// type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1496,11 +1711,14 @@ pub enum ObjectTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PasswordEdit {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.1 Accel (Primary Keyboard Accelerator): the tag `xvml:Accel`, schema type `integer`.
+/// The `xvml:Accel` element, Primary Keyboard Accelerator (ECMA-376 Part 4, section 19.4.2.1). Its
+/// schema type is `integer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1509,12 +1727,14 @@ pub struct PasswordEdit {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PrimaryKeyboardAccelerator {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.48 `PrintObject` (Print Toggle): the tag `xvml:PrintObject`, schema type
-/// `ST_TrueFalseBlank`.
+/// The `xvml:PrintObject` element, Print Toggle (ECMA-376 Part 4, section 19.4.2.48). Its schema
+/// type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1523,12 +1743,14 @@ pub struct PrimaryKeyboardAccelerator {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PrintToggle {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.49 `RecalcAlways` (Recalculation Toggle): the tag `xvml:RecalcAlways`, schema type
-/// `ST_TrueFalseBlank`.
+/// The `xvml:RecalcAlways` element, Recalculation Toggle (ECMA-376 Part 4, section 19.4.2.49). Its
+/// schema type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1537,12 +1759,14 @@ pub struct PrintToggle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RecalculationToggle {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.27 `FmlaMacro` (Reference to Custom Function): the tag `xvml:FmlaMacro`, schema type
-/// `string`.
+/// The `xvml:FmlaMacro` element, Reference to Custom Function (ECMA-376 Part 4, section 19.4.2.27).
+/// Its schema type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1551,12 +1775,14 @@ pub struct RecalculationToggle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ReferenceToCustomFunction {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.59 `SizeWithCells` (Resize with Cells): the tag `xvml:SizeWithCells`, schema type
-/// `ST_TrueFalseBlank`.
+/// The `xvml:SizeWithCells` element, Resize with Cells (ECMA-376 Part 4, section 19.4.2.59). Its
+/// schema type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1565,11 +1791,14 @@ pub struct ReferenceToCustomFunction {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ResizeWithCells {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.33 Inc (Scroll Bar Increment): the tag `xvml:Inc`, schema type `integer`.
+/// The `xvml:Inc` element, Scroll Bar Increment (ECMA-376 Part 4, section 19.4.2.33). Its schema
+/// type is `integer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1578,11 +1807,14 @@ pub struct ResizeWithCells {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ScrollBarIncrement {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.40 Max (Scroll Bar Maximum): the tag `xvml:Max`, schema type `integer`.
+/// The `xvml:Max` element, Scroll Bar Maximum (ECMA-376 Part 4, section 19.4.2.40). Its schema type
+/// is `integer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1591,11 +1823,14 @@ pub struct ScrollBarIncrement {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ScrollBarMaximum {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.41 Min (Scroll Bar Minimum): the tag `xvml:Min`, schema type `integer`.
+/// The `xvml:Min` element, Scroll Bar Minimum (ECMA-376 Part 4, section 19.4.2.41). Its schema type
+/// is `integer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1604,11 +1839,14 @@ pub struct ScrollBarMaximum {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ScrollBarMinimum {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.32 Horiz (Scroll Bar Orientation): the tag `xvml:Horiz`, schema type `ST_TrueFalseBlank`.
+/// The `xvml:Horiz` element, Scroll Bar Orientation (ECMA-376 Part 4, section 19.4.2.32). Its
+/// schema type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1617,11 +1855,14 @@ pub struct ScrollBarMinimum {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ScrollBarOrientation {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.47 Page (Scroll Bar Page Increment): the tag `xvml:Page`, schema type `integer`.
+/// The `xvml:Page` element, Scroll Bar Page Increment (ECMA-376 Part 4, section 19.4.2.47). Its
+/// schema type is `integer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1630,11 +1871,14 @@ pub struct ScrollBarOrientation {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ScrollBarPageIncrement {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.63 Val (Scroll bar position): the tag `xvml:Val`, schema type `integer`.
+/// The `xvml:Val` element, Scroll bar position (ECMA-376 Part 4, section 19.4.2.63). Its schema
+/// type is `integer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1643,11 +1887,14 @@ pub struct ScrollBarPageIncrement {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ScrollBarPosition {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.23 Dx (Scroll Bar Width): the tag `xvml:Dx`, schema type `integer`.
+/// The `xvml:Dx` element, Scroll Bar Width (ECMA-376 Part 4, section 19.4.2.23). Its schema type is
+/// `integer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1656,11 +1903,14 @@ pub struct ScrollBarPosition {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ScrollBarWidth {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.2 Accel2 (Secondary Keyboard Accelerator): the tag `xvml:Accel2`, schema type `integer`.
+/// The `xvml:Accel2` element, Secondary Keyboard Accelerator (ECMA-376 Part 4, section 19.4.2.2).
+/// Its schema type is `integer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1669,11 +1919,14 @@ pub struct ScrollBarWidth {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SecondaryKeyboardAccelerator {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.57 Sel (Selected Entry): the tag `xvml:Sel`, schema type `integer`.
+/// The `xvml:Sel` element, Selected Entry (ECMA-376 Part 4, section 19.4.2.57). Its schema type is
+/// `integer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1682,11 +1935,14 @@ pub struct SecondaryKeyboardAccelerator {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SelectedEntry {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.58 `SelType` (Selection Type): the tag `xvml:SelType`, schema type `string`.
+/// The `xvml:SelType` element, Selection Type (ECMA-376 Part 4, section 19.4.2.58). Its schema type
+/// is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1695,11 +1951,14 @@ pub struct SelectedEntry {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SelectionType {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.30 `FmlaTxbx` (Text Formula): the tag `xvml:FmlaTxbx`, schema type `string`.
+/// The `xvml:FmlaTxbx` element, Text Formula (ECMA-376 Part 4, section 19.4.2.30). Its schema type
+/// is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1708,11 +1967,14 @@ pub struct SelectionType {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextFormula {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.38 `LockText` (Text Lock): the tag `xvml:LockText`, schema type `ST_TrueFalseBlank`.
+/// The `xvml:LockText` element, Text Lock (ECMA-376 Part 4, section 19.4.2.38). Its schema type is
+/// `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1721,11 +1983,14 @@ pub struct TextFormula {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextLock {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.62 `UIObj` (UI Object Toggle): the tag `xvml:UIObj`, schema type `ST_TrueFalseBlank`.
+/// The `xvml:UIObj` element, UI Object Toggle (ECMA-376 Part 4, section 19.4.2.62). Its schema type
+/// is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1734,11 +1999,14 @@ pub struct TextLock {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct UIObjectToggle {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.64 `ValidIds` (Valid ID): the tag `xvml:ValidIds`, schema type `ST_TrueFalseBlank`.
+/// The `xvml:ValidIds` element, Valid ID (ECMA-376 Part 4, section 19.4.2.64). Its schema type is
+/// `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1747,11 +2015,14 @@ pub struct UIObjectToggle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ValidID {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.67 `VTEdit` (Validation Type): the tag `xvml:VTEdit`, schema type `integer`.
+/// The `xvml:VTEdit` element, Validation Type (ECMA-376 Part 4, section 19.4.2.67). Its schema type
+/// is `integer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1760,11 +2031,14 @@ pub struct ValidID {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ValidationType {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.4.2.66 `VScroll` (Vertical Scroll): the tag `xvml:VScroll`, schema type `ST_TrueFalseBlank`.
+/// The `xvml:VScroll` element, Vertical Scroll (ECMA-376 Part 4, section 19.4.2.66). Its schema
+/// type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1773,12 +2047,14 @@ pub struct ValidationType {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct VerticalScroll {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// 19.4.2.61 `TextVAlign` (Vertical Text Alignment): the tag `xvml:TextVAlign`, schema type
-/// `string`.
+/// The `xvml:TextVAlign` element, Vertical Text Alignment (ECMA-376 Part 4, section 19.4.2.61). Its
+/// schema type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1787,7 +2063,9 @@ pub struct VerticalScroll {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct VerticalTextAlignment {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
@@ -3072,7 +3350,7 @@ impl ObjectTypeMember {
         crate::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

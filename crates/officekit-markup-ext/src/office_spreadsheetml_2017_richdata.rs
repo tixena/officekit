@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `xlrd` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/spreadsheetml/2017/richdata`, which files write with the prefix `xlrd`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2017/richdata`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -310,80 +312,116 @@ pub static V_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Shape 
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_spreadsheetml_2017_richdata` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `ExtLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
         None
     }
 
+    /// Asked for each `Fb`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn fb(&mut self, _node: &Fb) -> Option<Fb> {
         None
     }
 
+    /// Asked for each `K`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn k(&mut self, _node: &K) -> Option<K> {
         None
     }
 
+    /// Asked for each `Rv`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn rv(&mut self, _node: &Rv) -> Option<Rv> {
         None
     }
 
+    /// Asked for each `RvData`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn rv_data(&mut self, _node: &RvData) -> Option<RvData> {
         None
     }
 
+    /// Asked for each `RvStructures`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn rv_structures(&mut self, _node: &RvStructures) -> Option<RvStructures> {
         None
     }
 
+    /// Asked for each `Rvb`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn rvb(&mut self, _node: &Rvb) -> Option<Rvb> {
         None
     }
 
+    /// Asked for each `S`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn s(&mut self, _node: &S) -> Option<S> {
         None
     }
 
+    /// Asked for each `V`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn v(&mut self, _node: &V) -> Option<V> {
         None
     }
 
+    /// Asked when a `ExtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Fb` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_fb(&mut self, _node: &Fb, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `K` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_k(&mut self, _node: &K, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Rv` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_rv(&mut self, _node: &Rv, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `RvData` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_rv_data(&mut self, _node: &RvData, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `RvStructures` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_rv_structures(
         &mut self,
         _node: &RvStructures,
@@ -392,29 +430,39 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Rvb` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_rvb(&mut self, _node: &Rvb, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `S` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_s(&mut self, _node: &S, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `V` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_v(&mut self, _node: &V, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 }
 
-/// The tag `xlrd:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
+/// The `xlrd:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -423,11 +471,14 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
+    /// The children that are `spreadsheet::Extension`, in order.
     pub extension: Vec<spreadsheet::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrd:fb`, schema type `CT_RichValueFallback` of SDK 3.5.1's data.
+/// The `xlrd:fb` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RichValueFallback`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -436,12 +487,16 @@ pub struct ExtLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Fb {
+    /// The attribute `t`, when the element has it.
     pub t: Option<RichValueFallbackType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `xlrd:k`, schema type `CT_Key` of SDK 3.5.1's data.
+/// The `xlrd:k` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `CT_Key`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -450,12 +505,18 @@ pub struct Fb {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct K {
+    /// The attribute `n`, when the element has it.
     pub n: Option<String>,
+    /// The attribute `t`, when the element has it.
     pub t: Option<RichValueValueType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_RichValueFallbackType`: the text the file carried.
+/// The simple type `ST_RichValueFallbackType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -464,17 +525,25 @@ pub struct K {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RichValueFallbackType(pub String);
-/// The members of `ST_RichValueFallbackType`, in alphabetical order.
+/// The members of the enumeration `ST_RichValueFallbackType`, in alphabetical order. `as_str` gives
+/// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum RichValueFallbackTypeMember {
+    /// The member written `b`.
     B,
+    /// The member written `e`.
     E,
+    /// The member written `n`.
     N,
+    /// The member written `s`.
     S,
 }
 
-/// `ST_RichValueValueType`: the text the file carried.
+/// The simple type `ST_RichValueValueType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -483,21 +552,31 @@ pub enum RichValueFallbackTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RichValueValueType(pub String);
-/// The members of `ST_RichValueValueType`, in alphabetical order.
+/// The members of the enumeration `ST_RichValueValueType`, in alphabetical order. `as_str` gives
+/// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum RichValueValueTypeMember {
+    /// The member written `a`.
     A,
+    /// The member written `b`.
     B,
+    /// The member written `d`.
     D,
+    /// The member written `e`.
     E,
+    /// The member written `i`.
     I,
+    /// The member written `r`.
     R,
+    /// The member written `s`.
     S,
+    /// The member written `spb`.
     Spb,
 }
 
-/// The tag `xlrd:rv`, schema type `CT_RichValue` of SDK 3.5.1's data.
+/// The `xlrd:rv` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RichValue`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -506,13 +585,18 @@ pub enum RichValueValueTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Rv {
+    /// The child that is `Fb`, when there is one.
     pub fb: Option<Box<Fb>>,
+    /// The attribute `s`, when the element has it.
     pub s: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The children that are `V`, in order.
     pub v: Vec<V>,
 }
 
-/// The tag `xlrd:rvData`, schema type `CT_RichValueData` of SDK 3.5.1's data.
+/// The `xlrd:rvData` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RichValueData`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -521,13 +605,18 @@ pub struct Rv {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RvData {
+    /// The attribute `count`, when the element has it.
     pub count: Option<String>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The children that are `Rv`, in order.
     pub rv: Vec<Rv>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrd:rvStructures`, schema type `CT_RichValueStructures` of SDK 3.5.1's data.
+/// The `xlrd:rvStructures` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_RichValueStructures`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -536,13 +625,18 @@ pub struct RvData {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RvStructures {
+    /// The attribute `count`, when the element has it.
     pub count: Option<String>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The children that are `S`, in order.
     pub s: Vec<S>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrd:rvb`, schema type `CT_RichValueBlock` of SDK 3.5.1's data.
+/// The `xlrd:rvb` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RichValueBlock`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -551,11 +645,14 @@ pub struct RvStructures {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Rvb {
+    /// The attribute `i`, when the element has it.
     pub i: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrd:s`, schema type `CT_RichValueStructure` of SDK 3.5.1's data.
+/// The `xlrd:s` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `CT_RichValueStructure`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -564,12 +661,16 @@ pub struct Rvb {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct S {
+    /// The children that are `K`, in order.
     pub k: Vec<K>,
+    /// The attribute `t`, when the element has it.
     pub t: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrd:v`, schema type `CT_Value` of SDK 3.5.1's data.
+/// The `xlrd:v` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `CT_Value`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -578,7 +679,9 @@ pub struct S {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct V {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
@@ -588,38 +691,48 @@ pub struct V {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_spreadsheetml_2017_richdata` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `ExtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext_lst(&mut self, _node: &ExtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Fb`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn fb(&mut self, _node: &Fb) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `K`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn k(&mut self, _node: &K) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Rv`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn rv(&mut self, _node: &Rv) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RvData`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn rv_data(&mut self, _node: &RvData) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RvStructures`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn rv_structures(&mut self, _node: &RvStructures) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Rvb`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn rvb(&mut self, _node: &Rvb) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `S`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn s(&mut self, _node: &S) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `V`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn v(&mut self, _node: &V) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
@@ -728,7 +841,7 @@ impl RichValueFallbackTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -787,7 +900,7 @@ impl RichValueValueTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
