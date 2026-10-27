@@ -30,7 +30,18 @@ thiserror.workspace = true
 rkyv = { workspace = true, optional = true, features = ["alloc"] }
 
 # Reads an image's pixel size from its header; no pixel decoding
-imagesize = { workspace = true, features = ["bmp", "gif", "jpeg", "png", "tiff"] }
+imagesize = { workspace = true, features = ["bmp", "default", "gif", "jpeg", "png", "tiff"] }
+
+# The features other crates of the workspace turn on, asked for here so every
+# cargo line resolves one set and the crates above compile once.
+bstr = { workspace = true, features = ["alloc", "default", "std", "unicode"] }
+flate2 = { workspace = true, features = ["any_impl", "any_zlib", "default", "miniz_oxide", "runtime_detection", "rust_backend", "zlib-rs"] }
+indexmap = { workspace = true, features = ["default", "serde", "std"] }
+libc = { workspace = true, features = ["default", "std"] }
+log = { workspace = true, features = ["alloc", "std"] }
+serde_core = { workspace = true, features = ["alloc", "result", "std"] }
+simd-adler32 = { workspace = true, features = ["const-generics", "default", "std"] }
+zlib-rs = { workspace = true, features = ["rust-allocator", "std"] }
 
 [dev-dependencies]
 # The package writer's tests write a typed table through as it is made

@@ -13,10 +13,22 @@ workspace = true
 
 [features]
 # rkyv and the archive of every type: officekit's binary form.
-binary-format = ["dep:rkyv"]
+binary-format = ["dep:rkyv", "dep:indexmap", "dep:serde_core"]
 
 [dependencies]
 quick-xml.workspace = true
-thiserror.workspace = true
-regex = { workspace = true, features = ["unicode-perl"] }
-rkyv = { workspace = true, optional = true, features = ["alloc", "bytecheck"] }
+thiserror = { workspace = true, features = ["default", "std"] }
+regex = { workspace = true, features = ["std", "unicode-gencat", "unicode-perl"] }
+rkyv = { workspace = true, optional = true, features = ["alloc", "bytecheck", "indexmap-2", "std"] }
+# The features other crates of the workspace turn on, asked for here so every
+# cargo line resolves one set and the generated crates compile once.
+aho-corasick = { workspace = true, features = ["default", "perf-literal", "std"] }
+indexmap = { workspace = true, optional = true, features = ["default", "serde", "std"] }
+regex-automata = { workspace = true, features = ["alloc", "dfa-onepass", "dfa-search", "hybrid", "meta", "nfa", "nfa-backtrack", "nfa-pikevm", "nfa-thompson", "perf", "perf-inline", "perf-literal", "perf-literal-multisubstring", "perf-literal-substring", "std", "syntax", "unicode-gencat", "unicode-perl", "unicode-word-boundary"] }
+regex-syntax = { workspace = true, features = ["std", "unicode-gencat", "unicode-perl"] }
+serde_core = { workspace = true, optional = true, features = ["alloc", "result", "std"] }
+
+[build-dependencies]
+# The features the CLI's proc-macros turn on, so the proc-macros' syn is the
+# same in every cargo line.
+syn = { workspace = true, features = ["clone-impls", "default", "derive", "extra-traits", "full", "parsing", "printing", "proc-macro"] }

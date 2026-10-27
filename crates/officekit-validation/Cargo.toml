@@ -19,7 +19,7 @@ officekit-xml.workspace = true
 officekit-packaging.workspace = true
 
 # The validator's JSON records
-serde_json = { workspace = true, features = ["alloc"] }
+serde_json = { workspace = true, features = ["alloc", "default", "std", "unbounded_depth"] }
 
 # Runs the pattern facets of the validation tables, matched whole.
 regex = { workspace = true, features = ["unicode-gencat"] }

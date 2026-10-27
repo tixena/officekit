@@ -726,14 +726,22 @@ dependencies = [
 name = "officekit-packaging"
 version = "0.1.0"
 dependencies = [
+ "bstr",
+ "flate2",
  "imagesize",
+ "indexmap",
+ "libc",
+ "log",
  "officekit-markup",
  "officekit-traversal",
  "officekit-xml",
  "os-shim",
  "rkyv",
+ "serde_core",
+ "simd-adler32",
  "thiserror",
  "zip",
+ "zlib-rs",
 ]
 
 [[package]]
@@ -788,9 +796,15 @@ dependencies = [
 name = "officekit-xml"
 version = "0.1.0"
 dependencies = [
+ "aho-corasick",
+ "indexmap",
  "quick-xml",
  "regex",
+ "regex-automata",
+ "regex-syntax",
  "rkyv",
+ "serde_core",
+ "syn 3.0.5",
  "thiserror",
 ]
 
