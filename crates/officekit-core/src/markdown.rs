@@ -13,12 +13,12 @@ use alloc::vec::Vec;
 use std::io;
 use std::path::{Path, PathBuf};
 
-use arky_core::parser::ast::{
+use arky::parser::ast::{
     Document, FrontmatterFormat, InvalidFrontmatter, Mapping, MarkdownBlock, RawDocument,
 };
-use arky_core::parser::extension::{Extension, Markdown};
-use arky_core::parser::{parse, read_toml};
-use arky_core::writer::{self, WriteError, WriteOptions};
+use arky::parser::extension::{Extension, Markdown};
+use arky::parser::{parse, read_toml};
+use arky::writer::{self, WriteError, WriteOptions};
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;

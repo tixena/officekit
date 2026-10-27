@@ -4,8 +4,8 @@ use std::io::{self, Read, Write};
 use std::path::Path;
 
 use anyhow::{Context as _, Result, bail};
-use arky_core::parser::ast::RawDocument;
-use arky_core::writer::{self, WriteOptions};
+use arky::parser::ast::RawDocument;
+use arky::writer::{self, WriteOptions};
 use os_shim::{System, WriteMode};
 use serde_json::{Value, json};
 

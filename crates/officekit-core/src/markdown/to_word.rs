@@ -8,11 +8,11 @@ use alloc::vec::Vec;
 use core::{iter, mem};
 use std::path::Path;
 
-use arky_core::parser::ast::{
+use arky::parser::ast::{
     Alignment, Block, Continues, Inline, Item, Line, Link, LinkInline, List, MarkdownBlock,
     Paragraph as ArkyParagraph, Section, Table as ArkyTable, TableRow as ArkyTableRow,
 };
-use arky_core::parser::extension::Extension;
+use arky::parser::extension::Extension;
 use officekit_markup::Read as _;
 use officekit_markup::wordprocessing::{
     AnchorForImportedExternalContent, BlockContent, Bold, BookmarkEnd, BookmarkStart,

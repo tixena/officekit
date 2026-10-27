@@ -39,9 +39,9 @@ dependencies = [
 ]
 
 [[package]]
-name = "arky-core"
+name = "arky"
 version = "0.1.0"
-source = "git+https://github.com/tixena/arky.git#cd5308f7f303ffa6943a24b40942a744dcf6efd8"
+source = "git+https://github.com/tixena/arky.git#c6f666e54f6b84ce950dc3d6342a0e3adbaffb4a"
 dependencies = [
  "base64 0.23.1",
  "chrono",
@@ -708,7 +708,7 @@ name = "officekit"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "arky-core",
+ "arky",
  "assert_cmd",
  "clap",
  "officekit-core",
@@ -725,7 +725,7 @@ dependencies = [
 name = "officekit-core"
 version = "0.1.0"
 dependencies = [
- "arky-core",
+ "arky",
  "base64 0.22.1",
  "clap",
  "image-webp",
@@ -1456,7 +1456,7 @@ checksum = "fd3ca314f692efd6c868f8408f53fe444634a845f96c028b97d35f6a1f79f0ee"
 [[package]]
 name = "tixschema"
 version = "0.1.0"
-source = "git+https://github.com/tixena/tixschema.git#e6d509908cad363728504432f279f6c509f0172e"
+source = "git+https://github.com/tixena/tixschema.git#3a53f554667442acd788e7b8ddd8087e1c93bb3d"
 dependencies = [
  "log",
  "proc-macro2",

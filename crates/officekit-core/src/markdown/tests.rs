@@ -3,7 +3,7 @@ use alloc::vec::Vec;
 use std::io::{Cursor, ErrorKind};
 use std::path::Path;
 
-use arky_core::parser::ast::{
+use arky::parser::ast::{
     Alignment, Block, Document, Heading, Inline, Item, Line, List, MarkdownBlock,
     Paragraph as ArkyParagraph, Section, Table as ArkyTable, TableCell as ArkyTableCell,
     TableFormat, TableRow as ArkyTableRow, Text,

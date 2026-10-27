@@ -3,14 +3,14 @@ use alloc::vec::Vec;
 use std::io::Read as _;
 use std::path::Path;
 
-use arky_core::parser::ast::{
+use arky::parser::ast::{
     Alignment, Args, Block, BlockQuote, CodeBlock, Document, Emphasis, Heading, Html, Image,
     Inline, Item, Line, LineBreak, Link, LinkForm, LinkInline, LinkStrong, List, Mapping,
     MarkdownBlock, Paragraph, RawDocument, Section, Strong, Table, TableCell, TableFormat,
     TableRow, Text, ThematicBreak, Value,
 };
-use arky_core::parser::parse;
-use arky_core::writer::{WriteOptions, write};
+use arky::parser::parse;
+use arky::writer::{WriteOptions, write};
 use base64::Engine as _;
 use base64::engine::general_purpose::STANDARD;
 use officekit_packaging::package::OpenOptions;

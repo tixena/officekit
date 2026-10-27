@@ -12,9 +12,9 @@ mod tests;
 use std::path::Path;
 
 #[cfg(feature = "markdown")]
-use arky_core::parser::ast::Document as ArkyDocument;
+use arky::parser::ast::Document as ArkyDocument;
 #[cfg(feature = "markdown")]
-use arky_core::parser::extension::Extension;
+use arky::parser::extension::Extension;
 use officekit_markup::wordprocessing::{
     BlockContent, Document, DocumentProtectionTypesMember, DocumentSettings, Footer, Header,
     HeaderOrFooterTypeMember, TextRun,

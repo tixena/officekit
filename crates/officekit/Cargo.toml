@@ -18,13 +18,13 @@ path = "src/main.rs"
 [features]
 default = ["binary-format"]
 # get -f binary and save: officekit's binary form.
-binary-format = ["officekit-core/binary-format"]
+binary-format = ["officekit-core/binary-format", "arky/binary-format"]
 
 [dependencies]
 officekit-core = { workspace = true, default-features = false, features = ["markdown"] }
 
 # Writing the markdown text
-arky-core.workspace = true
+arky.workspace = true
 
 # Packages, part names and relationships
 officekit-packaging.workspace = true

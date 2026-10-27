@@ -1,8 +1,8 @@
 use std::io::Read as _;
 use std::path::Path;
 
-use arky_core::parser::parse;
-use arky_core::writer::{WriteOptions, write};
+use arky::parser::parse;
+use arky::writer::{WriteOptions, write};
 use officekit_core::docx::Docx;
 use officekit_core::markdown::{self, FRONTMATTER_RELATIONSHIP, MarkdownOptions};
 use officekit_packaging::package::OpenOptions;

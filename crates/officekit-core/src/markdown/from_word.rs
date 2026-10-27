@@ -10,14 +10,14 @@ use alloc::string::String;
 use alloc::vec::Vec;
 use core::{iter, mem, ptr};
 
-use arky_core::parser::ast::{
+use arky::parser::ast::{
     Alignment, Args, Block, BlockQuote, Code, CodeBlock, Document as ArkyDocument, Emphasis,
     Heading, Html, Image, Inline, Item, Line, LineBreak, Link, LinkEmphasis, LinkForm, LinkInline,
     LinkStrong, List, Mapping, MarkdownBlock, Paragraph as ArkyParagraph, RawDocument, Section,
     Strong, Table as ArkyTable, TableCell as ArkyTableCell, TableFormat, TableRow as ArkyTableRow,
     Text, ThematicBreak,
 };
-use arky_core::writer::{self, WriteOptions};
+use arky::writer::{self, WriteOptions};
 use base64::Engine as _;
 use base64::engine::general_purpose::STANDARD;
 use officekit_markup::wordprocessing::{
