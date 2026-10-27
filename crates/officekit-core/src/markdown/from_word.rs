@@ -1,4 +1,4 @@
-//! A Word body as an archie document: headings as sections, paragraphs and their runs, lists,
+//! A Word body as an arky document: headings as sections, paragraphs and their runs, lists,
 //! tables, links, pictures, code blocks, block quotes, thematic breaks, HTML imports, and the
 //! paragraphs of text boxes.
 
@@ -10,14 +10,14 @@ use alloc::string::String;
 use alloc::vec::Vec;
 use core::{iter, mem, ptr};
 
-use archie_core::parser::ast::{
-    Alignment, Args, Block, BlockQuote, Code, CodeBlock, Document as ArchieDocument, Emphasis,
+use arky_core::parser::ast::{
+    Alignment, Args, Block, BlockQuote, Code, CodeBlock, Document as ArkyDocument, Emphasis,
     Heading, Html, Image, Inline, Item, Line, LineBreak, Link, LinkEmphasis, LinkForm, LinkInline,
-    LinkStrong, List, Mapping, MarkdownBlock, Paragraph as ArchieParagraph, RawDocument, Section,
-    Strong, Table as ArchieTable, TableCell as ArchieTableCell, TableFormat,
-    TableRow as ArchieTableRow, Text, ThematicBreak,
+    LinkStrong, List, Mapping, MarkdownBlock, Paragraph as ArkyParagraph, RawDocument, Section,
+    Strong, Table as ArkyTable, TableCell as ArkyTableCell, TableFormat, TableRow as ArkyTableRow,
+    Text, ThematicBreak,
 };
-use archie_core::writer::{self, WriteOptions};
+use arky_core::writer::{self, WriteOptions};
 use base64::Engine as _;
 use base64::engine::general_purpose::STANDARD;
 use officekit_markup::wordprocessing::{
@@ -1188,12 +1188,12 @@ impl Walk<'_> {
     }
 
     /// A table cell's blocks, converted by these same rules into a markdown block of their own.
-    fn cell(&mut self, cell: &TableCell) -> Result<ArchieTableCell, PackageError> {
+    fn cell(&mut self, cell: &TableCell) -> Result<ArkyTableCell, PackageError> {
         let outer = mem::take(&mut self.output);
         let walked = self.blocks(&cell.content);
         let inner = mem::replace(&mut self.output, outer);
         walked?;
-        Ok(ArchieTableCell::new(inner.finish()))
+        Ok(ArkyTableCell::new(inner.finish()))
     }
 
     /// The paragraph's pieces of `kind`, as the block they give at `place`: the list whose last
@@ -1228,14 +1228,14 @@ impl Walk<'_> {
                         ),
                         Piece::Break | Piece::Image(..) => piece,
                     });
-                    let paragraph = ArchieParagraph::new(lines(bold, &self.links));
+                    let paragraph = ArkyParagraph::new(lines(bold, &self.links));
                     self.output.put(Block::Paragraph(paragraph), place);
                 }
             }
             Kind::Plain => {
                 self.output.flush();
                 let block = if has_text || has_picture(&pieces) {
-                    Some(Block::Paragraph(ArchieParagraph::new(lines(
+                    Some(Block::Paragraph(ArkyParagraph::new(lines(
                         pieces,
                         &self.links,
                     ))))
@@ -1467,7 +1467,7 @@ impl Walk<'_> {
                 let shown = self.number(instance, level, start);
                 let index = self.output.item(instance, level, shown);
                 if has_text(&pieces) || has_picture(&pieces) {
-                    let opening = ArchieParagraph::new(lines(pieces, &self.links));
+                    let opening = ArkyParagraph::new(lines(pieces, &self.links));
                     self.output.put(Block::Paragraph(opening), Some(index));
                 }
             }
@@ -1641,7 +1641,7 @@ impl Walk<'_> {
     }
 
     /// A table: its rows marked `w:tblHeader` as head rows, each column aligned by its first
-    /// row's cell, every row one cell per column, in pipe form when it has one head row and archie
+    /// row's cell, every row one cell per column, in pipe form when it has one head row and arky
     /// writes every cell on one line, in grid form otherwise.
     fn table(&mut self, table: &Table) -> Result<(), PackageError> {
         let mut rows = Vec::new();
@@ -1672,11 +1672,11 @@ impl Walk<'_> {
         } else {
             TableFormat::Grid
         };
-        let padded = |mut cells: Vec<ArchieTableCell>| {
+        let padded = |mut cells: Vec<ArkyTableCell>| {
             cells.resize_with(width, empty_cell);
-            ArchieTableRow::new(cells)
+            ArkyTableRow::new(cells)
         };
-        let converted = ArchieTable::new(
+        let converted = ArkyTable::new(
             format,
             alignments,
             head.into_iter().map(padded).collect(),
@@ -1693,7 +1693,7 @@ impl Walk<'_> {
         &mut self,
         row: &TableRow,
         mut alignments: Option<&mut Vec<Alignment>>,
-    ) -> Result<Vec<ArchieTableCell>, PackageError> {
+    ) -> Result<Vec<ArkyTableCell>, PackageError> {
         let mut word = Vec::new();
         row_cells(&row.content, &mut word);
         let mut cells = Vec::new();
@@ -1996,11 +1996,11 @@ fn drawings(node: &Node, found: &mut Vec<Drawing>) {
 }
 
 /// A cell with no block.
-const fn empty_cell() -> ArchieTableCell {
-    ArchieTableCell::new(MarkdownBlock::new(Vec::new()))
+const fn empty_cell() -> ArkyTableCell {
+    ArkyTableCell::new(MarkdownBlock::new(Vec::new()))
 }
 
-/// The archie document of `root` and `frontmatter`, its styles, numbering and parts read from
+/// The arky document of `root` and `frontmatter`, its styles, numbering and parts read from
 /// `styles`, `numbering` and `parts`, and the pictures it names.
 ///
 /// # Errors
@@ -2027,7 +2027,7 @@ pub fn exported(
         walk.blocks(&body.content)?;
     }
     Ok(Exported {
-        document: ArchieDocument::new(walk.output.finish(), frontmatter),
+        document: ArkyDocument::new(walk.output.finish(), frontmatter),
         images: walk.parts.images,
     })
 }
@@ -2193,10 +2193,10 @@ fn is_named(element: &Element, prefix: &str, local: &str) -> bool {
     element.name.local == local && table_prefix(&element.name.namespace) == Some(prefix)
 }
 
-/// Whether archie writes `body`, a table cell's content, on one line; a cell archie cannot write
+/// Whether arky writes `body`, a table cell's content, on one line; a cell arky cannot write
 /// is not.
 fn is_one_line(body: &MarkdownBlock) -> bool {
-    let document = RawDocument::Valid(ArchieDocument::new(body.clone(), None));
+    let document = RawDocument::Valid(ArkyDocument::new(body.clone(), None));
     writer::write(&document, &WriteOptions::default())
         .is_ok_and(|text| !text.trim_end_matches('\n').contains('\n'))
 }

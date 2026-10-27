@@ -12,9 +12,9 @@ mod tests;
 use std::path::Path;
 
 #[cfg(feature = "markdown")]
-use archie_core::parser::ast::Document as ArchieDocument;
+use arky_core::parser::ast::Document as ArkyDocument;
 #[cfg(feature = "markdown")]
-use archie_core::parser::extension::Extension;
+use arky_core::parser::extension::Extension;
 use officekit_markup::wordprocessing::{
     BlockContent, Document, DocumentProtectionTypesMember, DocumentSettings, Footer, Header,
     HeaderOrFooterTypeMember, TextRun,
@@ -157,17 +157,17 @@ impl Docx {
     /// [`MarkdownError::Write`] when `options.frontmatter` is on and the frontmatter holds a null,
     /// and [`MarkdownError::Package`] when the new package cannot be built or its parts stored.
     #[cfg(feature = "markdown")]
-    pub fn from_archie<S, E>(
+    pub fn from_arky<S, E>(
         system: &S,
         base: &Path,
-        document: &ArchieDocument<E>,
+        document: &ArkyDocument<E>,
         options: MarkdownOptions,
     ) -> Result<Self, MarkdownError>
     where
         S: System + ?Sized,
         E: Extension,
     {
-        markdown::from_archie(system, Some(base), document, options)
+        markdown::from_arky(system, Some(base), document, options)
     }
 
     /// The file whose bytes are `bytes`.
@@ -514,7 +514,7 @@ impl Docx {
         self.write_options = options;
     }
 
-    /// The main document as an archie document. Each picture's target is `{media}/{file name}`,
+    /// The main document as an arky document. Each picture's target is `{media}/{file name}`,
     /// the file name that of its image part (`image1.png`).
     ///
     /// # Errors
@@ -523,12 +523,12 @@ impl Docx {
     /// or an HTML part cannot be read, and [`MarkdownError::Frontmatter`] when
     /// `options.frontmatter` is on and the frontmatter part does not read.
     #[cfg(feature = "markdown")]
-    pub fn to_archie(
+    pub fn to_arky(
         &self,
         media: &str,
         options: MarkdownOptions,
     ) -> Result<Exported, MarkdownError> {
-        markdown::to_archie(self, self.options, media, options)
+        markdown::to_arky(self, self.options, media, options)
     }
 
     /// The file's bytes in the Strict class: as they are when it was read Strict, else every

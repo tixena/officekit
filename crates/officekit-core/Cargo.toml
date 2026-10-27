@@ -19,7 +19,7 @@ required-features = ["strict", "transitional"]
 default = ["transitional"]
 transitional = ["officekit-parts/transitional", "dep:officekit-transitional"]
 strict = ["officekit-parts/strict", "dep:officekit-strict", "dep:officekit-traversal"]
-markdown = ["transitional", "dep:archie-core", "dep:image-webp", "dep:png", "dep:resvg"]
+markdown = ["transitional", "dep:arky-core", "dep:image-webp", "dep:png", "dep:resvg"]
 # The `binary` module: officekit's binary form, an rkyv archive of a file's model.
 binary-format = ["dep:rkyv", "officekit-parts/binary-format"]
 
@@ -69,7 +69,7 @@ base64 = { workspace = true, features = ["alloc"] }
 regex = { workspace = true, features = ["std"] }
 
 # Markdown documents as a typed tree
-archie-core = { workspace = true, optional = true }
+arky-core = { workspace = true, optional = true }
 
 # Pictures: an SVG rendered to the PNG Word keeps beside it, a WebP decoded to PNG
 image-webp = { workspace = true, optional = true }

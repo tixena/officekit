@@ -3,10 +3,10 @@ use alloc::vec::Vec;
 use std::io::{Cursor, ErrorKind};
 use std::path::Path;
 
-use archie_core::parser::ast::{
+use arky_core::parser::ast::{
     Alignment, Block, Document, Heading, Inline, Item, Line, List, MarkdownBlock,
-    Paragraph as ArchieParagraph, Section, Table as ArchieTable, TableCell as ArchieTableCell,
-    TableFormat, TableRow as ArchieTableRow, Text,
+    Paragraph as ArkyParagraph, Section, Table as ArkyTable, TableCell as ArkyTableCell,
+    TableFormat, TableRow as ArkyTableRow, Text,
 };
 use base64::Engine as _;
 use base64::engine::general_purpose::STANDARD;
@@ -132,8 +132,8 @@ fn bookmarks(docx: &Docx) -> Vec<String> {
 }
 
 /// A table cell of one paragraph of plain `text`.
-fn cell_of(text: &str) -> ArchieTableCell {
-    ArchieTableCell::new(MarkdownBlock::new(alloc::vec![Section::new(
+fn cell_of(text: &str) -> ArkyTableCell {
+    ArkyTableCell::new(MarkdownBlock::new(alloc::vec![Section::new(
         None,
         alloc::vec![plain(text)],
         Vec::new()
@@ -185,8 +185,8 @@ fn document_of(blocks: Vec<Block>) -> Document {
 }
 
 /// The Word document `document` converts to.
-fn from_archie(document: &Document) -> Docx {
-    Docx::from_archie(
+fn from_arky(document: &Document) -> Docx {
+    Docx::from_arky(
         &MemorySystem::new(),
         Path::new("/"),
         document,
@@ -368,7 +368,7 @@ fn part(docx: &Docx, path: &str) -> (String, String) {
 
 /// A paragraph of plain `text`.
 fn plain(text: &str) -> Block {
-    Block::Paragraph(ArchieParagraph::new(alloc::vec![Line::new(alloc::vec![
+    Block::Paragraph(ArkyParagraph::new(alloc::vec![Line::new(alloc::vec![
         Inline::Text(Text::new(text.to_owned()))
     ])]))
 }
@@ -825,7 +825,7 @@ fn a_section_ten_deep_takes_the_ninth_heading_style() {
     }
     let document = Document::new(MarkdownBlock::new(alloc::vec![section]), None);
     assert_eq!(
-        outline(&from_archie(&document)),
+        outline(&from_arky(&document)),
         [
             "Heading1: h1",
             "Heading2: h2",
@@ -862,9 +862,9 @@ fn the_lines_of_a_paragraph_join_with_a_space_or_after_a_hard_break_with_none() 
 #[test]
 fn a_tab_and_a_line_ending_in_text_become_a_tab_and_a_break() {
     let line = Line::new(alloc::vec![Inline::Text(Text::new("a\tb\nc".to_owned()))]);
-    let paragraph = Block::Paragraph(ArchieParagraph::new(alloc::vec![line]));
+    let paragraph = Block::Paragraph(ArkyParagraph::new(alloc::vec![line]));
     assert_eq!(
-        outline(&from_archie(&document_of(alloc::vec![paragraph]))),
+        outline(&from_arky(&document_of(alloc::vec![paragraph]))),
         ["-: a<tab/>b<br/>c"]
     );
 }
@@ -1027,7 +1027,7 @@ fn a_list_nested_ten_deep_takes_the_ninth_level_for_its_two_deepest() {
         )]);
         list = List::new(alloc::vec![Item::new(body)], false, None);
     }
-    let lines = outline(&from_archie(&document_of(alloc::vec![Block::List(list)])));
+    let lines = outline(&from_arky(&document_of(alloc::vec![Block::List(list)])));
     let mut expected: Vec<String> = (0..9_usize)
         .map(|level| format!("- num=1/{level}: l{}", level + 1))
         .collect();
@@ -1116,7 +1116,7 @@ fn an_ordered_list_nested_ten_deep_overrides_the_ninth_level() {
         )]);
         list = List::new(alloc::vec![Item::new(body)], false, None);
     }
-    let docx = from_archie(&document_of(alloc::vec![Block::List(list)]));
+    let docx = from_arky(&document_of(alloc::vec![Block::List(list)]));
     assert_eq!(numbering_instances(&docx), ["num 1 -> 0", "num 2 -> 1 8=7"]);
 }
 
@@ -1206,13 +1206,13 @@ fn a_document_with_no_list_has_no_numbering_part() {
 
 #[test]
 fn a_short_row_gets_empty_cells_holding_one_paragraph() {
-    let table = ArchieTable::new(
+    let table = ArkyTable::new(
         TableFormat::Pipe,
         alloc::vec![Alignment::Center, Alignment::Default],
-        alloc::vec![ArchieTableRow::new(alloc::vec![cell_of("a"), cell_of("b")])],
-        alloc::vec![ArchieTableRow::new(alloc::vec![cell_of("c")])],
+        alloc::vec![ArkyTableRow::new(alloc::vec![cell_of("a"), cell_of("b")])],
+        alloc::vec![ArkyTableRow::new(alloc::vec![cell_of("c")])],
     );
-    let docx = from_archie(&document_of(alloc::vec![Block::Table(table)]));
+    let docx = from_arky(&document_of(alloc::vec![Block::Table(table)]));
     assert_eq!(
         outline(&docx),
         [

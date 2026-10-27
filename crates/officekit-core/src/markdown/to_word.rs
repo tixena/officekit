@@ -1,4 +1,4 @@
-//! archie's blocks and inline nodes as Word paragraphs, runs, lists, tables, hyperlinks and
+//! arky's blocks and inline nodes as Word paragraphs, runs, lists, tables, hyperlinks and
 //! pictures.
 
 use alloc::boxed::Box;
@@ -8,11 +8,11 @@ use alloc::vec::Vec;
 use core::{iter, mem};
 use std::path::Path;
 
-use archie_core::parser::ast::{
+use arky_core::parser::ast::{
     Alignment, Block, Continues, Inline, Item, Line, Link, LinkInline, List, MarkdownBlock,
-    Paragraph as ArchieParagraph, Section, Table as ArchieTable, TableRow as ArchieTableRow,
+    Paragraph as ArkyParagraph, Section, Table as ArkyTable, TableRow as ArkyTableRow,
 };
-use archie_core::parser::extension::Extension;
+use arky_core::parser::extension::Extension;
 use officekit_markup::Read as _;
 use officekit_markup::wordprocessing::{
     AnchorForImportedExternalContent, BlockContent, Bold, BookmarkEnd, BookmarkStart,
@@ -237,7 +237,7 @@ where
 
     /// One paragraph of `paragraph`'s lines, each after the one before and a space, or no space
     /// when the one before ends in a hard line break.
-    fn paragraph<E>(&mut self, paragraph: &ArchieParagraph<E>) -> Result<(), MarkdownError>
+    fn paragraph<E>(&mut self, paragraph: &ArkyParagraph<E>) -> Result<(), MarkdownError>
     where
         E: Extension,
     {
@@ -340,7 +340,7 @@ where
 
     /// A table styled `TableGrid` of automatic width, as many columns wide as its widest row: its
     /// head rows, then its other rows.
-    fn table<E>(&mut self, table: &ArchieTable<E>) -> Result<(), MarkdownError>
+    fn table<E>(&mut self, table: &ArkyTable<E>) -> Result<(), MarkdownError>
     where
         E: Extension,
     {
@@ -383,7 +383,7 @@ where
     /// marked `w:tblHeader`.
     fn table_row<E>(
         &mut self,
-        row: &ArchieTableRow<E>,
+        row: &ArkyTableRow<E>,
         head: bool,
         columns: usize,
         alignments: &[Alignment],
@@ -647,7 +647,7 @@ where
         self.run(alloc::vec![TextRunContent::Break(Break::default())], format);
     }
 
-    /// A `w:hyperlink` around the link's runs. A link written across lines, which archie cuts into
+    /// A `w:hyperlink` around the link's runs. A link written across lines, which arky cuts into
     /// one piece per line, is one hyperlink: its first piece opens it, the space that joins the
     /// lines and the later pieces go into it, and its last piece closes it.
     fn link<E>(&mut self, link: &Link<E>, format: Format) -> Result<(), MarkdownError>

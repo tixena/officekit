@@ -24,7 +24,7 @@ binary-format = ["officekit-core/binary-format"]
 officekit-core = { workspace = true, default-features = false, features = ["markdown"] }
 
 # Writing the markdown text
-archie-core.workspace = true
+arky-core.workspace = true
 
 # Packages, part names and relationships
 officekit-packaging.workspace = true

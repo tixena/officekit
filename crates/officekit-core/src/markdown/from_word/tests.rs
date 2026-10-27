@@ -3,14 +3,14 @@ use alloc::vec::Vec;
 use std::io::Read as _;
 use std::path::Path;
 
-use archie_core::parser::ast::{
+use arky_core::parser::ast::{
     Alignment, Args, Block, BlockQuote, CodeBlock, Document, Emphasis, Heading, Html, Image,
     Inline, Item, Line, LineBreak, Link, LinkForm, LinkInline, LinkStrong, List, Mapping,
     MarkdownBlock, Paragraph, RawDocument, Section, Strong, Table, TableCell, TableFormat,
     TableRow, Text, ThematicBreak, Value,
 };
-use archie_core::parser::parse;
-use archie_core::writer::{WriteOptions, write};
+use arky_core::parser::parse;
+use arky_core::writer::{WriteOptions, write};
 use base64::Engine as _;
 use base64::engine::general_purpose::STANDARD;
 use officekit_packaging::package::OpenOptions;
@@ -165,9 +165,9 @@ impl Fixture {
     }
 }
 
-/// The archie document of `docx`, checked to read back from its markdown as the same tree; it
+/// The arky document of `docx`, checked to read back from its markdown as the same tree; it
 /// names no picture.
-fn archie(docx: &Docx) -> Document {
+fn arky(docx: &Docx) -> Document {
     let result = exported(docx, MarkdownOptions::default());
     assert_eq!(result.images, Vec::<(String, Vec<u8>)>::new());
     result.document
@@ -192,7 +192,7 @@ fn empty_cell() -> TableCell {
 /// What `docx` exports with `options` to the folder `report_media`, its document checked to
 /// read back from its markdown as the same tree.
 fn exported(docx: &Docx, options: MarkdownOptions) -> Exported {
-    let result = docx.to_archie("report_media", options).unwrap();
+    let result = docx.to_arky("report_media", options).unwrap();
     let text = write(
         &RawDocument::Valid(result.document.clone()),
         &WriteOptions::default(),
@@ -251,7 +251,7 @@ fn list(items: Vec<Item>, start: Option<u64>) -> Block {
 
 /// The markdown of `docx`.
 fn markdown(docx: &Docx) -> String {
-    write(&RawDocument::Valid(archie(docx)), &WriteOptions::default()).unwrap()
+    write(&RawDocument::Valid(arky(docx)), &WriteOptions::default()).unwrap()
 }
 
 /// One section with no heading, holding `blocks`.
@@ -367,7 +367,7 @@ fn the_design_sample_writes_its_markdown_and_no_media_folder() {
         OpenOptions::default(),
     )
     .unwrap();
-    archie(&docx);
+    arky(&docx);
     save_markdown(
         &docx,
         &system,
@@ -423,7 +423,7 @@ fn a_style_named_heading_1_and_an_own_outline_level_0_both_give_depth_1_headings
     );
     let docx = word(&body);
     assert_eq!(
-        archie(&docx).body.sections,
+        arky(&docx).body.sections,
         [
             Section::new(Some(heading("One")), Vec::new(), Vec::new()),
             Section::new(Some(heading("Two")), Vec::new(), Vec::new()),
@@ -453,7 +453,7 @@ fn a_level_3_heading_after_a_level_1_heading_sits_in_a_depth_2_section_with_no_h
     let three = Section::new(Some(heading("Three")), Vec::new(), Vec::new());
     let skipped = Section::new(None, Vec::new(), alloc::vec![three]);
     assert_eq!(
-        archie(&docx).body.sections,
+        arky(&docx).body.sections,
         [Section::new(
             Some(heading("One")),
             Vec::new(),
@@ -473,7 +473,7 @@ fn a_level_7_heading_is_a_bold_paragraph_of_the_open_section() {
     let docx = word(&body);
     let deep = paragraph_of(alloc::vec![strong(alloc::vec![text("Deep")])]);
     assert_eq!(
-        archie(&docx).body.sections,
+        arky(&docx).body.sections,
         [Section::new(
             Some(heading("Top")),
             alloc::vec![deep],
@@ -502,7 +502,7 @@ fn three_bold_runs_become_one_strong_node() {
         bold_run("nue")
     );
     assert_eq!(
-        archie(&word(&body)).body.sections,
+        arky(&word(&body)).body.sections,
         no_heading(alloc::vec![paragraph_of(alloc::vec![strong(alloc::vec![
             text("Revenue")
         ])])])
@@ -514,7 +514,7 @@ fn the_space_at_the_end_of_a_bold_stretch_goes_outside_it() {
     let body = format!("<w:p>{}{}</w:p>", bold_run("Nombre: "), run("Ana"));
     let docx = word(&body);
     assert_eq!(
-        archie(&docx).body.sections,
+        arky(&docx).body.sections,
         no_heading(alloc::vec![paragraph_of(alloc::vec![
             strong(alloc::vec![text("Nombre:")]),
             text(" Ana"),
@@ -528,7 +528,7 @@ fn a_run_both_bold_and_italic_is_emphasis_holding_strong() {
     let docx = word("<w:p><w:r><w:rPr><w:b/><w:i/></w:rPr><w:t>x</w:t></w:r></w:p>");
     let both = Inline::Emphasis(Emphasis::new(alloc::vec![strong(alloc::vec![text("x")])]));
     assert_eq!(
-        archie(&docx).body.sections,
+        arky(&docx).body.sections,
         no_heading(alloc::vec![paragraph_of(alloc::vec![both])])
     );
     assert_eq!(markdown(&docx), "***x***\n");
@@ -579,7 +579,7 @@ fn consecutive_code_and_quote_paragraphs_become_one_code_block_and_one_block_quo
     .concat();
     let docx = word(&body);
     assert_eq!(
-        archie(&docx).body.sections,
+        arky(&docx).body.sections,
         no_heading(alloc::vec![
             Block::CodeBlock(CodeBlock::new(
                 None,
@@ -600,7 +600,7 @@ fn tabs_and_text_wrapping_breaks_stay_and_a_page_break_goes() {
         "<w:br/></w:r></w:p>",
     );
     assert_eq!(
-        archie(&word(body)).body.sections,
+        arky(&word(body)).body.sections,
         no_heading(alloc::vec![paragraph_lines(alloc::vec![
             alloc::vec![text("a\tb"), line_break()],
             alloc::vec![text("cd"), line_break()],
@@ -620,7 +620,7 @@ fn an_empty_paragraph_gives_nothing_and_one_with_a_bottom_border_alone_a_themati
         "<w:p><w:r><w:t>b</w:t></w:r></w:p>",
     );
     assert_eq!(
-        archie(&word(body)).body.sections,
+        arky(&word(body)).body.sections,
         no_heading(alloc::vec![
             paragraph_of(alloc::vec![text("a")]),
             Block::ThematicBreak(ThematicBreak::default()),
@@ -665,7 +665,7 @@ fn an_equation_gives_its_text() {
 }
 
 #[test]
-fn to_archie_leaves_the_main_part_as_it_was() {
+fn to_arky_leaves_the_main_part_as_it_was() {
     let body = format!(
         "{}<w:p>{}</w:p>",
         paragraph("Ttulo1", &run("Contrato")),
@@ -674,7 +674,7 @@ fn to_archie_leaves_the_main_part_as_it_was() {
     let docx = word(&body);
     let main = docx.main_document_part().clone();
     let before = docx.package().part_bytes(&main).unwrap();
-    archie(&docx);
+    arky(&docx);
     assert_eq!(docx.package().part_bytes(&main).unwrap(), before);
 }
 
@@ -796,7 +796,7 @@ fn a_paragraph_numbered_by_its_style_is_a_list_item_and_a_level_of_format_none_a
     .concat();
     let docx = fixture.body(&body);
     assert_eq!(
-        archie(&docx).body.sections,
+        arky(&docx).body.sections,
         no_heading(alloc::vec![
             list(
                 alloc::vec![item(alloc::vec![paragraph_of(alloc::vec![text("styled")])])],
@@ -825,7 +825,7 @@ fn a_deeper_level_nests_bullets_have_no_start_and_a_start_override_gives_the_fir
         None,
     );
     assert_eq!(
-        archie(&docx).body.sections,
+        arky(&docx).body.sections,
         no_heading(alloc::vec![
             list(
                 alloc::vec![
@@ -883,7 +883,7 @@ fn paragraphs_that_write_nothing_leave_the_items_of_one_word_list_in_one_list() 
         Some(1),
     );
     assert_eq!(
-        archie(&docx).body.sections,
+        arky(&docx).body.sections,
         no_heading(alloc::vec![
             list(
                 alloc::vec![
@@ -930,7 +930,7 @@ fn a_paragraph_indented_to_where_an_items_text_starts_is_a_later_block_of_that_i
         Some(1),
     ));
     assert_eq!(
-        archie(&docx).body.sections,
+        arky(&docx).body.sections,
         no_heading(alloc::vec![
             list(
                 alloc::vec![
@@ -972,7 +972,7 @@ fn a_list_paragraph_with_no_numbering_after_a_list_paragraph_is_a_later_block_of
         item(alloc::vec![paragraph_of(alloc::vec![text("two")])]),
     ];
     assert_eq!(
-        archie(&docx).body.sections,
+        arky(&docx).body.sections,
         no_heading(alloc::vec![
             Block::List(List::new(items, true, Some(1))),
             paragraph_of(alloc::vec![text("after")]),
@@ -1017,7 +1017,7 @@ fn a_code_block_a_block_quote_and_a_rule_inside_a_list_item_come_back_inside_it(
         Block::ThematicBreak(ThematicBreak::default()),
     ];
     assert_eq!(
-        archie(&docx).body.sections,
+        arky(&docx).body.sections,
         no_heading(alloc::vec![
             list(
                 alloc::vec![
@@ -1051,7 +1051,7 @@ fn a_later_block_indented_to_an_outer_level_goes_into_that_level_s_item() {
         None,
     );
     assert_eq!(
-        archie(&docx).body.sections,
+        arky(&docx).body.sections,
         no_heading(alloc::vec![list(
             alloc::vec![item(alloc::vec![
                 paragraph_of(alloc::vec![text("outer")]),
@@ -1087,7 +1087,7 @@ fn a_table_with_a_head_row_and_one_line_cells_is_a_pipe_table_aligned_by_its_fir
         alloc::vec![TableRow::new(alloc::vec![cell_of("a"), cell_of("b")])],
     );
     assert_eq!(
-        archie(&docx).body.sections,
+        arky(&docx).body.sections,
         no_heading(alloc::vec![Block::Table(expected)])
     );
     assert_eq!(
@@ -1109,7 +1109,7 @@ fn a_table_with_two_head_rows_or_a_one_line_code_cell_is_a_grid_table() {
         table_row(false, &[code.to_owned()]),
     ];
     let docx = word(&[table(&two_heads), table(&code_cell)].concat());
-    let formats: Vec<TableFormat> = archie(&docx)
+    let formats: Vec<TableFormat> = arky(&docx)
         .body
         .sections
         .iter()
@@ -1144,7 +1144,7 @@ fn a_table_with_no_head_row_or_with_a_cell_of_two_paragraphs_is_a_grid_table() {
         paragraph_of(alloc::vec![text("y")]),
     ])));
     assert_eq!(
-        archie(&docx).body.sections,
+        arky(&docx).body.sections,
         no_heading(alloc::vec![
             Block::Table(Table::new(
                 TableFormat::Grid,
@@ -1200,7 +1200,7 @@ fn a_spanning_cell_and_a_vertical_merge_continuation_are_padded_with_empty_cells
         ],
     );
     assert_eq!(
-        archie(&word(&table(&rows))).body.sections,
+        arky(&word(&table(&rows))).body.sections,
         no_heading(alloc::vec![Block::Table(expected)])
     );
 }
@@ -1226,7 +1226,7 @@ fn anchors_lose_their_underscores_and_hyperlink_fields_are_links() {
     );
     let docx = word(&body);
     assert_eq!(
-        archie(&docx).body.sections,
+        arky(&docx).body.sections,
         no_heading(alloc::vec![
             paragraph_of(alloc::vec![
                 link("#q3-results", alloc::vec![link_text("Q3")]),
@@ -1269,7 +1269,7 @@ fn a_hyperlink_inside_a_hyperlink_joins_its_text_and_bold_inside_a_link_is_link_
         ],
     ));
     assert_eq!(
-        archie(&docx).body.sections,
+        arky(&docx).body.sections,
         no_heading(alloc::vec![paragraph_of(alloc::vec![expected])])
     );
     assert_eq!(
@@ -1343,7 +1343,7 @@ fn a_linked_picture_is_an_image_of_its_address() {
     let blip = format!(r#"<a:blip r:link="{id}"/>"#);
     let body = format!("<w:p><w:r>{}</w:r></w:p>", picture_drawing("Logo", &blip));
     assert_eq!(
-        archie(&fixture.body(&body)).body.sections,
+        arky(&fixture.body(&body)).body.sections,
         no_heading(alloc::vec![paragraph_of(alloc::vec![image(
             "https://example.com/logo.png",
             "Logo"
@@ -1407,7 +1407,7 @@ fn an_alt_chunk_naming_an_html_part_is_an_html_block_of_its_body() {
     );
     let docx = fixture.body(&body);
     assert_eq!(
-        archie(&docx).body.sections,
+        arky(&docx).body.sections,
         no_heading(alloc::vec![
             paragraph_of(alloc::vec![text("before")]),
             Block::Html(Html::new("<div>hi</div>".to_owned())),
@@ -1445,12 +1445,12 @@ fn the_frontmatter_part_is_the_frontmatter_only_when_asked_and_one_that_does_not
     );
     let broken = with_part(b"a = [\n");
     assert!(matches!(
-        broken.to_archie("report_media", asked),
+        broken.to_arky("report_media", asked),
         Err(MarkdownError::Frontmatter(_))
     ));
     assert_eq!(
         broken
-            .to_archie("report_media", MarkdownOptions::default())
+            .to_arky("report_media", MarkdownOptions::default())
             .unwrap()
             .document
             .frontmatter,
@@ -1500,7 +1500,7 @@ fn a_vml_picture_of_an_external_relationship_is_an_image_of_its_address() {
         vml_picture("Logo", &id)
     );
     assert_eq!(
-        archie(&fixture.body(&body)).body.sections,
+        arky(&fixture.body(&body)).body.sections,
         no_heading(alloc::vec![paragraph_of(alloc::vec![image(
             "https://example.com/logo.png",
             "Logo"
@@ -1565,7 +1565,7 @@ fn a_bold_stretch_next_to_punctuation_comes_back_bold() {
     ]
     .concat();
     assert_eq!(
-        archie(&word(&body)).body.sections,
+        arky(&word(&body)).body.sections,
         no_heading(alloc::vec![
             paragraph_of(alloc::vec![
                 text("MONTO SOLICITUD"),

@@ -4,8 +4,8 @@ use std::io::{self, Read, Write};
 use std::path::Path;
 
 use anyhow::{Context as _, Result, bail};
-use archie_core::parser::ast::RawDocument;
-use archie_core::writer::{self, WriteOptions};
+use arky_core::parser::ast::RawDocument;
+use arky_core::writer::{self, WriteOptions};
 use os_shim::{System, WriteMode};
 use serde_json::{Value, json};
 
@@ -231,7 +231,7 @@ fn write_form(
         #[cfg(not(feature = "binary-format"))]
         (Form::Binary, _) => bail!(NO_BINARY_FORMAT),
         (Form::Markdown, OfficeFile::Word(docx)) => {
-            let exported = docx.to_archie("media", markdown)?;
+            let exported = docx.to_arky("media", markdown)?;
             writer::write(
                 &RawDocument::Valid(exported.document),
                 &WriteOptions::default(),

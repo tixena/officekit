@@ -1,4 +1,4 @@
-//! A Word document from an archie document and back, with the feature `markdown`.
+//! A Word document from an arky document and back, with the feature `markdown`.
 
 mod from_word;
 mod parts;
@@ -13,12 +13,12 @@ use alloc::vec::Vec;
 use std::io;
 use std::path::{Path, PathBuf};
 
-use archie_core::parser::ast::{
+use arky_core::parser::ast::{
     Document, FrontmatterFormat, InvalidFrontmatter, Mapping, MarkdownBlock, RawDocument,
 };
-use archie_core::parser::extension::{Extension, Markdown};
-use archie_core::parser::{parse, read_toml};
-use archie_core::writer::{self, WriteError, WriteOptions};
+use arky_core::parser::extension::{Extension, Markdown};
+use arky_core::parser::{parse, read_toml};
+use arky_core::writer::{self, WriteError, WriteOptions};
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
@@ -40,7 +40,7 @@ const FRONTMATTER_PART: &str = "/docProps/frontmatter.toml";
 /// The line that opens and closes a TOML frontmatter.
 const TOML_FENCE: &str = "+++\n";
 
-/// A Word document converted to markdown: the archie document, and the pictures it names, each
+/// A Word document converted to markdown: the arky document, and the pictures it names, each
 /// as its file name and bytes.
 #[derive(Debug, Clone, PartialEq)]
 #[non_exhaustive]
@@ -76,13 +76,13 @@ pub enum MarkdownError {
     /// The Word package could not be read or written.
     #[error(transparent)]
     Package(#[from] PackageError),
-    /// archie could not write the document as markdown.
+    /// arky could not write the document as markdown.
     #[error(transparent)]
     Write(#[from] WriteError),
 }
 
 /// Store `mapping` as TOML in the part `/docProps/frontmatter.toml`, related from the package with
-/// [`FRONTMATTER_RELATIONSHIP`]: the lines archie writes between the `+++` lines.
+/// [`FRONTMATTER_RELATIONSHIP`]: the lines arky writes between the `+++` lines.
 ///
 /// # Errors
 ///
@@ -105,7 +105,7 @@ fn add_frontmatter(package: &mut Package, mapping: &Mapping) -> Result<(), Markd
     Ok(())
 }
 
-/// A new Word document holding `document`, for [`Docx::from_archie`]; a relative picture path is
+/// A new Word document holding `document`, for [`Docx::from_arky`]; a relative picture path is
 /// found from `base`.
 ///
 /// # Errors
@@ -114,7 +114,7 @@ fn add_frontmatter(package: &mut Package, mapping: &Mapping) -> Result<(), Markd
 /// read or is in no format it stores,
 /// [`MarkdownError::Write`] when `options.frontmatter` is on and the frontmatter holds a null, and
 /// [`MarkdownError::Package`] when the new package cannot be built or its parts stored.
-pub(crate) fn from_archie<S, E>(
+pub(crate) fn from_arky<S, E>(
     system: &S,
     base: Option<&Path>,
     document: &Document<E>,
@@ -176,7 +176,7 @@ where
 /// # Errors
 ///
 /// [`MarkdownError::Frontmatter`] when the frontmatter does not read and `options.frontmatter` is
-/// on, and the errors of [`Docx::from_archie`].
+/// on, and the errors of [`Docx::from_arky`].
 pub fn from_markdown_text<S>(
     system: &S,
     text: &str,
@@ -194,7 +194,7 @@ where
         RawDocument::Invalid(invalid) => Document::new(invalid.body, None),
         _ => Document::new(MarkdownBlock::new(Vec::new()), None),
     };
-    from_archie(system, folder, &document, options)
+    from_arky(system, folder, &document, options)
 }
 
 /// `docx` written as markdown to `path`, its pictures in the folder beside it, or inside the
@@ -205,7 +205,7 @@ where
 ///
 /// # Errors
 ///
-/// The errors of [`Docx::to_archie`], [`MarkdownError::Write`] when archie cannot write the
+/// The errors of [`Docx::to_arky`], [`MarkdownError::Write`] when arky cannot write the
 /// document, and [`MarkdownError::Io`] when the markdown file, the folder, or a picture cannot be
 /// written.
 pub fn save_markdown<S>(
@@ -221,7 +221,7 @@ where
         .file_stem()
         .map_or_else(String::new, |stem| stem.to_string_lossy().into_owned());
     media.push_str("_media");
-    let exported = docx.to_archie(&media, options)?;
+    let exported = docx.to_arky(&media, options)?;
     let text = writer::write(
         &RawDocument::Valid(exported.document),
         &WriteOptions::default(),
@@ -292,8 +292,8 @@ fn read_frontmatter(package: &Package) -> Result<Option<Mapping>, MarkdownError>
     }
 }
 
-/// The main document of `docx`, its parts read with `read`, as an archie document, for
-/// [`Docx::to_archie`]: each picture's target in the folder `media`, or a data URI with
+/// The main document of `docx`, its parts read with `read`, as an arky document, for
+/// [`Docx::to_arky`]: each picture's target in the folder `media`, or a data URI with
 /// `options.embed_images`, and the frontmatter part read with `options.frontmatter`.
 ///
 /// # Errors
@@ -301,7 +301,7 @@ fn read_frontmatter(package: &Package) -> Result<Option<Mapping>, MarkdownError>
 /// [`MarkdownError::Package`] when the main document, its styles or numbering part, a picture
 /// or an HTML part cannot be read, and [`MarkdownError::Frontmatter`] when the frontmatter part
 /// is to be read and does not read.
-pub(crate) fn to_archie(
+pub(crate) fn to_arky(
     docx: &Docx,
     read: OpenOptions,
     media: &str,

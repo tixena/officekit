@@ -14,11 +14,11 @@
 //!   XML.
 #![cfg_attr(
     feature = "markdown",
-    doc = "- [`markdown`]: a Word document from an archie document, and back, with the feature `markdown`."
+    doc = "- [`markdown`]: a Word document from an arky document, and back, with the feature `markdown`."
 )]
 #![cfg_attr(
     not(feature = "markdown"),
-    doc = "- `markdown`: a Word document from an archie document, and back, with the feature `markdown`."
+    doc = "- `markdown`: a Word document from an arky document, and back, with the feature `markdown`."
 )]
 //!
 //! Every byte that reaches or leaves the operating system does so through an

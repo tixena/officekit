@@ -114,7 +114,7 @@ fn the_end_result_in_use() {
         word.to_bytes_transitional().unwrap().0
     );
     assert!(matches!(
-        decode(b"archie\0\x03"),
+        decode(b"arky\0\x03"),
         Err(BinaryError::NotOfficekit)
     ));
 }
@@ -197,7 +197,7 @@ fn the_binary_form_of_a_word_file_holds_no_xml_of_its_main_document() {
 
 #[test]
 fn bytes_that_do_not_open_with_officekit_and_a_zero_byte_are_not_officekits() {
-    for bytes in [&b"archie\0\x03 a document"[..], b"officekit", MAGIC] {
+    for bytes in [&b"arky\0\x03 a document"[..], b"officekit", MAGIC] {
         assert!(
             matches!(decode(bytes), Err(BinaryError::NotOfficekit)),
             "{bytes:?}"
