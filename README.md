@@ -191,4 +191,4 @@ errors for a folder as JSON.
 
 ## License
 
-MIT, Copyright (c) 2026 Tixena Labs. See [LICENSE](LICENSE).
+MIT, Copyright (c) 2026 Tixena. See [LICENSE](LICENSE).
