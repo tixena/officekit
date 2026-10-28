@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `o` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `urn:schemas-microsoft-com:office:office`, which files write with the prefix `o`.
 //!
-//! The namespace is `urn:schemas-microsoft-com:office:office`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -776,7 +776,11 @@ pub static SHAPE_LAYOUT_PROPERTIES_CONTENT_TAGS: officekit_markup_base::Accept =
         tags: &[(NS_O, "rules"), (NS_O, "regrouptable"), (NS_O, "idmap")],
     };
 
-/// 19.2.3.3 `ST_BWMode` (Black And White Modes): the text the file carried.
+/// Black And White Modes, the simple type `ST_BWMode` (ECMA-376 Part 4, section 19.2.3.3), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -785,25 +789,39 @@ pub static SHAPE_LAYOUT_PROPERTIES_CONTENT_TAGS: officekit_markup_base::Accept =
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BlackAndWhiteModes(pub String);
-/// The members of `ST_BWMode`, in alphabetical order.
+/// The members of the enumeration `ST_BWMode`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum BlackAndWhiteModesMember {
+    /// The member written `auto`.
     Auto,
+    /// The member written `black`.
     Black,
+    /// The member written `blackTextAndLines`.
     BlackTextAndLines,
+    /// The member written `color`.
     Color,
+    /// The member written `grayOutline`.
     GrayOutline,
+    /// The member written `grayScale`.
     GrayScale,
+    /// The member written `hide`.
     Hide,
+    /// The member written `highContrast`.
     HighContrast,
+    /// The member written `inverseGray`.
     InverseGray,
+    /// The member written `lightGrayscale`.
     LightGrayscale,
+    /// The member written `undrawn`.
     Undrawn,
+    /// The member written `white`.
     White,
 }
 
-/// 19.2.2.2 callout (Callout): the tag `o:callout`, schema type `CT_Callout`.
+/// The `o:callout` element, Callout (ECMA-376 Part 4, section 19.2.2.2). Its schema type is
+/// `CT_Callout`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -812,24 +830,43 @@ pub enum BlackAndWhiteModesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Callout {
+    /// The attribute `accentbar`, when the element has it.
     pub accentbar: Option<common_simple_types::BooleanValue>,
+    /// The attribute `angle`, when the element has it.
     pub angle: Option<CalloutAngles>,
+    /// The attribute `distance`, when the element has it.
     pub distance: Option<String>,
+    /// The attribute `drop`, when the element has it.
     pub drop: Option<String>,
+    /// The attribute `dropauto`, when the element has it.
     pub dropauto: Option<common_simple_types::BooleanValue>,
+    /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
+    /// The attribute `gap`, when the element has it.
     pub gap: Option<String>,
+    /// The attribute `length`, when the element has it.
     pub length: Option<String>,
+    /// The attribute `lengthspecified`, when the element has it.
     pub lengthspecified: Option<common_simple_types::BooleanValue>,
+    /// The attribute `minusx`, when the element has it.
     pub minusx: Option<common_simple_types::BooleanValue>,
+    /// The attribute `minusy`, when the element has it.
     pub minusy: Option<common_simple_types::BooleanValue>,
+    /// The attribute `on`, when the element has it.
     pub on: Option<common_simple_types::BooleanValue>,
+    /// The attribute `textborder`, when the element has it.
     pub textborder: Option<common_simple_types::BooleanValue>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 19.2.3.2 `ST_Angle` (Callout Angles): the text the file carried.
+/// Callout Angles, the simple type `ST_Angle` (ECMA-376 Part 4, section 19.2.3.2), kept as the text
+/// the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -838,19 +875,27 @@ pub struct Callout {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CalloutAngles(pub String);
-/// The members of `ST_Angle`, in alphabetical order.
+/// The members of the enumeration `ST_Angle`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum CalloutAnglesMember {
+    /// The member written `any`.
     Any,
+    /// The member written `auto`.
     Auto,
+    /// The member written `30`.
     Value30,
+    /// The member written `45`.
     Value45,
+    /// The member written `60`.
     Value60,
+    /// The member written `90`.
     Value90,
 }
 
-/// 19.2.2.7 complex (Complex): the tag `o:complex`, schema type `CT_Complex`.
+/// The `o:complex` element, Complex (ECMA-376 Part 4, section 19.2.2.7). Its schema type is
+/// `CT_Complex`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -859,11 +904,17 @@ pub enum CalloutAnglesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Complex {
+    /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 19.2.3.8 `ST_ConnectType` (Connection Locations Type): the text the file carried.
+/// Connection Locations Type, the simple type `ST_ConnectType` (ECMA-376 Part 4, section 19.2.3.8),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -872,17 +923,26 @@ pub struct Complex {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConnectionLocationsType(pub String);
-/// The members of `ST_ConnectType`, in alphabetical order.
+/// The members of the enumeration `ST_ConnectType`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ConnectionLocationsTypeMember {
+    /// The member written `custom`.
     Custom,
+    /// The member written `none`.
     None,
+    /// The member written `rect`.
     Rect,
+    /// The member written `segments`.
     Segments,
 }
 
-/// 19.2.3.7 `ST_ConnectorType` (Connector Type): the text the file carried.
+/// Connector Type, the simple type `ST_ConnectorType` (ECMA-376 Part 4, section 19.2.3.7), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -891,17 +951,26 @@ pub enum ConnectionLocationsTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConnectorType(pub String);
-/// The members of `ST_ConnectorType`, in alphabetical order.
+/// The members of the enumeration `ST_ConnectorType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ConnectorTypeMember {
+    /// The member written `curved`.
     Curved,
+    /// The member written `elbow`.
     Elbow,
+    /// The member written `none`.
     None,
+    /// The member written `straight`.
     Straight,
 }
 
-/// 19.2.3.10 `ST_DiagramLayout` (Diagram Layout Type): the text the file carried.
+/// Diagram Layout Type, the simple type `ST_DiagramLayout` (ECMA-376 Part 4, section 19.2.3.10),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -911,7 +980,8 @@ pub enum ConnectorTypeMember {
 #[non_exhaustive]
 pub struct DiagramLayoutType(pub String);
 
-/// 19.2.2.24 rel (Diagram Relationship): the tag `o:rel`, schema type `CT_Relation`.
+/// The `o:rel` element, Diagram Relationship (ECMA-376 Part 4, section 19.2.2.24). Its schema type
+/// is `CT_Relation`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -920,15 +990,20 @@ pub struct DiagramLayoutType(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DiagramRelationship {
+    /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
+    /// The attribute `idcntr`, when the element has it.
     pub idcntr: Option<String>,
+    /// The attribute `iddest`, when the element has it.
     pub iddest: Option<String>,
+    /// The attribute `idsrc`, when the element has it.
     pub idsrc: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 19.2.2.25 relationtable (Diagram Relationship Table): the tag `o:relationtable`, schema type
-/// `CT_RelationTable`.
+/// The `o:relationtable` element, Diagram Relationship Table (ECMA-376 Part 4, section 19.2.2.25).
+/// Its schema type is `CT_RelationTable`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -937,13 +1012,16 @@ pub struct DiagramRelationship {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DiagramRelationshipTable {
+    /// The children that are `DiagramRelationship`, in order.
     pub diagram_relationship: Vec<DiagramRelationship>,
+    /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 19.2.2.30 signatureline (Digital Signature Line): the tag `o:signatureline`, schema type
-/// `CT_SignatureLine`.
+/// The `o:signatureline` element, Digital Signature Line (ECMA-376 Part 4, section 19.2.2.30). Its
+/// schema type is `CT_SignatureLine`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -952,23 +1030,38 @@ pub struct DiagramRelationshipTable {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DigitalSignatureLine {
+    /// The attribute `addlxml`, when the element has it.
     pub addlxml: Option<String>,
+    /// The attribute `allowcomments`, when the element has it.
     pub allowcomments: Option<common_simple_types::BooleanValue>,
+    /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<common_simple_types::Guid>,
+    /// The attribute `issignatureline`, when the element has it.
     pub issignatureline: Option<common_simple_types::BooleanValue>,
+    /// The attribute `provid`, when the element has it.
     pub provid: Option<common_simple_types::Guid>,
+    /// The attribute `showsigndate`, when the element has it.
     pub showsigndate: Option<common_simple_types::BooleanValue>,
+    /// The attribute `signinginstructions`, when the element has it.
     pub signinginstructions: Option<String>,
+    /// The attribute `signinginstructionsset`, when the element has it.
     pub signinginstructionsset: Option<common_simple_types::BooleanValue>,
+    /// The attribute `sigprovurl`, when the element has it.
     pub sigprovurl: Option<String>,
+    /// The attribute `o:suggestedsigner`, when the element has it.
     pub suggestedsigner: Option<String>,
+    /// The attribute `o:suggestedsigner2`, when the element has it.
     pub suggestedsigner2: Option<String>,
+    /// The attribute `o:suggestedsigneremail`, when the element has it.
     pub suggestedsigneremail: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 19.2.2.20 `OLEObject` (Embedded OLE Object): the tag `o:OLEObject`, schema type `CT_OLEObject`.
+/// The `o:OLEObject` element, Embedded OLE Object (ECMA-376 Part 4, section 19.2.2.20). Its schema
+/// type is `CT_OLEObject`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -977,21 +1070,32 @@ pub struct DigitalSignatureLine {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EmbeddedOLEObject {
+    /// The attribute `DrawAspect`, when the element has it.
     pub draw_aspect: Option<OLEDrawAspect>,
+    /// The child that is `EmbeddedObjectAlternateImageRequest`, when there is one.
     pub embedded_object_alternate_image_request: Option<Box<EmbeddedObjectAlternateImageRequest>>,
+    /// The child that is `EmbeddedObjectCannotBeRefreshed`, when there is one.
     pub embedded_object_cannot_be_refreshed: Option<Box<EmbeddedObjectCannotBeRefreshed>>,
+    /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `ObjectID`, when the element has it.
     pub object_id: Option<String>,
+    /// The attribute `ProgID`, when the element has it.
     pub prog_id: Option<String>,
+    /// The attribute `ShapeID`, when the element has it.
     pub shape_id: Option<String>,
+    /// The attribute `Type`, when the element has it.
     pub r#type: Option<OLEType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `UpdateMode`, when the element has it.
     pub update_mode: Option<OLEUpdateMode>,
+    /// The child that is `WordprocessingMLFieldSwitches`, when there is one.
     pub wordprocessingml_field_switches: Option<Box<WordprocessingMLFieldSwitches>>,
 }
 
-/// 19.2.2.17 `LinkType` (Embedded Object Alternate Image Request): the tag `o:LinkType`, schema
-/// type `ST_OLELinkType`.
+/// The `o:LinkType` element, Embedded Object Alternate Image Request (ECMA-376 Part 4, section
+/// 19.2.2.17). Its schema type is `ST_OLELinkType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1000,12 +1104,14 @@ pub struct EmbeddedOLEObject {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EmbeddedObjectAlternateImageRequest {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 19.2.2.19 `LockedField` (Embedded Object Cannot Be Refreshed): the tag `o:LockedField`, schema
-/// type `ST_TrueFalseBlank`.
+/// The `o:LockedField` element, Embedded Object Cannot Be Refreshed (ECMA-376 Part 4, section
+/// 19.2.2.19). Its schema type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1014,11 +1120,13 @@ pub struct EmbeddedObjectAlternateImageRequest {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EmbeddedObjectCannotBeRefreshed {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// The tag `o:extrusion`, schema type `CT_Extrusion`.
+/// The `o:extrusion` element. Its schema type is `CT_Extrusion`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1027,43 +1135,81 @@ pub struct EmbeddedObjectCannotBeRefreshed {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Extrusion {
+    /// The attribute `autorotationcenter`, when the element has it.
     pub autorotationcenter: Option<common_simple_types::BooleanValue>,
+    /// The attribute `backdepth`, when the element has it.
     pub backdepth: Option<String>,
+    /// The attribute `brightness`, when the element has it.
     pub brightness: Option<String>,
+    /// The attribute `color`, when the element has it.
     pub color: Option<String>,
+    /// The attribute `colormode`, when the element has it.
     pub colormode: Option<ExtrusionColorTypes>,
+    /// The attribute `diffusity`, when the element has it.
     pub diffusity: Option<String>,
+    /// The attribute `edge`, when the element has it.
     pub edge: Option<String>,
+    /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
+    /// The attribute `facet`, when the element has it.
     pub facet: Option<String>,
+    /// The attribute `foredepth`, when the element has it.
     pub foredepth: Option<String>,
+    /// The attribute `lightface`, when the element has it.
     pub lightface: Option<common_simple_types::BooleanValue>,
+    /// The attribute `lightharsh`, when the element has it.
     pub lightharsh: Option<common_simple_types::BooleanValue>,
+    /// The attribute `lightharsh2`, when the element has it.
     pub lightharsh2: Option<common_simple_types::BooleanValue>,
+    /// The attribute `lightlevel`, when the element has it.
     pub lightlevel: Option<String>,
+    /// The attribute `lightlevel2`, when the element has it.
     pub lightlevel2: Option<String>,
+    /// The attribute `lightposition`, when the element has it.
     pub lightposition: Option<String>,
+    /// The attribute `lightposition2`, when the element has it.
     pub lightposition2: Option<String>,
+    /// The attribute `lockrotationcenter`, when the element has it.
     pub lockrotationcenter: Option<common_simple_types::BooleanValue>,
+    /// The attribute `metal`, when the element has it.
     pub metal: Option<common_simple_types::BooleanValue>,
+    /// The attribute `on`, when the element has it.
     pub on: Option<common_simple_types::BooleanValue>,
+    /// The attribute `orientation`, when the element has it.
     pub orientation: Option<String>,
+    /// The attribute `orientationangle`, when the element has it.
     pub orientationangle: Option<String>,
+    /// The attribute `plane`, when the element has it.
     pub plane: Option<ExtrusionPlanes>,
+    /// The attribute `render`, when the element has it.
     pub render: Option<ExtrusionRenderingTypes>,
+    /// The attribute `rotationangle`, when the element has it.
     pub rotationangle: Option<String>,
+    /// The attribute `rotationcenter`, when the element has it.
     pub rotationcenter: Option<String>,
+    /// The attribute `shininess`, when the element has it.
     pub shininess: Option<String>,
+    /// The attribute `skewamt`, when the element has it.
     pub skewamt: Option<String>,
+    /// The attribute `skewangle`, when the element has it.
     pub skewangle: Option<String>,
+    /// The attribute `specularity`, when the element has it.
     pub specularity: Option<String>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<ExtrusionType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `viewpoint`, when the element has it.
     pub viewpoint: Option<String>,
+    /// The attribute `viewpointorigin`, when the element has it.
     pub viewpointorigin: Option<String>,
 }
 
-/// 19.2.3.6 `ST_ColorMode` (Extrusion Color Types): the text the file carried.
+/// Extrusion Color Types, the simple type `ST_ColorMode` (ECMA-376 Part 4, section 19.2.3.6), kept
+/// as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1072,15 +1218,22 @@ pub struct Extrusion {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtrusionColorTypes(pub String);
-/// The members of `ST_ColorMode`, in alphabetical order.
+/// The members of the enumeration `ST_ColorMode`, in alphabetical order. `as_str` gives the text of
+/// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ExtrusionColorTypesMember {
+    /// The member written `auto`.
     Auto,
+    /// The member written `custom`.
     Custom,
 }
 
-/// 19.2.3.11 `ST_ExtrusionPlane` (Extrusion Planes): the text the file carried.
+/// Extrusion Planes, the simple type `ST_ExtrusionPlane` (ECMA-376 Part 4, section 19.2.3.11), kept
+/// as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1089,16 +1242,24 @@ pub enum ExtrusionColorTypesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtrusionPlanes(pub String);
-/// The members of `ST_ExtrusionPlane`, in alphabetical order.
+/// The members of the enumeration `ST_ExtrusionPlane`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ExtrusionPlanesMember {
+    /// The member written `XY`.
     Xy,
+    /// The member written `YZ`.
     Yz,
+    /// The member written `ZX`.
     Zx,
 }
 
-/// 19.2.3.12 `ST_ExtrusionRender` (Extrusion Rendering Types): the text the file carried.
+/// Extrusion Rendering Types, the simple type `ST_ExtrusionRender` (ECMA-376 Part 4, section
+/// 19.2.3.12), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1107,16 +1268,24 @@ pub enum ExtrusionPlanesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtrusionRenderingTypes(pub String);
-/// The members of `ST_ExtrusionRender`, in alphabetical order.
+/// The members of the enumeration `ST_ExtrusionRender`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ExtrusionRenderingTypesMember {
+    /// The member written `boundingCube`.
     BoundingCube,
+    /// The member written `solid`.
     Solid,
+    /// The member written `wireFrame`.
     WireFrame,
 }
 
-/// 19.2.3.13 `ST_ExtrusionType` (Extrusion Type): the text the file carried.
+/// Extrusion Type, the simple type `ST_ExtrusionType` (ECMA-376 Part 4, section 19.2.3.13), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1125,15 +1294,18 @@ pub enum ExtrusionRenderingTypesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtrusionType(pub String);
-/// The members of `ST_ExtrusionType`, in alphabetical order.
+/// The members of the enumeration `ST_ExtrusionType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ExtrusionTypeMember {
+    /// The member written `parallel`.
     Parallel,
+    /// The member written `perspective`.
     Perspective,
 }
 
-/// 19.2.2.15 ink (Ink): the tag `o:ink`, schema type `CT_Ink`.
+/// The `o:ink` element, Ink (ECMA-376 Part 4, section 19.2.2.15). Its schema type is `CT_Ink`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1142,13 +1314,21 @@ pub enum ExtrusionTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Ink {
+    /// The attribute `annotation`, when the element has it.
     pub annotation: Option<common_simple_types::BooleanValue>,
+    /// The attribute `contentType`, when the element has it.
     pub content_type: Option<String>,
+    /// The attribute `i`, when the element has it.
     pub i: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 19.2.3.17 `ST_InsetMode` (Inset Margin Type): the text the file carried.
+/// Inset Margin Type, the simple type `ST_InsetMode` (ECMA-376 Part 4, section 19.2.3.17), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1157,15 +1337,19 @@ pub struct Ink {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct InsetMarginType(pub String);
-/// The members of `ST_InsetMode`, in alphabetical order.
+/// The members of the enumeration `ST_InsetMode`, in alphabetical order. `as_str` gives the text of
+/// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum InsetMarginTypeMember {
+    /// The member written `auto`.
     Auto,
+    /// The member written `custom`.
     Custom,
 }
 
-/// 19.2.2.5 colormru (Most Recently Used Colors): the tag `o:colormru`, schema type `CT_ColorMru`.
+/// The `o:colormru` element, Most Recently Used Colors (ECMA-376 Part 4, section 19.2.2.5). Its
+/// schema type is `CT_ColorMru`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1174,13 +1358,16 @@ pub enum InsetMarginTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MostRecentlyUsedColors {
+    /// The attribute `colors`, when the element has it.
     pub colors: Option<String>,
+    /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 19.2.2.28 shapedefaults (New Shape Defaults): the tag `o:shapedefaults`, schema type
-/// `CT_ShapeDefaults`.
+/// The `o:shapedefaults` element, New Shape Defaults (ECMA-376 Part 4, section 19.2.2.28). Its
+/// schema type is `CT_ShapeDefaults`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1192,37 +1379,65 @@ pub struct MostRecentlyUsedColors {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NewShapeDefaults {
+    /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
+    /// The children that are an item of `NewShapeDefaultsContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<NewShapeDefaultsContent>,
+    /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
+    /// The attribute `fill`, when the element has it.
     pub fill: Option<common_simple_types::BooleanValue>,
+    /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
+    /// The attribute `spidmax`, when the element has it.
     pub spidmax: Option<String>,
+    /// The attribute `stroke`, when the element has it.
     pub stroke: Option<common_simple_types::BooleanValue>,
+    /// The attribute `strokecolor`, when the element has it.
     pub strokecolor: Option<String>,
+    /// The attribute `style`, when the element has it.
     pub style: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_ShapeDefaults`: xsd:all in `CT_ShapeDefaults`.
+/// One child element of a choice: xsd:all in `CT_ShapeDefaults`.
+///
+/// The schema types that hold it: `CT_ShapeDefaults`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum NewShapeDefaultsContent {
+    /// The element `o:callout`, a `Callout`.
     Callout(Callout),
+    /// The element `o:extrusion`, a `Extrusion`.
     Extrusion(Extrusion),
+    /// The element `v:stroke`, a `LineStrokeSettings`.
     LineStrokeSettings(super::vml::LineStrokeSettings),
+    /// The element `o:colormru`, a `MostRecentlyUsedColors`.
     MostRecentlyUsedColors(MostRecentlyUsedColors),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `v:shadow`, a `ShadowEffect`.
     ShadowEffect(super::vml::ShadowEffect),
+    /// The element `v:fill`, a `ShapeFillProperties`.
     ShapeFillProperties(super::vml::ShapeFillProperties),
+    /// The element `o:lock`, a `ShapeProtections`.
     ShapeProtections(ShapeProtections),
+    /// The element `o:skew`, a `SkewTransform`.
     SkewTransform(SkewTransform),
+    /// The element `v:textbox`, a `TextBox`.
     TextBox(super::vml::TextBox),
+    /// The element `o:colormenu`, a `UIDefaultColors`.
     UIDefaultColors(UIDefaultColors),
 }
 
-/// `ST_OLEDrawAspect`: the text the file carried.
+/// The simple type `ST_OLEDrawAspect`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1231,15 +1446,21 @@ pub enum NewShapeDefaultsContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct OLEDrawAspect(pub String);
-/// The members of `ST_OLEDrawAspect`, in alphabetical order.
+/// The members of the enumeration `ST_OLEDrawAspect`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum OLEDrawAspectMember {
+    /// The member written `Content`.
     Content,
+    /// The member written `Icon`.
     Icon,
 }
 
-/// `ST_OLEType`: the text the file carried.
+/// The simple type `ST_OLEType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1248,15 +1469,21 @@ pub enum OLEDrawAspectMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct OLEType(pub String);
-/// The members of `ST_OLEType`, in alphabetical order.
+/// The members of the enumeration `ST_OLEType`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum OLETypeMember {
+    /// The member written `Embed`.
     Embed,
+    /// The member written `Link`.
     Link,
 }
 
-/// `ST_OLEUpdateMode`: the text the file carried.
+/// The simple type `ST_OLEUpdateMode`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1265,15 +1492,19 @@ pub enum OLETypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct OLEUpdateMode(pub String);
-/// The members of `ST_OLEUpdateMode`, in alphabetical order.
+/// The members of the enumeration `ST_OLEUpdateMode`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum OLEUpdateModeMember {
+    /// The member written `Always`.
     Always,
+    /// The member written `OnCall`.
     OnCall,
 }
 
-/// 19.2.2.9 entry (Regroup Entry): the tag `o:entry`, schema type `CT_Entry`.
+/// The `o:entry` element, Regroup Entry (ECMA-376 Part 4, section 19.2.2.9). Its schema type is
+/// `CT_Entry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1282,12 +1513,15 @@ pub enum OLEUpdateModeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RegroupEntry {
+    /// The attribute `new`, when the element has it.
     pub new: Option<String>,
+    /// The attribute `old`, when the element has it.
     pub old: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 19.2.2.22 r (Rule): the tag `o:r`, schema type `CT_R`.
+/// The `o:r` element, Rule (ECMA-376 Part 4, section 19.2.2.22). Its schema type is `CT_R`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1296,15 +1530,22 @@ pub struct RegroupEntry {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Rule {
+    /// The attribute `how`, when the element has it.
     pub how: Option<StHow>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idref`, when the element has it.
     pub idref: Option<String>,
+    /// The children that are `ShapeReference`, in order.
     pub shape_reference: Vec<ShapeReference>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<RuleType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 19.2.2.27 rules (Rule Set): the tag `o:rules`, schema type `CT_Rules`.
+/// The `o:rules` element, Rule Set (ECMA-376 Part 4, section 19.2.2.27). Its schema type is
+/// `CT_Rules`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1313,12 +1554,19 @@ pub struct Rule {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RuleSet {
+    /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
+    /// The children that are `Rule`, in order.
     pub rule: Vec<Rule>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 19.2.3.22 `ST_RType` (Rule Type): the text the file carried.
+/// Rule Type, the simple type `ST_RType` (ECMA-376 Part 4, section 19.2.3.22), kept as the text the
+/// file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1327,17 +1575,26 @@ pub struct RuleSet {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RuleType(pub String);
-/// The members of `ST_RType`, in alphabetical order.
+/// The members of the enumeration `ST_RType`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum RuleTypeMember {
+    /// The member written `align`.
     Align,
+    /// The member written `arc`.
     Arc,
+    /// The member written `callout`.
     Callout,
+    /// The member written `connector`.
     Connector,
 }
 
-/// 19.2.3.23 `ST_ScreenSize` (Screen Sizes Type): the text the file carried.
+/// Screen Sizes Type, the simple type `ST_ScreenSize` (ECMA-376 Part 4, section 19.2.3.23), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1346,19 +1603,27 @@ pub enum RuleTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ScreenSizesType(pub String);
-/// The members of `ST_ScreenSize`, in alphabetical order.
+/// The members of the enumeration `ST_ScreenSize`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ScreenSizesTypeMember {
+    /// The member written `1024,768`.
     Value1024768,
+    /// The member written `1152,862`.
     Value1152862,
+    /// The member written `544,376`.
     Value544376,
+    /// The member written `640,480`.
     Value640480,
+    /// The member written `720,512`.
     Value720512,
+    /// The member written `800,600`.
     Value800600,
 }
 
-/// 19.2.2.3 clippath (Shape Clipping Path): the tag `o:clippath`, schema type `CT_ClipPath`.
+/// The `o:clippath` element, Shape Clipping Path (ECMA-376 Part 4, section 19.2.2.3). Its schema
+/// type is `CT_ClipPath`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1367,11 +1632,14 @@ pub enum ScreenSizesTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeClippingPath {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `o:v`, when the element has it.
     pub v: Option<String>,
 }
 
-/// 19.2.2.13 fill (Shape Fill Extended Properties): the tag `o:fill`, schema type `CT_Fill`.
+/// The `o:fill` element, Shape Fill Extended Properties (ECMA-376 Part 4, section 19.2.2.13). Its
+/// schema type is `CT_Fill`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1380,12 +1648,19 @@ pub struct ShapeClippingPath {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeFillExtendedProperties {
+    /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<ShapeFillType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 19.2.3.14 `ST_FillType` (Shape Fill Type): the text the file carried.
+/// Shape Fill Type, the simple type `ST_FillType` (ECMA-376 Part 4, section 19.2.3.14), kept as the
+/// text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1394,23 +1669,33 @@ pub struct ShapeFillExtendedProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeFillType(pub String);
-/// The members of `ST_FillType`, in alphabetical order.
+/// The members of the enumeration `ST_FillType`, in alphabetical order. `as_str` gives the text of
+/// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ShapeFillTypeMember {
+    /// The member written `background`.
     Background,
+    /// The member written `frame`.
     Frame,
+    /// The member written `gradient`.
     Gradient,
+    /// The member written `gradientCenter`.
     GradientCenter,
+    /// The member written `gradientRadial`.
     GradientRadial,
+    /// The member written `gradientUnscaled`.
     GradientUnscaled,
+    /// The member written `pattern`.
     Pattern,
+    /// The member written `solid`.
     Solid,
+    /// The member written `tile`.
     Tile,
 }
 
-/// 19.2.2.23 regrouptable (Shape Grouping History): the tag `o:regrouptable`, schema type
-/// `CT_RegroupTable`.
+/// The `o:regrouptable` element, Shape Grouping History (ECMA-376 Part 4, section 19.2.2.23). Its
+/// schema type is `CT_RegroupTable`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1419,12 +1704,16 @@ pub enum ShapeFillTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeGroupingHistory {
+    /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
+    /// The children that are `RegroupEntry`, in order.
     pub regroup_entry: Vec<RegroupEntry>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 19.2.2.14 idmap (Shape ID Map): the tag `o:idmap`, schema type `CT_IdMap`.
+/// The `o:idmap` element, Shape ID Map (ECMA-376 Part 4, section 19.2.2.14). Its schema type is
+/// `CT_IdMap`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1433,13 +1722,16 @@ pub struct ShapeGroupingHistory {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeIDMap {
+    /// The attribute `data`, when the element has it.
     pub data: Option<String>,
+    /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 19.2.2.29 shapelayout (Shape Layout Properties): the tag `o:shapelayout`, schema type
-/// `CT_ShapeLayout`.
+/// The `o:shapelayout` element, Shape Layout Properties (ECMA-376 Part 4, section 19.2.2.29). Its
+/// schema type is `CT_ShapeLayout`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1448,22 +1740,34 @@ pub struct ShapeIDMap {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeLayoutProperties {
+    /// The children that are an item of `ShapeLayoutPropertiesContent`, in order.
     pub content: Vec<ShapeLayoutPropertiesContent>,
+    /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_ShapeLayout`: xsd:all in `CT_ShapeLayout`.
+/// One child element of a choice: xsd:all in `CT_ShapeLayout`.
+///
+/// The schema types that hold it: `CT_ShapeLayout`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ShapeLayoutPropertiesContent {
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `o:rules`, a `RuleSet`.
     RuleSet(RuleSet),
+    /// The element `o:regrouptable`, a `ShapeGroupingHistory`.
     ShapeGroupingHistory(ShapeGroupingHistory),
+    /// The element `o:idmap`, a `ShapeIDMap`.
     ShapeIDMap(ShapeIDMap),
 }
 
-/// 19.2.2.18 lock (Shape Protections): the tag `o:lock`, schema type `CT_Lock`.
+/// The `o:lock` element, Shape Protections (ECMA-376 Part 4, section 19.2.2.18). Its schema type is
+/// `CT_Lock`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1472,22 +1776,36 @@ pub enum ShapeLayoutPropertiesContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeProtections {
+    /// The attribute `adjusthandles`, when the element has it.
     pub adjusthandles: Option<common_simple_types::BooleanValue>,
+    /// The attribute `aspectratio`, when the element has it.
     pub aspectratio: Option<common_simple_types::BooleanValue>,
+    /// The attribute `cropping`, when the element has it.
     pub cropping: Option<common_simple_types::BooleanValue>,
+    /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
+    /// The attribute `grouping`, when the element has it.
     pub grouping: Option<common_simple_types::BooleanValue>,
+    /// The attribute `position`, when the element has it.
     pub position: Option<common_simple_types::BooleanValue>,
+    /// The attribute `rotation`, when the element has it.
     pub rotation: Option<common_simple_types::BooleanValue>,
+    /// The attribute `selection`, when the element has it.
     pub selection: Option<common_simple_types::BooleanValue>,
+    /// The attribute `shapetype`, when the element has it.
     pub shapetype: Option<common_simple_types::BooleanValue>,
+    /// The attribute `text`, when the element has it.
     pub text: Option<common_simple_types::BooleanValue>,
+    /// The attribute `ungrouping`, when the element has it.
     pub ungrouping: Option<common_simple_types::BooleanValue>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `verticies`, when the element has it.
     pub verticies: Option<common_simple_types::BooleanValue>,
 }
 
-/// 19.2.2.21 proxy (Shape Reference): the tag `o:proxy`, schema type `CT_Proxy`.
+/// The `o:proxy` element, Shape Reference (ECMA-376 Part 4, section 19.2.2.21). Its schema type is
+/// `CT_Proxy`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1496,14 +1814,20 @@ pub struct ShapeProtections {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeReference {
+    /// The attribute `connectloc`, when the element has it.
     pub connectloc: Option<String>,
+    /// The attribute `end`, when the element has it.
     pub end: Option<common_simple_types::BooleanValueWithBlankFalseState>,
+    /// The attribute `idref`, when the element has it.
     pub idref: Option<String>,
+    /// The attribute `start`, when the element has it.
     pub start: Option<common_simple_types::BooleanValueWithBlankFalseState>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 19.2.2.31 skew (Skew Transform): the tag `o:skew`, schema type `CT_Skew`.
+/// The `o:skew` element, Skew Transform (ECMA-376 Part 4, section 19.2.2.31). Its schema type is
+/// `CT_Skew`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1512,16 +1836,27 @@ pub struct ShapeReference {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SkewTransform {
+    /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `matrix`, when the element has it.
     pub matrix: Option<String>,
+    /// The attribute `offset`, when the element has it.
     pub offset: Option<String>,
+    /// The attribute `on`, when the element has it.
     pub on: Option<common_simple_types::BooleanValue>,
+    /// The attribute `origin`, when the element has it.
     pub origin: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 19.2.3.15 `ST_How` (Alignment Type): the text the file carried.
+/// Alignment Type, the simple type `ST_How` (ECMA-376 Part 4, section 19.2.3.15), kept as the text
+/// the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1530,19 +1865,30 @@ pub struct SkewTransform {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StHow(pub String);
-/// The members of `ST_How`, in alphabetical order.
+/// The members of the enumeration `ST_How`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum StHowMember {
+    /// The member written `bottom`.
     Bottom,
+    /// The member written `center`.
     Center,
+    /// The member written `left`.
     Left,
+    /// The member written `middle`.
     Middle,
+    /// The member written `right`.
     Right,
+    /// The member written `top`.
     Top,
 }
 
-/// 19.2.3.16 `ST_HrAlign` (Alignment Type): the text the file carried.
+/// Alignment Type, the simple type `ST_HrAlign` (ECMA-376 Part 4, section 19.2.3.16), kept as the
+/// text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1551,17 +1897,21 @@ pub enum StHowMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StHrAlign(pub String);
-/// The members of `ST_HrAlign`, in alphabetical order.
+/// The members of the enumeration `ST_HrAlign`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum StHrAlignMember {
+    /// The member written `center`.
     Center,
+    /// The member written `left`.
     Left,
+    /// The member written `right`.
     Right,
 }
 
-/// 19.2.2.10 equationxml (Storage for Alternate Math Content): the tag `o:equationxml`, schema type
-/// `CT_EquationXml`.
+/// The `o:equationxml` element, Storage for Alternate Math Content (ECMA-376 Part 4, section
+/// 19.2.2.10). Its schema type is `CT_EquationXml`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1573,13 +1923,17 @@ pub enum StHrAlignMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StorageForAlternateMathContent {
+    /// The child that is an item of `super::drawing::AnyElementContent`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Box<super::drawing::AnyElementContent>,
+    /// The attribute `contentType`, when the element has it.
     pub content_type: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 19.2.2.1 bottom (Text Box Bottom Stroke): the tag `o:bottom`, schema type `CT_StrokeChild`.
+/// The `o:bottom` element, Text Box Bottom Stroke (ECMA-376 Part 4, section 19.2.2.1). Its schema
+/// type is `CT_StrokeChild`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1588,37 +1942,66 @@ pub struct StorageForAlternateMathContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextBoxBottomStroke {
+    /// The attribute `o:althref`, when the element has it.
     pub althref: Option<String>,
+    /// The attribute `color`, when the element has it.
     pub color: Option<String>,
+    /// The attribute `color2`, when the element has it.
     pub color2: Option<String>,
+    /// The attribute `dashstyle`, when the element has it.
     pub dashstyle: Option<String>,
+    /// The attribute `endarrow`, when the element has it.
     pub endarrow: Option<super::vml::StrokeArrowheadType>,
+    /// The attribute `endarrowlength`, when the element has it.
     pub endarrowlength: Option<super::vml::StrokeArrowheadLength>,
+    /// The attribute `endarrowwidth`, when the element has it.
     pub endarrowwidth: Option<super::vml::StrokeArrowheadWidth>,
+    /// The attribute `endcap`, when the element has it.
     pub endcap: Option<super::vml::StrokeEndCapType>,
+    /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
+    /// The attribute `filltype`, when the element has it.
     pub filltype: Option<super::vml::ShapeFillType>,
+    /// The attribute `o:forcedash`, when the element has it.
     pub forcedash: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:href`, when the element has it.
     pub href: Option<String>,
+    /// The attribute `imagealignshape`, when the element has it.
     pub imagealignshape: Option<common_simple_types::BooleanValue>,
+    /// The attribute `imageaspect`, when the element has it.
     pub imageaspect: Option<super::vml::ImageScalingBehavior>,
+    /// The attribute `imagesize`, when the element has it.
     pub imagesize: Option<String>,
+    /// The attribute `insetpen`, when the element has it.
     pub insetpen: Option<common_simple_types::BooleanValue>,
+    /// The attribute `joinstyle`, when the element has it.
     pub joinstyle: Option<super::vml::LineJoinType>,
+    /// The attribute `linestyle`, when the element has it.
     pub linestyle: Option<super::vml::StrokeLineStyle>,
+    /// The attribute `miterlimit`, when the element has it.
     pub miterlimit: Option<String>,
+    /// The attribute `on`, when the element has it.
     pub on: Option<common_simple_types::BooleanValue>,
+    /// The attribute `opacity`, when the element has it.
     pub opacity: Option<String>,
+    /// The attribute `src`, when the element has it.
     pub src: Option<String>,
+    /// The attribute `startarrow`, when the element has it.
     pub startarrow: Option<super::vml::StrokeArrowheadType>,
+    /// The attribute `startarrowlength`, when the element has it.
     pub startarrowlength: Option<super::vml::StrokeArrowheadLength>,
+    /// The attribute `startarrowwidth`, when the element has it.
     pub startarrowwidth: Option<super::vml::StrokeArrowheadWidth>,
+    /// The attribute `o:title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `weight`, when the element has it.
     pub weight: Option<String>,
 }
 
-/// 19.2.2.6 column (Text Box Interior Stroke): the tag `o:column`, schema type `CT_StrokeChild`.
+/// The `o:column` element, Text Box Interior Stroke (ECMA-376 Part 4, section 19.2.2.6). Its schema
+/// type is `CT_StrokeChild`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1627,37 +2010,66 @@ pub struct TextBoxBottomStroke {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextBoxInteriorStroke {
+    /// The attribute `o:althref`, when the element has it.
     pub althref: Option<String>,
+    /// The attribute `color`, when the element has it.
     pub color: Option<String>,
+    /// The attribute `color2`, when the element has it.
     pub color2: Option<String>,
+    /// The attribute `dashstyle`, when the element has it.
     pub dashstyle: Option<String>,
+    /// The attribute `endarrow`, when the element has it.
     pub endarrow: Option<super::vml::StrokeArrowheadType>,
+    /// The attribute `endarrowlength`, when the element has it.
     pub endarrowlength: Option<super::vml::StrokeArrowheadLength>,
+    /// The attribute `endarrowwidth`, when the element has it.
     pub endarrowwidth: Option<super::vml::StrokeArrowheadWidth>,
+    /// The attribute `endcap`, when the element has it.
     pub endcap: Option<super::vml::StrokeEndCapType>,
+    /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
+    /// The attribute `filltype`, when the element has it.
     pub filltype: Option<super::vml::ShapeFillType>,
+    /// The attribute `o:forcedash`, when the element has it.
     pub forcedash: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:href`, when the element has it.
     pub href: Option<String>,
+    /// The attribute `imagealignshape`, when the element has it.
     pub imagealignshape: Option<common_simple_types::BooleanValue>,
+    /// The attribute `imageaspect`, when the element has it.
     pub imageaspect: Option<super::vml::ImageScalingBehavior>,
+    /// The attribute `imagesize`, when the element has it.
     pub imagesize: Option<String>,
+    /// The attribute `insetpen`, when the element has it.
     pub insetpen: Option<common_simple_types::BooleanValue>,
+    /// The attribute `joinstyle`, when the element has it.
     pub joinstyle: Option<super::vml::LineJoinType>,
+    /// The attribute `linestyle`, when the element has it.
     pub linestyle: Option<super::vml::StrokeLineStyle>,
+    /// The attribute `miterlimit`, when the element has it.
     pub miterlimit: Option<String>,
+    /// The attribute `on`, when the element has it.
     pub on: Option<common_simple_types::BooleanValue>,
+    /// The attribute `opacity`, when the element has it.
     pub opacity: Option<String>,
+    /// The attribute `src`, when the element has it.
     pub src: Option<String>,
+    /// The attribute `startarrow`, when the element has it.
     pub startarrow: Option<super::vml::StrokeArrowheadType>,
+    /// The attribute `startarrowlength`, when the element has it.
     pub startarrowlength: Option<super::vml::StrokeArrowheadLength>,
+    /// The attribute `startarrowwidth`, when the element has it.
     pub startarrowwidth: Option<super::vml::StrokeArrowheadWidth>,
+    /// The attribute `o:title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `weight`, when the element has it.
     pub weight: Option<String>,
 }
 
-/// 19.2.2.16 left (Text Box Left Stroke): the tag `o:left`, schema type `CT_StrokeChild`.
+/// The `o:left` element, Text Box Left Stroke (ECMA-376 Part 4, section 19.2.2.16). Its schema type
+/// is `CT_StrokeChild`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1666,37 +2078,66 @@ pub struct TextBoxInteriorStroke {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextBoxLeftStroke {
+    /// The attribute `o:althref`, when the element has it.
     pub althref: Option<String>,
+    /// The attribute `color`, when the element has it.
     pub color: Option<String>,
+    /// The attribute `color2`, when the element has it.
     pub color2: Option<String>,
+    /// The attribute `dashstyle`, when the element has it.
     pub dashstyle: Option<String>,
+    /// The attribute `endarrow`, when the element has it.
     pub endarrow: Option<super::vml::StrokeArrowheadType>,
+    /// The attribute `endarrowlength`, when the element has it.
     pub endarrowlength: Option<super::vml::StrokeArrowheadLength>,
+    /// The attribute `endarrowwidth`, when the element has it.
     pub endarrowwidth: Option<super::vml::StrokeArrowheadWidth>,
+    /// The attribute `endcap`, when the element has it.
     pub endcap: Option<super::vml::StrokeEndCapType>,
+    /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
+    /// The attribute `filltype`, when the element has it.
     pub filltype: Option<super::vml::ShapeFillType>,
+    /// The attribute `o:forcedash`, when the element has it.
     pub forcedash: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:href`, when the element has it.
     pub href: Option<String>,
+    /// The attribute `imagealignshape`, when the element has it.
     pub imagealignshape: Option<common_simple_types::BooleanValue>,
+    /// The attribute `imageaspect`, when the element has it.
     pub imageaspect: Option<super::vml::ImageScalingBehavior>,
+    /// The attribute `imagesize`, when the element has it.
     pub imagesize: Option<String>,
+    /// The attribute `insetpen`, when the element has it.
     pub insetpen: Option<common_simple_types::BooleanValue>,
+    /// The attribute `joinstyle`, when the element has it.
     pub joinstyle: Option<super::vml::LineJoinType>,
+    /// The attribute `linestyle`, when the element has it.
     pub linestyle: Option<super::vml::StrokeLineStyle>,
+    /// The attribute `miterlimit`, when the element has it.
     pub miterlimit: Option<String>,
+    /// The attribute `on`, when the element has it.
     pub on: Option<common_simple_types::BooleanValue>,
+    /// The attribute `opacity`, when the element has it.
     pub opacity: Option<String>,
+    /// The attribute `src`, when the element has it.
     pub src: Option<String>,
+    /// The attribute `startarrow`, when the element has it.
     pub startarrow: Option<super::vml::StrokeArrowheadType>,
+    /// The attribute `startarrowlength`, when the element has it.
     pub startarrowlength: Option<super::vml::StrokeArrowheadLength>,
+    /// The attribute `startarrowwidth`, when the element has it.
     pub startarrowwidth: Option<super::vml::StrokeArrowheadWidth>,
+    /// The attribute `o:title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `weight`, when the element has it.
     pub weight: Option<String>,
 }
 
-/// 19.2.2.26 right (Text Box Right Stroke): the tag `o:right`, schema type `CT_StrokeChild`.
+/// The `o:right` element, Text Box Right Stroke (ECMA-376 Part 4, section 19.2.2.26). Its schema
+/// type is `CT_StrokeChild`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1705,37 +2146,66 @@ pub struct TextBoxLeftStroke {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextBoxRightStroke {
+    /// The attribute `o:althref`, when the element has it.
     pub althref: Option<String>,
+    /// The attribute `color`, when the element has it.
     pub color: Option<String>,
+    /// The attribute `color2`, when the element has it.
     pub color2: Option<String>,
+    /// The attribute `dashstyle`, when the element has it.
     pub dashstyle: Option<String>,
+    /// The attribute `endarrow`, when the element has it.
     pub endarrow: Option<super::vml::StrokeArrowheadType>,
+    /// The attribute `endarrowlength`, when the element has it.
     pub endarrowlength: Option<super::vml::StrokeArrowheadLength>,
+    /// The attribute `endarrowwidth`, when the element has it.
     pub endarrowwidth: Option<super::vml::StrokeArrowheadWidth>,
+    /// The attribute `endcap`, when the element has it.
     pub endcap: Option<super::vml::StrokeEndCapType>,
+    /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
+    /// The attribute `filltype`, when the element has it.
     pub filltype: Option<super::vml::ShapeFillType>,
+    /// The attribute `o:forcedash`, when the element has it.
     pub forcedash: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:href`, when the element has it.
     pub href: Option<String>,
+    /// The attribute `imagealignshape`, when the element has it.
     pub imagealignshape: Option<common_simple_types::BooleanValue>,
+    /// The attribute `imageaspect`, when the element has it.
     pub imageaspect: Option<super::vml::ImageScalingBehavior>,
+    /// The attribute `imagesize`, when the element has it.
     pub imagesize: Option<String>,
+    /// The attribute `insetpen`, when the element has it.
     pub insetpen: Option<common_simple_types::BooleanValue>,
+    /// The attribute `joinstyle`, when the element has it.
     pub joinstyle: Option<super::vml::LineJoinType>,
+    /// The attribute `linestyle`, when the element has it.
     pub linestyle: Option<super::vml::StrokeLineStyle>,
+    /// The attribute `miterlimit`, when the element has it.
     pub miterlimit: Option<String>,
+    /// The attribute `on`, when the element has it.
     pub on: Option<common_simple_types::BooleanValue>,
+    /// The attribute `opacity`, when the element has it.
     pub opacity: Option<String>,
+    /// The attribute `src`, when the element has it.
     pub src: Option<String>,
+    /// The attribute `startarrow`, when the element has it.
     pub startarrow: Option<super::vml::StrokeArrowheadType>,
+    /// The attribute `startarrowlength`, when the element has it.
     pub startarrowlength: Option<super::vml::StrokeArrowheadLength>,
+    /// The attribute `startarrowwidth`, when the element has it.
     pub startarrowwidth: Option<super::vml::StrokeArrowheadWidth>,
+    /// The attribute `o:title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `weight`, when the element has it.
     pub weight: Option<String>,
 }
 
-/// 19.2.2.32 top (Text Box Top Stroke): the tag `o:top`, schema type `CT_StrokeChild`.
+/// The `o:top` element, Text Box Top Stroke (ECMA-376 Part 4, section 19.2.2.32). Its schema type
+/// is `CT_StrokeChild`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1744,37 +2214,66 @@ pub struct TextBoxRightStroke {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextBoxTopStroke {
+    /// The attribute `o:althref`, when the element has it.
     pub althref: Option<String>,
+    /// The attribute `color`, when the element has it.
     pub color: Option<String>,
+    /// The attribute `color2`, when the element has it.
     pub color2: Option<String>,
+    /// The attribute `dashstyle`, when the element has it.
     pub dashstyle: Option<String>,
+    /// The attribute `endarrow`, when the element has it.
     pub endarrow: Option<super::vml::StrokeArrowheadType>,
+    /// The attribute `endarrowlength`, when the element has it.
     pub endarrowlength: Option<super::vml::StrokeArrowheadLength>,
+    /// The attribute `endarrowwidth`, when the element has it.
     pub endarrowwidth: Option<super::vml::StrokeArrowheadWidth>,
+    /// The attribute `endcap`, when the element has it.
     pub endcap: Option<super::vml::StrokeEndCapType>,
+    /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
+    /// The attribute `filltype`, when the element has it.
     pub filltype: Option<super::vml::ShapeFillType>,
+    /// The attribute `o:forcedash`, when the element has it.
     pub forcedash: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:href`, when the element has it.
     pub href: Option<String>,
+    /// The attribute `imagealignshape`, when the element has it.
     pub imagealignshape: Option<common_simple_types::BooleanValue>,
+    /// The attribute `imageaspect`, when the element has it.
     pub imageaspect: Option<super::vml::ImageScalingBehavior>,
+    /// The attribute `imagesize`, when the element has it.
     pub imagesize: Option<String>,
+    /// The attribute `insetpen`, when the element has it.
     pub insetpen: Option<common_simple_types::BooleanValue>,
+    /// The attribute `joinstyle`, when the element has it.
     pub joinstyle: Option<super::vml::LineJoinType>,
+    /// The attribute `linestyle`, when the element has it.
     pub linestyle: Option<super::vml::StrokeLineStyle>,
+    /// The attribute `miterlimit`, when the element has it.
     pub miterlimit: Option<String>,
+    /// The attribute `on`, when the element has it.
     pub on: Option<common_simple_types::BooleanValue>,
+    /// The attribute `opacity`, when the element has it.
     pub opacity: Option<String>,
+    /// The attribute `src`, when the element has it.
     pub src: Option<String>,
+    /// The attribute `startarrow`, when the element has it.
     pub startarrow: Option<super::vml::StrokeArrowheadType>,
+    /// The attribute `startarrowlength`, when the element has it.
     pub startarrowlength: Option<super::vml::StrokeArrowheadLength>,
+    /// The attribute `startarrowwidth`, when the element has it.
     pub startarrowwidth: Option<super::vml::StrokeArrowheadWidth>,
+    /// The attribute `o:title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `weight`, when the element has it.
     pub weight: Option<String>,
 }
 
-/// 19.2.2.4 colormenu (UI Default Colors): the tag `o:colormenu`, schema type `CT_ColorMenu`.
+/// The `o:colormenu` element, UI Default Colors (ECMA-376 Part 4, section 19.2.2.4). Its schema
+/// type is `CT_ColorMenu`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1783,15 +2282,22 @@ pub struct TextBoxTopStroke {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct UIDefaultColors {
+    /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
+    /// The attribute `extrusioncolor`, when the element has it.
     pub extrusioncolor: Option<String>,
+    /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
+    /// The attribute `shadowcolor`, when the element has it.
     pub shadowcolor: Option<String>,
+    /// The attribute `strokecolor`, when the element has it.
     pub strokecolor: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 19.2.2.8 diagram (VML Diagram): the tag `o:diagram`, schema type `CT_Diagram`.
+/// The `o:diagram` element, VML Diagram (ECMA-376 Part 4, section 19.2.2.8). Its schema type is
+/// `CT_Diagram`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1800,22 +2306,34 @@ pub struct UIDefaultColors {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct VMLDiagram {
+    /// The attribute `autoformat`, when the element has it.
     pub autoformat: Option<common_simple_types::BooleanValue>,
+    /// The attribute `autolayout`, when the element has it.
     pub autolayout: Option<common_simple_types::BooleanValue>,
+    /// The attribute `constrainbounds`, when the element has it.
     pub constrainbounds: Option<String>,
+    /// The attribute `dgmbasetextscale`, when the element has it.
     pub dgmbasetextscale: Option<String>,
+    /// The attribute `dgmfontsize`, when the element has it.
     pub dgmfontsize: Option<String>,
+    /// The attribute `dgmscalex`, when the element has it.
     pub dgmscalex: Option<String>,
+    /// The attribute `dgmscaley`, when the element has it.
     pub dgmscaley: Option<String>,
+    /// The attribute `dgmstyle`, when the element has it.
     pub dgmstyle: Option<String>,
+    /// The attribute `v:ext`, when the element has it.
     pub ext: Option<super::vml::VMLExtensionHandlingBehaviors>,
+    /// The child that is `DiagramRelationshipTable`, when there is one.
     pub relationship_table: Option<Box<DiagramRelationshipTable>>,
+    /// The attribute `reverse`, when the element has it.
     pub reverse: Option<common_simple_types::BooleanValue>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 19.2.2.12 `FieldCodes` (`WordprocessingML` Field Switches): the tag `o:FieldCodes`, schema type
-/// `string`.
+/// The `o:FieldCodes` element, `WordprocessingML` Field Switches (ECMA-376 Part 4, section
+/// 19.2.2.12). Its schema type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1824,7 +2342,9 @@ pub struct VMLDiagram {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct WordprocessingMLFieldSwitches {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
@@ -1868,7 +2388,7 @@ impl BlackAndWhiteModesMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -1958,7 +2478,7 @@ impl CalloutAnglesMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -2033,7 +2553,7 @@ impl ConnectionLocationsTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -2088,7 +2608,7 @@ impl ConnectorTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -2379,7 +2899,7 @@ impl ExtrusionColorTypesMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -2429,7 +2949,7 @@ impl ExtrusionPlanesMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -2479,7 +2999,7 @@ impl ExtrusionRenderingTypesMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -2532,7 +3052,7 @@ impl ExtrusionTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -2605,7 +3125,7 @@ impl InsetMarginTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -2754,7 +3274,7 @@ impl OLEDrawAspectMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -2801,7 +3321,7 @@ impl OLETypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -2850,7 +3370,7 @@ impl OLEUpdateModeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -2977,7 +3497,7 @@ impl RuleTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -3030,7 +3550,7 @@ impl ScreenSizesTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -3135,7 +3655,7 @@ impl ShapeFillTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -3380,7 +3900,7 @@ impl StHowMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -3430,7 +3950,7 @@ impl StHrAlignMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

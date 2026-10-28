@@ -212,8 +212,11 @@
 //! The hooks of the `p15` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_core::office_powerpoint_2012_main`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/powerpoint/2012/main`.
+//! The namespace is `http://schemas.microsoft.com/office/powerpoint/2012/main`. Its prefix, `p15`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_core::office_powerpoint_2012_main::*;
 
 use officekit_markup_base::Written;
@@ -229,6 +232,8 @@ use std::io;
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_powerpoint_2012_main` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `ChartTrackingRefBased`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn chart_tracking_ref_based(
         &mut self,
         _node: &ChartTrackingRefBased,
@@ -236,45 +241,66 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Clr`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn clr(&mut self, _node: &Clr) -> Option<Clr> {
         None
     }
 
+    /// Asked for each `ExtLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
         None
     }
 
+    /// Asked for each `Guide`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn guide(&mut self, _node: &Guide) -> Option<Guide> {
         None
     }
 
+    /// Asked for each `NotesGuideLst`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn notes_guide_lst(&mut self, _node: &NotesGuideLst) -> Option<NotesGuideLst> {
         None
     }
 
+    /// Asked for each `ParentCm`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn parent_cm(&mut self, _node: &ParentCm) -> Option<ParentCm> {
         None
     }
 
+    /// Asked for each `PresenceInfo`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn presence_info(&mut self, _node: &PresenceInfo) -> Option<PresenceInfo> {
         None
     }
 
+    /// Asked for each `PrstTrans`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn prst_trans(&mut self, _node: &PrstTrans) -> Option<PrstTrans> {
         None
     }
 
+    /// Asked for each `SldGuideLst`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn sld_guide_lst(&mut self, _node: &SldGuideLst) -> Option<SldGuideLst> {
         None
     }
 
+    /// Asked for each `ThreadingInfo`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn threading_info(&mut self, _node: &ThreadingInfo) -> Option<ThreadingInfo> {
         None
     }
 
+    /// Asked when a `ChartTrackingRefBased` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_chart_tracking_ref_based(
         &mut self,
         _node: &ChartTrackingRefBased,
@@ -283,30 +309,42 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Clr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_clr(&mut self, _node: &Clr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Guide` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_guide(&mut self, _node: &Guide, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `NotesGuideLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_notes_guide_lst(
         &mut self,
         _node: &NotesGuideLst,
@@ -315,9 +353,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ParentCm` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_parent_cm(
         &mut self,
         _node: &ParentCm,
@@ -326,9 +367,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PresenceInfo` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_presence_info(
         &mut self,
         _node: &PresenceInfo,
@@ -337,9 +381,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PrstTrans` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_prst_trans(
         &mut self,
         _node: &PrstTrans,
@@ -348,9 +395,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SldGuideLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sld_guide_lst(
         &mut self,
         _node: &SldGuideLst,
@@ -359,9 +409,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ThreadingInfo` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_threading_info(
         &mut self,
         _node: &ThreadingInfo,
@@ -377,6 +430,8 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_powerpoint_2012_main` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `ChartTrackingRefBased`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn chart_tracking_ref_based(
         &mut self,
         _node: &ChartTrackingRefBased,
@@ -384,38 +439,52 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Clr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn clr(&mut self, _node: &Clr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext_lst(&mut self, _node: &ExtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Guide`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn guide(&mut self, _node: &Guide) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NotesGuideLst`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn notes_guide_lst(&mut self, _node: &NotesGuideLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ParentCm`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn parent_cm(&mut self, _node: &ParentCm) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PresenceInfo`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn presence_info(&mut self, _node: &PresenceInfo) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PrstTrans`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn prst_trans(&mut self, _node: &PrstTrans) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SldGuideLst`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn sld_guide_lst(&mut self, _node: &SldGuideLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ThreadingInfo`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn threading_info(&mut self, _node: &ThreadingInfo) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

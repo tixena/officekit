@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `dsp` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/drawing/2008/diagram`, which files write with the prefix `dsp`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/drawing/2008/diagram`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -422,7 +424,8 @@ pub static GROUP_SHAPE_CONTENT_TAGS: officekit_markup_base::Accept =
         tags: &[(NS_DSP, "grpSp"), (NS_DSP, "sp")],
     };
 
-/// The tag `dsp:cNvGrpSpPr`, schema type `CT_NonVisualGroupDrawingShapeProps` of SDK 3.5.1's data.
+/// The `dsp:cNvGrpSpPr` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_NonVisualGroupDrawingShapeProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -431,12 +434,16 @@ pub static GROUP_SHAPE_CONTENT_TAGS: officekit_markup_base::Accept =
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CNvGrpSpPr {
+    /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionList>>,
+    /// The child that is `drawing::GroupShapeLocks`, when there is one.
     pub group_shape_locks: Option<Box<drawing::GroupShapeLocks>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `dsp:cNvPr`, schema type `CT_NonVisualDrawingProps` of SDK 3.5.1's data.
+/// The `dsp:cNvPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_NonVisualDrawingProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -445,18 +452,28 @@ pub struct CNvGrpSpPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CNvPr {
+    /// The child that is `drawing::ClickHyperlink`, when there is one.
     pub click_hyperlink: Option<Box<drawing::ClickHyperlink>>,
+    /// The attribute `descr`, when the element has it.
     pub descr: Option<String>,
+    /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionList>>,
+    /// The attribute `hidden`, when the element has it.
     pub hidden: Option<String>,
+    /// The child that is `drawing::HyperlinkForHover`, when there is one.
     pub hyperlink_for_hover: Option<Box<drawing::HyperlinkForHover>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<drawing::DrawingElementID>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `dsp:cNvSpPr`, schema type `CT_NonVisualDrawingShapeProps` of SDK 3.5.1's data.
+/// The `dsp:cNvSpPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_NonVisualDrawingShapeProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -465,9 +482,13 @@ pub struct CNvPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CNvSpPr {
+    /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionList>>,
+    /// The child that is `drawing::ShapeLocks`, when there is one.
     pub shape_locks: Option<Box<drawing::ShapeLocks>>,
+    /// The attribute `txBox`, when the element has it.
     pub tx_box: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -480,81 +501,120 @@ pub struct CNvSpPr {
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_drawing_2008_diagram` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `CNvGrpSpPr`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn c_nv_grp_sp_pr(&mut self, _node: &CNvGrpSpPr) -> Option<CNvGrpSpPr> {
         None
     }
 
+    /// Asked for each `CNvPr`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn c_nv_pr(&mut self, _node: &CNvPr) -> Option<CNvPr> {
         None
     }
 
+    /// Asked for each `CNvSpPr`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn c_nv_sp_pr(&mut self, _node: &CNvSpPr) -> Option<CNvSpPr> {
         None
     }
 
+    /// Asked for each `DataModelExt`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn data_model_ext(&mut self, _node: &DataModelExt) -> Option<DataModelExt> {
         None
     }
 
+    /// Asked for each `Drawing`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn drawing(&mut self, _node: &Drawing) -> Option<Drawing> {
         None
     }
 
+    /// Asked for each `ExtLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
         None
     }
 
+    /// Asked for each `GroupShapeContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn group_shape(&mut self, _node: &GroupShapeContent) -> Option<GroupShapeContent> {
         None
     }
 
+    /// Asked for each `GroupShapeContent` in a list. `None` leaves the item to its own `transform`,
+    /// and `Some` puts the items it holds, any number of them, in its place.
     fn group_shape_items(&mut self, _node: &GroupShapeContent) -> Option<Vec<GroupShapeContent>> {
         None
     }
 
+    /// Asked for each `GrpSp`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn grp_sp(&mut self, _node: &GrpSp) -> Option<GrpSp> {
         None
     }
 
+    /// Asked for each `GrpSpPr`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn grp_sp_pr(&mut self, _node: &GrpSpPr) -> Option<GrpSpPr> {
         None
     }
 
+    /// Asked for each `NvGrpSpPr`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn nv_grp_sp_pr(&mut self, _node: &NvGrpSpPr) -> Option<NvGrpSpPr> {
         None
     }
 
+    /// Asked for each `NvSpPr`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn nv_sp_pr(&mut self, _node: &NvSpPr) -> Option<NvSpPr> {
         None
     }
 
+    /// Asked for each `Sp`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn sp(&mut self, _node: &Sp) -> Option<Sp> {
         None
     }
 
+    /// Asked for each `SpPr`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn sp_pr(&mut self, _node: &SpPr) -> Option<SpPr> {
         None
     }
 
+    /// Asked for each `SpTree`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn sp_tree(&mut self, _node: &SpTree) -> Option<SpTree> {
         None
     }
 
+    /// Asked for each `Style`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn style(&mut self, _node: &Style) -> Option<Style> {
         None
     }
 
+    /// Asked for each `TxBody`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn tx_body(&mut self, _node: &TxBody) -> Option<TxBody> {
         None
     }
 
+    /// Asked for each `TxXfrm`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn tx_xfrm(&mut self, _node: &TxXfrm) -> Option<TxXfrm> {
         None
     }
 
+    /// Asked when a `CNvGrpSpPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_c_nv_grp_sp_pr(
         &mut self,
         _node: &CNvGrpSpPr,
@@ -563,16 +623,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CNvPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_c_nv_pr(&mut self, _node: &CNvPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `CNvSpPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_c_nv_sp_pr(
         &mut self,
         _node: &CNvSpPr,
@@ -581,9 +647,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DataModelExt` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_data_model_ext(
         &mut self,
         _node: &DataModelExt,
@@ -592,23 +661,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Drawing` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_drawing(&mut self, _node: &Drawing, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `GroupShapeContent` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_group_shape(
         &mut self,
         _node: &GroupShapeContent,
@@ -617,9 +695,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `GroupShapeContent` in a list is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_group_shape_items(
         &mut self,
         _node: &GroupShapeContent,
@@ -628,16 +709,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `GrpSp` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_grp_sp(&mut self, _node: &GrpSp, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `GrpSpPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_grp_sp_pr(
         &mut self,
         _node: &GrpSpPr,
@@ -646,9 +733,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NvGrpSpPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_nv_grp_sp_pr(
         &mut self,
         _node: &NvGrpSpPr,
@@ -657,57 +747,79 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NvSpPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_nv_sp_pr(&mut self, _node: &NvSpPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Sp` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sp(&mut self, _node: &Sp, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `SpPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sp_pr(&mut self, _node: &SpPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `SpTree` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sp_tree(&mut self, _node: &SpTree, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Style` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_style(&mut self, _node: &Style, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `TxBody` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_tx_body(&mut self, _node: &TxBody, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `TxXfrm` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_tx_xfrm(&mut self, _node: &TxXfrm, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 }
 
-/// The tag `dsp:dataModelExt`, schema type `CT_DataModelExtBlock` of SDK 3.5.1's data.
+/// The `dsp:dataModelExt` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_DataModelExtBlock`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -716,12 +828,16 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataModelExt {
+    /// The attribute `minVer`, when the element has it.
     pub min_ver: Option<String>,
+    /// The attribute `relId`, when the element has it.
     pub rel_id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `dsp:drawing`, schema type `CT_Drawing` of SDK 3.5.1's data.
+/// The `dsp:drawing` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Drawing`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -730,11 +846,14 @@ pub struct DataModelExt {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Drawing {
+    /// The child that is `SpTree`, which the schema requires.
     pub sp_tree: Box<SpTree>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `dsp:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
+/// The `dsp:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -743,20 +862,30 @@ pub struct Drawing {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
+    /// The children that are `drawing::Extension`, in order.
     pub extension: Vec<drawing::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_GroupShape`: choice in `CT_GroupShape`.
+/// One child element of a choice: choice in `CT_GroupShape`.
+///
+/// The schema types that hold it: `CT_GroupShape`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum GroupShapeContent {
+    /// The element `dsp:grpSp`, a `GrpSp`.
     GrpSp(GrpSp),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `dsp:sp`, a `Sp`.
     Sp(Sp),
 }
 
-/// The tag `dsp:grpSp`, schema type `CT_GroupShape` of SDK 3.5.1's data.
+/// The `dsp:grpSp` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_GroupShape`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -768,15 +897,21 @@ pub enum GroupShapeContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GrpSp {
+    /// The children that are an item of `GroupShapeContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<GroupShapeContent>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `NvGrpSpPr`, which the schema requires.
     pub nv_grp_sp_pr: Box<NvGrpSpPr>,
+    /// The child that is `GrpSpPr`, which the schema requires.
     pub pr: Box<GrpSpPr>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `dsp:grpSpPr`, schema type `CT_GroupShapeProperties` of SDK 3.5.1's data.
+/// The `dsp:grpSpPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_GroupShapeProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -785,16 +920,24 @@ pub struct GrpSp {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GrpSpPr {
+    /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<drawing::BlackAndWhiteMode>,
+    /// The child that is an item of `drawing::EffectPropertiesContent`, when there is one.
     pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
+    /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionList>>,
+    /// The child that is an item of `drawing::FillPropertiesContent`, when there is one.
     pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
+    /// The child that is `drawing::Scene3d`, when there is one.
     pub scene3d: Option<Box<drawing::Scene3d>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `drawing::XfrmGroupTransform2D`, when there is one.
     pub xfrm_group_transform2d: Option<Box<drawing::XfrmGroupTransform2D>>,
 }
 
-/// The tag `dsp:nvGrpSpPr`, schema type `CT_GroupShapeNonVisual` of SDK 3.5.1's data.
+/// The `dsp:nvGrpSpPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_GroupShapeNonVisual`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -803,12 +946,16 @@ pub struct GrpSpPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NvGrpSpPr {
+    /// The child that is `CNvGrpSpPr`, which the schema requires.
     pub c: Box<CNvGrpSpPr>,
+    /// The child that is `CNvPr`, which the schema requires.
     pub c_nv_pr: Box<CNvPr>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `dsp:nvSpPr`, schema type `CT_ShapeNonVisual` of SDK 3.5.1's data.
+/// The `dsp:nvSpPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ShapeNonVisual`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -817,12 +964,16 @@ pub struct NvGrpSpPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NvSpPr {
+    /// The child that is `CNvSpPr`, which the schema requires.
     pub c: Box<CNvSpPr>,
+    /// The child that is `CNvPr`, which the schema requires.
     pub c_nv_pr: Box<CNvPr>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `dsp:sp`, schema type `CT_Shape` of SDK 3.5.1's data.
+/// The `dsp:sp` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `CT_Shape`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -831,17 +982,26 @@ pub struct NvSpPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Sp {
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The attribute `modelId`, when the element has it.
     pub model_id: Option<String>,
+    /// The child that is `NvSpPr`, which the schema requires.
     pub nv_sp_pr: Box<NvSpPr>,
+    /// The child that is `SpPr`, which the schema requires.
     pub pr: Box<SpPr>,
+    /// The child that is `Style`, when there is one.
     pub style: Option<Box<Style>>,
+    /// The child that is `TxBody`, when there is one.
     pub tx_body: Option<Box<TxBody>>,
+    /// The child that is `TxXfrm`, when there is one.
     pub tx_xfrm: Option<Box<TxXfrm>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `dsp:spPr`, schema type `CT_ShapeProperties` of SDK 3.5.1's data.
+/// The `dsp:spPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ShapeProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -850,19 +1010,30 @@ pub struct Sp {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SpPr {
+    /// The child that is `drawing::Apply3DShapeProperties`, when there is one.
     pub apply_3d_shape_properties: Option<Box<drawing::Apply3DShapeProperties>>,
+    /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<drawing::BlackAndWhiteMode>,
+    /// The child that is an item of `drawing::EffectPropertiesContent`, when there is one.
     pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
+    /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionList>>,
+    /// The child that is an item of `drawing::FillPropertiesContent`, when there is one.
     pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
+    /// The child that is an item of `drawing::GeometryContent`, when there is one.
     pub geometry_content: Option<Box<drawing::GeometryContent>>,
+    /// The child that is `drawing::Outline`, when there is one.
     pub outline: Option<Box<drawing::Outline>>,
+    /// The child that is `drawing::Scene3d`, when there is one.
     pub scene3d: Option<Box<drawing::Scene3d>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `drawing::XfrmTransform2D`, when there is one.
     pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2D>>,
 }
 
-/// The tag `dsp:spTree`, schema type `CT_GroupShape` of SDK 3.5.1's data.
+/// The `dsp:spTree` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_GroupShape`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -871,14 +1042,20 @@ pub struct SpPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SpTree {
+    /// The children that are an item of `GroupShapeContent`, in order.
     pub content: Vec<GroupShapeContent>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `GrpSpPr`, which the schema requires.
     pub grp_sp_pr: Box<GrpSpPr>,
+    /// The child that is `NvGrpSpPr`, which the schema requires.
     pub nv_grp_sp_pr: Box<NvGrpSpPr>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `dsp:style`, schema type `CT_ShapeStyle` of SDK 3.5.1's data.
+/// The `dsp:style` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ShapeStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -887,14 +1064,20 @@ pub struct SpTree {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Style {
+    /// The child that is `drawing::EffectReference`, which the schema requires.
     pub effect_reference: Box<drawing::EffectReference>,
+    /// The child that is `drawing::FillReference`, which the schema requires.
     pub fill_reference: Box<drawing::FillReference>,
+    /// The child that is `drawing::FontReference`, which the schema requires.
     pub font_reference: Box<drawing::FontReference>,
+    /// The child that is `drawing::LineReference`, which the schema requires.
     pub line_reference: Box<drawing::LineReference>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `dsp:txBody`, schema type `CT_TextBody` of SDK 3.5.1's data.
+/// The `dsp:txBody` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TextBody`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -903,13 +1086,18 @@ pub struct Style {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TxBody {
+    /// The child that is `drawing::BodyProperties`, which the schema requires.
     pub properties: Box<drawing::BodyProperties>,
+    /// The child that is `drawing::TextListStyles`, when there is one.
     pub text_list_styles: Option<Box<drawing::TextListStyles>>,
+    /// The children that are `drawing::TextParagraphs`, in order.
     pub text_paragraphs: Vec<drawing::TextParagraphs>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `dsp:txXfrm`, schema type `CT_Transform2D` of SDK 3.5.1's data.
+/// The `dsp:txXfrm` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Transform2D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -918,11 +1106,17 @@ pub struct TxBody {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TxXfrm {
+    /// The child that is `drawing::Extents`, when there is one.
     pub extents: Option<Box<drawing::Extents>>,
+    /// The attribute `flipH`, when the element has it.
     pub flip_h: Option<String>,
+    /// The attribute `flipV`, when the element has it.
     pub flip_v: Option<String>,
+    /// The child that is `drawing::Offset`, when there is one.
     pub offset: Option<Box<drawing::Offset>>,
+    /// The attribute `rot`, when the element has it.
     pub rot: Option<drawing::Angle>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -932,70 +1126,91 @@ pub struct TxXfrm {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_drawing_2008_diagram` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `CNvGrpSpPr`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn c_nv_grp_sp_pr(&mut self, _node: &CNvGrpSpPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CNvPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn c_nv_pr(&mut self, _node: &CNvPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CNvSpPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn c_nv_sp_pr(&mut self, _node: &CNvSpPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DataModelExt`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn data_model_ext(&mut self, _node: &DataModelExt) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Drawing`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn drawing(&mut self, _node: &Drawing) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext_lst(&mut self, _node: &ExtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `GroupShapeContent`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn group_shape(&mut self, _node: &GroupShapeContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `GrpSp`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn grp_sp(&mut self, _node: &GrpSp) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `GrpSpPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn grp_sp_pr(&mut self, _node: &GrpSpPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NvGrpSpPr`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn nv_grp_sp_pr(&mut self, _node: &NvGrpSpPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NvSpPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn nv_sp_pr(&mut self, _node: &NvSpPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Sp`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sp(&mut self, _node: &Sp) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SpPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sp_pr(&mut self, _node: &SpPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SpTree`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sp_tree(&mut self, _node: &SpTree) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Style`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn style(&mut self, _node: &Style) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TxBody`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn tx_body(&mut self, _node: &TxBody) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TxXfrm`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn tx_xfrm(&mut self, _node: &TxXfrm) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

@@ -23,6 +23,9 @@ markdown = ["transitional", "dep:arky", "dep:image-webp", "dep:png", "dep:resvg"
 # The `binary` module: officekit's binary form, an rkyv archive of a file's model.
 binary-format = ["dep:rkyv", "officekit-parts/binary-format", "arky?/binary-format"]
 
+[package.metadata.docs.rs]
+all-features = true
+
 [dependencies]
 # The XML layer: element tree, names, values, markup compatibility, part reader and writer
 officekit-xml.workspace = true

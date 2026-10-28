@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `a` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.openxmlformats.org/drawingml/2006/main`, which files write with the prefix `a`.
 //!
-//! The namespace is `http://schemas.openxmlformats.org/drawingml/2006/main`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -4187,7 +4187,8 @@ pub static ANY_ELEMENT_CONTENT_TAGS: officekit_markup_base::Accept =
 static ST_TEXT_BULLET_SIZE_PERCENT_PATTERNS: &[&str] =
     &["0*((2[5-9])|([3-9][0-9])|([1-3][0-9][0-9])|400)%"];
 
-/// 20.1.4.1.1 accent1 (Accent 1): the tag `a:accent1`, schema type `CT_Color`.
+/// The `a:accent1` element, Accent 1 (ECMA-376 Part 1, section 20.1.4.1.1). Its schema type is
+/// `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4196,11 +4197,14 @@ static ST_TEXT_BULLET_SIZE_PERCENT_PATTERNS: &[&str] =
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Accent1 {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.1.2 accent2 (Accent 2): the tag `a:accent2`, schema type `CT_Color`.
+/// The `a:accent2` element, Accent 2 (ECMA-376 Part 1, section 20.1.4.1.2). Its schema type is
+/// `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4209,11 +4213,14 @@ pub struct Accent1 {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Accent2 {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.1.3 accent3 (Accent 3): the tag `a:accent3`, schema type `CT_Color`.
+/// The `a:accent3` element, Accent 3 (ECMA-376 Part 1, section 20.1.4.1.3). Its schema type is
+/// `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4222,11 +4229,14 @@ pub struct Accent2 {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Accent3 {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.1.4 accent4 (Accent 4): the tag `a:accent4`, schema type `CT_Color`.
+/// The `a:accent4` element, Accent 4 (ECMA-376 Part 1, section 20.1.4.1.4). Its schema type is
+/// `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4235,11 +4245,14 @@ pub struct Accent3 {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Accent4 {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.1.5 accent5 (Accent 5): the tag `a:accent5`, schema type `CT_Color`.
+/// The `a:accent5` element, Accent 5 (ECMA-376 Part 1, section 20.1.4.1.5). Its schema type is
+/// `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4248,11 +4261,14 @@ pub struct Accent4 {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Accent5 {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.1.6 accent6 (Accent 6): the tag `a:accent6`, schema type `CT_Color`.
+/// The `a:accent6` element, Accent 6 (ECMA-376 Part 1, section 20.1.4.1.6). Its schema type is
+/// `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4261,11 +4277,17 @@ pub struct Accent5 {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Accent6 {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.1 `ST_AdjAngle` (Adjustable Angle Methods): the text the file carried.
+/// Adjustable Angle Methods, the simple type `ST_AdjAngle` (ECMA-376 Part 1, section 20.1.10.1),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4279,11 +4301,17 @@ pub struct AdjustableAngleMethods(pub String);
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum AdjustableAngleMethodsMember {
+    /// A value of the member type `i64`.
     Angle(i64),
+    /// A value of the member type `String`.
     GeomGuideName(String),
 }
 
-/// 20.1.10.2 `ST_AdjCoordinate` (Adjustable Coordinate Methods): the text the file carried.
+/// Adjustable Coordinate Methods, the simple type `ST_AdjCoordinate` (ECMA-376 Part 1, section
+/// 20.1.10.2), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4297,12 +4325,19 @@ pub struct AdjustableCoordinateMethods(pub String);
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
 pub enum AdjustableCoordinateMethodsMember {
+    /// A value of the member type `String`.
     GeomGuideName(String),
+    /// A value of the member type `i64`.
     StCoordinateUnqualified(i64),
+    /// A value of the member type `Measure`.
     UniversalMeasurement(Measure),
 }
 
-/// 20.1.10.39 `ST_PenAlignment` (Alignment Type): the text the file carried.
+/// Alignment Type, the simple type `ST_PenAlignment` (ECMA-376 Part 1, section 20.1.10.39), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4311,15 +4346,19 @@ pub enum AdjustableCoordinateMethodsMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AlignmentType(pub String);
-/// The members of `ST_PenAlignment`, in alphabetical order.
+/// The members of the enumeration `ST_PenAlignment`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum AlignmentTypeMember {
+    /// The member written `ctr`.
     Ctr,
+    /// The member written `in`.
     In,
 }
 
-/// 20.1.2.3.1 alpha (Alpha): the tag `a:alpha`, schema type `CT_PositiveFixedPercentage`.
+/// The `a:alpha` element, Alpha (ECMA-376 Part 1, section 20.1.2.3.1). Its schema type is
+/// `CT_PositiveFixedPercentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4328,12 +4367,14 @@ pub enum AlignmentTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Alpha {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<PositiveFixedPercentage>,
 }
 
-/// 20.1.8.1 `alphaBiLevel` (Alpha Bi-Level Effect): the tag `a:alphaBiLevel`, schema type
-/// `CT_AlphaBiLevelEffect`.
+/// The `a:alphaBiLevel` element, Alpha Bi-Level Effect (ECMA-376 Part 1, section 20.1.8.1). Its
+/// schema type is `CT_AlphaBiLevelEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4342,12 +4383,14 @@ pub struct Alpha {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AlphaBiLevelEffect {
+    /// The attribute `thresh`, when the element has it.
     pub thresh: Option<PositiveFixedPercentage>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.2 `alphaCeiling` (Alpha Ceiling Effect): the tag `a:alphaCeiling`, schema type
-/// `CT_AlphaCeilingEffect`.
+/// The `a:alphaCeiling` element, Alpha Ceiling Effect (ECMA-376 Part 1, section 20.1.8.2). Its
+/// schema type is `CT_AlphaCeilingEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4356,11 +4399,12 @@ pub struct AlphaBiLevelEffect {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AlphaCeilingEffect {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.3 `alphaFloor` (Alpha Floor Effect): the tag `a:alphaFloor`, schema type
-/// `CT_AlphaFloorEffect`.
+/// The `a:alphaFloor` element, Alpha Floor Effect (ECMA-376 Part 1, section 20.1.8.3). Its schema
+/// type is `CT_AlphaFloorEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4369,11 +4413,12 @@ pub struct AlphaCeilingEffect {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AlphaFloorEffect {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.7 `alphaOutset` (Alpha Inset/Outset Effect): the tag `a:alphaOutset`, schema type
-/// `CT_AlphaOutsetEffect`.
+/// The `a:alphaOutset` element, Alpha Inset/Outset Effect (ECMA-376 Part 1, section 20.1.8.7). Its
+/// schema type is `CT_AlphaOutsetEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4382,12 +4427,14 @@ pub struct AlphaFloorEffect {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AlphaInsetOutsetEffect {
+    /// The attribute `rad`, when the element has it.
     pub rad: Option<Coordinate>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.4 `alphaInv` (Alpha Inverse Effect): the tag `a:alphaInv`, schema type
-/// `CT_AlphaInverseEffect`.
+/// The `a:alphaInv` element, Alpha Inverse Effect (ECMA-376 Part 1, section 20.1.8.4). Its schema
+/// type is `CT_AlphaInverseEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4396,12 +4443,14 @@ pub struct AlphaInsetOutsetEffect {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AlphaInverseEffect {
+    /// The child that is an item of `ColorContent`, when there is one.
     pub content: Option<Box<ColorContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.5 `alphaMod` (Alpha Modulate Effect): the tag `a:alphaMod`, schema type
-/// `CT_AlphaModulateEffect`.
+/// The `a:alphaMod` element, Alpha Modulate Effect (ECMA-376 Part 1, section 20.1.8.5). Its schema
+/// type is `CT_AlphaModulateEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4413,13 +4462,15 @@ pub struct AlphaInverseEffect {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AlphaModulateEffect {
+    /// The child that is `EffectContainerCont`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub container_cont: Box<EffectContainerCont>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.6 `alphaModFix` (Alpha Modulate Fixed Effect): the tag `a:alphaModFix`, schema type
-/// `CT_AlphaModulateFixedEffect`.
+/// The `a:alphaModFix` element, Alpha Modulate Fixed Effect (ECMA-376 Part 1, section 20.1.8.6).
+/// Its schema type is `CT_AlphaModulateFixedEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4428,12 +4479,14 @@ pub struct AlphaModulateEffect {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AlphaModulateFixedEffect {
+    /// The attribute `amt`, when the element has it.
     pub amt: Option<PositivePercentageValueWithSign>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.3.2 `alphaMod` (Alpha Modulation): the tag `a:alphaMod`, schema type
-/// `CT_PositivePercentage`.
+/// The `a:alphaMod` element, Alpha Modulation (ECMA-376 Part 1, section 20.1.2.3.2). Its schema
+/// type is `CT_PositivePercentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4442,11 +4495,14 @@ pub struct AlphaModulateFixedEffect {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AlphaModulation {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<PositivePercentageValueWithSign>,
 }
 
-/// 20.1.2.3.3 `alphaOff` (Alpha Offset): the tag `a:alphaOff`, schema type `CT_FixedPercentage`.
+/// The `a:alphaOff` element, Alpha Offset (ECMA-376 Part 1, section 20.1.2.3.3). Its schema type is
+/// `CT_FixedPercentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4455,12 +4511,14 @@ pub struct AlphaModulation {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AlphaOffset {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<FixedPercentage>,
 }
 
-/// 20.1.8.8 `alphaRepl` (Alpha Replace Effect): the tag `a:alphaRepl`, schema type
-/// `CT_AlphaReplaceEffect`.
+/// The `a:alphaRepl` element, Alpha Replace Effect (ECMA-376 Part 1, section 20.1.8.8). Its schema
+/// type is `CT_AlphaReplaceEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4469,11 +4527,14 @@ pub struct AlphaOffset {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AlphaReplaceEffect {
+    /// The attribute `a`, when the element has it.
     pub a: Option<PositiveFixedPercentage>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.5.1 anchor (Anchor Point): the tag `a:anchor`, schema type `CT_Point3D`.
+/// The `a:anchor` element, Anchor Point (ECMA-376 Part 1, section 20.1.5.1). Its schema type is
+/// `CT_Point3D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4482,13 +4543,21 @@ pub struct AlphaReplaceEffect {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AnchorPoint {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `x`, when the element has it.
     pub x: Option<Coordinate>,
+    /// The attribute `y`, when the element has it.
     pub y: Option<Coordinate>,
+    /// The attribute `z`, when the element has it.
     pub z: Option<Coordinate>,
 }
 
-/// 20.1.10.3 `ST_Angle` (Angle): the text the file carried.
+/// Angle, the simple type `ST_Angle` (ECMA-376 Part 1, section 20.1.10.3), kept as the text the
+/// file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4498,7 +4567,11 @@ pub struct AnchorPoint {
 #[non_exhaustive]
 pub struct Angle(pub String);
 
-/// 20.1.10.4 `ST_AnimationBuildType` (Animation Build Type): the text the file carried.
+/// Animation Build Type, the simple type `ST_AnimationBuildType` (ECMA-376 Part 1, section
+/// 20.1.10.4), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4507,10 +4580,12 @@ pub struct Angle(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AnimationBuildType(pub String);
-/// The members of `ST_AnimationBuildType`, in alphabetical order.
+/// The members of the enumeration `ST_AnimationBuildType`, in alphabetical order. `as_str` gives
+/// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum AnimationBuildTypeMember {
+    /// The member written `allAtOnce`.
     AllAtOnce,
 }
 
@@ -4519,190 +4594,366 @@ pub enum AnimationBuildTypeMember {
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum AnyElementContent {
+    /// The element `wp:anchor`, a `AnchorForFloatingDrawingMLObject`.
     AnchorForFloatingDrawingMLObject(
         super::wordprocessing_drawing::AnchorForFloatingDrawingMLObject,
     ),
+    /// The element `w10:anchorlock`, a `AnchorLocationIsLocked`.
     AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLocked),
+    /// The element `ap:Properties`, a `ApplicationSpecificFileProperties`.
     ApplicationSpecificFileProperties(
         document_properties_extended::ApplicationSpecificFileProperties,
     ),
+    /// The element `v:arc`, a `ArcSegment`.
     ArcSegment(super::vml::ArcSegment),
+    /// The element `vt:array`, a `Array`.
     Array(document_properties_variant_types::Array),
+    /// The element `xvml:ClientData`, a `AttachedObjectData`.
     AttachedObjectData(vml_spreadsheet_drawing::AttachedObjectData),
+    /// The element `vt:bstr`, a `BasicString`.
     BasicString(document_properties_variant_types::BasicString),
+    /// The element `v:curve`, a `BezierCurve`.
     BezierCurve(super::vml::BezierCurve),
+    /// The element `vt:blob`, a `BinaryBlob`.
     BinaryBlob(document_properties_variant_types::BinaryBlob),
+    /// The element `vt:oblob`, a `BinaryBlobObject`.
     BinaryBlobObject(document_properties_variant_types::BinaryBlobObject),
+    /// The element `vt:storage`, a `BinaryStorage`.
     BinaryStorage(document_properties_variant_types::BinaryStorage),
+    /// The element `vt:ostorage`, a `BinaryStorageObject`.
     BinaryStorageObject(document_properties_variant_types::BinaryStorageObject),
+    /// The element `vt:stream`, a `BinaryStream`.
     BinaryStream(document_properties_variant_types::BinaryStream),
+    /// The element `vt:ostream`, a `BinaryStreamObject`.
     BinaryStreamObject(document_properties_variant_types::BinaryStreamObject),
+    /// The element `vt:vstream`, a `BinaryVersionedStream`.
     BinaryVersionedStream(document_properties_variant_types::BinaryVersionedStream),
+    /// The element `a:blip`, a `Blip`.
     Blip(Blip),
+    /// The element `vt:bool`, a `Boolean`.
     Boolean(document_properties_variant_types::Boolean),
+    /// The element `w10:borderbottom`, a `BottomBorder`.
     BottomBorder(vml_wordprocessing_drawing::BottomBorder),
+    /// The element `x:calcChain`, a `CalculationChainInfo`.
     CalculationChainInfo(super::spreadsheet::CalculationChainInfo),
+    /// The element `o:callout`, a `Callout`.
     Callout(super::vml_office_drawing::Callout),
+    /// The element `x:chartsheet`, a `ChartSheet`.
     ChartSheet(super::spreadsheet::ChartSheet),
+    /// The element `c:chartSpace`, a `ChartSpace`.
     ChartSpace(super::chart::ChartSpace),
+    /// The element `vt:clsid`, a `ClassID`.
     ClassID(document_properties_variant_types::ClassID),
+    /// The element `dgm:colorsDefHdr`, a `ColorTransformDefinitionHeader`.
     ColorTransformDefinitionHeader(super::diagram::ColorTransformDefinitionHeader),
+    /// The element `dgm:colorsDef`, a `ColorTransformDefinitions`.
     ColorTransformDefinitions(super::diagram::ColorTransformDefinitions),
+    /// The element `dgm:colorsDefHdrLst`, a `ColorTransformHeaderList`.
     ColorTransformHeaderList(super::diagram::ColorTransformHeaderList),
+    /// The element `p:cmLst`, a `CommentList`.
     CommentList(super::presentation::CommentList),
+    /// The element `x:comments`, a `Comments`.
     Comments(super::spreadsheet::Comments),
+    /// The element `w:comments`, a `CommentsCollection`.
     CommentsCollection(super::wordprocessing::CommentsCollection),
+    /// The element `o:complex`, a `Complex`.
     Complex(super::vml_office_drawing::Complex),
+    /// The element `x:connections`, a `Connections`.
     Connections(super::spreadsheet::Connections),
+    /// The element `vt:cy`, a `Currency`.
     Currency(document_properties_variant_types::Currency),
+    /// The element `op:Properties`, a `CustomFileProperties`.
     CustomFileProperties(document_properties_custom::CustomFileProperties),
+    /// The element `ds:datastoreItem`, a `CustomXMLDataProperties`.
     CustomXMLDataProperties(custom_xml_data_properties::CustomXMLDataProperties),
+    /// The element `dgm:dataModel`, a `DataModel`.
     DataModel(super::diagram::DataModel),
+    /// The element `vt:date`, a `DateAndTime`.
     DateAndTime(document_properties_variant_types::DateAndTime),
+    /// The element `vt:decimal`, a `Decimal`.
     Decimal(document_properties_variant_types::Decimal),
+    /// The element `dgm:layoutDefHdrLst`, a `DiagramLayoutHeaderList`.
     DiagramLayoutHeaderList(super::diagram::DiagramLayoutHeaderList),
+    /// The element `x:dialogsheet`, a `DialogSheet`.
     DialogSheet(super::spreadsheet::DialogSheet),
+    /// The element `o:signatureline`, a `DigitalSignatureLine`.
     DigitalSignatureLine(super::vml_office_drawing::DigitalSignatureLine),
+    /// The element `w:document`, a `Document`.
     Document(super::wordprocessing::Document),
+    /// The element `v:background`, a `DocumentBackground`.
     DocumentBackground(super::vml::DocumentBackground),
+    /// The element `w:endnotes`, a `DocumentEndnotes`.
     DocumentEndnotes(super::wordprocessing::DocumentEndnotes),
+    /// The element `w:footnotes`, a `DocumentFootnotes`.
     DocumentFootnotes(super::wordprocessing::DocumentFootnotes),
+    /// The element `w:settings`, a `DocumentSettings`.
     DocumentSettings(super::wordprocessing::DocumentSettings),
+    /// The element `sl:schemaLibrary`, a `EmbeddedCustomXMLSchemaSupplementaryData`.
     EmbeddedCustomXMLSchemaSupplementaryData(
         custom_xml_schema_properties::EmbeddedCustomXMLSchemaSupplementaryData,
     ),
+    /// The element `o:OLEObject`, a `EmbeddedOLEObject`.
     EmbeddedOLEObject(super::vml_office_drawing::EmbeddedOLEObject),
+    /// The element `p:oleObj`, a `EmbeddedObjectsAndControls`.
     EmbeddedObjectsAndControls(super::presentation::EmbeddedObjectsAndControls),
+    /// The element `vt:empty`, a `Empty`.
     Empty(document_properties_variant_types::Empty),
+    /// The element `xdr:to`, a `EndingAnchorPoint`.
     EndingAnchorPoint(super::spreadsheet_drawing::EndingAnchorPoint),
+    /// The element `vt:error`, a `ErrorStatusCode`.
     ErrorStatusCode(document_properties_variant_types::ErrorStatusCode),
+    /// The element `dgm:relIds`, a `ExplicitRelationshipsToDiagramParts`.
     ExplicitRelationshipsToDiagramParts(super::diagram::ExplicitRelationshipsToDiagramParts),
+    /// The element `x:externalLink`, a `ExternalReferenceExternalLink`.
     ExternalReferenceExternalLink(super::spreadsheet::ExternalReferenceExternalLink),
+    /// The element `o:extrusion`, a `Extrusion`.
     Extrusion(super::vml_office_drawing::Extrusion),
+    /// The element `vt:filetime`, a `FileTime`.
     FileTime(document_properties_variant_types::FileTime),
+    /// The element `w:fonts`, a `FontTableRootElement`.
     FontTableRootElement(super::wordprocessing::FontTableRootElement),
+    /// The element `w:ftr`, a `Footer`.
     Footer(super::wordprocessing::Footer),
+    /// The element `w:glossaryDocument`, a `GlossaryDocumentRootElement`.
     GlossaryDocumentRootElement(super::wordprocessing::GlossaryDocumentRootElement),
+    /// The element `a:graphic`, a `GraphicObject`.
     GraphicObject(GraphicObject),
+    /// The element `p:handoutMaster`, a `HandoutMaster`.
     HandoutMaster(super::presentation::HandoutMaster),
+    /// The element `w:hdr`, a `Header`.
     Header(super::wordprocessing::Header),
+    /// The element `vt:i1`, a `I1`.
     I1(document_properties_variant_types::I1),
+    /// The element `vt:i2`, a `I2`.
     I2(document_properties_variant_types::I2),
+    /// The element `vt:i4`, a `I4`.
     I4(document_properties_variant_types::I4),
+    /// The element `vt:i8`, a `I8`.
     I8(document_properties_variant_types::I8),
+    /// The element `v:imagedata`, a `ImageData`.
     ImageData(super::vml::ImageData),
+    /// The element `v:image`, a `ImageFile`.
     ImageFile(super::vml::ImageFile),
+    /// The element `w:recipients`, a `InclusionExclusionDataForDataSource`.
     InclusionExclusionDataForDataSource(super::wordprocessing::InclusionExclusionDataForDataSource),
+    /// The element `o:ink`, a `Ink`.
     Ink(super::vml_office_drawing::Ink),
+    /// The element `pvml:iscomment`, a `InkAnnotationFlag`.
     InkAnnotationFlag(vml_presentation_drawing::InkAnnotationFlag),
+    /// The element `wp:inline`, a `InlineDrawingMLObject`.
     InlineDrawingMLObject(super::wordprocessing_drawing::InlineDrawingMLObject),
+    /// The element `vt:int`, a `Integer`.
     Integer(document_properties_variant_types::Integer),
+    /// The element `dgm:layoutDef`, a `LayoutDefinition`.
     LayoutDefinition(super::diagram::LayoutDefinition),
+    /// The element `dgm:layoutDefHdr`, a `LayoutDefinitionHeader`.
     LayoutDefinitionHeader(super::diagram::LayoutDefinitionHeader),
+    /// The element `w10:borderleft`, a `LeftBorder`.
     LeftBorder(vml_wordprocessing_drawing::LeftBorder),
+    /// The element `v:line`, a `Line`.
     Line(super::vml::Line),
+    /// The element `v:stroke`, a `LineStrokeSettings`.
     LineStrokeSettings(super::vml::LineStrokeSettings),
+    /// The element `p:cmAuthorLst`, a `ListOfCommentAuthors`.
     ListOfCommentAuthors(super::presentation::ListOfCommentAuthors),
+    /// The element `dgm:styleDefHdrLst`, a `ListOfStyleDefinitionHeaders`.
     ListOfStyleDefinitionHeaders(super::diagram::ListOfStyleDefinitionHeaders),
+    /// The element `lc:lockedCanvas`, a `LockedCanvasContainer`.
     LockedCanvasContainer(super::locked_canvas::LockedCanvasContainer),
+    /// The element `vt:lpstr`, a `Lpstr`.
     Lpstr(document_properties_variant_types::Lpstr),
+    /// The element `vt:lpwstr`, a `Lpwstr`.
     Lpwstr(document_properties_variant_types::Lpwstr),
+    /// The element `m:mathPr`, a `MathProperties`.
     MathProperties(super::math::MathProperties),
+    /// The element `x:metadata`, a `Metadata`.
     Metadata(super::spreadsheet::Metadata),
+    /// The element `v:polyline`, a `MultiplePathLine`.
     MultiplePathLine(super::vml::MultiplePathLine),
+    /// The element `o:shapedefaults`, a `NewShapeDefaults`.
     NewShapeDefaults(super::vml_office_drawing::NewShapeDefaults),
+    /// The element `p:notesMaster`, a `NotesMaster`.
     NotesMaster(super::presentation::NotesMaster),
+    /// The element `p:notes`, a `NotesSlide`.
     NotesSlide(super::presentation::NotesSlide),
+    /// The element `vt:null`, a `Null`.
     Null(document_properties_variant_types::Null),
+    /// The element `w:numbering`, a `NumberingDefinitions`.
     NumberingDefinitions(super::wordprocessing::NumberingDefinitions),
+    /// The element `m:oMath`, a `OfficeMath`.
     OfficeMath(super::math::OfficeMath),
+    /// The element `m:oMathPara`, a `OfficeMathParagraph`.
     OfficeMathParagraph(super::math::OfficeMathParagraph),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `v:oval`, a `Oval`.
     Oval(super::vml::Oval),
+    /// The element `pic:pic`, a `Picture`.
     Picture(super::picture::Picture),
+    /// The element `x:pivotCacheDefinition`, a `PivotCacheDefinition`.
     PivotCacheDefinition(super::spreadsheet::PivotCacheDefinition),
+    /// The element `x:pivotCacheRecords`, a `PivotCacheRecords`.
     PivotCacheRecords(super::spreadsheet::PivotCacheRecords),
+    /// The element `x:pivotTableDefinition`, a `PivotTableDefinition`.
     PivotTableDefinition(Box<super::spreadsheet::PivotTableDefinition>),
+    /// The element `p:presentation`, a `Presentation`.
     Presentation(super::presentation::Presentation),
+    /// The element `p:sld`, a `PresentationSlideSlide`.
     PresentationSlideSlide(super::presentation::PresentationSlideSlide),
+    /// The element `p:presentationPr`, a `PresentationWideProperties`.
     PresentationWideProperties(super::presentation::PresentationWideProperties),
+    /// The element `p:viewPr`, a `PresentationWideViewProperties`.
     PresentationWideViewProperties(super::presentation::PresentationWideViewProperties),
+    /// The element `p:tagLst`, a `ProgrammableTabList`.
     ProgrammableTabList(super::presentation::ProgrammableTabList),
+    /// The element `x:queryTable`, a `QueryTable`.
     QueryTable(super::spreadsheet::QueryTable),
+    /// The element `vt:r4`, a `R4`.
     R4(document_properties_variant_types::R4),
+    /// The element `vt:r8`, a `R8`.
     R8(document_properties_variant_types::R8),
+    /// The element `v:rect`, a `Rectangle`.
     Rectangle(super::vml::Rectangle),
+    /// The element `c:chart`, a `ReferenceToChartPart`.
     ReferenceToChartPart(super::chart::ReferenceToChartPart),
+    /// The element `x:headers`, a `RevisionHeaders`.
     RevisionHeaders(super::spreadsheet::RevisionHeaders),
+    /// The element `x:revisions`, a `Revisions`.
     Revisions(super::spreadsheet::Revisions),
+    /// The element `w:txbxContent`, a `RichTextBoxContentContainer`.
     RichTextBoxContentContainer(super::wordprocessing::RichTextBoxContentContainer),
+    /// The element `w10:borderright`, a `RightBorder`.
     RightBorder(vml_wordprocessing_drawing::RightBorder),
+    /// The element `v:roundrect`, a `RoundedRectangle`.
     RoundedRectangle(super::vml::RoundedRectangle),
+    /// The element `ac:additionalCharacteristics`, a `SetOfAdditionalCharacteristics`.
     SetOfAdditionalCharacteristics(additional_characteristics::SetOfAdditionalCharacteristics),
+    /// The element `v:formulas`, a `SetOfFormulas`.
     SetOfFormulas(super::vml::SetOfFormulas),
+    /// The element `v:handles`, a `SetOfHandles`.
     SetOfHandles(super::vml::SetOfHandles),
+    /// The element `v:shadow`, a `ShadowEffect`.
     ShadowEffect(super::vml::ShadowEffect),
+    /// The element `o:clippath`, a `ShapeClippingPath`.
     ShapeClippingPath(super::vml_office_drawing::ShapeClippingPath),
+    /// The element `v:shape`, a `ShapeDefinition`.
     ShapeDefinition(super::vml::ShapeDefinition),
+    /// The element `o:fill`, a `ShapeFillExtendedProperties`.
     ShapeFillExtendedProperties(super::vml_office_drawing::ShapeFillExtendedProperties),
+    /// The element `v:fill`, a `ShapeFillProperties`.
     ShapeFillProperties(super::vml::ShapeFillProperties),
+    /// The element `v:group`, a `ShapeGroup`.
     ShapeGroup(super::vml::ShapeGroup),
+    /// The element `o:shapelayout`, a `ShapeLayoutProperties`.
     ShapeLayoutProperties(super::vml_office_drawing::ShapeLayoutProperties),
+    /// The element `v:path`, a `ShapePath`.
     ShapePath(super::vml::ShapePath),
+    /// The element `o:lock`, a `ShapeProtections`.
     ShapeProtections(super::vml_office_drawing::ShapeProtections),
+    /// The element `v:shapetype`, a `ShapeTemplate`.
     ShapeTemplate(super::vml::ShapeTemplate),
+    /// The element `x:sst`, a `SharedStringTable`.
     SharedStringTable(super::spreadsheet::SharedStringTable),
+    /// The element `x:singleXmlCells`, a `SingleCells`.
     SingleCells(super::spreadsheet::SingleCells),
+    /// The element `o:skew`, a `SkewTransform`.
     SkewTransform(super::vml_office_drawing::SkewTransform),
+    /// The element `p:sldLayout`, a `SlideLayout`.
     SlideLayout(super::presentation::SlideLayout),
+    /// The element `p:sldMaster`, a `SlideMaster`.
     SlideMaster(super::presentation::SlideMaster),
+    /// The element `p:sldSyncPr`, a `SlideSynchronizationProperties`.
     SlideSynchronizationProperties(super::presentation::SlideSynchronizationProperties),
+    /// The element `b:Sources`, a `Sources`.
     Sources(bibliography::Sources),
+    /// The element `x:table`, a `Table`.
     SpreadsheetTable(super::spreadsheet::Table),
+    /// The element `xdr:from`, a `StartingAnchorPoint`.
     StartingAnchorPoint(super::spreadsheet_drawing::StartingAnchorPoint),
+    /// The element `o:equationxml`, a `StorageForAlternateMathContent`.
     StorageForAlternateMathContent(super::vml_office_drawing::StorageForAlternateMathContent),
+    /// The element `dgm:styleDef`, a `StyleDefinition`.
     StyleDefinition(super::diagram::StyleDefinition),
+    /// The element `dgm:styleDefHdr`, a `StyleDefinitionHeader`.
     StyleDefinitionHeader(super::diagram::StyleDefinitionHeader),
+    /// The element `w:styles`, a `StyleDefinitions`.
     StyleDefinitions(super::wordprocessing::StyleDefinitions),
+    /// The element `x:styleSheet`, a `StyleSheet`.
     StyleSheet(super::spreadsheet::StyleSheet),
+    /// The element `a:tbl`, a `Table`.
     Table(Table),
+    /// The element `a:tblStyleLst`, a `TableStyleList`.
     TableStyleList(TableStyleList),
+    /// The element `v:textbox`, a `TextBox`.
     TextBox(super::vml::TextBox),
+    /// The element `o:bottom`, a `TextBoxBottomStroke`.
     TextBoxBottomStroke(super::vml_office_drawing::TextBoxBottomStroke),
+    /// The element `o:column`, a `TextBoxInteriorStroke`.
     TextBoxInteriorStroke(super::vml_office_drawing::TextBoxInteriorStroke),
+    /// The element `o:left`, a `TextBoxLeftStroke`.
     TextBoxLeftStroke(super::vml_office_drawing::TextBoxLeftStroke),
+    /// The element `o:right`, a `TextBoxRightStroke`.
     TextBoxRightStroke(super::vml_office_drawing::TextBoxRightStroke),
+    /// The element `o:top`, a `TextBoxTopStroke`.
     TextBoxTopStroke(super::vml_office_drawing::TextBoxTopStroke),
+    /// The element `v:textpath`, a `TextLayoutPath`.
     TextLayoutPath(super::vml::TextLayoutPath),
+    /// The element `w10:wrap`, a `TextWrapping`.
     TextWrapping(vml_wordprocessing_drawing::TextWrapping),
+    /// The element `a:theme`, a `Theme`.
     Theme(Theme),
+    /// The element `a:themeManager`, a `ThemeManager`.
     ThemeManager(ThemeManager),
+    /// The element `a:themeOverride`, a `ThemeOverride`.
     ThemeOverride(ThemeOverride),
+    /// The element `w10:bordertop`, a `TopBorder`.
     TopBorder(vml_wordprocessing_drawing::TopBorder),
+    /// The element `vt:ui1`, a `Ui1`.
     Ui1(document_properties_variant_types::Ui1),
+    /// The element `vt:ui2`, a `Ui2`.
     Ui2(document_properties_variant_types::Ui2),
+    /// The element `vt:ui4`, a `Ui4`.
     Ui4(document_properties_variant_types::Ui4),
+    /// The element `vt:ui8`, a `Ui8`.
     Ui8(document_properties_variant_types::Ui8),
+    /// The element `vt:uint`, a `UnsignedInteger`.
     UnsignedInteger(document_properties_variant_types::UnsignedInteger),
+    /// The element `x:users`, a `UserList`.
     UserList(super::spreadsheet::UserList),
+    /// The element `c:userShapes`, a `UserShapes`.
     UserShapes(super::chart::UserShapes),
+    /// The element `o:diagram`, a `VMLDiagram`.
     VMLDiagram(super::vml_office_drawing::VMLDiagram),
+    /// The element `pvml:textdata`, a `VMLDiagramText`.
     VMLDiagramText(vml_presentation_drawing::VMLDiagramText),
+    /// The element `vt:variant`, a `Variant`.
     Variant(document_properties_variant_types::Variant),
+    /// The element `vt:vector`, a `Vector`.
     Vector(document_properties_variant_types::Vector),
+    /// The element `a:videoFile`, a `VideoFromFile`.
     VideoFromFile(VideoFromFile),
+    /// The element `x:volTypes`, a `VolatileDependencyTypes`.
     VolatileDependencyTypes(super::spreadsheet::VolatileDependencyTypes),
+    /// The element `w:webSettings`, a `WebPageSettings`.
     WebPageSettings(super::wordprocessing::WebPageSettings),
+    /// The element `wp:wpc`, a `WordprocessingMLDrawingCanvas`.
     WordprocessingMLDrawingCanvas(super::wordprocessing_drawing::WordprocessingMLDrawingCanvas),
+    /// The element `wp:wsp`, a `WordprocessingMLShape`.
     WordprocessingMLShape(super::wordprocessing_drawing::WordprocessingMLShape),
+    /// The element `wp:wgp`, a `WordprocessingMLShapeGroup`.
     WordprocessingMLShapeGroup(super::wordprocessing_drawing::WordprocessingMLShapeGroup),
+    /// The element `x:workbook`, a `Workbook`.
     Workbook(super::spreadsheet::Workbook),
+    /// The element `x:worksheet`, a `Worksheet`.
     Worksheet(super::spreadsheet::Worksheet),
+    /// The element `xdr:wsDr`, a `WorksheetDrawing`.
     WorksheetDrawing(super::spreadsheet_drawing::WorksheetDrawing),
+    /// The element `x:MapInfo`, a `XMLMappingMapInfo`.
     XMLMappingMapInfo(super::spreadsheet::XMLMappingMapInfo),
 }
 
-/// 20.1.5.12 sp3d (Apply 3D shape properties): the tag `a:sp3d`, schema type `CT_Shape3D`.
+/// The `a:sp3d` element, Apply 3D shape properties (ECMA-376 Part 1, section 20.1.5.12). Its schema
+/// type is `CT_Shape3D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4714,20 +4965,31 @@ pub enum AnyElementContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Apply3DShapeProperties {
+    /// The child that is `BottomBevel`, when there is one.
     pub bottom_bevel: Option<Box<BottomBevel>>,
+    /// The child that is `ContourColor`, when there is one.
     pub contour_color: Option<Box<ContourColor>>,
+    /// The attribute `contourW`, when the element has it.
     pub contour_w: Option<PositiveCoordinate>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `ExtrusionColor`, when there is one.
     pub extrusion_color: Option<Box<ExtrusionColor>>,
+    /// The attribute `extrusionH`, when the element has it.
     pub extrusion_h: Option<PositiveCoordinate>,
+    /// The attribute `prstMaterial`, when the element has it.
     pub prst_material: Option<PresetMaterialType>,
+    /// The child that is `TopBevel`, when there is one.
     pub top_bevel: Option<Box<TopBevel>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `z`, when the element has it.
     pub z: Option<Coordinate>,
 }
 
-/// 20.1.3.3 end (Audio End Time): the tag `a:end`, schema type `CT_AudioCDTime`.
+/// The `a:end` element, Audio End Time (ECMA-376 Part 1, section 20.1.3.3). Its schema type is
+/// `CT_AudioCDTime`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4736,12 +4998,16 @@ pub struct Apply3DShapeProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AudioEndTime {
+    /// The attribute `time`, when the element has it.
     pub time: Option<String>,
+    /// The attribute `track`, when the element has it.
     pub track: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.3.1 `audioCd` (Audio from CD): the tag `a:audioCd`, schema type `CT_AudioCD`.
+/// The `a:audioCd` element, Audio from CD (ECMA-376 Part 1, section 20.1.3.1). Its schema type is
+/// `CT_AudioCD`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4753,14 +5019,19 @@ pub struct AudioEndTime {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AudioFromCD {
+    /// The child that is `AudioEndTime`, which the schema requires.
     pub audio_end_time: Box<AudioEndTime>,
+    /// The child that is `AudioStartTime`, which the schema requires.
     pub audio_start_time: Box<AudioStartTime>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.3.2 `audioFile` (Audio from File): the tag `a:audioFile`, schema type `CT_AudioFile`.
+/// The `a:audioFile` element, Audio from File (ECMA-376 Part 1, section 20.1.3.2). Its schema type
+/// is `CT_AudioFile`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4772,15 +5043,19 @@ pub struct AudioFromCD {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AudioFromFile {
+    /// The attribute `contentType`, when the element has it.
     pub content_type: Option<String>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `r:link`, when the element has it.
     pub link: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.3.7 `wavAudioFile` (Audio from WAV File): the tag `a:wavAudioFile`, schema type
-/// `CT_EmbeddedWAVAudioFile`.
+/// The `a:wavAudioFile` element, Audio from WAV File (ECMA-376 Part 1, section 20.1.3.7). Its
+/// schema type is `CT_EmbeddedWAVAudioFile`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4789,12 +5064,16 @@ pub struct AudioFromFile {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AudioFromWAVFile {
+    /// The attribute `r:embed`, when the element has it.
     pub embed: Option<String>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.3.5 st (Audio Start Time): the tag `a:st`, schema type `CT_AudioCDTime`.
+/// The `a:st` element, Audio Start Time (ECMA-376 Part 1, section 20.1.3.5). Its schema type is
+/// `CT_AudioCDTime`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4803,13 +5082,16 @@ pub struct AudioFromWAVFile {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AudioStartTime {
+    /// The attribute `time`, when the element has it.
     pub time: Option<String>,
+    /// The attribute `track`, when the element has it.
     pub track: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.4.1 `buAutoNum` (Auto-Numbered Bullet): the tag `a:buAutoNum`, schema type
-/// `CT_TextAutonumberBullet`.
+/// The `a:buAutoNum` element, Auto-Numbered Bullet (ECMA-376 Part 1, section 21.1.2.4.1). Its
+/// schema type is `CT_TextAutonumberBullet`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4818,12 +5100,16 @@ pub struct AudioStartTime {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AutoNumberedBullet {
+    /// The attribute `startAt`, when the element has it.
     pub start_at: Option<StartBulletAtNumber>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<TextAutoNumberSchemes>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.5.2 backdrop (Backdrop Plane): the tag `a:backdrop`, schema type `CT_Backdrop`.
+/// The `a:backdrop` element, Backdrop Plane (ECMA-376 Part 1, section 20.1.5.2). Its schema type is
+/// `CT_Backdrop`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4835,15 +5121,21 @@ pub struct AutoNumberedBullet {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BackdropPlane {
+    /// The child that is `AnchorPoint`, which the schema requires.
     pub anchor_point: Box<AnchorPoint>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `Normal`, which the schema requires.
     pub normal: Box<Normal>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `UpVector`, which the schema requires.
     pub up_vector: Box<UpVector>,
 }
 
-/// 20.1.8.10 `bgClr` (Background color): the tag `a:bgClr`, schema type `CT_Color`.
+/// The `a:bgClr` element, Background color (ECMA-376 Part 1, section 20.1.8.10). Its schema type is
+/// `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4852,12 +5144,14 @@ pub struct BackdropPlane {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BackgroundColor {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.1.7 `bgFillStyleLst` (Background Fill Style List): the tag `a:bgFillStyleLst`, schema
-/// type `CT_BackgroundFillStyleList`.
+/// The `a:bgFillStyleLst` element, Background Fill Style List (ECMA-376 Part 1, section
+/// 20.1.4.1.7). Its schema type is `CT_BackgroundFillStyleList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4869,12 +5163,15 @@ pub struct BackgroundColor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BackgroundFillStyleList {
+    /// The children that are an item of `FillPropertiesContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<FillPropertiesContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.2.1 `band1H` (Band 1 Horizontal): the tag `a:band1H`, schema type `CT_TablePartStyle`.
+/// The `a:band1H` element, Band 1 Horizontal (ECMA-376 Part 1, section 20.1.4.2.1). Its schema type
+/// is `CT_TablePartStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4886,14 +5183,18 @@ pub struct BackgroundFillStyleList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Band1Horizontal {
+    /// The child that is `TableCellStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_cell_style: Option<Box<TableCellStyle>>,
+    /// The child that is `TableCellTextStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_cell_text_style: Option<Box<TableCellTextStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.2.2 `band1V` (Band 1 Vertical): the tag `a:band1V`, schema type `CT_TablePartStyle`.
+/// The `a:band1V` element, Band 1 Vertical (ECMA-376 Part 1, section 20.1.4.2.2). Its schema type
+/// is `CT_TablePartStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4905,14 +5206,18 @@ pub struct Band1Horizontal {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Band1Vertical {
+    /// The child that is `TableCellStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_cell_style: Option<Box<TableCellStyle>>,
+    /// The child that is `TableCellTextStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_cell_text_style: Option<Box<TableCellTextStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.2.3 `band2H` (Band 2 Horizontal): the tag `a:band2H`, schema type `CT_TablePartStyle`.
+/// The `a:band2H` element, Band 2 Horizontal (ECMA-376 Part 1, section 20.1.4.2.3). Its schema type
+/// is `CT_TablePartStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4924,14 +5229,18 @@ pub struct Band1Vertical {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Band2Horizontal {
+    /// The child that is `TableCellStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_cell_style: Option<Box<TableCellStyle>>,
+    /// The child that is `TableCellTextStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_cell_text_style: Option<Box<TableCellTextStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.2.4 `band2V` (Band 2 Vertical): the tag `a:band2V`, schema type `CT_TablePartStyle`.
+/// The `a:band2V` element, Band 2 Vertical (ECMA-376 Part 1, section 20.1.4.2.4). Its schema type
+/// is `CT_TablePartStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4943,14 +5252,18 @@ pub struct Band2Horizontal {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Band2Vertical {
+    /// The child that is `TableCellStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_cell_style: Option<Box<TableCellStyle>>,
+    /// The child that is `TableCellTextStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_cell_text_style: Option<Box<TableCellTextStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.2.5 bevel (Bevel): the tag `a:bevel`, schema type `CT_Bevel`.
+/// The `a:bevel` element, Bevel (ECMA-376 Part 1, section 20.1.4.2.5). Its schema type is
+/// `CT_Bevel`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4959,13 +5272,21 @@ pub struct Band2Vertical {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Bevel {
+    /// The attribute `h`, when the element has it.
     pub h: Option<PositiveCoordinate>,
+    /// The attribute `prst`, when the element has it.
     pub prst: Option<BevelPresets>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w`, when the element has it.
     pub w: Option<PositiveCoordinate>,
 }
 
-/// 20.1.10.9 `ST_BevelPresetType` (Bevel Presets): the text the file carried.
+/// Bevel Presets, the simple type `ST_BevelPresetType` (ECMA-376 Part 1, section 20.1.10.9), kept
+/// as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4974,25 +5295,38 @@ pub struct Bevel {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BevelPresets(pub String);
-/// The members of `ST_BevelPresetType`, in alphabetical order.
+/// The members of the enumeration `ST_BevelPresetType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum BevelPresetsMember {
+    /// The member written `angle`.
     Angle,
+    /// The member written `artDeco`.
     ArtDeco,
+    /// The member written `circle`.
     Circle,
+    /// The member written `convex`.
     Convex,
+    /// The member written `coolSlant`.
     CoolSlant,
+    /// The member written `cross`.
     Cross,
+    /// The member written `divot`.
     Divot,
+    /// The member written `hardEdge`.
     HardEdge,
+    /// The member written `relaxedInset`.
     RelaxedInset,
+    /// The member written `riblet`.
     Riblet,
+    /// The member written `slope`.
     Slope,
+    /// The member written `softRound`.
     SoftRound,
 }
 
-/// The tag `a:biLevel`, schema type `CT_BiLevelEffect`.
+/// The `a:biLevel` element. Its schema type is `CT_BiLevelEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5001,11 +5335,17 @@ pub enum BevelPresetsMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BiLevel {
+    /// The attribute `thresh`, when the element has it.
     pub thresh: Option<PositiveFixedPercentage>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.10 `ST_BlackWhiteMode` (Black and White Mode): the text the file carried.
+/// Black and White Mode, the simple type `ST_BlackWhiteMode` (ECMA-376 Part 1, section 20.1.10.10),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5014,24 +5354,37 @@ pub struct BiLevel {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BlackAndWhiteMode(pub String);
-/// The members of `ST_BlackWhiteMode`, in alphabetical order.
+/// The members of the enumeration `ST_BlackWhiteMode`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum BlackAndWhiteModeMember {
+    /// The member written `auto`.
     Auto,
+    /// The member written `black`.
     Black,
+    /// The member written `blackGray`.
     BlackGray,
+    /// The member written `blackWhite`.
     BlackWhite,
+    /// The member written `clr`.
     Clr,
+    /// The member written `gray`.
     Gray,
+    /// The member written `grayWhite`.
     GrayWhite,
+    /// The member written `hidden`.
     Hidden,
+    /// The member written `invGray`.
     InvGray,
+    /// The member written `ltGray`.
     LtGray,
+    /// The member written `white`.
     White,
 }
 
-/// 20.1.8.12 blend (Blend Effect): the tag `a:blend`, schema type `CT_BlendEffect`.
+/// The `a:blend` element, Blend Effect (ECMA-376 Part 1, section 20.1.8.12). Its schema type is
+/// `CT_BlendEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5043,13 +5396,20 @@ pub enum BlackAndWhiteModeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BlendEffect {
+    /// The attribute `blend`, when the element has it.
     pub blend: Option<BlendMode>,
+    /// The child that is `EffectContainerCont`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub container_cont: Box<EffectContainerCont>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.11 `ST_BlendMode` (Blend Mode): the text the file carried.
+/// Blend Mode, the simple type `ST_BlendMode` (ECMA-376 Part 1, section 20.1.10.11), kept as the
+/// text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5058,18 +5418,24 @@ pub struct BlendEffect {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BlendMode(pub String);
-/// The members of `ST_BlendMode`, in alphabetical order.
+/// The members of the enumeration `ST_BlendMode`, in alphabetical order. `as_str` gives the text of
+/// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum BlendModeMember {
+    /// The member written `darken`.
     Darken,
+    /// The member written `lighten`.
     Lighten,
+    /// The member written `mult`.
     Mult,
+    /// The member written `over`.
     Over,
+    /// The member written `screen`.
     Screen,
 }
 
-/// 20.1.8.13 blip (Blip): the tag `a:blip`, schema type `CT_Blip`.
+/// The `a:blip` element, Blip (ECMA-376 Part 1, section 20.1.8.13). Its schema type is `CT_Blip`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5081,17 +5447,27 @@ pub enum BlendModeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Blip {
+    /// The children that are an item of `BlipContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<BlipContent>,
+    /// The attribute `cstate`, when the element has it.
     pub cstate: Option<BlipCompressionType>,
+    /// The attribute `r:embed`, when the element has it.
     pub embed: Option<String>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `r:link`, when the element has it.
     pub link: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.12 `ST_BlipCompression` (Blip Compression Type): the text the file carried.
+/// Blip Compression Type, the simple type `ST_BlipCompression` (ECMA-376 Part 1, section
+/// 20.1.10.12), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5100,42 +5476,71 @@ pub struct Blip {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BlipCompressionType(pub String);
-/// The members of `ST_BlipCompression`, in alphabetical order.
+/// The members of the enumeration `ST_BlipCompression`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum BlipCompressionTypeMember {
+    /// The member written `email`.
     Email,
+    /// The member written `hqprint`.
     Hqprint,
+    /// The member written `none`.
     None,
+    /// The member written `print`.
     Print,
+    /// The member written `screen`.
     Screen,
 }
 
-/// One item of `CT_Blip`: local choice in `CT_Blip`.
+/// One child element of a choice: local choice in `CT_Blip`.
+///
+/// The schema types that hold it: `CT_Blip`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum BlipContent {
+    /// The element `a:alphaBiLevel`, a `AlphaBiLevelEffect`.
     AlphaBiLevelEffect(AlphaBiLevelEffect),
+    /// The element `a:alphaCeiling`, a `AlphaCeilingEffect`.
     AlphaCeilingEffect(AlphaCeilingEffect),
+    /// The element `a:alphaFloor`, a `AlphaFloorEffect`.
     AlphaFloorEffect(AlphaFloorEffect),
+    /// The element `a:alphaInv`, a `AlphaInverseEffect`.
     AlphaInverseEffect(AlphaInverseEffect),
+    /// The element `a:alphaMod`, a `AlphaModulateEffect`.
     AlphaModulateEffect(AlphaModulateEffect),
+    /// The element `a:alphaModFix`, a `AlphaModulateFixedEffect`.
     AlphaModulateFixedEffect(AlphaModulateFixedEffect),
+    /// The element `a:alphaRepl`, a `AlphaReplaceEffect`.
     AlphaReplaceEffect(AlphaReplaceEffect),
+    /// The element `a:biLevel`, a `BiLevel`.
     BiLevel(BiLevel),
+    /// The element `a:blur`, a `BlurEffect`.
     BlurEffect(BlurEffect),
+    /// The element `a:clrChange`, a `ColorChangeEffect`.
     ColorChangeEffect(ColorChangeEffect),
+    /// The element `a:duotone`, a `DuotoneEffect`.
     DuotoneEffect(DuotoneEffect),
+    /// The element `a:fillOverlay`, a `FillOverlayEffect`.
     FillOverlayEffect(FillOverlayEffect),
+    /// The element `a:grayscl`, a `GrayScaleEffect`.
     GrayScaleEffect(GrayScaleEffect),
+    /// The element `a:hsl`, a `HueSaturationLuminanceEffect`.
     HueSaturationLuminanceEffect(HueSaturationLuminanceEffect),
+    /// The element `a:lum`, a `LuminanceEffect`.
     LuminanceEffect(LuminanceEffect),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `a:clrRepl`, a `SolidColorReplacement`.
     SolidColorReplacement(SolidColorReplacement),
+    /// The element `a:tint`, a `TintEffect`.
     TintEffect(TintEffect),
 }
 
-/// 20.1.2.3.4 blue (Blue): the tag `a:blue`, schema type `CT_Percentage`.
+/// The `a:blue` element, Blue (ECMA-376 Part 1, section 20.1.2.3.4). Its schema type is
+/// `CT_Percentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5144,11 +5549,14 @@ pub enum BlipContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Blue {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<Percentage>,
 }
 
-/// 20.1.2.3.5 `blueMod` (Blue Modulation): the tag `a:blueMod`, schema type `CT_Percentage`.
+/// The `a:blueMod` element, Blue Modulation (ECMA-376 Part 1, section 20.1.2.3.5). Its schema type
+/// is `CT_Percentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5157,11 +5565,14 @@ pub struct Blue {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BlueModulation {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<Percentage>,
 }
 
-/// 20.1.2.3.6 `blueOff` (Blue Offset): the tag `a:blueOff`, schema type `CT_Percentage`.
+/// The `a:blueOff` element, Blue Offset (ECMA-376 Part 1, section 20.1.2.3.6). Its schema type is
+/// `CT_Percentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5170,11 +5581,14 @@ pub struct BlueModulation {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BlueOffset {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<Percentage>,
 }
 
-/// 20.1.8.15 blur (Blur Effect): the tag `a:blur`, schema type `CT_BlurEffect`.
+/// The `a:blur` element, Blur Effect (ECMA-376 Part 1, section 20.1.8.15). Its schema type is
+/// `CT_BlurEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5183,12 +5597,16 @@ pub struct BlueOffset {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BlurEffect {
+    /// The attribute `grow`, when the element has it.
     pub grow: Option<String>,
+    /// The attribute `rad`, when the element has it.
     pub rad: Option<PositiveCoordinate>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.1.1 `bodyPr` (Body Properties): the tag `a:bodyPr`, schema type `CT_TextBodyProperties`.
+/// The `a:bodyPr` element, Body Properties (ECMA-376 Part 1, section 21.1.2.1.1). Its schema type
+/// is `CT_TextBodyProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5200,37 +5618,63 @@ pub struct BlurEffect {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BodyProperties {
+    /// The attribute `anchor`, when the element has it.
     pub anchor: Option<TextAnchoringTypes>,
+    /// The attribute `anchorCtr`, when the element has it.
     pub anchor_ctr: Option<String>,
+    /// The attribute `bIns`, when the element has it.
     pub b_ins: Option<StCoordinate32>,
+    /// The attribute `compatLnSpc`, when the element has it.
     pub compat_ln_spc: Option<String>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `forceAA`, when the element has it.
     pub force_aa: Option<String>,
+    /// The attribute `fromWordArt`, when the element has it.
     pub from_word_art: Option<String>,
+    /// The attribute `horzOverflow`, when the element has it.
     pub horz_overflow: Option<TextHorizontalOverflowTypes>,
+    /// The attribute `lIns`, when the element has it.
     pub l_ins: Option<StCoordinate32>,
+    /// The attribute `numCol`, when the element has it.
     pub num_col: Option<TextColumnCount>,
+    /// The child that is `PresetTextWarp`, when there is one.
     pub preset_text_warp: Option<Box<PresetTextWarp>>,
+    /// The attribute `rIns`, when the element has it.
     pub r_ins: Option<StCoordinate32>,
+    /// The attribute `rot`, when the element has it.
     pub rot: Option<Angle>,
+    /// The attribute `rtlCol`, when the element has it.
     pub rtl_col: Option<String>,
+    /// The child that is `Scene3d`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub scene3d: Option<Box<Scene3d>>,
+    /// The attribute `spcCol`, when the element has it.
     pub spc_col: Option<PositiveCoordinatePoint>,
+    /// The attribute `spcFirstLastPara`, when the element has it.
     pub spc_first_last_para: Option<String>,
+    /// The attribute `tIns`, when the element has it.
     pub t_ins: Option<StCoordinate32>,
+    /// The child that is an item of `Text3DContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text3d_content: Option<Box<Text3DContent>>,
+    /// The child that is an item of `TextAutofitContent`, when there is one.
     pub text_autofit_content: Option<Box<TextAutofitContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `upright`, when the element has it.
     pub upright: Option<String>,
+    /// The attribute `vert`, when the element has it.
     pub vert: Option<VerticalTextTypes>,
+    /// The attribute `vertOverflow`, when the element has it.
     pub vert_overflow: Option<TextVerticalOverflow>,
+    /// The attribute `wrap`, when the element has it.
     pub wrap: Option<TextWrappingTypes>,
 }
 
-/// 20.1.5.3 `bevelB` (Bottom Bevel): the tag `a:bevelB`, schema type `CT_Bevel`.
+/// The `a:bevelB` element, Bottom Bevel (ECMA-376 Part 1, section 20.1.5.3). Its schema type is
+/// `CT_Bevel`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5239,13 +5683,18 @@ pub struct BodyProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BottomBevel {
+    /// The attribute `h`, when the element has it.
     pub h: Option<PositiveCoordinate>,
+    /// The attribute `prst`, when the element has it.
     pub prst: Option<BevelPresets>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w`, when the element has it.
     pub w: Option<PositiveCoordinate>,
 }
 
-/// 20.1.4.2.6 bottom (Bottom Border): the tag `a:bottom`, schema type `CT_ThemeableLineStyle`.
+/// The `a:bottom` element, Bottom Border (ECMA-376 Part 1, section 20.1.4.2.6). Its schema type is
+/// `CT_ThemeableLineStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5257,13 +5706,15 @@ pub struct BottomBevel {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BottomBorder {
+    /// The child that is an item of `ThemeableLineStyleContent`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Box<ThemeableLineStyleContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.3.5 `lnB` (Bottom Border Line Properties): the tag `a:lnB`, schema type
-/// `CT_LineProperties`.
+/// The `a:lnB` element, Bottom Border Line Properties (ECMA-376 Part 1, section 21.1.3.5). Its
+/// schema type is `CT_LineProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5275,22 +5726,33 @@ pub struct BottomBorder {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BottomBorderLineProperties {
+    /// The attribute `algn`, when the element has it.
     pub algn: Option<AlignmentType>,
+    /// The attribute `cap`, when the element has it.
     pub cap: Option<EndLineCap>,
+    /// The attribute `cmpd`, when the element has it.
     pub cmpd: Option<CompoundLineType>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is an item of `LineDashContent`, when there is one.
     pub line_dash_content: Option<Box<LineDashContent>>,
+    /// The child that is an item of `LineFillContent`, when there is one.
     pub line_fill_content: Option<Box<LineFillContent>>,
+    /// The child that is `LineHeadEndStyle`, when there is one.
     pub line_head_end_style: Option<Box<LineHeadEndStyle>>,
+    /// The child that is an item of `LineJoinContent`, when there is one.
     pub line_join_content: Option<Box<LineJoinContent>>,
+    /// The child that is `TailLineEndStyle`, when there is one.
     pub tail_line_end_style: Option<Box<TailLineEndStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w`, when the element has it.
     pub w: Option<LineWidth>,
 }
 
-/// 21.1.3.6 `lnBlToTr` (Bottom-Left to Top-Right Border Line Properties): the tag `a:lnBlToTr`,
-/// schema type `CT_LineProperties`.
+/// The `a:lnBlToTr` element, Bottom-Left to Top-Right Border Line Properties (ECMA-376 Part 1,
+/// section 21.1.3.6). Its schema type is `CT_LineProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5302,21 +5764,32 @@ pub struct BottomBorderLineProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BottomLeftToTopRightBorderLineProperties {
+    /// The attribute `algn`, when the element has it.
     pub algn: Option<AlignmentType>,
+    /// The attribute `cap`, when the element has it.
     pub cap: Option<EndLineCap>,
+    /// The attribute `cmpd`, when the element has it.
     pub cmpd: Option<CompoundLineType>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is an item of `LineDashContent`, when there is one.
     pub line_dash_content: Option<Box<LineDashContent>>,
+    /// The child that is an item of `LineFillContent`, when there is one.
     pub line_fill_content: Option<Box<LineFillContent>>,
+    /// The child that is `LineHeadEndStyle`, when there is one.
     pub line_head_end_style: Option<Box<LineHeadEndStyle>>,
+    /// The child that is an item of `LineJoinContent`, when there is one.
     pub line_join_content: Option<Box<LineJoinContent>>,
+    /// The child that is `TailLineEndStyle`, when there is one.
     pub tail_line_end_style: Option<Box<TailLineEndStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w`, when the element has it.
     pub w: Option<LineWidth>,
 }
 
-/// 20.1.2.2.1 `bldChart` (Build Chart): the tag `a:bldChart`, schema type
+/// The `a:bldChart` element, Build Chart (ECMA-376 Part 1, section 20.1.2.2.1). Its schema type is
 /// `CT_AnimationChartBuildProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
@@ -5326,12 +5799,15 @@ pub struct BottomLeftToTopRightBorderLineProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BuildChart {
+    /// The attribute `animBg`, when the element has it.
     pub anim_bg: Option<String>,
+    /// The attribute `bld`, when the element has it.
     pub bld: Option<ChartAnimationBuildType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.2 `bldDgm` (Build Diagram): the tag `a:bldDgm`, schema type
+/// The `a:bldDgm` element, Build Diagram (ECMA-376 Part 1, section 20.1.2.2.2). Its schema type is
 /// `CT_AnimationDgmBuildProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
@@ -5341,23 +5817,32 @@ pub struct BuildChart {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BuildDiagram {
+    /// The attribute `bld`, when the element has it.
     pub bld: Option<DiagramAnimationBuildType>,
+    /// The attribute `rev`, when the element has it.
     pub rev: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_AnimationGraphicalObjectBuildProperties`: local choice in
-/// `CT_AnimationGraphicalObjectBuildProperties`.
+/// One child element of a choice: local choice in `CT_AnimationGraphicalObjectBuildProperties`.
+///
+/// The schema types that hold it: `CT_AnimationGraphicalObjectBuildProperties`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum BuildSubElementsContent {
+    /// The element `a:bldChart`, a `BuildChart`.
     BuildChart(BuildChart),
+    /// The element `a:bldDgm`, a `BuildDiagram`.
     BuildDiagram(BuildDiagram),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
 }
 
-/// 21.1.2.4.11 `buSzTx` (Bullet Size Follows Text): the tag `a:buSzTx`, schema type
-/// `CT_TextBulletSizeFollowText`.
+/// The `a:buSzTx` element, Bullet Size Follows Text (ECMA-376 Part 1, section 21.1.2.4.11). Its
+/// schema type is `CT_TextBulletSizeFollowText`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5366,11 +5851,12 @@ pub enum BuildSubElementsContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BulletSizeFollowsText {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.4.9 `buSzPct` (Bullet Size Percentage): the tag `a:buSzPct`, schema type
-/// `CT_TextBulletSizePercent`.
+/// The `a:buSzPct` element, Bullet Size Percentage (ECMA-376 Part 1, section 21.1.2.4.9). Its
+/// schema type is `CT_TextBulletSizePercent`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5379,12 +5865,14 @@ pub struct BulletSizeFollowsText {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BulletSizePercentage {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<StTextBulletSizePercent>,
 }
 
-/// 21.1.2.4.10 `buSzPts` (Bullet Size Points): the tag `a:buSzPts`, schema type
-/// `CT_TextBulletSizePoint`.
+/// The `a:buSzPts` element, Bullet Size Points (ECMA-376 Part 1, section 21.1.2.4.10). Its schema
+/// type is `CT_TextBulletSizePoint`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5393,11 +5881,14 @@ pub struct BulletSizePercentage {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BulletSizePoints {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<TextFontSize>,
 }
 
-/// 20.1.5.5 camera (Camera): the tag `a:camera`, schema type `CT_Camera`.
+/// The `a:camera` element, Camera (ECMA-376 Part 1, section 20.1.5.5). Its schema type is
+/// `CT_Camera`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5406,14 +5897,20 @@ pub struct BulletSizePoints {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Camera {
+    /// The attribute `fov`, when the element has it.
     pub fov: Option<FieldOfViewAngle>,
+    /// The attribute `prst`, when the element has it.
     pub prst: Option<PresetCameraType>,
+    /// The child that is `Rotation`, when there is one.
     pub rotation: Option<Box<Rotation>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `zoom`, when the element has it.
     pub zoom: Option<PositivePercentageValueWithSign>,
 }
 
-/// 21.1.3.1 `cell3D` (Cell 3-D): the tag `a:cell3D`, schema type `CT_Cell3D`.
+/// The `a:cell3D` element, Cell 3-D (ECMA-376 Part 1, section 21.1.3.1). Its schema type is
+/// `CT_Cell3D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5425,15 +5922,21 @@ pub struct Camera {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Cell3D {
+    /// The child that is `Bevel`, which the schema requires.
     pub bevel: Box<Bevel>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `LightRig`, when there is one.
     pub light_rig: Option<Box<LightRig>>,
+    /// The attribute `prstMaterial`, when the element has it.
     pub prst_material: Option<PresetMaterialType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.17 `clrFrom` (Change Color From): the tag `a:clrFrom`, schema type `CT_Color`.
+/// The `a:clrFrom` element, Change Color From (ECMA-376 Part 1, section 20.1.8.17). Its schema type
+/// is `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5442,11 +5945,14 @@ pub struct Cell3D {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ChangeColorFrom {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.19 `clrTo` (Change Color To): the tag `a:clrTo`, schema type `CT_Color`.
+/// The `a:clrTo` element, Change Color To (ECMA-376 Part 1, section 20.1.8.19). Its schema type is
+/// `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5455,11 +5961,14 @@ pub struct ChangeColorFrom {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ChangeColorTo {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.4.3 `buChar` (Character Bullet): the tag `a:buChar`, schema type `CT_TextCharBullet`.
+/// The `a:buChar` element, Character Bullet (ECMA-376 Part 1, section 21.1.2.4.3). Its schema type
+/// is `CT_TextCharBullet`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5468,11 +5977,17 @@ pub struct ChangeColorTo {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CharacterBullet {
+    /// The attribute `char`, when the element has it.
     pub char: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.13 `ST_ChartBuildStep` (Chart Animation Build Step): the text the file carried.
+/// Chart Animation Build Step, the simple type `ST_ChartBuildStep` (ECMA-376 Part 1, section
+/// 20.1.10.13), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5481,19 +5996,30 @@ pub struct CharacterBullet {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ChartAnimationBuildStep(pub String);
-/// The members of `ST_ChartBuildStep`, in alphabetical order.
+/// The members of the enumeration `ST_ChartBuildStep`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ChartAnimationBuildStepMember {
+    /// The member written `allPts`.
     AllPts,
+    /// The member written `category`.
     Category,
+    /// The member written `gridLegend`.
     GridLegend,
+    /// The member written `ptInCategory`.
     PtInCategory,
+    /// The member written `ptInSeries`.
     PtInSeries,
+    /// The member written `series`.
     Series,
 }
 
-/// 20.1.10.5 `ST_AnimationChartBuildType` (Chart Animation Build Type): the text the file carried.
+/// Chart Animation Build Type, the simple type `ST_AnimationChartBuildType` (ECMA-376 Part 1,
+/// section 20.1.10.5), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5507,12 +6033,17 @@ pub struct ChartAnimationBuildType(pub String);
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ChartAnimationBuildTypeMember {
+    /// A value of the member type `AnimationBuildTypeMember`.
     AnimationBuildType(AnimationBuildTypeMember),
+    /// A value of the member type `ChartOnlyAnimationTypesMember`.
     ChartOnlyAnimationTypes(ChartOnlyAnimationTypesMember),
 }
 
-/// 20.1.10.6 `ST_AnimationChartOnlyBuildType` (Chart only Animation Types): the text the file
-/// carried.
+/// Chart only Animation Types, the simple type `ST_AnimationChartOnlyBuildType` (ECMA-376 Part 1,
+/// section 20.1.10.6), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5521,17 +6052,23 @@ pub enum ChartAnimationBuildTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ChartOnlyAnimationTypes(pub String);
-/// The members of `ST_AnimationChartOnlyBuildType`, in alphabetical order.
+/// The members of the enumeration `ST_AnimationChartOnlyBuildType`, in alphabetical order. `as_str`
+/// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ChartOnlyAnimationTypesMember {
+    /// The member written `category`.
     Category,
+    /// The member written `categoryEl`.
     CategoryEl,
+    /// The member written `series`.
     Series,
+    /// The member written `seriesEl`.
     SeriesEl,
 }
 
-/// 20.1.2.2.3 chart (Chart to Animate): the tag `a:chart`, schema type `CT_AnimationChartElement`.
+/// The `a:chart` element, Chart to Animate (ECMA-376 Part 1, section 20.1.2.2.3). Its schema type
+/// is `CT_AnimationChartElement`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5540,13 +6077,18 @@ pub enum ChartOnlyAnimationTypesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ChartToAnimate {
+    /// The attribute `bldStep`, when the element has it.
     pub bld_step: Option<ChartAnimationBuildStep>,
+    /// The attribute `categoryIdx`, when the element has it.
     pub category_idx: Option<String>,
+    /// The attribute `seriesIdx`, when the element has it.
     pub series_idx: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.7.1 `chExt` (Child Extents): the tag `a:chExt`, schema type `CT_PositiveSize2D`.
+/// The `a:chExt` element, Child Extents (ECMA-376 Part 1, section 20.1.7.1). Its schema type is
+/// `CT_PositiveSize2D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5555,12 +6097,16 @@ pub struct ChartToAnimate {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ChildExtents {
+    /// The attribute `cx`, when the element has it.
     pub cx: Option<PositiveCoordinate>,
+    /// The attribute `cy`, when the element has it.
     pub cy: Option<PositiveCoordinate>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.7.2 `chOff` (Child Offset): the tag `a:chOff`, schema type `CT_Point2D`.
+/// The `a:chOff` element, Child Offset (ECMA-376 Part 1, section 20.1.7.2). Its schema type is
+/// `CT_Point2D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5569,12 +6115,16 @@ pub struct ChildExtents {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ChildOffset {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `x`, when the element has it.
     pub x: Option<Coordinate>,
+    /// The attribute `y`, when the element has it.
     pub y: Option<Coordinate>,
 }
 
-/// 21.1.2.3.5 `hlinkClick` (Click Hyperlink): the tag `a:hlinkClick`, schema type `CT_Hyperlink`.
+/// The `a:hlinkClick` element, Click Hyperlink (ECMA-376 Part 1, section 21.1.2.3.5). Its schema
+/// type is `CT_Hyperlink`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5586,21 +6136,33 @@ pub struct ChildOffset {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ClickHyperlink {
+    /// The attribute `action`, when the element has it.
     pub action: Option<String>,
+    /// The attribute `endSnd`, when the element has it.
     pub end_snd: Option<String>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `highlightClick`, when the element has it.
     pub highlight_click: Option<String>,
+    /// The attribute `history`, when the element has it.
     pub history: Option<String>,
+    /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `invalidUrl`, when the element has it.
     pub invalid_url: Option<String>,
+    /// The child that is `HyperlinkSound`, when there is one.
     pub sound: Option<Box<HyperlinkSound>>,
+    /// The attribute `tgtFrame`, when the element has it.
     pub tgt_frame: Option<String>,
+    /// The attribute `tooltip`, when the element has it.
     pub tooltip: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.9.6 close (Close Shape Path): the tag `a:close`, schema type `CT_Path2DClose`.
+/// The `a:close` element, Close Shape Path (ECMA-376 Part 1, section 20.1.9.6). Its schema type is
+/// `CT_Path2DClose`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5609,11 +6171,12 @@ pub struct ClickHyperlink {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CloseShapePath {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.16 `clrChange` (Color Change Effect): the tag `a:clrChange`, schema type
-/// `CT_ColorChangeEffect`.
+/// The `a:clrChange` element, Color Change Effect (ECMA-376 Part 1, section 20.1.8.16). Its schema
+/// type is `CT_ColorChangeEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5622,32 +6185,47 @@ pub struct CloseShapePath {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColorChangeEffect {
+    /// The child that is `ChangeColorFrom`, which the schema requires.
     pub change_color_from: Box<ChangeColorFrom>,
+    /// The child that is `ChangeColorTo`, which the schema requires.
     pub change_color_to: Box<ChangeColorTo>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `useA`, when the element has it.
     pub use_a: Option<String>,
 }
 
-/// One item of `EG_ColorChoice`.
+/// One child element of a choice: `EG_ColorChoice`.
 ///
-/// Its types: `CT_AlphaInverseEffect`, `CT_Color`, `CT_ColorMRU`, `CT_ColorReplaceEffect`,
-/// `dgm:CT_Colors`, `CT_CustomColor`, `CT_DuotoneEffect`, `CT_FontReference`, `CT_GlowEffect`,
-/// `CT_GradientStop`, `CT_InnerShadowEffect`, `CT_OuterShadowEffect`, `CT_PresetShadowEffect`,
-/// `CT_SolidColorFillProperties`, `CT_StyleMatrixReference`, `CT_TableStyleTextStyle`,
-/// `cs:CT_ColorStyle`, `cs:CT_FontReference`, `cs:CT_StyleReference`.
+/// The schema types that hold it: `CT_AlphaInverseEffect`, `CT_Color`, `CT_ColorMRU`,
+/// `CT_ColorReplaceEffect`, `dgm:CT_Colors`, `CT_CustomColor`, `CT_DuotoneEffect`,
+/// `CT_FontReference`, `CT_GlowEffect`, `CT_GradientStop`, `CT_InnerShadowEffect`,
+/// `CT_OuterShadowEffect`, `CT_PresetShadowEffect`, `CT_SolidColorFillProperties`,
+/// `CT_StyleMatrixReference`, `CT_TableStyleTextStyle`, `cs:CT_ColorStyle`, `cs:CT_FontReference`,
+/// `cs:CT_StyleReference`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ColorContent {
+    /// The element `a:hslClr`, a `HueSaturationLuminanceColorModel`.
     HueSaturationLuminanceColorModel(HueSaturationLuminanceColorModel),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `a:prstClr`, a `PresetColor`.
     PresetColor(PresetColor),
+    /// The element `a:srgbClr`, a `RGBColorModelHexVariant`.
     RGBColorModelHexVariant(RGBColorModelHexVariant),
+    /// The element `a:scrgbClr`, a `RGBColorModelPercentageVariant`.
     RGBColorModelPercentageVariant(RGBColorModelPercentageVariant),
+    /// The element `a:schemeClr`, a `SchemeColor`.
     SchemeColor(SchemeColor),
+    /// The element `a:sysClr`, a `SystemColor`.
     SystemColor(SystemColor),
 }
 
-/// 20.1.6.1 `clrMap` (Color Map): the tag `a:clrMap`, schema type `CT_ColorMapping`.
+/// The `a:clrMap` element, Color Map (ECMA-376 Part 1, section 20.1.6.1). Its schema type is
+/// `CT_ColorMapping`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5659,24 +6237,39 @@ pub enum ColorContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColorMap {
+    /// The attribute `accent1`, when the element has it.
     pub accent1: Option<ThemeColorReference>,
+    /// The attribute `accent2`, when the element has it.
     pub accent2: Option<ThemeColorReference>,
+    /// The attribute `accent3`, when the element has it.
     pub accent3: Option<ThemeColorReference>,
+    /// The attribute `accent4`, when the element has it.
     pub accent4: Option<ThemeColorReference>,
+    /// The attribute `accent5`, when the element has it.
     pub accent5: Option<ThemeColorReference>,
+    /// The attribute `accent6`, when the element has it.
     pub accent6: Option<ThemeColorReference>,
+    /// The attribute `bg1`, when the element has it.
     pub bg1: Option<ThemeColorReference>,
+    /// The attribute `bg2`, when the element has it.
     pub bg2: Option<ThemeColorReference>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `folHlink`, when the element has it.
     pub fol_hlink: Option<ThemeColorReference>,
+    /// The attribute `hlink`, when the element has it.
     pub hlink: Option<ThemeColorReference>,
+    /// The attribute `tx1`, when the element has it.
     pub tx1: Option<ThemeColorReference>,
+    /// The attribute `tx2`, when the element has it.
     pub tx2: Option<ThemeColorReference>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.6.2 `clrScheme` (Color Scheme): the tag `a:clrScheme`, schema type `CT_ColorScheme`.
+/// The `a:clrScheme` element, Color Scheme (ECMA-376 Part 1, section 20.1.6.2). Its schema type is
+/// `CT_ColorScheme`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5688,34 +6281,57 @@ pub struct ColorMap {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColorScheme {
+    /// The child that is `Accent1`, which the schema requires.
     pub accent_1: Box<Accent1>,
+    /// The child that is `Accent2`, which the schema requires.
     pub accent_2: Box<Accent2>,
+    /// The child that is `Accent3`, which the schema requires.
     pub accent_3: Box<Accent3>,
+    /// The child that is `Accent4`, which the schema requires.
     pub accent_4: Box<Accent4>,
+    /// The child that is `Accent5`, which the schema requires.
     pub accent_5: Box<Accent5>,
+    /// The child that is `Accent6`, which the schema requires.
     pub accent_6: Box<Accent6>,
+    /// The child that is `Dark1`, which the schema requires.
     pub dark_1: Box<Dark1>,
+    /// The child that is `Dark2`, which the schema requires.
     pub dark_2: Box<Dark2>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `FollowedHyperlink`, which the schema requires.
     pub followed_hyperlink: Box<FollowedHyperlink>,
+    /// The child that is `Hyperlink`, which the schema requires.
     pub hyperlink: Box<Hyperlink>,
+    /// The child that is `Light1`, which the schema requires.
     pub light_1: Box<Light1>,
+    /// The child that is `Light2`, which the schema requires.
     pub light_2: Box<Light2>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_ColorMappingOverride`: local choice in `CT_ColorMappingOverride`.
+/// One child element of a choice: local choice in `CT_ColorMappingOverride`.
+///
+/// The schema types that hold it: `CT_ColorMappingOverride`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ColorSchemeMapOverrideContent {
+    /// The element `a:masterClrMapping`, a `MasterColorMapping`.
     MasterColorMapping(MasterColorMapping),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `a:overrideClrMapping`, a `OverrideColorMapping`.
     OverrideColorMapping(Box<OverrideColorMapping>),
 }
 
-/// 21.1.2.4.4 `buClr` (Color Specified): the tag `a:buClr`, schema type `CT_Color`.
+/// The `a:buClr` element, Color Specified (ECMA-376 Part 1, section 21.1.2.4.4). Its schema type is
+/// `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5724,47 +6340,83 @@ pub enum ColorSchemeMapOverrideContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColorSpecified {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_HslColor`, `CT_PresetColor`, `CT_SRgbColor`, `CT_ScRgbColor`, `CT_SchemeColor`,
-/// `CT_SystemColor`, `cs:CT_ColorStyleVariation`, `cs:CT_StyleColor`: `EG_ColorTransform`.
+/// One child element of a choice: `EG_ColorTransform`.
+///
+/// The schema types that hold it: `CT_HslColor`, `CT_PresetColor`, `CT_SRgbColor`, `CT_ScRgbColor`,
+/// `CT_SchemeColor`, `CT_SystemColor`, `cs:CT_ColorStyleVariation`, `cs:CT_StyleColor`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ColorTransformContent {
+    /// The element `a:alpha`, a `Alpha`.
     Alpha(Alpha),
+    /// The element `a:alphaMod`, a `AlphaModulation`.
     AlphaModulation(AlphaModulation),
+    /// The element `a:alphaOff`, a `AlphaOffset`.
     AlphaOffset(AlphaOffset),
+    /// The element `a:blue`, a `Blue`.
     Blue(Blue),
+    /// The element `a:blueMod`, a `BlueModulation`.
     BlueModulation(BlueModulation),
+    /// The element `a:blueOff`, a `BlueOffset`.
     BlueOffset(BlueOffset),
+    /// The element `a:comp`, a `Complement`.
     Complement(Complement),
+    /// The element `a:gamma`, a `Gamma`.
     Gamma(Gamma),
+    /// The element `a:gray`, a `Gray`.
     Gray(Gray),
+    /// The element `a:green`, a `Green`.
     Green(Green),
+    /// The element `a:greenMod`, a `GreenModulation`.
     GreenModulation(GreenModulation),
+    /// The element `a:greenOff`, a `GreenOffset`.
     GreenOffset(GreenOffset),
+    /// The element `a:hue`, a `Hue`.
     Hue(Hue),
+    /// The element `a:hueMod`, a `HueModulate`.
     HueModulate(HueModulate),
+    /// The element `a:hueOff`, a `HueOffset`.
     HueOffset(HueOffset),
+    /// The element `a:inv`, a `Inverse`.
     Inverse(Inverse),
+    /// The element `a:invGamma`, a `InverseGamma`.
     InverseGamma(InverseGamma),
+    /// The element `a:lum`, a `Luminance`.
     Luminance(Luminance),
+    /// The element `a:lumMod`, a `LuminanceModulation`.
     LuminanceModulation(LuminanceModulation),
+    /// The element `a:lumOff`, a `LuminanceOffset`.
     LuminanceOffset(LuminanceOffset),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `a:red`, a `Red`.
     Red(Red),
+    /// The element `a:redMod`, a `RedModulation`.
     RedModulation(RedModulation),
+    /// The element `a:redOff`, a `RedOffset`.
     RedOffset(RedOffset),
+    /// The element `a:sat`, a `Saturation`.
     Saturation(Saturation),
+    /// The element `a:satMod`, a `SaturationModulation`.
     SaturationModulation(SaturationModulation),
+    /// The element `a:satOff`, a `SaturationOffset`.
     SaturationOffset(SaturationOffset),
+    /// The element `a:shade`, a `Shade`.
     Shade(Shade),
+    /// The element `a:tint`, a `Tint`.
     Tint(Tint),
 }
 
-/// 20.1.2.3.7 comp (Complement): the tag `a:comp`, schema type `CT_ComplementTransform`.
+/// The `a:comp` element, Complement (ECMA-376 Part 1, section 20.1.2.3.7). Its schema type is
+/// `CT_ComplementTransform`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5773,10 +6425,12 @@ pub enum ColorTransformContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Complement {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.3.1 cs (Complex Script Font): the tag `a:cs`, schema type `CT_TextFont`.
+/// The `a:cs` element, Complex Script Font (ECMA-376 Part 1, section 21.1.2.3.1). Its schema type
+/// is `CT_TextFont`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5785,14 +6439,23 @@ pub struct Complement {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ComplexScriptFont {
+    /// The attribute `charset`, when the element has it.
     pub charset: Option<String>,
+    /// The attribute `panose`, when the element has it.
     pub panose: Option<common_simple_types::Panose1Number>,
+    /// The attribute `pitchFamily`, when the element has it.
     pub pitch_family: Option<PitchFamily>,
+    /// The attribute `typeface`, when the element has it.
     pub typeface: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.15 `ST_CompoundLine` (Compound Line Type): the text the file carried.
+/// Compound Line Type, the simple type `ST_CompoundLine` (ECMA-376 Part 1, section 20.1.10.15),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5801,18 +6464,25 @@ pub struct ComplexScriptFont {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CompoundLineType(pub String);
-/// The members of `ST_CompoundLine`, in alphabetical order.
+/// The members of the enumeration `ST_CompoundLine`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum CompoundLineTypeMember {
+    /// The member written `dbl`.
     Dbl,
+    /// The member written `sng`.
     Sng,
+    /// The member written `thickThin`.
     ThickThin,
+    /// The member written `thinThick`.
     ThinThick,
+    /// The member written `tri`.
     Tri,
 }
 
-/// 20.1.2.2.13 `endCxn` (Connection End): the tag `a:endCxn`, schema type `CT_Connection`.
+/// The `a:endCxn` element, Connection End (ECMA-376 Part 1, section 20.1.2.2.13). Its schema type
+/// is `CT_Connection`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5821,12 +6491,16 @@ pub enum CompoundLineTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConnectionEnd {
+    /// The attribute `id`, when the element has it.
     pub id: Option<DrawingElementID>,
+    /// The attribute `idx`, when the element has it.
     pub idx: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.10 `cxnSp` (Connection Shape): the tag `a:cxnSp`, schema type `CT_GvmlConnector`.
+/// The `a:cxnSp` element, Connection Shape (ECMA-376 Part 1, section 20.1.2.2.10). Its schema type
+/// is `CT_GvmlConnector`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5838,18 +6512,23 @@ pub struct ConnectionEnd {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConnectionShape {
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `NonVisualPropertiesForAConnectionShape`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_properties: Box<NonVisualPropertiesForAConnectionShape>,
+    /// The child that is `ShapeProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub properties: Box<ShapeProperties>,
+    /// The child that is `ShapeStyle`, when there is one.
     pub style: Option<Box<ShapeStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.11 `cxnSpLocks` (Connection Shape Locks): the tag `a:cxnSpLocks`, schema type
-/// `CT_ConnectorLocking`.
+/// The `a:cxnSpLocks` element, Connection Shape Locks (ECMA-376 Part 1, section 20.1.2.2.11). Its
+/// schema type is `CT_ConnectorLocking`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5861,22 +6540,35 @@ pub struct ConnectionShape {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConnectionShapeLocks {
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `noAdjustHandles`, when the element has it.
     pub no_adjust_handles: Option<String>,
+    /// The attribute `noChangeArrowheads`, when the element has it.
     pub no_change_arrowheads: Option<String>,
+    /// The attribute `noChangeAspect`, when the element has it.
     pub no_change_aspect: Option<String>,
+    /// The attribute `noChangeShapeType`, when the element has it.
     pub no_change_shape_type: Option<String>,
+    /// The attribute `noEditPoints`, when the element has it.
     pub no_edit_points: Option<String>,
+    /// The attribute `noGrp`, when the element has it.
     pub no_grp: Option<String>,
+    /// The attribute `noMove`, when the element has it.
     pub no_move: Option<String>,
+    /// The attribute `noResize`, when the element has it.
     pub no_resize: Option<String>,
+    /// The attribute `noRot`, when the element has it.
     pub no_rot: Option<String>,
+    /// The attribute `noSelect`, when the element has it.
     pub no_select: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.36 `stCxn` (Connection Start): the tag `a:stCxn`, schema type `CT_Connection`.
+/// The `a:stCxn` element, Connection Start (ECMA-376 Part 1, section 20.1.2.2.36). Its schema type
+/// is `CT_Connection`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5885,13 +6577,16 @@ pub struct ConnectionShapeLocks {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConnectionStart {
+    /// The attribute `id`, when the element has it.
     pub id: Option<DrawingElementID>,
+    /// The attribute `idx`, when the element has it.
     pub idx: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.43 `cpLocks` (Content Part Locks): the tag `a:cpLocks`, schema type
-/// `CT_ContentPartLocking`.
+/// The `a:cpLocks` element, Content Part Locks (ECMA-376 Part 1, section 20.1.2.2.43). Its schema
+/// type is `CT_ContentPartLocking`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5903,22 +6598,35 @@ pub struct ConnectionStart {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ContentPartLocks {
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `noAdjustHandles`, when the element has it.
     pub no_adjust_handles: Option<String>,
+    /// The attribute `noChangeArrowheads`, when the element has it.
     pub no_change_arrowheads: Option<String>,
+    /// The attribute `noChangeAspect`, when the element has it.
     pub no_change_aspect: Option<String>,
+    /// The attribute `noChangeShapeType`, when the element has it.
     pub no_change_shape_type: Option<String>,
+    /// The attribute `noEditPoints`, when the element has it.
     pub no_edit_points: Option<String>,
+    /// The attribute `noGrp`, when the element has it.
     pub no_grp: Option<String>,
+    /// The attribute `noMove`, when the element has it.
     pub no_move: Option<String>,
+    /// The attribute `noResize`, when the element has it.
     pub no_resize: Option<String>,
+    /// The attribute `noRot`, when the element has it.
     pub no_rot: Option<String>,
+    /// The attribute `noSelect`, when the element has it.
     pub no_select: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.5.6 `contourClr` (Contour Color): the tag `a:contourClr`, schema type `CT_Color`.
+/// The `a:contourClr` element, Contour Color (ECMA-376 Part 1, section 20.1.5.6). Its schema type
+/// is `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5927,11 +6635,17 @@ pub struct ContentPartLocks {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ContourColor {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.16 `ST_Coordinate` (Coordinate): the text the file carried.
+/// Coordinate, the simple type `ST_Coordinate` (ECMA-376 Part 1, section 20.1.10.16), kept as the
+/// text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5945,11 +6659,14 @@ pub struct Coordinate(pub String);
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
 pub enum CoordinateMember {
+    /// A value of the member type `i64`.
     StCoordinateUnqualified(i64),
+    /// A value of the member type `Measure`.
     UniversalMeasurement(Measure),
 }
 
-/// 20.1.4.1.8 `custClr` (Custom color): the tag `a:custClr`, schema type `CT_CustomColor`.
+/// The `a:custClr` element, Custom color (ECMA-376 Part 1, section 20.1.4.1.8). Its schema type is
+/// `CT_CustomColor`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5958,13 +6675,16 @@ pub enum CoordinateMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CustomColor {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.6.3 `custClrLst` (Custom Color List): the tag `a:custClrLst`, schema type
-/// `CT_CustomColorList`.
+/// The `a:custClrLst` element, Custom Color List (ECMA-376 Part 1, section 20.1.6.3). Its schema
+/// type is `CT_CustomColorList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5973,11 +6693,14 @@ pub struct CustomColor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CustomColorList {
+    /// The children that are `CustomColor`, in order.
     pub custom_color: Vec<CustomColor>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.21 `custDash` (Custom Dash): the tag `a:custDash`, schema type `CT_DashStopList`.
+/// The `a:custDash` element, Custom Dash (ECMA-376 Part 1, section 20.1.8.21). Its schema type is
+/// `CT_DashStopList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5986,11 +6709,14 @@ pub struct CustomColorList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CustomDash {
+    /// The children that are `DashStop`, in order.
     pub stop: Vec<DashStop>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.9.8 `custGeom` (Custom Geometry): the tag `a:custGeom`, schema type `CT_CustomGeometry2D`.
+/// The `a:custGeom` element, Custom Geometry (ECMA-376 Part 1, section 20.1.9.8). Its schema type
+/// is `CT_CustomGeometry2D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5999,16 +6725,24 @@ pub struct CustomDash {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CustomGeometry {
+    /// The child that is `ListOfShapeAdjustHandles`, when there is one.
     pub list_of_shape_adjust_handles: Option<Box<ListOfShapeAdjustHandles>>,
+    /// The child that is `ListOfShapeAdjustValues`, when there is one.
     pub list_of_shape_adjust_values: Option<Box<ListOfShapeAdjustValues>>,
+    /// The child that is `ListOfShapeConnectionSites`, when there is one.
     pub list_of_shape_connection_sites: Option<Box<ListOfShapeConnectionSites>>,
+    /// The child that is `ListOfShapeGuides`, when there is one.
     pub list_of_shape_guides: Option<Box<ListOfShapeGuides>>,
+    /// The child that is `ListOfShapePaths`, which the schema requires.
     pub list_of_shape_paths: Box<ListOfShapePaths>,
+    /// The child that is `ShapeTextRectangle`, when there is one.
     pub shape_text_rectangle: Option<Box<ShapeTextRectangle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.1.9 dk1 (Dark 1): the tag `a:dk1`, schema type `CT_Color`.
+/// The `a:dk1` element, Dark 1 (ECMA-376 Part 1, section 20.1.4.1.9). Its schema type is
+/// `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6017,11 +6751,14 @@ pub struct CustomGeometry {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Dark1 {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.1.10 dk2 (Dark 2): the tag `a:dk2`, schema type `CT_Color`.
+/// The `a:dk2` element, Dark 2 (ECMA-376 Part 1, section 20.1.4.1.10). Its schema type is
+/// `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6030,11 +6767,14 @@ pub struct Dark1 {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Dark2 {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.22 ds (Dash Stop): the tag `a:ds`, schema type `CT_DashStop`.
+/// The `a:ds` element, Dash Stop (ECMA-376 Part 1, section 20.1.8.22). Its schema type is
+/// `CT_DashStop`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6043,13 +6783,16 @@ pub struct Dark2 {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DashStop {
+    /// The attribute `d`, when the element has it.
     pub d: Option<PositivePercentageValueWithSign>,
+    /// The attribute `sp`, when the element has it.
     pub sp: Option<PositivePercentageValueWithSign>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.2.2 `defPPr` (Default Paragraph Style): the tag `a:defPPr`, schema type
-/// `CT_TextParagraphProperties`.
+/// The `a:defPPr` element, Default Paragraph Style (ECMA-376 Part 1, section 21.1.2.2.2). Its
+/// schema type is `CT_TextParagraphProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6061,35 +6804,57 @@ pub struct DashStop {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DefaultParagraphStyle {
+    /// The attribute `algn`, when the element has it.
     pub algn: Option<TextAlignmentTypes>,
+    /// The attribute `defTabSz`, when the element has it.
     pub def_tab_sz: Option<StCoordinate32>,
+    /// The child that is `DefaultTextRunProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub default_text_run_properties: Option<Box<DefaultTextRunProperties>>,
+    /// The attribute `eaLnBrk`, when the element has it.
     pub ea_ln_brk: Option<String>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `fontAlgn`, when the element has it.
     pub font_algn: Option<FontAlignmentTypes>,
+    /// The attribute `hangingPunct`, when the element has it.
     pub hanging_punct: Option<String>,
+    /// The attribute `indent`, when the element has it.
     pub indent: Option<TextIndentation>,
+    /// The attribute `latinLnBrk`, when the element has it.
     pub latin_ln_brk: Option<String>,
+    /// The child that is `LineSpacing`, when there is one.
     pub line_spacing: Option<Box<LineSpacing>>,
+    /// The attribute `lvl`, when the element has it.
     pub lvl: Option<TextIndentLevelType>,
+    /// The attribute `marL`, when the element has it.
     pub mar_l: Option<TextMargin>,
+    /// The attribute `marR`, when the element has it.
     pub mar_r: Option<TextMargin>,
+    /// The attribute `rtl`, when the element has it.
     pub rtl: Option<String>,
+    /// The child that is `SpaceAfter`, when there is one.
     pub space_after: Option<Box<SpaceAfter>>,
+    /// The child that is `SpaceBefore`, when there is one.
     pub space_before: Option<Box<SpaceBefore>>,
+    /// The child that is `TabList`, when there is one.
     pub tab_list: Option<Box<TabList>>,
+    /// The child that is an item of `TextBulletColorContent`, when there is one.
     pub text_bullet_color_content: Option<Box<TextBulletColorContent>>,
+    /// The child that is an item of `TextBulletContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_bullet_content: Option<Box<TextBulletContent>>,
+    /// The child that is an item of `TextBulletSizeContent`, when there is one.
     pub text_bullet_size_content: Option<Box<TextBulletSizeContent>>,
+    /// The child that is an item of `TextBulletTypefaceContent`, when there is one.
     pub text_bullet_typeface_content: Option<Box<TextBulletTypefaceContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.3.2 `defRPr` (Default Text Run Properties): the tag `a:defRPr`, schema type
-/// `CT_TextCharacterProperties`.
+/// The `a:defRPr` element, Default Text Run Properties (ECMA-376 Part 1, section 21.1.2.3.2). Its
+/// schema type is `CT_TextCharacterProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6101,51 +6866,89 @@ pub struct DefaultParagraphStyle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DefaultTextRunProperties {
+    /// The attribute `altLang`, when the element has it.
     pub alt_lang: Option<String>,
+    /// The attribute `b`, when the element has it.
     pub b: Option<String>,
+    /// The attribute `baseline`, when the element has it.
     pub baseline: Option<Percentage>,
+    /// The attribute `bmk`, when the element has it.
     pub bmk: Option<String>,
+    /// The attribute `cap`, when the element has it.
     pub cap: Option<TextCapTypes>,
+    /// The child that is `ClickHyperlink`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub click_hyperlink: Option<Box<ClickHyperlink>>,
+    /// The child that is `ComplexScriptFont`, when there is one.
     pub complex_script_font: Option<Box<ComplexScriptFont>>,
+    /// The attribute `dirty`, when the element has it.
     pub dirty: Option<String>,
+    /// The child that is `EastAsianFont`, when there is one.
     pub east_asian_font: Option<Box<EastAsianFont>>,
+    /// The child that is an item of `EffectPropertiesContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub effect_properties_content: Option<Box<EffectPropertiesContent>>,
+    /// The attribute `err`, when the element has it.
     pub err: Option<String>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is an item of `FillPropertiesContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub fill_properties_content: Option<Box<FillPropertiesContent>>,
+    /// The child that is `HighlightColor`, when there is one.
     pub highlight_color: Option<Box<HighlightColor>>,
+    /// The attribute `i`, when the element has it.
     pub i: Option<String>,
+    /// The attribute `kern`, when the element has it.
     pub kern: Option<TextNonNegativePoint>,
+    /// The attribute `kumimoji`, when the element has it.
     pub kumimoji: Option<String>,
+    /// The attribute `lang`, when the element has it.
     pub lang: Option<String>,
+    /// The child that is `LatinFont`, when there is one.
     pub latin_font: Option<Box<LatinFont>>,
+    /// The child that is `MouseOverHyperlink`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub mouse_over_hyperlink: Option<Box<MouseOverHyperlink>>,
+    /// The attribute `noProof`, when the element has it.
     pub no_proof: Option<String>,
+    /// The attribute `normalizeH`, when the element has it.
     pub normalize_h: Option<String>,
+    /// The child that is `Outline`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub outline: Option<Box<Outline>>,
+    /// The child that is `RightToLeftRun`, when there is one.
     pub right_to_left_run: Option<Box<RightToLeftRun>>,
+    /// The attribute `smtClean`, when the element has it.
     pub smt_clean: Option<String>,
+    /// The attribute `smtId`, when the element has it.
     pub smt_id: Option<String>,
+    /// The attribute `spc`, when the element has it.
     pub spc: Option<TextPoint>,
+    /// The attribute `strike`, when the element has it.
     pub strike: Option<TextStrikeType>,
+    /// The child that is `SymbolFont`, when there is one.
     pub symbol_font: Option<Box<SymbolFont>>,
+    /// The attribute `sz`, when the element has it.
     pub sz: Option<TextFontSize>,
+    /// The child that is an item of `TextUnderlineFillContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_underline_fill_content: Option<Box<TextUnderlineFillContent>>,
+    /// The child that is an item of `TextUnderlineLineContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_underline_line_content: Option<Box<TextUnderlineLineContent>>,
+    /// The attribute `u`, when the element has it.
     pub u: Option<TextUnderlineTypes>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.20 `ST_DgmBuildStep` (Diagram Animation Build Steps): the text the file carried.
+/// Diagram Animation Build Steps, the simple type `ST_DgmBuildStep` (ECMA-376 Part 1, section
+/// 20.1.10.20), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6154,15 +6957,22 @@ pub struct DefaultTextRunProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DiagramAnimationBuildSteps(pub String);
-/// The members of `ST_DgmBuildStep`, in alphabetical order.
+/// The members of the enumeration `ST_DgmBuildStep`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum DiagramAnimationBuildStepsMember {
+    /// The member written `bg`.
     Bg,
+    /// The member written `sp`.
     Sp,
 }
 
-/// 20.1.10.7 `ST_AnimationDgmBuildType` (Diagram Animation Build Type): the text the file carried.
+/// Diagram Animation Build Type, the simple type `ST_AnimationDgmBuildType` (ECMA-376 Part 1,
+/// section 20.1.10.7), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6176,12 +6986,17 @@ pub struct DiagramAnimationBuildType(pub String);
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum DiagramAnimationBuildTypeMember {
+    /// A value of the member type `AnimationBuildTypeMember`.
     AnimationBuildType(AnimationBuildTypeMember),
+    /// A value of the member type `DiagramOnlyAnimationTypesMember`.
     DiagramOnlyAnimationTypes(DiagramOnlyAnimationTypesMember),
 }
 
-/// 20.1.10.8 `ST_AnimationDgmOnlyBuildType` (Diagram only Animation Types): the text the file
-/// carried.
+/// Diagram only Animation Types, the simple type `ST_AnimationDgmOnlyBuildType` (ECMA-376 Part 1,
+/// section 20.1.10.8), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6190,16 +7005,21 @@ pub enum DiagramAnimationBuildTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DiagramOnlyAnimationTypes(pub String);
-/// The members of `ST_AnimationDgmOnlyBuildType`, in alphabetical order.
+/// The members of the enumeration `ST_AnimationDgmOnlyBuildType`, in alphabetical order. `as_str`
+/// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum DiagramOnlyAnimationTypesMember {
+    /// The member written `lvlAtOnce`.
     LvlAtOnce,
+    /// The member written `lvlOne`.
     LvlOne,
+    /// The member written `one`.
     One,
 }
 
-/// 20.1.2.2.12 dgm (Diagram to Animate): the tag `a:dgm`, schema type `CT_AnimationDgmElement`.
+/// The `a:dgm` element, Diagram to Animate (ECMA-376 Part 1, section 20.1.2.2.12). Its schema type
+/// is `CT_AnimationDgmElement`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6208,12 +7028,16 @@ pub enum DiagramOnlyAnimationTypesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DiagramToAnimate {
+    /// The attribute `bldStep`, when the element has it.
     pub bld_step: Option<DiagramAnimationBuildSteps>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<common_simple_types::Guid>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.9.4 `arcTo` (Draw Arc To): the tag `a:arcTo`, schema type `CT_Path2DArcTo`.
+/// The `a:arcTo` element, Draw Arc To (ECMA-376 Part 1, section 20.1.9.4). Its schema type is
+/// `CT_Path2DArcTo`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6222,15 +7046,20 @@ pub struct DiagramToAnimate {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DrawArcTo {
+    /// The attribute `hR`, when the element has it.
     pub h_r: Option<AdjustableCoordinateMethods>,
+    /// The attribute `stAng`, when the element has it.
     pub st_ang: Option<AdjustableAngleMethods>,
+    /// The attribute `swAng`, when the element has it.
     pub sw_ang: Option<AdjustableAngleMethods>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `wR`, when the element has it.
     pub w_r: Option<AdjustableCoordinateMethods>,
 }
 
-/// 20.1.9.7 `cubicBezTo` (Draw Cubic Bezier Curve To): the tag `a:cubicBezTo`, schema type
-/// `CT_Path2DCubicBezierTo`.
+/// The `a:cubicBezTo` element, Draw Cubic Bezier Curve To (ECMA-376 Part 1, section 20.1.9.7). Its
+/// schema type is `CT_Path2DCubicBezierTo`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6239,11 +7068,14 @@ pub struct DrawArcTo {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DrawCubicBezierCurveTo {
+    /// The children that are `ShapePathPoint`, in order.
     pub shape_path_point: Vec<ShapePathPoint>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.9.13 `lnTo` (Draw Line To): the tag `a:lnTo`, schema type `CT_Path2DLineTo`.
+/// The `a:lnTo` element, Draw Line To (ECMA-376 Part 1, section 20.1.9.13). Its schema type is
+/// `CT_Path2DLineTo`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6252,12 +7084,14 @@ pub struct DrawCubicBezierCurveTo {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DrawLineTo {
+    /// The child that is `ShapePathPoint`, which the schema requires.
     pub shape_path_point: Box<ShapePathPoint>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.9.21 `quadBezTo` (Draw Quadratic Bezier Curve To): the tag `a:quadBezTo`, schema type
-/// `CT_Path2DQuadBezierTo`.
+/// The `a:quadBezTo` element, Draw Quadratic Bezier Curve To (ECMA-376 Part 1, section 20.1.9.21).
+/// Its schema type is `CT_Path2DQuadBezierTo`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6266,11 +7100,17 @@ pub struct DrawLineTo {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DrawQuadraticBezierCurveTo {
+    /// The children that are `ShapePathPoint`, in order.
     pub shape_path_point: Vec<ShapePathPoint>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.21 `ST_DrawingElementId` (Drawing Element ID): the text the file carried.
+/// Drawing Element ID, the simple type `ST_DrawingElementId` (ECMA-376 Part 1, section 20.1.10.21),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6280,7 +7120,8 @@ pub struct DrawQuadraticBezierCurveTo {
 #[non_exhaustive]
 pub struct DrawingElementID(pub String);
 
-/// 20.1.8.23 duotone (Duotone Effect): the tag `a:duotone`, schema type `CT_DuotoneEffect`.
+/// The `a:duotone` element, Duotone Effect (ECMA-376 Part 1, section 20.1.8.23). Its schema type is
+/// `CT_DuotoneEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6289,11 +7130,14 @@ pub struct DrawingElementID(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DuotoneEffect {
+    /// The children that are an item of `ColorContent`, in order.
     pub content: Vec<ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.3.3 ea (East Asian Font): the tag `a:ea`, schema type `CT_TextFont`.
+/// The `a:ea` element, East Asian Font (ECMA-376 Part 1, section 21.1.2.3.3). Its schema type is
+/// `CT_TextFont`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6302,14 +7146,20 @@ pub struct DuotoneEffect {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EastAsianFont {
+    /// The attribute `charset`, when the element has it.
     pub charset: Option<String>,
+    /// The attribute `panose`, when the element has it.
     pub panose: Option<common_simple_types::Panose1Number>,
+    /// The attribute `pitchFamily`, when the element has it.
     pub pitch_family: Option<PitchFamily>,
+    /// The attribute `typeface`, when the element has it.
     pub typeface: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.2.7 effect (Effect): the tag `a:effect`, schema type `CT_EffectProperties`.
+/// The `a:effect` element, Effect (ECMA-376 Part 1, section 20.1.4.2.7). Its schema type is
+/// `CT_EffectProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6321,68 +7171,14 @@ pub struct EastAsianFont {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Effect {
+    /// The child that is an item of `EffectPropertiesContent`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Box<EffectPropertiesContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.20 cont (Effect Container): the tag `a:cont`, schema type `CT_EffectContainer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct EffectContainerCont {
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<EffectContainerContent>,
-    pub name: Option<String>,
-    pub r#type: Option<EffectContainerType>,
-    pub unknown: officekit_markup_base::Unknown,
-}
-
-/// One item of `CT_EffectContainer`: `EG_Effect`.
-#[derive(Clone, Debug, Eq, PartialEq)]
-#[non_exhaustive]
-pub enum EffectContainerContent {
-    AlphaBiLevelEffect(AlphaBiLevelEffect),
-    AlphaCeilingEffect(AlphaCeilingEffect),
-    AlphaFloorEffect(AlphaFloorEffect),
-    AlphaInsetOutsetEffect(AlphaInsetOutsetEffect),
-    AlphaInverseEffect(AlphaInverseEffect),
-    AlphaModulateEffect(AlphaModulateEffect),
-    AlphaModulateFixedEffect(AlphaModulateFixedEffect),
-    AlphaReplaceEffect(AlphaReplaceEffect),
-    BiLevel(BiLevel),
-    BlendEffect(BlendEffect),
-    BlurEffect(BlurEffect),
-    ColorChangeEffect(ColorChangeEffect),
-    DuotoneEffect(DuotoneEffect),
-    EffectContainerCont(EffectContainerCont),
-    EffectEffectReference(EffectEffectReference),
-    FillFillEffect(FillFillEffect),
-    FillOverlayEffect(FillOverlayEffect),
-    GlowEffect(GlowEffect),
-    GrayScaleEffect(GrayScaleEffect),
-    HueSaturationLuminanceEffect(HueSaturationLuminanceEffect),
-    InnerShadowEffect(InnerShadowEffect),
-    LuminanceEffect(LuminanceEffect),
-    Other(Node),
-    OuterShadowEffect(OuterShadowEffect),
-    PresetShadow(PresetShadow),
-    ReflectionEffect(ReflectionEffect),
-    RelativeOffsetEffect(RelativeOffsetEffect),
-    SoftEdgeEffect(SoftEdgeEffect),
-    SolidColorReplacement(SolidColorReplacement),
-    TintEffect(TintEffect),
-    TransformEffect(TransformEffect),
-}
-
-/// 20.1.8.25 `effectDag` (Effect Container): the tag `a:effectDag`, schema type
+/// The `a:cont` element, Effect Container (ECMA-376 Part 1, section 20.1.8.20). Its schema type is
 /// `CT_EffectContainer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
@@ -6394,15 +7190,116 @@ pub enum EffectContainerContent {
 #[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct EffectContainerEffectDag {
+pub struct EffectContainerCont {
+    /// The children that are an item of `EffectContainerContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<EffectContainerContent>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<EffectContainerType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.26 `effectLst` (Effect Container): the tag `a:effectLst`, schema type `CT_EffectList`.
+/// One child element of a choice: `EG_Effect`.
+///
+/// The schema types that hold it: `CT_EffectContainer`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
+#[derive(Clone, Debug, Eq, PartialEq)]
+#[non_exhaustive]
+pub enum EffectContainerContent {
+    /// The element `a:alphaBiLevel`, a `AlphaBiLevelEffect`.
+    AlphaBiLevelEffect(AlphaBiLevelEffect),
+    /// The element `a:alphaCeiling`, a `AlphaCeilingEffect`.
+    AlphaCeilingEffect(AlphaCeilingEffect),
+    /// The element `a:alphaFloor`, a `AlphaFloorEffect`.
+    AlphaFloorEffect(AlphaFloorEffect),
+    /// The element `a:alphaOutset`, a `AlphaInsetOutsetEffect`.
+    AlphaInsetOutsetEffect(AlphaInsetOutsetEffect),
+    /// The element `a:alphaInv`, a `AlphaInverseEffect`.
+    AlphaInverseEffect(AlphaInverseEffect),
+    /// The element `a:alphaMod`, a `AlphaModulateEffect`.
+    AlphaModulateEffect(AlphaModulateEffect),
+    /// The element `a:alphaModFix`, a `AlphaModulateFixedEffect`.
+    AlphaModulateFixedEffect(AlphaModulateFixedEffect),
+    /// The element `a:alphaRepl`, a `AlphaReplaceEffect`.
+    AlphaReplaceEffect(AlphaReplaceEffect),
+    /// The element `a:biLevel`, a `BiLevel`.
+    BiLevel(BiLevel),
+    /// The element `a:blend`, a `BlendEffect`.
+    BlendEffect(BlendEffect),
+    /// The element `a:blur`, a `BlurEffect`.
+    BlurEffect(BlurEffect),
+    /// The element `a:clrChange`, a `ColorChangeEffect`.
+    ColorChangeEffect(ColorChangeEffect),
+    /// The element `a:duotone`, a `DuotoneEffect`.
+    DuotoneEffect(DuotoneEffect),
+    /// The element `a:cont`, a `EffectContainerCont`.
+    EffectContainerCont(EffectContainerCont),
+    /// The element `a:effect`, a `EffectEffectReference`.
+    EffectEffectReference(EffectEffectReference),
+    /// The element `a:fill`, a `FillFillEffect`.
+    FillFillEffect(FillFillEffect),
+    /// The element `a:fillOverlay`, a `FillOverlayEffect`.
+    FillOverlayEffect(FillOverlayEffect),
+    /// The element `a:glow`, a `GlowEffect`.
+    GlowEffect(GlowEffect),
+    /// The element `a:grayscl`, a `GrayScaleEffect`.
+    GrayScaleEffect(GrayScaleEffect),
+    /// The element `a:hsl`, a `HueSaturationLuminanceEffect`.
+    HueSaturationLuminanceEffect(HueSaturationLuminanceEffect),
+    /// The element `a:innerShdw`, a `InnerShadowEffect`.
+    InnerShadowEffect(InnerShadowEffect),
+    /// The element `a:lum`, a `LuminanceEffect`.
+    LuminanceEffect(LuminanceEffect),
+    /// An element or node the schemas do not declare at this position.
+    Other(Node),
+    /// The element `a:outerShdw`, a `OuterShadowEffect`.
+    OuterShadowEffect(OuterShadowEffect),
+    /// The element `a:prstShdw`, a `PresetShadow`.
+    PresetShadow(PresetShadow),
+    /// The element `a:reflection`, a `ReflectionEffect`.
+    ReflectionEffect(ReflectionEffect),
+    /// The element `a:relOff`, a `RelativeOffsetEffect`.
+    RelativeOffsetEffect(RelativeOffsetEffect),
+    /// The element `a:softEdge`, a `SoftEdgeEffect`.
+    SoftEdgeEffect(SoftEdgeEffect),
+    /// The element `a:clrRepl`, a `SolidColorReplacement`.
+    SolidColorReplacement(SolidColorReplacement),
+    /// The element `a:tint`, a `TintEffect`.
+    TintEffect(TintEffect),
+    /// The element `a:xfrm`, a `TransformEffect`.
+    TransformEffect(TransformEffect),
+}
+
+/// The `a:effectDag` element, Effect Container (ECMA-376 Part 1, section 20.1.8.25). Its schema
+/// type is `CT_EffectContainer`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
+#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct EffectContainerEffectDag {
+    /// The children that are an item of `EffectContainerContent`, in order.
+    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
+    pub content: Vec<EffectContainerContent>,
+    /// The attribute `name`, when the element has it.
+    pub name: Option<String>,
+    /// The attribute `type`, when the element has it.
+    pub r#type: Option<EffectContainerType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+/// The `a:effectLst` element, Effect Container (ECMA-376 Part 1, section 20.1.8.26). Its schema
+/// type is `CT_EffectList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6414,19 +7311,32 @@ pub struct EffectContainerEffectDag {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EffectContainerEffectLst {
+    /// The child that is `BlurEffect`, when there is one.
     pub blur_effect: Option<Box<BlurEffect>>,
+    /// The child that is `FillOverlayEffect`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub fill_overlay_effect: Option<Box<FillOverlayEffect>>,
+    /// The child that is `GlowEffect`, when there is one.
     pub glow_effect: Option<Box<GlowEffect>>,
+    /// The child that is `InnerShadowEffect`, when there is one.
     pub inner_shadow_effect: Option<Box<InnerShadowEffect>>,
+    /// The child that is `OuterShadowEffect`, when there is one.
     pub outer_shadow_effect: Option<Box<OuterShadowEffect>>,
+    /// The child that is `PresetShadow`, when there is one.
     pub preset_shadow: Option<Box<PresetShadow>>,
+    /// The child that is `ReflectionEffect`, when there is one.
     pub reflection_effect: Option<Box<ReflectionEffect>>,
+    /// The child that is `SoftEdgeEffect`, when there is one.
     pub soft_edge_effect: Option<Box<SoftEdgeEffect>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.22 `ST_EffectContainerType` (Effect Container Type): the text the file carried.
+/// Effect Container Type, the simple type `ST_EffectContainerType` (ECMA-376 Part 1, section
+/// 20.1.10.22), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6435,15 +7345,19 @@ pub struct EffectContainerEffectLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EffectContainerType(pub String);
-/// The members of `ST_EffectContainerType`, in alphabetical order.
+/// The members of the enumeration `ST_EffectContainerType`, in alphabetical order. `as_str` gives
+/// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum EffectContainerTypeMember {
+    /// The member written `sib`.
     Sib,
+    /// The member written `tree`.
     Tree,
 }
 
-/// 20.1.8.24 effect (Effect): the tag `a:effect`, schema type `CT_EffectReference`.
+/// The `a:effect` element, Effect (ECMA-376 Part 1, section 20.1.8.24). Its schema type is
+/// `CT_EffectReference`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6452,25 +7366,32 @@ pub enum EffectContainerTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EffectEffectReference {
+    /// The attribute `ref`, when the element has it.
     pub r#ref: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `EG_EffectProperties`.
+/// One child element of a choice: `EG_EffectProperties`.
 ///
-/// Its types: `CT_BackgroundFormatting`, `p:CT_BackgroundProperties`, `CT_EffectProperties`,
-/// `CT_EffectStyleItem`, `CT_GroupShapeProperties`, `CT_ShapeProperties`, `CT_TableProperties`,
-/// `CT_TextCharacterProperties`, `CT_WholeE2oFormatting`.
+/// The schema types that hold it: `CT_BackgroundFormatting`, `p:CT_BackgroundProperties`,
+/// `CT_EffectProperties`, `CT_EffectStyleItem`, `CT_GroupShapeProperties`, `CT_ShapeProperties`,
+/// `CT_TableProperties`, `CT_TextCharacterProperties`, `CT_WholeE2oFormatting`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum EffectPropertiesContent {
+    /// The element `a:effectDag`, a `EffectContainerEffectDag`.
     EffectContainerEffectDag(EffectContainerEffectDag),
+    /// The element `a:effectLst`, a `EffectContainerEffectLst`.
     EffectContainerEffectLst(EffectContainerEffectLst),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
 }
 
-/// 20.1.4.2.8 `effectRef` (Effect Reference): the tag `a:effectRef`, schema type
-/// `CT_StyleMatrixReference`.
+/// The `a:effectRef` element, Effect Reference (ECMA-376 Part 1, section 20.1.4.2.8). Its schema
+/// type is `CT_StyleMatrixReference`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6479,13 +7400,16 @@ pub enum EffectPropertiesContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EffectReference {
+    /// The child that is an item of `ColorContent`, when there is one.
     pub content: Option<Box<ColorContent>>,
+    /// The attribute `idx`, when the element has it.
     pub idx: Option<StyleMatrixColumnIndex>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.1.11 `effectStyle` (Effect Style): the tag `a:effectStyle`, schema type
-/// `CT_EffectStyleItem`.
+/// The `a:effectStyle` element, Effect Style (ECMA-376 Part 1, section 20.1.4.1.11). Its schema
+/// type is `CT_EffectStyleItem`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6497,17 +7421,21 @@ pub struct EffectReference {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EffectStyle {
+    /// The child that is `Apply3DShapeProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub apply_3d_shape_properties: Option<Box<Apply3DShapeProperties>>,
+    /// The child that is an item of `EffectPropertiesContent`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Box<EffectPropertiesContent>,
+    /// The child that is `Scene3d`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub scene3d: Option<Box<Scene3d>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.1.12 `effectStyleLst` (Effect Style List): the tag `a:effectStyleLst`, schema type
-/// `CT_EffectStyleList`.
+/// The `a:effectStyleLst` element, Effect Style List (ECMA-376 Part 1, section 20.1.4.1.12). Its
+/// schema type is `CT_EffectStyleList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6519,12 +7447,18 @@ pub struct EffectStyle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EffectStyleList {
+    /// The children that are `EffectStyle`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub effect_style: Vec<EffectStyle>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.31 `ST_LineCap` (End Line Cap): the text the file carried.
+/// End Line Cap, the simple type `ST_LineCap` (ECMA-376 Part 1, section 20.1.10.31), kept as the
+/// text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6533,17 +7467,21 @@ pub struct EffectStyleList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EndLineCap(pub String);
-/// The members of `ST_LineCap`, in alphabetical order.
+/// The members of the enumeration `ST_LineCap`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum EndLineCapMember {
+    /// The member written `flat`.
     Flat,
+    /// The member written `rnd`.
     Rnd,
+    /// The member written `sq`.
     Sq,
 }
 
-/// 21.1.2.2.3 `endParaRPr` (End Paragraph Run Properties): the tag `a:endParaRPr`, schema type
-/// `CT_TextCharacterProperties`.
+/// The `a:endParaRPr` element, End Paragraph Run Properties (ECMA-376 Part 1, section 21.1.2.2.3).
+/// Its schema type is `CT_TextCharacterProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6555,51 +7493,86 @@ pub enum EndLineCapMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EndParagraphRunProperties {
+    /// The attribute `altLang`, when the element has it.
     pub alt_lang: Option<String>,
+    /// The attribute `b`, when the element has it.
     pub b: Option<String>,
+    /// The attribute `baseline`, when the element has it.
     pub baseline: Option<Percentage>,
+    /// The attribute `bmk`, when the element has it.
     pub bmk: Option<String>,
+    /// The attribute `cap`, when the element has it.
     pub cap: Option<TextCapTypes>,
+    /// The child that is `ClickHyperlink`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub click_hyperlink: Option<Box<ClickHyperlink>>,
+    /// The child that is `ComplexScriptFont`, when there is one.
     pub complex_script_font: Option<Box<ComplexScriptFont>>,
+    /// The attribute `dirty`, when the element has it.
     pub dirty: Option<String>,
+    /// The child that is `EastAsianFont`, when there is one.
     pub east_asian_font: Option<Box<EastAsianFont>>,
+    /// The child that is an item of `EffectPropertiesContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub effect_properties_content: Option<Box<EffectPropertiesContent>>,
+    /// The attribute `err`, when the element has it.
     pub err: Option<String>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is an item of `FillPropertiesContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub fill_properties_content: Option<Box<FillPropertiesContent>>,
+    /// The child that is `HighlightColor`, when there is one.
     pub highlight_color: Option<Box<HighlightColor>>,
+    /// The attribute `i`, when the element has it.
     pub i: Option<String>,
+    /// The attribute `kern`, when the element has it.
     pub kern: Option<TextNonNegativePoint>,
+    /// The attribute `kumimoji`, when the element has it.
     pub kumimoji: Option<String>,
+    /// The attribute `lang`, when the element has it.
     pub lang: Option<String>,
+    /// The child that is `LatinFont`, when there is one.
     pub latin_font: Option<Box<LatinFont>>,
+    /// The child that is `MouseOverHyperlink`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub mouse_over_hyperlink: Option<Box<MouseOverHyperlink>>,
+    /// The attribute `noProof`, when the element has it.
     pub no_proof: Option<String>,
+    /// The attribute `normalizeH`, when the element has it.
     pub normalize_h: Option<String>,
+    /// The child that is `Outline`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub outline: Option<Box<Outline>>,
+    /// The child that is `RightToLeftRun`, when there is one.
     pub right_to_left_run: Option<Box<RightToLeftRun>>,
+    /// The attribute `smtClean`, when the element has it.
     pub smt_clean: Option<String>,
+    /// The attribute `smtId`, when the element has it.
     pub smt_id: Option<String>,
+    /// The attribute `spc`, when the element has it.
     pub spc: Option<TextPoint>,
+    /// The attribute `strike`, when the element has it.
     pub strike: Option<TextStrikeType>,
+    /// The child that is `SymbolFont`, when there is one.
     pub symbol_font: Option<Box<SymbolFont>>,
+    /// The attribute `sz`, when the element has it.
     pub sz: Option<TextFontSize>,
+    /// The child that is an item of `TextUnderlineFillContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_underline_fill_content: Option<Box<TextUnderlineFillContent>>,
+    /// The child that is an item of `TextUnderlineLineContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_underline_line_content: Option<Box<TextUnderlineLineContent>>,
+    /// The attribute `u`, when the element has it.
     pub u: Option<TextUnderlineTypes>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.14 ext (Extension): the tag `a:ext`, schema type `CT_OfficeArtExtension`.
+/// The `a:ext` element, Extension (ECMA-376 Part 1, section 20.1.2.2.14). Its schema type is
+/// `CT_OfficeArtExtension`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6611,14 +7584,17 @@ pub struct EndParagraphRunProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Extension {
+    /// The children that are an item of `AnyElementContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<AnyElementContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `uri`, when the element has it.
     pub uri: Option<String>,
 }
 
-/// 20.1.2.2.15 `extLst` (Extension List): the tag `a:extLst`, schema type
-/// `CT_OfficeArtExtensionList`.
+/// The `a:extLst` element, Extension List (ECMA-376 Part 1, section 20.1.2.2.15). Its schema type
+/// is `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6630,12 +7606,15 @@ pub struct Extension {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtensionList {
+    /// The children that are `Extension`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension: Vec<Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.7.3 ext (Extents): the tag `a:ext`, schema type `CT_PositiveSize2D`.
+/// The `a:ext` element, Extents (ECMA-376 Part 1, section 20.1.7.3). Its schema type is
+/// `CT_PositiveSize2D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6644,13 +7623,16 @@ pub struct ExtensionList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Extents {
+    /// The attribute `cx`, when the element has it.
     pub cx: Option<PositiveCoordinate>,
+    /// The attribute `cy`, when the element has it.
     pub cy: Option<PositiveCoordinate>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.6.4 `extraClrScheme` (Extra Color Scheme): the tag `a:extraClrScheme`, schema type
-/// `CT_ColorSchemeAndMapping`.
+/// The `a:extraClrScheme` element, Extra Color Scheme (ECMA-376 Part 1, section 20.1.6.4). Its
+/// schema type is `CT_ColorSchemeAndMapping`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6662,15 +7644,18 @@ pub struct Extents {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtraColorScheme {
+    /// The child that is `ColorMap`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub color_map: Option<Box<ColorMap>>,
+    /// The child that is `ColorScheme`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub color_scheme: Box<ColorScheme>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.6.5 `extraClrSchemeLst` (Extra Color Scheme List): the tag `a:extraClrSchemeLst`, schema
-/// type `CT_ColorSchemeList`.
+/// The `a:extraClrSchemeLst` element, Extra Color Scheme List (ECMA-376 Part 1, section 20.1.6.5).
+/// Its schema type is `CT_ColorSchemeList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6682,12 +7667,15 @@ pub struct ExtraColorScheme {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtraColorSchemeList {
+    /// The children that are `ExtraColorScheme`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extra_color_scheme: Vec<ExtraColorScheme>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.5.7 `extrusionClr` (Extrusion Color): the tag `a:extrusionClr`, schema type `CT_Color`.
+/// The `a:extrusionClr` element, Extrusion Color (ECMA-376 Part 1, section 20.1.5.7). Its schema
+/// type is `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6696,11 +7684,17 @@ pub struct ExtraColorSchemeList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtrusionColor {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.26 `ST_FOVAngle` (Field of View Angle): the text the file carried.
+/// Field of View Angle, the simple type `ST_FOVAngle` (ECMA-376 Part 1, section 20.1.10.26), kept
+/// as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6710,7 +7704,8 @@ pub struct ExtrusionColor {
 #[non_exhaustive]
 pub struct FieldOfViewAngle(pub String);
 
-/// 20.1.4.2.9 fill (Fill): the tag `a:fill`, schema type `CT_FillProperties`.
+/// The `a:fill` element, Fill (ECMA-376 Part 1, section 20.1.4.2.9). Its schema type is
+/// `CT_FillProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6722,12 +7717,15 @@ pub struct FieldOfViewAngle(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Fill {
+    /// The child that is an item of `FillPropertiesContent`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Box<FillPropertiesContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.28 fill (Fill): the tag `a:fill`, schema type `CT_FillEffect`.
+/// The `a:fill` element, Fill (ECMA-376 Part 1, section 20.1.8.28). Its schema type is
+/// `CT_FillEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6739,22 +7737,31 @@ pub struct Fill {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FillFillEffect {
+    /// The child that is an item of `FillPropertiesContent`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Box<FillPropertiesContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_BlipFillProperties`: `EG_FillModeProperties`.
+/// One child element of a choice: `EG_FillModeProperties`.
+///
+/// The schema types that hold it: `CT_BlipFillProperties`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum FillModeContent {
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `a:stretch`, a `Stretch`.
     Stretch(Stretch),
+    /// The element `a:tile`, a `Tile`.
     Tile(Tile),
 }
 
-/// 20.1.8.29 `fillOverlay` (Fill Overlay Effect): the tag `a:fillOverlay`, schema type
-/// `CT_FillOverlayEffect`.
+/// The `a:fillOverlay` element, Fill Overlay Effect (ECMA-376 Part 1, section 20.1.8.29). Its
+/// schema type is `CT_FillOverlayEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6766,31 +7773,44 @@ pub enum FillModeContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FillOverlayEffect {
+    /// The attribute `blend`, when the element has it.
     pub blend: Option<BlendMode>,
+    /// The child that is an item of `FillPropertiesContent`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Box<FillPropertiesContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `EG_FillProperties`.
+/// One child element of a choice: `EG_FillProperties`.
 ///
-/// Its types: `CT_BackgroundFillStyleList`, `CT_BackgroundFormatting`, `p:CT_BackgroundProperties`,
-/// `CT_FillEffect`, `CT_FillOverlayEffect`, `CT_FillProperties`, `CT_FillStyleList`,
-/// `CT_GroupShapeProperties`, `CT_ShapeProperties`, `CT_TableCellProperties`, `CT_TableProperties`,
-/// `CT_TextCharacterProperties`, `CT_TextUnderlineFillGroupWrapper`.
+/// The schema types that hold it: `CT_BackgroundFillStyleList`, `CT_BackgroundFormatting`,
+/// `p:CT_BackgroundProperties`, `CT_FillEffect`, `CT_FillOverlayEffect`, `CT_FillProperties`,
+/// `CT_FillStyleList`, `CT_GroupShapeProperties`, `CT_ShapeProperties`, `CT_TableCellProperties`,
+/// `CT_TableProperties`, `CT_TextCharacterProperties`, `CT_TextUnderlineFillGroupWrapper`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum FillPropertiesContent {
+    /// The element `a:gradFill`, a `GradientFill`.
     GradientFill(GradientFill),
+    /// The element `a:grpFill`, a `GroupFill`.
     GroupFill(GroupFill),
+    /// The element `a:noFill`, a `NoFill`.
     NoFill(NoFill),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `a:pattFill`, a `PatternFill`.
     PatternFill(PatternFill),
+    /// The element `a:blipFill`, a `PictureFill`.
     PictureFill(PictureFill),
+    /// The element `a:solidFill`, a `SolidFill`.
     SolidFill(SolidFill),
 }
 
-/// 20.1.8.30 `fillRect` (Fill Rectangle): the tag `a:fillRect`, schema type `CT_RelativeRect`.
+/// The `a:fillRect` element, Fill Rectangle (ECMA-376 Part 1, section 20.1.8.30). Its schema type
+/// is `CT_RelativeRect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6799,15 +7819,20 @@ pub enum FillPropertiesContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FillRectangle {
+    /// The attribute `b`, when the element has it.
     pub b: Option<Percentage>,
+    /// The attribute `l`, when the element has it.
     pub l: Option<Percentage>,
+    /// The attribute `r`, when the element has it.
     pub r: Option<Percentage>,
+    /// The attribute `t`, when the element has it.
     pub t: Option<Percentage>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.2.10 `fillRef` (Fill Reference): the tag `a:fillRef`, schema type
-/// `CT_StyleMatrixReference`.
+/// The `a:fillRef` element, Fill Reference (ECMA-376 Part 1, section 20.1.4.2.10). Its schema type
+/// is `CT_StyleMatrixReference`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6816,13 +7841,16 @@ pub struct FillRectangle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FillReference {
+    /// The child that is an item of `ColorContent`, when there is one.
     pub content: Option<Box<ColorContent>>,
+    /// The attribute `idx`, when the element has it.
     pub idx: Option<StyleMatrixColumnIndex>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.1.13 `fillStyleLst` (Fill Style List): the tag `a:fillStyleLst`, schema type
-/// `CT_FillStyleList`.
+/// The `a:fillStyleLst` element, Fill Style List (ECMA-376 Part 1, section 20.1.4.1.13). Its schema
+/// type is `CT_FillStyleList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6834,13 +7862,15 @@ pub struct FillReference {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FillStyleList {
+    /// The children that are an item of `FillPropertiesContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<FillPropertiesContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.31 `fillToRect` (Fill To Rectangle): the tag `a:fillToRect`, schema type
-/// `CT_RelativeRect`.
+/// The `a:fillToRect` element, Fill To Rectangle (ECMA-376 Part 1, section 20.1.8.31). Its schema
+/// type is `CT_RelativeRect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6849,14 +7879,20 @@ pub struct FillStyleList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FillToRectangle {
+    /// The attribute `b`, when the element has it.
     pub b: Option<Percentage>,
+    /// The attribute `l`, when the element has it.
     pub l: Option<Percentage>,
+    /// The attribute `r`, when the element has it.
     pub r: Option<Percentage>,
+    /// The attribute `t`, when the element has it.
     pub t: Option<Percentage>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.2.11 `firstCol` (First Column): the tag `a:firstCol`, schema type `CT_TablePartStyle`.
+/// The `a:firstCol` element, First Column (ECMA-376 Part 1, section 20.1.4.2.11). Its schema type
+/// is `CT_TablePartStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6868,14 +7904,18 @@ pub struct FillToRectangle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FirstColumn {
+    /// The child that is `TableCellStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_cell_style: Option<Box<TableCellStyle>>,
+    /// The child that is `TableCellTextStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_cell_text_style: Option<Box<TableCellTextStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.2.12 `firstRow` (First Row): the tag `a:firstRow`, schema type `CT_TablePartStyle`.
+/// The `a:firstRow` element, First Row (ECMA-376 Part 1, section 20.1.4.2.12). Its schema type is
+/// `CT_TablePartStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6887,14 +7927,21 @@ pub struct FirstColumn {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FirstRow {
+    /// The child that is `TableCellStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_cell_style: Option<Box<TableCellStyle>>,
+    /// The child that is `TableCellTextStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_cell_text_style: Option<Box<TableCellTextStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.23 `ST_FixedAngle` (Fixed Angle): the text the file carried.
+/// Fixed Angle, the simple type `ST_FixedAngle` (ECMA-376 Part 1, section 20.1.10.23), kept as the
+/// text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6904,7 +7951,11 @@ pub struct FirstRow {
 #[non_exhaustive]
 pub struct FixedAngle(pub String);
 
-/// 20.1.10.24 `ST_FixedPercentage` (Fixed Percentage): the text the file carried.
+/// Fixed Percentage, the simple type `ST_FixedPercentage` (ECMA-376 Part 1, section 20.1.10.24),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6918,11 +7969,13 @@ pub struct FixedPercentage(pub String);
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
 pub enum FixedPercentageMember {
+    /// A value of the member type `f64`.
     FixedPercentageValueWithSign(f64),
+    /// A value of the member type `i64`.
     StFixedPercentageDecimal(i64),
 }
 
-/// 21.1.2.4.5 `buClrTx` (Follow Text): the tag `a:buClrTx`, schema type
+/// The `a:buClrTx` element, Follow Text (ECMA-376 Part 1, section 21.1.2.4.5). Its schema type is
 /// `CT_TextBulletColorFollowText`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
@@ -6932,10 +7985,11 @@ pub enum FixedPercentageMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FollowTextBuClrTx {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.4.7 `buFontTx` (Follow text): the tag `a:buFontTx`, schema type
+/// The `a:buFontTx` element, Follow text (ECMA-376 Part 1, section 21.1.2.4.7). Its schema type is
 /// `CT_TextBulletTypefaceFollowText`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
@@ -6945,10 +7999,12 @@ pub struct FollowTextBuClrTx {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FollowTextBuFontTx {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.1.15 `folHlink` (Followed Hyperlink): the tag `a:folHlink`, schema type `CT_Color`.
+/// The `a:folHlink` element, Followed Hyperlink (ECMA-376 Part 1, section 20.1.4.1.15). Its schema
+/// type is `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6957,11 +8013,14 @@ pub struct FollowTextBuFontTx {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FollowedHyperlink {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.1.16 font (Font): the tag `a:font`, schema type `CT_SupplementalFont`.
+/// The `a:font` element, Font (ECMA-376 Part 1, section 20.1.4.1.16). Its schema type is
+/// `CT_SupplementalFont`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6970,12 +8029,19 @@ pub struct FollowedHyperlink {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Font {
+    /// The attribute `script`, when the element has it.
     pub script: Option<String>,
+    /// The attribute `typeface`, when the element has it.
     pub typeface: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.66 `ST_TextFontAlignType` (Font Alignment Types): the text the file carried.
+/// Font Alignment Types, the simple type `ST_TextFontAlignType` (ECMA-376 Part 1, section
+/// 20.1.10.66), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6984,18 +8050,28 @@ pub struct Font {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FontAlignmentTypes(pub String);
-/// The members of `ST_TextFontAlignType`, in alphabetical order.
+/// The members of the enumeration `ST_TextFontAlignType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum FontAlignmentTypesMember {
+    /// The member written `auto`.
     Auto,
+    /// The member written `b`.
     B,
+    /// The member written `base`.
     Base,
+    /// The member written `ctr`.
     Ctr,
+    /// The member written `t`.
     T,
 }
 
-/// 20.1.10.25 `ST_FontCollectionIndex` (Font Collection Index): the text the file carried.
+/// Font Collection Index, the simple type `ST_FontCollectionIndex` (ECMA-376 Part 1, section
+/// 20.1.10.25), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7004,16 +8080,21 @@ pub enum FontAlignmentTypesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FontCollectionIndex(pub String);
-/// The members of `ST_FontCollectionIndex`, in alphabetical order.
+/// The members of the enumeration `ST_FontCollectionIndex`, in alphabetical order. `as_str` gives
+/// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum FontCollectionIndexMember {
+    /// The member written `major`.
     Major,
+    /// The member written `minor`.
     Minor,
+    /// The member written `none`.
     None,
 }
 
-/// 20.1.4.2.13 font (Font): the tag `a:font`, schema type `CT_FontCollection`.
+/// The `a:font` element, Font (ECMA-376 Part 1, section 20.1.4.2.13). Its schema type is
+/// `CT_FontCollection`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7025,16 +8106,23 @@ pub enum FontCollectionIndexMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FontFontCollection {
+    /// The child that is `ComplexScriptFont`, which the schema requires.
     pub complex_script_font: Box<ComplexScriptFont>,
+    /// The child that is `EastAsianFont`, which the schema requires.
     pub east_asian_font: Box<EastAsianFont>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The children that are `Font`, in order.
     pub font: Vec<Font>,
+    /// The child that is `LatinFont`, which the schema requires.
     pub latin_font: Box<LatinFont>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.1.17 `fontRef` (Font Reference): the tag `a:fontRef`, schema type `CT_FontReference`.
+/// The `a:fontRef` element, Font Reference (ECMA-376 Part 1, section 20.1.4.1.17). Its schema type
+/// is `CT_FontReference`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7043,12 +8131,16 @@ pub struct FontFontCollection {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FontReference {
+    /// The child that is an item of `ColorContent`, when there is one.
     pub content: Option<Box<ColorContent>>,
+    /// The attribute `idx`, when the element has it.
     pub idx: Option<FontCollectionIndex>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.1.18 `fontScheme` (Font Scheme): the tag `a:fontScheme`, schema type `CT_FontScheme`.
+/// The `a:fontScheme` element, Font Scheme (ECMA-376 Part 1, section 20.1.4.1.18). Its schema type
+/// is `CT_FontScheme`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7060,17 +8152,23 @@ pub struct FontReference {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FontScheme {
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `MajorFont`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub major_font: Box<MajorFont>,
+    /// The child that is `MinorFonts`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub minor_fonts: Box<MinorFonts>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.27 `fgClr` (Foreground color): the tag `a:fgClr`, schema type `CT_Color`.
+/// The `a:fgClr` element, Foreground color (ECMA-376 Part 1, section 20.1.8.27). Its schema type is
+/// `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7079,11 +8177,14 @@ pub struct FontScheme {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ForegroundColor {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.1.14 `fmtScheme` (Format Scheme): the tag `a:fmtScheme`, schema type `CT_StyleMatrix`.
+/// The `a:fmtScheme` element, Format Scheme (ECMA-376 Part 1, section 20.1.4.1.14). Its schema type
+/// is `CT_StyleMatrix`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7095,19 +8196,26 @@ pub struct ForegroundColor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FormatScheme {
+    /// The child that is `BackgroundFillStyleList`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub background_fill_style_list: Box<BackgroundFillStyleList>,
+    /// The child that is `EffectStyleList`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub effect_style_list: Box<EffectStyleList>,
+    /// The child that is `FillStyleList`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub fill_style_list: Box<FillStyleList>,
+    /// The child that is `LineStyleList`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub line_style_list: Box<LineStyleList>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.3.8 gamma (Gamma): the tag `a:gamma`, schema type `CT_GammaTransform`.
+/// The `a:gamma` element, Gamma (ECMA-376 Part 1, section 20.1.2.3.8). Its schema type is
+/// `CT_GammaTransform`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7116,19 +8224,28 @@ pub struct FormatScheme {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Gamma {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_ShapeProperties`, `ask:CT_LineSketchStyleProperties`: `EG_Geometry`.
+/// One child element of a choice: `EG_Geometry`.
+///
+/// The schema types that hold it: `CT_ShapeProperties`, `ask:CT_LineSketchStyleProperties`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum GeometryContent {
+    /// The element `a:custGeom`, a `CustomGeometry`.
     CustomGeometry(CustomGeometry),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `a:prstGeom`, a `PresetGeometry`.
     PresetGeometry(PresetGeometry),
 }
 
-/// 20.1.8.32 glow (Glow Effect): the tag `a:glow`, schema type `CT_GlowEffect`.
+/// The `a:glow` element, Glow Effect (ECMA-376 Part 1, section 20.1.8.32). Its schema type is
+/// `CT_GlowEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7137,12 +8254,15 @@ pub enum GeometryContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GlowEffect {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// The attribute `rad`, when the element has it.
     pub rad: Option<PositiveCoordinate>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.33 `gradFill` (Gradient Fill): the tag `a:gradFill`, schema type
+/// The `a:gradFill` element, Gradient Fill (ECMA-376 Part 1, section 20.1.8.33). Its schema type is
 /// `CT_GradientFillProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
@@ -7152,24 +8272,38 @@ pub struct GlowEffect {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GradientFill {
+    /// The child that is an item of `GradientFillContent`, when there is one.
     pub content: Option<Box<GradientFillContent>>,
+    /// The attribute `flip`, when the element has it.
     pub flip: Option<TileFlipMode>,
+    /// The child that is `GradientStopList`, when there is one.
     pub gradient_stop_list: Option<Box<GradientStopList>>,
+    /// The attribute `rotWithShape`, when the element has it.
     pub rot_with_shape: Option<String>,
+    /// The child that is `TileRectangle`, when there is one.
     pub tile_rectangle: Option<Box<TileRectangle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_GradientFillProperties`: `EG_ShadeProperties`.
+/// One child element of a choice: `EG_ShadeProperties`.
+///
+/// The schema types that hold it: `CT_GradientFillProperties`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum GradientFillContent {
+    /// The element `a:lin`, a `LinearGradientFill`.
     LinearGradientFill(LinearGradientFill),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `a:path`, a `PathGradient`.
     PathGradient(PathGradient),
 }
 
-/// 20.1.8.37 `gsLst` (Gradient Stop List): the tag `a:gsLst`, schema type `CT_GradientStopList`.
+/// The `a:gsLst` element, Gradient Stop List (ECMA-376 Part 1, section 20.1.8.37). Its schema type
+/// is `CT_GradientStopList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7178,11 +8312,14 @@ pub enum GradientFillContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GradientStopList {
+    /// The children that are `GradientStops`, in order.
     pub gradient_stops: Vec<GradientStops>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.36 gs (Gradient stops): the tag `a:gs`, schema type `CT_GradientStop`.
+/// The `a:gs` element, Gradient stops (ECMA-376 Part 1, section 20.1.8.36). Its schema type is
+/// `CT_GradientStop`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7191,22 +8328,32 @@ pub struct GradientStopList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GradientStops {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// The attribute `pos`, when the element has it.
     pub pos: Option<PositiveFixedPercentage>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_AnimationElementChoice`: local choice in `CT_AnimationElementChoice`.
+/// One child element of a choice: local choice in `CT_AnimationElementChoice`.
+///
+/// The schema types that hold it: `CT_AnimationElementChoice`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum GraphicElementContent {
+    /// The element `a:chart`, a `ChartToAnimate`.
     ChartToAnimate(ChartToAnimate),
+    /// The element `a:dgm`, a `DiagramToAnimate`.
     DiagramToAnimate(DiagramToAnimate),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
 }
 
-/// 20.1.2.2.18 `graphicFrame` (Graphic Frame): the tag `a:graphicFrame`, schema type
-/// `CT_GvmlGraphicalObjectFrame`.
+/// The `a:graphicFrame` element, Graphic Frame (ECMA-376 Part 1, section 20.1.2.2.18). Its schema
+/// type is `CT_GvmlGraphicalObjectFrame`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7218,18 +8365,23 @@ pub enum GraphicElementContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GraphicFrame {
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `GraphicObject`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub graphic_object: Box<GraphicObject>,
+    /// The child that is `NonVisualPropertiesForAGraphicFrame`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_properties: Box<NonVisualPropertiesForAGraphicFrame>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `XfrmTransform2D`, which the schema requires.
     pub xfrm_transform2d: Box<XfrmTransform2D>,
 }
 
-/// 20.1.2.2.19 `graphicFrameLocks` (Graphic Frame Locks): the tag `a:graphicFrameLocks`, schema
-/// type `CT_GraphicalObjectFrameLocking`.
+/// The `a:graphicFrameLocks` element, Graphic Frame Locks (ECMA-376 Part 1, section 20.1.2.2.19).
+/// Its schema type is `CT_GraphicalObjectFrameLocking`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7241,18 +8393,27 @@ pub struct GraphicFrame {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GraphicFrameLocks {
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `noChangeAspect`, when the element has it.
     pub no_change_aspect: Option<String>,
+    /// The attribute `noDrilldown`, when the element has it.
     pub no_drilldown: Option<String>,
+    /// The attribute `noGrp`, when the element has it.
     pub no_grp: Option<String>,
+    /// The attribute `noMove`, when the element has it.
     pub no_move: Option<String>,
+    /// The attribute `noResize`, when the element has it.
     pub no_resize: Option<String>,
+    /// The attribute `noSelect`, when the element has it.
     pub no_select: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.16 graphic (Graphic Object): the tag `a:graphic`, schema type `CT_GraphicalObject`.
+/// The `a:graphic` element, Graphic Object (ECMA-376 Part 1, section 20.1.2.2.16). Its schema type
+/// is `CT_GraphicalObject`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7264,13 +8425,15 @@ pub struct GraphicFrameLocks {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GraphicObject {
+    /// The child that is `GraphicObjectData`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub data: Box<GraphicObjectData>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.17 `graphicData` (Graphic Object Data): the tag `a:graphicData`, schema type
-/// `CT_GraphicalObjectData`.
+/// The `a:graphicData` element, Graphic Object Data (ECMA-376 Part 1, section 20.1.2.2.17). Its
+/// schema type is `CT_GraphicalObjectData`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7282,13 +8445,17 @@ pub struct GraphicObject {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GraphicObjectData {
+    /// The children that are an item of `AnyElementContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<AnyElementContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `uri`, when the element has it.
     pub uri: Option<String>,
 }
 
-/// 20.1.2.3.9 gray (Gray): the tag `a:gray`, schema type `CT_GrayscaleTransform`.
+/// The `a:gray` element, Gray (ECMA-376 Part 1, section 20.1.2.3.9). Its schema type is
+/// `CT_GrayscaleTransform`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7297,10 +8464,12 @@ pub struct GraphicObjectData {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Gray {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.34 grayscl (Gray Scale Effect): the tag `a:grayscl`, schema type `CT_GrayscaleEffect`.
+/// The `a:grayscl` element, Gray Scale Effect (ECMA-376 Part 1, section 20.1.8.34). Its schema type
+/// is `CT_GrayscaleEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7309,10 +8478,12 @@ pub struct Gray {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GrayScaleEffect {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.3.10 green (Green): the tag `a:green`, schema type `CT_Percentage`.
+/// The `a:green` element, Green (ECMA-376 Part 1, section 20.1.2.3.10). Its schema type is
+/// `CT_Percentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7321,11 +8492,14 @@ pub struct GrayScaleEffect {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Green {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<Percentage>,
 }
 
-/// 20.1.2.3.11 `greenMod` (Green Modulation): the tag `a:greenMod`, schema type `CT_Percentage`.
+/// The `a:greenMod` element, Green Modulation (ECMA-376 Part 1, section 20.1.2.3.11). Its schema
+/// type is `CT_Percentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7334,11 +8508,14 @@ pub struct Green {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GreenModulation {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<Percentage>,
 }
 
-/// 20.1.2.3.12 `greenOff` (Green Offset): the tag `a:greenOff`, schema type `CT_Percentage`.
+/// The `a:greenOff` element, Green Offset (ECMA-376 Part 1, section 20.1.2.3.12). Its schema type
+/// is `CT_Percentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7347,11 +8524,14 @@ pub struct GreenModulation {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GreenOffset {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<Percentage>,
 }
 
-/// 20.1.8.35 `grpFill` (Group Fill): the tag `a:grpFill`, schema type `CT_GroupFillProperties`.
+/// The `a:grpFill` element, Group Fill (ECMA-376 Part 1, section 20.1.8.35). Its schema type is
+/// `CT_GroupFillProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7360,10 +8540,12 @@ pub struct GreenOffset {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GroupFill {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.20 `grpSp` (Group shape): the tag `a:grpSp`, schema type `CT_GvmlGroupShape`.
+/// The `a:grpSp` element, Group shape (ECMA-376 Part 1, section 20.1.2.2.20). Its schema type is
+/// `CT_GvmlGroupShape`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7375,33 +8557,50 @@ pub struct GroupFill {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GroupShape {
+    /// The children that are an item of `GroupShapeContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<GroupShapeContent>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `NonVisualPropertiesForAGroupShape`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_properties: Box<NonVisualPropertiesForAGroupShape>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `VisualGroupShapeProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub visual_group_shape_properties: Box<VisualGroupShapeProperties>,
 }
 
-/// One item of `CT_GvmlGroupShape`: local choice in `CT_GvmlGroupShape`.
+/// One child element of a choice: local choice in `CT_GvmlGroupShape`.
+///
+/// The schema types that hold it: `CT_GvmlGroupShape`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum GroupShapeContent {
+    /// The element `a:cxnSp`, a `ConnectionShape`.
     ConnectionShape(ConnectionShape),
+    /// The element `a14:contentPart`, a `ContentPart`.
     ContentPart(super::office_drawing_2010_main::ContentPart),
+    /// The element `a:graphicFrame`, a `GraphicFrame`.
     GraphicFrame(GraphicFrame),
+    /// The element `a:grpSp`, a `GroupShape`.
     GroupShape(GroupShape),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `a:pic`, a `Picture`.
     Picture(Picture),
+    /// The element `a:sp`, a `Shape`.
     Shape(Shape),
+    /// The element `a:txSp`, a `TextShape`.
     TextShape(TextShape),
 }
 
-/// 20.1.2.2.21 `grpSpLocks` (Group Shape Locks): the tag `a:grpSpLocks`, schema type
-/// `CT_GroupLocking`.
+/// The `a:grpSpLocks` element, Group Shape Locks (ECMA-376 Part 1, section 20.1.2.2.21). Its schema
+/// type is `CT_GroupLocking`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7413,19 +8612,29 @@ pub enum GroupShapeContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GroupShapeLocks {
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `noChangeAspect`, when the element has it.
     pub no_change_aspect: Option<String>,
+    /// The attribute `noGrp`, when the element has it.
     pub no_grp: Option<String>,
+    /// The attribute `noMove`, when the element has it.
     pub no_move: Option<String>,
+    /// The attribute `noResize`, when the element has it.
     pub no_resize: Option<String>,
+    /// The attribute `noRot`, when the element has it.
     pub no_rot: Option<String>,
+    /// The attribute `noSelect`, when the element has it.
     pub no_select: Option<String>,
+    /// The attribute `noUngrp`, when the element has it.
     pub no_ungrp: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.3.3 header (Header Cell Reference): the tag `a:header`, schema type `string`.
+/// The `a:header` element, Header Cell Reference (ECMA-376 Part 1, section 21.1.3.3). Its schema
+/// type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7434,12 +8643,14 @@ pub struct GroupShapeLocks {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HeaderCellReference {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 21.1.3.4 headers (Header Cells Associated With Table Cell): the tag `a:headers`, schema type
-/// `CT_Headers`.
+/// The `a:headers` element, Header Cells Associated With Table Cell (ECMA-376 Part 1, section
+/// 21.1.3.4). Its schema type is `CT_Headers`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7448,11 +8659,14 @@ pub struct HeaderCellReference {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HeaderCellsAssociatedWithTableCell {
+    /// The children that are `HeaderCellReference`, in order.
     pub header_cell_reference: Vec<HeaderCellReference>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.3.4 highlight (Highlight Color): the tag `a:highlight`, schema type `CT_Color`.
+/// The `a:highlight` element, Highlight Color (ECMA-376 Part 1, section 21.1.2.3.4). Its schema
+/// type is `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7461,11 +8675,14 @@ pub struct HeaderCellsAssociatedWithTableCell {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HighlightColor {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.38 sx (Horizontal Ratio): the tag `a:sx`, schema type `CT_Ratio`.
+/// The `a:sx` element, Horizontal Ratio (ECMA-376 Part 1, section 20.1.2.2.38). Its schema type is
+/// `CT_Ratio`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7474,12 +8691,16 @@ pub struct HighlightColor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HorizontalRatio {
+    /// The attribute `d`, when the element has it.
     pub d: Option<String>,
+    /// The attribute `n`, when the element has it.
     pub n: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.3.14 hue (Hue): the tag `a:hue`, schema type `CT_PositiveFixedAngle`.
+/// The `a:hue` element, Hue (ECMA-376 Part 1, section 20.1.2.3.14). Its schema type is
+/// `CT_PositiveFixedAngle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7488,11 +8709,14 @@ pub struct HorizontalRatio {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Hue {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<PositiveFixedAngle>,
 }
 
-/// 20.1.2.3.15 `hueMod` (Hue Modulate): the tag `a:hueMod`, schema type `CT_PositivePercentage`.
+/// The `a:hueMod` element, Hue Modulate (ECMA-376 Part 1, section 20.1.2.3.15). Its schema type is
+/// `CT_PositivePercentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7501,11 +8725,14 @@ pub struct Hue {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HueModulate {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<PositivePercentageValueWithSign>,
 }
 
-/// 20.1.2.3.16 `hueOff` (Hue Offset): the tag `a:hueOff`, schema type `CT_Angle`.
+/// The `a:hueOff` element, Hue Offset (ECMA-376 Part 1, section 20.1.2.3.16). Its schema type is
+/// `CT_Angle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7514,12 +8741,14 @@ pub struct HueModulate {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HueOffset {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<Angle>,
 }
 
-/// 20.1.2.3.13 `hslClr` (Hue, Saturation, Luminance Color Model): the tag `a:hslClr`, schema type
-/// `CT_HslColor`.
+/// The `a:hslClr` element, Hue, Saturation, Luminance Color Model (ECMA-376 Part 1, section
+/// 20.1.2.3.13). Its schema type is `CT_HslColor`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7528,14 +8757,20 @@ pub struct HueOffset {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HueSaturationLuminanceColorModel {
+    /// The children that are an item of `ColorTransformContent`, in order.
     pub content: Vec<ColorTransformContent>,
+    /// The attribute `hue`, when the element has it.
     pub hue: Option<PositiveFixedAngle>,
+    /// The attribute `lum`, when the element has it.
     pub lum: Option<Percentage>,
+    /// The attribute `sat`, when the element has it.
     pub sat: Option<Percentage>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.39 hsl (Hue Saturation Luminance Effect): the tag `a:hsl`, schema type `CT_HSLEffect`.
+/// The `a:hsl` element, Hue Saturation Luminance Effect (ECMA-376 Part 1, section 20.1.8.39). Its
+/// schema type is `CT_HSLEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7544,13 +8779,18 @@ pub struct HueSaturationLuminanceColorModel {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HueSaturationLuminanceEffect {
+    /// The attribute `hue`, when the element has it.
     pub hue: Option<PositiveFixedAngle>,
+    /// The attribute `lum`, when the element has it.
     pub lum: Option<FixedPercentage>,
+    /// The attribute `sat`, when the element has it.
     pub sat: Option<FixedPercentage>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.1.19 hlink (Hyperlink): the tag `a:hlink`, schema type `CT_Color`.
+/// The `a:hlink` element, Hyperlink (ECMA-376 Part 1, section 20.1.4.1.19). Its schema type is
+/// `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7559,12 +8799,14 @@ pub struct HueSaturationLuminanceEffect {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Hyperlink {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.23 `hlinkHover` (Hyperlink for Hover): the tag `a:hlinkHover`, schema type
-/// `CT_Hyperlink`.
+/// The `a:hlinkHover` element, Hyperlink for Hover (ECMA-376 Part 1, section 20.1.2.2.23). Its
+/// schema type is `CT_Hyperlink`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7576,21 +8818,33 @@ pub struct Hyperlink {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HyperlinkForHover {
+    /// The attribute `action`, when the element has it.
     pub action: Option<String>,
+    /// The attribute `endSnd`, when the element has it.
     pub end_snd: Option<String>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `highlightClick`, when the element has it.
     pub highlight_click: Option<String>,
+    /// The attribute `history`, when the element has it.
     pub history: Option<String>,
+    /// The child that is `HyperlinkSound`, when there is one.
     pub hyperlink_sound: Option<Box<HyperlinkSound>>,
+    /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `invalidUrl`, when the element has it.
     pub invalid_url: Option<String>,
+    /// The attribute `tgtFrame`, when the element has it.
     pub tgt_frame: Option<String>,
+    /// The attribute `tooltip`, when the element has it.
     pub tooltip: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.32 snd (Hyperlink Sound): the tag `a:snd`, schema type `CT_EmbeddedWAVAudioFile`.
+/// The `a:snd` element, Hyperlink Sound (ECMA-376 Part 1, section 20.1.2.2.32). Its schema type is
+/// `CT_EmbeddedWAVAudioFile`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7599,13 +8853,16 @@ pub struct HyperlinkForHover {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HyperlinkSound {
+    /// The attribute `r:embed`, when the element has it.
     pub embed: Option<String>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.40 `innerShdw` (Inner Shadow Effect): the tag `a:innerShdw`, schema type
-/// `CT_InnerShadowEffect`.
+/// The `a:innerShdw` element, Inner Shadow Effect (ECMA-376 Part 1, section 20.1.8.40). Its schema
+/// type is `CT_InnerShadowEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7614,15 +8871,20 @@ pub struct HyperlinkSound {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct InnerShadowEffect {
+    /// The attribute `blurRad`, when the element has it.
     pub blur_rad: Option<PositiveCoordinate>,
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// The attribute `dir`, when the element has it.
     pub dir: Option<PositiveFixedAngle>,
+    /// The attribute `dist`, when the element has it.
     pub dist: Option<PositiveCoordinate>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.2.14 `insideH` (Inside Horizontal Border): the tag `a:insideH`, schema type
-/// `CT_ThemeableLineStyle`.
+/// The `a:insideH` element, Inside Horizontal Border (ECMA-376 Part 1, section 20.1.4.2.14). Its
+/// schema type is `CT_ThemeableLineStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7634,13 +8896,15 @@ pub struct InnerShadowEffect {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct InsideHorizontalBorder {
+    /// The child that is an item of `ThemeableLineStyleContent`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Box<ThemeableLineStyleContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.2.15 `insideV` (Inside Vertical Border): the tag `a:insideV`, schema type
-/// `CT_ThemeableLineStyle`.
+/// The `a:insideV` element, Inside Vertical Border (ECMA-376 Part 1, section 20.1.4.2.15). Its
+/// schema type is `CT_ThemeableLineStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7652,12 +8916,15 @@ pub struct InsideHorizontalBorder {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct InsideVerticalBorder {
+    /// The child that is an item of `ThemeableLineStyleContent`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Box<ThemeableLineStyleContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.3.17 inv (Inverse): the tag `a:inv`, schema type `CT_InverseTransform`.
+/// The `a:inv` element, Inverse (ECMA-376 Part 1, section 20.1.2.3.17). Its schema type is
+/// `CT_InverseTransform`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7666,11 +8933,12 @@ pub struct InsideVerticalBorder {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Inverse {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.3.18 `invGamma` (Inverse Gamma): the tag `a:invGamma`, schema type
-/// `CT_InverseGammaTransform`.
+/// The `a:invGamma` element, Inverse Gamma (ECMA-376 Part 1, section 20.1.2.3.18). Its schema type
+/// is `CT_InverseGammaTransform`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7679,10 +8947,12 @@ pub struct Inverse {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct InverseGamma {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.2.16 `lastCol` (Last Column): the tag `a:lastCol`, schema type `CT_TablePartStyle`.
+/// The `a:lastCol` element, Last Column (ECMA-376 Part 1, section 20.1.4.2.16). Its schema type is
+/// `CT_TablePartStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7694,14 +8964,18 @@ pub struct InverseGamma {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LastColumn {
+    /// The child that is `TableCellStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_cell_style: Option<Box<TableCellStyle>>,
+    /// The child that is `TableCellTextStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_cell_text_style: Option<Box<TableCellTextStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.2.17 `lastRow` (Last Row): the tag `a:lastRow`, schema type `CT_TablePartStyle`.
+/// The `a:lastRow` element, Last Row (ECMA-376 Part 1, section 20.1.4.2.17). Its schema type is
+/// `CT_TablePartStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7713,14 +8987,18 @@ pub struct LastColumn {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LastRow {
+    /// The child that is `TableCellStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_cell_style: Option<Box<TableCellStyle>>,
+    /// The child that is `TableCellTextStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_cell_text_style: Option<Box<TableCellTextStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.3.7 latin (Latin Font): the tag `a:latin`, schema type `CT_TextFont`.
+/// The `a:latin` element, Latin Font (ECMA-376 Part 1, section 21.1.2.3.7). Its schema type is
+/// `CT_TextFont`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7729,14 +9007,20 @@ pub struct LastRow {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LatinFont {
+    /// The attribute `charset`, when the element has it.
     pub charset: Option<String>,
+    /// The attribute `panose`, when the element has it.
     pub panose: Option<common_simple_types::Panose1Number>,
+    /// The attribute `pitchFamily`, when the element has it.
     pub pitch_family: Option<PitchFamily>,
+    /// The attribute `typeface`, when the element has it.
     pub typeface: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.2.18 left (Left Border): the tag `a:left`, schema type `CT_ThemeableLineStyle`.
+/// The `a:left` element, Left Border (ECMA-376 Part 1, section 20.1.4.2.18). Its schema type is
+/// `CT_ThemeableLineStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7748,12 +9032,15 @@ pub struct LatinFont {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LeftBorder {
+    /// The child that is an item of `ThemeableLineStyleContent`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Box<ThemeableLineStyleContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.3.7 `lnL` (Left Border Line Properties): the tag `a:lnL`, schema type `CT_LineProperties`.
+/// The `a:lnL` element, Left Border Line Properties (ECMA-376 Part 1, section 21.1.3.7). Its schema
+/// type is `CT_LineProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7765,21 +9052,33 @@ pub struct LeftBorder {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LeftBorderLineProperties {
+    /// The attribute `algn`, when the element has it.
     pub algn: Option<AlignmentType>,
+    /// The attribute `cap`, when the element has it.
     pub cap: Option<EndLineCap>,
+    /// The attribute `cmpd`, when the element has it.
     pub cmpd: Option<CompoundLineType>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is an item of `LineDashContent`, when there is one.
     pub line_dash_content: Option<Box<LineDashContent>>,
+    /// The child that is an item of `LineFillContent`, when there is one.
     pub line_fill_content: Option<Box<LineFillContent>>,
+    /// The child that is `LineHeadEndStyle`, when there is one.
     pub line_head_end_style: Option<Box<LineHeadEndStyle>>,
+    /// The child that is an item of `LineJoinContent`, when there is one.
     pub line_join_content: Option<Box<LineJoinContent>>,
+    /// The child that is `TailLineEndStyle`, when there is one.
     pub tail_line_end_style: Option<Box<TailLineEndStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w`, when the element has it.
     pub w: Option<LineWidth>,
 }
 
-/// 20.1.4.1.22 lt1 (Light 1): the tag `a:lt1`, schema type `CT_Color`.
+/// The `a:lt1` element, Light 1 (ECMA-376 Part 1, section 20.1.4.1.22). Its schema type is
+/// `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7788,11 +9087,14 @@ pub struct LeftBorderLineProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Light1 {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.1.23 lt2 (Light 2): the tag `a:lt2`, schema type `CT_Color`.
+/// The `a:lt2` element, Light 2 (ECMA-376 Part 1, section 20.1.4.1.23). Its schema type is
+/// `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7801,11 +9103,14 @@ pub struct Light1 {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Light2 {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.5.9 `lightRig` (Light Rig): the tag `a:lightRig`, schema type `CT_LightRig`.
+/// The `a:lightRig` element, Light Rig (ECMA-376 Part 1, section 20.1.5.9). Its schema type is
+/// `CT_LightRig`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7814,13 +9119,21 @@ pub struct Light2 {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LightRig {
+    /// The attribute `dir`, when the element has it.
     pub dir: Option<LightRigDirection>,
+    /// The attribute `rig`, when the element has it.
     pub rig: Option<LightRigType>,
+    /// The child that is `Rotation`, when there is one.
     pub rotation: Option<Box<Rotation>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.29 `ST_LightRigDirection` (Light Rig Direction): the text the file carried.
+/// Light Rig Direction, the simple type `ST_LightRigDirection` (ECMA-376 Part 1, section
+/// 20.1.10.29), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7829,21 +9142,34 @@ pub struct LightRig {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LightRigDirection(pub String);
-/// The members of `ST_LightRigDirection`, in alphabetical order.
+/// The members of the enumeration `ST_LightRigDirection`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum LightRigDirectionMember {
+    /// The member written `b`.
     B,
+    /// The member written `bl`.
     Bl,
+    /// The member written `br`.
     Br,
+    /// The member written `l`.
     L,
+    /// The member written `r`.
     R,
+    /// The member written `t`.
     T,
+    /// The member written `tl`.
     Tl,
+    /// The member written `tr`.
     Tr,
 }
 
-/// 20.1.10.30 `ST_LightRigType` (Light Rig Type): the text the file carried.
+/// Light Rig Type, the simple type `ST_LightRigType` (ECMA-376 Part 1, section 20.1.10.30), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7852,49 +9178,85 @@ pub enum LightRigDirectionMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LightRigType(pub String);
-/// The members of `ST_LightRigType`, in alphabetical order.
+/// The members of the enumeration `ST_LightRigType`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum LightRigTypeMember {
+    /// The member written `balanced`.
     Balanced,
+    /// The member written `brightRoom`.
     BrightRoom,
+    /// The member written `chilly`.
     Chilly,
+    /// The member written `contrasting`.
     Contrasting,
+    /// The member written `flat`.
     Flat,
+    /// The member written `flood`.
     Flood,
+    /// The member written `freezing`.
     Freezing,
+    /// The member written `glow`.
     Glow,
+    /// The member written `harsh`.
     Harsh,
+    /// The member written `legacyFlat1`.
     LegacyFlat1,
+    /// The member written `legacyFlat2`.
     LegacyFlat2,
+    /// The member written `legacyFlat3`.
     LegacyFlat3,
+    /// The member written `legacyFlat4`.
     LegacyFlat4,
+    /// The member written `legacyHarsh1`.
     LegacyHarsh1,
+    /// The member written `legacyHarsh2`.
     LegacyHarsh2,
+    /// The member written `legacyHarsh3`.
     LegacyHarsh3,
+    /// The member written `legacyHarsh4`.
     LegacyHarsh4,
+    /// The member written `legacyNormal1`.
     LegacyNormal1,
+    /// The member written `legacyNormal2`.
     LegacyNormal2,
+    /// The member written `legacyNormal3`.
     LegacyNormal3,
+    /// The member written `legacyNormal4`.
     LegacyNormal4,
+    /// The member written `morning`.
     Morning,
+    /// The member written `soft`.
     Soft,
+    /// The member written `sunrise`.
     Sunrise,
+    /// The member written `sunset`.
     Sunset,
+    /// The member written `threePt`.
     ThreePt,
+    /// The member written `twoPt`.
     TwoPt,
 }
 
-/// One item of `CT_LineProperties`: `EG_LineDashProperties`.
+/// One child element of a choice: `EG_LineDashProperties`.
+///
+/// The schema types that hold it: `CT_LineProperties`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum LineDashContent {
+    /// The element `a:custDash`, a `CustomDash`.
     CustomDash(CustomDash),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `a:prstDash`, a `PresetDash`.
     PresetDash(PresetDash),
 }
 
-/// 20.1.4.1.20 `lnDef` (Line Default): the tag `a:lnDef`, schema type `CT_DefaultShapeDefinition`.
+/// The `a:lnDef` element, Line Default (ECMA-376 Part 1, section 20.1.4.1.20). Its schema type is
+/// `CT_DefaultShapeDefinition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7906,19 +9268,29 @@ pub enum LineDashContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LineDefault {
+    /// The child that is `BodyProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub body_properties: Box<BodyProperties>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `ShapeProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub shape_properties: Box<ShapeProperties>,
+    /// The child that is `ShapeStyle`, when there is one.
     pub shape_style: Option<Box<ShapeStyle>>,
+    /// The child that is `TextListStyles`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_list_styles: Box<TextListStyles>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.32 `ST_LineEndLength` (Line End Length): the text the file carried.
+/// Line End Length, the simple type `ST_LineEndLength` (ECMA-376 Part 1, section 20.1.10.32), kept
+/// as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7927,16 +9299,24 @@ pub struct LineDefault {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LineEndLength(pub String);
-/// The members of `ST_LineEndLength`, in alphabetical order.
+/// The members of the enumeration `ST_LineEndLength`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum LineEndLengthMember {
+    /// The member written `lg`.
     Lg,
+    /// The member written `med`.
     Med,
+    /// The member written `sm`.
     Sm,
 }
 
-/// 20.1.10.33 `ST_LineEndType` (Line End Type): the text the file carried.
+/// Line End Type, the simple type `ST_LineEndType` (ECMA-376 Part 1, section 20.1.10.33), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7945,19 +9325,30 @@ pub enum LineEndLengthMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LineEndType(pub String);
-/// The members of `ST_LineEndType`, in alphabetical order.
+/// The members of the enumeration `ST_LineEndType`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum LineEndTypeMember {
+    /// The member written `arrow`.
     Arrow,
+    /// The member written `diamond`.
     Diamond,
+    /// The member written `none`.
     None,
+    /// The member written `oval`.
     Oval,
+    /// The member written `stealth`.
     Stealth,
+    /// The member written `triangle`.
     Triangle,
 }
 
-/// 20.1.10.34 `ST_LineEndWidth` (Line End Width): the text the file carried.
+/// Line End Width, the simple type `ST_LineEndWidth` (ECMA-376 Part 1, section 20.1.10.34), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7966,28 +9357,41 @@ pub enum LineEndTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LineEndWidth(pub String);
-/// The members of `ST_LineEndWidth`, in alphabetical order.
+/// The members of the enumeration `ST_LineEndWidth`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum LineEndWidthMember {
+    /// The member written `lg`.
     Lg,
+    /// The member written `med`.
     Med,
+    /// The member written `sm`.
     Sm,
 }
 
-/// One item of `CT_LineProperties`: `EG_LineFillProperties`.
+/// One child element of a choice: `EG_LineFillProperties`.
+///
+/// The schema types that hold it: `CT_LineProperties`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum LineFillContent {
+    /// The element `a:gradFill`, a `GradientFill`.
     GradientFill(GradientFill),
+    /// The element `a:noFill`, a `NoFill`.
     NoFill(NoFill),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `a:pattFill`, a `PatternFill`.
     PatternFill(PatternFill),
+    /// The element `a:solidFill`, a `SolidFill`.
     SolidFill(SolidFill),
 }
 
-/// 20.1.8.38 `headEnd` (Line Head/End Style): the tag `a:headEnd`, schema type
-/// `CT_LineEndProperties`.
+/// The `a:headEnd` element, Line Head/End Style (ECMA-376 Part 1, section 20.1.8.38). Its schema
+/// type is `CT_LineEndProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -7996,13 +9400,18 @@ pub enum LineFillContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LineHeadEndStyle {
+    /// The attribute `len`, when the element has it.
     pub len: Option<LineEndLength>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<LineEndType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w`, when the element has it.
     pub w: Option<LineEndWidth>,
 }
 
-/// 20.1.8.9 bevel (Line Join Bevel): the tag `a:bevel`, schema type `CT_LineJoinBevel`.
+/// The `a:bevel` element, Line Join Bevel (ECMA-376 Part 1, section 20.1.8.9). Its schema type is
+/// `CT_LineJoinBevel`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8011,20 +9420,30 @@ pub struct LineHeadEndStyle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LineJoinBevel {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_LineProperties`: `EG_LineJoinProperties`.
+/// One child element of a choice: `EG_LineJoinProperties`.
+///
+/// The schema types that hold it: `CT_LineProperties`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum LineJoinContent {
+    /// The element `a:bevel`, a `LineJoinBevel`.
     LineJoinBevel(LineJoinBevel),
+    /// The element `a:miter`, a `MiterLineJoin`.
     MiterLineJoin(MiterLineJoin),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `a:round`, a `RoundLineJoin`.
     RoundLineJoin(RoundLineJoin),
 }
 
-/// 20.1.4.2.19 `lnRef` (Line Reference): the tag `a:lnRef`, schema type `CT_StyleMatrixReference`.
+/// The `a:lnRef` element, Line Reference (ECMA-376 Part 1, section 20.1.4.2.19). Its schema type is
+/// `CT_StyleMatrixReference`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8033,12 +9452,16 @@ pub enum LineJoinContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LineReference {
+    /// The child that is an item of `ColorContent`, when there is one.
     pub content: Option<Box<ColorContent>>,
+    /// The attribute `idx`, when the element has it.
     pub idx: Option<StyleMatrixColumnIndex>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.2.5 `lnSpc` (Line Spacing): the tag `a:lnSpc`, schema type `CT_TextSpacing`.
+/// The `a:lnSpc` element, Line Spacing (ECMA-376 Part 1, section 21.1.2.2.5). Its schema type is
+/// `CT_TextSpacing`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8047,12 +9470,14 @@ pub struct LineReference {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LineSpacing {
+    /// The child that is an item of `TextSpacingContent`, which the schema requires.
     pub content: Box<TextSpacingContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.1.21 `lnStyleLst` (Line Style List): the tag `a:lnStyleLst`, schema type
-/// `CT_LineStyleList`.
+/// The `a:lnStyleLst` element, Line Style List (ECMA-376 Part 1, section 20.1.4.1.21). Its schema
+/// type is `CT_LineStyleList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8064,12 +9489,18 @@ pub struct LineSpacing {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LineStyleList {
+    /// The children that are `Outline`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub outline: Vec<Outline>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.35 `ST_LineWidth` (Line Width): the text the file carried.
+/// Line Width, the simple type `ST_LineWidth` (ECMA-376 Part 1, section 20.1.10.35), kept as the
+/// text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8079,7 +9510,8 @@ pub struct LineStyleList {
 #[non_exhaustive]
 pub struct LineWidth(pub String);
 
-/// 20.1.8.41 lin (Linear Gradient Fill): the tag `a:lin`, schema type `CT_LinearShadeProperties`.
+/// The `a:lin` element, Linear Gradient Fill (ECMA-376 Part 1, section 20.1.8.41). Its schema type
+/// is `CT_LinearShadeProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8088,13 +9520,16 @@ pub struct LineWidth(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LinearGradientFill {
+    /// The attribute `ang`, when the element has it.
     pub ang: Option<PositiveFixedAngle>,
+    /// The attribute `scaled`, when the element has it.
     pub scaled: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.4.13 `lvl1pPr` (List Level 1 Text Style): the tag `a:lvl1pPr`, schema type
-/// `CT_TextParagraphProperties`.
+/// The `a:lvl1pPr` element, List Level 1 Text Style (ECMA-376 Part 1, section 21.1.2.4.13). Its
+/// schema type is `CT_TextParagraphProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8106,35 +9541,57 @@ pub struct LinearGradientFill {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListLevel1TextStyle {
+    /// The attribute `algn`, when the element has it.
     pub algn: Option<TextAlignmentTypes>,
+    /// The attribute `defTabSz`, when the element has it.
     pub def_tab_sz: Option<StCoordinate32>,
+    /// The child that is `DefaultTextRunProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub default_text_run_properties: Option<Box<DefaultTextRunProperties>>,
+    /// The attribute `eaLnBrk`, when the element has it.
     pub ea_ln_brk: Option<String>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `fontAlgn`, when the element has it.
     pub font_algn: Option<FontAlignmentTypes>,
+    /// The attribute `hangingPunct`, when the element has it.
     pub hanging_punct: Option<String>,
+    /// The attribute `indent`, when the element has it.
     pub indent: Option<TextIndentation>,
+    /// The attribute `latinLnBrk`, when the element has it.
     pub latin_ln_brk: Option<String>,
+    /// The child that is `LineSpacing`, when there is one.
     pub line_spacing: Option<Box<LineSpacing>>,
+    /// The attribute `lvl`, when the element has it.
     pub lvl: Option<TextIndentLevelType>,
+    /// The attribute `marL`, when the element has it.
     pub mar_l: Option<TextMargin>,
+    /// The attribute `marR`, when the element has it.
     pub mar_r: Option<TextMargin>,
+    /// The attribute `rtl`, when the element has it.
     pub rtl: Option<String>,
+    /// The child that is `SpaceAfter`, when there is one.
     pub space_after: Option<Box<SpaceAfter>>,
+    /// The child that is `SpaceBefore`, when there is one.
     pub space_before: Option<Box<SpaceBefore>>,
+    /// The child that is `TabList`, when there is one.
     pub tab_list: Option<Box<TabList>>,
+    /// The child that is an item of `TextBulletColorContent`, when there is one.
     pub text_bullet_color_content: Option<Box<TextBulletColorContent>>,
+    /// The child that is an item of `TextBulletContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_bullet_content: Option<Box<TextBulletContent>>,
+    /// The child that is an item of `TextBulletSizeContent`, when there is one.
     pub text_bullet_size_content: Option<Box<TextBulletSizeContent>>,
+    /// The child that is an item of `TextBulletTypefaceContent`, when there is one.
     pub text_bullet_typeface_content: Option<Box<TextBulletTypefaceContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.4.14 `lvl2pPr` (List Level 2 Text Style): the tag `a:lvl2pPr`, schema type
-/// `CT_TextParagraphProperties`.
+/// The `a:lvl2pPr` element, List Level 2 Text Style (ECMA-376 Part 1, section 21.1.2.4.14). Its
+/// schema type is `CT_TextParagraphProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8146,35 +9603,57 @@ pub struct ListLevel1TextStyle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListLevel2TextStyle {
+    /// The attribute `algn`, when the element has it.
     pub algn: Option<TextAlignmentTypes>,
+    /// The attribute `defTabSz`, when the element has it.
     pub def_tab_sz: Option<StCoordinate32>,
+    /// The child that is `DefaultTextRunProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub default_text_run_properties: Option<Box<DefaultTextRunProperties>>,
+    /// The attribute `eaLnBrk`, when the element has it.
     pub ea_ln_brk: Option<String>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `fontAlgn`, when the element has it.
     pub font_algn: Option<FontAlignmentTypes>,
+    /// The attribute `hangingPunct`, when the element has it.
     pub hanging_punct: Option<String>,
+    /// The attribute `indent`, when the element has it.
     pub indent: Option<TextIndentation>,
+    /// The attribute `latinLnBrk`, when the element has it.
     pub latin_ln_brk: Option<String>,
+    /// The child that is `LineSpacing`, when there is one.
     pub line_spacing: Option<Box<LineSpacing>>,
+    /// The attribute `lvl`, when the element has it.
     pub lvl: Option<TextIndentLevelType>,
+    /// The attribute `marL`, when the element has it.
     pub mar_l: Option<TextMargin>,
+    /// The attribute `marR`, when the element has it.
     pub mar_r: Option<TextMargin>,
+    /// The attribute `rtl`, when the element has it.
     pub rtl: Option<String>,
+    /// The child that is `SpaceAfter`, when there is one.
     pub space_after: Option<Box<SpaceAfter>>,
+    /// The child that is `SpaceBefore`, when there is one.
     pub space_before: Option<Box<SpaceBefore>>,
+    /// The child that is `TabList`, when there is one.
     pub tab_list: Option<Box<TabList>>,
+    /// The child that is an item of `TextBulletColorContent`, when there is one.
     pub text_bullet_color_content: Option<Box<TextBulletColorContent>>,
+    /// The child that is an item of `TextBulletContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_bullet_content: Option<Box<TextBulletContent>>,
+    /// The child that is an item of `TextBulletSizeContent`, when there is one.
     pub text_bullet_size_content: Option<Box<TextBulletSizeContent>>,
+    /// The child that is an item of `TextBulletTypefaceContent`, when there is one.
     pub text_bullet_typeface_content: Option<Box<TextBulletTypefaceContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.4.15 `lvl3pPr` (List Level 3 Text Style): the tag `a:lvl3pPr`, schema type
-/// `CT_TextParagraphProperties`.
+/// The `a:lvl3pPr` element, List Level 3 Text Style (ECMA-376 Part 1, section 21.1.2.4.15). Its
+/// schema type is `CT_TextParagraphProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8186,35 +9665,57 @@ pub struct ListLevel2TextStyle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListLevel3TextStyle {
+    /// The attribute `algn`, when the element has it.
     pub algn: Option<TextAlignmentTypes>,
+    /// The attribute `defTabSz`, when the element has it.
     pub def_tab_sz: Option<StCoordinate32>,
+    /// The child that is `DefaultTextRunProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub default_text_run_properties: Option<Box<DefaultTextRunProperties>>,
+    /// The attribute `eaLnBrk`, when the element has it.
     pub ea_ln_brk: Option<String>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `fontAlgn`, when the element has it.
     pub font_algn: Option<FontAlignmentTypes>,
+    /// The attribute `hangingPunct`, when the element has it.
     pub hanging_punct: Option<String>,
+    /// The attribute `indent`, when the element has it.
     pub indent: Option<TextIndentation>,
+    /// The attribute `latinLnBrk`, when the element has it.
     pub latin_ln_brk: Option<String>,
+    /// The child that is `LineSpacing`, when there is one.
     pub line_spacing: Option<Box<LineSpacing>>,
+    /// The attribute `lvl`, when the element has it.
     pub lvl: Option<TextIndentLevelType>,
+    /// The attribute `marL`, when the element has it.
     pub mar_l: Option<TextMargin>,
+    /// The attribute `marR`, when the element has it.
     pub mar_r: Option<TextMargin>,
+    /// The attribute `rtl`, when the element has it.
     pub rtl: Option<String>,
+    /// The child that is `SpaceAfter`, when there is one.
     pub space_after: Option<Box<SpaceAfter>>,
+    /// The child that is `SpaceBefore`, when there is one.
     pub space_before: Option<Box<SpaceBefore>>,
+    /// The child that is `TabList`, when there is one.
     pub tab_list: Option<Box<TabList>>,
+    /// The child that is an item of `TextBulletColorContent`, when there is one.
     pub text_bullet_color_content: Option<Box<TextBulletColorContent>>,
+    /// The child that is an item of `TextBulletContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_bullet_content: Option<Box<TextBulletContent>>,
+    /// The child that is an item of `TextBulletSizeContent`, when there is one.
     pub text_bullet_size_content: Option<Box<TextBulletSizeContent>>,
+    /// The child that is an item of `TextBulletTypefaceContent`, when there is one.
     pub text_bullet_typeface_content: Option<Box<TextBulletTypefaceContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.4.16 `lvl4pPr` (List Level 4 Text Style): the tag `a:lvl4pPr`, schema type
-/// `CT_TextParagraphProperties`.
+/// The `a:lvl4pPr` element, List Level 4 Text Style (ECMA-376 Part 1, section 21.1.2.4.16). Its
+/// schema type is `CT_TextParagraphProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8226,35 +9727,57 @@ pub struct ListLevel3TextStyle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListLevel4TextStyle {
+    /// The attribute `algn`, when the element has it.
     pub algn: Option<TextAlignmentTypes>,
+    /// The attribute `defTabSz`, when the element has it.
     pub def_tab_sz: Option<StCoordinate32>,
+    /// The child that is `DefaultTextRunProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub default_text_run_properties: Option<Box<DefaultTextRunProperties>>,
+    /// The attribute `eaLnBrk`, when the element has it.
     pub ea_ln_brk: Option<String>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `fontAlgn`, when the element has it.
     pub font_algn: Option<FontAlignmentTypes>,
+    /// The attribute `hangingPunct`, when the element has it.
     pub hanging_punct: Option<String>,
+    /// The attribute `indent`, when the element has it.
     pub indent: Option<TextIndentation>,
+    /// The attribute `latinLnBrk`, when the element has it.
     pub latin_ln_brk: Option<String>,
+    /// The child that is `LineSpacing`, when there is one.
     pub line_spacing: Option<Box<LineSpacing>>,
+    /// The attribute `lvl`, when the element has it.
     pub lvl: Option<TextIndentLevelType>,
+    /// The attribute `marL`, when the element has it.
     pub mar_l: Option<TextMargin>,
+    /// The attribute `marR`, when the element has it.
     pub mar_r: Option<TextMargin>,
+    /// The attribute `rtl`, when the element has it.
     pub rtl: Option<String>,
+    /// The child that is `SpaceAfter`, when there is one.
     pub space_after: Option<Box<SpaceAfter>>,
+    /// The child that is `SpaceBefore`, when there is one.
     pub space_before: Option<Box<SpaceBefore>>,
+    /// The child that is `TabList`, when there is one.
     pub tab_list: Option<Box<TabList>>,
+    /// The child that is an item of `TextBulletColorContent`, when there is one.
     pub text_bullet_color_content: Option<Box<TextBulletColorContent>>,
+    /// The child that is an item of `TextBulletContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_bullet_content: Option<Box<TextBulletContent>>,
+    /// The child that is an item of `TextBulletSizeContent`, when there is one.
     pub text_bullet_size_content: Option<Box<TextBulletSizeContent>>,
+    /// The child that is an item of `TextBulletTypefaceContent`, when there is one.
     pub text_bullet_typeface_content: Option<Box<TextBulletTypefaceContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.4.17 `lvl5pPr` (List Level 5 Text Style): the tag `a:lvl5pPr`, schema type
-/// `CT_TextParagraphProperties`.
+/// The `a:lvl5pPr` element, List Level 5 Text Style (ECMA-376 Part 1, section 21.1.2.4.17). Its
+/// schema type is `CT_TextParagraphProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8266,35 +9789,57 @@ pub struct ListLevel4TextStyle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListLevel5TextStyle {
+    /// The attribute `algn`, when the element has it.
     pub algn: Option<TextAlignmentTypes>,
+    /// The attribute `defTabSz`, when the element has it.
     pub def_tab_sz: Option<StCoordinate32>,
+    /// The child that is `DefaultTextRunProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub default_text_run_properties: Option<Box<DefaultTextRunProperties>>,
+    /// The attribute `eaLnBrk`, when the element has it.
     pub ea_ln_brk: Option<String>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `fontAlgn`, when the element has it.
     pub font_algn: Option<FontAlignmentTypes>,
+    /// The attribute `hangingPunct`, when the element has it.
     pub hanging_punct: Option<String>,
+    /// The attribute `indent`, when the element has it.
     pub indent: Option<TextIndentation>,
+    /// The attribute `latinLnBrk`, when the element has it.
     pub latin_ln_brk: Option<String>,
+    /// The child that is `LineSpacing`, when there is one.
     pub line_spacing: Option<Box<LineSpacing>>,
+    /// The attribute `lvl`, when the element has it.
     pub lvl: Option<TextIndentLevelType>,
+    /// The attribute `marL`, when the element has it.
     pub mar_l: Option<TextMargin>,
+    /// The attribute `marR`, when the element has it.
     pub mar_r: Option<TextMargin>,
+    /// The attribute `rtl`, when the element has it.
     pub rtl: Option<String>,
+    /// The child that is `SpaceAfter`, when there is one.
     pub space_after: Option<Box<SpaceAfter>>,
+    /// The child that is `SpaceBefore`, when there is one.
     pub space_before: Option<Box<SpaceBefore>>,
+    /// The child that is `TabList`, when there is one.
     pub tab_list: Option<Box<TabList>>,
+    /// The child that is an item of `TextBulletColorContent`, when there is one.
     pub text_bullet_color_content: Option<Box<TextBulletColorContent>>,
+    /// The child that is an item of `TextBulletContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_bullet_content: Option<Box<TextBulletContent>>,
+    /// The child that is an item of `TextBulletSizeContent`, when there is one.
     pub text_bullet_size_content: Option<Box<TextBulletSizeContent>>,
+    /// The child that is an item of `TextBulletTypefaceContent`, when there is one.
     pub text_bullet_typeface_content: Option<Box<TextBulletTypefaceContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.4.18 `lvl6pPr` (List Level 6 Text Style): the tag `a:lvl6pPr`, schema type
-/// `CT_TextParagraphProperties`.
+/// The `a:lvl6pPr` element, List Level 6 Text Style (ECMA-376 Part 1, section 21.1.2.4.18). Its
+/// schema type is `CT_TextParagraphProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8306,35 +9851,57 @@ pub struct ListLevel5TextStyle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListLevel6TextStyle {
+    /// The attribute `algn`, when the element has it.
     pub algn: Option<TextAlignmentTypes>,
+    /// The attribute `defTabSz`, when the element has it.
     pub def_tab_sz: Option<StCoordinate32>,
+    /// The child that is `DefaultTextRunProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub default_text_run_properties: Option<Box<DefaultTextRunProperties>>,
+    /// The attribute `eaLnBrk`, when the element has it.
     pub ea_ln_brk: Option<String>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `fontAlgn`, when the element has it.
     pub font_algn: Option<FontAlignmentTypes>,
+    /// The attribute `hangingPunct`, when the element has it.
     pub hanging_punct: Option<String>,
+    /// The attribute `indent`, when the element has it.
     pub indent: Option<TextIndentation>,
+    /// The attribute `latinLnBrk`, when the element has it.
     pub latin_ln_brk: Option<String>,
+    /// The child that is `LineSpacing`, when there is one.
     pub line_spacing: Option<Box<LineSpacing>>,
+    /// The attribute `lvl`, when the element has it.
     pub lvl: Option<TextIndentLevelType>,
+    /// The attribute `marL`, when the element has it.
     pub mar_l: Option<TextMargin>,
+    /// The attribute `marR`, when the element has it.
     pub mar_r: Option<TextMargin>,
+    /// The attribute `rtl`, when the element has it.
     pub rtl: Option<String>,
+    /// The child that is `SpaceAfter`, when there is one.
     pub space_after: Option<Box<SpaceAfter>>,
+    /// The child that is `SpaceBefore`, when there is one.
     pub space_before: Option<Box<SpaceBefore>>,
+    /// The child that is `TabList`, when there is one.
     pub tab_list: Option<Box<TabList>>,
+    /// The child that is an item of `TextBulletColorContent`, when there is one.
     pub text_bullet_color_content: Option<Box<TextBulletColorContent>>,
+    /// The child that is an item of `TextBulletContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_bullet_content: Option<Box<TextBulletContent>>,
+    /// The child that is an item of `TextBulletSizeContent`, when there is one.
     pub text_bullet_size_content: Option<Box<TextBulletSizeContent>>,
+    /// The child that is an item of `TextBulletTypefaceContent`, when there is one.
     pub text_bullet_typeface_content: Option<Box<TextBulletTypefaceContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.4.19 `lvl7pPr` (List Level 7 Text Style): the tag `a:lvl7pPr`, schema type
-/// `CT_TextParagraphProperties`.
+/// The `a:lvl7pPr` element, List Level 7 Text Style (ECMA-376 Part 1, section 21.1.2.4.19). Its
+/// schema type is `CT_TextParagraphProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8346,35 +9913,57 @@ pub struct ListLevel6TextStyle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListLevel7TextStyle {
+    /// The attribute `algn`, when the element has it.
     pub algn: Option<TextAlignmentTypes>,
+    /// The attribute `defTabSz`, when the element has it.
     pub def_tab_sz: Option<StCoordinate32>,
+    /// The child that is `DefaultTextRunProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub default_text_run_properties: Option<Box<DefaultTextRunProperties>>,
+    /// The attribute `eaLnBrk`, when the element has it.
     pub ea_ln_brk: Option<String>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `fontAlgn`, when the element has it.
     pub font_algn: Option<FontAlignmentTypes>,
+    /// The attribute `hangingPunct`, when the element has it.
     pub hanging_punct: Option<String>,
+    /// The attribute `indent`, when the element has it.
     pub indent: Option<TextIndentation>,
+    /// The attribute `latinLnBrk`, when the element has it.
     pub latin_ln_brk: Option<String>,
+    /// The child that is `LineSpacing`, when there is one.
     pub line_spacing: Option<Box<LineSpacing>>,
+    /// The attribute `lvl`, when the element has it.
     pub lvl: Option<TextIndentLevelType>,
+    /// The attribute `marL`, when the element has it.
     pub mar_l: Option<TextMargin>,
+    /// The attribute `marR`, when the element has it.
     pub mar_r: Option<TextMargin>,
+    /// The attribute `rtl`, when the element has it.
     pub rtl: Option<String>,
+    /// The child that is `SpaceAfter`, when there is one.
     pub space_after: Option<Box<SpaceAfter>>,
+    /// The child that is `SpaceBefore`, when there is one.
     pub space_before: Option<Box<SpaceBefore>>,
+    /// The child that is `TabList`, when there is one.
     pub tab_list: Option<Box<TabList>>,
+    /// The child that is an item of `TextBulletColorContent`, when there is one.
     pub text_bullet_color_content: Option<Box<TextBulletColorContent>>,
+    /// The child that is an item of `TextBulletContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_bullet_content: Option<Box<TextBulletContent>>,
+    /// The child that is an item of `TextBulletSizeContent`, when there is one.
     pub text_bullet_size_content: Option<Box<TextBulletSizeContent>>,
+    /// The child that is an item of `TextBulletTypefaceContent`, when there is one.
     pub text_bullet_typeface_content: Option<Box<TextBulletTypefaceContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.4.20 `lvl8pPr` (List Level 8 Text Style): the tag `a:lvl8pPr`, schema type
-/// `CT_TextParagraphProperties`.
+/// The `a:lvl8pPr` element, List Level 8 Text Style (ECMA-376 Part 1, section 21.1.2.4.20). Its
+/// schema type is `CT_TextParagraphProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8386,35 +9975,57 @@ pub struct ListLevel7TextStyle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListLevel8TextStyle {
+    /// The attribute `algn`, when the element has it.
     pub algn: Option<TextAlignmentTypes>,
+    /// The attribute `defTabSz`, when the element has it.
     pub def_tab_sz: Option<StCoordinate32>,
+    /// The child that is `DefaultTextRunProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub default_text_run_properties: Option<Box<DefaultTextRunProperties>>,
+    /// The attribute `eaLnBrk`, when the element has it.
     pub ea_ln_brk: Option<String>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `fontAlgn`, when the element has it.
     pub font_algn: Option<FontAlignmentTypes>,
+    /// The attribute `hangingPunct`, when the element has it.
     pub hanging_punct: Option<String>,
+    /// The attribute `indent`, when the element has it.
     pub indent: Option<TextIndentation>,
+    /// The attribute `latinLnBrk`, when the element has it.
     pub latin_ln_brk: Option<String>,
+    /// The child that is `LineSpacing`, when there is one.
     pub line_spacing: Option<Box<LineSpacing>>,
+    /// The attribute `lvl`, when the element has it.
     pub lvl: Option<TextIndentLevelType>,
+    /// The attribute `marL`, when the element has it.
     pub mar_l: Option<TextMargin>,
+    /// The attribute `marR`, when the element has it.
     pub mar_r: Option<TextMargin>,
+    /// The attribute `rtl`, when the element has it.
     pub rtl: Option<String>,
+    /// The child that is `SpaceAfter`, when there is one.
     pub space_after: Option<Box<SpaceAfter>>,
+    /// The child that is `SpaceBefore`, when there is one.
     pub space_before: Option<Box<SpaceBefore>>,
+    /// The child that is `TabList`, when there is one.
     pub tab_list: Option<Box<TabList>>,
+    /// The child that is an item of `TextBulletColorContent`, when there is one.
     pub text_bullet_color_content: Option<Box<TextBulletColorContent>>,
+    /// The child that is an item of `TextBulletContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_bullet_content: Option<Box<TextBulletContent>>,
+    /// The child that is an item of `TextBulletSizeContent`, when there is one.
     pub text_bullet_size_content: Option<Box<TextBulletSizeContent>>,
+    /// The child that is an item of `TextBulletTypefaceContent`, when there is one.
     pub text_bullet_typeface_content: Option<Box<TextBulletTypefaceContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.4.21 `lvl9pPr` (List Level 9 Text Style): the tag `a:lvl9pPr`, schema type
-/// `CT_TextParagraphProperties`.
+/// The `a:lvl9pPr` element, List Level 9 Text Style (ECMA-376 Part 1, section 21.1.2.4.21). Its
+/// schema type is `CT_TextParagraphProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8426,35 +10037,57 @@ pub struct ListLevel8TextStyle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListLevel9TextStyle {
+    /// The attribute `algn`, when the element has it.
     pub algn: Option<TextAlignmentTypes>,
+    /// The attribute `defTabSz`, when the element has it.
     pub def_tab_sz: Option<StCoordinate32>,
+    /// The child that is `DefaultTextRunProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub default_text_run_properties: Option<Box<DefaultTextRunProperties>>,
+    /// The attribute `eaLnBrk`, when the element has it.
     pub ea_ln_brk: Option<String>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `fontAlgn`, when the element has it.
     pub font_algn: Option<FontAlignmentTypes>,
+    /// The attribute `hangingPunct`, when the element has it.
     pub hanging_punct: Option<String>,
+    /// The attribute `indent`, when the element has it.
     pub indent: Option<TextIndentation>,
+    /// The attribute `latinLnBrk`, when the element has it.
     pub latin_ln_brk: Option<String>,
+    /// The child that is `LineSpacing`, when there is one.
     pub line_spacing: Option<Box<LineSpacing>>,
+    /// The attribute `lvl`, when the element has it.
     pub lvl: Option<TextIndentLevelType>,
+    /// The attribute `marL`, when the element has it.
     pub mar_l: Option<TextMargin>,
+    /// The attribute `marR`, when the element has it.
     pub mar_r: Option<TextMargin>,
+    /// The attribute `rtl`, when the element has it.
     pub rtl: Option<String>,
+    /// The child that is `SpaceAfter`, when there is one.
     pub space_after: Option<Box<SpaceAfter>>,
+    /// The child that is `SpaceBefore`, when there is one.
     pub space_before: Option<Box<SpaceBefore>>,
+    /// The child that is `TabList`, when there is one.
     pub tab_list: Option<Box<TabList>>,
+    /// The child that is an item of `TextBulletColorContent`, when there is one.
     pub text_bullet_color_content: Option<Box<TextBulletColorContent>>,
+    /// The child that is an item of `TextBulletContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_bullet_content: Option<Box<TextBulletContent>>,
+    /// The child that is an item of `TextBulletSizeContent`, when there is one.
     pub text_bullet_size_content: Option<Box<TextBulletSizeContent>>,
+    /// The child that is an item of `TextBulletTypefaceContent`, when there is one.
     pub text_bullet_typeface_content: Option<Box<TextBulletTypefaceContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.9.1 `ahLst` (List of Shape Adjust Handles): the tag `a:ahLst`, schema type
-/// `CT_AdjustHandleList`.
+/// The `a:ahLst` element, List of Shape Adjust Handles (ECMA-376 Part 1, section 20.1.9.1). Its
+/// schema type is `CT_AdjustHandleList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8463,12 +10096,14 @@ pub struct ListLevel9TextStyle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListOfShapeAdjustHandles {
+    /// The children that are an item of `ShapeAdjustHandlesContent`, in order.
     pub content: Vec<ShapeAdjustHandlesContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.9.5 `avLst` (List of Shape Adjust Values): the tag `a:avLst`, schema type
-/// `CT_GeomGuideList`.
+/// The `a:avLst` element, List of Shape Adjust Values (ECMA-376 Part 1, section 20.1.9.5). Its
+/// schema type is `CT_GeomGuideList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8477,12 +10112,14 @@ pub struct ListOfShapeAdjustHandles {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListOfShapeAdjustValues {
+    /// The children that are `ShapeGuide`, in order.
     pub shape_guide: Vec<ShapeGuide>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.9.10 `cxnLst` (List of Shape Connection Sites): the tag `a:cxnLst`, schema type
-/// `CT_ConnectionSiteList`.
+/// The `a:cxnLst` element, List of Shape Connection Sites (ECMA-376 Part 1, section 20.1.9.10). Its
+/// schema type is `CT_ConnectionSiteList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8491,11 +10128,14 @@ pub struct ListOfShapeAdjustValues {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListOfShapeConnectionSites {
+    /// The children that are `ShapeConnectionSite`, in order.
     pub shape_connection_site: Vec<ShapeConnectionSite>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.9.12 `gdLst` (List of Shape Guides): the tag `a:gdLst`, schema type `CT_GeomGuideList`.
+/// The `a:gdLst` element, List of Shape Guides (ECMA-376 Part 1, section 20.1.9.12). Its schema
+/// type is `CT_GeomGuideList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8504,11 +10144,14 @@ pub struct ListOfShapeConnectionSites {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListOfShapeGuides {
+    /// The children that are `ShapeGuide`, in order.
     pub shape_guide: Vec<ShapeGuide>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.9.16 `pathLst` (List of Shape Paths): the tag `a:pathLst`, schema type `CT_Path2DList`.
+/// The `a:pathLst` element, List of Shape Paths (ECMA-376 Part 1, section 20.1.9.16). Its schema
+/// type is `CT_Path2DList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8517,11 +10160,14 @@ pub struct ListOfShapeGuides {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ListOfShapePaths {
+    /// The children that are `ShapePath`, in order.
     pub shape_path: Vec<ShapePath>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.3.19 lum (Luminance): the tag `a:lum`, schema type `CT_Percentage`.
+/// The `a:lum` element, Luminance (ECMA-376 Part 1, section 20.1.2.3.19). Its schema type is
+/// `CT_Percentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8530,11 +10176,14 @@ pub struct ListOfShapePaths {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Luminance {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<Percentage>,
 }
 
-/// 20.1.8.42 lum (Luminance Effect): the tag `a:lum`, schema type `CT_LuminanceEffect`.
+/// The `a:lum` element, Luminance Effect (ECMA-376 Part 1, section 20.1.8.42). Its schema type is
+/// `CT_LuminanceEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8543,12 +10192,16 @@ pub struct Luminance {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LuminanceEffect {
+    /// The attribute `bright`, when the element has it.
     pub bright: Option<FixedPercentage>,
+    /// The attribute `contrast`, when the element has it.
     pub contrast: Option<FixedPercentage>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.3.20 `lumMod` (Luminance Modulation): the tag `a:lumMod`, schema type `CT_Percentage`.
+/// The `a:lumMod` element, Luminance Modulation (ECMA-376 Part 1, section 20.1.2.3.20). Its schema
+/// type is `CT_Percentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8557,11 +10210,14 @@ pub struct LuminanceEffect {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LuminanceModulation {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<Percentage>,
 }
 
-/// 20.1.2.3.21 `lumOff` (Luminance Offset): the tag `a:lumOff`, schema type `CT_Percentage`.
+/// The `a:lumOff` element, Luminance Offset (ECMA-376 Part 1, section 20.1.2.3.21). Its schema type
+/// is `CT_Percentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8570,11 +10226,14 @@ pub struct LuminanceModulation {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LuminanceOffset {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<Percentage>,
 }
 
-/// 20.1.4.1.24 `majorFont` (Major Font): the tag `a:majorFont`, schema type `CT_FontCollection`.
+/// The `a:majorFont` element, Major Font (ECMA-376 Part 1, section 20.1.4.1.24). Its schema type is
+/// `CT_FontCollection`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8586,17 +10245,23 @@ pub struct LuminanceOffset {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MajorFont {
+    /// The child that is `ComplexScriptFont`, which the schema requires.
     pub complex_script_font: Box<ComplexScriptFont>,
+    /// The child that is `EastAsianFont`, which the schema requires.
     pub east_asian_font: Box<EastAsianFont>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The children that are `Font`, in order.
     pub font: Vec<Font>,
+    /// The child that is `LatinFont`, which the schema requires.
     pub latin_font: Box<LatinFont>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.6.6 `masterClrMapping` (Master Color Mapping): the tag `a:masterClrMapping`, schema type
-/// `CT_EmptyElement`.
+/// The `a:masterClrMapping` element, Master Color Mapping (ECMA-376 Part 1, section 20.1.6.6). Its
+/// schema type is `CT_EmptyElement`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8605,10 +10270,12 @@ pub struct MajorFont {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MasterColorMapping {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.1.25 `minorFont` (Minor fonts): the tag `a:minorFont`, schema type `CT_FontCollection`.
+/// The `a:minorFont` element, Minor fonts (ECMA-376 Part 1, section 20.1.4.1.25). Its schema type
+/// is `CT_FontCollection`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8620,16 +10287,23 @@ pub struct MasterColorMapping {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MinorFonts {
+    /// The child that is `ComplexScriptFont`, which the schema requires.
     pub complex_script_font: Box<ComplexScriptFont>,
+    /// The child that is `EastAsianFont`, which the schema requires.
     pub east_asian_font: Box<EastAsianFont>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The children that are `Font`, in order.
     pub font: Vec<Font>,
+    /// The child that is `LatinFont`, which the schema requires.
     pub latin_font: Box<LatinFont>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.43 miter (Miter Line Join): the tag `a:miter`, schema type `CT_LineJoinMiterProperties`.
+/// The `a:miter` element, Miter Line Join (ECMA-376 Part 1, section 20.1.8.43). Its schema type is
+/// `CT_LineJoinMiterProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8638,12 +10312,14 @@ pub struct MinorFonts {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MiterLineJoin {
+    /// The attribute `lim`, when the element has it.
     pub lim: Option<PositivePercentageValueWithSign>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.3.6 `hlinkMouseOver` (Mouse-Over Hyperlink): the tag `a:hlinkMouseOver`, schema type
-/// `CT_Hyperlink`.
+/// The `a:hlinkMouseOver` element, Mouse-Over Hyperlink (ECMA-376 Part 1, section 21.1.2.3.6). Its
+/// schema type is `CT_Hyperlink`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8655,21 +10331,33 @@ pub struct MiterLineJoin {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MouseOverHyperlink {
+    /// The attribute `action`, when the element has it.
     pub action: Option<String>,
+    /// The attribute `endSnd`, when the element has it.
     pub end_snd: Option<String>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `highlightClick`, when the element has it.
     pub highlight_click: Option<String>,
+    /// The attribute `history`, when the element has it.
     pub history: Option<String>,
+    /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `invalidUrl`, when the element has it.
     pub invalid_url: Option<String>,
+    /// The child that is `HyperlinkSound`, when there is one.
     pub sound: Option<Box<HyperlinkSound>>,
+    /// The attribute `tgtFrame`, when the element has it.
     pub tgt_frame: Option<String>,
+    /// The attribute `tooltip`, when the element has it.
     pub tooltip: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.9.14 `moveTo` (Move Path To): the tag `a:moveTo`, schema type `CT_Path2DMoveTo`.
+/// The `a:moveTo` element, Move Path To (ECMA-376 Part 1, section 20.1.9.14). Its schema type is
+/// `CT_Path2DMoveTo`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8678,11 +10366,14 @@ pub struct MouseOverHyperlink {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MovePathTo {
+    /// The child that is `ShapePathPoint`, which the schema requires.
     pub shape_path_point: Box<ShapePathPoint>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.1.2 `noAutofit` (No `AutoFit`): the tag `a:noAutofit`, schema type `CT_TextNoAutofit`.
+/// The `a:noAutofit` element, No `AutoFit` (ECMA-376 Part 1, section 21.1.2.1.2). Its schema type
+/// is `CT_TextNoAutofit`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8691,10 +10382,12 @@ pub struct MovePathTo {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NoAutoFit {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.4.8 `buNone` (No Bullet): the tag `a:buNone`, schema type `CT_TextNoBullet`.
+/// The `a:buNone` element, No Bullet (ECMA-376 Part 1, section 21.1.2.4.8). Its schema type is
+/// `CT_TextNoBullet`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8703,10 +10396,12 @@ pub struct NoAutoFit {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NoBullet {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.44 `noFill` (No Fill): the tag `a:noFill`, schema type `CT_NoFillProperties`.
+/// The `a:noFill` element, No Fill (ECMA-376 Part 1, section 20.1.8.44). Its schema type is
+/// `CT_NoFillProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8715,10 +10410,12 @@ pub struct NoBullet {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NoFill {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.5.8 `flatTx` (No text in 3D scene): the tag `a:flatTx`, schema type `CT_FlatText`.
+/// The `a:flatTx` element, No text in 3D scene (ECMA-376 Part 1, section 20.1.5.8). Its schema type
+/// is `CT_FlatText`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8727,12 +10424,14 @@ pub struct NoFill {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NoTextIn3DScene {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `z`, when the element has it.
     pub z: Option<Coordinate>,
 }
 
-/// 20.1.2.2.4 `cNvCxnSpPr` (Non-Visual Connector Shape Drawing Properties): the tag `a:cNvCxnSpPr`,
-/// schema type `CT_NonVisualConnectorProperties`.
+/// The `a:cNvCxnSpPr` element, Non-Visual Connector Shape Drawing Properties (ECMA-376 Part 1,
+/// section 20.1.2.2.4). Its schema type is `CT_NonVisualConnectorProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8744,17 +10443,22 @@ pub struct NoTextIn3DScene {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualConnectorShapeDrawingProperties {
+    /// The child that is `ConnectionEnd`, when there is one.
     pub connection_end: Option<Box<ConnectionEnd>>,
+    /// The child that is `ConnectionShapeLocks`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub connection_shape_locks: Option<Box<ConnectionShapeLocks>>,
+    /// The child that is `ConnectionStart`, when there is one.
     pub connection_start: Option<Box<ConnectionStart>>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.8 `cNvPr` (Non-Visual Drawing Properties): the tag `a:cNvPr`, schema type
-/// `CT_NonVisualDrawingProps`.
+/// The `a:cNvPr` element, Non-Visual Drawing Properties (ECMA-376 Part 1, section 20.1.2.2.8). Its
+/// schema type is `CT_NonVisualDrawingProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8766,22 +10470,31 @@ pub struct NonVisualConnectorShapeDrawingProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualDrawingProperties {
+    /// The child that is `ClickHyperlink`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub click_hyperlink: Option<Box<ClickHyperlink>>,
+    /// The attribute `descr`, when the element has it.
     pub descr: Option<String>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `hidden`, when the element has it.
     pub hidden: Option<String>,
+    /// The child that is `HyperlinkForHover`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub hyperlink_for_hover: Option<Box<HyperlinkForHover>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<DrawingElementID>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.5 `cNvGraphicFramePr` (Non-Visual Graphic Frame Drawing Properties): the tag
-/// `a:cNvGraphicFramePr`, schema type `CT_NonVisualGraphicFrameProperties`.
+/// The `a:cNvGraphicFramePr` element, Non-Visual Graphic Frame Drawing Properties (ECMA-376 Part 1,
+/// section 20.1.2.2.5). Its schema type is `CT_NonVisualGraphicFrameProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8793,15 +10506,18 @@ pub struct NonVisualDrawingProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualGraphicFrameDrawingProperties {
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `GraphicFrameLocks`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub graphic_frame_locks: Option<Box<GraphicFrameLocks>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.6 `cNvGrpSpPr` (Non-Visual Group Shape Drawing Properties): the tag `a:cNvGrpSpPr`,
-/// schema type `CT_NonVisualGroupDrawingShapeProps`.
+/// The `a:cNvGrpSpPr` element, Non-Visual Group Shape Drawing Properties (ECMA-376 Part 1, section
+/// 20.1.2.2.6). Its schema type is `CT_NonVisualGroupDrawingShapeProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8813,15 +10529,18 @@ pub struct NonVisualGraphicFrameDrawingProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualGroupShapeDrawingProperties {
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `GroupShapeLocks`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub group_shape_locks: Option<Box<GroupShapeLocks>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.7 `cNvPicPr` (Non-Visual Picture Drawing Properties): the tag `a:cNvPicPr`, schema type
-/// `CT_NonVisualPictureProperties`.
+/// The `a:cNvPicPr` element, Non-Visual Picture Drawing Properties (ECMA-376 Part 1, section
+/// 20.1.2.2.7). Its schema type is `CT_NonVisualPictureProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8833,16 +10552,20 @@ pub struct NonVisualGroupShapeDrawingProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualPictureDrawingProperties {
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `PictureLocks`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub picture_locks: Option<Box<PictureLocks>>,
+    /// The attribute `preferRelativeResize`, when the element has it.
     pub prefer_relative_resize: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.25 `nvCxnSpPr` (Non-Visual Properties for a Connection Shape): the tag `a:nvCxnSpPr`,
-/// schema type `CT_GvmlConnectorNonVisual`.
+/// The `a:nvCxnSpPr` element, Non-Visual Properties for a Connection Shape (ECMA-376 Part 1,
+/// section 20.1.2.2.25). Its schema type is `CT_GvmlConnectorNonVisual`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8854,16 +10577,19 @@ pub struct NonVisualPictureDrawingProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualPropertiesForAConnectionShape {
+    /// The child that is `NonVisualConnectorShapeDrawingProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_connector_shape_drawing_properties:
         Box<NonVisualConnectorShapeDrawingProperties>,
+    /// The child that is `NonVisualDrawingProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.26 `nvGraphicFramePr` (Non-Visual Properties for a Graphic Frame): the tag
-/// `a:nvGraphicFramePr`, schema type `CT_GvmlGraphicFrameNonVisual`.
+/// The `a:nvGraphicFramePr` element, Non-Visual Properties for a Graphic Frame (ECMA-376 Part 1,
+/// section 20.1.2.2.26). Its schema type is `CT_GvmlGraphicFrameNonVisual`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8875,15 +10601,18 @@ pub struct NonVisualPropertiesForAConnectionShape {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualPropertiesForAGraphicFrame {
+    /// The child that is `NonVisualDrawingProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
+    /// The child that is `NonVisualGraphicFrameDrawingProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_graphic_frame_drawing_properties: Box<NonVisualGraphicFrameDrawingProperties>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.27 `nvGrpSpPr` (Non-Visual Properties for a Group Shape): the tag `a:nvGrpSpPr`, schema
-/// type `CT_GvmlGroupShapeNonVisual`.
+/// The `a:nvGrpSpPr` element, Non-Visual Properties for a Group Shape (ECMA-376 Part 1, section
+/// 20.1.2.2.27). Its schema type is `CT_GvmlGroupShapeNonVisual`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8895,15 +10624,18 @@ pub struct NonVisualPropertiesForAGraphicFrame {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualPropertiesForAGroupShape {
+    /// The child that is `NonVisualDrawingProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
+    /// The child that is `NonVisualGroupShapeDrawingProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_group_shape_drawing_properties: Box<NonVisualGroupShapeDrawingProperties>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.28 `nvPicPr` (Non-Visual Properties for a Picture): the tag `a:nvPicPr`, schema type
-/// `CT_GvmlPictureNonVisual`.
+/// The `a:nvPicPr` element, Non-Visual Properties for a Picture (ECMA-376 Part 1, section
+/// 20.1.2.2.28). Its schema type is `CT_GvmlPictureNonVisual`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8915,15 +10647,18 @@ pub struct NonVisualPropertiesForAGroupShape {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualPropertiesForAPicture {
+    /// The child that is `NonVisualDrawingProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
+    /// The child that is `NonVisualPictureDrawingProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_picture_drawing_properties: Box<NonVisualPictureDrawingProperties>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.29 `nvSpPr` (Non-Visual Properties for a Shape): the tag `a:nvSpPr`, schema type
-/// `CT_GvmlShapeNonVisual`.
+/// The `a:nvSpPr` element, Non-Visual Properties for a Shape (ECMA-376 Part 1, section
+/// 20.1.2.2.29). Its schema type is `CT_GvmlShapeNonVisual`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8935,15 +10670,18 @@ pub struct NonVisualPropertiesForAPicture {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualPropertiesForAShape {
+    /// The child that is `NonVisualDrawingProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
+    /// The child that is `NonVisualShapeDrawingProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_shape_drawing_properties: Box<NonVisualShapeDrawingProperties>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.9 `cNvSpPr` (Non-Visual Shape Drawing Properties): the tag `a:cNvSpPr`, schema type
-/// `CT_NonVisualDrawingShapeProps`.
+/// The `a:cNvSpPr` element, Non-Visual Shape Drawing Properties (ECMA-376 Part 1, section
+/// 20.1.2.2.9). Its schema type is `CT_NonVisualDrawingShapeProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8955,15 +10693,20 @@ pub struct NonVisualPropertiesForAShape {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualShapeDrawingProperties {
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `ShapeLocks`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub shape_locks: Option<Box<ShapeLocks>>,
+    /// The attribute `txBox`, when the element has it.
     pub tx_box: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.5.10 norm (Normal): the tag `a:norm`, schema type `CT_Vector3D`.
+/// The `a:norm` element, Normal (ECMA-376 Part 1, section 20.1.5.10). Its schema type is
+/// `CT_Vector3D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8972,14 +10715,18 @@ pub struct NonVisualShapeDrawingProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Normal {
+    /// The attribute `dx`, when the element has it.
     pub dx: Option<Coordinate>,
+    /// The attribute `dy`, when the element has it.
     pub dy: Option<Coordinate>,
+    /// The attribute `dz`, when the element has it.
     pub dz: Option<Coordinate>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.1.3 `normAutofit` (Normal `AutoFit`): the tag `a:normAutofit`, schema type
-/// `CT_TextNormalAutofit`.
+/// The `a:normAutofit` element, Normal `AutoFit` (ECMA-376 Part 1, section 21.1.2.1.3). Its schema
+/// type is `CT_TextNormalAutofit`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -8988,12 +10735,16 @@ pub struct Normal {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NormalAutoFit {
+    /// The attribute `fontScale`, when the element has it.
     pub font_scale: Option<StTextFontScalePercentOrPercentString>,
+    /// The attribute `lnSpcReduction`, when the element has it.
     pub ln_spc_reduction: Option<StTextSpacingPercentOrPercentString>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.2.20 `neCell` (Northeast Cell): the tag `a:neCell`, schema type `CT_TablePartStyle`.
+/// The `a:neCell` element, Northeast Cell (ECMA-376 Part 1, section 20.1.4.2.20). Its schema type
+/// is `CT_TablePartStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9005,14 +10756,18 @@ pub struct NormalAutoFit {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NortheastCell {
+    /// The child that is `TableCellStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_cell_style: Option<Box<TableCellStyle>>,
+    /// The child that is `TableCellTextStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_cell_text_style: Option<Box<TableCellTextStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.2.21 `nwCell` (Northwest Cell): the tag `a:nwCell`, schema type `CT_TablePartStyle`.
+/// The `a:nwCell` element, Northwest Cell (ECMA-376 Part 1, section 20.1.4.2.21). Its schema type
+/// is `CT_TablePartStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9024,15 +10779,18 @@ pub struct NortheastCell {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NorthwestCell {
+    /// The child that is `TableCellStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_cell_style: Option<Box<TableCellStyle>>,
+    /// The child that is `TableCellTextStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_cell_text_style: Option<Box<TableCellTextStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.6.7 `objectDefaults` (Object Defaults): the tag `a:objectDefaults`, schema type
-/// `CT_ObjectStyleDefaults`.
+/// The `a:objectDefaults` element, Object Defaults (ECMA-376 Part 1, section 20.1.6.7). Its schema
+/// type is `CT_ObjectStyleDefaults`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9044,18 +10802,24 @@ pub struct NorthwestCell {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ObjectDefaults {
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `LineDefault`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub line_default: Option<Box<LineDefault>>,
+    /// The child that is `ShapeDefault`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub shape_default: Option<Box<ShapeDefault>>,
+    /// The child that is `TextDefault`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_default: Option<Box<TextDefault>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.7.4 off (Offset): the tag `a:off`, schema type `CT_Point2D`.
+/// The `a:off` element, Offset (ECMA-376 Part 1, section 20.1.7.4). Its schema type is
+/// `CT_Point2D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9064,12 +10828,19 @@ pub struct ObjectDefaults {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Offset {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `x`, when the element has it.
     pub x: Option<Coordinate>,
+    /// The attribute `y`, when the element has it.
     pub y: Option<Coordinate>,
 }
 
-/// 20.1.10.36 `ST_OnOffStyleType` (On/Off Style Type): the text the file carried.
+/// On/Off Style Type, the simple type `ST_OnOffStyleType` (ECMA-376 Part 1, section 20.1.10.36),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9078,17 +10849,21 @@ pub struct Offset {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct OnOffStyleType(pub String);
-/// The members of `ST_OnOffStyleType`, in alphabetical order.
+/// The members of the enumeration `ST_OnOffStyleType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum OnOffStyleTypeMember {
+    /// The member written `def`.
     Def,
+    /// The member written `off`.
     Off,
+    /// The member written `on`.
     On,
 }
 
-/// 20.1.8.45 `outerShdw` (Outer Shadow Effect): the tag `a:outerShdw`, schema type
-/// `CT_OuterShadowEffect`.
+/// The `a:outerShdw` element, Outer Shadow Effect (ECMA-376 Part 1, section 20.1.8.45). Its schema
+/// type is `CT_OuterShadowEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9097,20 +10872,32 @@ pub enum OnOffStyleTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct OuterShadowEffect {
+    /// The attribute `algn`, when the element has it.
     pub algn: Option<RectangleAlignments>,
+    /// The attribute `blurRad`, when the element has it.
     pub blur_rad: Option<PositiveCoordinate>,
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// The attribute `dir`, when the element has it.
     pub dir: Option<PositiveFixedAngle>,
+    /// The attribute `dist`, when the element has it.
     pub dist: Option<PositiveCoordinate>,
+    /// The attribute `kx`, when the element has it.
     pub kx: Option<FixedAngle>,
+    /// The attribute `ky`, when the element has it.
     pub ky: Option<FixedAngle>,
+    /// The attribute `rotWithShape`, when the element has it.
     pub rot_with_shape: Option<String>,
+    /// The attribute `sx`, when the element has it.
     pub sx: Option<Percentage>,
+    /// The attribute `sy`, when the element has it.
     pub sy: Option<Percentage>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.24 ln (Outline): the tag `a:ln`, schema type `CT_LineProperties`.
+/// The `a:ln` element, Outline (ECMA-376 Part 1, section 20.1.2.2.24). Its schema type is
+/// `CT_LineProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9122,22 +10909,33 @@ pub struct OuterShadowEffect {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Outline {
+    /// The attribute `algn`, when the element has it.
     pub algn: Option<AlignmentType>,
+    /// The attribute `cap`, when the element has it.
     pub cap: Option<EndLineCap>,
+    /// The attribute `cmpd`, when the element has it.
     pub cmpd: Option<CompoundLineType>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is an item of `LineDashContent`, when there is one.
     pub line_dash_content: Option<Box<LineDashContent>>,
+    /// The child that is an item of `LineFillContent`, when there is one.
     pub line_fill_content: Option<Box<LineFillContent>>,
+    /// The child that is `LineHeadEndStyle`, when there is one.
     pub line_head_end_style: Option<Box<LineHeadEndStyle>>,
+    /// The child that is an item of `LineJoinContent`, when there is one.
     pub line_join_content: Option<Box<LineJoinContent>>,
+    /// The child that is `TailLineEndStyle`, when there is one.
     pub tail_line_end_style: Option<Box<TailLineEndStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w`, when the element has it.
     pub w: Option<LineWidth>,
 }
 
-/// 20.1.6.8 `overrideClrMapping` (Override Color Mapping): the tag `a:overrideClrMapping`, schema
-/// type `CT_ColorMapping`.
+/// The `a:overrideClrMapping` element, Override Color Mapping (ECMA-376 Part 1, section 20.1.6.8).
+/// Its schema type is `CT_ColorMapping`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9149,24 +10947,42 @@ pub struct Outline {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct OverrideColorMapping {
+    /// The attribute `accent1`, when the element has it.
     pub accent1: Option<ThemeColorReference>,
+    /// The attribute `accent2`, when the element has it.
     pub accent2: Option<ThemeColorReference>,
+    /// The attribute `accent3`, when the element has it.
     pub accent3: Option<ThemeColorReference>,
+    /// The attribute `accent4`, when the element has it.
     pub accent4: Option<ThemeColorReference>,
+    /// The attribute `accent5`, when the element has it.
     pub accent5: Option<ThemeColorReference>,
+    /// The attribute `accent6`, when the element has it.
     pub accent6: Option<ThemeColorReference>,
+    /// The attribute `bg1`, when the element has it.
     pub bg1: Option<ThemeColorReference>,
+    /// The attribute `bg2`, when the element has it.
     pub bg2: Option<ThemeColorReference>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `folHlink`, when the element has it.
     pub fol_hlink: Option<ThemeColorReference>,
+    /// The attribute `hlink`, when the element has it.
     pub hlink: Option<ThemeColorReference>,
+    /// The attribute `tx1`, when the element has it.
     pub tx1: Option<ThemeColorReference>,
+    /// The attribute `tx2`, when the element has it.
     pub tx2: Option<ThemeColorReference>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.37 `ST_PathFillMode` (Path Fill Mode): the text the file carried.
+/// Path Fill Mode, the simple type `ST_PathFillMode` (ECMA-376 Part 1, section 20.1.10.37), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9175,19 +10991,27 @@ pub struct OverrideColorMapping {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PathFillMode(pub String);
-/// The members of `ST_PathFillMode`, in alphabetical order.
+/// The members of the enumeration `ST_PathFillMode`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum PathFillModeMember {
+    /// The member written `darken`.
     Darken,
+    /// The member written `darkenLess`.
     DarkenLess,
+    /// The member written `lighten`.
     Lighten,
+    /// The member written `lightenLess`.
     LightenLess,
+    /// The member written `none`.
     None,
+    /// The member written `norm`.
     Norm,
 }
 
-/// 20.1.8.46 path (Path Gradient): the tag `a:path`, schema type `CT_PathShadeProperties`.
+/// The `a:path` element, Path Gradient (ECMA-376 Part 1, section 20.1.8.46). Its schema type is
+/// `CT_PathShadeProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9196,12 +11020,19 @@ pub enum PathFillModeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PathGradient {
+    /// The child that is `FillToRectangle`, when there is one.
     pub fill_to_rectangle: Option<Box<FillToRectangle>>,
+    /// The attribute `path`, when the element has it.
     pub path: Option<PathShadeType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.38 `ST_PathShadeType` (Path Shade Type): the text the file carried.
+/// Path Shade Type, the simple type `ST_PathShadeType` (ECMA-376 Part 1, section 20.1.10.38), kept
+/// as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9210,16 +11041,20 @@ pub struct PathGradient {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PathShadeType(pub String);
-/// The members of `ST_PathShadeType`, in alphabetical order.
+/// The members of the enumeration `ST_PathShadeType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum PathShadeTypeMember {
+    /// The member written `circle`.
     Circle,
+    /// The member written `rect`.
     Rect,
+    /// The member written `shape`.
     Shape,
 }
 
-/// 20.1.8.47 `pattFill` (Pattern Fill): the tag `a:pattFill`, schema type
+/// The `a:pattFill` element, Pattern Fill (ECMA-376 Part 1, section 20.1.8.47). Its schema type is
 /// `CT_PatternFillProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
@@ -9229,13 +11064,21 @@ pub enum PathShadeTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PatternFill {
+    /// The child that is `BackgroundColor`, when there is one.
     pub background_color: Option<Box<BackgroundColor>>,
+    /// The child that is `ForegroundColor`, when there is one.
     pub foreground_color: Option<Box<ForegroundColor>>,
+    /// The attribute `prst`, when the element has it.
     pub prst: Option<PresetPatternValue>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.40 `ST_Percentage` (Percentage): the text the file carried.
+/// Percentage, the simple type `ST_Percentage` (ECMA-376 Part 1, section 20.1.10.40), kept as the
+/// text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9249,11 +11092,17 @@ pub struct Percentage(pub String);
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
 pub enum PercentageMember {
+    /// A value of the member type `i64`.
     PercentageAsDecimalNumber(i64),
+    /// A value of the member type `f64`.
     PercentageValueWithSign(f64),
 }
 
-/// 17.2.2.12 `ST_PercentageDecimal` (Percentage as Decimal Number): the text the file carried.
+/// Percentage as Decimal Number, the simple type `ST_PercentageDecimal` (ECMA-376 Part 4, section
+/// 17.2.2.12), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9263,7 +11112,8 @@ pub enum PercentageMember {
 #[non_exhaustive]
 pub struct PercentageAsDecimalNumber(pub String);
 
-/// 20.1.2.2.30 pic (Picture): the tag `a:pic`, schema type `CT_GvmlPicture`.
+/// The `a:pic` element, Picture (ECMA-376 Part 1, section 20.1.2.2.30). Its schema type is
+/// `CT_GvmlPicture`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9275,19 +11125,26 @@ pub struct PercentageAsDecimalNumber(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Picture {
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `PictureFill`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub fill: Box<PictureFill>,
+    /// The child that is `NonVisualPropertiesForAPicture`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_properties: Box<NonVisualPropertiesForAPicture>,
+    /// The child that is `ShapeProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub shape_properties: Box<ShapeProperties>,
+    /// The child that is `ShapeStyle`, when there is one.
     pub shape_style: Option<Box<ShapeStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.4.2 `buBlip` (Picture Bullet): the tag `a:buBlip`, schema type `CT_TextBlipBullet`.
+/// The `a:buBlip` element, Picture Bullet (ECMA-376 Part 1, section 21.1.2.4.2). Its schema type is
+/// `CT_TextBlipBullet`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9299,12 +11156,15 @@ pub struct Picture {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PictureBullet {
+    /// The child that is `Blip`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub blip: Box<Blip>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.14 `blipFill` (Picture Fill): the tag `a:blipFill`, schema type `CT_BlipFillProperties`.
+/// The `a:blipFill` element, Picture Fill (ECMA-376 Part 1, section 20.1.8.14). Its schema type is
+/// `CT_BlipFillProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9316,16 +11176,23 @@ pub struct PictureBullet {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PictureFill {
+    /// The child that is `Blip`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub blip: Option<Box<Blip>>,
+    /// The child that is an item of `FillModeContent`, when there is one.
     pub content: Option<Box<FillModeContent>>,
+    /// The attribute `dpi`, when the element has it.
     pub dpi: Option<String>,
+    /// The attribute `rotWithShape`, when the element has it.
     pub rot_with_shape: Option<String>,
+    /// The child that is `SourceRectangle`, when there is one.
     pub source_rectangle: Option<Box<SourceRectangle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.31 `picLocks` (Picture Locks): the tag `a:picLocks`, schema type `CT_PictureLocking`.
+/// The `a:picLocks` element, Picture Locks (ECMA-376 Part 1, section 20.1.2.2.31). Its schema type
+/// is `CT_PictureLocking`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9337,23 +11204,40 @@ pub struct PictureFill {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PictureLocks {
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `noAdjustHandles`, when the element has it.
     pub no_adjust_handles: Option<String>,
+    /// The attribute `noChangeArrowheads`, when the element has it.
     pub no_change_arrowheads: Option<String>,
+    /// The attribute `noChangeAspect`, when the element has it.
     pub no_change_aspect: Option<String>,
+    /// The attribute `noChangeShapeType`, when the element has it.
     pub no_change_shape_type: Option<String>,
+    /// The attribute `noCrop`, when the element has it.
     pub no_crop: Option<String>,
+    /// The attribute `noEditPoints`, when the element has it.
     pub no_edit_points: Option<String>,
+    /// The attribute `noGrp`, when the element has it.
     pub no_grp: Option<String>,
+    /// The attribute `noMove`, when the element has it.
     pub no_move: Option<String>,
+    /// The attribute `noResize`, when the element has it.
     pub no_resize: Option<String>,
+    /// The attribute `noRot`, when the element has it.
     pub no_rot: Option<String>,
+    /// The attribute `noSelect`, when the element has it.
     pub no_select: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.41 `ST_PitchFamily` (Pitch Family): the text the file carried.
+/// Pitch Family, the simple type `ST_PitchFamily` (ECMA-376 Part 1, section 20.1.10.41), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9363,8 +11247,8 @@ pub struct PictureLocks {
 #[non_exhaustive]
 pub struct PitchFamily(pub String);
 
-/// 20.1.9.2 `ahPolar` (Polar Adjust Handle): the tag `a:ahPolar`, schema type
-/// `CT_PolarAdjustHandle`.
+/// The `a:ahPolar` element, Polar Adjust Handle (ECMA-376 Part 1, section 20.1.9.2). Its schema
+/// type is `CT_PolarAdjustHandle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9373,17 +11257,29 @@ pub struct PitchFamily(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PolarAdjustHandle {
+    /// The attribute `gdRefAng`, when the element has it.
     pub gd_ref_ang: Option<String>,
+    /// The attribute `gdRefR`, when the element has it.
     pub gd_ref_r: Option<String>,
+    /// The attribute `maxAng`, when the element has it.
     pub max_ang: Option<AdjustableAngleMethods>,
+    /// The attribute `maxR`, when the element has it.
     pub max_r: Option<AdjustableCoordinateMethods>,
+    /// The attribute `minAng`, when the element has it.
     pub min_ang: Option<AdjustableAngleMethods>,
+    /// The attribute `minR`, when the element has it.
     pub min_r: Option<AdjustableCoordinateMethods>,
+    /// The child that is `ShapePositionCoordinate`, which the schema requires.
     pub shape_position_coordinate: Box<ShapePositionCoordinate>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.42 `ST_PositiveCoordinate` (Positive Coordinate): the text the file carried.
+/// Positive Coordinate, the simple type `ST_PositiveCoordinate` (ECMA-376 Part 1, section
+/// 20.1.10.42), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9393,7 +11289,11 @@ pub struct PolarAdjustHandle {
 #[non_exhaustive]
 pub struct PositiveCoordinate(pub String);
 
-/// 20.1.10.43 `ST_PositiveCoordinate32` (Positive Coordinate Point): the text the file carried.
+/// Positive Coordinate Point, the simple type `ST_PositiveCoordinate32` (ECMA-376 Part 1, section
+/// 20.1.10.43), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9403,7 +11303,11 @@ pub struct PositiveCoordinate(pub String);
 #[non_exhaustive]
 pub struct PositiveCoordinatePoint(pub String);
 
-/// 20.1.10.44 `ST_PositiveFixedAngle` (Positive Fixed Angle): the text the file carried.
+/// Positive Fixed Angle, the simple type `ST_PositiveFixedAngle` (ECMA-376 Part 1, section
+/// 20.1.10.44), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9413,7 +11317,11 @@ pub struct PositiveCoordinatePoint(pub String);
 #[non_exhaustive]
 pub struct PositiveFixedAngle(pub String);
 
-/// 20.1.10.45 `ST_PositiveFixedPercentage` (Positive Fixed Percentage): the text the file carried.
+/// Positive Fixed Percentage, the simple type `ST_PositiveFixedPercentage` (ECMA-376 Part 1,
+/// section 20.1.10.45), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9427,12 +11335,17 @@ pub struct PositiveFixedPercentage(pub String);
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
 pub enum PositiveFixedPercentageMember {
+    /// A value of the member type `f64`.
     PositiveFixedPercentageValueWithSign(f64),
+    /// A value of the member type `i64`.
     StPositiveFixedPercentageDecimal(i64),
 }
 
-/// 17.2.2.9 `ST_PositivePercentageDecimal` (Positive Percentage as Decimal Number): the text the
-/// file carried.
+/// Positive Percentage as Decimal Number, the simple type `ST_PositivePercentageDecimal` (ECMA-376
+/// Part 4, section 17.2.2.9), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9442,8 +11355,11 @@ pub enum PositiveFixedPercentageMember {
 #[non_exhaustive]
 pub struct PositivePercentageAsDecimalNumber(pub String);
 
-/// 20.1.10.46 `ST_PositivePercentage` (Positive Percentage Value with Sign): the text the file
-/// carried.
+/// Positive Percentage Value with Sign, the simple type `ST_PositivePercentage` (ECMA-376 Part 1,
+/// section 20.1.10.46), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9457,11 +11373,17 @@ pub struct PositivePercentageValueWithSign(pub String);
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
 pub enum PositivePercentageValueWithSignMember {
+    /// A value of the member type `i64`.
     PositivePercentageAsDecimalNumber(i64),
+    /// A value of the member type `f64`.
     PositivePercentageValueWithSign(f64),
 }
 
-/// 20.1.10.47 `ST_PresetCameraType` (Preset Camera Type): the text the file carried.
+/// Preset Camera Type, the simple type `ST_PresetCameraType` (ECMA-376 Part 1, section 20.1.10.47),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9470,75 +11392,139 @@ pub enum PositivePercentageValueWithSignMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresetCameraType(pub String);
-/// The members of `ST_PresetCameraType`, in alphabetical order.
+/// The members of the enumeration `ST_PresetCameraType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum PresetCameraTypeMember {
+    /// The member written `isometricBottomDown`.
     IsometricBottomDown,
+    /// The member written `isometricBottomUp`.
     IsometricBottomUp,
+    /// The member written `isometricLeftDown`.
     IsometricLeftDown,
+    /// The member written `isometricLeftUp`.
     IsometricLeftUp,
+    /// The member written `isometricOffAxis1Left`.
     IsometricOffAxis1Left,
+    /// The member written `isometricOffAxis1Right`.
     IsometricOffAxis1Right,
+    /// The member written `isometricOffAxis1Top`.
     IsometricOffAxis1Top,
+    /// The member written `isometricOffAxis2Left`.
     IsometricOffAxis2Left,
+    /// The member written `isometricOffAxis2Right`.
     IsometricOffAxis2Right,
+    /// The member written `isometricOffAxis2Top`.
     IsometricOffAxis2Top,
+    /// The member written `isometricOffAxis3Bottom`.
     IsometricOffAxis3Bottom,
+    /// The member written `isometricOffAxis3Left`.
     IsometricOffAxis3Left,
+    /// The member written `isometricOffAxis3Right`.
     IsometricOffAxis3Right,
+    /// The member written `isometricOffAxis4Bottom`.
     IsometricOffAxis4Bottom,
+    /// The member written `isometricOffAxis4Left`.
     IsometricOffAxis4Left,
+    /// The member written `isometricOffAxis4Right`.
     IsometricOffAxis4Right,
+    /// The member written `isometricRightDown`.
     IsometricRightDown,
+    /// The member written `isometricRightUp`.
     IsometricRightUp,
+    /// The member written `isometricTopDown`.
     IsometricTopDown,
+    /// The member written `isometricTopUp`.
     IsometricTopUp,
+    /// The member written `legacyObliqueBottom`.
     LegacyObliqueBottom,
+    /// The member written `legacyObliqueBottomLeft`.
     LegacyObliqueBottomLeft,
+    /// The member written `legacyObliqueBottomRight`.
     LegacyObliqueBottomRight,
+    /// The member written `legacyObliqueFront`.
     LegacyObliqueFront,
+    /// The member written `legacyObliqueLeft`.
     LegacyObliqueLeft,
+    /// The member written `legacyObliqueRight`.
     LegacyObliqueRight,
+    /// The member written `legacyObliqueTop`.
     LegacyObliqueTop,
+    /// The member written `legacyObliqueTopLeft`.
     LegacyObliqueTopLeft,
+    /// The member written `legacyObliqueTopRight`.
     LegacyObliqueTopRight,
+    /// The member written `legacyPerspectiveBottom`.
     LegacyPerspectiveBottom,
+    /// The member written `legacyPerspectiveBottomLeft`.
     LegacyPerspectiveBottomLeft,
+    /// The member written `legacyPerspectiveBottomRight`.
     LegacyPerspectiveBottomRight,
+    /// The member written `legacyPerspectiveFront`.
     LegacyPerspectiveFront,
+    /// The member written `legacyPerspectiveLeft`.
     LegacyPerspectiveLeft,
+    /// The member written `legacyPerspectiveRight`.
     LegacyPerspectiveRight,
+    /// The member written `legacyPerspectiveTop`.
     LegacyPerspectiveTop,
+    /// The member written `legacyPerspectiveTopLeft`.
     LegacyPerspectiveTopLeft,
+    /// The member written `legacyPerspectiveTopRight`.
     LegacyPerspectiveTopRight,
+    /// The member written `obliqueBottom`.
     ObliqueBottom,
+    /// The member written `obliqueBottomLeft`.
     ObliqueBottomLeft,
+    /// The member written `obliqueBottomRight`.
     ObliqueBottomRight,
+    /// The member written `obliqueLeft`.
     ObliqueLeft,
+    /// The member written `obliqueRight`.
     ObliqueRight,
+    /// The member written `obliqueTop`.
     ObliqueTop,
+    /// The member written `obliqueTopLeft`.
     ObliqueTopLeft,
+    /// The member written `obliqueTopRight`.
     ObliqueTopRight,
+    /// The member written `orthographicFront`.
     OrthographicFront,
+    /// The member written `perspectiveAbove`.
     PerspectiveAbove,
+    /// The member written `perspectiveAboveLeftFacing`.
     PerspectiveAboveLeftFacing,
+    /// The member written `perspectiveAboveRightFacing`.
     PerspectiveAboveRightFacing,
+    /// The member written `perspectiveBelow`.
     PerspectiveBelow,
+    /// The member written `perspectiveContrastingLeftFacing`.
     PerspectiveContrastingLeftFacing,
+    /// The member written `perspectiveContrastingRightFacing`.
     PerspectiveContrastingRightFacing,
+    /// The member written `perspectiveFront`.
     PerspectiveFront,
+    /// The member written `perspectiveHeroicExtremeLeftFacing`.
     PerspectiveHeroicExtremeLeftFacing,
+    /// The member written `perspectiveHeroicExtremeRightFacing`.
     PerspectiveHeroicExtremeRightFacing,
+    /// The member written `perspectiveHeroicLeftFacing`.
     PerspectiveHeroicLeftFacing,
+    /// The member written `perspectiveHeroicRightFacing`.
     PerspectiveHeroicRightFacing,
+    /// The member written `perspectiveLeft`.
     PerspectiveLeft,
+    /// The member written `perspectiveRelaxed`.
     PerspectiveRelaxed,
+    /// The member written `perspectiveRelaxedModerately`.
     PerspectiveRelaxedModerately,
+    /// The member written `perspectiveRight`.
     PerspectiveRight,
 }
 
-/// 20.1.2.3.22 `prstClr` (Preset Color): the tag `a:prstClr`, schema type `CT_PresetColor`.
+/// The `a:prstClr` element, Preset Color (ECMA-376 Part 1, section 20.1.2.3.22). Its schema type is
+/// `CT_PresetColor`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9547,12 +11533,19 @@ pub enum PresetCameraTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresetColor {
+    /// The children that are an item of `ColorTransformContent`, in order.
     pub content: Vec<ColorTransformContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<PresetColorValue>,
 }
 
-/// 20.1.10.48 `ST_PresetColorVal` (Preset Color Value): the text the file carried.
+/// Preset Color Value, the simple type `ST_PresetColorVal` (ECMA-376 Part 1, section 20.1.10.48),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9561,203 +11554,394 @@ pub struct PresetColor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresetColorValue(pub String);
-/// The members of `ST_PresetColorVal`, in alphabetical order.
+/// The members of the enumeration `ST_PresetColorVal`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum PresetColorValueMember {
+    /// The member written `aliceBlue`.
     AliceBlue,
+    /// The member written `antiqueWhite`.
     AntiqueWhite,
+    /// The member written `aqua`.
     Aqua,
+    /// The member written `aquamarine`.
     Aquamarine,
+    /// The member written `azure`.
     Azure,
+    /// The member written `beige`.
     Beige,
+    /// The member written `bisque`.
     Bisque,
+    /// The member written `black`.
     Black,
+    /// The member written `blanchedAlmond`.
     BlanchedAlmond,
+    /// The member written `blue`.
     Blue,
+    /// The member written `blueViolet`.
     BlueViolet,
+    /// The member written `brown`.
     Brown,
+    /// The member written `burlyWood`.
     BurlyWood,
+    /// The member written `cadetBlue`.
     CadetBlue,
+    /// The member written `chartreuse`.
     Chartreuse,
+    /// The member written `chocolate`.
     Chocolate,
+    /// The member written `coral`.
     Coral,
+    /// The member written `cornflowerBlue`.
     CornflowerBlue,
+    /// The member written `cornsilk`.
     Cornsilk,
+    /// The member written `crimson`.
     Crimson,
+    /// The member written `cyan`.
     Cyan,
+    /// The member written `darkBlue`.
     DarkBlue,
+    /// The member written `darkCyan`.
     DarkCyan,
+    /// The member written `darkGoldenrod`.
     DarkGoldenrod,
+    /// The member written `darkGray`.
     DarkGray,
+    /// The member written `darkGreen`.
     DarkGreen,
+    /// The member written `darkGrey`.
     DarkGrey,
+    /// The member written `darkKhaki`.
     DarkKhaki,
+    /// The member written `darkMagenta`.
     DarkMagenta,
+    /// The member written `darkOliveGreen`.
     DarkOliveGreen,
+    /// The member written `darkOrange`.
     DarkOrange,
+    /// The member written `darkOrchid`.
     DarkOrchid,
+    /// The member written `darkRed`.
     DarkRed,
+    /// The member written `darkSalmon`.
     DarkSalmon,
+    /// The member written `darkSeaGreen`.
     DarkSeaGreen,
+    /// The member written `darkSlateBlue`.
     DarkSlateBlue,
+    /// The member written `darkSlateGray`.
     DarkSlateGray,
+    /// The member written `darkSlateGrey`.
     DarkSlateGrey,
+    /// The member written `darkTurquoise`.
     DarkTurquoise,
+    /// The member written `darkViolet`.
     DarkViolet,
+    /// The member written `deepPink`.
     DeepPink,
+    /// The member written `deepSkyBlue`.
     DeepSkyBlue,
+    /// The member written `dimGray`.
     DimGray,
+    /// The member written `dimGrey`.
     DimGrey,
+    /// The member written `dkBlue`.
     DkBlue,
+    /// The member written `dkCyan`.
     DkCyan,
+    /// The member written `dkGoldenrod`.
     DkGoldenrod,
+    /// The member written `dkGray`.
     DkGray,
+    /// The member written `dkGreen`.
     DkGreen,
+    /// The member written `dkGrey`.
     DkGrey,
+    /// The member written `dkKhaki`.
     DkKhaki,
+    /// The member written `dkMagenta`.
     DkMagenta,
+    /// The member written `dkOliveGreen`.
     DkOliveGreen,
+    /// The member written `dkOrange`.
     DkOrange,
+    /// The member written `dkOrchid`.
     DkOrchid,
+    /// The member written `dkRed`.
     DkRed,
+    /// The member written `dkSalmon`.
     DkSalmon,
+    /// The member written `dkSeaGreen`.
     DkSeaGreen,
+    /// The member written `dkSlateBlue`.
     DkSlateBlue,
+    /// The member written `dkSlateGray`.
     DkSlateGray,
+    /// The member written `dkSlateGrey`.
     DkSlateGrey,
+    /// The member written `dkTurquoise`.
     DkTurquoise,
+    /// The member written `dkViolet`.
     DkViolet,
+    /// The member written `dodgerBlue`.
     DodgerBlue,
+    /// The member written `firebrick`.
     Firebrick,
+    /// The member written `floralWhite`.
     FloralWhite,
+    /// The member written `forestGreen`.
     ForestGreen,
+    /// The member written `fuchsia`.
     Fuchsia,
+    /// The member written `gainsboro`.
     Gainsboro,
+    /// The member written `ghostWhite`.
     GhostWhite,
+    /// The member written `gold`.
     Gold,
+    /// The member written `goldenrod`.
     Goldenrod,
+    /// The member written `gray`.
     Gray,
+    /// The member written `green`.
     Green,
+    /// The member written `greenYellow`.
     GreenYellow,
+    /// The member written `grey`.
     Grey,
+    /// The member written `honeydew`.
     Honeydew,
+    /// The member written `hotPink`.
     HotPink,
+    /// The member written `indianRed`.
     IndianRed,
+    /// The member written `indigo`.
     Indigo,
+    /// The member written `ivory`.
     Ivory,
+    /// The member written `khaki`.
     Khaki,
+    /// The member written `lavender`.
     Lavender,
+    /// The member written `lavenderBlush`.
     LavenderBlush,
+    /// The member written `lawnGreen`.
     LawnGreen,
+    /// The member written `lemonChiffon`.
     LemonChiffon,
+    /// The member written `lightBlue`.
     LightBlue,
+    /// The member written `lightCoral`.
     LightCoral,
+    /// The member written `lightCyan`.
     LightCyan,
+    /// The member written `lightGoldenrodYellow`.
     LightGoldenrodYellow,
+    /// The member written `lightGray`.
     LightGray,
+    /// The member written `lightGreen`.
     LightGreen,
+    /// The member written `lightGrey`.
     LightGrey,
+    /// The member written `lightPink`.
     LightPink,
+    /// The member written `lightSalmon`.
     LightSalmon,
+    /// The member written `lightSeaGreen`.
     LightSeaGreen,
+    /// The member written `lightSkyBlue`.
     LightSkyBlue,
+    /// The member written `lightSlateGray`.
     LightSlateGray,
+    /// The member written `lightSlateGrey`.
     LightSlateGrey,
+    /// The member written `lightSteelBlue`.
     LightSteelBlue,
+    /// The member written `lightYellow`.
     LightYellow,
+    /// The member written `lime`.
     Lime,
+    /// The member written `limeGreen`.
     LimeGreen,
+    /// The member written `linen`.
     Linen,
+    /// The member written `ltBlue`.
     LtBlue,
+    /// The member written `ltCoral`.
     LtCoral,
+    /// The member written `ltCyan`.
     LtCyan,
+    /// The member written `ltGoldenrodYellow`.
     LtGoldenrodYellow,
+    /// The member written `ltGray`.
     LtGray,
+    /// The member written `ltGreen`.
     LtGreen,
+    /// The member written `ltGrey`.
     LtGrey,
+    /// The member written `ltPink`.
     LtPink,
+    /// The member written `ltSalmon`.
     LtSalmon,
+    /// The member written `ltSeaGreen`.
     LtSeaGreen,
+    /// The member written `ltSkyBlue`.
     LtSkyBlue,
+    /// The member written `ltSlateGray`.
     LtSlateGray,
+    /// The member written `ltSlateGrey`.
     LtSlateGrey,
+    /// The member written `ltSteelBlue`.
     LtSteelBlue,
+    /// The member written `ltYellow`.
     LtYellow,
+    /// The member written `magenta`.
     Magenta,
+    /// The member written `maroon`.
     Maroon,
+    /// The member written `medAquamarine`.
     MedAquamarine,
+    /// The member written `medBlue`.
     MedBlue,
+    /// The member written `medOrchid`.
     MedOrchid,
+    /// The member written `medPurple`.
     MedPurple,
+    /// The member written `medSeaGreen`.
     MedSeaGreen,
+    /// The member written `medSlateBlue`.
     MedSlateBlue,
+    /// The member written `medSpringGreen`.
     MedSpringGreen,
+    /// The member written `medTurquoise`.
     MedTurquoise,
+    /// The member written `medVioletRed`.
     MedVioletRed,
+    /// The member written `mediumAquamarine`.
     MediumAquamarine,
+    /// The member written `mediumBlue`.
     MediumBlue,
+    /// The member written `mediumOrchid`.
     MediumOrchid,
+    /// The member written `mediumPurple`.
     MediumPurple,
+    /// The member written `mediumSeaGreen`.
     MediumSeaGreen,
+    /// The member written `mediumSlateBlue`.
     MediumSlateBlue,
+    /// The member written `mediumSpringGreen`.
     MediumSpringGreen,
+    /// The member written `mediumTurquoise`.
     MediumTurquoise,
+    /// The member written `mediumVioletRed`.
     MediumVioletRed,
+    /// The member written `midnightBlue`.
     MidnightBlue,
+    /// The member written `mintCream`.
     MintCream,
+    /// The member written `mistyRose`.
     MistyRose,
+    /// The member written `moccasin`.
     Moccasin,
+    /// The member written `navajoWhite`.
     NavajoWhite,
+    /// The member written `navy`.
     Navy,
+    /// The member written `oldLace`.
     OldLace,
+    /// The member written `olive`.
     Olive,
+    /// The member written `oliveDrab`.
     OliveDrab,
+    /// The member written `orange`.
     Orange,
+    /// The member written `orangeRed`.
     OrangeRed,
+    /// The member written `orchid`.
     Orchid,
+    /// The member written `paleGoldenrod`.
     PaleGoldenrod,
+    /// The member written `paleGreen`.
     PaleGreen,
+    /// The member written `paleTurquoise`.
     PaleTurquoise,
+    /// The member written `paleVioletRed`.
     PaleVioletRed,
+    /// The member written `papayaWhip`.
     PapayaWhip,
+    /// The member written `peachPuff`.
     PeachPuff,
+    /// The member written `peru`.
     Peru,
+    /// The member written `pink`.
     Pink,
+    /// The member written `plum`.
     Plum,
+    /// The member written `powderBlue`.
     PowderBlue,
+    /// The member written `purple`.
     Purple,
+    /// The member written `red`.
     Red,
+    /// The member written `rosyBrown`.
     RosyBrown,
+    /// The member written `royalBlue`.
     RoyalBlue,
+    /// The member written `saddleBrown`.
     SaddleBrown,
+    /// The member written `salmon`.
     Salmon,
+    /// The member written `sandyBrown`.
     SandyBrown,
+    /// The member written `seaGreen`.
     SeaGreen,
+    /// The member written `seaShell`.
     SeaShell,
+    /// The member written `sienna`.
     Sienna,
+    /// The member written `silver`.
     Silver,
+    /// The member written `skyBlue`.
     SkyBlue,
+    /// The member written `slateBlue`.
     SlateBlue,
+    /// The member written `slateGray`.
     SlateGray,
+    /// The member written `slateGrey`.
     SlateGrey,
+    /// The member written `snow`.
     Snow,
+    /// The member written `springGreen`.
     SpringGreen,
+    /// The member written `steelBlue`.
     SteelBlue,
+    /// The member written `tan`.
     Tan,
+    /// The member written `teal`.
     Teal,
+    /// The member written `thistle`.
     Thistle,
+    /// The member written `tomato`.
     Tomato,
+    /// The member written `turquoise`.
     Turquoise,
+    /// The member written `violet`.
     Violet,
+    /// The member written `wheat`.
     Wheat,
+    /// The member written `white`.
     White,
+    /// The member written `whiteSmoke`.
     WhiteSmoke,
+    /// The member written `yellow`.
     Yellow,
+    /// The member written `yellowGreen`.
     YellowGreen,
 }
 
-/// 20.1.8.48 `prstDash` (Preset Dash): the tag `a:prstDash`, schema type
+/// The `a:prstDash` element, Preset Dash (ECMA-376 Part 1, section 20.1.8.48). Its schema type is
 /// `CT_PresetLineDashProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
@@ -9767,11 +11951,14 @@ pub enum PresetColorValueMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresetDash {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<PresetLineDashValue>,
 }
 
-/// 20.1.9.18 `prstGeom` (Preset geometry): the tag `a:prstGeom`, schema type `CT_PresetGeometry2D`.
+/// The `a:prstGeom` element, Preset geometry (ECMA-376 Part 1, section 20.1.9.18). Its schema type
+/// is `CT_PresetGeometry2D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9780,12 +11967,19 @@ pub struct PresetDash {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresetGeometry {
+    /// The child that is `ListOfShapeAdjustValues`, when there is one.
     pub list_of_shape_adjust_values: Option<Box<ListOfShapeAdjustValues>>,
+    /// The attribute `prst`, when the element has it.
     pub prst: Option<PresetShapeTypes>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.49 `ST_PresetLineDashVal` (Preset Line Dash Value): the text the file carried.
+/// Preset Line Dash Value, the simple type `ST_PresetLineDashVal` (ECMA-376 Part 1, section
+/// 20.1.10.49), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9794,24 +11988,40 @@ pub struct PresetGeometry {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresetLineDashValue(pub String);
-/// The members of `ST_PresetLineDashVal`, in alphabetical order.
+/// The members of the enumeration `ST_PresetLineDashVal`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum PresetLineDashValueMember {
+    /// The member written `dash`.
     Dash,
+    /// The member written `dashDot`.
     DashDot,
+    /// The member written `dot`.
     Dot,
+    /// The member written `lgDash`.
     LgDash,
+    /// The member written `lgDashDot`.
     LgDashDot,
+    /// The member written `lgDashDotDot`.
     LgDashDotDot,
+    /// The member written `solid`.
     Solid,
+    /// The member written `sysDash`.
     SysDash,
+    /// The member written `sysDashDot`.
     SysDashDot,
+    /// The member written `sysDashDotDot`.
     SysDashDotDot,
+    /// The member written `sysDot`.
     SysDot,
 }
 
-/// 20.1.10.50 `ST_PresetMaterialType` (Preset Material Type): the text the file carried.
+/// Preset Material Type, the simple type `ST_PresetMaterialType` (ECMA-376 Part 1, section
+/// 20.1.10.50), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9820,28 +12030,48 @@ pub enum PresetLineDashValueMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresetMaterialType(pub String);
-/// The members of `ST_PresetMaterialType`, in alphabetical order.
+/// The members of the enumeration `ST_PresetMaterialType`, in alphabetical order. `as_str` gives
+/// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum PresetMaterialTypeMember {
+    /// The member written `clear`.
     Clear,
+    /// The member written `dkEdge`.
     DkEdge,
+    /// The member written `flat`.
     Flat,
+    /// The member written `legacyMatte`.
     LegacyMatte,
+    /// The member written `legacyMetal`.
     LegacyMetal,
+    /// The member written `legacyPlastic`.
     LegacyPlastic,
+    /// The member written `legacyWireframe`.
     LegacyWireframe,
+    /// The member written `matte`.
     Matte,
+    /// The member written `metal`.
     Metal,
+    /// The member written `plastic`.
     Plastic,
+    /// The member written `powder`.
     Powder,
+    /// The member written `softEdge`.
     SoftEdge,
+    /// The member written `softmetal`.
     Softmetal,
+    /// The member written `translucentPowder`.
     TranslucentPowder,
+    /// The member written `warmMatte`.
     WarmMatte,
 }
 
-/// 20.1.10.51 `ST_PresetPatternVal` (Preset Pattern Value): the text the file carried.
+/// Preset Pattern Value, the simple type `ST_PresetPatternVal` (ECMA-376 Part 1, section
+/// 20.1.10.51), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9850,67 +12080,123 @@ pub enum PresetMaterialTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresetPatternValue(pub String);
-/// The members of `ST_PresetPatternVal`, in alphabetical order.
+/// The members of the enumeration `ST_PresetPatternVal`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum PresetPatternValueMember {
+    /// The member written `cross`.
     Cross,
+    /// The member written `dashDnDiag`.
     DashDnDiag,
+    /// The member written `dashHorz`.
     DashHorz,
+    /// The member written `dashUpDiag`.
     DashUpDiag,
+    /// The member written `dashVert`.
     DashVert,
+    /// The member written `diagBrick`.
     DiagBrick,
+    /// The member written `diagCross`.
     DiagCross,
+    /// The member written `divot`.
     Divot,
+    /// The member written `dkDnDiag`.
     DkDnDiag,
+    /// The member written `dkHorz`.
     DkHorz,
+    /// The member written `dkUpDiag`.
     DkUpDiag,
+    /// The member written `dkVert`.
     DkVert,
+    /// The member written `dnDiag`.
     DnDiag,
+    /// The member written `dotDmnd`.
     DotDmnd,
+    /// The member written `dotGrid`.
     DotGrid,
+    /// The member written `horz`.
     Horz,
+    /// The member written `horzBrick`.
     HorzBrick,
+    /// The member written `lgCheck`.
     LgCheck,
+    /// The member written `lgConfetti`.
     LgConfetti,
+    /// The member written `lgGrid`.
     LgGrid,
+    /// The member written `ltDnDiag`.
     LtDnDiag,
+    /// The member written `ltHorz`.
     LtHorz,
+    /// The member written `ltUpDiag`.
     LtUpDiag,
+    /// The member written `ltVert`.
     LtVert,
+    /// The member written `narHorz`.
     NarHorz,
+    /// The member written `narVert`.
     NarVert,
+    /// The member written `openDmnd`.
     OpenDmnd,
+    /// The member written `pct10`.
     Pct10,
+    /// The member written `pct20`.
     Pct20,
+    /// The member written `pct25`.
     Pct25,
+    /// The member written `pct30`.
     Pct30,
+    /// The member written `pct40`.
     Pct40,
+    /// The member written `pct5`.
     Pct5,
+    /// The member written `pct50`.
     Pct50,
+    /// The member written `pct60`.
     Pct60,
+    /// The member written `pct70`.
     Pct70,
+    /// The member written `pct75`.
     Pct75,
+    /// The member written `pct80`.
     Pct80,
+    /// The member written `pct90`.
     Pct90,
+    /// The member written `plaid`.
     Plaid,
+    /// The member written `shingle`.
     Shingle,
+    /// The member written `smCheck`.
     SmCheck,
+    /// The member written `smConfetti`.
     SmConfetti,
+    /// The member written `smGrid`.
     SmGrid,
+    /// The member written `solidDmnd`.
     SolidDmnd,
+    /// The member written `sphere`.
     Sphere,
+    /// The member written `trellis`.
     Trellis,
+    /// The member written `upDiag`.
     UpDiag,
+    /// The member written `vert`.
     Vert,
+    /// The member written `wave`.
     Wave,
+    /// The member written `wdDnDiag`.
     WdDnDiag,
+    /// The member written `wdUpDiag`.
     WdUpDiag,
+    /// The member written `weave`.
     Weave,
+    /// The member written `zigZag`.
     ZigZag,
 }
 
-/// 20.1.8.49 `prstShdw` (Preset Shadow): the tag `a:prstShdw`, schema type `CT_PresetShadowEffect`.
+/// The `a:prstShdw` element, Preset Shadow (ECMA-376 Part 1, section 20.1.8.49). Its schema type is
+/// `CT_PresetShadowEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9919,14 +12205,23 @@ pub enum PresetPatternValueMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresetShadow {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// The attribute `dir`, when the element has it.
     pub dir: Option<PositiveFixedAngle>,
+    /// The attribute `dist`, when the element has it.
     pub dist: Option<PositiveCoordinate>,
+    /// The attribute `prst`, when the element has it.
     pub prst: Option<PresetShadowType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.52 `ST_PresetShadowVal` (Preset Shadow Type): the text the file carried.
+/// Preset Shadow Type, the simple type `ST_PresetShadowVal` (ECMA-376 Part 1, section 20.1.10.52),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9935,33 +12230,58 @@ pub struct PresetShadow {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresetShadowType(pub String);
-/// The members of `ST_PresetShadowVal`, in alphabetical order.
+/// The members of the enumeration `ST_PresetShadowVal`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum PresetShadowTypeMember {
+    /// The member written `shdw1`.
     Shdw1,
+    /// The member written `shdw10`.
     Shdw10,
+    /// The member written `shdw11`.
     Shdw11,
+    /// The member written `shdw12`.
     Shdw12,
+    /// The member written `shdw13`.
     Shdw13,
+    /// The member written `shdw14`.
     Shdw14,
+    /// The member written `shdw15`.
     Shdw15,
+    /// The member written `shdw16`.
     Shdw16,
+    /// The member written `shdw17`.
     Shdw17,
+    /// The member written `shdw18`.
     Shdw18,
+    /// The member written `shdw19`.
     Shdw19,
+    /// The member written `shdw2`.
     Shdw2,
+    /// The member written `shdw20`.
     Shdw20,
+    /// The member written `shdw3`.
     Shdw3,
+    /// The member written `shdw4`.
     Shdw4,
+    /// The member written `shdw5`.
     Shdw5,
+    /// The member written `shdw6`.
     Shdw6,
+    /// The member written `shdw7`.
     Shdw7,
+    /// The member written `shdw8`.
     Shdw8,
+    /// The member written `shdw9`.
     Shdw9,
 }
 
-/// 20.1.10.56 `ST_ShapeType` (Preset Shape Types): the text the file carried.
+/// Preset Shape Types, the simple type `ST_ShapeType` (ECMA-376 Part 1, section 20.1.10.56), kept
+/// as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -9970,200 +12290,392 @@ pub enum PresetShadowTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresetShapeTypes(pub String);
-/// The members of `ST_ShapeType`, in alphabetical order.
+/// The members of the enumeration `ST_ShapeType`, in alphabetical order. `as_str` gives the text of
+/// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum PresetShapeTypesMember {
+    /// The member written `accentBorderCallout1`.
     AccentBorderCallout1,
+    /// The member written `accentBorderCallout2`.
     AccentBorderCallout2,
+    /// The member written `accentBorderCallout3`.
     AccentBorderCallout3,
+    /// The member written `accentCallout1`.
     AccentCallout1,
+    /// The member written `accentCallout2`.
     AccentCallout2,
+    /// The member written `accentCallout3`.
     AccentCallout3,
+    /// The member written `actionButtonBackPrevious`.
     ActionButtonBackPrevious,
+    /// The member written `actionButtonBeginning`.
     ActionButtonBeginning,
+    /// The member written `actionButtonBlank`.
     ActionButtonBlank,
+    /// The member written `actionButtonDocument`.
     ActionButtonDocument,
+    /// The member written `actionButtonEnd`.
     ActionButtonEnd,
+    /// The member written `actionButtonForwardNext`.
     ActionButtonForwardNext,
+    /// The member written `actionButtonHelp`.
     ActionButtonHelp,
+    /// The member written `actionButtonHome`.
     ActionButtonHome,
+    /// The member written `actionButtonInformation`.
     ActionButtonInformation,
+    /// The member written `actionButtonMovie`.
     ActionButtonMovie,
+    /// The member written `actionButtonReturn`.
     ActionButtonReturn,
+    /// The member written `actionButtonSound`.
     ActionButtonSound,
+    /// The member written `arc`.
     Arc,
+    /// The member written `bentArrow`.
     BentArrow,
+    /// The member written `bentConnector2`.
     BentConnector2,
+    /// The member written `bentConnector3`.
     BentConnector3,
+    /// The member written `bentConnector4`.
     BentConnector4,
+    /// The member written `bentConnector5`.
     BentConnector5,
+    /// The member written `bentUpArrow`.
     BentUpArrow,
+    /// The member written `bevel`.
     Bevel,
+    /// The member written `blockArc`.
     BlockArc,
+    /// The member written `borderCallout1`.
     BorderCallout1,
+    /// The member written `borderCallout2`.
     BorderCallout2,
+    /// The member written `borderCallout3`.
     BorderCallout3,
+    /// The member written `bracePair`.
     BracePair,
+    /// The member written `bracketPair`.
     BracketPair,
+    /// The member written `callout1`.
     Callout1,
+    /// The member written `callout2`.
     Callout2,
+    /// The member written `callout3`.
     Callout3,
+    /// The member written `can`.
     Can,
+    /// The member written `chartPlus`.
     ChartPlus,
+    /// The member written `chartStar`.
     ChartStar,
+    /// The member written `chartX`.
     ChartX,
+    /// The member written `chevron`.
     Chevron,
+    /// The member written `chord`.
     Chord,
+    /// The member written `circularArrow`.
     CircularArrow,
+    /// The member written `cloud`.
     Cloud,
+    /// The member written `cloudCallout`.
     CloudCallout,
+    /// The member written `corner`.
     Corner,
+    /// The member written `cornerTabs`.
     CornerTabs,
+    /// The member written `cube`.
     Cube,
+    /// The member written `curvedConnector2`.
     CurvedConnector2,
+    /// The member written `curvedConnector3`.
     CurvedConnector3,
+    /// The member written `curvedConnector4`.
     CurvedConnector4,
+    /// The member written `curvedConnector5`.
     CurvedConnector5,
+    /// The member written `curvedDownArrow`.
     CurvedDownArrow,
+    /// The member written `curvedLeftArrow`.
     CurvedLeftArrow,
+    /// The member written `curvedRightArrow`.
     CurvedRightArrow,
+    /// The member written `curvedUpArrow`.
     CurvedUpArrow,
+    /// The member written `decagon`.
     Decagon,
+    /// The member written `diagStripe`.
     DiagStripe,
+    /// The member written `diamond`.
     Diamond,
+    /// The member written `dodecagon`.
     Dodecagon,
+    /// The member written `donut`.
     Donut,
+    /// The member written `doubleWave`.
     DoubleWave,
+    /// The member written `downArrow`.
     DownArrow,
+    /// The member written `downArrowCallout`.
     DownArrowCallout,
+    /// The member written `ellipse`.
     Ellipse,
+    /// The member written `ellipseRibbon`.
     EllipseRibbon,
+    /// The member written `ellipseRibbon2`.
     EllipseRibbon2,
+    /// The member written `flowChartAlternateProcess`.
     FlowChartAlternateProcess,
+    /// The member written `flowChartCollate`.
     FlowChartCollate,
+    /// The member written `flowChartConnector`.
     FlowChartConnector,
+    /// The member written `flowChartDecision`.
     FlowChartDecision,
+    /// The member written `flowChartDelay`.
     FlowChartDelay,
+    /// The member written `flowChartDisplay`.
     FlowChartDisplay,
+    /// The member written `flowChartDocument`.
     FlowChartDocument,
+    /// The member written `flowChartExtract`.
     FlowChartExtract,
+    /// The member written `flowChartInputOutput`.
     FlowChartInputOutput,
+    /// The member written `flowChartInternalStorage`.
     FlowChartInternalStorage,
+    /// The member written `flowChartMagneticDisk`.
     FlowChartMagneticDisk,
+    /// The member written `flowChartMagneticDrum`.
     FlowChartMagneticDrum,
+    /// The member written `flowChartMagneticTape`.
     FlowChartMagneticTape,
+    /// The member written `flowChartManualInput`.
     FlowChartManualInput,
+    /// The member written `flowChartManualOperation`.
     FlowChartManualOperation,
+    /// The member written `flowChartMerge`.
     FlowChartMerge,
+    /// The member written `flowChartMultidocument`.
     FlowChartMultidocument,
+    /// The member written `flowChartOfflineStorage`.
     FlowChartOfflineStorage,
+    /// The member written `flowChartOffpageConnector`.
     FlowChartOffpageConnector,
+    /// The member written `flowChartOnlineStorage`.
     FlowChartOnlineStorage,
+    /// The member written `flowChartOr`.
     FlowChartOr,
+    /// The member written `flowChartPredefinedProcess`.
     FlowChartPredefinedProcess,
+    /// The member written `flowChartPreparation`.
     FlowChartPreparation,
+    /// The member written `flowChartProcess`.
     FlowChartProcess,
+    /// The member written `flowChartPunchedCard`.
     FlowChartPunchedCard,
+    /// The member written `flowChartPunchedTape`.
     FlowChartPunchedTape,
+    /// The member written `flowChartSort`.
     FlowChartSort,
+    /// The member written `flowChartSummingJunction`.
     FlowChartSummingJunction,
+    /// The member written `flowChartTerminator`.
     FlowChartTerminator,
+    /// The member written `foldedCorner`.
     FoldedCorner,
+    /// The member written `frame`.
     Frame,
+    /// The member written `funnel`.
     Funnel,
+    /// The member written `gear6`.
     Gear6,
+    /// The member written `gear9`.
     Gear9,
+    /// The member written `halfFrame`.
     HalfFrame,
+    /// The member written `heart`.
     Heart,
+    /// The member written `heptagon`.
     Heptagon,
+    /// The member written `hexagon`.
     Hexagon,
+    /// The member written `homePlate`.
     HomePlate,
+    /// The member written `horizontalScroll`.
     HorizontalScroll,
+    /// The member written `irregularSeal1`.
     IrregularSeal1,
+    /// The member written `irregularSeal2`.
     IrregularSeal2,
+    /// The member written `leftArrow`.
     LeftArrow,
+    /// The member written `leftArrowCallout`.
     LeftArrowCallout,
+    /// The member written `leftBrace`.
     LeftBrace,
+    /// The member written `leftBracket`.
     LeftBracket,
+    /// The member written `leftCircularArrow`.
     LeftCircularArrow,
+    /// The member written `leftRightArrow`.
     LeftRightArrow,
+    /// The member written `leftRightArrowCallout`.
     LeftRightArrowCallout,
+    /// The member written `leftRightCircularArrow`.
     LeftRightCircularArrow,
+    /// The member written `leftRightRibbon`.
     LeftRightRibbon,
+    /// The member written `leftRightUpArrow`.
     LeftRightUpArrow,
+    /// The member written `leftUpArrow`.
     LeftUpArrow,
+    /// The member written `lightningBolt`.
     LightningBolt,
+    /// The member written `line`.
     Line,
+    /// The member written `lineInv`.
     LineInv,
+    /// The member written `mathDivide`.
     MathDivide,
+    /// The member written `mathEqual`.
     MathEqual,
+    /// The member written `mathMinus`.
     MathMinus,
+    /// The member written `mathMultiply`.
     MathMultiply,
+    /// The member written `mathNotEqual`.
     MathNotEqual,
+    /// The member written `mathPlus`.
     MathPlus,
+    /// The member written `moon`.
     Moon,
+    /// The member written `noSmoking`.
     NoSmoking,
+    /// The member written `nonIsoscelesTrapezoid`.
     NonIsoscelesTrapezoid,
+    /// The member written `notchedRightArrow`.
     NotchedRightArrow,
+    /// The member written `octagon`.
     Octagon,
+    /// The member written `parallelogram`.
     Parallelogram,
+    /// The member written `pentagon`.
     Pentagon,
+    /// The member written `pie`.
     Pie,
+    /// The member written `pieWedge`.
     PieWedge,
+    /// The member written `plaque`.
     Plaque,
+    /// The member written `plaqueTabs`.
     PlaqueTabs,
+    /// The member written `plus`.
     Plus,
+    /// The member written `quadArrow`.
     QuadArrow,
+    /// The member written `quadArrowCallout`.
     QuadArrowCallout,
+    /// The member written `rect`.
     Rect,
+    /// The member written `ribbon`.
     Ribbon,
+    /// The member written `ribbon2`.
     Ribbon2,
+    /// The member written `rightArrow`.
     RightArrow,
+    /// The member written `rightArrowCallout`.
     RightArrowCallout,
+    /// The member written `rightBrace`.
     RightBrace,
+    /// The member written `rightBracket`.
     RightBracket,
+    /// The member written `round1Rect`.
     Round1Rect,
+    /// The member written `round2DiagRect`.
     Round2DiagRect,
+    /// The member written `round2SameRect`.
     Round2SameRect,
+    /// The member written `roundRect`.
     RoundRect,
+    /// The member written `rtTriangle`.
     RtTriangle,
+    /// The member written `smileyFace`.
     SmileyFace,
+    /// The member written `snip1Rect`.
     Snip1Rect,
+    /// The member written `snip2DiagRect`.
     Snip2DiagRect,
+    /// The member written `snip2SameRect`.
     Snip2SameRect,
+    /// The member written `snipRoundRect`.
     SnipRoundRect,
+    /// The member written `squareTabs`.
     SquareTabs,
+    /// The member written `star10`.
     Star10,
+    /// The member written `star12`.
     Star12,
+    /// The member written `star16`.
     Star16,
+    /// The member written `star24`.
     Star24,
+    /// The member written `star32`.
     Star32,
+    /// The member written `star4`.
     Star4,
+    /// The member written `star5`.
     Star5,
+    /// The member written `star6`.
     Star6,
+    /// The member written `star7`.
     Star7,
+    /// The member written `star8`.
     Star8,
+    /// The member written `straightConnector1`.
     StraightConnector1,
+    /// The member written `stripedRightArrow`.
     StripedRightArrow,
+    /// The member written `sun`.
     Sun,
+    /// The member written `swooshArrow`.
     SwooshArrow,
+    /// The member written `teardrop`.
     Teardrop,
+    /// The member written `trapezoid`.
     Trapezoid,
+    /// The member written `triangle`.
     Triangle,
+    /// The member written `upArrow`.
     UpArrow,
+    /// The member written `upArrowCallout`.
     UpArrowCallout,
+    /// The member written `upDownArrow`.
     UpDownArrow,
+    /// The member written `upDownArrowCallout`.
     UpDownArrowCallout,
+    /// The member written `uturnArrow`.
     UturnArrow,
+    /// The member written `verticalScroll`.
     VerticalScroll,
+    /// The member written `wave`.
     Wave,
+    /// The member written `wedgeEllipseCallout`.
     WedgeEllipseCallout,
+    /// The member written `wedgeRectCallout`.
     WedgeRectCallout,
+    /// The member written `wedgeRoundRectCallout`.
     WedgeRoundRectCallout,
 }
 
-/// 20.1.10.76 `ST_TextShapeType` (Preset Text Shape Types): the text the file carried.
+/// Preset Text Shape Types, the simple type `ST_TextShapeType` (ECMA-376 Part 1, section
+/// 20.1.10.76), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10172,55 +12684,97 @@ pub enum PresetShapeTypesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresetTextShapeTypes(pub String);
-/// The members of `ST_TextShapeType`, in alphabetical order.
+/// The members of the enumeration `ST_TextShapeType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum PresetTextShapeTypesMember {
+    /// The member written `textArchDown`.
     TextArchDown,
+    /// The member written `textArchDownPour`.
     TextArchDownPour,
+    /// The member written `textArchUp`.
     TextArchUp,
+    /// The member written `textArchUpPour`.
     TextArchUpPour,
+    /// The member written `textButton`.
     TextButton,
+    /// The member written `textButtonPour`.
     TextButtonPour,
+    /// The member written `textCanDown`.
     TextCanDown,
+    /// The member written `textCanUp`.
     TextCanUp,
+    /// The member written `textCascadeDown`.
     TextCascadeDown,
+    /// The member written `textCascadeUp`.
     TextCascadeUp,
+    /// The member written `textChevron`.
     TextChevron,
+    /// The member written `textChevronInverted`.
     TextChevronInverted,
+    /// The member written `textCircle`.
     TextCircle,
+    /// The member written `textCirclePour`.
     TextCirclePour,
+    /// The member written `textCurveDown`.
     TextCurveDown,
+    /// The member written `textCurveUp`.
     TextCurveUp,
+    /// The member written `textDeflate`.
     TextDeflate,
+    /// The member written `textDeflateBottom`.
     TextDeflateBottom,
+    /// The member written `textDeflateInflate`.
     TextDeflateInflate,
+    /// The member written `textDeflateInflateDeflate`.
     TextDeflateInflateDeflate,
+    /// The member written `textDeflateTop`.
     TextDeflateTop,
+    /// The member written `textDoubleWave1`.
     TextDoubleWave1,
+    /// The member written `textFadeDown`.
     TextFadeDown,
+    /// The member written `textFadeLeft`.
     TextFadeLeft,
+    /// The member written `textFadeRight`.
     TextFadeRight,
+    /// The member written `textFadeUp`.
     TextFadeUp,
+    /// The member written `textInflate`.
     TextInflate,
+    /// The member written `textInflateBottom`.
     TextInflateBottom,
+    /// The member written `textInflateTop`.
     TextInflateTop,
+    /// The member written `textNoShape`.
     TextNoShape,
+    /// The member written `textPlain`.
     TextPlain,
+    /// The member written `textRingInside`.
     TextRingInside,
+    /// The member written `textRingOutside`.
     TextRingOutside,
+    /// The member written `textSlantDown`.
     TextSlantDown,
+    /// The member written `textSlantUp`.
     TextSlantUp,
+    /// The member written `textStop`.
     TextStop,
+    /// The member written `textTriangle`.
     TextTriangle,
+    /// The member written `textTriangleInverted`.
     TextTriangleInverted,
+    /// The member written `textWave1`.
     TextWave1,
+    /// The member written `textWave2`.
     TextWave2,
+    /// The member written `textWave4`.
     TextWave4,
 }
 
-/// 20.1.9.19 `prstTxWarp` (Preset Text Warp): the tag `a:prstTxWarp`, schema type
-/// `CT_PresetTextShape`.
+/// The `a:prstTxWarp` element, Preset Text Warp (ECMA-376 Part 1, section 20.1.9.19). Its schema
+/// type is `CT_PresetTextShape`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10229,13 +12783,16 @@ pub enum PresetTextShapeTypesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresetTextWarp {
+    /// The child that is `ListOfShapeAdjustValues`, when there is one.
     pub list_of_shape_adjust_values: Option<Box<ListOfShapeAdjustValues>>,
+    /// The attribute `prst`, when the element has it.
     pub prst: Option<PresetTextShapeTypes>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.3.4 `quickTimeFile` (`QuickTime` from File): the tag `a:quickTimeFile`, schema type
-/// `CT_QuickTimeFile`.
+/// The `a:quickTimeFile` element, `QuickTime` from File (ECMA-376 Part 1, section 20.1.3.4). Its
+/// schema type is `CT_QuickTimeFile`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10247,14 +12804,17 @@ pub struct PresetTextWarp {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct QuickTimeFromFile {
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `r:link`, when the element has it.
     pub link: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.3.32 `srgbClr` (RGB Color Model - Hex Variant): the tag `a:srgbClr`, schema type
-/// `CT_SRgbColor`.
+/// The `a:srgbClr` element, RGB Color Model - Hex Variant (ECMA-376 Part 1, section 20.1.2.3.32).
+/// Its schema type is `CT_SRgbColor`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10263,14 +12823,18 @@ pub struct QuickTimeFromFile {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RGBColorModelHexVariant {
+    /// The children that are an item of `ColorTransformContent`, in order.
     pub content: Vec<ColorTransformContent>,
+    /// The attribute `a14:legacySpreadsheetColorIndex`, when the element has it.
     pub legacy_spreadsheet_color_index: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<common_simple_types::HexadecimalColorValue>,
 }
 
-/// 20.1.2.3.30 `scrgbClr` (RGB Color Model - Percentage Variant): the tag `a:scrgbClr`, schema type
-/// `CT_ScRgbColor`.
+/// The `a:scrgbClr` element, RGB Color Model - Percentage Variant (ECMA-376 Part 1, section
+/// 20.1.2.3.30). Its schema type is `CT_ScRgbColor`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10279,14 +12843,23 @@ pub struct RGBColorModelHexVariant {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RGBColorModelPercentageVariant {
+    /// The attribute `b`, when the element has it.
     pub b: Option<Percentage>,
+    /// The children that are an item of `ColorTransformContent`, in order.
     pub content: Vec<ColorTransformContent>,
+    /// The attribute `g`, when the element has it.
     pub g: Option<Percentage>,
+    /// The attribute `r`, when the element has it.
     pub r: Option<Percentage>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.53 `ST_RectAlignment` (Rectangle Alignments): the text the file carried.
+/// Rectangle Alignments, the simple type `ST_RectAlignment` (ECMA-376 Part 1, section 20.1.10.53),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10295,22 +12868,33 @@ pub struct RGBColorModelPercentageVariant {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RectangleAlignments(pub String);
-/// The members of `ST_RectAlignment`, in alphabetical order.
+/// The members of the enumeration `ST_RectAlignment`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum RectangleAlignmentsMember {
+    /// The member written `b`.
     B,
+    /// The member written `bl`.
     Bl,
+    /// The member written `br`.
     Br,
+    /// The member written `ctr`.
     Ctr,
+    /// The member written `l`.
     L,
+    /// The member written `r`.
     R,
+    /// The member written `t`.
     T,
+    /// The member written `tl`.
     Tl,
+    /// The member written `tr`.
     Tr,
 }
 
-/// 20.1.2.3.23 red (Red): the tag `a:red`, schema type `CT_Percentage`.
+/// The `a:red` element, Red (ECMA-376 Part 1, section 20.1.2.3.23). Its schema type is
+/// `CT_Percentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10319,11 +12903,14 @@ pub enum RectangleAlignmentsMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Red {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<Percentage>,
 }
 
-/// 20.1.2.3.24 `redMod` (Red Modulation): the tag `a:redMod`, schema type `CT_Percentage`.
+/// The `a:redMod` element, Red Modulation (ECMA-376 Part 1, section 20.1.2.3.24). Its schema type
+/// is `CT_Percentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10332,11 +12919,14 @@ pub struct Red {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RedModulation {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<Percentage>,
 }
 
-/// 20.1.2.3.25 `redOff` (Red Offset): the tag `a:redOff`, schema type `CT_Percentage`.
+/// The `a:redOff` element, Red Offset (ECMA-376 Part 1, section 20.1.2.3.25). Its schema type is
+/// `CT_Percentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10345,12 +12935,14 @@ pub struct RedModulation {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RedOffset {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<Percentage>,
 }
 
-/// 20.1.8.50 reflection (Reflection Effect): the tag `a:reflection`, schema type
-/// `CT_ReflectionEffect`.
+/// The `a:reflection` element, Reflection Effect (ECMA-376 Part 1, section 20.1.8.50). Its schema
+/// type is `CT_ReflectionEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10359,25 +12951,40 @@ pub struct RedOffset {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ReflectionEffect {
+    /// The attribute `algn`, when the element has it.
     pub algn: Option<RectangleAlignments>,
+    /// The attribute `blurRad`, when the element has it.
     pub blur_rad: Option<PositiveCoordinate>,
+    /// The attribute `dir`, when the element has it.
     pub dir: Option<PositiveFixedAngle>,
+    /// The attribute `dist`, when the element has it.
     pub dist: Option<PositiveCoordinate>,
+    /// The attribute `endA`, when the element has it.
     pub end_a: Option<PositiveFixedPercentage>,
+    /// The attribute `endPos`, when the element has it.
     pub end_pos: Option<PositiveFixedPercentage>,
+    /// The attribute `fadeDir`, when the element has it.
     pub fade_dir: Option<PositiveFixedAngle>,
+    /// The attribute `kx`, when the element has it.
     pub kx: Option<FixedAngle>,
+    /// The attribute `ky`, when the element has it.
     pub ky: Option<FixedAngle>,
+    /// The attribute `rotWithShape`, when the element has it.
     pub rot_with_shape: Option<String>,
+    /// The attribute `stA`, when the element has it.
     pub st_a: Option<PositiveFixedPercentage>,
+    /// The attribute `stPos`, when the element has it.
     pub st_pos: Option<PositiveFixedPercentage>,
+    /// The attribute `sx`, when the element has it.
     pub sx: Option<Percentage>,
+    /// The attribute `sy`, when the element has it.
     pub sy: Option<Percentage>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.51 `relOff` (Relative Offset Effect): the tag `a:relOff`, schema type
-/// `CT_RelativeOffsetEffect`.
+/// The `a:relOff` element, Relative Offset Effect (ECMA-376 Part 1, section 20.1.8.51). Its schema
+/// type is `CT_RelativeOffsetEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10386,12 +12993,16 @@ pub struct ReflectionEffect {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RelativeOffsetEffect {
+    /// The attribute `tx`, when the element has it.
     pub tx: Option<Percentage>,
+    /// The attribute `ty`, when the element has it.
     pub ty: Option<Percentage>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.2.22 right (Right Border): the tag `a:right`, schema type `CT_ThemeableLineStyle`.
+/// The `a:right` element, Right Border (ECMA-376 Part 1, section 20.1.4.2.22). Its schema type is
+/// `CT_ThemeableLineStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10403,12 +13014,15 @@ pub struct RelativeOffsetEffect {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RightBorder {
+    /// The child that is an item of `ThemeableLineStyleContent`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Box<ThemeableLineStyleContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.3.8 `lnR` (Right Border Line Properties): the tag `a:lnR`, schema type `CT_LineProperties`.
+/// The `a:lnR` element, Right Border Line Properties (ECMA-376 Part 1, section 21.1.3.8). Its
+/// schema type is `CT_LineProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10420,21 +13034,33 @@ pub struct RightBorder {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RightBorderLineProperties {
+    /// The attribute `algn`, when the element has it.
     pub algn: Option<AlignmentType>,
+    /// The attribute `cap`, when the element has it.
     pub cap: Option<EndLineCap>,
+    /// The attribute `cmpd`, when the element has it.
     pub cmpd: Option<CompoundLineType>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is an item of `LineDashContent`, when there is one.
     pub line_dash_content: Option<Box<LineDashContent>>,
+    /// The child that is an item of `LineFillContent`, when there is one.
     pub line_fill_content: Option<Box<LineFillContent>>,
+    /// The child that is `LineHeadEndStyle`, when there is one.
     pub line_head_end_style: Option<Box<LineHeadEndStyle>>,
+    /// The child that is an item of `LineJoinContent`, when there is one.
     pub line_join_content: Option<Box<LineJoinContent>>,
+    /// The child that is `TailLineEndStyle`, when there is one.
     pub tail_line_end_style: Option<Box<TailLineEndStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w`, when the element has it.
     pub w: Option<LineWidth>,
 }
 
-/// 21.1.2.2.8 rtl (Right to Left Run): the tag `a:rtl`, schema type `CT_Boolean`.
+/// The `a:rtl` element, Right to Left Run (ECMA-376 Part 1, section 21.1.2.2.8). Its schema type is
+/// `CT_Boolean`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10443,11 +13069,14 @@ pub struct RightBorderLineProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RightToLeftRun {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 20.1.5.11 rot (Rotation): the tag `a:rot`, schema type `CT_SphereCoords`.
+/// The `a:rot` element, Rotation (ECMA-376 Part 1, section 20.1.5.11). Its schema type is
+/// `CT_SphereCoords`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10456,13 +13085,18 @@ pub struct RightToLeftRun {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Rotation {
+    /// The attribute `lat`, when the element has it.
     pub lat: Option<PositiveFixedAngle>,
+    /// The attribute `lon`, when the element has it.
     pub lon: Option<PositiveFixedAngle>,
+    /// The attribute `rev`, when the element has it.
     pub rev: Option<PositiveFixedAngle>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.52 round (Round Line Join): the tag `a:round`, schema type `CT_LineJoinRound`.
+/// The `a:round` element, Round Line Join (ECMA-376 Part 1, section 20.1.8.52). Its schema type is
+/// `CT_LineJoinRound`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10471,10 +13105,12 @@ pub struct Rotation {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RoundLineJoin {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.3.26 sat (Saturation): the tag `a:sat`, schema type `CT_Percentage`.
+/// The `a:sat` element, Saturation (ECMA-376 Part 1, section 20.1.2.3.26). Its schema type is
+/// `CT_Percentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10483,11 +13119,14 @@ pub struct RoundLineJoin {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Saturation {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<Percentage>,
 }
 
-/// 20.1.2.3.27 `satMod` (Saturation Modulation): the tag `a:satMod`, schema type `CT_Percentage`.
+/// The `a:satMod` element, Saturation Modulation (ECMA-376 Part 1, section 20.1.2.3.27). Its schema
+/// type is `CT_Percentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10496,11 +13135,14 @@ pub struct Saturation {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SaturationModulation {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<Percentage>,
 }
 
-/// 20.1.2.3.28 `satOff` (Saturation Offset): the tag `a:satOff`, schema type `CT_Percentage`.
+/// The `a:satOff` element, Saturation Offset (ECMA-376 Part 1, section 20.1.2.3.28). Its schema
+/// type is `CT_Percentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10509,11 +13151,13 @@ pub struct SaturationModulation {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SaturationOffset {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<Percentage>,
 }
 
-/// The tag `a:scene3d`, schema type `CT_Scene3D`.
+/// The `a:scene3d` element. Its schema type is `CT_Scene3D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10525,16 +13169,22 @@ pub struct SaturationOffset {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Scene3d {
+    /// The child that is `BackdropPlane`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub backdrop_plane: Option<Box<BackdropPlane>>,
+    /// The child that is `Camera`, which the schema requires.
     pub camera: Box<Camera>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `LightRig`, which the schema requires.
     pub light_rig: Box<LightRig>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.3.29 `schemeClr` (Scheme Color): the tag `a:schemeClr`, schema type `CT_SchemeColor`.
+/// The `a:schemeClr` element, Scheme Color (ECMA-376 Part 1, section 20.1.2.3.29). Its schema type
+/// is `CT_SchemeColor`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10543,12 +13193,16 @@ pub struct Scene3d {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SchemeColor {
+    /// The children that are an item of `ColorTransformContent`, in order.
     pub content: Vec<ColorTransformContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<StSchemeColorVal>,
 }
 
-/// 20.1.2.3.31 shade (Shade): the tag `a:shade`, schema type `CT_PositiveFixedPercentage`.
+/// The `a:shade` element, Shade (ECMA-376 Part 1, section 20.1.2.3.31). Its schema type is
+/// `CT_PositiveFixedPercentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10557,11 +13211,14 @@ pub struct SchemeColor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Shade {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<PositiveFixedPercentage>,
 }
 
-/// 20.1.2.2.33 sp (Shape): the tag `a:sp`, schema type `CT_GvmlShape`.
+/// The `a:sp` element, Shape (ECMA-376 Part 1, section 20.1.2.2.33). Its schema type is
+/// `CT_GvmlShape`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10573,29 +13230,42 @@ pub struct Shade {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Shape {
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `NonVisualPropertiesForAShape`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_properties: Box<NonVisualPropertiesForAShape>,
+    /// The child that is `ShapeProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub properties: Box<ShapeProperties>,
+    /// The child that is `ShapeStyle`, when there is one.
     pub style: Option<Box<ShapeStyle>>,
+    /// The child that is `TextShape`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text: Option<Box<TextShape>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_AdjustHandleList`: local choice in `CT_AdjustHandleList`.
+/// One child element of a choice: local choice in `CT_AdjustHandleList`.
+///
+/// The schema types that hold it: `CT_AdjustHandleList`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ShapeAdjustHandlesContent {
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `a:ahPolar`, a `PolarAdjustHandle`.
     PolarAdjustHandle(PolarAdjustHandle),
+    /// The element `a:ahXY`, a `XYAdjustHandle`.
     XYAdjustHandle(XYAdjustHandle),
 }
 
-/// 21.1.2.1.4 `spAutoFit` (Shape `AutoFit`): the tag `a:spAutoFit`, schema type
-/// `CT_TextShapeAutofit`.
+/// The `a:spAutoFit` element, Shape `AutoFit` (ECMA-376 Part 1, section 21.1.2.1.4). Its schema
+/// type is `CT_TextShapeAutofit`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10604,10 +13274,12 @@ pub enum ShapeAdjustHandlesContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeAutoFit {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.9.9 cxn (Shape Connection Site): the tag `a:cxn`, schema type `CT_ConnectionSite`.
+/// The `a:cxn` element, Shape Connection Site (ECMA-376 Part 1, section 20.1.9.9). Its schema type
+/// is `CT_ConnectionSite`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10616,12 +13288,16 @@ pub struct ShapeAutoFit {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeConnectionSite {
+    /// The attribute `ang`, when the element has it.
     pub ang: Option<AdjustableAngleMethods>,
+    /// The child that is `ShapePositionCoordinate`, which the schema requires.
     pub shape_position_coordinate: Box<ShapePositionCoordinate>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.1.27 `spDef` (Shape Default): the tag `a:spDef`, schema type `CT_DefaultShapeDefinition`.
+/// The `a:spDef` element, Shape Default (ECMA-376 Part 1, section 20.1.4.1.27). Its schema type is
+/// `CT_DefaultShapeDefinition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10633,19 +13309,26 @@ pub struct ShapeConnectionSite {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeDefault {
+    /// The child that is `BodyProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub body_properties: Box<BodyProperties>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `ShapeProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub shape_properties: Box<ShapeProperties>,
+    /// The child that is `ShapeStyle`, when there is one.
     pub shape_style: Option<Box<ShapeStyle>>,
+    /// The child that is `TextListStyles`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_list_styles: Box<TextListStyles>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.9.11 gd (Shape Guide): the tag `a:gd`, schema type `CT_GeomGuide`.
+/// The `a:gd` element, Shape Guide (ECMA-376 Part 1, section 20.1.9.11). Its schema type is
+/// `CT_GeomGuide`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10654,12 +13337,16 @@ pub struct ShapeDefault {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeGuide {
+    /// The attribute `fmla`, when the element has it.
     pub fmla: Option<String>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.34 `spLocks` (Shape Locks): the tag `a:spLocks`, schema type `CT_ShapeLocking`.
+/// The `a:spLocks` element, Shape Locks (ECMA-376 Part 1, section 20.1.2.2.34). Its schema type is
+/// `CT_ShapeLocking`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10671,23 +13358,37 @@ pub struct ShapeGuide {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeLocks {
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `noAdjustHandles`, when the element has it.
     pub no_adjust_handles: Option<String>,
+    /// The attribute `noChangeArrowheads`, when the element has it.
     pub no_change_arrowheads: Option<String>,
+    /// The attribute `noChangeAspect`, when the element has it.
     pub no_change_aspect: Option<String>,
+    /// The attribute `noChangeShapeType`, when the element has it.
     pub no_change_shape_type: Option<String>,
+    /// The attribute `noEditPoints`, when the element has it.
     pub no_edit_points: Option<String>,
+    /// The attribute `noGrp`, when the element has it.
     pub no_grp: Option<String>,
+    /// The attribute `noMove`, when the element has it.
     pub no_move: Option<String>,
+    /// The attribute `noResize`, when the element has it.
     pub no_resize: Option<String>,
+    /// The attribute `noRot`, when the element has it.
     pub no_rot: Option<String>,
+    /// The attribute `noSelect`, when the element has it.
     pub no_select: Option<String>,
+    /// The attribute `noTextEdit`, when the element has it.
     pub no_text_edit: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.9.15 path (Shape Path): the tag `a:path`, schema type `CT_Path2D`.
+/// The `a:path` element, Shape Path (ECMA-376 Part 1, section 20.1.9.15). Its schema type is
+/// `CT_Path2D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10696,29 +13397,48 @@ pub struct ShapeLocks {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapePath {
+    /// The children that are an item of `ShapePathContent`, in order.
     pub content: Vec<ShapePathContent>,
+    /// The attribute `extrusionOk`, when the element has it.
     pub extrusion_ok: Option<String>,
+    /// The attribute `fill`, when the element has it.
     pub fill: Option<PathFillMode>,
+    /// The attribute `h`, when the element has it.
     pub h: Option<PositiveCoordinate>,
+    /// The attribute `stroke`, when the element has it.
     pub stroke: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w`, when the element has it.
     pub w: Option<PositiveCoordinate>,
 }
 
-/// One item of `CT_Path2D`: local choice in `CT_Path2D`.
+/// One child element of a choice: local choice in `CT_Path2D`.
+///
+/// The schema types that hold it: `CT_Path2D`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ShapePathContent {
+    /// The element `a:close`, a `CloseShapePath`.
     CloseShapePath(CloseShapePath),
+    /// The element `a:arcTo`, a `DrawArcTo`.
     DrawArcTo(DrawArcTo),
+    /// The element `a:cubicBezTo`, a `DrawCubicBezierCurveTo`.
     DrawCubicBezierCurveTo(DrawCubicBezierCurveTo),
+    /// The element `a:lnTo`, a `DrawLineTo`.
     DrawLineTo(DrawLineTo),
+    /// The element `a:quadBezTo`, a `DrawQuadraticBezierCurveTo`.
     DrawQuadraticBezierCurveTo(DrawQuadraticBezierCurveTo),
+    /// The element `a:moveTo`, a `MovePathTo`.
     MovePathTo(MovePathTo),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
 }
 
-/// 20.1.9.20 pt (Shape Path Point): the tag `a:pt`, schema type `CT_AdjPoint2D`.
+/// The `a:pt` element, Shape Path Point (ECMA-376 Part 1, section 20.1.9.20). Its schema type is
+/// `CT_AdjPoint2D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10727,12 +13447,16 @@ pub enum ShapePathContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapePathPoint {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `x`, when the element has it.
     pub x: Option<AdjustableCoordinateMethods>,
+    /// The attribute `y`, when the element has it.
     pub y: Option<AdjustableCoordinateMethods>,
 }
 
-/// 20.1.9.17 pos (Shape Position Coordinate): the tag `a:pos`, schema type `CT_AdjPoint2D`.
+/// The `a:pos` element, Shape Position Coordinate (ECMA-376 Part 1, section 20.1.9.17). Its schema
+/// type is `CT_AdjPoint2D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10741,12 +13465,16 @@ pub struct ShapePathPoint {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapePositionCoordinate {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `x`, when the element has it.
     pub x: Option<AdjustableCoordinateMethods>,
+    /// The attribute `y`, when the element has it.
     pub y: Option<AdjustableCoordinateMethods>,
 }
 
-/// 20.1.2.2.35 `spPr` (Shape Properties): the tag `a:spPr`, schema type `CT_ShapeProperties`.
+/// The `a:spPr` element, Shape Properties (ECMA-376 Part 1, section 20.1.2.2.35). Its schema type
+/// is `CT_ShapeProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10758,25 +13486,36 @@ pub struct ShapePositionCoordinate {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeProperties {
+    /// The child that is `Apply3DShapeProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub apply_3d: Option<Box<Apply3DShapeProperties>>,
+    /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<BlackAndWhiteMode>,
+    /// The child that is an item of `EffectPropertiesContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub effect_properties_content: Option<Box<EffectPropertiesContent>>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is an item of `FillPropertiesContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub fill_properties_content: Option<Box<FillPropertiesContent>>,
+    /// The child that is an item of `GeometryContent`, when there is one.
     pub geometry_content: Option<Box<GeometryContent>>,
+    /// The child that is `Outline`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub outline: Option<Box<Outline>>,
+    /// The child that is `Scene3d`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub scene3d: Option<Box<Scene3d>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `XfrmTransform2D`, when there is one.
     pub xfrm_transform2d: Option<Box<XfrmTransform2D>>,
 }
 
-/// 20.1.2.2.37 style (Shape Style): the tag `a:style`, schema type `CT_ShapeStyle`.
+/// The `a:style` element, Shape Style (ECMA-376 Part 1, section 20.1.2.2.37). Its schema type is
+/// `CT_ShapeStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10785,14 +13524,20 @@ pub struct ShapeProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeStyle {
+    /// The child that is `EffectReference`, which the schema requires.
     pub effect_reference: Box<EffectReference>,
+    /// The child that is `FillReference`, which the schema requires.
     pub fill_reference: Box<FillReference>,
+    /// The child that is `FontReference`, which the schema requires.
     pub font_reference: Box<FontReference>,
+    /// The child that is `LineReference`, which the schema requires.
     pub line_reference: Box<LineReference>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.40 `txBody` (Shape Text Body): the tag `a:txBody`, schema type `CT_TextBody`.
+/// The `a:txBody` element, Shape Text Body (ECMA-376 Part 1, section 20.1.2.2.40). Its schema type
+/// is `CT_TextBody`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10804,16 +13549,21 @@ pub struct ShapeStyle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeTextBody {
+    /// The child that is `BodyProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub properties: Box<BodyProperties>,
+    /// The child that is `TextListStyles`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_list_styles: Option<Box<TextListStyles>>,
+    /// The children that are `TextParagraphs`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_paragraphs: Vec<TextParagraphs>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.9.22 rect (Shape Text Rectangle): the tag `a:rect`, schema type `CT_GeomRect`.
+/// The `a:rect` element, Shape Text Rectangle (ECMA-376 Part 1, section 20.1.9.22). Its schema type
+/// is `CT_GeomRect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10822,14 +13572,20 @@ pub struct ShapeTextBody {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeTextRectangle {
+    /// The attribute `b`, when the element has it.
     pub b: Option<AdjustableCoordinateMethods>,
+    /// The attribute `l`, when the element has it.
     pub l: Option<AdjustableCoordinateMethods>,
+    /// The attribute `r`, when the element has it.
     pub r: Option<AdjustableCoordinateMethods>,
+    /// The attribute `t`, when the element has it.
     pub t: Option<AdjustableCoordinateMethods>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.53 `softEdge` (Soft Edge Effect): the tag `a:softEdge`, schema type `CT_SoftEdgesEffect`.
+/// The `a:softEdge` element, Soft Edge Effect (ECMA-376 Part 1, section 20.1.8.53). Its schema type
+/// is `CT_SoftEdgesEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10838,12 +13594,14 @@ pub struct ShapeTextRectangle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SoftEdgeEffect {
+    /// The attribute `rad`, when the element has it.
     pub rad: Option<PositiveCoordinate>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.18 `clrRepl` (Solid Color Replacement): the tag `a:clrRepl`, schema type
-/// `CT_ColorReplaceEffect`.
+/// The `a:clrRepl` element, Solid Color Replacement (ECMA-376 Part 1, section 20.1.8.18). Its
+/// schema type is `CT_ColorReplaceEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10852,11 +13610,13 @@ pub struct SoftEdgeEffect {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SolidColorReplacement {
+    /// The child that is an item of `ColorContent`, which the schema requires.
     pub content: Box<ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.54 `solidFill` (Solid Fill): the tag `a:solidFill`, schema type
+/// The `a:solidFill` element, Solid Fill (ECMA-376 Part 1, section 20.1.8.54). Its schema type is
 /// `CT_SolidColorFillProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
@@ -10866,11 +13626,14 @@ pub struct SolidColorReplacement {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SolidFill {
+    /// The child that is an item of `ColorContent`, when there is one.
     pub content: Option<Box<ColorContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.55 `srcRect` (Source Rectangle): the tag `a:srcRect`, schema type `CT_RelativeRect`.
+/// The `a:srcRect` element, Source Rectangle (ECMA-376 Part 1, section 20.1.8.55). Its schema type
+/// is `CT_RelativeRect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10879,14 +13642,20 @@ pub struct SolidFill {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SourceRectangle {
+    /// The attribute `b`, when the element has it.
     pub b: Option<Percentage>,
+    /// The attribute `l`, when the element has it.
     pub l: Option<Percentage>,
+    /// The attribute `r`, when the element has it.
     pub r: Option<Percentage>,
+    /// The attribute `t`, when the element has it.
     pub t: Option<Percentage>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.2.23 `seCell` (Southeast Cell): the tag `a:seCell`, schema type `CT_TablePartStyle`.
+/// The `a:seCell` element, Southeast Cell (ECMA-376 Part 1, section 20.1.4.2.23). Its schema type
+/// is `CT_TablePartStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10898,14 +13667,18 @@ pub struct SourceRectangle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SoutheastCell {
+    /// The child that is `TableCellStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_cell_style: Option<Box<TableCellStyle>>,
+    /// The child that is `TableCellTextStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_cell_text_style: Option<Box<TableCellTextStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.2.24 `swCell` (Southwest Cell): the tag `a:swCell`, schema type `CT_TablePartStyle`.
+/// The `a:swCell` element, Southwest Cell (ECMA-376 Part 1, section 20.1.4.2.24). Its schema type
+/// is `CT_TablePartStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10917,14 +13690,18 @@ pub struct SoutheastCell {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SouthwestCell {
+    /// The child that is `TableCellStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_cell_style: Option<Box<TableCellStyle>>,
+    /// The child that is `TableCellTextStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_cell_text_style: Option<Box<TableCellTextStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.2.9 `spcAft` (Space After): the tag `a:spcAft`, schema type `CT_TextSpacing`.
+/// The `a:spcAft` element, Space After (ECMA-376 Part 1, section 21.1.2.2.9). Its schema type is
+/// `CT_TextSpacing`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10933,11 +13710,14 @@ pub struct SouthwestCell {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SpaceAfter {
+    /// The child that is an item of `TextSpacingContent`, which the schema requires.
     pub content: Box<TextSpacingContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.2.10 `spcBef` (Space Before): the tag `a:spcBef`, schema type `CT_TextSpacing`.
+/// The `a:spcBef` element, Space Before (ECMA-376 Part 1, section 21.1.2.2.10). Its schema type is
+/// `CT_TextSpacing`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10946,11 +13726,14 @@ pub struct SpaceAfter {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SpaceBefore {
+    /// The child that is an item of `TextSpacingContent`, which the schema requires.
     pub content: Box<TextSpacingContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.2.11 `spcPct` (Spacing Percent): the tag `a:spcPct`, schema type `CT_TextSpacingPercent`.
+/// The `a:spcPct` element, Spacing Percent (ECMA-376 Part 1, section 21.1.2.2.11). Its schema type
+/// is `CT_TextSpacingPercent`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10959,11 +13742,14 @@ pub struct SpaceBefore {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SpacingPercent {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<StTextSpacingPercentOrPercentString>,
 }
 
-/// 21.1.2.2.12 `spcPts` (Spacing Points): the tag `a:spcPts`, schema type `CT_TextSpacingPoint`.
+/// The `a:spcPts` element, Spacing Points (ECMA-376 Part 1, section 21.1.2.2.12). Its schema type
+/// is `CT_TextSpacingPoint`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10972,11 +13758,14 @@ pub struct SpacingPercent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SpacingPoints {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<TextSpacingPoint>,
 }
 
-/// 21.1.2.4.6 `buFont` (Specified): the tag `a:buFont`, schema type `CT_TextFont`.
+/// The `a:buFont` element, Specified (ECMA-376 Part 1, section 21.1.2.4.6). Its schema type is
+/// `CT_TextFont`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -10985,14 +13774,23 @@ pub struct SpacingPoints {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Specified {
+    /// The attribute `charset`, when the element has it.
     pub charset: Option<String>,
+    /// The attribute `panose`, when the element has it.
     pub panose: Option<common_simple_types::Panose1Number>,
+    /// The attribute `pitchFamily`, when the element has it.
     pub pitch_family: Option<PitchFamily>,
+    /// The attribute `typeface`, when the element has it.
     pub typeface: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.17 `ST_Coordinate32` (Coordinate Point): the text the file carried.
+/// Coordinate Point, the simple type `ST_Coordinate32` (ECMA-376 Part 1, section 20.1.10.17), kept
+/// as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11006,11 +13804,17 @@ pub struct StCoordinate32(pub String);
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
 pub enum StCoordinate32Member {
+    /// A value of the member type `i64`.
     StCoordinate32Unqualified(i64),
+    /// A value of the member type `Measure`.
     UniversalMeasurement(Measure),
 }
 
-/// 20.1.10.18 `ST_Coordinate32Unqualified` (Coordinate Point): the text the file carried.
+/// Coordinate Point, the simple type `ST_Coordinate32Unqualified` (ECMA-376 Part 1, section
+/// 20.1.10.18), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11020,7 +13824,11 @@ pub enum StCoordinate32Member {
 #[non_exhaustive]
 pub struct StCoordinate32Unqualified(pub String);
 
-/// 20.1.10.19 `ST_CoordinateUnqualified` (Coordinate): the text the file carried.
+/// Coordinate, the simple type `ST_CoordinateUnqualified` (ECMA-376 Part 1, section 20.1.10.19),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11030,7 +13838,11 @@ pub struct StCoordinate32Unqualified(pub String);
 #[non_exhaustive]
 pub struct StCoordinateUnqualified(pub String);
 
-/// 17.2.2.7 `ST_FixedPercentageDecimal` (Fixed Percentage): the text the file carried.
+/// Fixed Percentage, the simple type `ST_FixedPercentageDecimal` (ECMA-376 Part 4, section
+/// 17.2.2.7), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11040,8 +13852,11 @@ pub struct StCoordinateUnqualified(pub String);
 #[non_exhaustive]
 pub struct StFixedPercentageDecimal(pub String);
 
-/// 17.2.2.8 `ST_PositiveFixedPercentageDecimal` (Positive Fixed Percentage): the text the file
-/// carried.
+/// Positive Fixed Percentage, the simple type `ST_PositiveFixedPercentageDecimal` (ECMA-376 Part 4,
+/// section 17.2.2.8), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11051,7 +13866,11 @@ pub struct StFixedPercentageDecimal(pub String);
 #[non_exhaustive]
 pub struct StPositiveFixedPercentageDecimal(pub String);
 
-/// 20.1.10.54 `ST_SchemeColorVal` (Scheme Color): the text the file carried.
+/// Scheme Color, the simple type `ST_SchemeColorVal` (ECMA-376 Part 1, section 20.1.10.54), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11060,30 +13879,52 @@ pub struct StPositiveFixedPercentageDecimal(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StSchemeColorVal(pub String);
-/// The members of `ST_SchemeColorVal`, in alphabetical order.
+/// The members of the enumeration `ST_SchemeColorVal`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum StSchemeColorValMember {
+    /// The member written `accent1`.
     Accent1,
+    /// The member written `accent2`.
     Accent2,
+    /// The member written `accent3`.
     Accent3,
+    /// The member written `accent4`.
     Accent4,
+    /// The member written `accent5`.
     Accent5,
+    /// The member written `accent6`.
     Accent6,
+    /// The member written `bg1`.
     Bg1,
+    /// The member written `bg2`.
     Bg2,
+    /// The member written `dk1`.
     Dk1,
+    /// The member written `dk2`.
     Dk2,
+    /// The member written `folHlink`.
     FolHlink,
+    /// The member written `hlink`.
     Hlink,
+    /// The member written `lt1`.
     Lt1,
+    /// The member written `lt2`.
     Lt2,
+    /// The member written `phClr`.
     PhClr,
+    /// The member written `tx1`.
     Tx1,
+    /// The member written `tx2`.
     Tx2,
 }
 
-/// 20.1.10.62 `ST_TextBulletSizePercent` (Bullet Size Percentage): the text the file carried.
+/// Bullet Size Percentage, the simple type `ST_TextBulletSizePercent` (ECMA-376 Part 1, section
+/// 20.1.10.62), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11093,7 +13934,11 @@ pub enum StSchemeColorValMember {
 #[non_exhaustive]
 pub struct StTextBulletSizePercent(pub String);
 
-/// 17.2.2.10 `ST_TextFontScalePercent` (Text Font Scale Percentage): the text the file carried.
+/// Text Font Scale Percentage, the simple type `ST_TextFontScalePercent` (ECMA-376 Part 4, section
+/// 17.2.2.10), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11103,8 +13948,11 @@ pub struct StTextBulletSizePercent(pub String);
 #[non_exhaustive]
 pub struct StTextFontScalePercent(pub String);
 
-/// 20.1.10.67 `ST_TextFontScalePercentOrPercentString` (Text Font Scale Percentage): the text the
-/// file carried.
+/// Text Font Scale Percentage, the simple type `ST_TextFontScalePercentOrPercentString` (ECMA-376
+/// Part 1, section 20.1.10.67), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11118,11 +13966,17 @@ pub struct StTextFontScalePercentOrPercentString(pub String);
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
 pub enum StTextFontScalePercentOrPercentStringMember {
+    /// A value of the member type `f64`.
     PercentageValueWithSign(f64),
+    /// A value of the member type `i64`.
     StTextFontScalePercent(i64),
 }
 
-/// 20.1.10.75 `ST_TextPointUnqualified` (Text Point): the text the file carried.
+/// Text Point, the simple type `ST_TextPointUnqualified` (ECMA-376 Part 1, section 20.1.10.75),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11132,8 +13986,11 @@ pub enum StTextFontScalePercentOrPercentStringMember {
 #[non_exhaustive]
 pub struct StTextPointUnqualified(pub String);
 
-/// 20.1.10.77 `ST_TextSpacingPercentOrPercentString` (Text Spacing Percent): the text the file
-/// carried.
+/// Text Spacing Percent, the simple type `ST_TextSpacingPercentOrPercentString` (ECMA-376 Part 1,
+/// section 20.1.10.77), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11147,11 +14004,17 @@ pub struct StTextSpacingPercentOrPercentString(pub String);
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
 pub enum StTextSpacingPercentOrPercentStringMember {
+    /// A value of the member type `f64`.
     PercentageValueWithSign(f64),
+    /// A value of the member type `i64`.
     TextSpacingPercent(i64),
 }
 
-/// 20.1.10.63 `ST_TextBulletStartAtNum` (Start Bullet At Number): the text the file carried.
+/// Start Bullet At Number, the simple type `ST_TextBulletStartAtNum` (ECMA-376 Part 1, section
+/// 20.1.10.63), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11161,7 +14024,8 @@ pub enum StTextSpacingPercentOrPercentStringMember {
 #[non_exhaustive]
 pub struct StartBulletAtNumber(pub String);
 
-/// 20.1.8.56 stretch (Stretch): the tag `a:stretch`, schema type `CT_StretchInfoProperties`.
+/// The `a:stretch` element, Stretch (ECMA-376 Part 1, section 20.1.8.56). Its schema type is
+/// `CT_StretchInfoProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11170,11 +14034,17 @@ pub struct StartBulletAtNumber(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Stretch {
+    /// The child that is `FillRectangle`, when there is one.
     pub fill_rectangle: Option<Box<FillRectangle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.57 `ST_StyleMatrixColumnIndex` (Style Matrix Column Index): the text the file carried.
+/// Style Matrix Column Index, the simple type `ST_StyleMatrixColumnIndex` (ECMA-376 Part 1, section
+/// 20.1.10.57), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11184,7 +14054,8 @@ pub struct Stretch {
 #[non_exhaustive]
 pub struct StyleMatrixColumnIndex(pub String);
 
-/// 21.1.2.3.10 sym (Symbol Font): the tag `a:sym`, schema type `CT_TextFont`.
+/// The `a:sym` element, Symbol Font (ECMA-376 Part 1, section 21.1.2.3.10). Its schema type is
+/// `CT_TextFont`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11193,14 +14064,20 @@ pub struct StyleMatrixColumnIndex(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SymbolFont {
+    /// The attribute `charset`, when the element has it.
     pub charset: Option<String>,
+    /// The attribute `panose`, when the element has it.
     pub panose: Option<common_simple_types::Panose1Number>,
+    /// The attribute `pitchFamily`, when the element has it.
     pub pitch_family: Option<PitchFamily>,
+    /// The attribute `typeface`, when the element has it.
     pub typeface: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.3.33 `sysClr` (System Color): the tag `a:sysClr`, schema type `CT_SystemColor`.
+/// The `a:sysClr` element, System Color (ECMA-376 Part 1, section 20.1.2.3.33). Its schema type is
+/// `CT_SystemColor`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11209,13 +14086,21 @@ pub struct SymbolFont {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SystemColor {
+    /// The children that are an item of `ColorTransformContent`, in order.
     pub content: Vec<ColorTransformContent>,
+    /// The attribute `lastClr`, when the element has it.
     pub last_clr: Option<common_simple_types::HexadecimalColorValue>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<SystemColorValue>,
 }
 
-/// 20.1.10.58 `ST_SystemColorVal` (System Color Value): the text the file carried.
+/// System Color Value, the simple type `ST_SystemColorVal` (ECMA-376 Part 1, section 20.1.10.58),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11224,43 +14109,75 @@ pub struct SystemColor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SystemColorValue(pub String);
-/// The members of `ST_SystemColorVal`, in alphabetical order.
+/// The members of the enumeration `ST_SystemColorVal`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum SystemColorValueMember {
+    /// The member written `activeBorder`.
     ActiveBorder,
+    /// The member written `activeCaption`.
     ActiveCaption,
+    /// The member written `appWorkspace`.
     AppWorkspace,
+    /// The member written `background`.
     Background,
+    /// The member written `btnFace`.
     BtnFace,
+    /// The member written `btnHighlight`.
     BtnHighlight,
+    /// The member written `btnShadow`.
     BtnShadow,
+    /// The member written `btnText`.
     BtnText,
+    /// The member written `captionText`.
     CaptionText,
+    /// The member written `gradientActiveCaption`.
     GradientActiveCaption,
+    /// The member written `gradientInactiveCaption`.
     GradientInactiveCaption,
+    /// The member written `grayText`.
     GrayText,
+    /// The member written `highlight`.
     Highlight,
+    /// The member written `highlightText`.
     HighlightText,
+    /// The member written `hotLight`.
     HotLight,
+    /// The member written `inactiveBorder`.
     InactiveBorder,
+    /// The member written `inactiveCaption`.
     InactiveCaption,
+    /// The member written `inactiveCaptionText`.
     InactiveCaptionText,
+    /// The member written `infoBk`.
     InfoBk,
+    /// The member written `infoText`.
     InfoText,
+    /// The member written `menu`.
     Menu,
+    /// The member written `menuBar`.
     MenuBar,
+    /// The member written `menuHighlight`.
     MenuHighlight,
+    /// The member written `menuText`.
     MenuText,
+    /// The member written `scrollBar`.
     ScrollBar,
+    /// The member written `3dDkShadow`.
     Value3dDkShadow,
+    /// The member written `3dLight`.
     Value3dLight,
+    /// The member written `window`.
     Window,
+    /// The member written `windowFrame`.
     WindowFrame,
+    /// The member written `windowText`.
     WindowText,
 }
 
-/// 21.1.2.2.14 `tabLst` (Tab List): the tag `a:tabLst`, schema type `CT_TextTabStopList`.
+/// The `a:tabLst` element, Tab List (ECMA-376 Part 1, section 21.1.2.2.14). Its schema type is
+/// `CT_TextTabStopList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11269,11 +14186,14 @@ pub enum SystemColorValueMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TabList {
+    /// The children that are `TabStop`, in order.
     pub tab_stop: Vec<TabStop>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.2.13 tab (Tab Stop): the tag `a:tab`, schema type `CT_TextTabStop`.
+/// The `a:tab` element, Tab Stop (ECMA-376 Part 1, section 21.1.2.2.13). Its schema type is
+/// `CT_TextTabStop`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11282,12 +14202,15 @@ pub struct TabList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TabStop {
+    /// The attribute `algn`, when the element has it.
     pub algn: Option<TextTabAlignmentTypes>,
+    /// The attribute `pos`, when the element has it.
     pub pos: Option<StCoordinate32>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.3.13 tbl (Table): the tag `a:tbl`, schema type `CT_Table`.
+/// The `a:tbl` element, Table (ECMA-376 Part 1, section 21.1.3.13). Its schema type is `CT_Table`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11299,17 +14222,21 @@ pub struct TabStop {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Table {
+    /// The child that is `TableGrid`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub grid: Box<TableGrid>,
+    /// The child that is `TableProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub properties: Option<Box<TableProperties>>,
+    /// The children that are `TableRow`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub row: Vec<TableRow>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.2.25 `tblBg` (Table Background): the tag `a:tblBg`, schema type
-/// `CT_TableBackgroundStyle`.
+/// The `a:tblBg` element, Table Background (ECMA-376 Part 1, section 20.1.4.2.25). Its schema type
+/// is `CT_TableBackgroundStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11321,23 +14248,34 @@ pub struct Table {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TableBackground {
+    /// The child that is an item of `TableBackgroundEffectContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub effect_content: Option<Box<TableBackgroundEffectContent>>,
+    /// The child that is an item of `ThemeableFillStyleContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub themeable_fill_style_content: Option<Box<ThemeableFillStyleContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_TableBackgroundStyle`: `EG_ThemeableEffectStyle`.
+/// One child element of a choice: `EG_ThemeableEffectStyle`.
+///
+/// The schema types that hold it: `CT_TableBackgroundStyle`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TableBackgroundEffectContent {
+    /// The element `a:effect`, a `Effect`.
     Effect(Effect),
+    /// The element `a:effectRef`, a `EffectReference`.
     EffectReference(EffectReference),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
 }
 
-/// 21.1.3.16 tc (Table Cell): the tag `a:tc`, schema type `CT_TableCell`.
+/// The `a:tc` element, Table Cell (ECMA-376 Part 1, section 21.1.3.16). Its schema type is
+/// `CT_TableCell`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11349,22 +14287,31 @@ pub enum TableBackgroundEffectContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TableCell {
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `gridSpan`, when the element has it.
     pub grid_span: Option<String>,
+    /// The attribute `hMerge`, when the element has it.
     pub h_merge: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The child that is `TableCellProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub properties: Option<Box<TableCellProperties>>,
+    /// The attribute `rowSpan`, when the element has it.
     pub row_span: Option<String>,
+    /// The child that is `ShapeTextBody`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub shape_text_body: Option<Box<ShapeTextBody>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `vMerge`, when the element has it.
     pub v_merge: Option<String>,
 }
 
-/// 20.1.4.2.28 `tcBdr` (Table Cell Borders): the tag `a:tcBdr`, schema type
-/// `CT_TableCellBorderStyle`.
+/// The `a:tcBdr` element, Table Cell Borders (ECMA-376 Part 1, section 20.1.4.2.28). Its schema
+/// type is `CT_TableCellBorderStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11376,29 +14323,39 @@ pub struct TableCell {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TableCellBorders {
+    /// The child that is `BottomBorder`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub bottom_border: Option<Box<BottomBorder>>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `InsideHorizontalBorder`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub inside_horizontal_border: Option<Box<InsideHorizontalBorder>>,
+    /// The child that is `InsideVerticalBorder`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub inside_vertical_border: Option<Box<InsideVerticalBorder>>,
+    /// The child that is `LeftBorder`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub left_border: Option<Box<LeftBorder>>,
+    /// The child that is `RightBorder`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub right_border: Option<Box<RightBorder>>,
+    /// The child that is `TopBorder`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub top_border: Option<Box<TopBorder>>,
+    /// The child that is `TopLeftToBottomRightBorder`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub top_left_to_bottom_right_border: Option<Box<TopLeftToBottomRightBorder>>,
+    /// The child that is `TopRightToBottomLeftBorder`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub top_right_to_bottom_left_border: Option<Box<TopRightToBottomLeftBorder>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.3.17 `tcPr` (Table Cell Properties): the tag `a:tcPr`, schema type
-/// `CT_TableCellProperties`.
+/// The `a:tcPr` element, Table Cell Properties (ECMA-376 Part 1, section 21.1.3.17). Its schema
+/// type is `CT_TableCellProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11410,40 +14367,59 @@ pub struct TableCellBorders {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TableCellProperties {
+    /// The attribute `anchor`, when the element has it.
     pub anchor: Option<TextAnchoringTypes>,
+    /// The attribute `anchorCtr`, when the element has it.
     pub anchor_ctr: Option<String>,
+    /// The child that is `BottomBorderLineProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub bottom_border_line_properties: Option<Box<BottomBorderLineProperties>>,
+    /// The child that is `BottomLeftToTopRightBorderLineProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub bottom_left_to_top_right_border_line_properties:
         Option<Box<BottomLeftToTopRightBorderLineProperties>>,
+    /// The child that is `Cell3D`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub cell_3_d: Option<Box<Cell3D>>,
+    /// The child that is an item of `FillPropertiesContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Option<Box<FillPropertiesContent>>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `HeaderCellsAssociatedWithTableCell`, when there is one.
     pub header_cells_associated_with_table_cell: Option<Box<HeaderCellsAssociatedWithTableCell>>,
+    /// The attribute `horzOverflow`, when the element has it.
     pub horz_overflow: Option<TextHorizontalOverflowTypes>,
+    /// The child that is `LeftBorderLineProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub left_border_line_properties: Option<Box<LeftBorderLineProperties>>,
+    /// The attribute `marB`, when the element has it.
     pub mar_b: Option<StCoordinate32>,
+    /// The attribute `marL`, when the element has it.
     pub mar_l: Option<StCoordinate32>,
+    /// The attribute `marR`, when the element has it.
     pub mar_r: Option<StCoordinate32>,
+    /// The attribute `marT`, when the element has it.
     pub mar_t: Option<StCoordinate32>,
+    /// The child that is `RightBorderLineProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub right_border_line_properties: Option<Box<RightBorderLineProperties>>,
+    /// The child that is `TopBorderLineProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub top_border_line_properties: Option<Box<TopBorderLineProperties>>,
+    /// The child that is `TopLeftToBottomRightBorderLineProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub top_left_to_bottom_right_border_line_properties:
         Option<Box<TopLeftToBottomRightBorderLineProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `vert`, when the element has it.
     pub vert: Option<VerticalTextTypes>,
 }
 
-/// 20.1.4.2.29 `tcStyle` (Table Cell Style): the tag `a:tcStyle`, schema type
-/// `CT_TableStyleCellStyle`.
+/// The `a:tcStyle` element, Table Cell Style (ECMA-376 Part 1, section 20.1.4.2.29). Its schema
+/// type is `CT_TableStyleCellStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11455,17 +14431,21 @@ pub struct TableCellProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TableCellStyle {
+    /// The child that is `Cell3D`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub cell_3_d: Option<Box<Cell3D>>,
+    /// The child that is an item of `ThemeableFillStyleContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Option<Box<ThemeableFillStyleContent>>,
+    /// The child that is `TableCellBorders`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_cell_borders: Option<Box<TableCellBorders>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.2.30 `tcTxStyle` (Table Cell Text Style): the tag `a:tcTxStyle`, schema type
-/// `CT_TableStyleTextStyle`.
+/// The `a:tcTxStyle` element, Table Cell Text Style (ECMA-376 Part 1, section 20.1.4.2.30). Its
+/// schema type is `CT_TableStyleTextStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11477,26 +14457,40 @@ pub struct TableCellStyle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TableCellTextStyle {
+    /// The attribute `b`, when the element has it.
     pub b: Option<OnOffStyleType>,
+    /// The child that is an item of `ColorContent`, when there is one.
     pub color_content: Option<Box<ColorContent>>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is an item of `TableCellTextStyleFontContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub font_content: Option<Box<TableCellTextStyleFontContent>>,
+    /// The attribute `i`, when the element has it.
     pub i: Option<OnOffStyleType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_TableStyleTextStyle`: `EG_ThemeableFontStyles`.
+/// One child element of a choice: `EG_ThemeableFontStyles`.
+///
+/// The schema types that hold it: `CT_TableStyleTextStyle`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TableCellTextStyleFontContent {
+    /// The element `a:font`, a `FontFontCollection`.
     FontFontCollection(FontFontCollection),
+    /// The element `a:fontRef`, a `FontReference`.
     FontReference(FontReference),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
 }
 
-/// 21.1.3.14 `tblGrid` (Table Grid): the tag `a:tblGrid`, schema type `CT_TableGrid`.
+/// The `a:tblGrid` element, Table Grid (ECMA-376 Part 1, section 21.1.3.14). Its schema type is
+/// `CT_TableGrid`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11508,12 +14502,15 @@ pub enum TableCellTextStyleFontContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TableGrid {
+    /// The children that are `TableGridColumn`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub column: Vec<TableGridColumn>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.3.2 `gridCol` (Table Grid Column): the tag `a:gridCol`, schema type `CT_TableCol`.
+/// The `a:gridCol` element, Table Grid Column (ECMA-376 Part 1, section 21.1.3.2). Its schema type
+/// is `CT_TableCol`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11525,13 +14522,17 @@ pub struct TableGrid {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TableGridColumn {
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w`, when the element has it.
     pub w: Option<Coordinate>,
 }
 
-/// 21.1.3.15 `tblPr` (Table Properties): the tag `a:tblPr`, schema type `CT_TableProperties`.
+/// The `a:tblPr` element, Table Properties (ECMA-376 Part 1, section 21.1.3.15). Its schema type is
+/// `CT_TableProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11543,34 +14544,54 @@ pub struct TableGridColumn {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TableProperties {
+    /// The attribute `bandCol`, when the element has it.
     pub band_col: Option<String>,
+    /// The attribute `bandRow`, when the element has it.
     pub band_row: Option<String>,
+    /// The child that is an item of `EffectPropertiesContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub effect_properties_content: Option<Box<EffectPropertiesContent>>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is an item of `FillPropertiesContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub fill_properties_content: Option<Box<FillPropertiesContent>>,
+    /// The attribute `firstCol`, when the element has it.
     pub first_col: Option<String>,
+    /// The attribute `firstRow`, when the element has it.
     pub first_row: Option<String>,
+    /// The attribute `lastCol`, when the element has it.
     pub last_col: Option<String>,
+    /// The attribute `lastRow`, when the element has it.
     pub last_row: Option<String>,
+    /// The attribute `rtl`, when the element has it.
     pub rtl: Option<String>,
+    /// The child that is an item of `TablePropertiesStyleContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub style_content: Option<Box<TablePropertiesStyleContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_TableProperties`: local choice in `CT_TableProperties`.
+/// One child element of a choice: local choice in `CT_TableProperties`.
+///
+/// The schema types that hold it: `CT_TableProperties`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TablePropertiesStyleContent {
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `a:tableStyle`, a `TableStyle`.
     TableStyle(TableStyle),
+    /// The element `a:tableStyleId`, a `TableStyleID`.
     TableStyleID(TableStyleID),
 }
 
-/// 21.1.3.18 tr (Table Row): the tag `a:tr`, schema type `CT_TableRow`.
+/// The `a:tr` element, Table Row (ECMA-376 Part 1, section 21.1.3.18). Its schema type is
+/// `CT_TableRow`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11582,15 +14603,20 @@ pub enum TablePropertiesStyleContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TableRow {
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `h`, when the element has it.
     pub h: Option<Coordinate>,
+    /// The children that are `TableCell`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_cell: Vec<TableCell>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.3.11 `tableStyle` (Table Style): the tag `a:tableStyle`, schema type `CT_TableStyle`.
+/// The `a:tableStyle` element, Table Style (ECMA-376 Part 1, section 21.1.3.11). Its schema type is
+/// `CT_TableStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11602,42 +14628,61 @@ pub struct TableRow {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TableStyle {
+    /// The child that is `Band1Horizontal`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub band_1_horizontal: Option<Box<Band1Horizontal>>,
+    /// The child that is `Band1Vertical`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub band_1_vertical: Option<Box<Band1Vertical>>,
+    /// The child that is `Band2Horizontal`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub band_2_horizontal: Option<Box<Band2Horizontal>>,
+    /// The child that is `Band2Vertical`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub band_2_vertical: Option<Box<Band2Vertical>>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `FirstColumn`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub first_column: Option<Box<FirstColumn>>,
+    /// The child that is `FirstRow`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub first_row: Option<Box<FirstRow>>,
+    /// The child that is `LastColumn`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub last_column: Option<Box<LastColumn>>,
+    /// The child that is `LastRow`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub last_row: Option<Box<LastRow>>,
+    /// The child that is `NortheastCell`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub northeast_cell: Option<Box<NortheastCell>>,
+    /// The child that is `NorthwestCell`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub northwest_cell: Option<Box<NorthwestCell>>,
+    /// The child that is `SoutheastCell`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub southeast_cell: Option<Box<SoutheastCell>>,
+    /// The child that is `SouthwestCell`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub southwest_cell: Option<Box<SouthwestCell>>,
+    /// The attribute `styleId`, when the element has it.
     pub style_id: Option<common_simple_types::Guid>,
+    /// The attribute `styleName`, when the element has it.
     pub style_name: Option<String>,
+    /// The child that is `TableBackground`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_background: Option<Box<TableBackground>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `WholeTable`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub whole_table: Option<Box<WholeTable>>,
 }
 
-/// 21.1.3.12 `tableStyleId` (Table Style ID): the tag `a:tableStyleId`, schema type `ST_Guid`.
+/// The `a:tableStyleId` element, Table Style ID (ECMA-376 Part 1, section 21.1.3.12). Its schema
+/// type is `ST_Guid`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11646,12 +14691,14 @@ pub struct TableStyle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TableStyleID {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: common_simple_types::Guid,
 }
 
-/// 20.1.4.2.27 `tblStyleLst` (Table Style List): the tag `a:tblStyleLst`, schema type
-/// `CT_TableStyleList`.
+/// The `a:tblStyleLst` element, Table Style List (ECMA-376 Part 1, section 20.1.4.2.27). Its schema
+/// type is `CT_TableStyleList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11663,13 +14710,17 @@ pub struct TableStyleID {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TableStyleList {
+    /// The attribute `def`, when the element has it.
     pub def: Option<common_simple_types::Guid>,
+    /// The children that are `TableStyleTblStyle`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_style_tbl_style: Vec<TableStyleTblStyle>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.4.2.26 `tblStyle` (Table Style): the tag `a:tblStyle`, schema type `CT_TableStyle`.
+/// The `a:tblStyle` element, Table Style (ECMA-376 Part 1, section 20.1.4.2.26). Its schema type is
+/// `CT_TableStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11681,43 +14732,61 @@ pub struct TableStyleList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TableStyleTblStyle {
+    /// The child that is `Band1Horizontal`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub band_1_horizontal: Option<Box<Band1Horizontal>>,
+    /// The child that is `Band1Vertical`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub band_1_vertical: Option<Box<Band1Vertical>>,
+    /// The child that is `Band2Horizontal`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub band_2_horizontal: Option<Box<Band2Horizontal>>,
+    /// The child that is `Band2Vertical`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub band_2_vertical: Option<Box<Band2Vertical>>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `FirstColumn`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub first_column: Option<Box<FirstColumn>>,
+    /// The child that is `FirstRow`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub first_row: Option<Box<FirstRow>>,
+    /// The child that is `LastColumn`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub last_column: Option<Box<LastColumn>>,
+    /// The child that is `LastRow`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub last_row: Option<Box<LastRow>>,
+    /// The child that is `NortheastCell`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub northeast_cell: Option<Box<NortheastCell>>,
+    /// The child that is `NorthwestCell`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub northwest_cell: Option<Box<NorthwestCell>>,
+    /// The child that is `SoutheastCell`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub southeast_cell: Option<Box<SoutheastCell>>,
+    /// The child that is `SouthwestCell`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub southwest_cell: Option<Box<SouthwestCell>>,
+    /// The attribute `styleId`, when the element has it.
     pub style_id: Option<common_simple_types::Guid>,
+    /// The attribute `styleName`, when the element has it.
     pub style_name: Option<String>,
+    /// The child that is `TableBackground`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub table_background: Option<Box<TableBackground>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `WholeTable`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub whole_table: Option<Box<WholeTable>>,
 }
 
-/// 20.1.8.57 `tailEnd` (Tail line end style): the tag `a:tailEnd`, schema type
-/// `CT_LineEndProperties`.
+/// The `a:tailEnd` element, Tail line end style (ECMA-376 Part 1, section 20.1.8.57). Its schema
+/// type is `CT_LineEndProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11726,22 +14795,37 @@ pub struct TableStyleTblStyle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TailLineEndStyle {
+    /// The attribute `len`, when the element has it.
     pub len: Option<LineEndLength>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<LineEndType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w`, when the element has it.
     pub w: Option<LineEndWidth>,
 }
 
-/// One item of `CT_TextBodyProperties`, `dgm:CT_TextProps`: `EG_Text3D`.
+/// One child element of a choice: `EG_Text3D`.
+///
+/// The schema types that hold it: `CT_TextBodyProperties`, `dgm:CT_TextProps`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum Text3DContent {
+    /// The element `a:sp3d`, a `Apply3DShapeProperties`.
     Apply3DShapeProperties(Apply3DShapeProperties),
+    /// The element `a:flatTx`, a `NoTextIn3DScene`.
     NoTextIn3DScene(NoTextIn3DScene),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
 }
 
-/// 20.1.10.59 `ST_TextAlignType` (Text Alignment Types): the text the file carried.
+/// Text Alignment Types, the simple type `ST_TextAlignType` (ECMA-376 Part 1, section 20.1.10.59),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11750,20 +14834,32 @@ pub enum Text3DContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextAlignmentTypes(pub String);
-/// The members of `ST_TextAlignType`, in alphabetical order.
+/// The members of the enumeration `ST_TextAlignType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextAlignmentTypesMember {
+    /// The member written `ctr`.
     Ctr,
+    /// The member written `dist`.
     Dist,
+    /// The member written `just`.
     Just,
+    /// The member written `justLow`.
     JustLow,
+    /// The member written `l`.
     L,
+    /// The member written `r`.
     R,
+    /// The member written `thaiDist`.
     ThaiDist,
 }
 
-/// 20.1.10.60 `ST_TextAnchoringType` (Text Anchoring Types): the text the file carried.
+/// Text Anchoring Types, the simple type `ST_TextAnchoringType` (ECMA-376 Part 1, section
+/// 20.1.10.60), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11772,18 +14868,28 @@ pub enum TextAlignmentTypesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextAnchoringTypes(pub String);
-/// The members of `ST_TextAnchoringType`, in alphabetical order.
+/// The members of the enumeration `ST_TextAnchoringType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextAnchoringTypesMember {
+    /// The member written `b`.
     B,
+    /// The member written `ctr`.
     Ctr,
+    /// The member written `dist`.
     Dist,
+    /// The member written `just`.
     Just,
+    /// The member written `t`.
     T,
 }
 
-/// 20.1.10.61 `ST_TextAutonumberScheme` (Text Auto-number Schemes): the text the file carried.
+/// Text Auto-number Schemes, the simple type `ST_TextAutonumberScheme` (ECMA-376 Part 1, section
+/// 20.1.10.61), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11792,103 +14898,188 @@ pub enum TextAnchoringTypesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextAutoNumberSchemes(pub String);
-/// The members of `ST_TextAutonumberScheme`, in alphabetical order.
+/// The members of the enumeration `ST_TextAutonumberScheme`, in alphabetical order. `as_str` gives
+/// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextAutoNumberSchemesMember {
+    /// The member written `alphaLcParenBoth`.
     AlphaLcParenBoth,
+    /// The member written `alphaLcParenR`.
     AlphaLcParenR,
+    /// The member written `alphaLcPeriod`.
     AlphaLcPeriod,
+    /// The member written `alphaUcParenBoth`.
     AlphaUcParenBoth,
+    /// The member written `alphaUcParenR`.
     AlphaUcParenR,
+    /// The member written `alphaUcPeriod`.
     AlphaUcPeriod,
+    /// The member written `arabic1Minus`.
     Arabic1Minus,
+    /// The member written `arabic2Minus`.
     Arabic2Minus,
+    /// The member written `arabicDbPeriod`.
     ArabicDbPeriod,
+    /// The member written `arabicDbPlain`.
     ArabicDbPlain,
+    /// The member written `arabicParenBoth`.
     ArabicParenBoth,
+    /// The member written `arabicParenR`.
     ArabicParenR,
+    /// The member written `arabicPeriod`.
     ArabicPeriod,
+    /// The member written `arabicPlain`.
     ArabicPlain,
+    /// The member written `circleNumDbPlain`.
     CircleNumDbPlain,
+    /// The member written `circleNumWdBlackPlain`.
     CircleNumWdBlackPlain,
+    /// The member written `circleNumWdWhitePlain`.
     CircleNumWdWhitePlain,
+    /// The member written `ea1ChsPeriod`.
     Ea1ChsPeriod,
+    /// The member written `ea1ChsPlain`.
     Ea1ChsPlain,
+    /// The member written `ea1ChtPeriod`.
     Ea1ChtPeriod,
+    /// The member written `ea1ChtPlain`.
     Ea1ChtPlain,
+    /// The member written `ea1JpnChsDbPeriod`.
     Ea1JpnChsDbPeriod,
+    /// The member written `ea1JpnKorPeriod`.
     Ea1JpnKorPeriod,
+    /// The member written `ea1JpnKorPlain`.
     Ea1JpnKorPlain,
+    /// The member written `hebrew2Minus`.
     Hebrew2Minus,
+    /// The member written `hindiAlpha1Period`.
     HindiAlpha1Period,
+    /// The member written `hindiAlphaPeriod`.
     HindiAlphaPeriod,
+    /// The member written `hindiNumParenR`.
     HindiNumParenR,
+    /// The member written `hindiNumPeriod`.
     HindiNumPeriod,
+    /// The member written `romanLcParenBoth`.
     RomanLcParenBoth,
+    /// The member written `romanLcParenR`.
     RomanLcParenR,
+    /// The member written `romanLcPeriod`.
     RomanLcPeriod,
+    /// The member written `romanUcParenBoth`.
     RomanUcParenBoth,
+    /// The member written `romanUcParenR`.
     RomanUcParenR,
+    /// The member written `romanUcPeriod`.
     RomanUcPeriod,
+    /// The member written `thaiAlphaParenBoth`.
     ThaiAlphaParenBoth,
+    /// The member written `thaiAlphaParenR`.
     ThaiAlphaParenR,
+    /// The member written `thaiAlphaPeriod`.
     ThaiAlphaPeriod,
+    /// The member written `thaiNumParenBoth`.
     ThaiNumParenBoth,
+    /// The member written `thaiNumParenR`.
     ThaiNumParenR,
+    /// The member written `thaiNumPeriod`.
     ThaiNumPeriod,
 }
 
-/// One item of `CT_TextBodyProperties`: `EG_TextAutofit`.
+/// One child element of a choice: `EG_TextAutofit`.
+///
+/// The schema types that hold it: `CT_TextBodyProperties`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextAutofitContent {
+    /// The element `a:noAutofit`, a `NoAutoFit`.
     NoAutoFit(NoAutoFit),
+    /// The element `a:normAutofit`, a `NormalAutoFit`.
     NormalAutoFit(NormalAutoFit),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `a:spAutoFit`, a `ShapeAutoFit`.
     ShapeAutoFit(ShapeAutoFit),
 }
 
-/// One item of `CT_TextParagraphProperties`: `EG_TextBulletColor`.
+/// One child element of a choice: `EG_TextBulletColor`.
+///
+/// The schema types that hold it: `CT_TextParagraphProperties`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextBulletColorContent {
+    /// The element `a:buClr`, a `ColorSpecified`.
     ColorSpecified(ColorSpecified),
+    /// The element `a:buClrTx`, a `FollowTextBuClrTx`.
     FollowTextBuClrTx(FollowTextBuClrTx),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
 }
 
-/// One item of `CT_TextParagraphProperties`, `dgm1611:CT_DiagramAutoBullet`: `EG_TextBullet`.
+/// One child element of a choice: `EG_TextBullet`.
+///
+/// The schema types that hold it: `CT_TextParagraphProperties`, `dgm1611:CT_DiagramAutoBullet`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextBulletContent {
+    /// The element `a:buAutoNum`, a `AutoNumberedBullet`.
     AutoNumberedBullet(AutoNumberedBullet),
+    /// The element `a:buChar`, a `CharacterBullet`.
     CharacterBullet(CharacterBullet),
+    /// The element `a:buNone`, a `NoBullet`.
     NoBullet(NoBullet),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `a:buBlip`, a `PictureBullet`.
     PictureBullet(PictureBullet),
 }
 
-/// One item of `CT_TextParagraphProperties`: `EG_TextBulletSize`.
+/// One child element of a choice: `EG_TextBulletSize`.
+///
+/// The schema types that hold it: `CT_TextParagraphProperties`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextBulletSizeContent {
+    /// The element `a:buSzTx`, a `BulletSizeFollowsText`.
     BulletSizeFollowsText(BulletSizeFollowsText),
+    /// The element `a:buSzPct`, a `BulletSizePercentage`.
     BulletSizePercentage(BulletSizePercentage),
+    /// The element `a:buSzPts`, a `BulletSizePoints`.
     BulletSizePoints(BulletSizePoints),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
 }
 
-/// One item of `CT_TextParagraphProperties`: `EG_TextBulletTypeface`.
+/// One child element of a choice: `EG_TextBulletTypeface`.
+///
+/// The schema types that hold it: `CT_TextParagraphProperties`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextBulletTypefaceContent {
+    /// The element `a:buFontTx`, a `FollowTextBuFontTx`.
     FollowTextBuFontTx(FollowTextBuFontTx),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `a:buFont`, a `Specified`.
     Specified(Specified),
 }
 
-/// 20.1.10.64 `ST_TextCapsType` (Text Cap Types): the text the file carried.
+/// Text Cap Types, the simple type `ST_TextCapsType` (ECMA-376 Part 1, section 20.1.10.64), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11897,16 +15088,24 @@ pub enum TextBulletTypefaceContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextCapTypes(pub String);
-/// The members of `ST_TextCapsType`, in alphabetical order.
+/// The members of the enumeration `ST_TextCapsType`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextCapTypesMember {
+    /// The member written `all`.
     All,
+    /// The member written `none`.
     None,
+    /// The member written `small`.
     Small,
 }
 
-/// 20.1.10.65 `ST_TextColumnCount` (Text Column Count): the text the file carried.
+/// Text Column Count, the simple type `ST_TextColumnCount` (ECMA-376 Part 1, section 20.1.10.65),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11916,7 +15115,8 @@ pub enum TextCapTypesMember {
 #[non_exhaustive]
 pub struct TextColumnCount(pub String);
 
-/// 20.1.4.1.28 `txDef` (Text Default): the tag `a:txDef`, schema type `CT_DefaultShapeDefinition`.
+/// The `a:txDef` element, Text Default (ECMA-376 Part 1, section 20.1.4.1.28). Its schema type is
+/// `CT_DefaultShapeDefinition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11928,19 +15128,26 @@ pub struct TextColumnCount(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextDefault {
+    /// The child that is `BodyProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub body_properties: Box<BodyProperties>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `ShapeProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub shape_properties: Box<ShapeProperties>,
+    /// The child that is `ShapeStyle`, when there is one.
     pub shape_style: Option<Box<ShapeStyle>>,
+    /// The child that is `TextListStyles`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_list_styles: Box<TextListStyles>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.2.4 fld (Text Field): the tag `a:fld`, schema type `CT_TextField`.
+/// The `a:fld` element, Text Field (ECMA-376 Part 1, section 21.1.2.2.4). Its schema type is
+/// `CT_TextField`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11952,17 +15159,27 @@ pub struct TextDefault {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextField {
+    /// The attribute `id`, when the element has it.
     pub id: Option<common_simple_types::Guid>,
+    /// The child that is `TextParagraphProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_paragraph_properties: Option<Box<TextParagraphProperties>>,
+    /// The child that is `TextRunProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_run_properties: Option<Box<TextRunProperties>>,
+    /// The child that is `TextString`, when there is one.
     pub text_string: Option<Box<TextString>>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.68 `ST_TextFontSize` (Text Font Size): the text the file carried.
+/// Text Font Size, the simple type `ST_TextFontSize` (ECMA-376 Part 1, section 20.1.10.68), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11972,8 +15189,11 @@ pub struct TextField {
 #[non_exhaustive]
 pub struct TextFontSize(pub String);
 
-/// 20.1.10.69 `ST_TextHorzOverflowType` (Text Horizontal Overflow Types): the text the file
-/// carried.
+/// Text Horizontal Overflow Types, the simple type `ST_TextHorzOverflowType` (ECMA-376 Part 1,
+/// section 20.1.10.69), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -11982,15 +15202,22 @@ pub struct TextFontSize(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextHorizontalOverflowTypes(pub String);
-/// The members of `ST_TextHorzOverflowType`, in alphabetical order.
+/// The members of the enumeration `ST_TextHorzOverflowType`, in alphabetical order. `as_str` gives
+/// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextHorizontalOverflowTypesMember {
+    /// The member written `clip`.
     Clip,
+    /// The member written `overflow`.
     Overflow,
 }
 
-/// 20.1.10.71 `ST_TextIndentLevelType` (Text Indent Level Type): the text the file carried.
+/// Text Indent Level Type, the simple type `ST_TextIndentLevelType` (ECMA-376 Part 1, section
+/// 20.1.10.71), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12000,7 +15227,11 @@ pub enum TextHorizontalOverflowTypesMember {
 #[non_exhaustive]
 pub struct TextIndentLevelType(pub String);
 
-/// 20.1.10.70 `ST_TextIndent` (Text Indentation): the text the file carried.
+/// Text Indentation, the simple type `ST_TextIndent` (ECMA-376 Part 1, section 20.1.10.70), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12010,7 +15241,8 @@ pub struct TextIndentLevelType(pub String);
 #[non_exhaustive]
 pub struct TextIndentation(pub String);
 
-/// 21.1.2.2.1 br (Text Line Break): the tag `a:br`, schema type `CT_TextLineBreak`.
+/// The `a:br` element, Text Line Break (ECMA-376 Part 1, section 21.1.2.2.1). Its schema type is
+/// `CT_TextLineBreak`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12022,12 +15254,15 @@ pub struct TextIndentation(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextLineBreak {
+    /// The child that is `TextRunProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_run_properties: Option<Box<TextRunProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.4.12 `lstStyle` (Text List Styles): the tag `a:lstStyle`, schema type `CT_TextListStyle`.
+/// The `a:lstStyle` element, Text List Styles (ECMA-376 Part 1, section 21.1.2.4.12). Its schema
+/// type is `CT_TextListStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12039,32 +15274,48 @@ pub struct TextLineBreak {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextListStyles {
+    /// The child that is `DefaultParagraphStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub default_paragraph_style: Option<Box<DefaultParagraphStyle>>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `ListLevel1TextStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_1_text_style: Option<Box<ListLevel1TextStyle>>,
+    /// The child that is `ListLevel2TextStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_2_text_style: Option<Box<ListLevel2TextStyle>>,
+    /// The child that is `ListLevel3TextStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_3_text_style: Option<Box<ListLevel3TextStyle>>,
+    /// The child that is `ListLevel4TextStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_4_text_style: Option<Box<ListLevel4TextStyle>>,
+    /// The child that is `ListLevel5TextStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_5_text_style: Option<Box<ListLevel5TextStyle>>,
+    /// The child that is `ListLevel6TextStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_6_text_style: Option<Box<ListLevel6TextStyle>>,
+    /// The child that is `ListLevel7TextStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_7_text_style: Option<Box<ListLevel7TextStyle>>,
+    /// The child that is `ListLevel8TextStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_8_text_style: Option<Box<ListLevel8TextStyle>>,
+    /// The child that is `ListLevel9TextStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub list_level_9_text_style: Option<Box<ListLevel9TextStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.72 `ST_TextMargin` (Text Margin): the text the file carried.
+/// Text Margin, the simple type `ST_TextMargin` (ECMA-376 Part 1, section 20.1.10.72), kept as the
+/// text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12074,7 +15325,11 @@ pub struct TextListStyles {
 #[non_exhaustive]
 pub struct TextMargin(pub String);
 
-/// 20.1.10.73 `ST_TextNonNegativePoint` (Text Non-Negative Point): the text the file carried.
+/// Text Non-Negative Point, the simple type `ST_TextNonNegativePoint` (ECMA-376 Part 1, section
+/// 20.1.10.73), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12084,8 +15339,8 @@ pub struct TextMargin(pub String);
 #[non_exhaustive]
 pub struct TextNonNegativePoint(pub String);
 
-/// 21.1.2.2.7 `pPr` (Text Paragraph Properties): the tag `a:pPr`, schema type
-/// `CT_TextParagraphProperties`.
+/// The `a:pPr` element, Text Paragraph Properties (ECMA-376 Part 1, section 21.1.2.2.7). Its schema
+/// type is `CT_TextParagraphProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12097,34 +15352,57 @@ pub struct TextNonNegativePoint(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextParagraphProperties {
+    /// The attribute `algn`, when the element has it.
     pub algn: Option<TextAlignmentTypes>,
+    /// The attribute `defTabSz`, when the element has it.
     pub def_tab_sz: Option<StCoordinate32>,
+    /// The child that is `DefaultTextRunProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub default_text_run_properties: Option<Box<DefaultTextRunProperties>>,
+    /// The attribute `eaLnBrk`, when the element has it.
     pub ea_ln_brk: Option<String>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `fontAlgn`, when the element has it.
     pub font_algn: Option<FontAlignmentTypes>,
+    /// The attribute `hangingPunct`, when the element has it.
     pub hanging_punct: Option<String>,
+    /// The attribute `indent`, when the element has it.
     pub indent: Option<TextIndentation>,
+    /// The attribute `latinLnBrk`, when the element has it.
     pub latin_ln_brk: Option<String>,
+    /// The child that is `LineSpacing`, when there is one.
     pub line_spacing: Option<Box<LineSpacing>>,
+    /// The attribute `lvl`, when the element has it.
     pub lvl: Option<TextIndentLevelType>,
+    /// The attribute `marL`, when the element has it.
     pub mar_l: Option<TextMargin>,
+    /// The attribute `marR`, when the element has it.
     pub mar_r: Option<TextMargin>,
+    /// The attribute `rtl`, when the element has it.
     pub rtl: Option<String>,
+    /// The child that is `SpaceAfter`, when there is one.
     pub space_after: Option<Box<SpaceAfter>>,
+    /// The child that is `SpaceBefore`, when there is one.
     pub space_before: Option<Box<SpaceBefore>>,
+    /// The child that is `TabList`, when there is one.
     pub tab_list: Option<Box<TabList>>,
+    /// The child that is an item of `TextBulletColorContent`, when there is one.
     pub text_bullet_color_content: Option<Box<TextBulletColorContent>>,
+    /// The child that is an item of `TextBulletContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_bullet_content: Option<Box<TextBulletContent>>,
+    /// The child that is an item of `TextBulletSizeContent`, when there is one.
     pub text_bullet_size_content: Option<Box<TextBulletSizeContent>>,
+    /// The child that is an item of `TextBulletTypefaceContent`, when there is one.
     pub text_bullet_typeface_content: Option<Box<TextBulletTypefaceContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.2.6 p (Text Paragraphs): the tag `a:p`, schema type `CT_TextParagraph`.
+/// The `a:p` element, Text Paragraphs (ECMA-376 Part 1, section 21.1.2.2.6). Its schema type is
+/// `CT_TextParagraph`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12136,27 +15414,44 @@ pub struct TextParagraphProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextParagraphs {
+    /// The children that are an item of `TextParagraphsContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<TextParagraphsContent>,
+    /// The child that is `EndParagraphRunProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub end_paragraph_run_properties: Option<Box<EndParagraphRunProperties>>,
+    /// The child that is `TextParagraphProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_paragraph_properties: Option<Box<TextParagraphProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_TextParagraph`: `EG_TextRun`.
+/// One child element of a choice: `EG_TextRun`.
+///
+/// The schema types that hold it: `CT_TextParagraph`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextParagraphsContent {
+    /// The element `a14:m`, a `M`.
     M(super::office_drawing_2010_main::M),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `a:fld`, a `TextField`.
     TextField(TextField),
+    /// The element `a:br`, a `TextLineBreak`.
     TextLineBreak(TextLineBreak),
+    /// The element `a:r`, a `TextRun`.
     TextRun(TextRun),
 }
 
-/// 20.1.10.74 `ST_TextPoint` (Text Point): the text the file carried.
+/// Text Point, the simple type `ST_TextPoint` (ECMA-376 Part 1, section 20.1.10.74), kept as the
+/// text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12170,11 +15465,14 @@ pub struct TextPoint(pub String);
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
 pub enum TextPointMember {
+    /// A value of the member type `i64`.
     StTextPointUnqualified(i64),
+    /// A value of the member type `Measure`.
     UniversalMeasurement(Measure),
 }
 
-/// 21.1.2.3.8 r (Text Run): the tag `a:r`, schema type `CT_RegularTextRun`.
+/// The `a:r` element, Text Run (ECMA-376 Part 1, section 21.1.2.3.8). Its schema type is
+/// `CT_RegularTextRun`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12186,14 +15484,17 @@ pub enum TextPointMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextRun {
+    /// The child that is `TextRunProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub properties: Option<Box<TextRunProperties>>,
+    /// The child that is `TextString`, which the schema requires.
     pub text_string: Box<TextString>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.3.9 `rPr` (Text Run Properties): the tag `a:rPr`, schema type
-/// `CT_TextCharacterProperties`.
+/// The `a:rPr` element, Text Run Properties (ECMA-376 Part 1, section 21.1.2.3.9). Its schema type
+/// is `CT_TextCharacterProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12205,51 +15506,86 @@ pub struct TextRun {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextRunProperties {
+    /// The attribute `altLang`, when the element has it.
     pub alt_lang: Option<String>,
+    /// The attribute `b`, when the element has it.
     pub b: Option<String>,
+    /// The attribute `baseline`, when the element has it.
     pub baseline: Option<Percentage>,
+    /// The attribute `bmk`, when the element has it.
     pub bmk: Option<String>,
+    /// The attribute `cap`, when the element has it.
     pub cap: Option<TextCapTypes>,
+    /// The child that is `ClickHyperlink`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub click_hyperlink: Option<Box<ClickHyperlink>>,
+    /// The child that is `ComplexScriptFont`, when there is one.
     pub complex_script_font: Option<Box<ComplexScriptFont>>,
+    /// The attribute `dirty`, when the element has it.
     pub dirty: Option<String>,
+    /// The child that is `EastAsianFont`, when there is one.
     pub east_asian_font: Option<Box<EastAsianFont>>,
+    /// The child that is an item of `EffectPropertiesContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub effect_properties_content: Option<Box<EffectPropertiesContent>>,
+    /// The attribute `err`, when the element has it.
     pub err: Option<String>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is an item of `FillPropertiesContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub fill_properties_content: Option<Box<FillPropertiesContent>>,
+    /// The child that is `HighlightColor`, when there is one.
     pub highlight_color: Option<Box<HighlightColor>>,
+    /// The attribute `i`, when the element has it.
     pub i: Option<String>,
+    /// The attribute `kern`, when the element has it.
     pub kern: Option<TextNonNegativePoint>,
+    /// The attribute `kumimoji`, when the element has it.
     pub kumimoji: Option<String>,
+    /// The attribute `lang`, when the element has it.
     pub lang: Option<String>,
+    /// The child that is `LatinFont`, when there is one.
     pub latin_font: Option<Box<LatinFont>>,
+    /// The child that is `MouseOverHyperlink`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub mouse_over_hyperlink: Option<Box<MouseOverHyperlink>>,
+    /// The attribute `noProof`, when the element has it.
     pub no_proof: Option<String>,
+    /// The attribute `normalizeH`, when the element has it.
     pub normalize_h: Option<String>,
+    /// The child that is `Outline`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub outline: Option<Box<Outline>>,
+    /// The child that is `RightToLeftRun`, when there is one.
     pub right_to_left_run: Option<Box<RightToLeftRun>>,
+    /// The attribute `smtClean`, when the element has it.
     pub smt_clean: Option<String>,
+    /// The attribute `smtId`, when the element has it.
     pub smt_id: Option<String>,
+    /// The attribute `spc`, when the element has it.
     pub spc: Option<TextPoint>,
+    /// The attribute `strike`, when the element has it.
     pub strike: Option<TextStrikeType>,
+    /// The child that is `SymbolFont`, when there is one.
     pub symbol_font: Option<Box<SymbolFont>>,
+    /// The attribute `sz`, when the element has it.
     pub sz: Option<TextFontSize>,
+    /// The child that is an item of `TextUnderlineFillContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_underline_fill_content: Option<Box<TextUnderlineFillContent>>,
+    /// The child that is an item of `TextUnderlineLineContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_underline_line_content: Option<Box<TextUnderlineLineContent>>,
+    /// The attribute `u`, when the element has it.
     pub u: Option<TextUnderlineTypes>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.41 `txSp` (Text Shape): the tag `a:txSp`, schema type `CT_GvmlTextShape`.
+/// The `a:txSp` element, Text Shape (ECMA-376 Part 1, section 20.1.2.2.41). Its schema type is
+/// `CT_GvmlTextShape`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12261,33 +15597,55 @@ pub struct TextRunProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextShape {
+    /// The child that is an item of `TextShapeContent`, which the schema requires.
     pub content: Box<TextShapeContent>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `ShapeTextBody`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_body: Box<ShapeTextBody>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_GvmlTextShape`: local choice in `CT_GvmlTextShape`.
+/// One child element of a choice: local choice in `CT_GvmlTextShape`.
+///
+/// The schema types that hold it: `CT_GvmlTextShape`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextShapeContent {
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `a:useSpRect`, a `UseShapeTextRectangle`.
     UseShapeTextRectangle(UseShapeTextRectangle),
+    /// The element `a:xfrm`, a `XfrmTransform2D`.
     XfrmTransform2D(XfrmTransform2D),
 }
 
-/// One item of `CT_TextSpacing`: local choice in `CT_TextSpacing`.
+/// One child element of a choice: local choice in `CT_TextSpacing`.
+///
+/// The schema types that hold it: `CT_TextSpacing`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextSpacingContent {
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `a:spcPct`, a `SpacingPercent`.
     SpacingPercent(SpacingPercent),
+    /// The element `a:spcPts`, a `SpacingPoints`.
     SpacingPoints(SpacingPoints),
 }
 
-/// 17.2.2.11 `ST_TextSpacingPercent` (Text Spacing Percent): the text the file carried.
+/// Text Spacing Percent, the simple type `ST_TextSpacingPercent` (ECMA-376 Part 4, section
+/// 17.2.2.11), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12297,7 +15655,11 @@ pub enum TextSpacingContent {
 #[non_exhaustive]
 pub struct TextSpacingPercent(pub String);
 
-/// 20.1.10.78 `ST_TextSpacingPoint` (Text Spacing Point): the text the file carried.
+/// Text Spacing Point, the simple type `ST_TextSpacingPoint` (ECMA-376 Part 1, section 20.1.10.78),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12307,7 +15669,11 @@ pub struct TextSpacingPercent(pub String);
 #[non_exhaustive]
 pub struct TextSpacingPoint(pub String);
 
-/// 20.1.10.79 `ST_TextStrikeType` (Text Strike Type): the text the file carried.
+/// Text Strike Type, the simple type `ST_TextStrikeType` (ECMA-376 Part 1, section 20.1.10.79),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12316,16 +15682,21 @@ pub struct TextSpacingPoint(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextStrikeType(pub String);
-/// The members of `ST_TextStrikeType`, in alphabetical order.
+/// The members of the enumeration `ST_TextStrikeType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextStrikeTypeMember {
+    /// The member written `dblStrike`.
     DblStrike,
+    /// The member written `noStrike`.
     NoStrike,
+    /// The member written `sngStrike`.
     SngStrike,
 }
 
-/// 21.1.2.3.11 t (Text String): the tag `a:t`, schema type `string`.
+/// The `a:t` element, Text String (ECMA-376 Part 1, section 21.1.2.3.11). Its schema type is
+/// `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12334,11 +15705,17 @@ pub enum TextStrikeTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextString {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 20.1.10.80 `ST_TextTabAlignType` (Text Tab Alignment Types): the text the file carried.
+/// Text Tab Alignment Types, the simple type `ST_TextTabAlignType` (ECMA-376 Part 1, section
+/// 20.1.10.80), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12347,35 +15724,58 @@ pub struct TextString {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextTabAlignmentTypes(pub String);
-/// The members of `ST_TextTabAlignType`, in alphabetical order.
+/// The members of the enumeration `ST_TextTabAlignType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextTabAlignmentTypesMember {
+    /// The member written `ctr`.
     Ctr,
+    /// The member written `dec`.
     Dec,
+    /// The member written `l`.
     L,
+    /// The member written `r`.
     R,
 }
 
-/// One item of `CT_TextCharacterProperties`: `EG_TextUnderlineFill`.
+/// One child element of a choice: `EG_TextUnderlineFill`.
+///
+/// The schema types that hold it: `CT_TextCharacterProperties`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextUnderlineFillContent {
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `a:uFill`, a `UnderlineFill`.
     UnderlineFill(UnderlineFill),
+    /// The element `a:uFillTx`, a `UnderlineFillPropertiesFollowText`.
     UnderlineFillPropertiesFollowText(UnderlineFillPropertiesFollowText),
 }
 
-/// One item of `CT_TextCharacterProperties`: `EG_TextUnderlineLine`.
+/// One child element of a choice: `EG_TextUnderlineLine`.
+///
+/// The schema types that hold it: `CT_TextCharacterProperties`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextUnderlineLineContent {
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `a:uLnTx`, a `UnderlineFollowsText`.
     UnderlineFollowsText(UnderlineFollowsText),
+    /// The element `a:uLn`, a `UnderlineStroke`.
     UnderlineStroke(UnderlineStroke),
 }
 
-/// 20.1.10.82 `ST_TextUnderlineType` (Text Underline Types): the text the file carried.
+/// Text Underline Types, the simple type `ST_TextUnderlineType` (ECMA-376 Part 1, section
+/// 20.1.10.82), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12384,31 +15784,54 @@ pub enum TextUnderlineLineContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextUnderlineTypes(pub String);
-/// The members of `ST_TextUnderlineType`, in alphabetical order.
+/// The members of the enumeration `ST_TextUnderlineType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextUnderlineTypesMember {
+    /// The member written `dash`.
     Dash,
+    /// The member written `dashHeavy`.
     DashHeavy,
+    /// The member written `dashLong`.
     DashLong,
+    /// The member written `dashLongHeavy`.
     DashLongHeavy,
+    /// The member written `dbl`.
     Dbl,
+    /// The member written `dotDash`.
     DotDash,
+    /// The member written `dotDashHeavy`.
     DotDashHeavy,
+    /// The member written `dotDotDash`.
     DotDotDash,
+    /// The member written `dotDotDashHeavy`.
     DotDotDashHeavy,
+    /// The member written `dotted`.
     Dotted,
+    /// The member written `dottedHeavy`.
     DottedHeavy,
+    /// The member written `heavy`.
     Heavy,
+    /// The member written `none`.
     None,
+    /// The member written `sng`.
     Sng,
+    /// The member written `wavy`.
     Wavy,
+    /// The member written `wavyDbl`.
     WavyDbl,
+    /// The member written `wavyHeavy`.
     WavyHeavy,
+    /// The member written `words`.
     Words,
 }
 
-/// 20.1.10.84 `ST_TextVertOverflowType` (Text Vertical Overflow): the text the file carried.
+/// Text Vertical Overflow, the simple type `ST_TextVertOverflowType` (ECMA-376 Part 1, section
+/// 20.1.10.84), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12417,16 +15840,24 @@ pub enum TextUnderlineTypesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextVerticalOverflow(pub String);
-/// The members of `ST_TextVertOverflowType`, in alphabetical order.
+/// The members of the enumeration `ST_TextVertOverflowType`, in alphabetical order. `as_str` gives
+/// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextVerticalOverflowMember {
+    /// The member written `clip`.
     Clip,
+    /// The member written `ellipsis`.
     Ellipsis,
+    /// The member written `overflow`.
     Overflow,
 }
 
-/// 20.1.10.85 `ST_TextWrappingType` (Text Wrapping Types): the text the file carried.
+/// Text Wrapping Types, the simple type `ST_TextWrappingType` (ECMA-376 Part 1, section
+/// 20.1.10.85), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12435,15 +15866,19 @@ pub enum TextVerticalOverflowMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextWrappingTypes(pub String);
-/// The members of `ST_TextWrappingType`, in alphabetical order.
+/// The members of the enumeration `ST_TextWrappingType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextWrappingTypesMember {
+    /// The member written `none`.
     None,
+    /// The member written `square`.
     Square,
 }
 
-/// 20.1.6.9 theme (Theme): the tag `a:theme`, schema type `CT_OfficeStyleSheet`.
+/// The `a:theme` element, Theme (ECMA-376 Part 1, section 20.1.6.9). Its schema type is
+/// `CT_OfficeStyleSheet`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12455,21 +15890,33 @@ pub enum TextWrappingTypesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Theme {
+    /// The child that is `CustomColorList`, when there is one.
     pub custom_color_list: Option<Box<CustomColorList>>,
+    /// The child that is `ThemeElements`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub elements: Box<ThemeElements>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `ExtraColorSchemeList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extra_color_scheme_list: Option<Box<ExtraColorSchemeList>>,
+    /// The attribute `thm15:id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The child that is `ObjectDefaults`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub object_defaults: Option<Box<ObjectDefaults>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.14 `ST_ColorSchemeIndex` (Theme Color Reference): the text the file carried.
+/// Theme Color Reference, the simple type `ST_ColorSchemeIndex` (ECMA-376 Part 1, section
+/// 20.1.10.14), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12478,26 +15925,39 @@ pub struct Theme {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ThemeColorReference(pub String);
-/// The members of `ST_ColorSchemeIndex`, in alphabetical order.
+/// The members of the enumeration `ST_ColorSchemeIndex`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ThemeColorReferenceMember {
+    /// The member written `accent1`.
     Accent1,
+    /// The member written `accent2`.
     Accent2,
+    /// The member written `accent3`.
     Accent3,
+    /// The member written `accent4`.
     Accent4,
+    /// The member written `accent5`.
     Accent5,
+    /// The member written `accent6`.
     Accent6,
+    /// The member written `dk1`.
     Dk1,
+    /// The member written `dk2`.
     Dk2,
+    /// The member written `folHlink`.
     FolHlink,
+    /// The member written `hlink`.
     Hlink,
+    /// The member written `lt1`.
     Lt1,
+    /// The member written `lt2`.
     Lt2,
 }
 
-/// 20.1.6.10 `themeElements` (Theme Elements): the tag `a:themeElements`, schema type
-/// `CT_BaseStyles`.
+/// The `a:themeElements` element, Theme Elements (ECMA-376 Part 1, section 20.1.6.10). Its schema
+/// type is `CT_BaseStyles`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12509,19 +15969,24 @@ pub enum ThemeColorReferenceMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ThemeElements {
+    /// The child that is `ColorScheme`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub color_scheme: Box<ColorScheme>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is `FontScheme`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub font_scheme: Box<FontScheme>,
+    /// The child that is `FormatScheme`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub format_scheme: Box<FormatScheme>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.6.11 `themeManager` (Theme Manager): the tag `a:themeManager`, schema type
-/// `CT_EmptyElement`.
+/// The `a:themeManager` element, Theme Manager (ECMA-376 Part 1, section 20.1.6.11). Its schema
+/// type is `CT_EmptyElement`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12530,11 +15995,12 @@ pub struct ThemeElements {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ThemeManager {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.6.12 `themeOverride` (Theme Override): the tag `a:themeOverride`, schema type
-/// `CT_BaseStylesOverride`.
+/// The `a:themeOverride` element, Theme Override (ECMA-376 Part 1, section 20.1.6.12). Its schema
+/// type is `CT_BaseStylesOverride`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12546,34 +16012,53 @@ pub struct ThemeManager {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ThemeOverride {
+    /// The child that is `ColorScheme`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub color_scheme: Option<Box<ColorScheme>>,
+    /// The child that is `FontScheme`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub font_scheme: Option<Box<FontScheme>>,
+    /// The child that is `FormatScheme`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub format_scheme: Option<Box<FormatScheme>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_TableBackgroundStyle`, `CT_TableStyleCellStyle`: `EG_ThemeableFillStyle`.
+/// One child element of a choice: `EG_ThemeableFillStyle`.
+///
+/// The schema types that hold it: `CT_TableBackgroundStyle`, `CT_TableStyleCellStyle`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ThemeableFillStyleContent {
+    /// The element `a:fill`, a `Fill`.
     Fill(Fill),
+    /// The element `a:fillRef`, a `FillReference`.
     FillReference(FillReference),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
 }
 
-/// One item of `CT_ThemeableLineStyle`: local choice in `CT_ThemeableLineStyle`.
+/// One child element of a choice: local choice in `CT_ThemeableLineStyle`.
+///
+/// The schema types that hold it: `CT_ThemeableLineStyle`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ThemeableLineStyleContent {
+    /// The element `a:lnRef`, a `LineReference`.
     LineReference(LineReference),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `a:ln`, a `Outline`.
     Outline(Outline),
 }
 
-/// 20.1.8.58 tile (Tile): the tag `a:tile`, schema type `CT_TileInfoProperties`.
+/// The `a:tile` element, Tile (ECMA-376 Part 1, section 20.1.8.58). Its schema type is
+/// `CT_TileInfoProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12582,16 +16067,27 @@ pub enum ThemeableLineStyleContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Tile {
+    /// The attribute `algn`, when the element has it.
     pub algn: Option<RectangleAlignments>,
+    /// The attribute `flip`, when the element has it.
     pub flip: Option<TileFlipMode>,
+    /// The attribute `sx`, when the element has it.
     pub sx: Option<Percentage>,
+    /// The attribute `sy`, when the element has it.
     pub sy: Option<Percentage>,
+    /// The attribute `tx`, when the element has it.
     pub tx: Option<Coordinate>,
+    /// The attribute `ty`, when the element has it.
     pub ty: Option<Coordinate>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.86 `ST_TileFlipMode` (Tile Flip Mode): the text the file carried.
+/// Tile Flip Mode, the simple type `ST_TileFlipMode` (ECMA-376 Part 1, section 20.1.10.86), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12600,17 +16096,23 @@ pub struct Tile {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TileFlipMode(pub String);
-/// The members of `ST_TileFlipMode`, in alphabetical order.
+/// The members of the enumeration `ST_TileFlipMode`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TileFlipModeMember {
+    /// The member written `none`.
     None,
+    /// The member written `x`.
     X,
+    /// The member written `xy`.
     Xy,
+    /// The member written `y`.
     Y,
 }
 
-/// 20.1.8.59 `tileRect` (Tile Rectangle): the tag `a:tileRect`, schema type `CT_RelativeRect`.
+/// The `a:tileRect` element, Tile Rectangle (ECMA-376 Part 1, section 20.1.8.59). Its schema type
+/// is `CT_RelativeRect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12619,14 +16121,20 @@ pub enum TileFlipModeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TileRectangle {
+    /// The attribute `b`, when the element has it.
     pub b: Option<Percentage>,
+    /// The attribute `l`, when the element has it.
     pub l: Option<Percentage>,
+    /// The attribute `r`, when the element has it.
     pub r: Option<Percentage>,
+    /// The attribute `t`, when the element has it.
     pub t: Option<Percentage>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.3.34 tint (Tint): the tag `a:tint`, schema type `CT_PositiveFixedPercentage`.
+/// The `a:tint` element, Tint (ECMA-376 Part 1, section 20.1.2.3.34). Its schema type is
+/// `CT_PositiveFixedPercentage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12635,11 +16143,14 @@ pub struct TileRectangle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Tint {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<PositiveFixedPercentage>,
 }
 
-/// 20.1.8.60 tint (Tint Effect): the tag `a:tint`, schema type `CT_TintEffect`.
+/// The `a:tint` element, Tint Effect (ECMA-376 Part 1, section 20.1.8.60). Its schema type is
+/// `CT_TintEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12648,12 +16159,16 @@ pub struct Tint {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TintEffect {
+    /// The attribute `amt`, when the element has it.
     pub amt: Option<FixedPercentage>,
+    /// The attribute `hue`, when the element has it.
     pub hue: Option<PositiveFixedAngle>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.5.4 `bevelT` (Top Bevel): the tag `a:bevelT`, schema type `CT_Bevel`.
+/// The `a:bevelT` element, Top Bevel (ECMA-376 Part 1, section 20.1.5.4). Its schema type is
+/// `CT_Bevel`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12662,13 +16177,18 @@ pub struct TintEffect {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TopBevel {
+    /// The attribute `h`, when the element has it.
     pub h: Option<PositiveCoordinate>,
+    /// The attribute `prst`, when the element has it.
     pub prst: Option<BevelPresets>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w`, when the element has it.
     pub w: Option<PositiveCoordinate>,
 }
 
-/// 20.1.4.2.32 top (Top Border): the tag `a:top`, schema type `CT_ThemeableLineStyle`.
+/// The `a:top` element, Top Border (ECMA-376 Part 1, section 20.1.4.2.32). Its schema type is
+/// `CT_ThemeableLineStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12680,12 +16200,15 @@ pub struct TopBevel {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TopBorder {
+    /// The child that is an item of `ThemeableLineStyleContent`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Box<ThemeableLineStyleContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.3.9 `lnT` (Top Border Line Properties): the tag `a:lnT`, schema type `CT_LineProperties`.
+/// The `a:lnT` element, Top Border Line Properties (ECMA-376 Part 1, section 21.1.3.9). Its schema
+/// type is `CT_LineProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12697,22 +16220,33 @@ pub struct TopBorder {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TopBorderLineProperties {
+    /// The attribute `algn`, when the element has it.
     pub algn: Option<AlignmentType>,
+    /// The attribute `cap`, when the element has it.
     pub cap: Option<EndLineCap>,
+    /// The attribute `cmpd`, when the element has it.
     pub cmpd: Option<CompoundLineType>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is an item of `LineDashContent`, when there is one.
     pub line_dash_content: Option<Box<LineDashContent>>,
+    /// The child that is an item of `LineFillContent`, when there is one.
     pub line_fill_content: Option<Box<LineFillContent>>,
+    /// The child that is `LineHeadEndStyle`, when there is one.
     pub line_head_end_style: Option<Box<LineHeadEndStyle>>,
+    /// The child that is an item of `LineJoinContent`, when there is one.
     pub line_join_content: Option<Box<LineJoinContent>>,
+    /// The child that is `TailLineEndStyle`, when there is one.
     pub tail_line_end_style: Option<Box<TailLineEndStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w`, when the element has it.
     pub w: Option<LineWidth>,
 }
 
-/// 20.1.4.2.31 tl2br (Top Left to Bottom Right Border): the tag `a:tl2br`, schema type
-/// `CT_ThemeableLineStyle`.
+/// The `a:tl2br` element, Top Left to Bottom Right Border (ECMA-376 Part 1, section 20.1.4.2.31).
+/// Its schema type is `CT_ThemeableLineStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12724,13 +16258,15 @@ pub struct TopBorderLineProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TopLeftToBottomRightBorder {
+    /// The child that is an item of `ThemeableLineStyleContent`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Box<ThemeableLineStyleContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.3.10 `lnTlToBr` (Top-Left to Bottom-Right Border Line Properties): the tag `a:lnTlToBr`,
-/// schema type `CT_LineProperties`.
+/// The `a:lnTlToBr` element, Top-Left to Bottom-Right Border Line Properties (ECMA-376 Part 1,
+/// section 21.1.3.10). Its schema type is `CT_LineProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12742,22 +16278,33 @@ pub struct TopLeftToBottomRightBorder {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TopLeftToBottomRightBorderLineProperties {
+    /// The attribute `algn`, when the element has it.
     pub algn: Option<AlignmentType>,
+    /// The attribute `cap`, when the element has it.
     pub cap: Option<EndLineCap>,
+    /// The attribute `cmpd`, when the element has it.
     pub cmpd: Option<CompoundLineType>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is an item of `LineDashContent`, when there is one.
     pub line_dash_content: Option<Box<LineDashContent>>,
+    /// The child that is an item of `LineFillContent`, when there is one.
     pub line_fill_content: Option<Box<LineFillContent>>,
+    /// The child that is `LineHeadEndStyle`, when there is one.
     pub line_head_end_style: Option<Box<LineHeadEndStyle>>,
+    /// The child that is an item of `LineJoinContent`, when there is one.
     pub line_join_content: Option<Box<LineJoinContent>>,
+    /// The child that is `TailLineEndStyle`, when there is one.
     pub tail_line_end_style: Option<Box<TailLineEndStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w`, when the element has it.
     pub w: Option<LineWidth>,
 }
 
-/// 20.1.4.2.33 tr2bl (Top Right to Bottom Left Border): the tag `a:tr2bl`, schema type
-/// `CT_ThemeableLineStyle`.
+/// The `a:tr2bl` element, Top Right to Bottom Left Border (ECMA-376 Part 1, section 20.1.4.2.33).
+/// Its schema type is `CT_ThemeableLineStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12769,12 +16316,15 @@ pub struct TopLeftToBottomRightBorderLineProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TopRightToBottomLeftBorder {
+    /// The child that is an item of `ThemeableLineStyleContent`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Box<ThemeableLineStyleContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.8.61 xfrm (Transform Effect): the tag `a:xfrm`, schema type `CT_TransformEffect`.
+/// The `a:xfrm` element, Transform Effect (ECMA-376 Part 1, section 20.1.8.61). Its schema type is
+/// `CT_TransformEffect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12783,16 +16333,23 @@ pub struct TopRightToBottomLeftBorder {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TransformEffect {
+    /// The attribute `kx`, when the element has it.
     pub kx: Option<FixedAngle>,
+    /// The attribute `ky`, when the element has it.
     pub ky: Option<FixedAngle>,
+    /// The attribute `sx`, when the element has it.
     pub sx: Option<Percentage>,
+    /// The attribute `sy`, when the element has it.
     pub sy: Option<Percentage>,
+    /// The attribute `tx`, when the element has it.
     pub tx: Option<Coordinate>,
+    /// The attribute `ty`, when the element has it.
     pub ty: Option<Coordinate>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.3.12 `uFill` (Underline Fill): the tag `a:uFill`, schema type
+/// The `a:uFill` element, Underline Fill (ECMA-376 Part 1, section 21.1.2.3.12). Its schema type is
 /// `CT_TextUnderlineFillGroupWrapper`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
@@ -12805,13 +16362,15 @@ pub struct TransformEffect {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct UnderlineFill {
+    /// The child that is an item of `FillPropertiesContent`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Box<FillPropertiesContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.3.13 `uFillTx` (Underline Fill Properties Follow Text): the tag `a:uFillTx`, schema type
-/// `CT_TextUnderlineFillFollowText`.
+/// The `a:uFillTx` element, Underline Fill Properties Follow Text (ECMA-376 Part 1, section
+/// 21.1.2.3.13). Its schema type is `CT_TextUnderlineFillFollowText`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12820,11 +16379,12 @@ pub struct UnderlineFill {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct UnderlineFillPropertiesFollowText {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.3.15 `uLnTx` (Underline Follows Text): the tag `a:uLnTx`, schema type
-/// `CT_TextUnderlineLineFollowText`.
+/// The `a:uLnTx` element, Underline Follows Text (ECMA-376 Part 1, section 21.1.2.3.15). Its schema
+/// type is `CT_TextUnderlineLineFollowText`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12833,10 +16393,12 @@ pub struct UnderlineFillPropertiesFollowText {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct UnderlineFollowsText {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.1.2.3.14 `uLn` (Underline Stroke): the tag `a:uLn`, schema type `CT_LineProperties`.
+/// The `a:uLn` element, Underline Stroke (ECMA-376 Part 1, section 21.1.2.3.14). Its schema type is
+/// `CT_LineProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12848,21 +16410,33 @@ pub struct UnderlineFollowsText {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct UnderlineStroke {
+    /// The attribute `algn`, when the element has it.
     pub algn: Option<AlignmentType>,
+    /// The attribute `cap`, when the element has it.
     pub cap: Option<EndLineCap>,
+    /// The attribute `cmpd`, when the element has it.
     pub cmpd: Option<CompoundLineType>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is an item of `LineDashContent`, when there is one.
     pub line_dash_content: Option<Box<LineDashContent>>,
+    /// The child that is an item of `LineFillContent`, when there is one.
     pub line_fill_content: Option<Box<LineFillContent>>,
+    /// The child that is `LineHeadEndStyle`, when there is one.
     pub line_head_end_style: Option<Box<LineHeadEndStyle>>,
+    /// The child that is an item of `LineJoinContent`, when there is one.
     pub line_join_content: Option<Box<LineJoinContent>>,
+    /// The child that is `TailLineEndStyle`, when there is one.
     pub tail_line_end_style: Option<Box<TailLineEndStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w`, when the element has it.
     pub w: Option<LineWidth>,
 }
 
-/// 20.1.5.13 up (Up Vector): the tag `a:up`, schema type `CT_Vector3D`.
+/// The `a:up` element, Up Vector (ECMA-376 Part 1, section 20.1.5.13). Its schema type is
+/// `CT_Vector3D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12871,14 +16445,18 @@ pub struct UnderlineStroke {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct UpVector {
+    /// The attribute `dx`, when the element has it.
     pub dx: Option<Coordinate>,
+    /// The attribute `dy`, when the element has it.
     pub dy: Option<Coordinate>,
+    /// The attribute `dz`, when the element has it.
     pub dz: Option<Coordinate>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.42 `useSpRect` (Use Shape Text Rectangle): the tag `a:useSpRect`, schema type
-/// `CT_GvmlUseShapeRectangle`.
+/// The `a:useSpRect` element, Use Shape Text Rectangle (ECMA-376 Part 1, section 20.1.2.2.42). Its
+/// schema type is `CT_GvmlUseShapeRectangle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12887,10 +16465,12 @@ pub struct UpVector {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct UseShapeTextRectangle {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.39 sy (Vertical Ratio): the tag `a:sy`, schema type `CT_Ratio`.
+/// The `a:sy` element, Vertical Ratio (ECMA-376 Part 1, section 20.1.2.2.39). Its schema type is
+/// `CT_Ratio`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12899,12 +16479,19 @@ pub struct UseShapeTextRectangle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct VerticalRatio {
+    /// The attribute `d`, when the element has it.
     pub d: Option<String>,
+    /// The attribute `n`, when the element has it.
     pub n: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.10.83 `ST_TextVerticalType` (Vertical Text Types): the text the file carried.
+/// Vertical Text Types, the simple type `ST_TextVerticalType` (ECMA-376 Part 1, section
+/// 20.1.10.83), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12913,20 +16500,29 @@ pub struct VerticalRatio {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct VerticalTextTypes(pub String);
-/// The members of `ST_TextVerticalType`, in alphabetical order.
+/// The members of the enumeration `ST_TextVerticalType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum VerticalTextTypesMember {
+    /// The member written `eaVert`.
     EaVert,
+    /// The member written `horz`.
     Horz,
+    /// The member written `mongolianVert`.
     MongolianVert,
+    /// The member written `vert`.
     Vert,
+    /// The member written `vert270`.
     Vert270,
+    /// The member written `wordArtVert`.
     WordArtVert,
+    /// The member written `wordArtVertRtl`.
     WordArtVertRtl,
 }
 
-/// 20.1.3.6 `videoFile` (Video from File): the tag `a:videoFile`, schema type `CT_VideoFile`.
+/// The `a:videoFile` element, Video from File (ECMA-376 Part 1, section 20.1.3.6). Its schema type
+/// is `CT_VideoFile`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12938,15 +16534,19 @@ pub enum VerticalTextTypesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct VideoFromFile {
+    /// The attribute `contentType`, when the element has it.
     pub content_type: Option<String>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The attribute `r:link`, when the element has it.
     pub link: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.2.2.22 `grpSpPr` (Visual Group Shape Properties): the tag `a:grpSpPr`, schema type
-/// `CT_GroupShapeProperties`.
+/// The `a:grpSpPr` element, Visual Group Shape Properties (ECMA-376 Part 1, section 20.1.2.2.22).
+/// Its schema type is `CT_GroupShapeProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12958,20 +16558,28 @@ pub struct VideoFromFile {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct VisualGroupShapeProperties {
+    /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<BlackAndWhiteMode>,
+    /// The child that is an item of `EffectPropertiesContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub effect_properties_content: Option<Box<EffectPropertiesContent>>,
+    /// The child that is `ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<ExtensionList>>,
+    /// The child that is an item of `FillPropertiesContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub fill_properties_content: Option<Box<FillPropertiesContent>>,
+    /// The child that is `Scene3d`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub scene3d: Option<Box<Scene3d>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `XfrmGroupTransform2D`, when there is one.
     pub xfrm_group_transform2d: Option<Box<XfrmGroupTransform2D>>,
 }
 
-/// 20.1.4.2.34 `wholeTbl` (Whole Table): the tag `a:wholeTbl`, schema type `CT_TablePartStyle`.
+/// The `a:wholeTbl` element, Whole Table (ECMA-376 Part 1, section 20.1.4.2.34). Its schema type is
+/// `CT_TablePartStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12983,14 +16591,18 @@ pub struct VisualGroupShapeProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct WholeTable {
+    /// The child that is `TableCellStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub cell_style: Option<Box<TableCellStyle>>,
+    /// The child that is `TableCellTextStyle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub cell_text_style: Option<Box<TableCellTextStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.1.9.3 `ahXY` (XY Adjust Handle): the tag `a:ahXY`, schema type `CT_XYAdjustHandle`.
+/// The `a:ahXY` element, XY Adjust Handle (ECMA-376 Part 1, section 20.1.9.3). Its schema type is
+/// `CT_XYAdjustHandle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -12999,17 +16611,25 @@ pub struct WholeTable {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct XYAdjustHandle {
+    /// The attribute `gdRefX`, when the element has it.
     pub gd_ref_x: Option<String>,
+    /// The attribute `gdRefY`, when the element has it.
     pub gd_ref_y: Option<String>,
+    /// The attribute `maxX`, when the element has it.
     pub max_x: Option<AdjustableCoordinateMethods>,
+    /// The attribute `maxY`, when the element has it.
     pub max_y: Option<AdjustableCoordinateMethods>,
+    /// The attribute `minX`, when the element has it.
     pub min_x: Option<AdjustableCoordinateMethods>,
+    /// The attribute `minY`, when the element has it.
     pub min_y: Option<AdjustableCoordinateMethods>,
+    /// The child that is `ShapePositionCoordinate`, which the schema requires.
     pub shape_position_coordinate: Box<ShapePositionCoordinate>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a:xfrm`, schema type `CT_GroupTransform2D`.
+/// The `a:xfrm` element. Its schema type is `CT_GroupTransform2D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -13018,17 +16638,25 @@ pub struct XYAdjustHandle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct XfrmGroupTransform2D {
+    /// The child that is `ChildExtents`, when there is one.
     pub child_extents: Option<Box<ChildExtents>>,
+    /// The child that is `ChildOffset`, when there is one.
     pub child_offset: Option<Box<ChildOffset>>,
+    /// The child that is `Extents`, when there is one.
     pub extents: Option<Box<Extents>>,
+    /// The attribute `flipH`, when the element has it.
     pub flip_h: Option<String>,
+    /// The attribute `flipV`, when the element has it.
     pub flip_v: Option<String>,
+    /// The child that is `Offset`, when there is one.
     pub offset: Option<Box<Offset>>,
+    /// The attribute `rot`, when the element has it.
     pub rot: Option<Angle>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a:xfrm`, schema type `CT_Transform2D`.
+/// The `a:xfrm` element. Its schema type is `CT_Transform2D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -13037,11 +16665,17 @@ pub struct XfrmGroupTransform2D {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct XfrmTransform2D {
+    /// The child that is `Extents`, when there is one.
     pub extents: Option<Box<Extents>>,
+    /// The attribute `flipH`, when the element has it.
     pub flip_h: Option<String>,
+    /// The attribute `flipV`, when the element has it.
     pub flip_v: Option<String>,
+    /// The child that is `Offset`, when there is one.
     pub offset: Option<Box<Offset>>,
+    /// The attribute `rot`, when the element has it.
     pub rot: Option<Angle>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -13263,7 +16897,7 @@ impl AlignmentTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -13610,7 +17244,7 @@ impl AnimationBuildTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -14742,7 +18376,7 @@ impl BevelPresetsMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -14824,7 +18458,7 @@ impl BlackAndWhiteModeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -14904,7 +18538,7 @@ impl BlendModeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -14982,7 +18616,7 @@ impl BlipCompressionTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -15620,7 +19254,7 @@ impl ChartAnimationBuildStepMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -15711,7 +19345,7 @@ impl ChartOnlyAnimationTypesMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -16205,7 +19839,7 @@ impl CompoundLineTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -16671,7 +20305,7 @@ impl DiagramAnimationBuildStepsMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -16761,7 +20395,7 @@ impl DiagramOnlyAnimationTypesMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -17301,7 +20935,7 @@ impl EffectContainerTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -17479,7 +21113,7 @@ impl EndLineCapMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -18171,7 +21805,7 @@ impl FontAlignmentTypesMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -18225,7 +21859,7 @@ impl FontCollectionIndexMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -19496,7 +23130,7 @@ impl LightRigDirectionMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -19574,7 +23208,7 @@ impl LightRigTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -19669,7 +23303,7 @@ impl LineEndLengthMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -19722,7 +23356,7 @@ impl LineEndTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -19772,7 +23406,7 @@ impl LineEndWidthMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -21154,7 +24788,7 @@ impl OnOffStyleTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -21301,7 +24935,7 @@ impl PathFillModeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -21375,7 +25009,7 @@ impl PathShadeTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -21959,7 +25593,7 @@ impl PresetCameraTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -22388,7 +26022,7 @@ impl PresetColorValueMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -22498,7 +26132,7 @@ impl PresetLineDashValueMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -22564,7 +26198,7 @@ impl PresetMaterialTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -22669,7 +26303,7 @@ impl PresetPatternValueMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -22766,7 +26400,7 @@ impl PresetShadowTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -23044,7 +26678,7 @@ impl PresetShapeTypesMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -23136,7 +26770,7 @@ impl PresetTextShapeTypesMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -23295,7 +26929,7 @@ impl RectangleAlignmentsMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -24521,7 +28155,7 @@ impl StSchemeColorValMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -24866,7 +28500,7 @@ impl SystemColorValueMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -25463,7 +29097,7 @@ impl TextAlignmentTypesMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -25519,7 +29153,7 @@ impl TextAnchoringTypesMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -25611,7 +29245,7 @@ impl TextAutoNumberSchemesMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -25811,7 +29445,7 @@ impl TextCapTypesMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -25952,7 +29586,7 @@ impl TextHorizontalOverflowTypesMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -26446,7 +30080,7 @@ impl TextStrikeTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -26521,7 +30155,7 @@ impl TextTabAlignmentTypesMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -26642,7 +30276,7 @@ impl TextUnderlineTypesMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -26696,7 +30330,7 @@ impl TextVerticalOverflowMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -26747,7 +30381,7 @@ impl TextWrappingTypesMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -26835,7 +30469,7 @@ impl ThemeColorReferenceMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -27036,7 +30670,7 @@ impl TileFlipModeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -27500,7 +31134,7 @@ impl VerticalTextTypesMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

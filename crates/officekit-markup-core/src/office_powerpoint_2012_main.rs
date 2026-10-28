@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `p15` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/powerpoint/2012/main`, which files write with the prefix `p15`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/powerpoint/2012/main`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 pub mod read;
 pub mod write;
@@ -312,7 +312,8 @@ pub static EXT_LST_SHAPE: officekit_markup_base::Shape = officekit_markup_base::
     text: false,
 };
 
-/// The tag `p15:chartTrackingRefBased`, schema type `CT_ChartTrackingRefBased` of SDK 3.5.1's data.
+/// The `p15:chartTrackingRefBased` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_ChartTrackingRefBased`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -321,11 +322,14 @@ pub static EXT_LST_SHAPE: officekit_markup_base::Shape = officekit_markup_base::
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ChartTrackingRefBased {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `p15:clr`, schema type `CT_Color` of SDK 3.5.1's data.
+/// The `p15:clr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -334,11 +338,14 @@ pub struct ChartTrackingRefBased {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Clr {
+    /// The child that is an item of `super::drawing::ColorContent`, which the schema requires.
     pub content: Box<super::drawing::ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p15:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
+/// The `p15:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -347,11 +354,14 @@ pub struct Clr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
+    /// The children that are `super::presentation::Extension`, in order.
     pub extension: Vec<super::presentation::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p15:guide`, schema type `CT_ExtendedGuide` of SDK 3.5.1's data.
+/// The `p15:guide` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ExtendedGuide`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -360,17 +370,26 @@ pub struct ExtLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Guide {
+    /// The child that is `Clr`, which the schema requires.
     pub clr: Box<Clr>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `orient`, when the element has it.
     pub orient: Option<super::presentation::Direction>,
+    /// The attribute `pos`, when the element has it.
     pub pos: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `userDrawn`, when the element has it.
     pub user_drawn: Option<String>,
 }
 
-/// The tag `p15:notesGuideLst`, schema type `CT_ExtendedGuideList` of SDK 3.5.1's data.
+/// The `p15:notesGuideLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_ExtendedGuideList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -379,12 +398,16 @@ pub struct Guide {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NotesGuideLst {
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The children that are `Guide`, in order.
     pub guide: Vec<Guide>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p15:parentCm`, schema type `CT_ParentCommentIdentifier` of SDK 3.5.1's data.
+/// The `p15:parentCm` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ParentCommentIdentifier`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -393,12 +416,16 @@ pub struct NotesGuideLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ParentCm {
+    /// The attribute `authorId`, when the element has it.
     pub author_id: Option<String>,
+    /// The attribute `idx`, when the element has it.
     pub idx: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p15:presenceInfo`, schema type `CT_PresenceInfo` of SDK 3.5.1's data.
+/// The `p15:presenceInfo` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_PresenceInfo`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -407,12 +434,16 @@ pub struct ParentCm {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PresenceInfo {
+    /// The attribute `providerId`, when the element has it.
     pub provider_id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `userId`, when the element has it.
     pub user_id: Option<String>,
 }
 
-/// The tag `p15:prstTrans`, schema type `CT_PresetTransition` of SDK 3.5.1's data.
+/// The `p15:prstTrans` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_PresetTransition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -421,13 +452,18 @@ pub struct PresenceInfo {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PrstTrans {
+    /// The attribute `invX`, when the element has it.
     pub inv_x: Option<String>,
+    /// The attribute `invY`, when the element has it.
     pub inv_y: Option<String>,
+    /// The attribute `prst`, when the element has it.
     pub prst: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p15:sldGuideLst`, schema type `CT_ExtendedGuideList` of SDK 3.5.1's data.
+/// The `p15:sldGuideLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_ExtendedGuideList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -436,12 +472,16 @@ pub struct PrstTrans {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SldGuideLst {
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The children that are `Guide`, in order.
     pub guide: Vec<Guide>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p15:threadingInfo`, schema type `CT_CommentThreading` of SDK 3.5.1's data.
+/// The `p15:threadingInfo` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_CommentThreading`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -450,8 +490,11 @@ pub struct SldGuideLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ThreadingInfo {
+    /// The child that is `ParentCm`, when there is one.
     pub parent_cm: Option<Box<ParentCm>>,
+    /// The attribute `timeZoneBias`, when the element has it.
     pub time_zone_bias: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 

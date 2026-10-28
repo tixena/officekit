@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `pic14` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/drawing/2010/picture`, which files write with the prefix `pic14`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/drawing/2010/picture`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 pub mod read;
 pub mod write;
@@ -251,7 +251,8 @@ pub static STYLE_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Sh
     text: false,
 };
 
-/// The tag `pic14:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
+/// The `pic14:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -263,12 +264,15 @@ pub static STYLE_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Sh
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
+    /// The children that are `super::drawing::Extension`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension: Vec<super::drawing::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `pic14:style`, schema type `CT_ShapeStyle` of SDK 3.5.1's data.
+/// The `pic14:style` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ShapeStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -277,10 +281,15 @@ pub struct ExtLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Style {
+    /// The child that is `super::drawing::EffectReference`, which the schema requires.
     pub effect_reference: Box<super::drawing::EffectReference>,
+    /// The child that is `super::drawing::FillReference`, which the schema requires.
     pub fill_reference: Box<super::drawing::FillReference>,
+    /// The child that is `super::drawing::FontReference`, which the schema requires.
     pub font_reference: Box<super::drawing::FontReference>,
+    /// The child that is `super::drawing::LineReference`, which the schema requires.
     pub line_reference: Box<super::drawing::LineReference>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 

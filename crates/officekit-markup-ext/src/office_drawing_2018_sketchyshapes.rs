@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `ask` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/drawing/2018/sketchyshapes`, which files write with the prefix `ask`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/drawing/2018/sketchyshapes`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -316,26 +318,38 @@ pub static LINE_SKETCH_TYPE_PROPERTIES_CONTENT_TAGS: officekit_markup_base::Acce
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_drawing_2018_sketchyshapes` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `ExtLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
         None
     }
 
+    /// Asked for each `LineSketchCurved`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn line_sketch_curved(&mut self, _node: &LineSketchCurved) -> Option<LineSketchCurved> {
         None
     }
 
+    /// Asked for each `LineSketchFreehand`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn line_sketch_freehand(&mut self, _node: &LineSketchFreehand) -> Option<LineSketchFreehand> {
         None
     }
 
+    /// Asked for each `LineSketchNone`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn line_sketch_none(&mut self, _node: &LineSketchNone) -> Option<LineSketchNone> {
         None
     }
 
+    /// Asked for each `LineSketchScribble`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn line_sketch_scribble(&mut self, _node: &LineSketchScribble) -> Option<LineSketchScribble> {
         None
     }
 
+    /// Asked for each `LineSketchStyleProps`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn line_sketch_style_props(
         &mut self,
         _node: &LineSketchStyleProps,
@@ -343,6 +357,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `LineSketchTypePropertiesContent`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn line_sketch_type_properties(
         &mut self,
         _node: &LineSketchTypePropertiesContent,
@@ -350,24 +366,34 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Seed`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn seed(&mut self, _node: &Seed) -> Option<Seed> {
         None
     }
 
+    /// Asked for each `Type`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn r#type(&mut self, _node: &Type) -> Option<Type> {
         None
     }
 
+    /// Asked when a `ExtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `LineSketchCurved` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_line_sketch_curved(
         &mut self,
         _node: &LineSketchCurved,
@@ -376,9 +402,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LineSketchFreehand` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_line_sketch_freehand(
         &mut self,
         _node: &LineSketchFreehand,
@@ -387,9 +416,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LineSketchNone` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_line_sketch_none(
         &mut self,
         _node: &LineSketchNone,
@@ -398,9 +430,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LineSketchScribble` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_line_sketch_scribble(
         &mut self,
         _node: &LineSketchScribble,
@@ -409,9 +444,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LineSketchStyleProps` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_line_sketch_style_props(
         &mut self,
         _node: &LineSketchStyleProps,
@@ -420,9 +458,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LineSketchTypePropertiesContent` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_line_sketch_type_properties(
         &mut self,
         _node: &LineSketchTypePropertiesContent,
@@ -431,22 +472,29 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Seed` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_seed(&mut self, _node: &Seed, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Type` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_type(&mut self, _node: &Type, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 }
 
-/// The tag `ask:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
+/// The `ask:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -455,11 +503,14 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
+    /// The children that are `drawing::Extension`, in order.
     pub extension: Vec<drawing::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `ask:lineSketchCurved`, schema type `CT_Empty` of SDK 3.5.1's data.
+/// The `ask:lineSketchCurved` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_Empty`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -468,10 +519,12 @@ pub struct ExtLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LineSketchCurved {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `ask:lineSketchFreehand`, schema type `CT_Empty` of SDK 3.5.1's data.
+/// The `ask:lineSketchFreehand` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_Empty`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -480,10 +533,12 @@ pub struct LineSketchCurved {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LineSketchFreehand {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `ask:lineSketchNone`, schema type `CT_Empty` of SDK 3.5.1's data.
+/// The `ask:lineSketchNone` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_Empty`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -492,10 +547,12 @@ pub struct LineSketchFreehand {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LineSketchNone {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `ask:lineSketchScribble`, schema type `CT_Empty` of SDK 3.5.1's data.
+/// The `ask:lineSketchScribble` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_Empty`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -504,11 +561,12 @@ pub struct LineSketchNone {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LineSketchScribble {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `ask:lineSketchStyleProps`, schema type `CT_LineSketchStyleProperties` of SDK 3.5.1's
-/// data.
+/// The `ask:lineSketchStyleProps` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_LineSketchStyleProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -517,26 +575,42 @@ pub struct LineSketchScribble {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LineSketchStyleProps {
+    /// The child that is an item of `drawing::GeometryContent`, when there is one.
     pub content: Option<Box<drawing::GeometryContent>>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The attribute `sd`, when the element has it.
     pub sd: Option<String>,
+    /// The child that is `Seed`, when there is one.
     pub seed: Option<Box<Seed>>,
+    /// The child that is `Type`, when there is one.
     pub r#type: Option<Box<Type>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_LineSketchTypeProperties`: choice in `CT_LineSketchTypeProperties`.
+/// One child element of a choice: choice in `CT_LineSketchTypeProperties`.
+///
+/// The schema types that hold it: `CT_LineSketchTypeProperties`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum LineSketchTypePropertiesContent {
+    /// The element `ask:lineSketchCurved`, a `LineSketchCurved`.
     LineSketchCurved(LineSketchCurved),
+    /// The element `ask:lineSketchFreehand`, a `LineSketchFreehand`.
     LineSketchFreehand(LineSketchFreehand),
+    /// The element `ask:lineSketchNone`, a `LineSketchNone`.
     LineSketchNone(LineSketchNone),
+    /// The element `ask:lineSketchScribble`, a `LineSketchScribble`.
     LineSketchScribble(LineSketchScribble),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
 }
 
-/// The tag `ask:seed`, schema type `ST_LineSketchSeed` of SDK 3.5.1's data.
+/// The `ask:seed` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `ST_LineSketchSeed`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -545,11 +619,14 @@ pub enum LineSketchTypePropertiesContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Seed {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `ask:type`, schema type `CT_LineSketchTypeProperties` of SDK 3.5.1's data.
+/// The `ask:type` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_LineSketchTypeProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -558,7 +635,9 @@ pub struct Seed {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Type {
+    /// The child that is an item of `LineSketchTypePropertiesContent`, when there is one.
     pub content: Option<Box<LineSketchTypePropertiesContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -568,14 +647,19 @@ pub struct Type {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_drawing_2018_sketchyshapes` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `ExtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext_lst(&mut self, _node: &ExtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LineSketchCurved`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn line_sketch_curved(&mut self, _node: &LineSketchCurved) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LineSketchFreehand`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn line_sketch_freehand(
         &mut self,
         _node: &LineSketchFreehand,
@@ -583,10 +667,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LineSketchNone`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn line_sketch_none(&mut self, _node: &LineSketchNone) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LineSketchScribble`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn line_sketch_scribble(
         &mut self,
         _node: &LineSketchScribble,
@@ -594,6 +682,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LineSketchStyleProps`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn line_sketch_style_props(
         &mut self,
         _node: &LineSketchStyleProps,
@@ -601,6 +691,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LineSketchTypePropertiesContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn line_sketch_type_properties(
         &mut self,
         _node: &LineSketchTypePropertiesContent,
@@ -608,10 +700,12 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Seed`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn seed(&mut self, _node: &Seed) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Type`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn r#type(&mut self, _node: &Type) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

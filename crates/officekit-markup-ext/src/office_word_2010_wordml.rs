@@ -212,8 +212,11 @@
 //! The hooks of the `w14` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_core::office_word_2010_wordml`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/word/2010/wordml`.
+//! The namespace is `http://schemas.microsoft.com/office/word/2010/wordml`. Its prefix, `w14`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_core::office_word_2010_wordml::*;
 
 use officekit_markup_base::Written;
@@ -229,58 +232,86 @@ use std::io;
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_word_2010_wordml` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `Alpha`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn alpha(&mut self, _node: &Alpha) -> Option<Alpha> {
         None
     }
 
+    /// Asked for each `Bevel`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn bevel(&mut self, _node: &Bevel) -> Option<Bevel> {
         None
     }
 
+    /// Asked for each `BevelB`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn bevel_b(&mut self, _node: &BevelB) -> Option<BevelB> {
         None
     }
 
+    /// Asked for each `BevelT`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn bevel_t(&mut self, _node: &BevelT) -> Option<BevelT> {
         None
     }
 
+    /// Asked for each `CNvContentPartPr`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn c_nv_content_part_pr(&mut self, _node: &CNvContentPartPr) -> Option<CNvContentPartPr> {
         None
     }
 
+    /// Asked for each `CNvPr`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn c_nv_pr(&mut self, _node: &CNvPr) -> Option<CNvPr> {
         None
     }
 
+    /// Asked for each `Camera`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn camera(&mut self, _node: &Camera) -> Option<Camera> {
         None
     }
 
+    /// Asked for each `Checkbox`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn checkbox(&mut self, _node: &Checkbox) -> Option<Checkbox> {
         None
     }
 
+    /// Asked for each `Checked`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn checked(&mut self, _node: &Checked) -> Option<Checked> {
         None
     }
 
+    /// Asked for each `CheckedState`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn checked_state(&mut self, _node: &CheckedState) -> Option<CheckedState> {
         None
     }
 
+    /// Asked for each `CntxtAlts`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn cntxt_alts(&mut self, _node: &CntxtAlts) -> Option<CntxtAlts> {
         None
     }
 
+    /// Asked for each `ColorContent`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn color(&mut self, _node: &ColorContent) -> Option<ColorContent> {
         None
     }
 
+    /// Asked for each `ColorTransformContent`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn color_transform(&mut self, _node: &ColorTransformContent) -> Option<ColorTransformContent> {
         None
     }
 
+    /// Asked for each `ColorTransformContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn color_transform_items(
         &mut self,
         _node: &ColorTransformContent,
@@ -288,6 +319,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ConflictDelRunTrackChange`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn conflict_del_run_track_change(
         &mut self,
         _node: &ConflictDelRunTrackChange,
@@ -295,6 +328,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ConflictDelTrackChange`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn conflict_del_track_change(
         &mut self,
         _node: &ConflictDelTrackChange,
@@ -302,6 +337,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ConflictInsRunTrackChange`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn conflict_ins_run_track_change(
         &mut self,
         _node: &ConflictInsRunTrackChange,
@@ -309,6 +346,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ConflictInsTrackChange`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn conflict_ins_track_change(
         &mut self,
         _node: &ConflictInsTrackChange,
@@ -316,18 +355,26 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ConflictMode`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn conflict_mode(&mut self, _node: &ConflictMode) -> Option<ConflictMode> {
         None
     }
 
+    /// Asked for each `ContentPart`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn content_part(&mut self, _node: &ContentPart) -> Option<ContentPart> {
         None
     }
 
+    /// Asked for each `ContourClr`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn contour_clr(&mut self, _node: &ContourClr) -> Option<ContourClr> {
         None
     }
 
+    /// Asked for each `CustomXmlConflictDelRangeEnd`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn custom_xml_conflict_del_range_end(
         &mut self,
         _node: &CustomXmlConflictDelRangeEnd,
@@ -335,6 +382,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `CustomXmlConflictDelRangeStart`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn custom_xml_conflict_del_range_start(
         &mut self,
         _node: &CustomXmlConflictDelRangeStart,
@@ -342,6 +391,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `CustomXmlConflictInsRangeEnd`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn custom_xml_conflict_ins_range_end(
         &mut self,
         _node: &CustomXmlConflictInsRangeEnd,
@@ -349,6 +400,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `CustomXmlConflictInsRangeStart`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn custom_xml_conflict_ins_range_start(
         &mut self,
         _node: &CustomXmlConflictInsRangeStart,
@@ -356,10 +409,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `DefaultImageDpi`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn default_image_dpi(&mut self, _node: &DefaultImageDpi) -> Option<DefaultImageDpi> {
         None
     }
 
+    /// Asked for each `DiscardImageEditingData`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn discard_image_editing_data(
         &mut self,
         _node: &DiscardImageEditingData,
@@ -367,38 +424,56 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `DocId`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn doc_id(&mut self, _node: &DocId) -> Option<DocId> {
         None
     }
 
+    /// Asked for each `EntityPicker`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn entity_picker(&mut self, _node: &EntityPicker) -> Option<EntityPicker> {
         None
     }
 
+    /// Asked for each `ExtLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
         None
     }
 
+    /// Asked for each `ExtrusionClr`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn extrusion_clr(&mut self, _node: &ExtrusionClr) -> Option<ExtrusionClr> {
         None
     }
 
+    /// Asked for each `FillPropertiesContent`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn fill_properties(&mut self, _node: &FillPropertiesContent) -> Option<FillPropertiesContent> {
         None
     }
 
+    /// Asked for each `FillToRect`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn fill_to_rect(&mut self, _node: &FillToRect) -> Option<FillToRect> {
         None
     }
 
+    /// Asked for each `Glow`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn glow(&mut self, _node: &Glow) -> Option<Glow> {
         None
     }
 
+    /// Asked for each `GradFill`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn grad_fill(&mut self, _node: &GradFill) -> Option<GradFill> {
         None
     }
 
+    /// Asked for each `GradientFillPropertiesContent`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn gradient_fill_properties(
         &mut self,
         _node: &GradientFillPropertiesContent,
@@ -406,181 +481,268 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Gs`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn gs(&mut self, _node: &Gs) -> Option<Gs> {
         None
     }
 
+    /// Asked for each `GsLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn gs_lst(&mut self, _node: &GsLst) -> Option<GsLst> {
         None
     }
 
+    /// Asked for each `HueMod`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn hue_mod(&mut self, _node: &HueMod) -> Option<HueMod> {
         None
     }
 
+    /// Asked for each `Ligatures`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn ligatures(&mut self, _node: &Ligatures) -> Option<Ligatures> {
         None
     }
 
+    /// Asked for each `LightRig`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn light_rig(&mut self, _node: &LightRig) -> Option<LightRig> {
         None
     }
 
+    /// Asked for each `Lin`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn lin(&mut self, _node: &Lin) -> Option<Lin> {
         None
     }
 
+    /// Asked for each `LineJoinContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn line_join(&mut self, _node: &LineJoinContent) -> Option<LineJoinContent> {
         None
     }
 
+    /// Asked for each `Lum`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn lum(&mut self, _node: &Lum) -> Option<Lum> {
         None
     }
 
+    /// Asked for each `LumMod`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn lum_mod(&mut self, _node: &LumMod) -> Option<LumMod> {
         None
     }
 
+    /// Asked for each `LumOff`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn lum_off(&mut self, _node: &LumOff) -> Option<LumOff> {
         None
     }
 
+    /// Asked for each `Miter`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn miter(&mut self, _node: &Miter) -> Option<Miter> {
         None
     }
 
+    /// Asked for each `NoFill`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn no_fill(&mut self, _node: &NoFill) -> Option<NoFill> {
         None
     }
 
+    /// Asked for each `NumForm`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn num_form(&mut self, _node: &NumForm) -> Option<NumForm> {
         None
     }
 
+    /// Asked for each `NumSpacing`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn num_spacing(&mut self, _node: &NumSpacing) -> Option<NumSpacing> {
         None
     }
 
+    /// Asked for each `NvContentPartPr`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn nv_content_part_pr(&mut self, _node: &NvContentPartPr) -> Option<NvContentPartPr> {
         None
     }
 
+    /// Asked for each `Path`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn path(&mut self, _node: &Path) -> Option<Path> {
         None
     }
 
+    /// Asked for each `Props3d`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn props3d(&mut self, _node: &Props3d) -> Option<Props3d> {
         None
     }
 
+    /// Asked for each `PrstDash`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn prst_dash(&mut self, _node: &PrstDash) -> Option<PrstDash> {
         None
     }
 
+    /// Asked for each `Reflection`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn reflection(&mut self, _node: &Reflection) -> Option<Reflection> {
         None
     }
 
+    /// Asked for each `Rot`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn rot(&mut self, _node: &Rot) -> Option<Rot> {
         None
     }
 
+    /// Asked for each `Round`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn round(&mut self, _node: &Round) -> Option<Round> {
         None
     }
 
+    /// Asked for each `Sat`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn sat(&mut self, _node: &Sat) -> Option<Sat> {
         None
     }
 
+    /// Asked for each `SatMod`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn sat_mod(&mut self, _node: &SatMod) -> Option<SatMod> {
         None
     }
 
+    /// Asked for each `SatOff`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn sat_off(&mut self, _node: &SatOff) -> Option<SatOff> {
         None
     }
 
+    /// Asked for each `Scene3d`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn scene3d(&mut self, _node: &Scene3d) -> Option<Scene3d> {
         None
     }
 
+    /// Asked for each `SchemeClr`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn scheme_clr(&mut self, _node: &SchemeClr) -> Option<SchemeClr> {
         None
     }
 
+    /// Asked for each `Shade`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn shade(&mut self, _node: &Shade) -> Option<Shade> {
         None
     }
 
+    /// Asked for each `Shadow`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn shadow(&mut self, _node: &Shadow) -> Option<Shadow> {
         None
     }
 
+    /// Asked for each `SolidFill`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn solid_fill(&mut self, _node: &SolidFill) -> Option<SolidFill> {
         None
     }
 
+    /// Asked for each `SrgbClr`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn srgb_clr(&mut self, _node: &SrgbClr) -> Option<SrgbClr> {
         None
     }
 
+    /// Asked for each `StyleSet`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn style_set(&mut self, _node: &StyleSet) -> Option<StyleSet> {
         None
     }
 
+    /// Asked for each `StylisticSets`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn stylistic_sets(&mut self, _node: &StylisticSets) -> Option<StylisticSets> {
         None
     }
 
+    /// Asked for each `TextFill`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn text_fill(&mut self, _node: &TextFill) -> Option<TextFill> {
         None
     }
 
+    /// Asked for each `TextOutline`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn text_outline(&mut self, _node: &TextOutline) -> Option<TextOutline> {
         None
     }
 
+    /// Asked for each `Tint`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn tint(&mut self, _node: &Tint) -> Option<Tint> {
         None
     }
 
+    /// Asked for each `UncheckedState`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn unchecked_state(&mut self, _node: &UncheckedState) -> Option<UncheckedState> {
         None
     }
 
+    /// Asked when a `Alpha` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_alpha(&mut self, _node: &Alpha, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Bevel` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_bevel(&mut self, _node: &Bevel, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `BevelB` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_bevel_b(&mut self, _node: &BevelB, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `BevelT` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_bevel_t(&mut self, _node: &BevelT, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `CNvContentPartPr` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_c_nv_content_part_pr(
         &mut self,
         _node: &CNvContentPartPr,
@@ -589,23 +751,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CNvPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_c_nv_pr(&mut self, _node: &CNvPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Camera` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_camera(&mut self, _node: &Camera, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Checkbox` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_checkbox(
         &mut self,
         _node: &Checkbox,
@@ -614,16 +785,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Checked` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_checked(&mut self, _node: &Checked, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `CheckedState` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_checked_state(
         &mut self,
         _node: &CheckedState,
@@ -632,9 +809,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CntxtAlts` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cntxt_alts(
         &mut self,
         _node: &CntxtAlts,
@@ -643,9 +823,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ColorContent` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_color(
         &mut self,
         _node: &ColorContent,
@@ -654,9 +837,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ColorTransformContent` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_color_transform(
         &mut self,
         _node: &ColorTransformContent,
@@ -665,9 +851,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ColorTransformContent` in a list is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_color_transform_items(
         &mut self,
         _node: &ColorTransformContent,
@@ -676,9 +865,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ConflictDelRunTrackChange` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_conflict_del_run_track_change(
         &mut self,
         _node: &ConflictDelRunTrackChange,
@@ -687,9 +879,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ConflictDelTrackChange` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_conflict_del_track_change(
         &mut self,
         _node: &ConflictDelTrackChange,
@@ -698,9 +893,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ConflictInsRunTrackChange` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_conflict_ins_run_track_change(
         &mut self,
         _node: &ConflictInsRunTrackChange,
@@ -709,9 +907,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ConflictInsTrackChange` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_conflict_ins_track_change(
         &mut self,
         _node: &ConflictInsTrackChange,
@@ -720,9 +921,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ConflictMode` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_conflict_mode(
         &mut self,
         _node: &ConflictMode,
@@ -731,9 +935,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ContentPart` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_content_part(
         &mut self,
         _node: &ContentPart,
@@ -742,9 +949,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ContourClr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_contour_clr(
         &mut self,
         _node: &ContourClr,
@@ -753,9 +963,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CustomXmlConflictDelRangeEnd` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_custom_xml_conflict_del_range_end(
         &mut self,
         _node: &CustomXmlConflictDelRangeEnd,
@@ -764,9 +977,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CustomXmlConflictDelRangeStart` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_custom_xml_conflict_del_range_start(
         &mut self,
         _node: &CustomXmlConflictDelRangeStart,
@@ -775,9 +991,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CustomXmlConflictInsRangeEnd` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_custom_xml_conflict_ins_range_end(
         &mut self,
         _node: &CustomXmlConflictInsRangeEnd,
@@ -786,9 +1005,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CustomXmlConflictInsRangeStart` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_custom_xml_conflict_ins_range_start(
         &mut self,
         _node: &CustomXmlConflictInsRangeStart,
@@ -797,9 +1019,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DefaultImageDpi` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_default_image_dpi(
         &mut self,
         _node: &DefaultImageDpi,
@@ -808,9 +1033,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DiscardImageEditingData` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_discard_image_editing_data(
         &mut self,
         _node: &DiscardImageEditingData,
@@ -819,16 +1047,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DocId` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_doc_id(&mut self, _node: &DocId, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `EntityPicker` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_entity_picker(
         &mut self,
         _node: &EntityPicker,
@@ -837,16 +1071,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExtrusionClr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_extrusion_clr(
         &mut self,
         _node: &ExtrusionClr,
@@ -855,9 +1095,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FillPropertiesContent` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_fill_properties(
         &mut self,
         _node: &FillPropertiesContent,
@@ -866,9 +1109,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FillToRect` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_fill_to_rect(
         &mut self,
         _node: &FillToRect,
@@ -877,16 +1123,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Glow` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_glow(&mut self, _node: &Glow, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `GradFill` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_grad_fill(
         &mut self,
         _node: &GradFill,
@@ -895,9 +1147,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `GradientFillPropertiesContent` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_gradient_fill_properties(
         &mut self,
         _node: &GradientFillPropertiesContent,
@@ -906,30 +1161,42 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Gs` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_gs(&mut self, _node: &Gs, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `GsLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_gs_lst(&mut self, _node: &GsLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `HueMod` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_hue_mod(&mut self, _node: &HueMod, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Ligatures` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ligatures(
         &mut self,
         _node: &Ligatures,
@@ -938,9 +1205,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LightRig` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_light_rig(
         &mut self,
         _node: &LightRig,
@@ -949,16 +1219,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Lin` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_lin(&mut self, _node: &Lin, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `LineJoinContent` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_line_join(
         &mut self,
         _node: &LineJoinContent,
@@ -967,44 +1243,62 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Lum` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_lum(&mut self, _node: &Lum, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `LumMod` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_lum_mod(&mut self, _node: &LumMod, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `LumOff` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_lum_off(&mut self, _node: &LumOff, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Miter` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_miter(&mut self, _node: &Miter, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `NoFill` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_no_fill(&mut self, _node: &NoFill, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `NumForm` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_num_form(
         &mut self,
         _node: &NumForm,
@@ -1013,9 +1307,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NumSpacing` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_num_spacing(
         &mut self,
         _node: &NumSpacing,
@@ -1024,9 +1321,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NvContentPartPr` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_nv_content_part_pr(
         &mut self,
         _node: &NvContentPartPr,
@@ -1035,23 +1335,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Path` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_path(&mut self, _node: &Path, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Props3d` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_props3d(&mut self, _node: &Props3d, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `PrstDash` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_prst_dash(
         &mut self,
         _node: &PrstDash,
@@ -1060,9 +1369,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Reflection` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_reflection(
         &mut self,
         _node: &Reflection,
@@ -1071,51 +1383,72 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Rot` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_rot(&mut self, _node: &Rot, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Round` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_round(&mut self, _node: &Round, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Sat` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sat(&mut self, _node: &Sat, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `SatMod` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sat_mod(&mut self, _node: &SatMod, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `SatOff` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sat_off(&mut self, _node: &SatOff, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Scene3d` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_scene3d(&mut self, _node: &Scene3d, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `SchemeClr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_scheme_clr(
         &mut self,
         _node: &SchemeClr,
@@ -1124,23 +1457,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Shade` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shade(&mut self, _node: &Shade, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Shadow` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shadow(&mut self, _node: &Shadow, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `SolidFill` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_solid_fill(
         &mut self,
         _node: &SolidFill,
@@ -1149,9 +1491,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SrgbClr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_srgb_clr(
         &mut self,
         _node: &SrgbClr,
@@ -1160,9 +1505,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `StyleSet` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_style_set(
         &mut self,
         _node: &StyleSet,
@@ -1171,9 +1519,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `StylisticSets` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_stylistic_sets(
         &mut self,
         _node: &StylisticSets,
@@ -1182,9 +1533,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TextFill` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_text_fill(
         &mut self,
         _node: &TextFill,
@@ -1193,9 +1547,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TextOutline` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_text_outline(
         &mut self,
         _node: &TextOutline,
@@ -1204,16 +1561,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Tint` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_tint(&mut self, _node: &Tint, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `UncheckedState` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_unchecked_state(
         &mut self,
         _node: &UncheckedState,
@@ -1222,13 +1585,18 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Xfrm` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_xfrm(&mut self, _node: &Xfrm, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked for each `Xfrm`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn xfrm(&mut self, _node: &Xfrm) -> Option<Xfrm> {
         None
     }
@@ -1240,58 +1608,78 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_word_2010_wordml` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `Alpha`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn alpha(&mut self, _node: &Alpha) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Bevel`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn bevel(&mut self, _node: &Bevel) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BevelB`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn bevel_b(&mut self, _node: &BevelB) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BevelT`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn bevel_t(&mut self, _node: &BevelT) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CNvContentPartPr`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn c_nv_content_part_pr(&mut self, _node: &CNvContentPartPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CNvPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn c_nv_pr(&mut self, _node: &CNvPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Camera`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn camera(&mut self, _node: &Camera) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Checkbox`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn checkbox(&mut self, _node: &Checkbox) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Checked`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn checked(&mut self, _node: &Checked) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CheckedState`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn checked_state(&mut self, _node: &CheckedState) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CntxtAlts`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn cntxt_alts(&mut self, _node: &CntxtAlts) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ColorContent`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn color(&mut self, _node: &ColorContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ColorTransformContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn color_transform(&mut self, _node: &ColorTransformContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ConflictDelRunTrackChange`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn conflict_del_run_track_change(
         &mut self,
         _node: &ConflictDelRunTrackChange,
@@ -1299,6 +1687,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ConflictDelTrackChange`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn conflict_del_track_change(
         &mut self,
         _node: &ConflictDelTrackChange,
@@ -1306,6 +1696,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ConflictInsRunTrackChange`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn conflict_ins_run_track_change(
         &mut self,
         _node: &ConflictInsRunTrackChange,
@@ -1313,6 +1705,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ConflictInsTrackChange`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn conflict_ins_track_change(
         &mut self,
         _node: &ConflictInsTrackChange,
@@ -1320,18 +1714,26 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ConflictMode`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn conflict_mode(&mut self, _node: &ConflictMode) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ContentPart`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn content_part(&mut self, _node: &ContentPart) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ContourClr`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn contour_clr(&mut self, _node: &ContourClr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CustomXmlConflictDelRangeEnd`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn custom_xml_conflict_del_range_end(
         &mut self,
         _node: &CustomXmlConflictDelRangeEnd,
@@ -1339,6 +1741,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CustomXmlConflictDelRangeStart`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn custom_xml_conflict_del_range_start(
         &mut self,
         _node: &CustomXmlConflictDelRangeStart,
@@ -1346,6 +1750,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CustomXmlConflictInsRangeEnd`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn custom_xml_conflict_ins_range_end(
         &mut self,
         _node: &CustomXmlConflictInsRangeEnd,
@@ -1353,6 +1759,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CustomXmlConflictInsRangeStart`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn custom_xml_conflict_ins_range_start(
         &mut self,
         _node: &CustomXmlConflictInsRangeStart,
@@ -1360,10 +1768,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DefaultImageDpi`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn default_image_dpi(&mut self, _node: &DefaultImageDpi) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DiscardImageEditingData`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn discard_image_editing_data(
         &mut self,
         _node: &DiscardImageEditingData,
@@ -1371,38 +1783,52 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DocId`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn doc_id(&mut self, _node: &DocId) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `EntityPicker`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn entity_picker(&mut self, _node: &EntityPicker) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext_lst(&mut self, _node: &ExtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExtrusionClr`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn extrusion_clr(&mut self, _node: &ExtrusionClr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FillPropertiesContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn fill_properties(&mut self, _node: &FillPropertiesContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FillToRect`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn fill_to_rect(&mut self, _node: &FillToRect) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Glow`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn glow(&mut self, _node: &Glow) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `GradFill`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn grad_fill(&mut self, _node: &GradFill) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `GradientFillPropertiesContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn gradient_fill_properties(
         &mut self,
         _node: &GradientFillPropertiesContent,
@@ -1410,150 +1836,197 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Gs`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn gs(&mut self, _node: &Gs) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `GsLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn gs_lst(&mut self, _node: &GsLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `HueMod`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn hue_mod(&mut self, _node: &HueMod) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Ligatures`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn ligatures(&mut self, _node: &Ligatures) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LightRig`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn light_rig(&mut self, _node: &LightRig) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Lin`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn lin(&mut self, _node: &Lin) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LineJoinContent`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn line_join(&mut self, _node: &LineJoinContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Lum`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn lum(&mut self, _node: &Lum) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LumMod`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn lum_mod(&mut self, _node: &LumMod) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LumOff`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn lum_off(&mut self, _node: &LumOff) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Miter`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn miter(&mut self, _node: &Miter) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NoFill`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn no_fill(&mut self, _node: &NoFill) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NumForm`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn num_form(&mut self, _node: &NumForm) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NumSpacing`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn num_spacing(&mut self, _node: &NumSpacing) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NvContentPartPr`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn nv_content_part_pr(&mut self, _node: &NvContentPartPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Path`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn path(&mut self, _node: &Path) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Props3d`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn props3d(&mut self, _node: &Props3d) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PrstDash`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn prst_dash(&mut self, _node: &PrstDash) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Reflection`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn reflection(&mut self, _node: &Reflection) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Rot`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn rot(&mut self, _node: &Rot) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Round`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn round(&mut self, _node: &Round) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Sat`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sat(&mut self, _node: &Sat) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SatMod`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sat_mod(&mut self, _node: &SatMod) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SatOff`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sat_off(&mut self, _node: &SatOff) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Scene3d`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn scene3d(&mut self, _node: &Scene3d) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SchemeClr`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn scheme_clr(&mut self, _node: &SchemeClr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Shade`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn shade(&mut self, _node: &Shade) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Shadow`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn shadow(&mut self, _node: &Shadow) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SolidFill`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn solid_fill(&mut self, _node: &SolidFill) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SrgbClr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn srgb_clr(&mut self, _node: &SrgbClr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `StyleSet`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn style_set(&mut self, _node: &StyleSet) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `StylisticSets`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn stylistic_sets(&mut self, _node: &StylisticSets) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TextFill`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn text_fill(&mut self, _node: &TextFill) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TextOutline`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn text_outline(&mut self, _node: &TextOutline) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Tint`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn tint(&mut self, _node: &Tint) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `UncheckedState`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn unchecked_state(&mut self, _node: &UncheckedState) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Xfrm`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn xfrm(&mut self, _node: &Xfrm) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

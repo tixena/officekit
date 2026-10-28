@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `clbl` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/2020/mipLabelMetadata`, which files write with the prefix `clbl`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/2020/mipLabelMetadata`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -279,46 +281,66 @@ pub static LABEL_LIST_SHAPE: officekit_markup_base::Shape = officekit_markup_bas
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_2020_mip_label_metadata` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `Ext`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn ext(&mut self, _node: &Ext) -> Option<Ext> {
         None
     }
 
+    /// Asked for each `ExtLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
         None
     }
 
+    /// Asked for each `Label`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn label(&mut self, _node: &Label) -> Option<Label> {
         None
     }
 
+    /// Asked for each `LabelList`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn label_list(&mut self, _node: &LabelList) -> Option<LabelList> {
         None
     }
 
+    /// Asked when a `Ext` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext(&mut self, _node: &Ext, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Label` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_label(&mut self, _node: &Label, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `LabelList` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_label_list(
         &mut self,
         _node: &LabelList,
@@ -328,7 +350,8 @@ pub trait Context: crate::Context {
     }
 }
 
-/// The tag `clbl:ext`, schema type `CT_ClassificationExtension` of SDK 3.5.1's data.
+/// The `clbl:ext` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ClassificationExtension`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -337,12 +360,16 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Ext {
+    /// The child that is an item of `drawing::AnyElementContent`, which the schema requires.
     pub content: Box<drawing::AnyElementContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `uri`, when the element has it.
     pub uri: Option<String>,
 }
 
-/// The tag `clbl:extLst`, schema type `CT_ClassificationExtensionList` of SDK 3.5.1's data.
+/// The `clbl:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ClassificationExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -351,11 +378,14 @@ pub struct Ext {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
+    /// The children that are `Ext`, in order.
     pub ext: Vec<Ext>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `clbl:label`, schema type `CT_ClassificationLabel` of SDK 3.5.1's data.
+/// The `clbl:label` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ClassificationLabel`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -364,19 +394,30 @@ pub struct ExtLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Label {
+    /// The attribute `actionId`, when the element has it.
     pub action_id: Option<String>,
+    /// The attribute `contentBits`, when the element has it.
     pub content_bits: Option<String>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `method`, when the element has it.
     pub method: Option<String>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `removed`, when the element has it.
     pub removed: Option<String>,
+    /// The attribute `setDate`, when the element has it.
     pub set_date: Option<String>,
+    /// The attribute `siteId`, when the element has it.
     pub site_id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `clbl:labelList`, schema type `CT_ClassificationLabelList` of SDK 3.5.1's data.
+/// The `clbl:labelList` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_ClassificationLabelList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -385,8 +426,11 @@ pub struct Label {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LabelList {
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The children that are `Label`, in order.
     pub label: Vec<Label>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -396,18 +440,23 @@ pub struct LabelList {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_2020_mip_label_metadata` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `Ext`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext(&mut self, _node: &Ext) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext_lst(&mut self, _node: &ExtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Label`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn label(&mut self, _node: &Label) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LabelList`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn label_list(&mut self, _node: &LabelList) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

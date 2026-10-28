@@ -37,6 +37,53 @@ use crate::file;
 use crate::new_parts;
 
 /// A `.xlsx`-family file: its package, its workbook part, and the class and kind they give.
+///
+/// Make one with [`new`](Self::new), or open one with [`open`](Self::open) or
+/// [`from_bytes`](Self::from_bytes). [`workbook`](Self::workbook) gives the workbook part as a
+/// typed tree. The cells live in the worksheet parts, which `officekit_parts::worksheet` loads and
+/// stores.
+///
+#[cfg_attr(
+    feature = "transitional",
+    doc = r#"
+This writes a number into cell `A1` of the first sheet of a new workbook and reads it back.
+
+```rust
+use officekit::xlsx::Xlsx;
+use officekit_markup::spreadsheet::{Cell, CellValue, Row};
+use officekit_packaging::part_name::PartName;
+use officekit_parts::kinds::SpreadsheetKind;
+use officekit_parts::worksheet;
+use officekit_xml::write::WriteOptions;
+
+# fn main() -> Result<(), Box<dyn core::error::Error>> {
+let mut xlsx = Xlsx::new(SpreadsheetKind::Workbook)?;
+let sheet = PartName::new("/xl/worksheets/sheet1.xml")?;
+
+let mut value = CellValue::default();
+value.value = "42".to_owned();
+let mut cell = Cell::default();
+cell.r = Some("A1".to_owned());
+cell.value = Some(Box::new(value));
+let mut row = Row::default();
+row.r = Some("1".to_owned());
+row.cell.push(cell);
+
+let mut root = worksheet::load(xlsx.package(), &sheet, xlsx.options())?;
+root.sheet_data.row.push(row);
+worksheet::store_transitional(xlsx.package_mut(), &sheet, &root, WriteOptions::default())?;
+
+let again = worksheet::load(xlsx.package(), &sheet, xlsx.options())?;
+let first = again.sheet_data.row.first().and_then(|row| row.cell.first());
+let text = first
+    .and_then(|cell| cell.value.as_ref())
+    .map(|value| value.value.as_str());
+assert_eq!(text, Some("42"));
+# Ok(())
+# }
+```
+"#
+)]
 #[derive(Debug)]
 pub struct Xlsx {
     class: ConformanceClass,
@@ -62,7 +109,8 @@ impl Xlsx {
         self.class
     }
 
-    /// A new workbook of `kind`, as [`new`](Self::new) makes it, written to `path`.
+    /// A new workbook of `kind`, as [`new`](Self::new) makes it, written to `path` as the package
+    /// is built, with no change of class. Needs the feature `transitional`.
     ///
     /// # Errors
     ///
@@ -161,11 +209,13 @@ impl Xlsx {
         &self.package
     }
 
+    /// The package, to change its parts, relationships and content types directly.
     pub const fn package_mut(&mut self) -> &mut Package {
         &mut self.package
     }
 
-    /// Write the file to `path` in the Strict class; nothing is written when it fails.
+    /// Write the file to `path` in the Strict class; nothing is written when it fails. Needs the
+    /// feature `strict`.
     ///
     /// # Errors
     ///
@@ -182,6 +232,8 @@ impl Xlsx {
     }
 
     /// Write the file to `path` in the Transitional class; nothing is written when it fails.
+    /// Returns one warning for each date cell written as a number. Needs the feature
+    /// `transitional`.
     ///
     /// # Errors
     ///
@@ -228,7 +280,7 @@ impl Xlsx {
     /// worksheet, table definition, pivot table, or pivot cache definition is written, each
     /// `x:dynamicFilter/@maxVal` gives its `maxValIso` and each
     /// `x:pivotCacheDefinition/@refreshedDate` its `refreshedDateIso`, in the workbook's date
-    /// system.
+    /// system. Needs the feature `strict`.
     ///
     /// # Errors
     ///
@@ -285,8 +337,9 @@ impl Xlsx {
     /// The file's bytes in the Transitional class: as they are when it was read Transitional,
     /// else every part a part module knows written again in Transitional, every relationship type
     /// in Transitional's spelling, and every other part, an embedded workbook among them, as it is.
-    /// Each date cell of a worksheet becomes a number cell in the workbook's date system, with one
-    /// warning per cell.
+    /// Each date cell of a worksheet that holds a date becomes a number cell in the workbook's date
+    /// system, with one warning per cell. A date cell with no value loses its type with no
+    /// warning, and one whose text is not a date stays, so the write refuses it. Needs the feature `transitional`.
     ///
     /// # Errors
     ///

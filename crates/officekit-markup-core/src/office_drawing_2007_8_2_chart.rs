@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `c14` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/drawing/2007/8/2/chart`, which files write with the prefix `c14`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/drawing/2007/8/2/chart`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 pub mod read;
 pub mod write;
@@ -328,7 +328,8 @@ pub static STYLE_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Sh
     text: false,
 };
 
-/// The tag `c14:dropZoneCategories`, schema type `CT_BooleanFalse` of SDK 3.5.1's data.
+/// The `c14:dropZoneCategories` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_BooleanFalse`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -337,10 +338,12 @@ pub static STYLE_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Sh
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DropZoneCategories {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c14:dropZoneData`, schema type `CT_BooleanFalse` of SDK 3.5.1's data.
+/// The `c14:dropZoneData` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_BooleanFalse`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -349,10 +352,12 @@ pub struct DropZoneCategories {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DropZoneData {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c14:dropZoneFilter`, schema type `CT_BooleanFalse` of SDK 3.5.1's data.
+/// The `c14:dropZoneFilter` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_BooleanFalse`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -361,10 +366,12 @@ pub struct DropZoneData {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DropZoneFilter {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c14:dropZoneSeries`, schema type `CT_BooleanFalse` of SDK 3.5.1's data.
+/// The `c14:dropZoneSeries` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_BooleanFalse`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -373,10 +380,12 @@ pub struct DropZoneFilter {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DropZoneSeries {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c14:dropZonesVisible`, schema type `CT_BooleanFalse` of SDK 3.5.1's data.
+/// The `c14:dropZonesVisible` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_BooleanFalse`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -385,10 +394,12 @@ pub struct DropZoneSeries {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DropZonesVisible {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c14:inSketchMode`, schema type `CT_BooleanFalse` of SDK 3.5.1's data.
+/// The `c14:inSketchMode` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_BooleanFalse`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -397,10 +408,12 @@ pub struct DropZonesVisible {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct InSketchMode {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c14:invertSolidFillFmt`, schema type `CT_InvertSolidFillFmt` of SDK 3.5.1's data.
+/// The `c14:invertSolidFillFmt` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_InvertSolidFillFmt`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -409,11 +422,14 @@ pub struct InSketchMode {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct InvertSolidFillFmt {
+    /// The child that is `SpPr`, which the schema requires.
     pub sp_pr: Box<SpPr>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c14:pivotOptions`, schema type `CT_PivotOptions` of SDK 3.5.1's data.
+/// The `c14:pivotOptions` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_PivotOptions`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -422,15 +438,22 @@ pub struct InvertSolidFillFmt {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PivotOptions {
+    /// The child that is `DropZoneCategories`, when there is one.
     pub drop_zone_categories: Option<Box<DropZoneCategories>>,
+    /// The child that is `DropZoneData`, when there is one.
     pub drop_zone_data: Option<Box<DropZoneData>>,
+    /// The child that is `DropZoneFilter`, when there is one.
     pub drop_zone_filter: Option<Box<DropZoneFilter>>,
+    /// The child that is `DropZoneSeries`, when there is one.
     pub drop_zone_series: Option<Box<DropZoneSeries>>,
+    /// The child that is `DropZonesVisible`, when there is one.
     pub drop_zones_visible: Option<Box<DropZonesVisible>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c14:showSketchBtn`, schema type `CT_BooleanTrue` of SDK 3.5.1's data.
+/// The `c14:showSketchBtn` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_BooleanTrue`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -439,11 +462,14 @@ pub struct PivotOptions {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShowSketchBtn {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `c14:sketchOptions`, schema type `CT_SketchOptions` of SDK 3.5.1's data.
+/// The `c14:sketchOptions` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_SketchOptions`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -452,12 +478,16 @@ pub struct ShowSketchBtn {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SketchOptions {
+    /// The child that is `InSketchMode`, when there is one.
     pub in_sketch_mode: Option<Box<InSketchMode>>,
+    /// The child that is `ShowSketchBtn`, when there is one.
     pub show_sketch_btn: Option<Box<ShowSketchBtn>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `c14:spPr`, schema type `CT_ShapeProperties` of SDK 3.5.1's data.
+/// The `c14:spPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ShapeProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -466,19 +496,30 @@ pub struct SketchOptions {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SpPr {
+    /// The child that is `super::drawing::Apply3DShapeProperties`, when there is one.
     pub apply_3d_shape_properties: Option<Box<super::drawing::Apply3DShapeProperties>>,
+    /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
+    /// The child that is an item of `super::drawing::EffectPropertiesContent`, when there is one.
     pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContent>>,
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The child that is an item of `super::drawing::FillPropertiesContent`, when there is one.
     pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContent>>,
+    /// The child that is an item of `super::drawing::GeometryContent`, when there is one.
     pub geometry_content: Option<Box<super::drawing::GeometryContent>>,
+    /// The child that is `super::drawing::Outline`, when there is one.
     pub outline: Option<Box<super::drawing::Outline>>,
+    /// The child that is `super::drawing::Scene3d`, when there is one.
     pub scene3d: Option<Box<super::drawing::Scene3d>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `super::drawing::XfrmTransform2D`, when there is one.
     pub xfrm_transform2d: Option<Box<super::drawing::XfrmTransform2D>>,
 }
 
-/// The tag `c14:style`, schema type `CT_Style` of SDK 3.5.1's data.
+/// The `c14:style` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Style`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -487,7 +528,9 @@ pub struct SpPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Style {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 

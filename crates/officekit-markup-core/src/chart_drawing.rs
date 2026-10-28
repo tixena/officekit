@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `cdr` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.openxmlformats.org/drawingml/2006/chartDrawing`, which files write with the prefix `cdr`.
 //!
-//! The namespace is `http://schemas.openxmlformats.org/drawingml/2006/chartDrawing`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -597,8 +597,8 @@ static CHART_MARKER_COORDINATE_VALUE_BOUNDS: officekit_markup_base::Bounds =
         min_inclusive: Some(0.0_f64),
     };
 
-/// 21.3.2.1 `absSizeAnchor` (Absolute Anchor Shape Size): the tag `cdr:absSizeAnchor`, schema type
-/// `CT_AbsSizeAnchor`.
+/// The `cdr:absSizeAnchor` element, Absolute Anchor Shape Size (ECMA-376 Part 1, section 21.3.2.1).
+/// Its schema type is `CT_AbsSizeAnchor`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -610,14 +610,22 @@ static CHART_MARKER_COORDINATE_VALUE_BOUNDS: officekit_markup_base::Bounds =
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AbsoluteAnchorShapeSize {
+    /// The child that is an item of `ObjectContent`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Box<ObjectContent>,
+    /// The child that is `ShapeExtent`, which the schema requires.
     pub shape_extent: Box<ShapeExtent>,
+    /// The child that is `StartingAnchorPoint`, which the schema requires.
     pub starting_anchor_point: Box<StartingAnchorPoint>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.3.3.1 `ST_MarkerCoordinate` (Chart Marker Coordinate Value): the text the file carried.
+/// Chart Marker Coordinate Value, the simple type `ST_MarkerCoordinate` (ECMA-376 Part 1, section
+/// 21.3.3.1), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -627,7 +635,8 @@ pub struct AbsoluteAnchorShapeSize {
 #[non_exhaustive]
 pub struct ChartMarkerCoordinateValue(pub String);
 
-/// 21.3.2.9 `cxnSp` (Connection Shape): the tag `cdr:cxnSp`, schema type `CT_Connector`.
+/// The `cdr:cxnSp` element, Connection Shape (ECMA-376 Part 1, section 21.3.2.9). Its schema type
+/// is `CT_Connector`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -639,18 +648,24 @@ pub struct ChartMarkerCoordinateValue(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConnectionShape {
+    /// The child that is `ConnectorNonVisualProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub connector_non_visual_properties: Box<ConnectorNonVisualProperties>,
+    /// The attribute `fPublished`, when the element has it.
     pub f_published: Option<String>,
+    /// The attribute `macro`, when the element has it.
     pub r#macro: Option<String>,
+    /// The child that is `ShapeProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub properties: Box<ShapeProperties>,
+    /// The child that is `ShapeStyle`, when there is one.
     pub style: Option<Box<ShapeStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.3.2.15 `nvCxnSpPr` (Connector Non Visual Properties): the tag `cdr:nvCxnSpPr`, schema type
-/// `CT_ConnectorNonVisual`.
+/// The `cdr:nvCxnSpPr` element, Connector Non Visual Properties (ECMA-376 Part 1, section
+/// 21.3.2.15). Its schema type is `CT_ConnectorNonVisual`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -662,15 +677,19 @@ pub struct ConnectionShape {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ConnectorNonVisualProperties {
+    /// The child that is `NonVisualConnectionShapeDrawingProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_connection_shape_drawing_properties:
         Box<NonVisualConnectionShapeDrawingProperties>,
+    /// The child that is `NonVisualDrawingProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.3.2.25 to (Ending Anchor Point): the tag `cdr:to`, schema type `CT_Marker`.
+/// The `cdr:to` element, Ending Anchor Point (ECMA-376 Part 1, section 21.3.2.25). Its schema type
+/// is `CT_Marker`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -679,13 +698,16 @@ pub struct ConnectorNonVisualProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EndingAnchorPoint {
+    /// The child that is `RelativeXCoordinate`, which the schema requires.
     pub relative_x_coordinate: Box<RelativeXCoordinate>,
+    /// The child that is `RelativeYCoordinate`, which the schema requires.
     pub relative_y_coordinate: Box<RelativeYCoordinate>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.3.2.12 `graphicFrame` (Graphic Frame): the tag `cdr:graphicFrame`, schema type
-/// `CT_GraphicFrame`.
+/// The `cdr:graphicFrame` element, Graphic Frame (ECMA-376 Part 1, section 21.3.2.12). Its schema
+/// type is `CT_GraphicFrame`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -697,17 +719,24 @@ pub struct EndingAnchorPoint {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GraphicFrame {
+    /// The attribute `fPublished`, when the element has it.
     pub f_published: Option<String>,
+    /// The child that is `super::drawing::GraphicObject`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub graphic_object: Box<super::drawing::GraphicObject>,
+    /// The attribute `macro`, when the element has it.
     pub r#macro: Option<String>,
+    /// The child that is `NonVisualGraphicFrameProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_graphic_frame_properties: Box<NonVisualGraphicFrameProperties>,
+    /// The child that is `GraphicFrameTransform`, which the schema requires.
     pub transform: Box<GraphicFrameTransform>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.3.2.28 xfrm (Graphic Frame Transform): the tag `cdr:xfrm`, schema type `CT_Transform2D`.
+/// The `cdr:xfrm` element, Graphic Frame Transform (ECMA-376 Part 1, section 21.3.2.28). Its schema
+/// type is `CT_Transform2D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -716,15 +745,22 @@ pub struct GraphicFrame {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GraphicFrameTransform {
+    /// The child that is `super::drawing::Extents`, when there is one.
     pub extents: Option<Box<super::drawing::Extents>>,
+    /// The attribute `flipH`, when the element has it.
     pub flip_h: Option<String>,
+    /// The attribute `flipV`, when the element has it.
     pub flip_v: Option<String>,
+    /// The child that is `super::drawing::Offset`, when there is one.
     pub offset: Option<Box<super::drawing::Offset>>,
+    /// The attribute `rot`, when the element has it.
     pub rot: Option<super::drawing::Angle>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.3.2.13 `grpSp` (Group Shape): the tag `cdr:grpSp`, schema type `CT_GroupShape`.
+/// The `cdr:grpSp` element, Group Shape (ECMA-376 Part 1, section 21.3.2.13). Its schema type is
+/// `CT_GroupShape`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -736,17 +772,21 @@ pub struct GraphicFrameTransform {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GroupShape {
+    /// The children that are an item of `ObjectContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<ObjectContent>,
+    /// The child that is `NonVisualGroupShapeProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_group_shape_properties: Box<NonVisualGroupShapeProperties>,
+    /// The child that is `GroupShapeProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub properties: Box<GroupShapeProperties>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.3.2.14 `grpSpPr` (Group Shape Properties): the tag `cdr:grpSpPr`, schema type
-/// `CT_GroupShapeProperties`.
+/// The `cdr:grpSpPr` element, Group Shape Properties (ECMA-376 Part 1, section 21.3.2.14). Its
+/// schema type is `CT_GroupShapeProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -758,21 +798,28 @@ pub struct GroupShape {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GroupShapeProperties {
+    /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
+    /// The child that is an item of `super::drawing::EffectPropertiesContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContent>>,
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The child that is an item of `super::drawing::FillPropertiesContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContent>>,
+    /// The child that is `super::drawing::Scene3d`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub scene3d: Option<Box<super::drawing::Scene3d>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `super::drawing::XfrmGroupTransform2D`, when there is one.
     pub xfrm_group_transform2d: Option<Box<super::drawing::XfrmGroupTransform2D>>,
 }
 
-/// 21.3.2.3 `cNvCxnSpPr` (Non-Visual Connection Shape Drawing Properties): the tag
-/// `cdr:cNvCxnSpPr`, schema type `CT_NonVisualConnectorProperties`.
+/// The `cdr:cNvCxnSpPr` element, Non-Visual Connection Shape Drawing Properties (ECMA-376 Part 1,
+/// section 21.3.2.3). Its schema type is `CT_NonVisualConnectorProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -784,17 +831,22 @@ pub struct GroupShapeProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualConnectionShapeDrawingProperties {
+    /// The child that is `super::drawing::ConnectionEnd`, when there is one.
     pub connection_end: Option<Box<super::drawing::ConnectionEnd>>,
+    /// The child that is `super::drawing::ConnectionShapeLocks`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub connection_shape_locks: Option<Box<super::drawing::ConnectionShapeLocks>>,
+    /// The child that is `super::drawing::ConnectionStart`, when there is one.
     pub connection_start: Option<Box<super::drawing::ConnectionStart>>,
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.3.2.7 `cNvPr` (Non-Visual Drawing Properties): the tag `cdr:cNvPr`, schema type
-/// `CT_NonVisualDrawingProps`.
+/// The `cdr:cNvPr` element, Non-Visual Drawing Properties (ECMA-376 Part 1, section 21.3.2.7). Its
+/// schema type is `CT_NonVisualDrawingProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -806,22 +858,31 @@ pub struct NonVisualConnectionShapeDrawingProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualDrawingProperties {
+    /// The child that is `super::drawing::ClickHyperlink`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub click_hyperlink: Option<Box<super::drawing::ClickHyperlink>>,
+    /// The attribute `descr`, when the element has it.
     pub descr: Option<String>,
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The attribute `hidden`, when the element has it.
     pub hidden: Option<String>,
+    /// The child that is `super::drawing::HyperlinkForHover`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHover>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<super::drawing::DrawingElementID>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.3.2.4 `cNvGraphicFramePr` (Non-Visual Graphic Frame Drawing Properties): the tag
-/// `cdr:cNvGraphicFramePr`, schema type `CT_NonVisualGraphicFrameProperties`.
+/// The `cdr:cNvGraphicFramePr` element, Non-Visual Graphic Frame Drawing Properties (ECMA-376 Part
+/// 1, section 21.3.2.4). Its schema type is `CT_NonVisualGraphicFrameProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -833,15 +894,18 @@ pub struct NonVisualDrawingProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualGraphicFrameDrawingProperties {
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The child that is `super::drawing::GraphicFrameLocks`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub graphic_frame_locks: Option<Box<super::drawing::GraphicFrameLocks>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.3.2.16 `nvGraphicFramePr` (Non-Visual Graphic Frame Properties): the tag
-/// `cdr:nvGraphicFramePr`, schema type `CT_GraphicFrameNonVisual`.
+/// The `cdr:nvGraphicFramePr` element, Non-Visual Graphic Frame Properties (ECMA-376 Part 1,
+/// section 21.3.2.16). Its schema type is `CT_GraphicFrameNonVisual`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -853,15 +917,18 @@ pub struct NonVisualGraphicFrameDrawingProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualGraphicFrameProperties {
+    /// The child that is `NonVisualDrawingProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
+    /// The child that is `NonVisualGraphicFrameDrawingProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_graphic_frame_drawing_properties: Box<NonVisualGraphicFrameDrawingProperties>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.3.2.5 `cNvGrpSpPr` (Non-Visual Group Shape Drawing Properties): the tag `cdr:cNvGrpSpPr`,
-/// schema type `CT_NonVisualGroupDrawingShapeProps`.
+/// The `cdr:cNvGrpSpPr` element, Non-Visual Group Shape Drawing Properties (ECMA-376 Part 1,
+/// section 21.3.2.5). Its schema type is `CT_NonVisualGroupDrawingShapeProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -873,15 +940,18 @@ pub struct NonVisualGraphicFrameProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualGroupShapeDrawingProperties {
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The child that is `super::drawing::GroupShapeLocks`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub group_shape_locks: Option<Box<super::drawing::GroupShapeLocks>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.3.2.17 `nvGrpSpPr` (Non-Visual Group Shape Properties): the tag `cdr:nvGrpSpPr`, schema type
-/// `CT_GroupShapeNonVisual`.
+/// The `cdr:nvGrpSpPr` element, Non-Visual Group Shape Properties (ECMA-376 Part 1, section
+/// 21.3.2.17). Its schema type is `CT_GroupShapeNonVisual`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -893,15 +963,18 @@ pub struct NonVisualGroupShapeDrawingProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualGroupShapeProperties {
+    /// The child that is `NonVisualDrawingProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
+    /// The child that is `NonVisualGroupShapeDrawingProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_group_shape_drawing_properties: Box<NonVisualGroupShapeDrawingProperties>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.3.2.6 `cNvPicPr` (Non-Visual Picture Drawing Properties): the tag `cdr:cNvPicPr`, schema type
-/// `CT_NonVisualPictureProperties`.
+/// The `cdr:cNvPicPr` element, Non-Visual Picture Drawing Properties (ECMA-376 Part 1, section
+/// 21.3.2.6). Its schema type is `CT_NonVisualPictureProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -913,16 +986,20 @@ pub struct NonVisualGroupShapeProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualPictureDrawingProperties {
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The child that is `super::drawing::PictureLocks`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub picture_locks: Option<Box<super::drawing::PictureLocks>>,
+    /// The attribute `preferRelativeResize`, when the element has it.
     pub prefer_relative_resize: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.3.2.18 `nvPicPr` (Non-Visual Picture Properties): the tag `cdr:nvPicPr`, schema type
-/// `CT_PictureNonVisual`.
+/// The `cdr:nvPicPr` element, Non-Visual Picture Properties (ECMA-376 Part 1, section 21.3.2.18).
+/// Its schema type is `CT_PictureNonVisual`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -934,15 +1011,18 @@ pub struct NonVisualPictureDrawingProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualPictureProperties {
+    /// The child that is `NonVisualDrawingProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
+    /// The child that is `NonVisualPictureDrawingProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_picture_drawing_properties: Box<NonVisualPictureDrawingProperties>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.3.2.8 `cNvSpPr` (Non-Visual Shape Drawing Properties): the tag `cdr:cNvSpPr`, schema type
-/// `CT_NonVisualDrawingShapeProps`.
+/// The `cdr:cNvSpPr` element, Non-Visual Shape Drawing Properties (ECMA-376 Part 1, section
+/// 21.3.2.8). Its schema type is `CT_NonVisualDrawingShapeProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -954,16 +1034,20 @@ pub struct NonVisualPictureProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualShapeDrawingProperties {
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The child that is `super::drawing::ShapeLocks`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub shape_locks: Option<Box<super::drawing::ShapeLocks>>,
+    /// The attribute `txBox`, when the element has it.
     pub tx_box: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.3.2.19 `nvSpPr` (Non-Visual Shape Properties): the tag `cdr:nvSpPr`, schema type
-/// `CT_ShapeNonVisual`.
+/// The `cdr:nvSpPr` element, Non-Visual Shape Properties (ECMA-376 Part 1, section 21.3.2.19). Its
+/// schema type is `CT_ShapeNonVisual`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -975,28 +1059,43 @@ pub struct NonVisualShapeDrawingProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualShapeProperties {
+    /// The child that is `NonVisualDrawingProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
+    /// The child that is `NonVisualShapeDrawingProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_shape_drawing_properties: Box<NonVisualShapeDrawingProperties>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_AbsSizeAnchor`, `CT_GroupShape`, `CT_RelSizeAnchor`: local choice in
-/// `CT_GroupShape`, local choice in `EG_ObjectChoices`.
+/// One child element of a choice: local choice in `CT_GroupShape`, local choice in
+/// `EG_ObjectChoices`.
+///
+/// The schema types that hold it: `CT_AbsSizeAnchor`, `CT_GroupShape`, `CT_RelSizeAnchor`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ObjectContent {
+    /// The element `cdr:cxnSp`, a `ConnectionShape`.
     ConnectionShape(ConnectionShape),
+    /// The element `cdr14:contentPart`, a `ContentPart`.
     ContentPart(super::office_drawing_2010_chart_drawing::ContentPart),
+    /// The element `cdr:graphicFrame`, a `GraphicFrame`.
     GraphicFrame(GraphicFrame),
+    /// The element `cdr:grpSp`, a `GroupShape`.
     GroupShape(GroupShape),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `cdr:pic`, a `Picture`.
     Picture(Picture),
+    /// The element `cdr:sp`, a `Shape`.
     Shape(Shape),
 }
 
-/// 21.3.2.20 pic (Picture): the tag `cdr:pic`, schema type `CT_Picture`.
+/// The `cdr:pic` element, Picture (ECMA-376 Part 1, section 21.3.2.20). Its schema type is
+/// `CT_Picture`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1008,19 +1107,27 @@ pub enum ObjectContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Picture {
+    /// The attribute `fPublished`, when the element has it.
     pub f_published: Option<String>,
+    /// The child that is `PictureFill`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub fill: Box<PictureFill>,
+    /// The attribute `macro`, when the element has it.
     pub r#macro: Option<String>,
+    /// The child that is `NonVisualPictureProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_picture_properties: Box<NonVisualPictureProperties>,
+    /// The child that is `ShapeProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub shape_properties: Box<ShapeProperties>,
+    /// The child that is `ShapeStyle`, when there is one.
     pub shape_style: Option<Box<ShapeStyle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.3.2.2 `blipFill` (Picture Fill): the tag `cdr:blipFill`, schema type `CT_BlipFillProperties`.
+/// The `cdr:blipFill` element, Picture Fill (ECMA-376 Part 1, section 21.3.2.2). Its schema type is
+/// `CT_BlipFillProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1032,17 +1139,23 @@ pub struct Picture {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PictureFill {
+    /// The child that is `super::drawing::Blip`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub blip: Option<Box<super::drawing::Blip>>,
+    /// The child that is an item of `super::drawing::FillModeContent`, when there is one.
     pub content: Option<Box<super::drawing::FillModeContent>>,
+    /// The attribute `dpi`, when the element has it.
     pub dpi: Option<String>,
+    /// The attribute `rotWithShape`, when the element has it.
     pub rot_with_shape: Option<String>,
+    /// The child that is `super::drawing::SourceRectangle`, when there is one.
     pub source_rectangle: Option<Box<super::drawing::SourceRectangle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.3.2.21 `relSizeAnchor` (Relative Anchor Shape Size): the tag `cdr:relSizeAnchor`, schema type
-/// `CT_RelSizeAnchor`.
+/// The `cdr:relSizeAnchor` element, Relative Anchor Shape Size (ECMA-376 Part 1, section
+/// 21.3.2.21). Its schema type is `CT_RelSizeAnchor`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1054,14 +1167,19 @@ pub struct PictureFill {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RelativeAnchorShapeSize {
+    /// The child that is an item of `ObjectContent`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Box<ObjectContent>,
+    /// The child that is `EndingAnchorPoint`, which the schema requires.
     pub ending_anchor_point: Box<EndingAnchorPoint>,
+    /// The child that is `StartingAnchorPoint`, which the schema requires.
     pub starting_anchor_point: Box<StartingAnchorPoint>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.3.2.27 x (Relative X Coordinate): the tag `cdr:x`, schema type `ST_MarkerCoordinate`.
+/// The `cdr:x` element, Relative X Coordinate (ECMA-376 Part 1, section 21.3.2.27). Its schema type
+/// is `ST_MarkerCoordinate`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1070,11 +1188,14 @@ pub struct RelativeAnchorShapeSize {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RelativeXCoordinate {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: ChartMarkerCoordinateValue,
 }
 
-/// 21.3.2.29 y (Relative Y Coordinate): the tag `cdr:y`, schema type `ST_MarkerCoordinate`.
+/// The `cdr:y` element, Relative Y Coordinate (ECMA-376 Part 1, section 21.3.2.29). Its schema type
+/// is `ST_MarkerCoordinate`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1083,11 +1204,13 @@ pub struct RelativeXCoordinate {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RelativeYCoordinate {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: ChartMarkerCoordinateValue,
 }
 
-/// 21.3.2.22 sp (Shape): the tag `cdr:sp`, schema type `CT_Shape`.
+/// The `cdr:sp` element, Shape (ECMA-376 Part 1, section 21.3.2.22). Its schema type is `CT_Shape`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1099,21 +1222,31 @@ pub struct RelativeYCoordinate {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Shape {
+    /// The attribute `fLocksText`, when the element has it.
     pub f_locks_text: Option<String>,
+    /// The attribute `fPublished`, when the element has it.
     pub f_published: Option<String>,
+    /// The attribute `macro`, when the element has it.
     pub r#macro: Option<String>,
+    /// The child that is `NonVisualShapeProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_shape_properties: Box<NonVisualShapeProperties>,
+    /// The child that is `ShapeProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub properties: Box<ShapeProperties>,
+    /// The child that is `ShapeStyle`, when there is one.
     pub style: Option<Box<ShapeStyle>>,
+    /// The child that is `ShapeTextBody`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_body: Option<Box<ShapeTextBody>>,
+    /// The attribute `textlink`, when the element has it.
     pub textlink: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.3.2.10 ext (Shape Extent): the tag `cdr:ext`, schema type `CT_PositiveSize2D`.
+/// The `cdr:ext` element, Shape Extent (ECMA-376 Part 1, section 21.3.2.10). Its schema type is
+/// `CT_PositiveSize2D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1122,12 +1255,16 @@ pub struct Shape {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeExtent {
+    /// The attribute `cx`, when the element has it.
     pub cx: Option<super::drawing::PositiveCoordinate>,
+    /// The attribute `cy`, when the element has it.
     pub cy: Option<super::drawing::PositiveCoordinate>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.3.2.23 `spPr` (Shape Properties): the tag `cdr:spPr`, schema type `CT_ShapeProperties`.
+/// The `cdr:spPr` element, Shape Properties (ECMA-376 Part 1, section 21.3.2.23). Its schema type
+/// is `CT_ShapeProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1139,25 +1276,36 @@ pub struct ShapeExtent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeProperties {
+    /// The child that is `super::drawing::Apply3DShapeProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub apply_3d: Option<Box<super::drawing::Apply3DShapeProperties>>,
+    /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
+    /// The child that is an item of `super::drawing::EffectPropertiesContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContent>>,
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The child that is an item of `super::drawing::FillPropertiesContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContent>>,
+    /// The child that is an item of `super::drawing::GeometryContent`, when there is one.
     pub geometry_content: Option<Box<super::drawing::GeometryContent>>,
+    /// The child that is `super::drawing::Outline`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub outline: Option<Box<super::drawing::Outline>>,
+    /// The child that is `super::drawing::Scene3d`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub scene3d: Option<Box<super::drawing::Scene3d>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `super::drawing::XfrmTransform2D`, when there is one.
     pub xfrm_transform2d: Option<Box<super::drawing::XfrmTransform2D>>,
 }
 
-/// 21.3.2.24 style (Shape Style): the tag `cdr:style`, schema type `CT_ShapeStyle`.
+/// The `cdr:style` element, Shape Style (ECMA-376 Part 1, section 21.3.2.24). Its schema type is
+/// `CT_ShapeStyle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1166,14 +1314,20 @@ pub struct ShapeProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeStyle {
+    /// The child that is `super::drawing::EffectReference`, which the schema requires.
     pub effect_reference: Box<super::drawing::EffectReference>,
+    /// The child that is `super::drawing::FillReference`, which the schema requires.
     pub fill_reference: Box<super::drawing::FillReference>,
+    /// The child that is `super::drawing::FontReference`, which the schema requires.
     pub font_reference: Box<super::drawing::FontReference>,
+    /// The child that is `super::drawing::LineReference`, which the schema requires.
     pub line_reference: Box<super::drawing::LineReference>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.3.2.26 `txBody` (Shape Text Body): the tag `cdr:txBody`, schema type `CT_TextBody`.
+/// The `cdr:txBody` element, Shape Text Body (ECMA-376 Part 1, section 21.3.2.26). Its schema type
+/// is `CT_TextBody`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1185,16 +1339,21 @@ pub struct ShapeStyle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeTextBody {
+    /// The child that is `super::drawing::BodyProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub properties: Box<super::drawing::BodyProperties>,
+    /// The child that is `super::drawing::TextListStyles`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_list_styles: Option<Box<super::drawing::TextListStyles>>,
+    /// The children that are `super::drawing::TextParagraphs`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub text_paragraphs: Vec<super::drawing::TextParagraphs>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 21.3.2.11 from (Starting Anchor Point): the tag `cdr:from`, schema type `CT_Marker`.
+/// The `cdr:from` element, Starting Anchor Point (ECMA-376 Part 1, section 21.3.2.11). Its schema
+/// type is `CT_Marker`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1203,17 +1362,27 @@ pub struct ShapeTextBody {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StartingAnchorPoint {
+    /// The child that is `RelativeXCoordinate`, which the schema requires.
     pub relative_x_coordinate: Box<RelativeXCoordinate>,
+    /// The child that is `RelativeYCoordinate`, which the schema requires.
     pub relative_y_coordinate: Box<RelativeYCoordinate>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_Drawing`: `EG_Anchor`.
+/// One child element of a choice: `EG_Anchor`.
+///
+/// The schema types that hold it: `CT_Drawing`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum UserShapesContent {
+    /// The element `cdr:absSizeAnchor`, a `AbsoluteAnchorShapeSize`.
     AbsoluteAnchorShapeSize(AbsoluteAnchorShapeSize),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `cdr:relSizeAnchor`, a `RelativeAnchorShapeSize`.
     RelativeAnchorShapeSize(RelativeAnchorShapeSize),
 }
 

@@ -31,12 +31,17 @@ const STRUCT_WIDTH: usize = 18;
 /// The module's text after the header: its documentation, imports, and the
 /// five files, with the semantic table `emit::semantic` writes.
 const MODULE_BODY: &str = "\
-//! The validation tables, converted from SDK 3.5.1's schema data.
+//! The validation tables, converted from the schema data of the Open XML SDK, version 3.5.1.
 //!
-//! Every schema type's attributes, children, content models, and text checks,
-//! the enumerations, the simple types the generator maps by hand, the part
-//! rules, and the semantic constraints, written by `cargo xtask
-//! generate-schema`.
+//! `SCHEMA_TYPES` holds every schema type with its attributes, children, content model and text
+//! checks. `ENUMERATIONS` and `SIMPLE_TYPES` hold the values of the simple types. `PART_RULES`
+//! holds the rule of every part type, and `SEMANTIC_CONSTRAINTS` the constraints between
+//! attributes and elements that a schema cannot state. `type_id` finds a type by name.
+//!
+//! A type's id is its index in `SCHEMA_TYPES`, and a part rule's id is its index in `PART_RULES`.
+//! A type is named by its namespace prefix, its schema type and its element, such as
+//! `w:CT_TblCellMar/w:tblCellMar`. Each row says in which Office versions it exists, as the bits of
+//! a `Versions`.
 
 use super::schema::types::{
     AnyNamespace, AttributeConstraint, Bounds, Check, ChildKind, ChildPart, CompositeKind,
@@ -65,7 +70,8 @@ const TRANSITIONAL_ONLY_NAMESPACES: &str = "
 
 /// The lookup by name that ends `types.rs`.
 const TYPE_ID: &str = "
-/// The id of the type the data names `name`, `w:CT_TblCellMar/w:tblCellMar`.
+/// The id of the type the data names `name`, `w:CT_TblCellMar/w:tblCellMar`; `None` for a name the
+/// data does not hold.
 #[must_use]
 pub fn type_id(name: &str) -> Option<TypeId> {
     let index = SCHEMA_TYPES
@@ -535,7 +541,7 @@ pub(super) fn files(
             .collect::<Result<Vec<Expr>>>()?,
     );
     let mut types_text = format!(
-        "{header}\n/// Every schema type of the data, sorted by name; a type's id is its index.\n"
+        "{header}\n/// Every schema type of the data, sorted by name; a type's id is its index, and `type_id` finds it\n/// by name.\n"
     );
     statement(
         "pub static SCHEMA_TYPES: &[SchemaType] = ",
@@ -573,7 +579,7 @@ pub(super) fn files(
         &mut enums_text,
     );
     enums_text.push_str(
-        "\n/// The class SDK 3.5.1's generator reads each of these simple types as,\n/// sorted by simple type.\n",
+        "\n/// The class the Open XML SDK's generator reads each of these simple types as, sorted by simple\n/// type.\n",
     );
     statement(
         "pub static SIMPLE_TYPES: &[(&str, ValueClass)] = ",

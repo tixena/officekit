@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `xr` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/spreadsheetml/2014/revision`, which files write with the prefix `xr`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2014/revision`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -1045,7 +1047,10 @@ pub static STATE_BASED_OBJECT_CONTENT_TAGS: officekit_markup_base::Accept =
         ],
     };
 
-/// `ST_AdjustType`: the text the file carried.
+/// The simple type `ST_AdjustType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1054,22 +1059,35 @@ pub static STATE_BASED_OBJECT_CONTENT_TAGS: officekit_markup_base::Accept =
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AdjustType(pub String);
-/// The members of `ST_AdjustType`, in alphabetical order.
+/// The members of the enumeration `ST_AdjustType`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum AdjustTypeMember {
+    /// The member written `anchor`.
     Anchor,
+    /// The member written `condFmt`.
     CondFmt,
+    /// The member written `fmla`.
     Fmla,
+    /// The member written `fmlaNoSticky`.
     FmlaNoSticky,
+    /// The member written `format`.
     Format,
+    /// The member written `fragile`.
     Fragile,
+    /// The member written `future`.
     Future,
+    /// The member written `noAdj`.
     NoAdj,
+    /// The member written `sparkline`.
     Sparkline,
 }
 
-/// `ST_AdjustTypeExt`: the text the file carried.
+/// The simple type `ST_AdjustTypeExt`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1078,14 +1096,17 @@ pub enum AdjustTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AdjustTypeExt(pub String);
-/// The members of `ST_AdjustTypeExt`, in alphabetical order.
+/// The members of the enumeration `ST_AdjustTypeExt`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum AdjustTypeExtMember {
+    /// The member written `test`.
     Test,
 }
 
-/// The tag `xr:autoFilter`, schema type `CT_AutoFilter` of SDK 3.5.1's data.
+/// The `xr:autoFilter` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_AutoFilter`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1094,14 +1115,20 @@ pub enum AdjustTypeExtMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AutoFilter {
+    /// The children that are `spreadsheet::AutoFilterColumn`, in order.
     pub autofilter_column: Vec<spreadsheet::AutoFilterColumn>,
+    /// The child that is `spreadsheet::FutureFeatureDataStorageArea`, when there is one.
     pub future_feature_data_storage_area: Option<Box<spreadsheet::FutureFeatureDataStorageArea>>,
+    /// The attribute `ref`, when the element has it.
     pub r#ref: Option<String>,
+    /// The child that is `spreadsheet::SortState`, when there is one.
     pub sort_state: Option<Box<spreadsheet::SortState>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:body`, schema type `CT_RevisionState` of SDK 3.5.1's data.
+/// The `xr:body` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RevisionState`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1110,11 +1137,14 @@ pub struct AutoFilter {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Body {
+    /// The child that is an item of `RevisionStateContent`, which the schema requires.
     pub content: Box<RevisionStateContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:c`, schema type `CT_RevCell` of SDK 3.5.1's data.
+/// The `xr:c` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `CT_RevCell`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1123,17 +1153,26 @@ pub struct Body {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct C {
+    /// The child that is `F`, when there is one.
     pub f: Option<Box<F>>,
+    /// The child that is `Is`, when there is one.
     pub is: Option<Box<Is>>,
+    /// The attribute `nop`, when the element has it.
     pub nop: Option<String>,
+    /// The attribute `rep`, when the element has it.
     pub rep: Option<String>,
+    /// The attribute `t`, when the element has it.
     pub t: Option<spreadsheet::CellType>,
+    /// The attribute `tick`, when the element has it.
     pub tick: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `V`, when there is one.
     pub v: Option<Box<V>>,
 }
 
-/// The tag `xr:ccse`, schema type `CT_ChangeCellSubEdit` of SDK 3.5.1's data.
+/// The `xr:ccse` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ChangeCellSubEdit`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1142,15 +1181,22 @@ pub struct C {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Ccse {
+    /// The children that are `C`, in order.
     pub c: Vec<C>,
+    /// The attribute `r`, when the element has it.
     pub r: Option<String>,
+    /// The attribute `t`, when the element has it.
     pub t: Option<FillType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w`, when the element has it.
     pub w: Option<String>,
+    /// The attribute `x`, when the element has it.
     pub x: Option<FillTypeExt>,
 }
 
-/// The tag `xr:comments`, schema type `CT_Comments` of SDK 3.5.1's data.
+/// The `xr:comments` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Comments`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1159,9 +1205,13 @@ pub struct Ccse {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Comments {
+    /// The child that is `spreadsheet::Authors`, which the schema requires.
     pub authors: Box<spreadsheet::Authors>,
+    /// The child that is `spreadsheet::FutureFeatureDataStorageArea`, when there is one.
     pub future_feature_data_storage_area: Option<Box<spreadsheet::FutureFeatureDataStorageArea>>,
+    /// The child that is `spreadsheet::ListOfComments`, which the schema requires.
     pub list: Box<spreadsheet::ListOfComments>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -1174,58 +1224,86 @@ pub struct Comments {
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_spreadsheetml_2014_revision` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `AutoFilter`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn auto_filter(&mut self, _node: &AutoFilter) -> Option<AutoFilter> {
         None
     }
 
+    /// Asked for each `Body`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn body(&mut self, _node: &Body) -> Option<Body> {
         None
     }
 
+    /// Asked for each `C`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn c(&mut self, _node: &C) -> Option<C> {
         None
     }
 
+    /// Asked for each `Ccse`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn ccse(&mut self, _node: &Ccse) -> Option<Ccse> {
         None
     }
 
+    /// Asked for each `Comments`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn comments(&mut self, _node: &Comments) -> Option<Comments> {
         None
     }
 
+    /// Asked for each `DataValidation`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn data_validation(&mut self, _node: &DataValidation) -> Option<DataValidation> {
         None
     }
 
+    /// Asked for each `Dxf`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn dxf(&mut self, _node: &Dxf) -> Option<Dxf> {
         None
     }
 
+    /// Asked for each `ExtLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
         None
     }
 
+    /// Asked for each `F`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn f(&mut self, _node: &F) -> Option<F> {
         None
     }
 
+    /// Asked for each `Formula`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn formula(&mut self, _node: &Formula) -> Option<Formula> {
         None
     }
 
+    /// Asked for each `FreezePanes`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn freeze_panes(&mut self, _node: &FreezePanes) -> Option<FreezePanes> {
         None
     }
 
+    /// Asked for each `Future`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn future(&mut self, _node: &Future) -> Option<Future> {
         None
     }
 
+    /// Asked for each `HdrRevExHeader`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn hdr_rev_ex_header(&mut self, _node: &HdrRevExHeader) -> Option<HdrRevExHeader> {
         None
     }
 
+    /// Asked for each `HdrStateBasedHeader`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn hdr_state_based_header(
         &mut self,
         _node: &HdrStateBasedHeader,
@@ -1233,38 +1311,56 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `HideUnhideSheet`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn hide_unhide_sheet(&mut self, _node: &HideUnhideSheet) -> Option<HideUnhideSheet> {
         None
     }
 
+    /// Asked for each `Hyperlink`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn hyperlink(&mut self, _node: &Hyperlink) -> Option<Hyperlink> {
         None
     }
 
+    /// Asked for each `Is`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn is(&mut self, _node: &Is) -> Option<Is> {
         None
     }
 
+    /// Asked for each `Link`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn link(&mut self, _node: &Link) -> Option<Link> {
         None
     }
 
+    /// Asked for each `OartAnchor`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn oart_anchor(&mut self, _node: &OartAnchor) -> Option<OartAnchor> {
         None
     }
 
+    /// Asked for each `ObjectState`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn object_state(&mut self, _node: &ObjectState) -> Option<ObjectState> {
         None
     }
 
+    /// Asked for each `Outline`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn outline(&mut self, _node: &Outline) -> Option<Outline> {
         None
     }
 
+    /// Asked for each `Outlines`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn outlines(&mut self, _node: &Outlines) -> Option<Outlines> {
         None
     }
 
+    /// Asked for each `PivotTableDefinition`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn pivot_table_definition(
         &mut self,
         _node: &PivotTableDefinition,
@@ -1272,14 +1368,20 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Ref`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn r#ref(&mut self, _node: &Ref) -> Option<Ref> {
         None
     }
 
+    /// Asked for each `ReferenceMapContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn reference_map(&mut self, _node: &ReferenceMapContent) -> Option<ReferenceMapContent> {
         None
     }
 
+    /// Asked for each `ReferenceMapContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn reference_map_items(
         &mut self,
         _node: &ReferenceMapContent,
@@ -1287,18 +1389,26 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Refmap`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn refmap(&mut self, _node: &Refmap) -> Option<Refmap> {
         None
     }
 
+    /// Asked for each `RevHdrs`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn rev_hdrs(&mut self, _node: &RevHdrs) -> Option<RevHdrs> {
         None
     }
 
+    /// Asked for each `RevStream`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn rev_stream(&mut self, _node: &RevStream) -> Option<RevStream> {
         None
     }
 
+    /// Asked for each `RevisionChangeObjectContent`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn revision_change_object(
         &mut self,
         _node: &RevisionChangeObjectContent,
@@ -1306,10 +1416,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `RevisionGroupContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn revision_group(&mut self, _node: &RevisionGroupContent) -> Option<RevisionGroupContent> {
         None
     }
 
+    /// Asked for each `RevisionGroupContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn revision_group_items(
         &mut self,
         _node: &RevisionGroupContent,
@@ -1317,18 +1431,26 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `RevisionPtr`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn revision_ptr(&mut self, _node: &RevisionPtr) -> Option<RevisionPtr> {
         None
     }
 
+    /// Asked for each `RevisionStateContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn revision_state(&mut self, _node: &RevisionStateContent) -> Option<RevisionStateContent> {
         None
     }
 
+    /// Asked for each `RevisionStreamContent`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn revision_stream(&mut self, _node: &RevisionStreamContent) -> Option<RevisionStreamContent> {
         None
     }
 
+    /// Asked for each `RevisionStreamContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn revision_stream_items(
         &mut self,
         _node: &RevisionStreamContent,
@@ -1336,14 +1458,20 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `RowColVisualOps`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn row_col_visual_ops(&mut self, _node: &RowColVisualOps) -> Option<RowColVisualOps> {
         None
     }
 
+    /// Asked for each `SheetUid`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn sheet_uid(&mut self, _node: &SheetUid) -> Option<SheetUid> {
         None
     }
 
+    /// Asked for each `ShowGridlinesHeadings`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn show_gridlines_headings(
         &mut self,
         _node: &ShowGridlinesHeadings,
@@ -1351,10 +1479,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `SparklineGroup`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn sparkline_group(&mut self, _node: &SparklineGroup) -> Option<SparklineGroup> {
         None
     }
 
+    /// Asked for each `StateBasedObjectContent`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn state_based_object(
         &mut self,
         _node: &StateBasedObjectContent,
@@ -1362,17 +1494,24 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Test`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn test(&mut self, _node: &Test) -> Option<Test> {
         None
     }
 
+    /// Asked for each `V`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn v(&mut self, _node: &V) -> Option<V> {
         None
     }
 
+    /// Asked when a `AutoFilter` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_auto_filter(
         &mut self,
         _node: &AutoFilter,
@@ -1381,30 +1520,42 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Body` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_body(&mut self, _node: &Body, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `C` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_c(&mut self, _node: &C, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Ccse` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ccse(&mut self, _node: &Ccse, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Comments` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_comments(
         &mut self,
         _node: &Comments,
@@ -1413,9 +1564,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DataValidation` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_data_validation(
         &mut self,
         _node: &DataValidation,
@@ -1424,37 +1578,52 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Dxf` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_dxf(&mut self, _node: &Dxf, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `F` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_f(&mut self, _node: &F, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Formula` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_formula(&mut self, _node: &Formula, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `FreezePanes` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_freeze_panes(
         &mut self,
         _node: &FreezePanes,
@@ -1463,16 +1632,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Future` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_future(&mut self, _node: &Future, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `HdrRevExHeader` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_hdr_rev_ex_header(
         &mut self,
         _node: &HdrRevExHeader,
@@ -1481,9 +1656,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `HdrStateBasedHeader` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_hdr_state_based_header(
         &mut self,
         _node: &HdrStateBasedHeader,
@@ -1492,9 +1670,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `HideUnhideSheet` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_hide_unhide_sheet(
         &mut self,
         _node: &HideUnhideSheet,
@@ -1503,9 +1684,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Hyperlink` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_hyperlink(
         &mut self,
         _node: &Hyperlink,
@@ -1514,23 +1698,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Is` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_is(&mut self, _node: &Is, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Link` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_link(&mut self, _node: &Link, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `OartAnchor` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_oart_anchor(
         &mut self,
         _node: &OartAnchor,
@@ -1539,9 +1732,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ObjectState` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_object_state(
         &mut self,
         _node: &ObjectState,
@@ -1550,16 +1746,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Outline` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_outline(&mut self, _node: &Outline, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Outlines` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_outlines(
         &mut self,
         _node: &Outlines,
@@ -1568,9 +1770,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotTableDefinition` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_table_definition(
         &mut self,
         _node: &PivotTableDefinition,
@@ -1579,16 +1784,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Ref` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ref(&mut self, _node: &Ref, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ReferenceMapContent` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_reference_map(
         &mut self,
         _node: &ReferenceMapContent,
@@ -1597,9 +1808,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ReferenceMapContent` in a list is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_reference_map_items(
         &mut self,
         _node: &ReferenceMapContent,
@@ -1608,16 +1822,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Refmap` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_refmap(&mut self, _node: &Refmap, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `RevHdrs` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_rev_hdrs(
         &mut self,
         _node: &RevHdrs,
@@ -1626,9 +1846,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RevStream` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_rev_stream(
         &mut self,
         _node: &RevStream,
@@ -1637,9 +1860,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RevisionChangeObjectContent` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_revision_change_object(
         &mut self,
         _node: &RevisionChangeObjectContent,
@@ -1648,9 +1874,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RevisionGroupContent` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_revision_group(
         &mut self,
         _node: &RevisionGroupContent,
@@ -1659,9 +1888,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RevisionGroupContent` in a list is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_revision_group_items(
         &mut self,
         _node: &RevisionGroupContent,
@@ -1670,9 +1902,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RevisionPtr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_revision_ptr(
         &mut self,
         _node: &RevisionPtr,
@@ -1681,9 +1916,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RevisionStateContent` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_revision_state(
         &mut self,
         _node: &RevisionStateContent,
@@ -1692,9 +1930,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RevisionStreamContent` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_revision_stream(
         &mut self,
         _node: &RevisionStreamContent,
@@ -1703,9 +1944,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RevisionStreamContent` in a list is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_revision_stream_items(
         &mut self,
         _node: &RevisionStreamContent,
@@ -1714,9 +1958,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RowColVisualOps` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_row_col_visual_ops(
         &mut self,
         _node: &RowColVisualOps,
@@ -1725,9 +1972,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SheetUid` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sheet_uid(
         &mut self,
         _node: &SheetUid,
@@ -1736,9 +1986,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShowGridlinesHeadings` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_show_gridlines_headings(
         &mut self,
         _node: &ShowGridlinesHeadings,
@@ -1747,9 +2000,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SparklineGroup` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sparkline_group(
         &mut self,
         _node: &SparklineGroup,
@@ -1758,9 +2014,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `StateBasedObjectContent` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_state_based_object(
         &mut self,
         _node: &StateBasedObjectContent,
@@ -1769,23 +2028,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Test` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_test(&mut self, _node: &Test, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `V` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_v(&mut self, _node: &V, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `XrrDefName` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_xrr_def_name(
         &mut self,
         _node: &XrrDefName,
@@ -1794,9 +2062,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `XrrList` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_xrr_list(
         &mut self,
         _node: &XrrList,
@@ -1805,9 +2076,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `XrrListExpR` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_xrr_list_exp_r(
         &mut self,
         _node: &XrrListExpR,
@@ -1816,9 +2090,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `XrrSheet` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_xrr_sheet(
         &mut self,
         _node: &XrrSheet,
@@ -1827,9 +2104,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `XrrTrim` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_xrr_trim(
         &mut self,
         _node: &XrrTrim,
@@ -1838,9 +2118,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `XrrUspt` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_xrr_uspt(
         &mut self,
         _node: &XrrUspt,
@@ -1849,131 +2132,189 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Xrrc` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_xrrc(&mut self, _node: &Xrrc, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Xrrco` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_xrrco(&mut self, _node: &Xrrco, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Xrrdo` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_xrrdo(&mut self, _node: &Xrrdo, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Xrrf` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_xrrf(&mut self, _node: &Xrrf, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Xrrftr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_xrrftr(&mut self, _node: &Xrrftr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Xrrg` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_xrrg(&mut self, _node: &Xrrg, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Xrrm` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_xrrm(&mut self, _node: &Xrrm, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Xrrrc` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_xrrrc(&mut self, _node: &Xrrrc, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Xrrtest` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_xrrtest(&mut self, _node: &Xrrtest, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked for each `XrrDefName`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn xrr_def_name(&mut self, _node: &XrrDefName) -> Option<XrrDefName> {
         None
     }
 
+    /// Asked for each `XrrList`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn xrr_list(&mut self, _node: &XrrList) -> Option<XrrList> {
         None
     }
 
+    /// Asked for each `XrrListExpR`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn xrr_list_exp_r(&mut self, _node: &XrrListExpR) -> Option<XrrListExpR> {
         None
     }
 
+    /// Asked for each `XrrSheet`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn xrr_sheet(&mut self, _node: &XrrSheet) -> Option<XrrSheet> {
         None
     }
 
+    /// Asked for each `XrrTrim`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn xrr_trim(&mut self, _node: &XrrTrim) -> Option<XrrTrim> {
         None
     }
 
+    /// Asked for each `XrrUspt`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn xrr_uspt(&mut self, _node: &XrrUspt) -> Option<XrrUspt> {
         None
     }
 
+    /// Asked for each `Xrrc`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn xrrc(&mut self, _node: &Xrrc) -> Option<Xrrc> {
         None
     }
 
+    /// Asked for each `Xrrco`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn xrrco(&mut self, _node: &Xrrco) -> Option<Xrrco> {
         None
     }
 
+    /// Asked for each `Xrrdo`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn xrrdo(&mut self, _node: &Xrrdo) -> Option<Xrrdo> {
         None
     }
 
+    /// Asked for each `Xrrf`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn xrrf(&mut self, _node: &Xrrf) -> Option<Xrrf> {
         None
     }
 
+    /// Asked for each `Xrrftr`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn xrrftr(&mut self, _node: &Xrrftr) -> Option<Xrrftr> {
         None
     }
 
+    /// Asked for each `Xrrg`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn xrrg(&mut self, _node: &Xrrg) -> Option<Xrrg> {
         None
     }
 
+    /// Asked for each `Xrrm`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn xrrm(&mut self, _node: &Xrrm) -> Option<Xrrm> {
         None
     }
 
+    /// Asked for each `Xrrrc`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn xrrrc(&mut self, _node: &Xrrrc) -> Option<Xrrrc> {
         None
     }
 
+    /// Asked for each `Xrrtest`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn xrrtest(&mut self, _node: &Xrrtest) -> Option<Xrrtest> {
         None
     }
 }
 
-/// The tag `xr:dataValidation`, schema type `CT_DataValidation` of SDK 3.5.1's data.
+/// The `xr:dataValidation` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_DataValidation`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1982,26 +2323,44 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataValidation {
+    /// The attribute `allowBlank`, when the element has it.
     pub allow_blank: Option<String>,
+    /// The attribute `error`, when the element has it.
     pub error: Option<String>,
+    /// The attribute `errorStyle`, when the element has it.
     pub error_style: Option<spreadsheet::DataValidationErrorStyles>,
+    /// The attribute `errorTitle`, when the element has it.
     pub error_title: Option<String>,
+    /// The child that is `spreadsheet::Formula1`, when there is one.
     pub formula_1: Option<Box<spreadsheet::Formula1>>,
+    /// The child that is `spreadsheet::Formula2`, when there is one.
     pub formula_2: Option<Box<spreadsheet::Formula2>>,
+    /// The attribute `imeMode`, when the element has it.
     pub ime_mode: Option<spreadsheet::DataValidationIMEMode>,
+    /// The child that is `office_spreadsheetml_2011_1_ac::List`, when there is one.
     pub list: Option<Box<office_spreadsheetml_2011_1_ac::List>>,
+    /// The attribute `operator`, when the element has it.
     pub operator: Option<spreadsheet::DataValidationOperator>,
+    /// The attribute `prompt`, when the element has it.
     pub prompt: Option<String>,
+    /// The attribute `promptTitle`, when the element has it.
     pub prompt_title: Option<String>,
+    /// The attribute `showDropDown`, when the element has it.
     pub show_drop_down: Option<String>,
+    /// The attribute `showErrorMessage`, when the element has it.
     pub show_error_message: Option<String>,
+    /// The attribute `showInputMessage`, when the element has it.
     pub show_input_message: Option<String>,
+    /// The attribute `sqref`, when the element has it.
     pub sqref: Option<spreadsheet::ReferenceSequence>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<spreadsheet::DataValidationType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:dxf`, schema type `CT_Dxf` of SDK 3.5.1's data.
+/// The `xr:dxf` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `CT_Dxf`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2010,17 +2369,28 @@ pub struct DataValidation {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Dxf {
+    /// The child that is `spreadsheet::Alignment`, when there is one.
     pub alignment: Option<Box<spreadsheet::Alignment>>,
+    /// The child that is `spreadsheet::Border`, when there is one.
     pub border: Option<Box<spreadsheet::Border>>,
+    /// The child that is `spreadsheet::Fill`, when there is one.
     pub fill: Option<Box<spreadsheet::Fill>>,
+    /// The child that is `spreadsheet::Font`, when there is one.
     pub font: Option<Box<spreadsheet::Font>>,
+    /// The child that is `spreadsheet::FutureFeatureDataStorageArea`, when there is one.
     pub future_feature_data_storage_area: Option<Box<spreadsheet::FutureFeatureDataStorageArea>>,
+    /// The child that is `spreadsheet::NumberFormat`, when there is one.
     pub number_format: Option<Box<spreadsheet::NumberFormat>>,
+    /// The child that is `spreadsheet::ProtectionProperties`, when there is one.
     pub protection_properties: Option<Box<spreadsheet::ProtectionProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_ExtFeatureType`: the text the file carried.
+/// The simple type `ST_ExtFeatureType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2029,14 +2399,17 @@ pub struct Dxf {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtFeatureType(pub String);
-/// The members of `ST_ExtFeatureType`, in alphabetical order.
+/// The members of the enumeration `ST_ExtFeatureType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ExtFeatureTypeMember {
+    /// The member written `reserved`.
     Reserved,
 }
 
-/// The tag `xr:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
+/// The `xr:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2045,11 +2418,16 @@ pub enum ExtFeatureTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
+    /// The children that are `spreadsheet::Extension`, in order.
     pub extension: Vec<spreadsheet::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_ExtSubFeatureType`: the text the file carried.
+/// The simple type `ST_ExtSubFeatureType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2058,14 +2436,17 @@ pub struct ExtLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtSubFeatureType(pub String);
-/// The members of `ST_ExtSubFeatureType`, in alphabetical order.
+/// The members of the enumeration `ST_ExtSubFeatureType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ExtSubFeatureTypeMember {
+    /// The member written `reserved`.
     Reserved,
 }
 
-/// The tag `xr:f`, schema type `ST_Formula` of SDK 3.5.1's data.
+/// The `xr:f` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `ST_Formula`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2074,11 +2455,16 @@ pub enum ExtSubFeatureTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct F {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// `ST_FeatureType`: the text the file carried.
+/// The simple type `ST_FeatureType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2087,26 +2473,43 @@ pub struct F {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FeatureType(pub String);
-/// The members of `ST_FeatureType`, in alphabetical order.
+/// The members of the enumeration `ST_FeatureType`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum FeatureTypeMember {
+    /// The member written `autoFilter`.
     AutoFilter,
+    /// The member written `comment`.
     Comment,
+    /// The member written `dataValidation`.
     DataValidation,
+    /// The member written `drawingElement`.
     DrawingElement,
+    /// The member written `freezePanes`.
     FreezePanes,
+    /// The member written `future`.
     Future,
+    /// The member written `hideUnhideSheet`.
     HideUnhideSheet,
+    /// The member written `hyperlink`.
     Hyperlink,
+    /// The member written `outlines`.
     Outlines,
+    /// The member written `pivotTable`.
     PivotTable,
+    /// The member written `rowColVisualOps`.
     RowColVisualOps,
+    /// The member written `showGridlinesHeadings`.
     ShowGridlinesHeadings,
+    /// The member written `sparklines`.
     Sparklines,
 }
 
-/// `ST_FillType`: the text the file carried.
+/// The simple type `ST_FillType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2115,16 +2518,23 @@ pub enum FeatureTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FillType(pub String);
-/// The members of `ST_FillType`, in alphabetical order.
+/// The members of the enumeration `ST_FillType`, in alphabetical order. `as_str` gives the text of
+/// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum FillTypeMember {
+    /// The member written `array`.
     Array,
+    /// The member written `fill`.
     Fill,
+    /// The member written `future`.
     Future,
 }
 
-/// `ST_FillTypeExt`: the text the file carried.
+/// The simple type `ST_FillTypeExt`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2133,14 +2543,17 @@ pub enum FillTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FillTypeExt(pub String);
-/// The members of `ST_FillTypeExt`, in alphabetical order.
+/// The members of the enumeration `ST_FillTypeExt`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum FillTypeExtMember {
+    /// The member written `test`.
     Test,
 }
 
-/// The tag `xr:formula`, schema type `ST_Formula` of SDK 3.5.1's data.
+/// The `xr:formula` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `ST_Formula`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2149,11 +2562,14 @@ pub enum FillTypeExtMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Formula {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `xr:freezePanes`, schema type `CT_FreezePanes` of SDK 3.5.1's data.
+/// The `xr:freezePanes` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_FreezePanes`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2162,11 +2578,14 @@ pub struct Formula {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FreezePanes {
+    /// The attribute `sheetViewUid`, when the element has it.
     pub sheet_view_uid: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:future`, schema type `CT_RefFuture` of SDK 3.5.1's data.
+/// The `xr:future` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RefFuture`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2175,10 +2594,12 @@ pub struct FreezePanes {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Future {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:hdr`, schema type `CT_RevExHeader` of SDK 3.5.1's data.
+/// The `xr:hdr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `CT_RevExHeader`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2187,14 +2608,20 @@ pub struct Future {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HdrRevExHeader {
+    /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `maxRev`, when the element has it.
     pub max_rev: Option<String>,
+    /// The attribute `minRev`, when the element has it.
     pub min_rev: Option<String>,
+    /// The attribute `time`, when the element has it.
     pub time: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:hdr`, schema type `CT_StateBasedHeader` of SDK 3.5.1's data.
+/// The `xr:hdr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `CT_StateBasedHeader`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2203,16 +2630,24 @@ pub struct HdrRevExHeader {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HdrStateBasedHeader {
+    /// The attribute `eft`, when the element has it.
     pub eft: Option<FeatureType>,
+    /// The attribute `eftx`, when the element has it.
     pub eftx: Option<ExtFeatureType>,
+    /// The child that is `Refmap`, when there is one.
     pub refmap: Option<Box<Refmap>>,
+    /// The attribute `seft`, when the element has it.
     pub seft: Option<SubFeatureType>,
+    /// The attribute `seftx`, when the element has it.
     pub seftx: Option<ExtSubFeatureType>,
+    /// The attribute `uid`, when the element has it.
     pub uid: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:hideUnhideSheet`, schema type `CT_HideUnhideSheet` of SDK 3.5.1's data.
+/// The `xr:hideUnhideSheet` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_HideUnhideSheet`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2221,11 +2656,14 @@ pub struct HdrStateBasedHeader {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HideUnhideSheet {
+    /// The attribute `hide`, when the element has it.
     pub hide: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:hyperlink`, schema type `CT_Hyperlink` of SDK 3.5.1's data.
+/// The `xr:hyperlink` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Hyperlink`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2234,15 +2672,22 @@ pub struct HideUnhideSheet {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Hyperlink {
+    /// The attribute `display`, when the element has it.
     pub display: Option<String>,
+    /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `location`, when the element has it.
     pub location: Option<String>,
+    /// The attribute `ref`, when the element has it.
     pub r#ref: Option<String>,
+    /// The attribute `tooltip`, when the element has it.
     pub tooltip: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:is`, schema type `CT_Rst` of SDK 3.5.1's data.
+/// The `xr:is` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `CT_Rst`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2251,14 +2696,20 @@ pub struct Hyperlink {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Is {
+    /// The child that is `spreadsheet::PhoneticProperties`, when there is one.
     pub phonetic_properties: Option<Box<spreadsheet::PhoneticProperties>>,
+    /// The children that are `spreadsheet::PhoneticRun`, in order.
     pub phonetic_run: Vec<spreadsheet::PhoneticRun>,
+    /// The children that are `spreadsheet::RichTextRun`, in order.
     pub rich_text_run: Vec<spreadsheet::RichTextRun>,
+    /// The child that is `spreadsheet::Text`, when there is one.
     pub text: Option<Box<spreadsheet::Text>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:link`, schema type `CT_RevisionStateLink` of SDK 3.5.1's data.
+/// The `xr:link` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RevisionStateLink`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2267,11 +2718,14 @@ pub struct Is {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Link {
+    /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:oartAnchor`, schema type `CT_RefOartAnchor` of SDK 3.5.1's data.
+/// The `xr:oartAnchor` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RefOartAnchor`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2280,24 +2734,42 @@ pub struct Link {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct OartAnchor {
+    /// The attribute `ajt`, when the element has it.
     pub ajt: Option<AdjustType>,
+    /// The attribute `ajtx`, when the element has it.
     pub ajtx: Option<AdjustTypeExt>,
+    /// The attribute `cx`, when the element has it.
     pub cx: Option<String>,
+    /// The attribute `cy`, when the element has it.
     pub cy: Option<String>,
+    /// The attribute `fromColOff`, when the element has it.
     pub from_col_off: Option<String>,
+    /// The attribute `fromRowOff`, when the element has it.
     pub from_row_off: Option<String>,
+    /// The attribute `homeRef`, when the element has it.
     pub home_ref: Option<String>,
+    /// The attribute `n`, when the element has it.
     pub n: Option<String>,
+    /// The attribute `oat`, when the element has it.
     pub oat: Option<OartAnchorType>,
+    /// The attribute `r`, when the element has it.
     pub r: Option<String>,
+    /// The attribute `toColOff`, when the element has it.
     pub to_col_off: Option<String>,
+    /// The attribute `toRowOff`, when the element has it.
     pub to_row_off: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `x`, when the element has it.
     pub x: Option<String>,
+    /// The attribute `y`, when the element has it.
     pub y: Option<String>,
 }
 
-/// `ST_OartAnchorType`: the text the file carried.
+/// The simple type `ST_OartAnchorType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2306,16 +2778,21 @@ pub struct OartAnchor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct OartAnchorType(pub String);
-/// The members of `ST_OartAnchorType`, in alphabetical order.
+/// The members of the enumeration `ST_OartAnchorType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum OartAnchorTypeMember {
+    /// The member written `absolute`.
     Absolute,
+    /// The member written `oneCell`.
     OneCell,
+    /// The member written `twoCell`.
     TwoCell,
 }
 
-/// The tag `xr:objectState`, schema type `CT_StateBasedObject` of SDK 3.5.1's data.
+/// The `xr:objectState` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_StateBasedObject`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2324,11 +2801,14 @@ pub enum OartAnchorTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ObjectState {
+    /// The child that is an item of `StateBasedObjectContent`, which the schema requires.
     pub content: Box<StateBasedObjectContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:outline`, schema type `CT_Outline` of SDK 3.5.1's data.
+/// The `xr:outline` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Outline`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2337,12 +2817,16 @@ pub struct ObjectState {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Outline {
+    /// The attribute `isCollapsed`, when the element has it.
     pub is_collapsed: Option<String>,
+    /// The attribute `level`, when the element has it.
     pub level: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:outlines`, schema type `CT_Outlines` of SDK 3.5.1's data.
+/// The `xr:outlines` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Outlines`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2351,12 +2835,16 @@ pub struct Outline {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Outlines {
+    /// The attribute `isRow`, when the element has it.
     pub is_row: Option<String>,
+    /// The children that are `Outline`, in order.
     pub outline: Vec<Outline>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:pivotTableDefinition`, schema type `CT_pivotTableDefinition` of SDK 3.5.1's data.
+/// The `xr:pivotTableDefinition` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_pivotTableDefinition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2365,95 +2853,182 @@ pub struct Outlines {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PivotTableDefinition {
+    /// The attribute `applyAlignmentFormats`, when the element has it.
     pub apply_alignment_formats: Option<String>,
+    /// The attribute `applyBorderFormats`, when the element has it.
     pub apply_border_formats: Option<String>,
+    /// The attribute `applyFontFormats`, when the element has it.
     pub apply_font_formats: Option<String>,
+    /// The attribute `applyNumberFormats`, when the element has it.
     pub apply_number_formats: Option<String>,
+    /// The attribute `applyPatternFormats`, when the element has it.
     pub apply_pattern_formats: Option<String>,
+    /// The attribute `applyWidthHeightFormats`, when the element has it.
     pub apply_width_height_formats: Option<String>,
+    /// The attribute `asteriskTotals`, when the element has it.
     pub asterisk_totals: Option<String>,
+    /// The attribute `autoFormatId`, when the element has it.
     pub auto_format_id: Option<String>,
+    /// The attribute `cacheId`, when the element has it.
     pub cache_id: Option<String>,
+    /// The attribute `chartFormat`, when the element has it.
     pub chart_format: Option<String>,
+    /// The attribute `colGrandTotals`, when the element has it.
     pub col_grand_totals: Option<String>,
+    /// The attribute `colHeaderCaption`, when the element has it.
     pub col_header_caption: Option<String>,
+    /// The child that is `spreadsheet::ColumnFields`, when there is one.
     pub column_fields: Option<Box<spreadsheet::ColumnFields>>,
+    /// The child that is `spreadsheet::ColumnItems`, when there is one.
     pub column_items: Option<Box<spreadsheet::ColumnItems>>,
+    /// The child that is `spreadsheet::ColumnOLAPHierarchyReferences`, when there is one.
     pub column_olap_hierarchy_references: Option<Box<spreadsheet::ColumnOLAPHierarchyReferences>>,
+    /// The attribute `compact`, when the element has it.
     pub compact: Option<String>,
+    /// The attribute `compactData`, when the element has it.
     pub compact_data: Option<String>,
+    /// The child that is `spreadsheet::ConditionalFormats`, when there is one.
     pub conditional_formats: Option<Box<spreadsheet::ConditionalFormats>>,
+    /// The attribute `createdVersion`, when the element has it.
     pub created_version: Option<String>,
+    /// The attribute `customListSort`, when the element has it.
     pub custom_list_sort: Option<String>,
+    /// The attribute `dataCaption`, when the element has it.
     pub data_caption: Option<String>,
+    /// The child that is `spreadsheet::DataFields`, when there is one.
     pub data_fields: Option<Box<spreadsheet::DataFields>>,
+    /// The attribute `dataOnRows`, when the element has it.
     pub data_on_rows: Option<String>,
+    /// The attribute `dataPosition`, when the element has it.
     pub data_position: Option<String>,
+    /// The attribute `disableFieldList`, when the element has it.
     pub disable_field_list: Option<String>,
+    /// The attribute `editData`, when the element has it.
     pub edit_data: Option<String>,
+    /// The attribute `enableDrill`, when the element has it.
     pub enable_drill: Option<String>,
+    /// The attribute `enableFieldProperties`, when the element has it.
     pub enable_field_properties: Option<String>,
+    /// The attribute `enableWizard`, when the element has it.
     pub enable_wizard: Option<String>,
+    /// The attribute `errorCaption`, when the element has it.
     pub error_caption: Option<String>,
+    /// The attribute `fieldListSortAscending`, when the element has it.
     pub field_list_sort_ascending: Option<String>,
+    /// The attribute `fieldPrintTitles`, when the element has it.
     pub field_print_titles: Option<String>,
+    /// The child that is `spreadsheet::Filters`, when there is one.
     pub filters: Option<Box<spreadsheet::Filters>>,
+    /// The child that is `spreadsheet::FutureFeatureDataStorageArea`, when there is one.
     pub future_feature_data_storage_area: Option<Box<spreadsheet::FutureFeatureDataStorageArea>>,
+    /// The attribute `grandTotalCaption`, when the element has it.
     pub grand_total_caption: Option<String>,
+    /// The attribute `gridDropZones`, when the element has it.
     pub grid_drop_zones: Option<String>,
+    /// The attribute `immersive`, when the element has it.
     pub immersive: Option<String>,
+    /// The attribute `indent`, when the element has it.
     pub indent: Option<String>,
+    /// The attribute `itemPrintTitles`, when the element has it.
     pub item_print_titles: Option<String>,
+    /// The attribute `mdxSubqueries`, when the element has it.
     pub mdx_subqueries: Option<String>,
+    /// The attribute `mergeItem`, when the element has it.
     pub merge_item: Option<String>,
+    /// The attribute `minRefreshableVersion`, when the element has it.
     pub min_refreshable_version: Option<String>,
+    /// The attribute `missingCaption`, when the element has it.
     pub missing_caption: Option<String>,
+    /// The attribute `multipleFieldFilters`, when the element has it.
     pub multiple_field_filters: Option<String>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `outline`, when the element has it.
     pub outline: Option<String>,
+    /// The attribute `outlineData`, when the element has it.
     pub outline_data: Option<String>,
+    /// The child that is `spreadsheet::PageFieldItems`, when there is one.
     pub page_field_items: Option<Box<spreadsheet::PageFieldItems>>,
+    /// The attribute `pageOverThenDown`, when the element has it.
     pub page_over_then_down: Option<String>,
+    /// The attribute `pageStyle`, when the element has it.
     pub page_style: Option<String>,
+    /// The attribute `pageWrap`, when the element has it.
     pub page_wrap: Option<String>,
+    /// The attribute `pivotTableStyle`, when the element has it.
     pub pivot_table_style: Option<String>,
+    /// The child that is `spreadsheet::PivotChartFormats`, when there is one.
     pub pivotchart_formats: Option<Box<spreadsheet::PivotChartFormats>>,
+    /// The child that is `spreadsheet::PivotTableFields`, when there is one.
     pub pivottable_fields: Option<Box<spreadsheet::PivotTableFields>>,
+    /// The child that is `spreadsheet::PivotTableFormats`, when there is one.
     pub pivottable_formats: Option<Box<spreadsheet::PivotTableFormats>>,
+    /// The child that is `spreadsheet::PivotTableLocation`, which the schema requires.
     pub pivottable_location: Box<spreadsheet::PivotTableLocation>,
+    /// The child that is `spreadsheet::PivotTableOLAPHierarchies`, when there is one.
     pub pivottable_olap_hierarchies: Option<Box<spreadsheet::PivotTableOLAPHierarchies>>,
+    /// The child that is `spreadsheet::PivotTableStyle`, when there is one.
     pub pivottable_style: Option<Box<spreadsheet::PivotTableStyle>>,
+    /// The attribute `preserveFormatting`, when the element has it.
     pub preserve_formatting: Option<String>,
+    /// The attribute `printDrill`, when the element has it.
     pub print_drill: Option<String>,
+    /// The attribute `published`, when the element has it.
     pub published: Option<String>,
+    /// The child that is `spreadsheet::RowFields`, when there is one.
     pub row_fields: Option<Box<spreadsheet::RowFields>>,
+    /// The attribute `rowGrandTotals`, when the element has it.
     pub row_grand_totals: Option<String>,
+    /// The attribute `rowHeaderCaption`, when the element has it.
     pub row_header_caption: Option<String>,
+    /// The child that is `spreadsheet::RowItems`, when there is one.
     pub row_items: Option<Box<spreadsheet::RowItems>>,
+    /// The child that is `spreadsheet::RowOLAPHierarchyReferences`, when there is one.
     pub row_olap_hierarchy_references: Option<Box<spreadsheet::RowOLAPHierarchyReferences>>,
+    /// The attribute `showCalcMbrs`, when the element has it.
     pub show_calc_mbrs: Option<String>,
+    /// The attribute `showDataDropDown`, when the element has it.
     pub show_data_drop_down: Option<String>,
+    /// The attribute `showDataTips`, when the element has it.
     pub show_data_tips: Option<String>,
+    /// The attribute `showDrill`, when the element has it.
     pub show_drill: Option<String>,
+    /// The attribute `showDropZones`, when the element has it.
     pub show_drop_zones: Option<String>,
+    /// The attribute `showEmptyCol`, when the element has it.
     pub show_empty_col: Option<String>,
+    /// The attribute `showEmptyRow`, when the element has it.
     pub show_empty_row: Option<String>,
+    /// The attribute `showError`, when the element has it.
     pub show_error: Option<String>,
+    /// The attribute `showHeaders`, when the element has it.
     pub show_headers: Option<String>,
+    /// The attribute `showItems`, when the element has it.
     pub show_items: Option<String>,
+    /// The attribute `showMemberPropertyTips`, when the element has it.
     pub show_member_property_tips: Option<String>,
+    /// The attribute `showMissing`, when the element has it.
     pub show_missing: Option<String>,
+    /// The attribute `showMultipleLabel`, when the element has it.
     pub show_multiple_label: Option<String>,
+    /// The attribute `subtotalHiddenItems`, when the element has it.
     pub subtotal_hidden_items: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `updatedVersion`, when the element has it.
     pub updated_version: Option<String>,
+    /// The attribute `useAutoFormatting`, when the element has it.
     pub use_auto_formatting: Option<String>,
+    /// The attribute `vacatedStyle`, when the element has it.
     pub vacated_style: Option<String>,
+    /// The attribute `visualTotals`, when the element has it.
     pub visual_totals: Option<String>,
 }
 
-/// The tag `xr:ref`, schema type `CT_RefCell` of SDK 3.5.1's data.
+/// The `xr:ref` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `CT_RefCell`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2462,29 +3037,48 @@ pub struct PivotTableDefinition {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Ref {
+    /// The attribute `ajt`, when the element has it.
     pub ajt: Option<AdjustType>,
+    /// The attribute `ajtx`, when the element has it.
     pub ajtx: Option<AdjustTypeExt>,
+    /// The attribute `homeRef`, when the element has it.
     pub home_ref: Option<String>,
+    /// The attribute `n`, when the element has it.
     pub n: Option<String>,
+    /// The attribute `r`, when the element has it.
     pub r: Option<String>,
+    /// The attribute `uid`, when the element has it.
     pub uid: Option<String>,
+    /// The attribute `uidLast`, when the element has it.
     pub uid_last: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_RefMap`: choice in `CT_RefMap`.
+/// One child element of a choice: choice in `CT_RefMap`.
+///
+/// The schema types that hold it: `CT_RefMap`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ReferenceMapContent {
+    /// The element `xr:future`, a `Future`.
     Future(Future),
+    /// The element `xr:oartAnchor`, a `OartAnchor`.
     OartAnchor(OartAnchor),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `xr:ref`, a `Ref`.
     Ref(Ref),
+    /// The element `xr:sheetUid`, a `SheetUid`.
     SheetUid(SheetUid),
+    /// The element `xr:test`, a `Test`.
     Test(Test),
 }
 
-/// The tag `xr:refmap`, schema type `CT_RefMap` of SDK 3.5.1's data.
+/// The `xr:refmap` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RefMap`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2493,11 +3087,14 @@ pub enum ReferenceMapContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Refmap {
+    /// The children that are an item of `ReferenceMapContent`, in order.
     pub content: Vec<ReferenceMapContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:revHdrs`, schema type `CT_RevExHeaders` of SDK 3.5.1's data.
+/// The `xr:revHdrs` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RevExHeaders`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2506,15 +3103,22 @@ pub struct Refmap {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RevHdrs {
+    /// The attribute `docId`, when the element has it.
     pub doc_id: Option<String>,
+    /// The attribute `endpointId`, when the element has it.
     pub endpoint_id: Option<String>,
+    /// The children that are `HdrRevExHeader`, in order.
     pub hdr_rev_ex_header: Vec<HdrRevExHeader>,
+    /// The attribute `maxRev`, when the element has it.
     pub max_rev: Option<String>,
+    /// The attribute `minRev`, when the element has it.
     pub min_rev: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:revStream`, schema type `CT_RevExStream` of SDK 3.5.1's data.
+/// The `xr:revStream` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RevExStream`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2523,20 +3127,32 @@ pub struct RevHdrs {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RevStream {
+    /// The children that are an item of `RevisionStreamContent`, in order.
     pub content: Vec<RevisionStreamContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_RevExChgObj`: choice in `CT_RevExChgObj`.
+/// One child element of a choice: choice in `CT_RevExChgObj`.
+///
+/// The schema types that hold it: `CT_RevExChgObj`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum RevisionChangeObjectContent {
+    /// The element `xr:body`, a `Body`.
     Body(Body),
+    /// The element `xr:link`, a `Link`.
     Link(Link),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
 }
 
-/// `ST_RevisionContext`: the text the file carried.
+/// The simple type `ST_RevisionContext`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2545,37 +3161,61 @@ pub enum RevisionChangeObjectContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RevisionContext(pub String);
-/// The members of `ST_RevisionContext`, in alphabetical order.
+/// The members of the enumeration `ST_RevisionContext`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum RevisionContextMember {
+    /// The member written `copy`.
     Copy,
+    /// The member written `normal`.
     Normal,
+    /// The member written `redo`.
     Redo,
+    /// The member written `undo`.
     Undo,
 }
 
-/// One item of `CT_RevGroup`: choice in `CT_RevGroup`.
+/// One child element of a choice: choice in `CT_RevGroup`.
+///
+/// The schema types that hold it: `CT_RevGroup`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum RevisionGroupContent {
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `xr:xrrDefName`, a `XrrDefName`.
     XrrDefName(XrrDefName),
+    /// The element `xr:xrrList`, a `XrrList`.
     XrrList(XrrList),
+    /// The element `xr:xrrListExpR`, a `XrrListExpR`.
     XrrListExpR(XrrListExpR),
+    /// The element `xr:xrrSheet`, a `XrrSheet`.
     XrrSheet(XrrSheet),
+    /// The element `xr:xrrTrim`, a `XrrTrim`.
     XrrTrim(XrrTrim),
+    /// The element `xr:xrrUspt`, a `XrrUspt`.
     XrrUspt(XrrUspt),
+    /// The element `xr:xrrc`, a `Xrrc`.
     Xrrc(Xrrc),
+    /// The element `xr:xrrco`, a `Xrrco`.
     Xrrco(Xrrco),
+    /// The element `xr:xrrdo`, a `Xrrdo`.
     Xrrdo(Xrrdo),
+    /// The element `xr:xrrf`, a `Xrrf`.
     Xrrf(Xrrf),
+    /// The element `xr:xrrftr`, a `Xrrftr`.
     Xrrftr(Xrrftr),
+    /// The element `xr:xrrm`, a `Xrrm`.
     Xrrm(Xrrm),
+    /// The element `xr:xrrrc`, a `Xrrrc`.
     Xrrrc(Xrrrc),
 }
 
-/// The tag `xr:revisionPtr`, schema type `CT_RevisionPtr` of SDK 3.5.1's data.
+/// The `xr:revisionPtr` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_RevisionPtr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2584,45 +3224,80 @@ pub enum RevisionGroupContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RevisionPtr {
+    /// The attribute `documentId`, when the element has it.
     pub document_id: Option<String>,
+    /// The attribute `revIDLastSave`, when the element has it.
     pub rev_id_last_save: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_RevisionState`: choice in `CT_RevisionState`.
+/// One child element of a choice: choice in `CT_RevisionState`.
+///
+/// The schema types that hold it: `CT_RevisionState`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum RevisionStateContent {
+    /// The element `xr:freezePanes`, a `FreezePanes`.
     FreezePanes(FreezePanes),
+    /// The element `xr:hideUnhideSheet`, a `HideUnhideSheet`.
     HideUnhideSheet(HideUnhideSheet),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `xr:outlines`, a `Outlines`.
     Outlines(Outlines),
+    /// The element `xr:rowColVisualOps`, a `RowColVisualOps`.
     RowColVisualOps(RowColVisualOps),
+    /// The element `xr:showGridlinesHeadings`, a `ShowGridlinesHeadings`.
     ShowGridlinesHeadings(ShowGridlinesHeadings),
 }
 
-/// One item of `CT_RevExStream`: choice in `CT_RevExStream`.
+/// One child element of a choice: choice in `CT_RevExStream`.
+///
+/// The schema types that hold it: `CT_RevExStream`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum RevisionStreamContent {
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `xr:xrrDefName`, a `XrrDefName`.
     XrrDefName(XrrDefName),
+    /// The element `xr:xrrList`, a `XrrList`.
     XrrList(XrrList),
+    /// The element `xr:xrrListExpR`, a `XrrListExpR`.
     XrrListExpR(XrrListExpR),
+    /// The element `xr:xrrSheet`, a `XrrSheet`.
     XrrSheet(XrrSheet),
+    /// The element `xr:xrrTrim`, a `XrrTrim`.
     XrrTrim(XrrTrim),
+    /// The element `xr:xrrUspt`, a `XrrUspt`.
     XrrUspt(XrrUspt),
+    /// The element `xr:xrrc`, a `Xrrc`.
     Xrrc(Xrrc),
+    /// The element `xr:xrrco`, a `Xrrco`.
     Xrrco(Xrrco),
+    /// The element `xr:xrrdo`, a `Xrrdo`.
     Xrrdo(Xrrdo),
+    /// The element `xr:xrrf`, a `Xrrf`.
     Xrrf(Xrrf),
+    /// The element `xr:xrrftr`, a `Xrrftr`.
     Xrrftr(Xrrftr),
+    /// The element `xr:xrrg`, a `Xrrg`.
     Xrrg(Xrrg),
+    /// The element `xr:xrrm`, a `Xrrm`.
     Xrrm(Xrrm),
+    /// The element `xr:xrrrc`, a `Xrrrc`.
     Xrrrc(Xrrrc),
 }
 
-/// `ST_RowColVisualOp`: the text the file carried.
+/// The simple type `ST_RowColVisualOp`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2631,17 +3306,23 @@ pub enum RevisionStreamContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RowColVisualOp(pub String);
-/// The members of `ST_RowColVisualOp`, in alphabetical order.
+/// The members of the enumeration `ST_RowColVisualOp`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum RowColVisualOpMember {
+    /// The member written `autosize`.
     Autosize,
+    /// The member written `hide`.
     Hide,
+    /// The member written `resize`.
     Resize,
+    /// The member written `unhide`.
     Unhide,
 }
 
-/// The tag `xr:rowColVisualOps`, schema type `CT_RowColVisualOps` of SDK 3.5.1's data.
+/// The `xr:rowColVisualOps` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_RowColVisualOps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2650,14 +3331,22 @@ pub enum RowColVisualOpMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RowColVisualOps {
+    /// The attribute `action`, when the element has it.
     pub action: Option<RowColVisualOp>,
+    /// The attribute `isRow`, when the element has it.
     pub is_row: Option<String>,
+    /// The attribute `size`, when the element has it.
     pub size: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `userSized`, when the element has it.
     pub user_sized: Option<String>,
 }
 
-/// `ST_RwColAction`: the text the file carried.
+/// The simple type `ST_RwColAction`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2666,17 +3355,25 @@ pub struct RowColVisualOps {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RwColAction(pub String);
-/// The members of `ST_RwColAction`, in alphabetical order.
+/// The members of the enumeration `ST_RwColAction`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum RwColActionMember {
+    /// The member written `delc`.
     Delc,
+    /// The member written `delr`.
     Delr,
+    /// The member written `insc`.
     Insc,
+    /// The member written `insr`.
     Insr,
 }
 
-/// `ST_SheetOp`: the text the file carried.
+/// The simple type `ST_SheetOp`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2685,17 +3382,23 @@ pub enum RwColActionMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SheetOp(pub String);
-/// The members of `ST_SheetOp`, in alphabetical order.
+/// The members of the enumeration `ST_SheetOp`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum SheetOpMember {
+    /// The member written `delete`.
     Delete,
+    /// The member written `insert`.
     Insert,
+    /// The member written `rename`.
     Rename,
+    /// The member written `reorder`.
     Reorder,
 }
 
-/// The tag `xr:sheetUid`, schema type `CT_SheetXluid` of SDK 3.5.1's data.
+/// The `xr:sheetUid` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SheetXluid`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2704,15 +3407,22 @@ pub enum SheetOpMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SheetUid {
+    /// The attribute `ajt`, when the element has it.
     pub ajt: Option<AdjustType>,
+    /// The attribute `ajtx`, when the element has it.
     pub ajtx: Option<AdjustTypeExt>,
+    /// The attribute `homeRef`, when the element has it.
     pub home_ref: Option<String>,
+    /// The attribute `n`, when the element has it.
     pub n: Option<String>,
+    /// The attribute `uid`, when the element has it.
     pub uid: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:showGridlinesHeadings`, schema type `CT_ShowGridlinesHeadings` of SDK 3.5.1's data.
+/// The `xr:showGridlinesHeadings` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_ShowGridlinesHeadings`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2721,12 +3431,16 @@ pub struct SheetUid {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShowGridlinesHeadings {
+    /// The attribute `showGridLines`, when the element has it.
     pub show_grid_lines: Option<String>,
+    /// The attribute `showRowCol`, when the element has it.
     pub show_row_col: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:sparklineGroup`, schema type `CT_SparklineGroup` of SDK 3.5.1's data.
+/// The `xr:sparklineGroup` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_SparklineGroup`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2735,50 +3449,92 @@ pub struct ShowGridlinesHeadings {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SparklineGroup {
+    /// The child that is `office_spreadsheetml_2009_9_main::ColorAxis`, when there is one.
     pub color_axis: Option<Box<office_spreadsheetml_2009_9_main::ColorAxis>>,
+    /// The child that is `office_spreadsheetml_2009_9_main::ColorFirst`, when there is one.
     pub color_first: Option<Box<office_spreadsheetml_2009_9_main::ColorFirst>>,
+    /// The child that is `office_spreadsheetml_2009_9_main::ColorHigh`, when there is one.
     pub color_high: Option<Box<office_spreadsheetml_2009_9_main::ColorHigh>>,
+    /// The child that is `office_spreadsheetml_2009_9_main::ColorLast`, when there is one.
     pub color_last: Option<Box<office_spreadsheetml_2009_9_main::ColorLast>>,
+    /// The child that is `office_spreadsheetml_2009_9_main::ColorLow`, when there is one.
     pub color_low: Option<Box<office_spreadsheetml_2009_9_main::ColorLow>>,
+    /// The child that is `office_spreadsheetml_2009_9_main::ColorMarkers`, when there is one.
     pub color_markers: Option<Box<office_spreadsheetml_2009_9_main::ColorMarkers>>,
+    /// The child that is `office_spreadsheetml_2009_9_main::ColorNegative`, when there is one.
     pub color_negative: Option<Box<office_spreadsheetml_2009_9_main::ColorNegative>>,
+    /// The child that is `office_spreadsheetml_2009_9_main::ColorSeries`, when there is one.
     pub color_series: Option<Box<office_spreadsheetml_2009_9_main::ColorSeries>>,
+    /// The attribute `dateAxis`, when the element has it.
     pub date_axis: Option<String>,
+    /// The attribute `displayEmptyCellsAs`, when the element has it.
     pub display_empty_cells_as: Option<office_spreadsheetml_2009_9_main::DispBlanksAs>,
+    /// The attribute `displayHidden`, when the element has it.
     pub display_hidden: Option<String>,
+    /// The attribute `displayXAxis`, when the element has it.
     pub display_x_axis: Option<String>,
+    /// The child that is `office_excel_2006_main::F`, when there is one.
     pub f: Option<Box<office_excel_2006_main::F>>,
+    /// The attribute `first`, when the element has it.
     pub first: Option<String>,
+    /// The attribute `high`, when the element has it.
     pub high: Option<String>,
+    /// The attribute `last`, when the element has it.
     pub last: Option<String>,
+    /// The attribute `lineWeight`, when the element has it.
     pub line_weight: Option<String>,
+    /// The attribute `low`, when the element has it.
     pub low: Option<String>,
+    /// The attribute `manualMax`, when the element has it.
     pub manual_max: Option<String>,
+    /// The attribute `manualMin`, when the element has it.
     pub manual_min: Option<String>,
+    /// The attribute `markers`, when the element has it.
     pub markers: Option<String>,
+    /// The attribute `maxAxisType`, when the element has it.
     pub max_axis_type: Option<office_spreadsheetml_2009_9_main::SparklineAxisMinMax>,
+    /// The attribute `minAxisType`, when the element has it.
     pub min_axis_type: Option<office_spreadsheetml_2009_9_main::SparklineAxisMinMax>,
+    /// The attribute `negative`, when the element has it.
     pub negative: Option<String>,
+    /// The attribute `rightToLeft`, when the element has it.
     pub right_to_left: Option<String>,
+    /// The child that is `office_spreadsheetml_2009_9_main::Sparklines`, which the schema requires.
     pub sparklines: Box<office_spreadsheetml_2009_9_main::Sparklines>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<office_spreadsheetml_2009_9_main::SparklineType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_StateBasedObject`: choice in `CT_StateBasedObject`.
+/// One child element of a choice: choice in `CT_StateBasedObject`.
+///
+/// The schema types that hold it: `CT_StateBasedObject`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum StateBasedObjectContent {
+    /// The element `xr:autoFilter`, a `AutoFilter`.
     AutoFilter(AutoFilter),
+    /// The element `xr:comments`, a `Comments`.
     Comments(Comments),
+    /// The element `xr:dataValidation`, a `DataValidation`.
     DataValidation(DataValidation),
+    /// The element `xr:hyperlink`, a `Hyperlink`.
     Hyperlink(Hyperlink),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `xr:pivotTableDefinition`, a `PivotTableDefinition`.
     PivotTableDefinition(Box<PivotTableDefinition>),
+    /// The element `xr:sparklineGroup`, a `SparklineGroup`.
     SparklineGroup(SparklineGroup),
 }
 
-/// `ST_SubFeatureType`: the text the file carried.
+/// The simple type `ST_SubFeatureType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2787,15 +3543,19 @@ pub enum StateBasedObjectContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SubFeatureType(pub String);
-/// The members of `ST_SubFeatureType`, in alphabetical order.
+/// The members of the enumeration `ST_SubFeatureType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum SubFeatureTypeMember {
+    /// The member written `future`.
     Future,
+    /// The member written `none`.
     None,
 }
 
-/// The tag `xr:test`, schema type `CT_RefTest` of SDK 3.5.1's data.
+/// The `xr:test` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RefTest`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2804,14 +3564,20 @@ pub enum SubFeatureTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Test {
+    /// The attribute `ajt`, when the element has it.
     pub ajt: Option<AdjustType>,
+    /// The attribute `ajtx`, when the element has it.
     pub ajtx: Option<AdjustTypeExt>,
+    /// The attribute `homeRef`, when the element has it.
     pub home_ref: Option<String>,
+    /// The attribute `n`, when the element has it.
     pub n: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:v`, schema type `ST_Xstring` of SDK 3.5.1's data.
+/// The `xr:v` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `ST_Xstring`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2820,7 +3586,9 @@ pub struct Test {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct V {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
@@ -2830,58 +3598,77 @@ pub struct V {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_spreadsheetml_2014_revision` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `AutoFilter`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn auto_filter(&mut self, _node: &AutoFilter) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Body`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn body(&mut self, _node: &Body) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `C`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn c(&mut self, _node: &C) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Ccse`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ccse(&mut self, _node: &Ccse) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Comments`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn comments(&mut self, _node: &Comments) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DataValidation`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn data_validation(&mut self, _node: &DataValidation) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Dxf`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn dxf(&mut self, _node: &Dxf) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext_lst(&mut self, _node: &ExtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `F`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn f(&mut self, _node: &F) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Formula`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn formula(&mut self, _node: &Formula) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FreezePanes`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn freeze_panes(&mut self, _node: &FreezePanes) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Future`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn future(&mut self, _node: &Future) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `HdrRevExHeader`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn hdr_rev_ex_header(&mut self, _node: &HdrRevExHeader) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `HdrStateBasedHeader`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn hdr_state_based_header(
         &mut self,
         _node: &HdrStateBasedHeader,
@@ -2889,38 +3676,52 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `HideUnhideSheet`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn hide_unhide_sheet(&mut self, _node: &HideUnhideSheet) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Hyperlink`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn hyperlink(&mut self, _node: &Hyperlink) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Is`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn is(&mut self, _node: &Is) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Link`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn link(&mut self, _node: &Link) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OartAnchor`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn oart_anchor(&mut self, _node: &OartAnchor) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ObjectState`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn object_state(&mut self, _node: &ObjectState) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Outline`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn outline(&mut self, _node: &Outline) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Outlines`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn outlines(&mut self, _node: &Outlines) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotTableDefinition`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn pivot_table_definition(
         &mut self,
         _node: &PivotTableDefinition,
@@ -2928,26 +3729,35 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Ref`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn r#ref(&mut self, _node: &Ref) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ReferenceMapContent`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn reference_map(&mut self, _node: &ReferenceMapContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Refmap`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn refmap(&mut self, _node: &Refmap) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RevHdrs`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn rev_hdrs(&mut self, _node: &RevHdrs) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RevStream`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn rev_stream(&mut self, _node: &RevStream) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RevisionChangeObjectContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn revision_change_object(
         &mut self,
         _node: &RevisionChangeObjectContent,
@@ -2955,30 +3765,43 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RevisionGroupContent`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn revision_group(&mut self, _node: &RevisionGroupContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RevisionPtr`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn revision_ptr(&mut self, _node: &RevisionPtr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RevisionStateContent`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn revision_state(&mut self, _node: &RevisionStateContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RevisionStreamContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn revision_stream(&mut self, _node: &RevisionStreamContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RowColVisualOps`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn row_col_visual_ops(&mut self, _node: &RowColVisualOps) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SheetUid`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sheet_uid(&mut self, _node: &SheetUid) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShowGridlinesHeadings`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn show_gridlines_headings(
         &mut self,
         _node: &ShowGridlinesHeadings,
@@ -2986,10 +3809,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SparklineGroup`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn sparkline_group(&mut self, _node: &SparklineGroup) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `StateBasedObjectContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn state_based_object(
         &mut self,
         _node: &StateBasedObjectContent,
@@ -2997,76 +3824,96 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Test`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn test(&mut self, _node: &Test) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `V`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn v(&mut self, _node: &V) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `XrrDefName`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn xrr_def_name(&mut self, _node: &XrrDefName) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `XrrList`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn xrr_list(&mut self, _node: &XrrList) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `XrrListExpR`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn xrr_list_exp_r(&mut self, _node: &XrrListExpR) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `XrrSheet`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn xrr_sheet(&mut self, _node: &XrrSheet) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `XrrTrim`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn xrr_trim(&mut self, _node: &XrrTrim) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `XrrUspt`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn xrr_uspt(&mut self, _node: &XrrUspt) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Xrrc`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn xrrc(&mut self, _node: &Xrrc) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Xrrco`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn xrrco(&mut self, _node: &Xrrco) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Xrrdo`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn xrrdo(&mut self, _node: &Xrrdo) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Xrrf`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn xrrf(&mut self, _node: &Xrrf) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Xrrftr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn xrrftr(&mut self, _node: &Xrrftr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Xrrg`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn xrrg(&mut self, _node: &Xrrg) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Xrrm`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn xrrm(&mut self, _node: &Xrrm) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Xrrrc`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn xrrrc(&mut self, _node: &Xrrrc) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Xrrtest`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn xrrtest(&mut self, _node: &Xrrtest) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 }
 
-/// The tag `xr:xrrDefName`, schema type `CT_RevExDefinedName` of SDK 3.5.1's data.
+/// The `xr:xrrDefName` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RevExDefinedName`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3075,28 +3922,48 @@ pub trait Visitor: crate::Visitor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct XrrDefName {
+    /// The attribute `comment`, when the element has it.
     pub comment: Option<String>,
+    /// The attribute `ctx`, when the element has it.
     pub ctx: Option<RevisionContext>,
+    /// The attribute `customMenu`, when the element has it.
     pub custom_menu: Option<String>,
+    /// The attribute `customView`, when the element has it.
     pub custom_view: Option<String>,
+    /// The attribute `description`, when the element has it.
     pub description: Option<String>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `Formula`, when there is one.
     pub formula: Option<Box<Formula>>,
+    /// The attribute `function`, when the element has it.
     pub function: Option<String>,
+    /// The attribute `functionGroupId`, when the element has it.
     pub function_group_id: Option<String>,
+    /// The attribute `help`, when the element has it.
     pub help: Option<String>,
+    /// The attribute `hidden`, when the element has it.
     pub hidden: Option<String>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `rev`, when the element has it.
     pub rev: Option<String>,
+    /// The attribute `sh`, when the element has it.
     pub sh: Option<String>,
+    /// The attribute `shortcutKey`, when the element has it.
     pub shortcut_key: Option<String>,
+    /// The attribute `statusBar`, when the element has it.
     pub status_bar: Option<String>,
+    /// The attribute `uid`, when the element has it.
     pub uid: Option<String>,
+    /// The attribute `uidp`, when the element has it.
     pub uidp: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:xrrList`, schema type `CT_RevisionList` of SDK 3.5.1's data.
+/// The `xr:xrrList` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RevisionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3105,23 +3972,38 @@ pub struct XrrDefName {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct XrrList {
+    /// The attribute `ctx`, when the element has it.
     pub ctx: Option<RevisionContext>,
+    /// The attribute `Data`, when the element has it.
     pub data: Option<String>,
+    /// The attribute `Fake`, when the element has it.
     pub fake: Option<String>,
+    /// The attribute `Formatting`, when the element has it.
     pub formatting: Option<String>,
+    /// The attribute `Headers`, when the element has it.
     pub headers: Option<String>,
+    /// The attribute `InsDelHeaders`, when the element has it.
     pub ins_del_headers: Option<String>,
+    /// The attribute `rId`, when the element has it.
     pub r_id: Option<String>,
+    /// The attribute `RangeBased`, when the element has it.
     pub range_based: Option<String>,
+    /// The attribute `ref`, when the element has it.
     pub r#ref: Option<String>,
+    /// The attribute `rev`, when the element has it.
     pub rev: Option<String>,
+    /// The attribute `sh`, when the element has it.
     pub sh: Option<String>,
+    /// The attribute `uid`, when the element has it.
     pub uid: Option<String>,
+    /// The attribute `uidp`, when the element has it.
     pub uidp: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:xrrListExpR`, schema type `CT_RevListAutoExpandRw` of SDK 3.5.1's data.
+/// The `xr:xrrListExpR` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_RevListAutoExpandRw`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3130,17 +4012,26 @@ pub struct XrrList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct XrrListExpR {
+    /// The attribute `ctx`, when the element has it.
     pub ctx: Option<RevisionContext>,
+    /// The attribute `listGuid`, when the element has it.
     pub list_guid: Option<String>,
+    /// The attribute `refAdded`, when the element has it.
     pub ref_added: Option<String>,
+    /// The attribute `rev`, when the element has it.
     pub rev: Option<String>,
+    /// The attribute `sh`, when the element has it.
     pub sh: Option<String>,
+    /// The attribute `uid`, when the element has it.
     pub uid: Option<String>,
+    /// The attribute `uidp`, when the element has it.
     pub uidp: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:xrrSheet`, schema type `CT_RevExSheetOp` of SDK 3.5.1's data.
+/// The `xr:xrrSheet` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RevExSheetOp`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3149,19 +4040,30 @@ pub struct XrrListExpR {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct XrrSheet {
+    /// The attribute `ctx`, when the element has it.
     pub ctx: Option<RevisionContext>,
+    /// The attribute `idNew`, when the element has it.
     pub id_new: Option<String>,
+    /// The attribute `idOrig`, when the element has it.
     pub id_orig: Option<String>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `op`, when the element has it.
     pub op: Option<SheetOp>,
+    /// The attribute `rev`, when the element has it.
     pub rev: Option<String>,
+    /// The attribute `sh`, when the element has it.
     pub sh: Option<String>,
+    /// The attribute `uid`, when the element has it.
     pub uid: Option<String>,
+    /// The attribute `uidp`, when the element has it.
     pub uidp: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:xrrTrim`, schema type `CT_RevExTrimmed` of SDK 3.5.1's data.
+/// The `xr:xrrTrim` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RevExTrimmed`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3170,15 +4072,22 @@ pub struct XrrSheet {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct XrrTrim {
+    /// The attribute `ctx`, when the element has it.
     pub ctx: Option<RevisionContext>,
+    /// The attribute `rev`, when the element has it.
     pub rev: Option<String>,
+    /// The attribute `sh`, when the element has it.
     pub sh: Option<String>,
+    /// The attribute `uid`, when the element has it.
     pub uid: Option<String>,
+    /// The attribute `uidp`, when the element has it.
     pub uidp: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:xrrUspt`, schema type `CT_RevExUnsupported` of SDK 3.5.1's data.
+/// The `xr:xrrUspt` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RevExUnsupported`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3187,15 +4096,22 @@ pub struct XrrTrim {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct XrrUspt {
+    /// The attribute `ctx`, when the element has it.
     pub ctx: Option<RevisionContext>,
+    /// The attribute `rev`, when the element has it.
     pub rev: Option<String>,
+    /// The attribute `sh`, when the element has it.
     pub sh: Option<String>,
+    /// The attribute `uid`, when the element has it.
     pub uid: Option<String>,
+    /// The attribute `uidp`, when the element has it.
     pub uidp: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:xrrc`, schema type `CT_RevExChangeCell` of SDK 3.5.1's data.
+/// The `xr:xrrc` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RevExChangeCell`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3204,22 +4120,36 @@ pub struct XrrUspt {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Xrrc {
+    /// The children that are `C`, in order.
     pub c: Vec<C>,
+    /// The children that are `Ccse`, in order.
     pub ccse: Vec<Ccse>,
+    /// The attribute `ctx`, when the element has it.
     pub ctx: Option<RevisionContext>,
+    /// The attribute `listUid`, when the element has it.
     pub list_uid: Option<String>,
+    /// The attribute `r`, when the element has it.
     pub r: Option<String>,
+    /// The attribute `rev`, when the element has it.
     pub rev: Option<String>,
+    /// The attribute `sh`, when the element has it.
     pub sh: Option<String>,
+    /// The attribute `t`, when the element has it.
     pub t: Option<FillType>,
+    /// The attribute `uid`, when the element has it.
     pub uid: Option<String>,
+    /// The attribute `uidp`, when the element has it.
     pub uidp: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `w`, when the element has it.
     pub w: Option<String>,
+    /// The attribute `x`, when the element has it.
     pub x: Option<FillTypeExt>,
 }
 
-/// The tag `xr:xrrco`, schema type `CT_RevExChgObj` of SDK 3.5.1's data.
+/// The `xr:xrrco` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RevExChgObj`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3228,17 +4158,26 @@ pub struct Xrrc {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Xrrco {
+    /// The child that is an item of `RevisionChangeObjectContent`, which the schema requires.
     pub content: Box<RevisionChangeObjectContent>,
+    /// The attribute `ctx`, when the element has it.
     pub ctx: Option<RevisionContext>,
+    /// The child that is `HdrStateBasedHeader`, which the schema requires.
     pub hdr_state_based_header: Box<HdrStateBasedHeader>,
+    /// The attribute `rev`, when the element has it.
     pub rev: Option<String>,
+    /// The attribute `sh`, when the element has it.
     pub sh: Option<String>,
+    /// The attribute `uid`, when the element has it.
     pub uid: Option<String>,
+    /// The attribute `uidp`, when the element has it.
     pub uidp: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:xrrdo`, schema type `CT_RevExDelObj` of SDK 3.5.1's data.
+/// The `xr:xrrdo` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RevExDelObj`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3247,16 +4186,24 @@ pub struct Xrrco {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Xrrdo {
+    /// The attribute `ctx`, when the element has it.
     pub ctx: Option<RevisionContext>,
+    /// The child that is `HdrStateBasedHeader`, which the schema requires.
     pub hdr_state_based_header: Box<HdrStateBasedHeader>,
+    /// The attribute `rev`, when the element has it.
     pub rev: Option<String>,
+    /// The attribute `sh`, when the element has it.
     pub sh: Option<String>,
+    /// The attribute `uid`, when the element has it.
     pub uid: Option<String>,
+    /// The attribute `uidp`, when the element has it.
     pub uidp: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:xrrf`, schema type `CT_RevExFormatting` of SDK 3.5.1's data.
+/// The `xr:xrrf` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RevExFormatting`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3265,31 +4212,54 @@ pub struct Xrrdo {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Xrrf {
+    /// The attribute `applyAlignment`, when the element has it.
     pub apply_alignment: Option<String>,
+    /// The attribute `applyBorder`, when the element has it.
     pub apply_border: Option<String>,
+    /// The attribute `applyFill`, when the element has it.
     pub apply_fill: Option<String>,
+    /// The attribute `applyFont`, when the element has it.
     pub apply_font: Option<String>,
+    /// The attribute `applyNumberFormat`, when the element has it.
     pub apply_number_format: Option<String>,
+    /// The attribute `applyProtection`, when the element has it.
     pub apply_protection: Option<String>,
+    /// The attribute `ctx`, when the element has it.
     pub ctx: Option<RevisionContext>,
+    /// The child that is `Dxf`, when there is one.
     pub dxf: Option<Box<Dxf>>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The attribute `fBlankCell`, when the element has it.
     pub f_blank_cell: Option<String>,
+    /// The attribute `length`, when the element has it.
     pub length: Option<String>,
+    /// The attribute `numFmtId`, when the element has it.
     pub num_fmt_id: Option<String>,
+    /// The attribute `rev`, when the element has it.
     pub rev: Option<String>,
+    /// The attribute `sh`, when the element has it.
     pub sh: Option<String>,
+    /// The attribute `sqref`, when the element has it.
     pub sqref: Option<String>,
+    /// The attribute `start`, when the element has it.
     pub start: Option<String>,
+    /// The attribute `style`, when the element has it.
     pub style: Option<String>,
+    /// The attribute `styleUid`, when the element has it.
     pub style_uid: Option<String>,
+    /// The attribute `uid`, when the element has it.
     pub uid: Option<String>,
+    /// The attribute `uidp`, when the element has it.
     pub uidp: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `xfDxf`, when the element has it.
     pub xf_dxf: Option<String>,
 }
 
-/// The tag `xr:xrrftr`, schema type `CT_RevExFuture` of SDK 3.5.1's data.
+/// The `xr:xrrftr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RevExFuture`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3298,17 +4268,26 @@ pub struct Xrrf {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Xrrftr {
+    /// The attribute `ctx`, when the element has it.
     pub ctx: Option<RevisionContext>,
+    /// The attribute `rev`, when the element has it.
     pub rev: Option<String>,
+    /// The attribute `sh`, when the element has it.
     pub sh: Option<String>,
+    /// The attribute `sti`, when the element has it.
     pub sti: Option<String>,
+    /// The attribute `uid`, when the element has it.
     pub uid: Option<String>,
+    /// The attribute `uidp`, when the element has it.
     pub uidp: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The children that are `Xrrtest`, in order.
     pub xrrtest: Vec<Xrrtest>,
 }
 
-/// The tag `xr:xrrg`, schema type `CT_RevGroup` of SDK 3.5.1's data.
+/// The `xr:xrrg` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RevGroup`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3317,16 +4296,24 @@ pub struct Xrrftr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Xrrg {
+    /// The children that are an item of `RevisionGroupContent`, in order.
     pub content: Vec<RevisionGroupContent>,
+    /// The attribute `ctx`, when the element has it.
     pub ctx: Option<RevisionContext>,
+    /// The attribute `rev`, when the element has it.
     pub rev: Option<String>,
+    /// The attribute `sh`, when the element has it.
     pub sh: Option<String>,
+    /// The attribute `uid`, when the element has it.
     pub uid: Option<String>,
+    /// The attribute `uidp`, when the element has it.
     pub uidp: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:xrrm`, schema type `CT_RevExMove` of SDK 3.5.1's data.
+/// The `xr:xrrm` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RevExMove`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3335,18 +4322,28 @@ pub struct Xrrg {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Xrrm {
+    /// The attribute `ctx`, when the element has it.
     pub ctx: Option<RevisionContext>,
+    /// The attribute `dst`, when the element has it.
     pub dst: Option<String>,
+    /// The attribute `rev`, when the element has it.
     pub rev: Option<String>,
+    /// The attribute `sh`, when the element has it.
     pub sh: Option<String>,
+    /// The attribute `src`, when the element has it.
     pub src: Option<String>,
+    /// The attribute `srcSh`, when the element has it.
     pub src_sh: Option<String>,
+    /// The attribute `uid`, when the element has it.
     pub uid: Option<String>,
+    /// The attribute `uidp`, when the element has it.
     pub uidp: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:xrrrc`, schema type `CT_RevExRowColumn` of SDK 3.5.1's data.
+/// The `xr:xrrrc` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RevExRowColumn`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3355,18 +4352,28 @@ pub struct Xrrm {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Xrrrc {
+    /// The attribute `action`, when the element has it.
     pub action: Option<RwColAction>,
+    /// The attribute `ctx`, when the element has it.
     pub ctx: Option<RevisionContext>,
+    /// The attribute `eol`, when the element has it.
     pub eol: Option<String>,
+    /// The attribute `ref`, when the element has it.
     pub r#ref: Option<String>,
+    /// The attribute `rev`, when the element has it.
     pub rev: Option<String>,
+    /// The attribute `sh`, when the element has it.
     pub sh: Option<String>,
+    /// The attribute `uid`, when the element has it.
     pub uid: Option<String>,
+    /// The attribute `uidp`, when the element has it.
     pub uidp: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xr:xrrtest`, schema type `CT_RevExTest` of SDK 3.5.1's data.
+/// The `xr:xrrtest` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RevExTest`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3375,6 +4382,7 @@ pub struct Xrrrc {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Xrrtest {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -3423,7 +4431,7 @@ impl AdjustTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -3470,7 +4478,7 @@ impl AdjustTypeExtMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -3694,7 +4702,7 @@ impl ExtFeatureTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -3762,7 +4770,7 @@ impl ExtSubFeatureTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -3890,7 +4898,7 @@ impl FeatureTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -3940,7 +4948,7 @@ impl FillTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -3987,7 +4995,7 @@ impl FillTypeExtMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4295,7 +5303,7 @@ impl OartAnchorTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4666,7 +5674,7 @@ impl RevisionContextMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4927,7 +5935,7 @@ impl RowColVisualOpMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5005,7 +6013,7 @@ impl RwColActionMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5056,7 +6064,7 @@ impl SheetOpMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5242,7 +6250,7 @@ impl SubFeatureTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

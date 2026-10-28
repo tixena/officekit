@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `wetp` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/webextensions/taskpanes/2010/11`, which files write with the prefix `wetp`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/webextensions/taskpanes/2010/11`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -275,32 +277,46 @@ pub static TASKPANES_SHAPE: officekit_markup_base::Shape = officekit_markup_base
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_webextensions_taskpanes_2010_11` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `ExtLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
         None
     }
 
+    /// Asked for each `Taskpane`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn taskpane(&mut self, _node: &Taskpane) -> Option<Taskpane> {
         None
     }
 
+    /// Asked for each `Taskpanes`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn taskpanes(&mut self, _node: &Taskpanes) -> Option<Taskpanes> {
         None
     }
 
+    /// Asked for each `Webextensionref`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn webextensionref(&mut self, _node: &Webextensionref) -> Option<Webextensionref> {
         None
     }
 
+    /// Asked when a `ExtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Taskpane` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_taskpane(
         &mut self,
         _node: &Taskpane,
@@ -309,9 +325,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Taskpanes` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_taskpanes(
         &mut self,
         _node: &Taskpanes,
@@ -320,9 +339,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Webextensionref` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_webextensionref(
         &mut self,
         _node: &Webextensionref,
@@ -332,7 +354,8 @@ pub trait Context: crate::Context {
     }
 }
 
-/// The tag `wetp:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
+/// The `wetp:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -341,11 +364,14 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
+    /// The children that are `drawing::Extension`, in order.
     pub extension: Vec<drawing::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `wetp:taskpane`, schema type `CT_OsfTaskpane` of SDK 3.5.1's data.
+/// The `wetp:taskpane` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OsfTaskpane`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -354,17 +380,26 @@ pub struct ExtLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Taskpane {
+    /// The attribute `dockstate`, when the element has it.
     pub dockstate: Option<String>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The attribute `locked`, when the element has it.
     pub locked: Option<String>,
+    /// The attribute `row`, when the element has it.
     pub row: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visibility`, when the element has it.
     pub visibility: Option<String>,
+    /// The child that is `Webextensionref`, which the schema requires.
     pub webextensionref: Box<Webextensionref>,
+    /// The attribute `width`, when the element has it.
     pub width: Option<String>,
 }
 
-/// The tag `wetp:taskpanes`, schema type `CT_OsfTaskpanes` of SDK 3.5.1's data.
+/// The `wetp:taskpanes` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_OsfTaskpanes`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -373,7 +408,9 @@ pub struct Taskpane {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Taskpanes {
+    /// The children that are `Taskpane`, in order.
     pub taskpane: Vec<Taskpane>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -383,24 +420,31 @@ pub struct Taskpanes {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_webextensions_taskpanes_2010_11` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `ExtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext_lst(&mut self, _node: &ExtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Taskpane`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn taskpane(&mut self, _node: &Taskpane) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Taskpanes`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn taskpanes(&mut self, _node: &Taskpanes) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Webextensionref`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn webextensionref(&mut self, _node: &Webextensionref) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 }
 
-/// The tag `wetp:webextensionref`, schema type `CT_WebExtensionPartRef` of SDK 3.5.1's data.
+/// The `wetp:webextensionref` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_WebExtensionPartRef`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -409,7 +453,9 @@ pub trait Visitor: crate::Visitor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Webextensionref {
+    /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 

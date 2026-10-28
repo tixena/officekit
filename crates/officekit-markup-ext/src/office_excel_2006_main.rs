@@ -212,8 +212,11 @@
 //! The hooks of the `xne` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_base::office_excel_2006_main`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/excel/2006/main`.
+//! The namespace is `http://schemas.microsoft.com/office/excel/2006/main`. Its prefix, `xne`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_base::office_excel_2006_main::*;
 
 use officekit_markup_base::Written;
@@ -229,24 +232,34 @@ use std::io;
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_excel_2006_main` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `F`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn f(&mut self, _node: &F) -> Option<F> {
         None
     }
 
+    /// Asked for each `Sqref`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn sqref(&mut self, _node: &Sqref) -> Option<Sqref> {
         None
     }
 
+    /// Asked when a `F` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_f(&mut self, _node: &F, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Sqref` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sqref(&mut self, _node: &Sqref, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
@@ -258,10 +271,12 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_excel_2006_main` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `F`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn f(&mut self, _node: &F) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Sqref`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sqref(&mut self, _node: &Sqref) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

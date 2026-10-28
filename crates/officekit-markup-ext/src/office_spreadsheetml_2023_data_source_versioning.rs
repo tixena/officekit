@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `xxdsv` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/spreadsheetml/2023/dataSourceVersioning`, which files write with the prefix `xxdsv`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2023/dataSourceVersioning`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -269,25 +271,36 @@ pub static VERSION_INFO_SHAPE: officekit_markup_base::Shape = officekit_markup_b
 /// not return itself from `crate::Context::office_spreadsheetml_2023_data_source_versioning` is
 /// never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `LastEditFeature`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn last_edit_feature(&mut self, _node: &LastEditFeature) -> Option<LastEditFeature> {
         None
     }
 
+    /// Asked for each `LastRefreshFeature`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn last_refresh_feature(&mut self, _node: &LastRefreshFeature) -> Option<LastRefreshFeature> {
         None
     }
 
+    /// Asked for each `RequiredFeature`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn required_feature(&mut self, _node: &RequiredFeature) -> Option<RequiredFeature> {
         None
     }
 
+    /// Asked for each `VersionInfo`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn version_info(&mut self, _node: &VersionInfo) -> Option<VersionInfo> {
         None
     }
 
+    /// Asked when a `LastEditFeature` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_last_edit_feature(
         &mut self,
         _node: &LastEditFeature,
@@ -296,9 +309,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LastRefreshFeature` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_last_refresh_feature(
         &mut self,
         _node: &LastRefreshFeature,
@@ -307,9 +323,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RequiredFeature` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_required_feature(
         &mut self,
         _node: &RequiredFeature,
@@ -318,9 +337,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `VersionInfo` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_version_info(
         &mut self,
         _node: &VersionInfo,
@@ -330,7 +352,8 @@ pub trait Context: crate::Context {
     }
 }
 
-/// The tag `xxdsv:lastEditFeature`, schema type `string` of SDK 3.5.1's data.
+/// The `xxdsv:lastEditFeature` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -339,11 +362,14 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LastEditFeature {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `xxdsv:lastRefreshFeature`, schema type `string` of SDK 3.5.1's data.
+/// The `xxdsv:lastRefreshFeature` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -352,11 +378,14 @@ pub struct LastEditFeature {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LastRefreshFeature {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `xxdsv:requiredFeature`, schema type `string` of SDK 3.5.1's data.
+/// The `xxdsv:requiredFeature` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -365,11 +394,14 @@ pub struct LastRefreshFeature {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RequiredFeature {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `xxdsv:versionInfo`, schema type `CT_VersionInfo` of SDK 3.5.1's data.
+/// The `xxdsv:versionInfo` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_VersionInfo`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -378,9 +410,13 @@ pub struct RequiredFeature {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct VersionInfo {
+    /// The children that are `LastEditFeature`, in order.
     pub last_edit_feature: Vec<LastEditFeature>,
+    /// The children that are `LastRefreshFeature`, in order.
     pub last_refresh_feature: Vec<LastRefreshFeature>,
+    /// The children that are `RequiredFeature`, in order.
     pub required_feature: Vec<RequiredFeature>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -390,10 +426,14 @@ pub struct VersionInfo {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_spreadsheetml_2023_data_source_versioning` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `LastEditFeature`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn last_edit_feature(&mut self, _node: &LastEditFeature) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LastRefreshFeature`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn last_refresh_feature(
         &mut self,
         _node: &LastRefreshFeature,
@@ -401,10 +441,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RequiredFeature`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn required_feature(&mut self, _node: &RequiredFeature) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `VersionInfo`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn version_info(&mut self, _node: &VersionInfo) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

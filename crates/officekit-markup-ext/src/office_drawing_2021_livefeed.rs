@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `alf` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/drawing/2021/livefeed`, which files write with the prefix `alf`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/drawing/2021/livefeed`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -296,8 +298,8 @@ pub static LIVE_FEED_BACKGROUND_PROPERTIES_CONTENT_TAGS: officekit_markup_base::
         ],
     };
 
-/// The tag `alf:backgroundProps`, schema type `CT_LiveFeedBackgroundProperties` of SDK 3.5.1's
-/// data.
+/// The `alf:backgroundProps` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_LiveFeedBackgroundProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -306,12 +308,16 @@ pub static LIVE_FEED_BACKGROUND_PROPERTIES_CONTENT_TAGS: officekit_markup_base::
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BackgroundProps {
+    /// The child that is an item of `LiveFeedBackgroundPropertiesContent`, when there is one.
     pub content: Option<Box<LiveFeedBackgroundPropertiesContent>>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `alf:Blur`, schema type `CT_BackgroundBlurProperties` of SDK 3.5.1's data.
+/// The `alf:Blur` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_BackgroundBlurProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -320,7 +326,9 @@ pub struct BackgroundProps {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Blur {
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -333,22 +341,32 @@ pub struct Blur {
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_drawing_2021_livefeed` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `BackgroundProps`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn background_props(&mut self, _node: &BackgroundProps) -> Option<BackgroundProps> {
         None
     }
 
+    /// Asked for each `Blur`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn blur(&mut self, _node: &Blur) -> Option<Blur> {
         None
     }
 
+    /// Asked for each `Custom`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn custom(&mut self, _node: &Custom) -> Option<Custom> {
         None
     }
 
+    /// Asked for each `ExtLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
         None
     }
 
+    /// Asked for each `LiveFeedBackgroundPropertiesContent`. `None` rebuilds it from its
+    /// transformed children, and `Some` puts the node it holds in its place.
     fn live_feed_background_properties(
         &mut self,
         _node: &LiveFeedBackgroundPropertiesContent,
@@ -356,21 +374,30 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `LiveFeedProps`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn live_feed_props(&mut self, _node: &LiveFeedProps) -> Option<LiveFeedProps> {
         None
     }
 
+    /// Asked for each `Normal`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn normal(&mut self, _node: &Normal) -> Option<Normal> {
         None
     }
 
+    /// Asked for each `Removed`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn removed(&mut self, _node: &Removed) -> Option<Removed> {
         None
     }
 
+    /// Asked when a `BackgroundProps` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_background_props(
         &mut self,
         _node: &BackgroundProps,
@@ -379,30 +406,42 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Blur` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_blur(&mut self, _node: &Blur, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Custom` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_custom(&mut self, _node: &Custom, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `LiveFeedBackgroundPropertiesContent` is written through. `Written::Yes` means
+    /// the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_live_feed_background_properties(
         &mut self,
         _node: &LiveFeedBackgroundPropertiesContent,
@@ -411,9 +450,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LiveFeedProps` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_live_feed_props(
         &mut self,
         _node: &LiveFeedProps,
@@ -422,22 +464,29 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Normal` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_normal(&mut self, _node: &Normal, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Removed` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_removed(&mut self, _node: &Removed, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 }
 
-/// The tag `alf:Custom`, schema type `CT_BackgroundCustomProperties` of SDK 3.5.1's data.
+/// The `alf:Custom` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_BackgroundCustomProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -446,11 +495,14 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Custom {
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `alf:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
+/// The `alf:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -459,22 +511,34 @@ pub struct Custom {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
+    /// The children that are `drawing::Extension`, in order.
     pub extension: Vec<drawing::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_LiveFeedBackgroundProperties`: choice in `CT_LiveFeedBackgroundProperties`.
+/// One child element of a choice: choice in `CT_LiveFeedBackgroundProperties`.
+///
+/// The schema types that hold it: `CT_LiveFeedBackgroundProperties`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum LiveFeedBackgroundPropertiesContent {
+    /// The element `alf:Blur`, a `Blur`.
     Blur(Blur),
+    /// The element `alf:Custom`, a `Custom`.
     Custom(Custom),
+    /// The element `alf:Normal`, a `Normal`.
     Normal(Normal),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `alf:Removed`, a `Removed`.
     Removed(Removed),
 }
 
-/// The tag `alf:liveFeedProps`, schema type `CT_LiveFeedProperties` of SDK 3.5.1's data.
+/// The `alf:liveFeedProps` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_LiveFeedProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -483,12 +547,16 @@ pub enum LiveFeedBackgroundPropertiesContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LiveFeedProps {
+    /// The child that is `BackgroundProps`, when there is one.
     pub background_props: Option<Box<BackgroundProps>>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `alf:Normal`, schema type `CT_BackgroundNormalProperties` of SDK 3.5.1's data.
+/// The `alf:Normal` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_BackgroundNormalProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -497,11 +565,14 @@ pub struct LiveFeedProps {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Normal {
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `alf:Removed`, schema type `CT_BackgroundRemovedProperties` of SDK 3.5.1's data.
+/// The `alf:Removed` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_BackgroundRemovedProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -510,7 +581,9 @@ pub struct Normal {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Removed {
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -520,22 +593,29 @@ pub struct Removed {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_drawing_2021_livefeed` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `BackgroundProps`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn background_props(&mut self, _node: &BackgroundProps) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Blur`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn blur(&mut self, _node: &Blur) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Custom`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn custom(&mut self, _node: &Custom) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext_lst(&mut self, _node: &ExtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LiveFeedBackgroundPropertiesContent`. `Descend::Yes` walks into its children,
+    /// and `Descend::No` skips them.
     fn live_feed_background_properties(
         &mut self,
         _node: &LiveFeedBackgroundPropertiesContent,
@@ -543,14 +623,18 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LiveFeedProps`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn live_feed_props(&mut self, _node: &LiveFeedProps) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Normal`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn normal(&mut self, _node: &Normal) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Removed`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn removed(&mut self, _node: &Removed) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

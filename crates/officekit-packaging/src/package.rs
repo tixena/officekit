@@ -30,7 +30,8 @@ use crate::relationship::{
 #[cfg(test)]
 mod tests;
 
-/// The XML declaration of every part the package writes itself.
+/// The XML declaration, without `<?` and `?>`, of every part the package writes itself: version
+/// 1.0, UTF-8, standalone. [`Document::new`] takes it.
 pub const DECLARATION: &str = "xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"";
 
 /// The part that maps every part to its content type.
@@ -67,12 +68,18 @@ enum FileKind {
 /// class the relationship's type names.
 #[non_exhaustive]
 pub struct MainPart {
+    /// Strict or Transitional, from the spelling of the `officeDocument` relationship type.
     pub class: ConformanceClass,
+    /// The part's content type; `None` when the package gives it none.
     pub content_type: Option<String>,
+    /// The main part's name, such as `/word/document.xml`.
     pub name: PartName,
 }
 
 /// What a read does with the parts it parses.
+///
+/// Build it with [`OpenOptions::default`], which keeps markup compatibility as the file has it,
+/// then set the field.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -81,10 +88,31 @@ pub struct MainPart {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct OpenOptions {
+    /// Whether `mc:AlternateContent` blocks stay or resolve for an Office version.
     pub markup_compatibility: MarkupCompatibility,
 }
 
-/// An Office Open XML package.
+/// An Office Open XML package held in memory.
+///
+/// The zip archive is unpacked into an `os_shim::mock::MemorySystem`, one file per part.
+/// `[Content_Types].xml` and every relationship part are kept parsed and written back whenever
+/// they change. `Package` has no `Clone`, because cloning a `MemorySystem` shares its files; use
+/// [`duplicate`](Self::duplicate) for an independent copy.
+///
+/// A name is looked up without regard to ASCII case, so `/Word/Document.xml` finds
+/// `/word/document.xml`.
+///
+/// - Make one: [`new`](Self::new), [`from_bytes`](Self::from_bytes), [`open`](Self::open),
+///   [`from_parts`](Self::from_parts).
+/// - Write one: [`to_bytes`](Self::to_bytes), [`save`](Self::save).
+/// - Parts: [`part_names`](Self::part_names), [`part_bytes`](Self::part_bytes),
+///   [`set_part_bytes`](Self::set_part_bytes), [`add_part`](Self::add_part),
+///   [`remove_part`](Self::remove_part).
+/// - Parsed XML: [`load_tree`](Self::load_tree), [`store_tree`](Self::store_tree).
+/// - Relationships: [`relate`](Self::relate), [`related`](Self::related),
+///   [`main_part`](Self::main_part), [`set_relationship_class`](Self::set_relationship_class).
+/// - Images: [`image`](Self::image), [`add_image`](Self::add_image),
+///   [`set_image`](Self::set_image).
 pub struct Package {
     content_types: ContentTypes,
     fs: MemorySystem,

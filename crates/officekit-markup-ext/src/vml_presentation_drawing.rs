@@ -212,8 +212,11 @@
 //! The hooks of the `pvml` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_base::vml_presentation_drawing`.
 //!
-//! The namespace is `urn:schemas-microsoft-com:office:powerpoint`.
+//! The namespace is `urn:schemas-microsoft-com:office:powerpoint`. Its prefix, `pvml`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_base::vml_presentation_drawing::*;
 
 use officekit_markup_base::Written;
@@ -229,17 +232,24 @@ use std::io;
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::vml_presentation_drawing` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `InkAnnotationFlag`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn ink_annotation_flag(&mut self, _node: &InkAnnotationFlag) -> Option<InkAnnotationFlag> {
         None
     }
 
+    /// Asked for each `VMLDiagramText`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn vml_diagram_text(&mut self, _node: &VMLDiagramText) -> Option<VMLDiagramText> {
         None
     }
 
+    /// Asked when a `InkAnnotationFlag` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ink_annotation_flag(
         &mut self,
         _node: &InkAnnotationFlag,
@@ -248,9 +258,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `VMLDiagramText` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_vml_diagram_text(
         &mut self,
         _node: &VMLDiagramText,
@@ -266,10 +279,14 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::vml_presentation_drawing` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `InkAnnotationFlag`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn ink_annotation_flag(&mut self, _node: &InkAnnotationFlag) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `VMLDiagramText`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn vml_diagram_text(&mut self, _node: &VMLDiagramText) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

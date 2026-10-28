@@ -211,6 +211,9 @@
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 //! The writers of `crate::office_excel_2010_spreadsheet_drawing`: each struct written as its generic
 //! element, its unknown content at its place.
+//!
+//! A write gives back, at their places, the attributes and elements a read kept as unknown.
+//! The `officekit-strict` and `officekit-transitional` crates write a node in one class.
 
 use officekit_xml::element::Element;
 use officekit_xml::write::Scope;

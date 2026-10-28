@@ -19,6 +19,7 @@ mod tests;
 pub enum PartEvent {
     /// The XML declaration's text as written, without `<?` and `?>`.
     Declaration(String),
+    /// The end of the element the last unmatched `Start` began.
     End,
     /// Text, a comment, CDATA, a processing instruction, or an element with
     /// no content (`<x/>`).
@@ -47,6 +48,7 @@ pub struct PartReader<R: BufRead> {
 }
 
 impl<R: BufRead> PartReader<R> {
+    /// A reader over `source`, before the first event.
     #[must_use]
     pub fn new(source: R) -> Self {
         let mut reader = Reader::from_reader(source);

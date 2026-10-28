@@ -1,4 +1,8 @@
 //! A part's typed root, and its load from and store into a package.
+//!
+//! [`PartRoot`] is the trait the typed root of a part implements. [`load`] reads a root from a
+//! [`Package`] and [`store`] writes one back in a conformance class. Every generated part module
+//! calls them with its own root.
 
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{DECLARATION, OpenOptions, Package};
@@ -13,6 +17,65 @@ mod tests;
 
 /// A part's typed root: what a generated part module moves between the
 /// package and the typed tree.
+///
+/// A root names its tag in [`LOCAL_NAME`](Self::LOCAL_NAME), reads itself from a generic element
+/// with [`from_tree`](Self::from_tree), and writes itself as one in a class with
+/// [`to_tree`](Self::to_tree).
+///
+/// ```
+/// use officekit_packaging::package::{OpenOptions, Package};
+/// use officekit_packaging::part_name::PartName;
+/// use officekit_parts::part_root::{self, PartRoot};
+/// use officekit_xml::conformance::ConformanceClass;
+/// use officekit_xml::element::{Element, Node};
+/// use officekit_xml::error::WriteError;
+/// use officekit_xml::name::QName;
+/// use officekit_xml::write::WriteOptions;
+///
+/// struct Note {
+///     text: String,
+/// }
+///
+/// impl PartRoot for Note {
+///     const LOCAL_NAME: &'static str = "note";
+///
+///     fn from_tree(root: &Element) -> Result<Self, String> {
+///         let text = root
+///             .children
+///             .iter()
+///             .filter_map(|node| match node {
+///                 Node::Text(text) => Some(text.as_str()),
+///                 _ => None,
+///             })
+///             .collect();
+///         Ok(Self { text })
+///     }
+///
+///     fn to_tree(&self, _class: ConformanceClass) -> Result<Element, WriteError> {
+///         let mut element = Element::new(QName::unprefixed("note", ""));
+///         element.children.push(Node::Text(self.text.clone()));
+///         Ok(element)
+///     }
+/// }
+///
+/// # fn main() -> Result<(), Box<dyn std::error::Error>> {
+/// let mut package = Package::new();
+/// let name = PartName::new("/note.xml")?;
+/// let note = Note { text: "Dear Sam,".to_owned() };
+/// part_root::store(
+///     &mut package,
+///     &name,
+///     "application/xml",
+///     &note,
+///     ConformanceClass::Transitional,
+///     WriteOptions::default(),
+/// )?;
+///
+/// let loaded: Note = part_root::load(&package, &name, OpenOptions::default())?;
+/// assert_eq!(loaded.text, "Dear Sam,");
+/// # Ok(())
+/// # }
+/// ```
 pub trait PartRoot: Sized {
     /// The root's tag, checked on load.
     const LOCAL_NAME: &'static str;

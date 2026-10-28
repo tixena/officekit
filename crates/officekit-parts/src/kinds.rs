@@ -345,36 +345,74 @@
 //! forms and the add-ins are Microsoft's extensions.
 
 /// The kinds of `.pptx`-family file, by their main part's content type.
+///
+/// `PresentationKind::ALL` lists them and `main_content_type` gives the content type of each.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum PresentationKind {
+    /// A file whose main part has the content type
+    /// `application/vnd.ms-powerpoint.addin.macroEnabled.main+xml`.
     AddIn,
+    /// A file whose main part has the content type
+    /// `application/vnd.ms-powerpoint.presentation.macroEnabled.main+xml`.
     MacroEnabledPresentation,
+    /// A file whose main part has the content type
+    /// `application/vnd.ms-powerpoint.slideshow.macroEnabled.main+xml`.
     MacroEnabledSlideshow,
+    /// A file whose main part has the content type
+    /// `application/vnd.ms-powerpoint.template.macroEnabled.main+xml`.
     MacroEnabledTemplate,
+    /// A file whose main part has the content type
+    /// `application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml`.
     Presentation,
+    /// A file whose main part has the content type
+    /// `application/vnd.openxmlformats-officedocument.presentationml.slideshow.main+xml`.
     Slideshow,
+    /// A file whose main part has the content type
+    /// `application/vnd.openxmlformats-officedocument.presentationml.template.main+xml`.
     Template,
 }
 
 /// The kinds of `.xlsx`-family file, by their main part's content type.
+///
+/// `SpreadsheetKind::ALL` lists them and `main_content_type` gives the content type of each.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum SpreadsheetKind {
+    /// A file whose main part has the content type
+    /// `application/vnd.ms-excel.addin.macroEnabled.main+xml`.
     AddIn,
+    /// A file whose main part has the content type
+    /// `application/vnd.ms-excel.template.macroEnabled.main+xml`.
     MacroEnabledTemplate,
+    /// A file whose main part has the content type
+    /// `application/vnd.ms-excel.sheet.macroEnabled.main+xml`.
     MacroEnabledWorkbook,
+    /// A file whose main part has the content type
+    /// `application/vnd.openxmlformats-officedocument.spreadsheetml.template.main+xml`.
     Template,
+    /// A file whose main part has the content type
+    /// `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml`.
     Workbook,
 }
 
 /// The kinds of `.docx`-family file, by their main part's content type.
+///
+/// `WordprocessingKind::ALL` lists them and `main_content_type` gives the content type of each.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum WordprocessingKind {
+    /// A file whose main part has the content type
+    /// `application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml`.
     Document,
+    /// A file whose main part has the content type
+    /// `application/vnd.ms-word.document.macroEnabled.main+xml`.
     MacroEnabledDocument,
+    /// A file whose main part has the content type
+    /// `application/vnd.ms-word.template.macroEnabledTemplate.main+xml`.
     MacroEnabledTemplate,
+    /// A file whose main part has the content type
+    /// `application/vnd.openxmlformats-officedocument.wordprocessingml.template.main+xml`.
     Template,
 }
 

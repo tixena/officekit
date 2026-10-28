@@ -24,6 +24,28 @@ use crate::file;
 use crate::new_parts;
 
 /// A `.pptx`-family file: its package, its presentation part, and the class and kind they give.
+///
+/// Make one with [`new`](Self::new), or open one with [`open`](Self::open) or
+/// [`from_bytes`](Self::from_bytes). [`presentation`](Self::presentation) gives the presentation
+/// part as a typed tree. The slides are parts of their own, which `officekit_parts::slide` loads
+/// and stores.
+///
+/// A new presentation has a slide master, a blank layout and a theme, and no slides.
+///
+/// ```rust
+/// use officekit::pptx::Pptx;
+/// use officekit_parts::kinds::PresentationKind;
+///
+/// # fn main() -> Result<(), Box<dyn core::error::Error>> {
+/// let pptx = Pptx::new(PresentationKind::Presentation)?;
+/// assert_eq!(pptx.presentation_part().as_str(), "/ppt/presentation.xml");
+/// assert!(pptx.presentation()?.list_of_slide_ids.is_none());
+///
+/// let xml = String::from_utf8(pptx.package().part_bytes(pptx.presentation_part())?)?;
+/// assert!(xml.contains("<p:sldSz cx=\"12192000\" cy=\"6858000\"/>"));
+/// # Ok(())
+/// # }
+/// ```
 #[derive(Debug)]
 pub struct Pptx {
     class: ConformanceClass,
@@ -51,7 +73,8 @@ impl Pptx {
         self.class
     }
 
-    /// A new presentation of `kind`, as [`new`](Self::new) makes it, written to `path`.
+    /// A new presentation of `kind`, as [`new`](Self::new) makes it, written to `path` as the
+    /// package is built, with no change of class. Needs the feature `transitional`.
     ///
     /// # Errors
     ///
@@ -158,6 +181,7 @@ impl Pptx {
         &self.package
     }
 
+    /// The package, to change its parts, relationships and content types directly.
     pub const fn package_mut(&mut self) -> &mut Package {
         &mut self.package
     }
@@ -177,7 +201,8 @@ impl Pptx {
         &self.main
     }
 
-    /// Write the file to `path` in the Strict class; nothing is written when it fails.
+    /// Write the file to `path` in the Strict class; nothing is written when it fails. Needs the
+    /// feature `strict`.
     ///
     /// # Errors
     ///
@@ -194,6 +219,8 @@ impl Pptx {
     }
 
     /// Write the file to `path` in the Transitional class; nothing is written when it fails.
+    /// Returns the warnings of the save, which are always empty for a presentation. Needs the
+    /// feature `transitional`.
     ///
     /// # Errors
     ///
@@ -236,7 +263,7 @@ impl Pptx {
 
     /// The file's bytes in the Strict class: as they are when it was read Strict, else every
     /// part a part module knows written again in Strict, every relationship type in Strict's
-    /// spelling, and every other part as it is.
+    /// spelling, and every other part as it is. Needs the feature `strict`.
     ///
     /// # Errors
     ///
@@ -254,10 +281,14 @@ impl Pptx {
         )
     }
 
-    /// The file's bytes in the Transitional class: as they are when it was read Transitional,
-    /// else every part a part module knows written again in Transitional, every relationship type
-    /// in Transitional's spelling, and every other part as it is. The list of warnings is empty:
-    /// an embedded workbook is a part carried as it is.
+    /// The file's bytes in the Transitional class. Needs the feature `transitional`.
+    ///
+    /// They are the package as it is when the file was read Transitional. Otherwise every part a
+    /// part module knows is written again in Transitional, every relationship type takes
+    /// Transitional's spelling, and every other part stays as it is.
+    ///
+    /// The list of warnings is always empty: a presentation has no date cells to convert, and an
+    /// embedded workbook is a part carried as it is.
     ///
     /// # Errors
     ///

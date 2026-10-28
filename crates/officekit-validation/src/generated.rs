@@ -350,12 +350,17 @@
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 
-//! The validation tables, converted from SDK 3.5.1's schema data.
+//! The validation tables, converted from the schema data of the Open XML SDK, version 3.5.1.
 //!
-//! Every schema type's attributes, children, content models, and text checks,
-//! the enumerations, the simple types the generator maps by hand, the part
-//! rules, and the semantic constraints, written by `cargo xtask
-//! generate-schema`.
+//! `SCHEMA_TYPES` holds every schema type with its attributes, children, content model and text
+//! checks. `ENUMERATIONS` and `SIMPLE_TYPES` hold the values of the simple types. `PART_RULES`
+//! holds the rule of every part type, and `SEMANTIC_CONSTRAINTS` the constraints between
+//! attributes and elements that a schema cannot state. `type_id` finds a type by name.
+//!
+//! A type's id is its index in `SCHEMA_TYPES`, and a part rule's id is its index in `PART_RULES`.
+//! A type is named by its namespace prefix, its schema type and its element, such as
+//! `w:CT_TblCellMar/w:tblCellMar`. Each row says in which Office versions it exists, as the bits of
+//! a `Versions`.
 
 use super::schema::types::{
     AnyNamespace, AttributeConstraint, Bounds, Check, ChildKind, ChildPart, CompositeKind,

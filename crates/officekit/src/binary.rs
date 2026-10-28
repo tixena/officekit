@@ -33,14 +33,21 @@ pub const VERSION: u8 = 2;
 #[derive(Debug, thiserror::Error)]
 #[non_exhaustive]
 pub enum BinaryError {
+    /// The bytes do not open with [`MAGIC`].
     #[error("not officekit's binary form: the bytes do not open with `officekit` and a zero byte")]
     NotOfficekit,
+    /// A package operation failed while the model was read or written.
     #[error(transparent)]
     Package(#[from] PackageError),
+    /// The rkyv archive could not be written, or the bytes do not hold a model.
     #[error(transparent)]
     Rkyv(#[from] rancor::Error),
+    /// The version byte is not [`VERSION`].
     #[error("officekit's binary form version {found}, and this officekit reads version {VERSION}")]
-    Version { found: u8 },
+    Version {
+        /// The version byte the bytes hold.
+        found: u8,
+    },
 }
 
 /// A package as officekit's model: every part, typed when a module takes it.
@@ -62,6 +69,30 @@ enum Part {
 }
 
 /// The file `bytes` hold in officekit's binary form.
+///
+#[cfg_attr(
+    feature = "transitional",
+    doc = r#"
+```rust
+use officekit::binary;
+use officekit::docx::Docx;
+use officekit::office_file::OfficeFile;
+use officekit_parts::kinds::WordprocessingKind;
+
+# fn main() -> Result<(), Box<dyn core::error::Error>> {
+let file = OfficeFile::Word(Docx::new(WordprocessingKind::Document)?);
+let archive = binary::encode(&file)?;
+
+let restored = binary::decode(&archive)?;
+assert!(matches!(restored, OfficeFile::Word(_)));
+
+let error = binary::decode(b"not officekit").unwrap_err();
+assert!(matches!(error, binary::BinaryError::NotOfficekit));
+# Ok(())
+# }
+```
+"#
+)]
 ///
 /// Each typed part is written in the class of the package's main part; the package is rebuilt
 /// with its content types and relationships as they were, and opened as

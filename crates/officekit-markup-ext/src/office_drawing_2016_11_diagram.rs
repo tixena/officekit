@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `dgm1611` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/drawing/2016/11/diagram`, which files write with the prefix `dgm1611`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/drawing/2016/11/diagram`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -255,7 +257,8 @@ pub static AUTO_BU_NODE_INFO_LST_SHAPE: officekit_markup_base::Shape =
         text: false,
     };
 
-/// The tag `dgm1611:autoBuNodeInfo`, schema type `CT_NumberDiagramInfo` of SDK 3.5.1's data.
+/// The `dgm1611:autoBuNodeInfo` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_NumberDiagramInfo`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -264,13 +267,18 @@ pub static AUTO_BU_NODE_INFO_LST_SHAPE: officekit_markup_base::Shape =
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AutoBuNodeInfo {
+    /// The child that is `BuPr`, which the schema requires.
     pub bu_pr: Box<BuPr>,
+    /// The attribute `lvl`, when the element has it.
     pub lvl: Option<String>,
+    /// The attribute `ptType`, when the element has it.
     pub pt_type: Option<STorageType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `dgm1611:autoBuNodeInfoLst`, schema type `CT_NumberDiagramInfoList` of SDK 3.5.1's data.
+/// The `dgm1611:autoBuNodeInfoLst` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_NumberDiagramInfoList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -279,11 +287,14 @@ pub struct AutoBuNodeInfo {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AutoBuNodeInfoLst {
+    /// The children that are `AutoBuNodeInfo`, in order.
     pub auto_bu_node_info: Vec<AutoBuNodeInfo>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `dgm1611:buPr`, schema type `CT_DiagramAutoBullet` of SDK 3.5.1's data.
+/// The `dgm1611:buPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_DiagramAutoBullet`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -292,9 +303,13 @@ pub struct AutoBuNodeInfoLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BuPr {
+    /// The child that is an item of `drawing::TextBulletContent`, which the schema requires.
     pub content: Box<drawing::TextBulletContent>,
+    /// The attribute `leadZeros`, when the element has it.
     pub lead_zeros: Option<String>,
+    /// The attribute `prefix`, when the element has it.
     pub prefix: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -307,21 +322,30 @@ pub struct BuPr {
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_drawing_2016_11_diagram` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `AutoBuNodeInfo`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn auto_bu_node_info(&mut self, _node: &AutoBuNodeInfo) -> Option<AutoBuNodeInfo> {
         None
     }
 
+    /// Asked for each `AutoBuNodeInfoLst`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn auto_bu_node_info_lst(&mut self, _node: &AutoBuNodeInfoLst) -> Option<AutoBuNodeInfoLst> {
         None
     }
 
+    /// Asked for each `BuPr`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn bu_pr(&mut self, _node: &BuPr) -> Option<BuPr> {
         None
     }
 
+    /// Asked when a `AutoBuNodeInfo` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_auto_bu_node_info(
         &mut self,
         _node: &AutoBuNodeInfo,
@@ -330,9 +354,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `AutoBuNodeInfoLst` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_auto_bu_node_info_lst(
         &mut self,
         _node: &AutoBuNodeInfoLst,
@@ -341,15 +368,21 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BuPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_bu_pr(&mut self, _node: &BuPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 }
 
-/// `ST_STorageType`: the text the file carried.
+/// The simple type `ST_STorageType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -358,11 +391,14 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct STorageType(pub String);
-/// The members of `ST_STorageType`, in alphabetical order.
+/// The members of the enumeration `ST_STorageType`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum STorageTypeMember {
+    /// The member written `parTrans`.
     ParTrans,
+    /// The member written `sibTrans`.
     SibTrans,
 }
 
@@ -372,10 +408,14 @@ pub enum STorageTypeMember {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_drawing_2016_11_diagram` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `AutoBuNodeInfo`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn auto_bu_node_info(&mut self, _node: &AutoBuNodeInfo) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `AutoBuNodeInfoLst`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn auto_bu_node_info_lst(
         &mut self,
         _node: &AutoBuNodeInfoLst,
@@ -383,6 +423,7 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BuPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn bu_pr(&mut self, _node: &BuPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
@@ -489,7 +530,7 @@ impl STorageTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

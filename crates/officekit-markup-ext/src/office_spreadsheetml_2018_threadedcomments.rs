@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `xltc` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/spreadsheetml/2018/threadedcomments`, which files write with the prefix `xltc`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2018/threadedcomments`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -321,55 +323,80 @@ pub static THREADED_COMMENTS_SHAPE: officekit_markup_base::Shape = officekit_mar
 /// not return itself from `crate::Context::office_spreadsheetml_2018_threadedcomments` is never
 /// asked.
 pub trait Context: crate::Context {
+    /// Asked for each `ExtLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
         None
     }
 
+    /// Asked for each `Mention`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn mention(&mut self, _node: &Mention) -> Option<Mention> {
         None
     }
 
+    /// Asked for each `Mentions`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn mentions(&mut self, _node: &Mentions) -> Option<Mentions> {
         None
     }
 
+    /// Asked for each `Person`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn person(&mut self, _node: &Person) -> Option<Person> {
         None
     }
 
+    /// Asked for each `PersonList`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn person_list(&mut self, _node: &PersonList) -> Option<PersonList> {
         None
     }
 
+    /// Asked for each `Text`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn text(&mut self, _node: &Text) -> Option<Text> {
         None
     }
 
+    /// Asked for each `ThreadedComment`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn threaded_comment(&mut self, _node: &ThreadedComment) -> Option<ThreadedComment> {
         None
     }
 
+    /// Asked for each `ThreadedComments`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn threaded_comments(&mut self, _node: &ThreadedComments) -> Option<ThreadedComments> {
         None
     }
 
+    /// Asked when a `ExtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Mention` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_mention(&mut self, _node: &Mention, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Mentions` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_mentions(
         &mut self,
         _node: &Mentions,
@@ -378,16 +405,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Person` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_person(&mut self, _node: &Person, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `PersonList` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_person_list(
         &mut self,
         _node: &PersonList,
@@ -396,16 +429,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Text` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_text(&mut self, _node: &Text, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ThreadedComment` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_threaded_comment(
         &mut self,
         _node: &ThreadedComment,
@@ -414,9 +453,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ThreadedComments` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_threaded_comments(
         &mut self,
         _node: &ThreadedComments,
@@ -426,7 +468,8 @@ pub trait Context: crate::Context {
     }
 }
 
-/// The tag `xltc:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
+/// The `xltc:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -435,11 +478,14 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
+    /// The children that are `spreadsheet::Extension`, in order.
     pub extension: Vec<spreadsheet::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xltc:mention`, schema type `CT_Mention` of SDK 3.5.1's data.
+/// The `xltc:mention` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Mention`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -448,14 +494,20 @@ pub struct ExtLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Mention {
+    /// The attribute `length`, when the element has it.
     pub length: Option<String>,
+    /// The attribute `mentionId`, when the element has it.
     pub mention_id: Option<String>,
+    /// The attribute `mentionpersonId`, when the element has it.
     pub mentionperson_id: Option<String>,
+    /// The attribute `startIndex`, when the element has it.
     pub start_index: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xltc:mentions`, schema type `CT_ThreadedCommentMentions` of SDK 3.5.1's data.
+/// The `xltc:mentions` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ThreadedCommentMentions`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -464,11 +516,14 @@ pub struct Mention {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Mentions {
+    /// The children that are `Mention`, in order.
     pub mention: Vec<Mention>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xltc:person`, schema type `CT_Person` of SDK 3.5.1's data.
+/// The `xltc:person` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Person`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -477,15 +532,22 @@ pub struct Mentions {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Person {
+    /// The attribute `displayName`, when the element has it.
     pub display_name: Option<String>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `providerId`, when the element has it.
     pub provider_id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `userId`, when the element has it.
     pub user_id: Option<String>,
 }
 
-/// The tag `xltc:personList`, schema type `CT_PersonList` of SDK 3.5.1's data.
+/// The `xltc:personList` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_PersonList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -494,12 +556,16 @@ pub struct Person {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PersonList {
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The children that are `Person`, in order.
     pub person: Vec<Person>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xltc:text`, schema type `ST_Xstring` of SDK 3.5.1's data.
+/// The `xltc:text` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `ST_Xstring`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -508,11 +574,14 @@ pub struct PersonList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Text {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `xltc:threadedComment`, schema type `CT_ThreadedComment` of SDK 3.5.1's data.
+/// The `xltc:threadedComment` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_ThreadedComment`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -521,19 +590,30 @@ pub struct Text {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ThreadedComment {
+    /// The attribute `dT`, when the element has it.
     pub d_t: Option<String>,
+    /// The attribute `done`, when the element has it.
     pub done: Option<String>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The child that is `Mentions`, when there is one.
     pub mentions: Option<Box<Mentions>>,
+    /// The attribute `parentId`, when the element has it.
     pub parent_id: Option<String>,
+    /// The attribute `personId`, when the element has it.
     pub person_id: Option<String>,
+    /// The attribute `ref`, when the element has it.
     pub r#ref: Option<String>,
+    /// The child that is `Text`, when there is one.
     pub text: Option<Box<Text>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xltc:ThreadedComments`, schema type `CT_ThreadedComments` of SDK 3.5.1's data.
+/// The `xltc:ThreadedComments` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_ThreadedComments`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -542,8 +622,11 @@ pub struct ThreadedComment {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ThreadedComments {
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The children that are `ThreadedComment`, in order.
     pub threaded_comment: Vec<ThreadedComment>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -553,34 +636,45 @@ pub struct ThreadedComments {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_spreadsheetml_2018_threadedcomments` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `ExtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext_lst(&mut self, _node: &ExtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Mention`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn mention(&mut self, _node: &Mention) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Mentions`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn mentions(&mut self, _node: &Mentions) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Person`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn person(&mut self, _node: &Person) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PersonList`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn person_list(&mut self, _node: &PersonList) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Text`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn text(&mut self, _node: &Text) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ThreadedComment`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn threaded_comment(&mut self, _node: &ThreadedComment) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ThreadedComments`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn threaded_comments(&mut self, _node: &ThreadedComments) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

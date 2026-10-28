@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `xpdl` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/spreadsheetml/2016/pivotdefaultlayout`, which files write with the prefix `xpdl`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2016/pivotdefaultlayout`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -248,6 +250,8 @@ pub static PIVOT_TABLE_DEFINITION16_SHAPE: officekit_markup_base::Shape =
 /// not return itself from `crate::Context::office_spreadsheetml_2016_pivotdefaultlayout` is never
 /// asked.
 pub trait Context: crate::Context {
+    /// Asked for each `PivotTableDefinition16`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn pivot_table_definition16(
         &mut self,
         _node: &PivotTableDefinition16,
@@ -255,9 +259,12 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked when a `PivotTableDefinition16` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_table_definition16(
         &mut self,
         _node: &PivotTableDefinition16,
@@ -267,8 +274,8 @@ pub trait Context: crate::Context {
     }
 }
 
-/// The tag `xpdl:pivotTableDefinition16`, schema type `CT_PivotTableDefinition16` of SDK 3.5.1's
-/// data.
+/// The `xpdl:pivotTableDefinition16` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_PivotTableDefinition16`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -277,9 +284,13 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PivotTableDefinition16 {
+    /// The attribute `EnabledSubtotalsDefault`, when the element has it.
     pub enabled_subtotals_default: Option<String>,
+    /// The attribute `InsertBlankRowDefault`, when the element has it.
     pub insert_blank_row_default: Option<String>,
+    /// The attribute `SubtotalsOnTopDefault`, when the element has it.
     pub subtotals_on_top_default: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -289,6 +300,8 @@ pub struct PivotTableDefinition16 {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_spreadsheetml_2016_pivotdefaultlayout` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `PivotTableDefinition16`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn pivot_table_definition16(
         &mut self,
         _node: &PivotTableDefinition16,

@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `ahyp` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/drawing/2018/hyperlinkcolor`, which files write with the prefix `ahyp`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/drawing/2018/hyperlinkcolor`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -243,13 +245,18 @@ pub static HLINK_CLR_SHAPE: officekit_markup_base::Shape = officekit_markup_base
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_drawing_2018_hyperlinkcolor` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `HlinkClr`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn hlink_clr(&mut self, _node: &HlinkClr) -> Option<HlinkClr> {
         None
     }
 
+    /// Asked when a `HlinkClr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_hlink_clr(
         &mut self,
         _node: &HlinkClr,
@@ -259,7 +266,8 @@ pub trait Context: crate::Context {
     }
 }
 
-/// The tag `ahyp:hlinkClr`, schema type `CT_HyperlinkColor` of SDK 3.5.1's data.
+/// The `ahyp:hlinkClr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_HyperlinkColor`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -268,11 +276,16 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HlinkClr {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<HyperlinkColor>,
 }
 
-/// `ST_HyperlinkColor`: the text the file carried.
+/// The simple type `ST_HyperlinkColor`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -281,11 +294,14 @@ pub struct HlinkClr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HyperlinkColor(pub String);
-/// The members of `ST_HyperlinkColor`, in alphabetical order.
+/// The members of the enumeration `ST_HyperlinkColor`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum HyperlinkColorMember {
+    /// The member written `hlink`.
     Hlink,
+    /// The member written `tx`.
     Tx,
 }
 
@@ -295,6 +311,7 @@ pub enum HyperlinkColorMember {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_drawing_2018_hyperlinkcolor` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `HlinkClr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn hlink_clr(&mut self, _node: &HlinkClr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
@@ -354,7 +371,7 @@ impl HyperlinkColorMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

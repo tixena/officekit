@@ -7551,8 +7551,8 @@ pub static ENUMERATIONS: &[Enumeration] = &[
     },
 ];
 
-/// The class SDK 3.5.1's generator reads each of these simple types as,
-/// sorted by simple type.
+/// The class the Open XML SDK's generator reads each of these simple types as, sorted by simple
+/// type.
 pub static SIMPLE_TYPES: &[(&str, ValueClass)] = &[
     ("a:ST_Angle", ValueClass::Int32),
     ("a:ST_Coordinate", ValueClass::Int64),

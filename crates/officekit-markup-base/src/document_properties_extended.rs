@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `ap` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.openxmlformats.org/officeDocument/2006/extended-properties`, which files write with the prefix `ap`.
 //!
-//! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/extended-properties`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -457,7 +457,8 @@ pub static APPLICATION_SPECIFIC_FILE_PROPERTIES_CONTENT_TAGS: crate::Accept = cr
     ],
 };
 
-/// 22.2.2.1 Application (Application Name): the tag `ap:Application`, schema type `string`.
+/// The `ap:Application` element, Application Name (ECMA-376 Part 1, section 22.2.2.1). Its schema
+/// type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -466,12 +467,14 @@ pub static APPLICATION_SPECIFIC_FILE_PROPERTIES_CONTENT_TAGS: crate::Accept = cr
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ApplicationName {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.2.2.21 Properties (Application Specific File Properties): the tag `ap:Properties`, schema
-/// type `CT_Properties`.
+/// The `ap:Properties` element, Application Specific File Properties (ECMA-376 Part 1, section
+/// 22.2.2.21). Its schema type is `CT_Properties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -480,45 +483,80 @@ pub struct ApplicationName {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ApplicationSpecificFileProperties {
+    /// The children that are an item of `ApplicationSpecificFilePropertiesContent`, in order.
     pub content: Vec<ApplicationSpecificFilePropertiesContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// One item of `CT_Properties`: xsd:all in `CT_Properties`.
+/// One child element of a choice: xsd:all in `CT_Properties`.
+///
+/// The schema types that hold it: `CT_Properties`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ApplicationSpecificFilePropertiesContent {
+    /// The element `ap:Application`, a `ApplicationName`.
     ApplicationName(ApplicationName),
+    /// The element `ap:AppVersion`, a `ApplicationVersion`.
     ApplicationVersion(ApplicationVersion),
+    /// The element `ap:CharactersWithSpaces`, a `CharactersWithSpaces`.
     CharactersWithSpaces(CharactersWithSpaces),
+    /// The element `ap:DigSig`, a `DigitalSignature`.
     DigitalSignature(DigitalSignature),
+    /// The element `ap:DocSecurity`, a `DocumentSecurity`.
     DocumentSecurity(DocumentSecurity),
+    /// The element `ap:HeadingPairs`, a `HeadingPairs`.
     HeadingPairs(HeadingPairs),
+    /// The element `ap:HLinks`, a `HyperlinkList`.
     HyperlinkList(HyperlinkList),
+    /// The element `ap:HyperlinksChanged`, a `HyperlinksChanged`.
     HyperlinksChanged(HyperlinksChanged),
+    /// The element `ap:PresentationFormat`, a `IntendedFormatOfPresentation`.
     IntendedFormatOfPresentation(IntendedFormatOfPresentation),
+    /// The element `ap:LinksUpToDate`, a `LinksUpToDate`.
     LinksUpToDate(LinksUpToDate),
+    /// The element `ap:Company`, a `NameOfCompany`.
     NameOfCompany(NameOfCompany),
+    /// The element `ap:Template`, a `NameOfDocumentTemplate`.
     NameOfDocumentTemplate(NameOfDocumentTemplate),
+    /// The element `ap:Manager`, a `NameOfManager`.
     NameOfManager(NameOfManager),
+    /// The element `ap:HiddenSlides`, a `NumberOfHiddenSlides`.
     NumberOfHiddenSlides(NumberOfHiddenSlides),
+    /// The element `ap:Lines`, a `NumberOfLines`.
     NumberOfLines(NumberOfLines),
+    /// The element `ap:Notes`, a `NumberOfSlidesContainingNotes`.
     NumberOfSlidesContainingNotes(NumberOfSlidesContainingNotes),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `ap:TitlesOfParts`, a `PartTitles`.
     PartTitles(PartTitles),
+    /// The element `ap:HyperlinkBase`, a `RelativeHyperlinkBase`.
     RelativeHyperlinkBase(RelativeHyperlinkBase),
+    /// The element `ap:SharedDoc`, a `SharedDocument`.
     SharedDocument(SharedDocument),
+    /// The element `ap:Slides`, a `SlidesMetadataElement`.
     SlidesMetadataElement(SlidesMetadataElement),
+    /// The element `ap:ScaleCrop`, a `ThumbnailDisplayMode`.
     ThumbnailDisplayMode(ThumbnailDisplayMode),
+    /// The element `ap:TotalTime`, a `TotalEditTimeMetadataElement`.
     TotalEditTimeMetadataElement(TotalEditTimeMetadataElement),
+    /// The element `ap:Characters`, a `TotalNumberOfCharacters`.
     TotalNumberOfCharacters(TotalNumberOfCharacters),
+    /// The element `ap:MMClips`, a `TotalNumberOfMultimediaClips`.
     TotalNumberOfMultimediaClips(TotalNumberOfMultimediaClips),
+    /// The element `ap:Pages`, a `TotalNumberOfPages`.
     TotalNumberOfPages(TotalNumberOfPages),
+    /// The element `ap:Paragraphs`, a `TotalNumberOfParagraphs`.
     TotalNumberOfParagraphs(TotalNumberOfParagraphs),
+    /// The element `ap:Words`, a `WordCount`.
     WordCount(WordCount),
 }
 
-/// 22.2.2.2 `AppVersion` (Application Version): the tag `ap:AppVersion`, schema type `string`.
+/// The `ap:AppVersion` element, Application Version (ECMA-376 Part 1, section 22.2.2.2). Its schema
+/// type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -527,11 +565,13 @@ pub enum ApplicationSpecificFilePropertiesContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ApplicationVersion {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// The tag `ap:CharactersWithSpaces`, schema type `int`.
+/// The `ap:CharactersWithSpaces` element. Its schema type is `int`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -540,11 +580,14 @@ pub struct ApplicationVersion {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CharactersWithSpaces {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.2.2.6 `DigSig` (Digital Signature): the tag `ap:DigSig`, schema type `CT_DigSigBlob`.
+/// The `ap:DigSig` element, Digital Signature (ECMA-376 Part 1, section 22.2.2.6). Its schema type
+/// is `CT_DigSigBlob`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -553,11 +596,15 @@ pub struct CharactersWithSpaces {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DigitalSignature {
+    /// The child that is `super::document_properties_variant_types::BinaryBlob`, which the schema
+    /// requires.
     pub binary_blob: Box<super::document_properties_variant_types::BinaryBlob>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 22.2.2.7 `DocSecurity` (Document Security): the tag `ap:DocSecurity`, schema type `int`.
+/// The `ap:DocSecurity` element, Document Security (ECMA-376 Part 1, section 22.2.2.7). Its schema
+/// type is `int`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -566,12 +613,14 @@ pub struct DigitalSignature {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DocumentSecurity {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.2.2.8 `HeadingPairs` (Heading Pairs): the tag `ap:HeadingPairs`, schema type
-/// `CT_VectorVariant`.
+/// The `ap:HeadingPairs` element, Heading Pairs (ECMA-376 Part 1, section 22.2.2.8). Its schema
+/// type is `CT_VectorVariant`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -580,11 +629,15 @@ pub struct DocumentSecurity {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HeadingPairs {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The child that is `super::document_properties_variant_types::Vector`, which the schema
+    /// requires.
     pub vector: Box<super::document_properties_variant_types::Vector>,
 }
 
-/// 22.2.2.10 `HLinks` (Hyperlink List): the tag `ap:HLinks`, schema type `CT_VectorVariant`.
+/// The `ap:HLinks` element, Hyperlink List (ECMA-376 Part 1, section 22.2.2.10). Its schema type is
+/// `CT_VectorVariant`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -593,12 +646,15 @@ pub struct HeadingPairs {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HyperlinkList {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The child that is `super::document_properties_variant_types::Vector`, which the schema
+    /// requires.
     pub vector: Box<super::document_properties_variant_types::Vector>,
 }
 
-/// 22.2.2.12 `HyperlinksChanged` (Hyperlinks Changed): the tag `ap:HyperlinksChanged`, schema type
-/// `boolean`.
+/// The `ap:HyperlinksChanged` element, Hyperlinks Changed (ECMA-376 Part 1, section 22.2.2.12). Its
+/// schema type is `boolean`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -607,12 +663,14 @@ pub struct HyperlinkList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HyperlinksChanged {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.2.2.20 `PresentationFormat` (Intended Format of Presentation): the tag
-/// `ap:PresentationFormat`, schema type `string`.
+/// The `ap:PresentationFormat` element, Intended Format of Presentation (ECMA-376 Part 1, section
+/// 22.2.2.20). Its schema type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -621,11 +679,14 @@ pub struct HyperlinksChanged {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct IntendedFormatOfPresentation {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.2.2.14 `LinksUpToDate` (Links Up-to-Date): the tag `ap:LinksUpToDate`, schema type `boolean`.
+/// The `ap:LinksUpToDate` element, Links Up-to-Date (ECMA-376 Part 1, section 22.2.2.14). Its
+/// schema type is `boolean`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -634,11 +695,14 @@ pub struct IntendedFormatOfPresentation {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LinksUpToDate {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.2.2.5 Company (Name of Company): the tag `ap:Company`, schema type `string`.
+/// The `ap:Company` element, Name of Company (ECMA-376 Part 1, section 22.2.2.5). Its schema type
+/// is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -647,11 +711,14 @@ pub struct LinksUpToDate {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NameOfCompany {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.2.2.25 Template (Name of Document Template): the tag `ap:Template`, schema type `string`.
+/// The `ap:Template` element, Name of Document Template (ECMA-376 Part 1, section 22.2.2.25). Its
+/// schema type is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -660,11 +727,14 @@ pub struct NameOfCompany {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NameOfDocumentTemplate {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.2.2.15 Manager (Name of Manager): the tag `ap:Manager`, schema type `string`.
+/// The `ap:Manager` element, Name of Manager (ECMA-376 Part 1, section 22.2.2.15). Its schema type
+/// is `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -673,11 +743,14 @@ pub struct NameOfDocumentTemplate {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NameOfManager {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.2.2.9 `HiddenSlides` (Number of Hidden Slides): the tag `ap:HiddenSlides`, schema type `int`.
+/// The `ap:HiddenSlides` element, Number of Hidden Slides (ECMA-376 Part 1, section 22.2.2.9). Its
+/// schema type is `int`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -686,104 +759,13 @@ pub struct NameOfManager {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NumberOfHiddenSlides {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.2.2.13 Lines (Number of Lines): the tag `ap:Lines`, schema type `int`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct NumberOfLines {
-    pub unknown: crate::Unknown,
-    pub value: String,
-}
-
-/// 22.2.2.17 Notes (Number of Slides Containing Notes): the tag `ap:Notes`, schema type `int`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct NumberOfSlidesContainingNotes {
-    pub unknown: crate::Unknown,
-    pub value: String,
-}
-
-/// 22.2.2.26 `TitlesOfParts` (Part Titles): the tag `ap:TitlesOfParts`, schema type
-/// `CT_VectorLpstr`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct PartTitles {
-    pub unknown: crate::Unknown,
-    pub vector: Box<super::document_properties_variant_types::Vector>,
-}
-
-/// 22.2.2.11 `HyperlinkBase` (Relative Hyperlink Base): the tag `ap:HyperlinkBase`, schema type
-/// `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct RelativeHyperlinkBase {
-    pub unknown: crate::Unknown,
-    pub value: String,
-}
-
-/// 22.2.2.23 `SharedDoc` (Shared Document): the tag `ap:SharedDoc`, schema type `boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct SharedDocument {
-    pub unknown: crate::Unknown,
-    pub value: String,
-}
-
-/// 22.2.2.24 Slides (Slides Metadata Element): the tag `ap:Slides`, schema type `int`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct SlidesMetadataElement {
-    pub unknown: crate::Unknown,
-    pub value: String,
-}
-
-/// 22.2.2.22 `ScaleCrop` (Thumbnail Display Mode): the tag `ap:ScaleCrop`, schema type `boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
-#[non_exhaustive]
-pub struct ThumbnailDisplayMode {
-    pub unknown: crate::Unknown,
-    pub value: String,
-}
-
-/// 22.2.2.27 `TotalTime` (Total Edit Time Metadata Element): the tag `ap:TotalTime`, schema type
+/// The `ap:Lines` element, Number of Lines (ECMA-376 Part 1, section 22.2.2.13). Its schema type is
 /// `int`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
@@ -792,12 +774,128 @@ pub struct ThumbnailDisplayMode {
 )]
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
-pub struct TotalEditTimeMetadataElement {
+pub struct NumberOfLines {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.2.2.3 Characters (Total Number of Characters): the tag `ap:Characters`, schema type `int`.
+/// The `ap:Notes` element, Number of Slides Containing Notes (ECMA-376 Part 1, section 22.2.2.17).
+/// Its schema type is `int`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct NumberOfSlidesContainingNotes {
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: crate::Unknown,
+    /// The element's text.
+    pub value: String,
+}
+
+/// The `ap:TitlesOfParts` element, Part Titles (ECMA-376 Part 1, section 22.2.2.26). Its schema
+/// type is `CT_VectorLpstr`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct PartTitles {
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: crate::Unknown,
+    /// The child that is `super::document_properties_variant_types::Vector`, which the schema
+    /// requires.
+    pub vector: Box<super::document_properties_variant_types::Vector>,
+}
+
+/// The `ap:HyperlinkBase` element, Relative Hyperlink Base (ECMA-376 Part 1, section 22.2.2.11).
+/// Its schema type is `string`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct RelativeHyperlinkBase {
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: crate::Unknown,
+    /// The element's text.
+    pub value: String,
+}
+
+/// The `ap:SharedDoc` element, Shared Document (ECMA-376 Part 1, section 22.2.2.23). Its schema
+/// type is `boolean`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct SharedDocument {
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: crate::Unknown,
+    /// The element's text.
+    pub value: String,
+}
+
+/// The `ap:Slides` element, Slides Metadata Element (ECMA-376 Part 1, section 22.2.2.24). Its
+/// schema type is `int`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct SlidesMetadataElement {
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: crate::Unknown,
+    /// The element's text.
+    pub value: String,
+}
+
+/// The `ap:ScaleCrop` element, Thumbnail Display Mode (ECMA-376 Part 1, section 22.2.2.22). Its
+/// schema type is `boolean`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct ThumbnailDisplayMode {
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: crate::Unknown,
+    /// The element's text.
+    pub value: String,
+}
+
+/// The `ap:TotalTime` element, Total Edit Time Metadata Element (ECMA-376 Part 1, section
+/// 22.2.2.27). Its schema type is `int`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct TotalEditTimeMetadataElement {
+    /// What a read found that the schemas do not declare, which a write gives back.
+    pub unknown: crate::Unknown,
+    /// The element's text.
+    pub value: String,
+}
+
+/// The `ap:Characters` element, Total Number of Characters (ECMA-376 Part 1, section 22.2.2.3). Its
+/// schema type is `int`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -806,11 +904,14 @@ pub struct TotalEditTimeMetadataElement {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TotalNumberOfCharacters {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.2.2.16 `MMClips` (Total Number of Multimedia Clips): the tag `ap:MMClips`, schema type `int`.
+/// The `ap:MMClips` element, Total Number of Multimedia Clips (ECMA-376 Part 1, section 22.2.2.16).
+/// Its schema type is `int`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -819,11 +920,14 @@ pub struct TotalNumberOfCharacters {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TotalNumberOfMultimediaClips {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.2.2.18 Pages (Total Number of Pages): the tag `ap:Pages`, schema type `int`.
+/// The `ap:Pages` element, Total Number of Pages (ECMA-376 Part 1, section 22.2.2.18). Its schema
+/// type is `int`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -832,11 +936,14 @@ pub struct TotalNumberOfMultimediaClips {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TotalNumberOfPages {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.2.2.19 Paragraphs (Total Number of Paragraphs): the tag `ap:Paragraphs`, schema type `int`.
+/// The `ap:Paragraphs` element, Total Number of Paragraphs (ECMA-376 Part 1, section 22.2.2.19).
+/// Its schema type is `int`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -845,11 +952,14 @@ pub struct TotalNumberOfPages {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TotalNumberOfParagraphs {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.2.2.28 Words (Word Count): the tag `ap:Words`, schema type `int`.
+/// The `ap:Words` element, Word Count (ECMA-376 Part 1, section 22.2.2.28). Its schema type is
+/// `int`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -858,7 +968,9 @@ pub struct TotalNumberOfParagraphs {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct WordCount {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The element's text.
     pub value: String,
 }
 

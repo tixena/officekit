@@ -350,7 +350,8 @@
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 
-/// Every schema type of the data, sorted by name; a type's id is its index.
+/// Every schema type of the data, sorted by name; a type's id is its index, and `type_id` finds it
+/// by name.
 pub static SCHEMA_TYPES: &[SchemaType] = &[
     SchemaType {
         attributes: ATTRIBUTES_1,
@@ -46554,7 +46555,8 @@ pub static SCHEMA_TYPES: &[SchemaType] = &[
 /// exists only in Transitional.
 pub static TRANSITIONAL_ONLY_NAMESPACES: &[NamespaceId] = &[60, 87, 95, 98, 162];
 
-/// The id of the type the data names `name`, `w:CT_TblCellMar/w:tblCellMar`.
+/// The id of the type the data names `name`, `w:CT_TblCellMar/w:tblCellMar`; `None` for a name the
+/// data does not hold.
 #[must_use]
 pub fn type_id(name: &str) -> Option<TypeId> {
     let index = SCHEMA_TYPES

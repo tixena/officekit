@@ -212,8 +212,11 @@
 //! The hooks of the `cdr14` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_core::office_drawing_2010_chart_drawing`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/drawing/2010/chartDrawing`.
+//! The namespace is `http://schemas.microsoft.com/office/drawing/2010/chartDrawing`. Its prefix, `cdr14`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_core::office_drawing_2010_chart_drawing::*;
 
 use officekit_markup_base::Written;
@@ -229,33 +232,48 @@ use std::io;
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_drawing_2010_chart_drawing` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `CNvContentPartPr`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn c_nv_content_part_pr(&mut self, _node: &CNvContentPartPr) -> Option<CNvContentPartPr> {
         None
     }
 
+    /// Asked for each `CNvPr`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn c_nv_pr(&mut self, _node: &CNvPr) -> Option<CNvPr> {
         None
     }
 
+    /// Asked for each `ContentPart`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn content_part(&mut self, _node: &ContentPart) -> Option<ContentPart> {
         None
     }
 
+    /// Asked for each `ExtLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
         None
     }
 
+    /// Asked for each `NvContentPartPr`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn nv_content_part_pr(&mut self, _node: &NvContentPartPr) -> Option<NvContentPartPr> {
         None
     }
 
+    /// Asked for each `NvPr`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn nv_pr(&mut self, _node: &NvPr) -> Option<NvPr> {
         None
     }
 
+    /// Asked when a `CNvContentPartPr` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_c_nv_content_part_pr(
         &mut self,
         _node: &CNvContentPartPr,
@@ -264,16 +282,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CNvPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_c_nv_pr(&mut self, _node: &CNvPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ContentPart` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_content_part(
         &mut self,
         _node: &ContentPart,
@@ -282,16 +306,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `NvContentPartPr` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_nv_content_part_pr(
         &mut self,
         _node: &NvContentPartPr,
@@ -300,20 +330,28 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NvPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_nv_pr(&mut self, _node: &NvPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Xfrm` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_xfrm(&mut self, _node: &Xfrm, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked for each `Xfrm`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn xfrm(&mut self, _node: &Xfrm) -> Option<Xfrm> {
         None
     }
@@ -325,30 +363,40 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_drawing_2010_chart_drawing` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `CNvContentPartPr`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn c_nv_content_part_pr(&mut self, _node: &CNvContentPartPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CNvPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn c_nv_pr(&mut self, _node: &CNvPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ContentPart`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn content_part(&mut self, _node: &ContentPart) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext_lst(&mut self, _node: &ExtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NvContentPartPr`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn nv_content_part_pr(&mut self, _node: &NvContentPartPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NvPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn nv_pr(&mut self, _node: &NvPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Xfrm`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn xfrm(&mut self, _node: &Xfrm) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

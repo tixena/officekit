@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `s` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.openxmlformats.org/officeDocument/2006/sharedTypes`, which files write with the prefix `s`.
 //!
-//! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/sharedTypes`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 pub mod read;
 pub mod write;
@@ -257,7 +257,11 @@ static XML_NAME_FACETS: crate::Facets = crate::Facets {
     patterns: &[],
 };
 
-/// 20.1.2.5 `ST_TrueFalse` (Boolean Value): the text the file carried.
+/// Boolean Value, the simple type `ST_TrueFalse` (ECMA-376 Part 4, section 20.1.2.5), kept as the
+/// text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -266,18 +270,26 @@ static XML_NAME_FACETS: crate::Facets = crate::Facets {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BooleanValue(pub String);
-/// The members of `ST_TrueFalse`, in alphabetical order.
+/// The members of the enumeration `ST_TrueFalse`, in alphabetical order. `as_str` gives the text of
+/// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum BooleanValueMember {
+    /// The member written `f`.
     F,
+    /// The member written `false`.
     False,
+    /// The member written `t`.
     T,
+    /// The member written `true`.
     True,
 }
 
-/// 20.1.2.6 `ST_TrueFalseBlank` (Boolean Value with Blank \[False\] State): the text the file
-/// carried.
+/// Boolean Value with Blank \[False\] State, the simple type `ST_TrueFalseBlank` (ECMA-376 Part 4,
+/// section 20.1.2.6), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -286,20 +298,32 @@ pub enum BooleanValueMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BooleanValueWithBlankFalseState(pub String);
-/// The members of `ST_TrueFalseBlank`, in alphabetical order.
+/// The members of the enumeration `ST_TrueFalseBlank`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum BooleanValueWithBlankFalseStateMember {
+    /// The member written as an empty string.
     Empty,
+    /// The member written `f`.
     F,
+    /// The member written `false`.
     False4,
+    /// The member written `False`.
     False7,
+    /// The member written `t`.
     T,
+    /// The member written `true`.
     True3,
+    /// The member written `True`.
     True6,
 }
 
-/// 22.9.2.1 `ST_CalendarType` (Calendar Types): the text the file carried.
+/// Calendar Types, the simple type `ST_CalendarType` (ECMA-376 Part 1, section 22.9.2.1), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -308,27 +332,46 @@ pub enum BooleanValueWithBlankFalseStateMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CalendarTypes(pub String);
-/// The members of `ST_CalendarType`, in alphabetical order.
+/// The members of the enumeration `ST_CalendarType`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum CalendarTypesMember {
+    /// The member written `gregorian`.
     Gregorian,
+    /// The member written `gregorianArabic`.
     GregorianArabic,
+    /// The member written `gregorianMeFrench`.
     GregorianMeFrench,
+    /// The member written `gregorianUs`.
     GregorianUs,
+    /// The member written `gregorianXlitEnglish`.
     GregorianXlitEnglish,
+    /// The member written `gregorianXlitFrench`.
     GregorianXlitFrench,
+    /// The member written `hebrew`.
     Hebrew,
+    /// The member written `hijri`.
     Hijri,
+    /// The member written `japan`.
     Japan,
+    /// The member written `korea`.
     Korea,
+    /// The member written `none`.
     None,
+    /// The member written `saka`.
     Saka,
+    /// The member written `taiwan`.
     Taiwan,
+    /// The member written `thai`.
     Thai,
 }
 
-/// 20.1.2.1 `ST_AlgClass` (Cryptographic Algorithm Classes): the text the file carried.
+/// Cryptographic Algorithm Classes, the simple type `ST_AlgClass` (ECMA-376 Part 4, section
+/// 20.1.2.1), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -337,15 +380,22 @@ pub enum CalendarTypesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CryptographicAlgorithmClasses(pub String);
-/// The members of `ST_AlgClass`, in alphabetical order.
+/// The members of the enumeration `ST_AlgClass`, in alphabetical order. `as_str` gives the text of
+/// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum CryptographicAlgorithmClassesMember {
+    /// The member written `custom`.
     Custom,
+    /// The member written `hash`.
     Hash,
 }
 
-/// 20.1.2.2 `ST_AlgType` (Cryptographic Algorithm Types): the text the file carried.
+/// Cryptographic Algorithm Types, the simple type `ST_AlgType` (ECMA-376 Part 4, section 20.1.2.2),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -354,15 +404,22 @@ pub enum CryptographicAlgorithmClassesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CryptographicAlgorithmTypes(pub String);
-/// The members of `ST_AlgType`, in alphabetical order.
+/// The members of the enumeration `ST_AlgType`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum CryptographicAlgorithmTypesMember {
+    /// The member written `custom`.
     Custom,
+    /// The member written `typeAny`.
     TypeAny,
 }
 
-/// 20.1.2.4 `ST_CryptProv` (Cryptographic Provider Types): the text the file carried.
+/// Cryptographic Provider Types, the simple type `ST_CryptProv` (ECMA-376 Part 4, section
+/// 20.1.2.4), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -371,16 +428,24 @@ pub enum CryptographicAlgorithmTypesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CryptographicProviderTypes(pub String);
-/// The members of `ST_CryptProv`, in alphabetical order.
+/// The members of the enumeration `ST_CryptProv`, in alphabetical order. `as_str` gives the text of
+/// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum CryptographicProviderTypesMember {
+    /// The member written `custom`.
     Custom,
+    /// The member written `rsaAES`.
     RsaAES,
+    /// The member written `rsaFull`.
     RsaFull,
 }
 
-/// 22.9.2.2 `ST_ConformanceClass` (Document Conformance Class Value): the text the file carried.
+/// Document Conformance Class Value, the simple type `ST_ConformanceClass` (ECMA-376 Part 1,
+/// section 22.9.2.2), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -389,15 +454,22 @@ pub enum CryptographicProviderTypesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DocumentConformanceClassValue(pub String);
-/// The members of `ST_ConformanceClass`, in alphabetical order.
+/// The members of the enumeration `ST_ConformanceClass`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum DocumentConformanceClassValueMember {
+    /// The member written `strict`.
     Strict,
+    /// The member written `transitional`.
     Transitional,
 }
 
-/// 22.9.2.3 `ST_FixedPercentage` (Fixed Percentage Value with Sign): the text the file carried.
+/// Fixed Percentage Value with Sign, the simple type `ST_FixedPercentage` (ECMA-376 Part 1, section
+/// 22.9.2.3), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -407,7 +479,10 @@ pub enum DocumentConformanceClassValueMember {
 #[non_exhaustive]
 pub struct FixedPercentageValueWithSign(pub String);
 
-/// `ST_Guid`: the text the file carried.
+/// The simple type `ST_Guid`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -417,7 +492,11 @@ pub struct FixedPercentageValueWithSign(pub String);
 #[non_exhaustive]
 pub struct Guid(pub String);
 
-/// 22.9.2.5 `ST_HexColorRGB` (Hexadecimal Color Value): the text the file carried.
+/// Hexadecimal Color Value, the simple type `ST_HexColorRGB` (ECMA-376 Part 1, section 22.9.2.5),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -427,7 +506,11 @@ pub struct Guid(pub String);
 #[non_exhaustive]
 pub struct HexadecimalColorValue(pub String);
 
-/// 22.9.2.18 `ST_XAlign` (Horizontal Alignment Location): the text the file carried.
+/// Horizontal Alignment Location, the simple type `ST_XAlign` (ECMA-376 Part 1, section 22.9.2.18),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -436,18 +519,28 @@ pub struct HexadecimalColorValue(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HorizontalAlignmentLocation(pub String);
-/// The members of `ST_XAlign`, in alphabetical order.
+/// The members of the enumeration `ST_XAlign`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum HorizontalAlignmentLocationMember {
+    /// The member written `center`.
     Center,
+    /// The member written `inside`.
     Inside,
+    /// The member written `left`.
     Left,
+    /// The member written `outside`.
     Outside,
+    /// The member written `right`.
     Right,
 }
 
-/// 22.9.2.14 `ST_TwipsMeasure` (Measurement in Twentieths of a Point): the text the file carried.
+/// Measurement in Twentieths of a Point, the simple type `ST_TwipsMeasure` (ECMA-376 Part 1,
+/// section 22.9.2.14), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -461,11 +554,17 @@ pub struct MeasurementInTwentiethsOfAPoint(pub String);
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
 pub enum MeasurementInTwentiethsOfAPointMember {
+    /// A value of the member type `Measure`.
     PositiveUniversalMeasurement(Measure),
+    /// A value of the member type `i64`.
     UnsignedDecimalNumberValue(i64),
 }
 
-/// 22.9.2.7 `ST_OnOff` (On/Off Value): the text the file carried.
+/// On/Off Value, the simple type `ST_OnOff` (ECMA-376 Part 1, section 22.9.2.7), kept as the text
+/// the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -475,7 +574,11 @@ pub enum MeasurementInTwentiethsOfAPointMember {
 #[non_exhaustive]
 pub struct OnOffValue(pub String);
 
-/// 22.9.2.8 `ST_Panose` (Panose-1 Number): the text the file carried.
+/// Panose-1 Number, the simple type `ST_Panose` (ECMA-376 Part 1, section 22.9.2.8), kept as the
+/// text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -485,7 +588,11 @@ pub struct OnOffValue(pub String);
 #[non_exhaustive]
 pub struct Panose1Number(pub String);
 
-/// 22.9.2.9 `ST_Percentage` (Percentage Value with Sign): the text the file carried.
+/// Percentage Value with Sign, the simple type `ST_Percentage` (ECMA-376 Part 1, section 22.9.2.9),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -495,8 +602,11 @@ pub struct Panose1Number(pub String);
 #[non_exhaustive]
 pub struct PercentageValueWithSign(pub String);
 
-/// 22.9.2.10 `ST_PositiveFixedPercentage` (Positive Fixed Percentage Value with Sign): the text the
-/// file carried.
+/// Positive Fixed Percentage Value with Sign, the simple type `ST_PositiveFixedPercentage`
+/// (ECMA-376 Part 1, section 22.9.2.10), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -506,8 +616,11 @@ pub struct PercentageValueWithSign(pub String);
 #[non_exhaustive]
 pub struct PositiveFixedPercentageValueWithSign(pub String);
 
-/// 22.9.2.11 `ST_PositivePercentage` (Positive Percentage Value with Sign): the text the file
-/// carried.
+/// Positive Percentage Value with Sign, the simple type `ST_PositivePercentage` (ECMA-376 Part 1,
+/// section 22.9.2.11), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -517,8 +630,11 @@ pub struct PositiveFixedPercentageValueWithSign(pub String);
 #[non_exhaustive]
 pub struct PositivePercentageValueWithSign(pub String);
 
-/// 22.9.2.12 `ST_PositiveUniversalMeasure` (Positive Universal Measurement): the text the file
-/// carried.
+/// Positive Universal Measurement, the simple type `ST_PositiveUniversalMeasure` (ECMA-376 Part 1,
+/// section 22.9.2.12), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -528,7 +644,11 @@ pub struct PositivePercentageValueWithSign(pub String);
 #[non_exhaustive]
 pub struct PositiveUniversalMeasurement(pub String);
 
-/// 22.9.2.15 `ST_UniversalMeasure` (Universal Measurement): the text the file carried.
+/// Universal Measurement, the simple type `ST_UniversalMeasure` (ECMA-376 Part 1, section
+/// 22.9.2.15), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -538,7 +658,11 @@ pub struct PositiveUniversalMeasurement(pub String);
 #[non_exhaustive]
 pub struct UniversalMeasurement(pub String);
 
-/// 22.9.2.16 `ST_UnsignedDecimalNumber` (Unsigned Decimal Number Value): the text the file carried.
+/// Unsigned Decimal Number Value, the simple type `ST_UnsignedDecimalNumber` (ECMA-376 Part 1,
+/// section 22.9.2.16), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -548,7 +672,11 @@ pub struct UniversalMeasurement(pub String);
 #[non_exhaustive]
 pub struct UnsignedDecimalNumberValue(pub String);
 
-/// 22.9.2.20 `ST_YAlign` (Vertical Alignment Location): the text the file carried.
+/// Vertical Alignment Location, the simple type `ST_YAlign` (ECMA-376 Part 1, section 22.9.2.20),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -557,19 +685,30 @@ pub struct UnsignedDecimalNumberValue(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct VerticalAlignmentLocation(pub String);
-/// The members of `ST_YAlign`, in alphabetical order.
+/// The members of the enumeration `ST_YAlign`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum VerticalAlignmentLocationMember {
+    /// The member written `bottom`.
     Bottom,
+    /// The member written `center`.
     Center,
+    /// The member written `inline`.
     Inline,
+    /// The member written `inside`.
     Inside,
+    /// The member written `outside`.
     Outside,
+    /// The member written `top`.
     Top,
 }
 
-/// 22.9.2.17 `ST_VerticalAlignRun` (Vertical Positioning Location): the text the file carried.
+/// Vertical Positioning Location, the simple type `ST_VerticalAlignRun` (ECMA-376 Part 1, section
+/// 22.9.2.17), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -578,16 +717,24 @@ pub enum VerticalAlignmentLocationMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct VerticalPositioningLocation(pub String);
-/// The members of `ST_VerticalAlignRun`, in alphabetical order.
+/// The members of the enumeration `ST_VerticalAlignRun`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum VerticalPositioningLocationMember {
+    /// The member written `baseline`.
     Baseline,
+    /// The member written `subscript`.
     Subscript,
+    /// The member written `superscript`.
     Superscript,
 }
 
-/// 22.9.2.21 `ST_XmlName` (XML Name): the text the file carried.
+/// XML Name, the simple type `ST_XmlName` (ECMA-376 Part 1, section 22.9.2.21), kept as the text
+/// the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -629,7 +776,7 @@ impl BooleanValueMember {
         crate::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -683,7 +830,7 @@ impl BooleanValueWithBlankFalseStateMember {
         crate::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -748,7 +895,7 @@ impl CalendarTypesMember {
         crate::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -795,7 +942,7 @@ impl CryptographicAlgorithmClassesMember {
         crate::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -848,7 +995,7 @@ impl CryptographicAlgorithmTypesMember {
         crate::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -902,7 +1049,7 @@ impl CryptographicProviderTypesMember {
         crate::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -955,7 +1102,7 @@ impl DocumentConformanceClassValueMember {
         crate::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -1084,7 +1231,7 @@ impl HorizontalAlignmentLocationMember {
         crate::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -1382,7 +1529,7 @@ impl VerticalAlignmentLocationMember {
         crate::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -1436,7 +1583,7 @@ impl VerticalPositioningLocationMember {
         crate::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

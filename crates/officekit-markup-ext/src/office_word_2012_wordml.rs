@@ -212,8 +212,11 @@
 //! The hooks of the `w15` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_core::office_word_2012_wordml`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/word/2012/wordml`.
+//! The namespace is `http://schemas.microsoft.com/office/word/2012/wordml`. Its prefix, `w15`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_core::office_word_2012_wordml::*;
 
 use officekit_markup_base::Written;
@@ -229,10 +232,14 @@ use std::io;
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_word_2012_wordml` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `Appearance`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn appearance(&mut self, _node: &Appearance) -> Option<Appearance> {
         None
     }
 
+    /// Asked for each `ChartTrackingRefBased`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn chart_tracking_ref_based(
         &mut self,
         _node: &ChartTrackingRefBased,
@@ -240,26 +247,38 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Collapsed`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn collapsed(&mut self, _node: &Collapsed) -> Option<Collapsed> {
         None
     }
 
+    /// Asked for each `Color`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn color(&mut self, _node: &Color) -> Option<Color> {
         None
     }
 
+    /// Asked for each `CommentEx`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn comment_ex(&mut self, _node: &CommentEx) -> Option<CommentEx> {
         None
     }
 
+    /// Asked for each `CommentsEx`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn comments_ex(&mut self, _node: &CommentsEx) -> Option<CommentsEx> {
         None
     }
 
+    /// Asked for each `DataBinding`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn data_binding(&mut self, _node: &DataBinding) -> Option<DataBinding> {
         None
     }
 
+    /// Asked for each `DoNotAllowInsertDeleteSection`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn do_not_allow_insert_delete_section(
         &mut self,
         _node: &DoNotAllowInsertDeleteSection,
@@ -267,30 +286,44 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `DocId`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn doc_id(&mut self, _node: &DocId) -> Option<DocId> {
         None
     }
 
+    /// Asked for each `FootnoteColumns`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn footnote_columns(&mut self, _node: &FootnoteColumns) -> Option<FootnoteColumns> {
         None
     }
 
+    /// Asked for each `People`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn people(&mut self, _node: &People) -> Option<People> {
         None
     }
 
+    /// Asked for each `Person`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn person(&mut self, _node: &Person) -> Option<Person> {
         None
     }
 
+    /// Asked for each `PresenceInfo`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn presence_info(&mut self, _node: &PresenceInfo) -> Option<PresenceInfo> {
         None
     }
 
+    /// Asked for each `RepeatingSection`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn repeating_section(&mut self, _node: &RepeatingSection) -> Option<RepeatingSection> {
         None
     }
 
+    /// Asked for each `RepeatingSectionItem`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn repeating_section_item(
         &mut self,
         _node: &RepeatingSectionItem,
@@ -298,10 +331,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `SectionTitle`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn section_title(&mut self, _node: &SectionTitle) -> Option<SectionTitle> {
         None
     }
 
+    /// Asked for each `WebExtensionCreated`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn web_extension_created(
         &mut self,
         _node: &WebExtensionCreated,
@@ -309,13 +346,18 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `WebExtensionLinked`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn web_extension_linked(&mut self, _node: &WebExtensionLinked) -> Option<WebExtensionLinked> {
         None
     }
 
+    /// Asked when a `Appearance` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_appearance(
         &mut self,
         _node: &Appearance,
@@ -324,9 +366,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ChartTrackingRefBased` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_chart_tracking_ref_based(
         &mut self,
         _node: &ChartTrackingRefBased,
@@ -335,9 +380,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Collapsed` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_collapsed(
         &mut self,
         _node: &Collapsed,
@@ -346,16 +394,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Color` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_color(&mut self, _node: &Color, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `CommentEx` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_comment_ex(
         &mut self,
         _node: &CommentEx,
@@ -364,9 +418,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CommentsEx` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_comments_ex(
         &mut self,
         _node: &CommentsEx,
@@ -375,9 +432,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DataBinding` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_data_binding(
         &mut self,
         _node: &DataBinding,
@@ -386,9 +446,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DoNotAllowInsertDeleteSection` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_do_not_allow_insert_delete_section(
         &mut self,
         _node: &DoNotAllowInsertDeleteSection,
@@ -397,16 +460,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DocId` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_doc_id(&mut self, _node: &DocId, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `FootnoteColumns` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_footnote_columns(
         &mut self,
         _node: &FootnoteColumns,
@@ -415,23 +484,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `People` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_people(&mut self, _node: &People, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Person` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_person(&mut self, _node: &Person, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `PresenceInfo` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_presence_info(
         &mut self,
         _node: &PresenceInfo,
@@ -440,9 +518,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RepeatingSection` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_repeating_section(
         &mut self,
         _node: &RepeatingSection,
@@ -451,9 +532,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RepeatingSectionItem` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_repeating_section_item(
         &mut self,
         _node: &RepeatingSectionItem,
@@ -462,9 +546,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SectionTitle` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_section_title(
         &mut self,
         _node: &SectionTitle,
@@ -473,9 +560,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `WebExtensionCreated` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_web_extension_created(
         &mut self,
         _node: &WebExtensionCreated,
@@ -484,9 +574,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `WebExtensionLinked` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_web_extension_linked(
         &mut self,
         _node: &WebExtensionLinked,
@@ -502,10 +595,14 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_word_2012_wordml` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `Appearance`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn appearance(&mut self, _node: &Appearance) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ChartTrackingRefBased`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn chart_tracking_ref_based(
         &mut self,
         _node: &ChartTrackingRefBased,
@@ -513,26 +610,37 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Collapsed`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn collapsed(&mut self, _node: &Collapsed) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Color`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn color(&mut self, _node: &Color) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CommentEx`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn comment_ex(&mut self, _node: &CommentEx) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CommentsEx`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn comments_ex(&mut self, _node: &CommentsEx) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DataBinding`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn data_binding(&mut self, _node: &DataBinding) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DoNotAllowInsertDeleteSection`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn do_not_allow_insert_delete_section(
         &mut self,
         _node: &DoNotAllowInsertDeleteSection,
@@ -540,30 +648,41 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DocId`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn doc_id(&mut self, _node: &DocId) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FootnoteColumns`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn footnote_columns(&mut self, _node: &FootnoteColumns) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `People`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn people(&mut self, _node: &People) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Person`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn person(&mut self, _node: &Person) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PresenceInfo`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn presence_info(&mut self, _node: &PresenceInfo) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RepeatingSection`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn repeating_section(&mut self, _node: &RepeatingSection) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RepeatingSectionItem`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn repeating_section_item(
         &mut self,
         _node: &RepeatingSectionItem,
@@ -571,10 +690,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SectionTitle`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn section_title(&mut self, _node: &SectionTitle) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `WebExtensionCreated`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn web_extension_created(
         &mut self,
         _node: &WebExtensionCreated,
@@ -582,6 +705,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `WebExtensionLinked`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn web_extension_linked(
         &mut self,
         _node: &WebExtensionLinked,

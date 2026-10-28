@@ -212,8 +212,11 @@
 //! The hooks of the `o` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_core::vml_office_drawing`.
 //!
-//! The namespace is `urn:schemas-microsoft-com:office:office`.
+//! The namespace is `urn:schemas-microsoft-com:office:office`. Its prefix, `o`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_core::vml_office_drawing::*;
 
 use officekit_markup_base::Written;
@@ -229,18 +232,26 @@ use std::io;
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::vml_office_drawing` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `Callout`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn callout(&mut self, _node: &Callout) -> Option<Callout> {
         None
     }
 
+    /// Asked for each `Complex`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn complex(&mut self, _node: &Complex) -> Option<Complex> {
         None
     }
 
+    /// Asked for each `DiagramRelationship`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn diagram_relationship(&mut self, _node: &DiagramRelationship) -> Option<DiagramRelationship> {
         None
     }
 
+    /// Asked for each `DiagramRelationshipTable`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn diagram_relationship_table(
         &mut self,
         _node: &DiagramRelationshipTable,
@@ -248,6 +259,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `DigitalSignatureLine`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn digital_signature_line(
         &mut self,
         _node: &DigitalSignatureLine,
@@ -255,6 +268,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `EmbeddedObjectAlternateImageRequest`. `None` rebuilds it from its
+    /// transformed children, and `Some` puts the node it holds in its place.
     fn embedded_object_alternate_image_request(
         &mut self,
         _node: &EmbeddedObjectAlternateImageRequest,
@@ -262,6 +277,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `EmbeddedObjectCannotBeRefreshed`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn embedded_object_cannot_be_refreshed(
         &mut self,
         _node: &EmbeddedObjectCannotBeRefreshed,
@@ -269,18 +286,26 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `EmbeddedOLEObject`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn embedded_ole_object(&mut self, _node: &EmbeddedOLEObject) -> Option<EmbeddedOLEObject> {
         None
     }
 
+    /// Asked for each `Extrusion`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn extrusion(&mut self, _node: &Extrusion) -> Option<Extrusion> {
         None
     }
 
+    /// Asked for each `Ink`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn ink(&mut self, _node: &Ink) -> Option<Ink> {
         None
     }
 
+    /// Asked for each `MostRecentlyUsedColors`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn most_recently_used_colors(
         &mut self,
         _node: &MostRecentlyUsedColors,
@@ -288,10 +313,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `NewShapeDefaults`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn new_shape_defaults(&mut self, _node: &NewShapeDefaults) -> Option<NewShapeDefaults> {
         None
     }
 
+    /// Asked for each `NewShapeDefaultsContent`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn new_shape_defaults_content(
         &mut self,
         _node: &NewShapeDefaultsContent,
@@ -299,6 +328,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `NewShapeDefaultsContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn new_shape_defaults_content_items(
         &mut self,
         _node: &NewShapeDefaultsContent,
@@ -306,22 +337,32 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `RegroupEntry`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn regroup_entry(&mut self, _node: &RegroupEntry) -> Option<RegroupEntry> {
         None
     }
 
+    /// Asked for each `Rule`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn rule(&mut self, _node: &Rule) -> Option<Rule> {
         None
     }
 
+    /// Asked for each `RuleSet`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn rule_set(&mut self, _node: &RuleSet) -> Option<RuleSet> {
         None
     }
 
+    /// Asked for each `ShapeClippingPath`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn shape_clipping_path(&mut self, _node: &ShapeClippingPath) -> Option<ShapeClippingPath> {
         None
     }
 
+    /// Asked for each `ShapeFillExtendedProperties`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn shape_fill_extended_properties(
         &mut self,
         _node: &ShapeFillExtendedProperties,
@@ -329,6 +370,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ShapeGroupingHistory`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn shape_grouping_history(
         &mut self,
         _node: &ShapeGroupingHistory,
@@ -336,10 +379,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ShapeIDMap`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn shape_id_map(&mut self, _node: &ShapeIDMap) -> Option<ShapeIDMap> {
         None
     }
 
+    /// Asked for each `ShapeLayoutProperties`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn shape_layout_properties(
         &mut self,
         _node: &ShapeLayoutProperties,
@@ -347,6 +394,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ShapeLayoutPropertiesContent`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn shape_layout_properties_content(
         &mut self,
         _node: &ShapeLayoutPropertiesContent,
@@ -354,6 +403,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ShapeLayoutPropertiesContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn shape_layout_properties_content_items(
         &mut self,
         _node: &ShapeLayoutPropertiesContent,
@@ -361,18 +412,26 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ShapeProtections`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn shape_protections(&mut self, _node: &ShapeProtections) -> Option<ShapeProtections> {
         None
     }
 
+    /// Asked for each `ShapeReference`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn shape_reference(&mut self, _node: &ShapeReference) -> Option<ShapeReference> {
         None
     }
 
+    /// Asked for each `SkewTransform`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn skew_transform(&mut self, _node: &SkewTransform) -> Option<SkewTransform> {
         None
     }
 
+    /// Asked for each `StorageForAlternateMathContent`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn storage_for_alternate_math_content(
         &mut self,
         _node: &StorageForAlternateMathContent,
@@ -380,6 +439,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `TextBoxBottomStroke`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn text_box_bottom_stroke(
         &mut self,
         _node: &TextBoxBottomStroke,
@@ -387,6 +448,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `TextBoxInteriorStroke`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn text_box_interior_stroke(
         &mut self,
         _node: &TextBoxInteriorStroke,
@@ -394,26 +457,38 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `TextBoxLeftStroke`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn text_box_left_stroke(&mut self, _node: &TextBoxLeftStroke) -> Option<TextBoxLeftStroke> {
         None
     }
 
+    /// Asked for each `TextBoxRightStroke`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn text_box_right_stroke(&mut self, _node: &TextBoxRightStroke) -> Option<TextBoxRightStroke> {
         None
     }
 
+    /// Asked for each `TextBoxTopStroke`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn text_box_top_stroke(&mut self, _node: &TextBoxTopStroke) -> Option<TextBoxTopStroke> {
         None
     }
 
+    /// Asked for each `UIDefaultColors`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn ui_default_colors(&mut self, _node: &UIDefaultColors) -> Option<UIDefaultColors> {
         None
     }
 
+    /// Asked for each `VMLDiagram`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn vml_diagram(&mut self, _node: &VMLDiagram) -> Option<VMLDiagram> {
         None
     }
 
+    /// Asked for each `WordprocessingMLFieldSwitches`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn wordprocessing_ml_field_switches(
         &mut self,
         _node: &WordprocessingMLFieldSwitches,
@@ -421,23 +496,32 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked when a `Callout` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_callout(&mut self, _node: &Callout, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Complex` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_complex(&mut self, _node: &Complex, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `DiagramRelationship` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_diagram_relationship(
         &mut self,
         _node: &DiagramRelationship,
@@ -446,9 +530,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DiagramRelationshipTable` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_diagram_relationship_table(
         &mut self,
         _node: &DiagramRelationshipTable,
@@ -457,9 +544,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DigitalSignatureLine` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_digital_signature_line(
         &mut self,
         _node: &DigitalSignatureLine,
@@ -468,9 +558,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `EmbeddedObjectAlternateImageRequest` is written through. `Written::Yes` means
+    /// the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_embedded_object_alternate_image_request(
         &mut self,
         _node: &EmbeddedObjectAlternateImageRequest,
@@ -479,9 +572,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `EmbeddedObjectCannotBeRefreshed` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_embedded_object_cannot_be_refreshed(
         &mut self,
         _node: &EmbeddedObjectCannotBeRefreshed,
@@ -490,9 +586,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `EmbeddedOLEObject` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_embedded_ole_object(
         &mut self,
         _node: &EmbeddedOLEObject,
@@ -501,9 +600,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Extrusion` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_extrusion(
         &mut self,
         _node: &Extrusion,
@@ -512,16 +614,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Ink` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ink(&mut self, _node: &Ink, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `MostRecentlyUsedColors` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_most_recently_used_colors(
         &mut self,
         _node: &MostRecentlyUsedColors,
@@ -530,9 +638,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NewShapeDefaults` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_new_shape_defaults(
         &mut self,
         _node: &NewShapeDefaults,
@@ -541,9 +652,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NewShapeDefaultsContent` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_new_shape_defaults_content(
         &mut self,
         _node: &NewShapeDefaultsContent,
@@ -552,9 +666,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NewShapeDefaultsContent` in a list is written through. `Written::Yes` means
+    /// the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_new_shape_defaults_content_items(
         &mut self,
         _node: &NewShapeDefaultsContent,
@@ -563,9 +680,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RegroupEntry` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_regroup_entry(
         &mut self,
         _node: &RegroupEntry,
@@ -574,16 +694,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Rule` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_rule(&mut self, _node: &Rule, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `RuleSet` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_rule_set(
         &mut self,
         _node: &RuleSet,
@@ -592,9 +718,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeClippingPath` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_clipping_path(
         &mut self,
         _node: &ShapeClippingPath,
@@ -603,9 +732,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeFillExtendedProperties` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_fill_extended_properties(
         &mut self,
         _node: &ShapeFillExtendedProperties,
@@ -614,9 +746,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeGroupingHistory` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_grouping_history(
         &mut self,
         _node: &ShapeGroupingHistory,
@@ -625,9 +760,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeIDMap` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_id_map(
         &mut self,
         _node: &ShapeIDMap,
@@ -636,9 +774,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeLayoutProperties` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_layout_properties(
         &mut self,
         _node: &ShapeLayoutProperties,
@@ -647,9 +788,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeLayoutPropertiesContent` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_layout_properties_content(
         &mut self,
         _node: &ShapeLayoutPropertiesContent,
@@ -658,9 +802,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeLayoutPropertiesContent` in a list is written through. `Written::Yes`
+    /// means the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_layout_properties_content_items(
         &mut self,
         _node: &ShapeLayoutPropertiesContent,
@@ -669,9 +816,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeProtections` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_protections(
         &mut self,
         _node: &ShapeProtections,
@@ -680,9 +830,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShapeReference` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shape_reference(
         &mut self,
         _node: &ShapeReference,
@@ -691,9 +844,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SkewTransform` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_skew_transform(
         &mut self,
         _node: &SkewTransform,
@@ -702,9 +858,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `StorageForAlternateMathContent` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_storage_for_alternate_math_content(
         &mut self,
         _node: &StorageForAlternateMathContent,
@@ -713,9 +872,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TextBoxBottomStroke` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_text_box_bottom_stroke(
         &mut self,
         _node: &TextBoxBottomStroke,
@@ -724,9 +886,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TextBoxInteriorStroke` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_text_box_interior_stroke(
         &mut self,
         _node: &TextBoxInteriorStroke,
@@ -735,9 +900,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TextBoxLeftStroke` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_text_box_left_stroke(
         &mut self,
         _node: &TextBoxLeftStroke,
@@ -746,9 +914,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TextBoxRightStroke` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_text_box_right_stroke(
         &mut self,
         _node: &TextBoxRightStroke,
@@ -757,9 +928,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TextBoxTopStroke` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_text_box_top_stroke(
         &mut self,
         _node: &TextBoxTopStroke,
@@ -768,9 +942,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `UIDefaultColors` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ui_default_colors(
         &mut self,
         _node: &UIDefaultColors,
@@ -779,9 +956,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `VMLDiagram` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_vml_diagram(
         &mut self,
         _node: &VMLDiagram,
@@ -790,9 +970,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `WordprocessingMLFieldSwitches` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_wordprocessing_ml_field_switches(
         &mut self,
         _node: &WordprocessingMLFieldSwitches,
@@ -808,14 +991,18 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::vml_office_drawing` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `Callout`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn callout(&mut self, _node: &Callout) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Complex`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn complex(&mut self, _node: &Complex) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DiagramRelationship`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn diagram_relationship(
         &mut self,
         _node: &DiagramRelationship,
@@ -823,6 +1010,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DiagramRelationshipTable`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn diagram_relationship_table(
         &mut self,
         _node: &DiagramRelationshipTable,
@@ -830,6 +1019,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DigitalSignatureLine`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn digital_signature_line(
         &mut self,
         _node: &DigitalSignatureLine,
@@ -837,6 +1028,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `EmbeddedObjectAlternateImageRequest`. `Descend::Yes` walks into its children,
+    /// and `Descend::No` skips them.
     fn embedded_object_alternate_image_request(
         &mut self,
         _node: &EmbeddedObjectAlternateImageRequest,
@@ -844,6 +1037,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `EmbeddedObjectCannotBeRefreshed`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn embedded_object_cannot_be_refreshed(
         &mut self,
         _node: &EmbeddedObjectCannotBeRefreshed,
@@ -851,18 +1046,25 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `EmbeddedOLEObject`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn embedded_ole_object(&mut self, _node: &EmbeddedOLEObject) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Extrusion`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn extrusion(&mut self, _node: &Extrusion) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Ink`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ink(&mut self, _node: &Ink) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MostRecentlyUsedColors`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn most_recently_used_colors(
         &mut self,
         _node: &MostRecentlyUsedColors,
@@ -870,10 +1072,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NewShapeDefaults`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn new_shape_defaults(&mut self, _node: &NewShapeDefaults) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NewShapeDefaultsContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn new_shape_defaults_content(
         &mut self,
         _node: &NewShapeDefaultsContent,
@@ -881,22 +1087,30 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RegroupEntry`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn regroup_entry(&mut self, _node: &RegroupEntry) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Rule`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn rule(&mut self, _node: &Rule) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RuleSet`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn rule_set(&mut self, _node: &RuleSet) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShapeClippingPath`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn shape_clipping_path(&mut self, _node: &ShapeClippingPath) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShapeFillExtendedProperties`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn shape_fill_extended_properties(
         &mut self,
         _node: &ShapeFillExtendedProperties,
@@ -904,6 +1118,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShapeGroupingHistory`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn shape_grouping_history(
         &mut self,
         _node: &ShapeGroupingHistory,
@@ -911,10 +1127,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShapeIDMap`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn shape_id_map(&mut self, _node: &ShapeIDMap) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShapeLayoutProperties`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn shape_layout_properties(
         &mut self,
         _node: &ShapeLayoutProperties,
@@ -922,6 +1142,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShapeLayoutPropertiesContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn shape_layout_properties_content(
         &mut self,
         _node: &ShapeLayoutPropertiesContent,
@@ -929,18 +1151,26 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShapeProtections`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn shape_protections(&mut self, _node: &ShapeProtections) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShapeReference`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn shape_reference(&mut self, _node: &ShapeReference) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SkewTransform`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn skew_transform(&mut self, _node: &SkewTransform) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `StorageForAlternateMathContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn storage_for_alternate_math_content(
         &mut self,
         _node: &StorageForAlternateMathContent,
@@ -948,6 +1178,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TextBoxBottomStroke`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn text_box_bottom_stroke(
         &mut self,
         _node: &TextBoxBottomStroke,
@@ -955,6 +1187,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TextBoxInteriorStroke`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn text_box_interior_stroke(
         &mut self,
         _node: &TextBoxInteriorStroke,
@@ -962,6 +1196,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TextBoxLeftStroke`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn text_box_left_stroke(
         &mut self,
         _node: &TextBoxLeftStroke,
@@ -969,6 +1205,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TextBoxRightStroke`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn text_box_right_stroke(
         &mut self,
         _node: &TextBoxRightStroke,
@@ -976,18 +1214,26 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TextBoxTopStroke`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn text_box_top_stroke(&mut self, _node: &TextBoxTopStroke) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `UIDefaultColors`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn ui_default_colors(&mut self, _node: &UIDefaultColors) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `VMLDiagram`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn vml_diagram(&mut self, _node: &VMLDiagram) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `WordprocessingMLFieldSwitches`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn wordprocessing_ml_field_switches(
         &mut self,
         _node: &WordprocessingMLFieldSwitches,

@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `p202` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/powerpoint/2020/02/main`, which files write with the prefix `p202`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/powerpoint/2020/02/main`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -268,25 +270,36 @@ pub static EXT_LST_SHAPE: officekit_markup_base::Shape = officekit_markup_base::
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_powerpoint_2020_02_main` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `DesignPr`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn design_pr(&mut self, _node: &DesignPr) -> Option<DesignPr> {
         None
     }
 
+    /// Asked for each `DesignTag`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn design_tag(&mut self, _node: &DesignTag) -> Option<DesignTag> {
         None
     }
 
+    /// Asked for each `DesignTagLst`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn design_tag_lst(&mut self, _node: &DesignTagLst) -> Option<DesignTagLst> {
         None
     }
 
+    /// Asked for each `ExtLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
         None
     }
 
+    /// Asked when a `DesignPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_design_pr(
         &mut self,
         _node: &DesignPr,
@@ -295,9 +308,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DesignTag` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_design_tag(
         &mut self,
         _node: &DesignTag,
@@ -306,9 +322,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DesignTagLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_design_tag_lst(
         &mut self,
         _node: &DesignTagLst,
@@ -317,15 +336,19 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 }
 
-/// The tag `p202:designPr`, schema type `CT_DesignerDrawingProps` of SDK 3.5.1's data.
+/// The `p202:designPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_DesignerDrawingProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -334,13 +357,18 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DesignPr {
+    /// The child that is `DesignTagLst`, when there is one.
     pub design_tag_lst: Option<Box<DesignTagLst>>,
+    /// The attribute `edtDesignElem`, when the element has it.
     pub edt_design_elem: Option<String>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p202:designTag`, schema type `CT_DesignerTag` of SDK 3.5.1's data.
+/// The `p202:designTag` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_DesignerTag`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -349,12 +377,16 @@ pub struct DesignPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DesignTag {
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `p202:designTagLst`, schema type `CT_DesignerTagList` of SDK 3.5.1's data.
+/// The `p202:designTagLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_DesignerTagList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -363,11 +395,14 @@ pub struct DesignTag {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DesignTagLst {
+    /// The children that are `DesignTag`, in order.
     pub design_tag: Vec<DesignTag>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p202:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
+/// The `p202:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -376,7 +411,9 @@ pub struct DesignTagLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
+    /// The children that are `presentation::Extension`, in order.
     pub extension: Vec<presentation::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -386,18 +423,24 @@ pub struct ExtLst {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_powerpoint_2020_02_main` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `DesignPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn design_pr(&mut self, _node: &DesignPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DesignTag`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn design_tag(&mut self, _node: &DesignTag) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DesignTagLst`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn design_tag_lst(&mut self, _node: &DesignTagLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext_lst(&mut self, _node: &ExtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

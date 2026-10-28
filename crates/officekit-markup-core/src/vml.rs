@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `v` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `urn:schemas-microsoft-com:vml`, which files write with the prefix `v`.
 //!
-//! The namespace is `urn:schemas-microsoft-com:vml`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -1329,7 +1329,8 @@ pub static TEXT_BOX_CONTENT_TAGS: officekit_markup_base::Accept = officekit_mark
     tags: &[(NS_W, "txbxContent")],
 };
 
-/// 19.1.2.1 arc (Arc Segment): the tag `v:arc`, schema type `CT_Arc`.
+/// The `v:arc` element, Arc Segment (ECMA-376 Part 4, section 19.1.2.1). Its schema type is
+/// `CT_Arc`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1341,67 +1342,125 @@ pub static TEXT_BOX_CONTENT_TAGS: officekit_markup_base::Accept = officekit_mark
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArcSegment {
+    /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:allowoverlap`, when the element has it.
     pub allowoverlap: Option<common_simple_types::BooleanValue>,
+    /// The attribute `alt`, when the element has it.
     pub alt: Option<String>,
+    /// The attribute `o:borderbottomcolor`, when the element has it.
     pub borderbottomcolor: Option<String>,
+    /// The attribute `o:borderleftcolor`, when the element has it.
     pub borderleftcolor: Option<String>,
+    /// The attribute `o:borderrightcolor`, when the element has it.
     pub borderrightcolor: Option<String>,
+    /// The attribute `o:bordertopcolor`, when the element has it.
     pub bordertopcolor: Option<String>,
+    /// The attribute `o:bullet`, when the element has it.
     pub bullet: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:button`, when the element has it.
     pub button: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:bwmode`, when the element has it.
     pub bwmode: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `o:bwnormal`, when the element has it.
     pub bwnormal: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `o:bwpure`, when the element has it.
     pub bwpure: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `chromakey`, when the element has it.
     pub chromakey: Option<String>,
+    /// The attribute `class`, when the element has it.
     pub class: Option<String>,
+    /// The attribute `o:clip`, when the element has it.
     pub clip: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:cliptowrap`, when the element has it.
     pub cliptowrap: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:connectortype`, when the element has it.
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
+    /// The children that are an item of `ShapeElementContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<ShapeElementContent>,
+    /// The attribute `coordorigin`, when the element has it.
     pub coordorigin: Option<String>,
+    /// The attribute `coordsize`, when the element has it.
     pub coordsize: Option<String>,
+    /// The attribute `o:dgmlayout`, when the element has it.
     pub dgmlayout: Option<super::vml_office_drawing::DiagramLayoutType>,
+    /// The attribute `o:dgmlayoutmru`, when the element has it.
     pub dgmlayoutmru: Option<super::vml_office_drawing::DiagramLayoutType>,
+    /// The attribute `o:dgmnodekind`, when the element has it.
     pub dgmnodekind: Option<String>,
+    /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    /// The attribute `endAngle`, when the element has it.
     pub end_angle: Option<String>,
+    /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
+    /// The attribute `filled`, when the element has it.
     pub filled: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:forcedash`, when the element has it.
     pub forcedash: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hr`, when the element has it.
     pub hr: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hralign`, when the element has it.
     pub hralign: Option<super::vml_office_drawing::StHrAlign>,
+    /// The attribute `href`, when the element has it.
     pub href: Option<String>,
+    /// The attribute `o:hrnoshade`, when the element has it.
     pub hrnoshade: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hrpct`, when the element has it.
     pub hrpct: Option<String>,
+    /// The attribute `o:hrstd`, when the element has it.
     pub hrstd: Option<common_simple_types::BooleanValue>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `o:insetmode`, when the element has it.
     pub insetmode: Option<super::vml_office_drawing::InsetMarginType>,
+    /// The attribute `insetpen`, when the element has it.
     pub insetpen: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:ole`, when the element has it.
     pub ole: Option<common_simple_types::BooleanValueWithBlankFalseState>,
+    /// The attribute `o:oleicon`, when the element has it.
     pub oleicon: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:oned`, when the element has it.
     pub oned: Option<common_simple_types::BooleanValue>,
+    /// The attribute `opacity`, when the element has it.
     pub opacity: Option<String>,
+    /// The attribute `o:preferrelative`, when the element has it.
     pub preferrelative: Option<common_simple_types::BooleanValue>,
+    /// The attribute `print`, when the element has it.
     pub print: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:regroupid`, when the element has it.
     pub regroupid: Option<String>,
+    /// The attribute `o:spid`, when the element has it.
     pub spid: Option<String>,
+    /// The attribute `o:spt`, when the element has it.
     pub spt: Option<String>,
+    /// The attribute `startAngle`, when the element has it.
     pub start_angle: Option<String>,
+    /// The attribute `strokecolor`, when the element has it.
     pub strokecolor: Option<String>,
+    /// The attribute `stroked`, when the element has it.
     pub stroked: Option<common_simple_types::BooleanValue>,
+    /// The attribute `strokeweight`, when the element has it.
     pub strokeweight: Option<String>,
+    /// The attribute `style`, when the element has it.
     pub style: Option<String>,
+    /// The attribute `target`, when the element has it.
     pub target: Option<String>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `o:userdrawn`, when the element has it.
     pub userdrawn: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:userhidden`, when the element has it.
     pub userhidden: Option<common_simple_types::BooleanValue>,
+    /// The attribute `wrapcoords`, when the element has it.
     pub wrapcoords: Option<String>,
 }
 
-/// 19.1.2.3 curve (Bezier Curve): the tag `v:curve`, schema type `CT_Curve`.
+/// The `v:curve` element, Bezier Curve (ECMA-376 Part 4, section 19.1.2.3). Its schema type is
+/// `CT_Curve`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1413,69 +1472,129 @@ pub struct ArcSegment {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BezierCurve {
+    /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:allowoverlap`, when the element has it.
     pub allowoverlap: Option<common_simple_types::BooleanValue>,
+    /// The attribute `alt`, when the element has it.
     pub alt: Option<String>,
+    /// The attribute `o:borderbottomcolor`, when the element has it.
     pub borderbottomcolor: Option<String>,
+    /// The attribute `o:borderleftcolor`, when the element has it.
     pub borderleftcolor: Option<String>,
+    /// The attribute `o:borderrightcolor`, when the element has it.
     pub borderrightcolor: Option<String>,
+    /// The attribute `o:bordertopcolor`, when the element has it.
     pub bordertopcolor: Option<String>,
+    /// The attribute `o:bullet`, when the element has it.
     pub bullet: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:button`, when the element has it.
     pub button: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:bwmode`, when the element has it.
     pub bwmode: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `o:bwnormal`, when the element has it.
     pub bwnormal: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `o:bwpure`, when the element has it.
     pub bwpure: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `chromakey`, when the element has it.
     pub chromakey: Option<String>,
+    /// The attribute `class`, when the element has it.
     pub class: Option<String>,
+    /// The attribute `o:clip`, when the element has it.
     pub clip: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:cliptowrap`, when the element has it.
     pub cliptowrap: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:connectortype`, when the element has it.
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
+    /// The children that are an item of `ShapeElementContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<ShapeElementContent>,
+    /// The attribute `control1`, when the element has it.
     pub control1: Option<String>,
+    /// The attribute `control2`, when the element has it.
     pub control2: Option<String>,
+    /// The attribute `coordorigin`, when the element has it.
     pub coordorigin: Option<String>,
+    /// The attribute `coordsize`, when the element has it.
     pub coordsize: Option<String>,
+    /// The attribute `o:dgmlayout`, when the element has it.
     pub dgmlayout: Option<super::vml_office_drawing::DiagramLayoutType>,
+    /// The attribute `o:dgmlayoutmru`, when the element has it.
     pub dgmlayoutmru: Option<super::vml_office_drawing::DiagramLayoutType>,
+    /// The attribute `o:dgmnodekind`, when the element has it.
     pub dgmnodekind: Option<String>,
+    /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
+    /// The attribute `filled`, when the element has it.
     pub filled: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:forcedash`, when the element has it.
     pub forcedash: Option<common_simple_types::BooleanValue>,
+    /// The attribute `from`, when the element has it.
     pub from: Option<String>,
+    /// The attribute `o:hr`, when the element has it.
     pub hr: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hralign`, when the element has it.
     pub hralign: Option<super::vml_office_drawing::StHrAlign>,
+    /// The attribute `href`, when the element has it.
     pub href: Option<String>,
+    /// The attribute `o:hrnoshade`, when the element has it.
     pub hrnoshade: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hrpct`, when the element has it.
     pub hrpct: Option<String>,
+    /// The attribute `o:hrstd`, when the element has it.
     pub hrstd: Option<common_simple_types::BooleanValue>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `o:insetmode`, when the element has it.
     pub insetmode: Option<super::vml_office_drawing::InsetMarginType>,
+    /// The attribute `insetpen`, when the element has it.
     pub insetpen: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:ole`, when the element has it.
     pub ole: Option<common_simple_types::BooleanValueWithBlankFalseState>,
+    /// The attribute `o:oleicon`, when the element has it.
     pub oleicon: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:oned`, when the element has it.
     pub oned: Option<common_simple_types::BooleanValue>,
+    /// The attribute `opacity`, when the element has it.
     pub opacity: Option<String>,
+    /// The attribute `o:preferrelative`, when the element has it.
     pub preferrelative: Option<common_simple_types::BooleanValue>,
+    /// The attribute `print`, when the element has it.
     pub print: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:regroupid`, when the element has it.
     pub regroupid: Option<String>,
+    /// The attribute `o:spid`, when the element has it.
     pub spid: Option<String>,
+    /// The attribute `o:spt`, when the element has it.
     pub spt: Option<String>,
+    /// The attribute `strokecolor`, when the element has it.
     pub strokecolor: Option<String>,
+    /// The attribute `stroked`, when the element has it.
     pub stroked: Option<common_simple_types::BooleanValue>,
+    /// The attribute `strokeweight`, when the element has it.
     pub strokeweight: Option<String>,
+    /// The attribute `style`, when the element has it.
     pub style: Option<String>,
+    /// The attribute `target`, when the element has it.
     pub target: Option<String>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// The attribute `to`, when the element has it.
     pub to: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `o:userdrawn`, when the element has it.
     pub userdrawn: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:userhidden`, when the element has it.
     pub userhidden: Option<common_simple_types::BooleanValue>,
+    /// The attribute `wrapcoords`, when the element has it.
     pub wrapcoords: Option<String>,
 }
 
-/// 19.1.2.2 background (Document Background): the tag `v:background`, schema type `CT_Background`.
+/// The `v:background` element, Document Background (ECMA-376 Part 4, section 19.1.2.2). Its schema
+/// type is `CT_Background`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1484,18 +1603,31 @@ pub struct BezierCurve {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DocumentBackground {
+    /// The attribute `o:bwmode`, when the element has it.
     pub bwmode: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `o:bwnormal`, when the element has it.
     pub bwnormal: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `o:bwpure`, when the element has it.
     pub bwpure: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
+    /// The attribute `filled`, when the element has it.
     pub filled: Option<common_simple_types::BooleanValue>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The child that is `ShapeFillProperties`, when there is one.
     pub shape_fill_properties: Option<Box<ShapeFillProperties>>,
+    /// The attribute `o:targetscreensize`, when the element has it.
     pub targetscreensize: Option<super::vml_office_drawing::ScreenSizesType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 19.1.3.3 `ST_FillMethod` (Gradient Fill Computation Type): the text the file carried.
+/// Gradient Fill Computation Type, the simple type `ST_FillMethod` (ECMA-376 Part 4, section
+/// 19.1.3.3), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1504,18 +1636,25 @@ pub struct DocumentBackground {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GradientFillComputationType(pub String);
-/// The members of `ST_FillMethod`, in alphabetical order.
+/// The members of the enumeration `ST_FillMethod`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum GradientFillComputationTypeMember {
+    /// The member written `any`.
     Any,
+    /// The member written `linear`.
     Linear,
+    /// The member written `linear sigma`.
     LinearSigma,
+    /// The member written `none`.
     None,
+    /// The member written `sigma`.
     Sigma,
 }
 
-/// 19.1.2.11 imagedata (Image Data): the tag `v:imagedata`, schema type `CT_ImageData`.
+/// The `v:imagedata` element, Image Data (ECMA-376 Part 4, section 19.1.2.11). Its schema type is
+/// `CT_ImageData`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1524,34 +1663,60 @@ pub enum GradientFillComputationTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ImageData {
+    /// The attribute `o:althref`, when the element has it.
     pub althref: Option<String>,
+    /// The attribute `bilevel`, when the element has it.
     pub bilevel: Option<common_simple_types::BooleanValue>,
+    /// The attribute `blacklevel`, when the element has it.
     pub blacklevel: Option<String>,
+    /// The attribute `chromakey`, when the element has it.
     pub chromakey: Option<String>,
+    /// The attribute `cropbottom`, when the element has it.
     pub cropbottom: Option<String>,
+    /// The attribute `cropleft`, when the element has it.
     pub cropleft: Option<String>,
+    /// The attribute `cropright`, when the element has it.
     pub cropright: Option<String>,
+    /// The attribute `croptop`, when the element has it.
     pub croptop: Option<String>,
+    /// The attribute `o:detectmouseclick`, when the element has it.
     pub detectmouseclick: Option<common_simple_types::BooleanValue>,
+    /// The attribute `embosscolor`, when the element has it.
     pub embosscolor: Option<String>,
+    /// The attribute `gain`, when the element has it.
     pub gain: Option<String>,
+    /// The attribute `gamma`, when the element has it.
     pub gamma: Option<String>,
+    /// The attribute `grayscale`, when the element has it.
     pub grayscale: Option<common_simple_types::BooleanValue>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `o:movie`, when the element has it.
     pub movie: Option<String>,
+    /// The attribute `o:href`, when the element has it.
     pub o_href: Option<String>,
+    /// The attribute `o:oleid`, when the element has it.
     pub oleid: Option<String>,
+    /// The attribute `r:pict`, when the element has it.
     pub pict: Option<String>,
+    /// The attribute `r:href`, when the element has it.
     pub r_href: Option<String>,
+    /// The attribute `r:id`, when the element has it.
     pub r_id: Option<String>,
+    /// The attribute `recolortarget`, when the element has it.
     pub recolortarget: Option<String>,
+    /// The attribute `o:relid`, when the element has it.
     pub relid: Option<String>,
+    /// The attribute `src`, when the element has it.
     pub src: Option<String>,
+    /// The attribute `o:title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 19.1.2.10 image (Image File): the tag `v:image`, schema type `CT_Image`.
+/// The `v:image` element, Image File (ECMA-376 Part 4, section 19.1.2.10). Its schema type is
+/// `CT_Image`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1563,75 +1728,144 @@ pub struct ImageData {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ImageFile {
+    /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:allowoverlap`, when the element has it.
     pub allowoverlap: Option<common_simple_types::BooleanValue>,
+    /// The attribute `alt`, when the element has it.
     pub alt: Option<String>,
+    /// The attribute `bilevel`, when the element has it.
     pub bilevel: Option<common_simple_types::BooleanValue>,
+    /// The attribute `blacklevel`, when the element has it.
     pub blacklevel: Option<String>,
+    /// The attribute `o:borderbottomcolor`, when the element has it.
     pub borderbottomcolor: Option<String>,
+    /// The attribute `o:borderleftcolor`, when the element has it.
     pub borderleftcolor: Option<String>,
+    /// The attribute `o:borderrightcolor`, when the element has it.
     pub borderrightcolor: Option<String>,
+    /// The attribute `o:bordertopcolor`, when the element has it.
     pub bordertopcolor: Option<String>,
+    /// The attribute `o:bullet`, when the element has it.
     pub bullet: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:button`, when the element has it.
     pub button: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:bwmode`, when the element has it.
     pub bwmode: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `o:bwnormal`, when the element has it.
     pub bwnormal: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `o:bwpure`, when the element has it.
     pub bwpure: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `chromakey`, when the element has it.
     pub chromakey: Option<String>,
+    /// The attribute `class`, when the element has it.
     pub class: Option<String>,
+    /// The attribute `o:clip`, when the element has it.
     pub clip: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:cliptowrap`, when the element has it.
     pub cliptowrap: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:connectortype`, when the element has it.
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
+    /// The children that are an item of `ShapeElementContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<ShapeElementContent>,
+    /// The attribute `coordorigin`, when the element has it.
     pub coordorigin: Option<String>,
+    /// The attribute `coordsize`, when the element has it.
     pub coordsize: Option<String>,
+    /// The attribute `cropbottom`, when the element has it.
     pub cropbottom: Option<String>,
+    /// The attribute `cropleft`, when the element has it.
     pub cropleft: Option<String>,
+    /// The attribute `cropright`, when the element has it.
     pub cropright: Option<String>,
+    /// The attribute `croptop`, when the element has it.
     pub croptop: Option<String>,
+    /// The attribute `o:dgmlayout`, when the element has it.
     pub dgmlayout: Option<super::vml_office_drawing::DiagramLayoutType>,
+    /// The attribute `o:dgmlayoutmru`, when the element has it.
     pub dgmlayoutmru: Option<super::vml_office_drawing::DiagramLayoutType>,
+    /// The attribute `o:dgmnodekind`, when the element has it.
     pub dgmnodekind: Option<String>,
+    /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
+    /// The attribute `filled`, when the element has it.
     pub filled: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:forcedash`, when the element has it.
     pub forcedash: Option<common_simple_types::BooleanValue>,
+    /// The attribute `gain`, when the element has it.
     pub gain: Option<String>,
+    /// The attribute `gamma`, when the element has it.
     pub gamma: Option<String>,
+    /// The attribute `grayscale`, when the element has it.
     pub grayscale: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hr`, when the element has it.
     pub hr: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hralign`, when the element has it.
     pub hralign: Option<super::vml_office_drawing::StHrAlign>,
+    /// The attribute `href`, when the element has it.
     pub href: Option<String>,
+    /// The attribute `o:hrnoshade`, when the element has it.
     pub hrnoshade: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hrpct`, when the element has it.
     pub hrpct: Option<String>,
+    /// The attribute `o:hrstd`, when the element has it.
     pub hrstd: Option<common_simple_types::BooleanValue>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `o:insetmode`, when the element has it.
     pub insetmode: Option<super::vml_office_drawing::InsetMarginType>,
+    /// The attribute `insetpen`, when the element has it.
     pub insetpen: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:ole`, when the element has it.
     pub ole: Option<common_simple_types::BooleanValueWithBlankFalseState>,
+    /// The attribute `o:oleicon`, when the element has it.
     pub oleicon: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:oned`, when the element has it.
     pub oned: Option<common_simple_types::BooleanValue>,
+    /// The attribute `opacity`, when the element has it.
     pub opacity: Option<String>,
+    /// The attribute `o:preferrelative`, when the element has it.
     pub preferrelative: Option<common_simple_types::BooleanValue>,
+    /// The attribute `print`, when the element has it.
     pub print: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:regroupid`, when the element has it.
     pub regroupid: Option<String>,
+    /// The attribute `o:spid`, when the element has it.
     pub spid: Option<String>,
+    /// The attribute `o:spt`, when the element has it.
     pub spt: Option<String>,
+    /// The attribute `src`, when the element has it.
     pub src: Option<String>,
+    /// The attribute `strokecolor`, when the element has it.
     pub strokecolor: Option<String>,
+    /// The attribute `stroked`, when the element has it.
     pub stroked: Option<common_simple_types::BooleanValue>,
+    /// The attribute `strokeweight`, when the element has it.
     pub strokeweight: Option<String>,
+    /// The attribute `style`, when the element has it.
     pub style: Option<String>,
+    /// The attribute `target`, when the element has it.
     pub target: Option<String>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `o:userdrawn`, when the element has it.
     pub userdrawn: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:userhidden`, when the element has it.
     pub userhidden: Option<common_simple_types::BooleanValue>,
+    /// The attribute `wrapcoords`, when the element has it.
     pub wrapcoords: Option<String>,
 }
 
-/// 19.1.3.5 `ST_ImageAspect` (Image Scaling Behavior): the text the file carried.
+/// Image Scaling Behavior, the simple type `ST_ImageAspect` (ECMA-376 Part 4, section 19.1.3.5),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1640,16 +1874,20 @@ pub struct ImageFile {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ImageScalingBehavior(pub String);
-/// The members of `ST_ImageAspect`, in alphabetical order.
+/// The members of the enumeration `ST_ImageAspect`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ImageScalingBehaviorMember {
+    /// The member written `atLeast`.
     AtLeast,
+    /// The member written `atMost`.
     AtMost,
+    /// The member written `ignore`.
     Ignore,
 }
 
-/// 19.1.2.12 line (Line): the tag `v:line`, schema type `CT_Line`.
+/// The `v:line` element, Line (ECMA-376 Part 4, section 19.1.2.12). Its schema type is `CT_Line`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1661,67 +1899,128 @@ pub enum ImageScalingBehaviorMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Line {
+    /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:allowoverlap`, when the element has it.
     pub allowoverlap: Option<common_simple_types::BooleanValue>,
+    /// The attribute `alt`, when the element has it.
     pub alt: Option<String>,
+    /// The attribute `o:borderbottomcolor`, when the element has it.
     pub borderbottomcolor: Option<String>,
+    /// The attribute `o:borderleftcolor`, when the element has it.
     pub borderleftcolor: Option<String>,
+    /// The attribute `o:borderrightcolor`, when the element has it.
     pub borderrightcolor: Option<String>,
+    /// The attribute `o:bordertopcolor`, when the element has it.
     pub bordertopcolor: Option<String>,
+    /// The attribute `o:bullet`, when the element has it.
     pub bullet: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:button`, when the element has it.
     pub button: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:bwmode`, when the element has it.
     pub bwmode: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `o:bwnormal`, when the element has it.
     pub bwnormal: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `o:bwpure`, when the element has it.
     pub bwpure: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `chromakey`, when the element has it.
     pub chromakey: Option<String>,
+    /// The attribute `class`, when the element has it.
     pub class: Option<String>,
+    /// The attribute `o:clip`, when the element has it.
     pub clip: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:cliptowrap`, when the element has it.
     pub cliptowrap: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:connectortype`, when the element has it.
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
+    /// The children that are an item of `ShapeElementContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<ShapeElementContent>,
+    /// The attribute `coordorigin`, when the element has it.
     pub coordorigin: Option<String>,
+    /// The attribute `coordsize`, when the element has it.
     pub coordsize: Option<String>,
+    /// The attribute `o:dgmlayout`, when the element has it.
     pub dgmlayout: Option<super::vml_office_drawing::DiagramLayoutType>,
+    /// The attribute `o:dgmlayoutmru`, when the element has it.
     pub dgmlayoutmru: Option<super::vml_office_drawing::DiagramLayoutType>,
+    /// The attribute `o:dgmnodekind`, when the element has it.
     pub dgmnodekind: Option<String>,
+    /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
+    /// The attribute `filled`, when the element has it.
     pub filled: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:forcedash`, when the element has it.
     pub forcedash: Option<common_simple_types::BooleanValue>,
+    /// The attribute `from`, when the element has it.
     pub from: Option<String>,
+    /// The attribute `o:hr`, when the element has it.
     pub hr: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hralign`, when the element has it.
     pub hralign: Option<super::vml_office_drawing::StHrAlign>,
+    /// The attribute `href`, when the element has it.
     pub href: Option<String>,
+    /// The attribute `o:hrnoshade`, when the element has it.
     pub hrnoshade: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hrpct`, when the element has it.
     pub hrpct: Option<String>,
+    /// The attribute `o:hrstd`, when the element has it.
     pub hrstd: Option<common_simple_types::BooleanValue>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `o:insetmode`, when the element has it.
     pub insetmode: Option<super::vml_office_drawing::InsetMarginType>,
+    /// The attribute `insetpen`, when the element has it.
     pub insetpen: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:ole`, when the element has it.
     pub ole: Option<common_simple_types::BooleanValueWithBlankFalseState>,
+    /// The attribute `o:oleicon`, when the element has it.
     pub oleicon: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:oned`, when the element has it.
     pub oned: Option<common_simple_types::BooleanValue>,
+    /// The attribute `opacity`, when the element has it.
     pub opacity: Option<String>,
+    /// The attribute `o:preferrelative`, when the element has it.
     pub preferrelative: Option<common_simple_types::BooleanValue>,
+    /// The attribute `print`, when the element has it.
     pub print: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:regroupid`, when the element has it.
     pub regroupid: Option<String>,
+    /// The attribute `o:spid`, when the element has it.
     pub spid: Option<String>,
+    /// The attribute `o:spt`, when the element has it.
     pub spt: Option<String>,
+    /// The attribute `strokecolor`, when the element has it.
     pub strokecolor: Option<String>,
+    /// The attribute `stroked`, when the element has it.
     pub stroked: Option<common_simple_types::BooleanValue>,
+    /// The attribute `strokeweight`, when the element has it.
     pub strokeweight: Option<String>,
+    /// The attribute `style`, when the element has it.
     pub style: Option<String>,
+    /// The attribute `target`, when the element has it.
     pub target: Option<String>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// The attribute `to`, when the element has it.
     pub to: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `o:userdrawn`, when the element has it.
     pub userdrawn: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:userhidden`, when the element has it.
     pub userhidden: Option<common_simple_types::BooleanValue>,
+    /// The attribute `wrapcoords`, when the element has it.
     pub wrapcoords: Option<String>,
 }
 
-/// 19.1.3.11 `ST_StrokeJoinStyle` (Line Join Type): the text the file carried.
+/// Line Join Type, the simple type `ST_StrokeJoinStyle` (ECMA-376 Part 4, section 19.1.3.11), kept
+/// as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1730,16 +2029,21 @@ pub struct Line {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LineJoinType(pub String);
-/// The members of `ST_StrokeJoinStyle`, in alphabetical order.
+/// The members of the enumeration `ST_StrokeJoinStyle`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum LineJoinTypeMember {
+    /// The member written `bevel`.
     Bevel,
+    /// The member written `miter`.
     Miter,
+    /// The member written `round`.
     Round,
 }
 
-/// 19.1.2.21 stroke (Line Stroke Settings): the tag `v:stroke`, schema type `CT_Stroke`.
+/// The `v:stroke` element, Line Stroke Settings (ECMA-376 Part 4, section 19.1.2.21). Its schema
+/// type is `CT_Stroke`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1748,44 +2052,80 @@ pub enum LineJoinTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LineStrokeSettings {
+    /// The attribute `o:althref`, when the element has it.
     pub althref: Option<String>,
+    /// The attribute `color`, when the element has it.
     pub color: Option<String>,
+    /// The attribute `color2`, when the element has it.
     pub color2: Option<String>,
+    /// The attribute `dashstyle`, when the element has it.
     pub dashstyle: Option<String>,
+    /// The attribute `endarrow`, when the element has it.
     pub endarrow: Option<StrokeArrowheadType>,
+    /// The attribute `endarrowlength`, when the element has it.
     pub endarrowlength: Option<StrokeArrowheadLength>,
+    /// The attribute `endarrowwidth`, when the element has it.
     pub endarrowwidth: Option<StrokeArrowheadWidth>,
+    /// The attribute `endcap`, when the element has it.
     pub endcap: Option<StrokeEndCapType>,
+    /// The attribute `filltype`, when the element has it.
     pub filltype: Option<ShapeFillType>,
+    /// The attribute `o:forcedash`, when the element has it.
     pub forcedash: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:href`, when the element has it.
     pub href: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `imagealignshape`, when the element has it.
     pub imagealignshape: Option<common_simple_types::BooleanValue>,
+    /// The attribute `imageaspect`, when the element has it.
     pub imageaspect: Option<ImageScalingBehavior>,
+    /// The attribute `imagesize`, when the element has it.
     pub imagesize: Option<String>,
+    /// The attribute `insetpen`, when the element has it.
     pub insetpen: Option<common_simple_types::BooleanValue>,
+    /// The attribute `joinstyle`, when the element has it.
     pub joinstyle: Option<LineJoinType>,
+    /// The attribute `linestyle`, when the element has it.
     pub linestyle: Option<StrokeLineStyle>,
+    /// The attribute `miterlimit`, when the element has it.
     pub miterlimit: Option<String>,
+    /// The attribute `on`, when the element has it.
     pub on: Option<common_simple_types::BooleanValue>,
+    /// The attribute `opacity`, when the element has it.
     pub opacity: Option<String>,
+    /// The attribute `r:id`, when the element has it.
     pub r_id: Option<String>,
+    /// The attribute `o:relid`, when the element has it.
     pub relid: Option<String>,
+    /// The attribute `src`, when the element has it.
     pub src: Option<String>,
+    /// The attribute `startarrow`, when the element has it.
     pub startarrow: Option<StrokeArrowheadType>,
+    /// The attribute `startarrowlength`, when the element has it.
     pub startarrowlength: Option<StrokeArrowheadLength>,
+    /// The attribute `startarrowwidth`, when the element has it.
     pub startarrowwidth: Option<StrokeArrowheadWidth>,
+    /// The child that is `super::vml_office_drawing::TextBoxBottomStroke`, when there is one.
     pub text_box_bottom_stroke: Option<Box<super::vml_office_drawing::TextBoxBottomStroke>>,
+    /// The child that is `super::vml_office_drawing::TextBoxInteriorStroke`, when there is one.
     pub text_box_interior_stroke: Option<Box<super::vml_office_drawing::TextBoxInteriorStroke>>,
+    /// The child that is `super::vml_office_drawing::TextBoxLeftStroke`, when there is one.
     pub text_box_left_stroke: Option<Box<super::vml_office_drawing::TextBoxLeftStroke>>,
+    /// The child that is `super::vml_office_drawing::TextBoxRightStroke`, when there is one.
     pub text_box_right_stroke: Option<Box<super::vml_office_drawing::TextBoxRightStroke>>,
+    /// The child that is `super::vml_office_drawing::TextBoxTopStroke`, when there is one.
     pub text_box_top_stroke: Option<Box<super::vml_office_drawing::TextBoxTopStroke>>,
+    /// The attribute `o:title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `weight`, when the element has it.
     pub weight: Option<String>,
 }
 
-/// 19.1.2.15 polyline (Multiple Path Line): the tag `v:polyline`, schema type `CT_PolyLine`.
+/// The `v:polyline` element, Multiple Path Line (ECMA-376 Part 4, section 19.1.2.15). Its schema
+/// type is `CT_PolyLine`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1797,96 +2137,181 @@ pub struct LineStrokeSettings {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MultiplePathLine {
+    /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:allowoverlap`, when the element has it.
     pub allowoverlap: Option<common_simple_types::BooleanValue>,
+    /// The attribute `alt`, when the element has it.
     pub alt: Option<String>,
+    /// The attribute `o:borderbottomcolor`, when the element has it.
     pub borderbottomcolor: Option<String>,
+    /// The attribute `o:borderleftcolor`, when the element has it.
     pub borderleftcolor: Option<String>,
+    /// The attribute `o:borderrightcolor`, when the element has it.
     pub borderrightcolor: Option<String>,
+    /// The attribute `o:bordertopcolor`, when the element has it.
     pub bordertopcolor: Option<String>,
+    /// The attribute `o:bullet`, when the element has it.
     pub bullet: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:button`, when the element has it.
     pub button: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:bwmode`, when the element has it.
     pub bwmode: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `o:bwnormal`, when the element has it.
     pub bwnormal: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `o:bwpure`, when the element has it.
     pub bwpure: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `chromakey`, when the element has it.
     pub chromakey: Option<String>,
+    /// The attribute `class`, when the element has it.
     pub class: Option<String>,
+    /// The attribute `o:clip`, when the element has it.
     pub clip: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:cliptowrap`, when the element has it.
     pub cliptowrap: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:connectortype`, when the element has it.
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
+    /// The children that are an item of `MultiplePathLineContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<MultiplePathLineContent>,
+    /// The attribute `coordorigin`, when the element has it.
     pub coordorigin: Option<String>,
+    /// The attribute `coordsize`, when the element has it.
     pub coordsize: Option<String>,
+    /// The attribute `o:dgmlayout`, when the element has it.
     pub dgmlayout: Option<super::vml_office_drawing::DiagramLayoutType>,
+    /// The attribute `o:dgmlayoutmru`, when the element has it.
     pub dgmlayoutmru: Option<super::vml_office_drawing::DiagramLayoutType>,
+    /// The attribute `o:dgmnodekind`, when the element has it.
     pub dgmnodekind: Option<String>,
+    /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
+    /// The attribute `filled`, when the element has it.
     pub filled: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:forcedash`, when the element has it.
     pub forcedash: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hr`, when the element has it.
     pub hr: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hralign`, when the element has it.
     pub hralign: Option<super::vml_office_drawing::StHrAlign>,
+    /// The attribute `href`, when the element has it.
     pub href: Option<String>,
+    /// The attribute `o:hrnoshade`, when the element has it.
     pub hrnoshade: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hrpct`, when the element has it.
     pub hrpct: Option<String>,
+    /// The attribute `o:hrstd`, when the element has it.
     pub hrstd: Option<common_simple_types::BooleanValue>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `o:insetmode`, when the element has it.
     pub insetmode: Option<super::vml_office_drawing::InsetMarginType>,
+    /// The attribute `insetpen`, when the element has it.
     pub insetpen: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:ole`, when the element has it.
     pub ole: Option<common_simple_types::BooleanValueWithBlankFalseState>,
+    /// The attribute `o:oleicon`, when the element has it.
     pub oleicon: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:oned`, when the element has it.
     pub oned: Option<common_simple_types::BooleanValue>,
+    /// The attribute `opacity`, when the element has it.
     pub opacity: Option<String>,
+    /// The attribute `points`, when the element has it.
     pub points: Option<String>,
+    /// The attribute `o:preferrelative`, when the element has it.
     pub preferrelative: Option<common_simple_types::BooleanValue>,
+    /// The attribute `print`, when the element has it.
     pub print: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:regroupid`, when the element has it.
     pub regroupid: Option<String>,
+    /// The attribute `o:spid`, when the element has it.
     pub spid: Option<String>,
+    /// The attribute `o:spt`, when the element has it.
     pub spt: Option<String>,
+    /// The attribute `strokecolor`, when the element has it.
     pub strokecolor: Option<String>,
+    /// The attribute `stroked`, when the element has it.
     pub stroked: Option<common_simple_types::BooleanValue>,
+    /// The attribute `strokeweight`, when the element has it.
     pub strokeweight: Option<String>,
+    /// The attribute `style`, when the element has it.
     pub style: Option<String>,
+    /// The attribute `target`, when the element has it.
     pub target: Option<String>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `o:userdrawn`, when the element has it.
     pub userdrawn: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:userhidden`, when the element has it.
     pub userhidden: Option<common_simple_types::BooleanValue>,
+    /// The attribute `wrapcoords`, when the element has it.
     pub wrapcoords: Option<String>,
 }
 
-/// One item of `CT_PolyLine`: local choice in `CT_PolyLine`.
+/// One child element of a choice: local choice in `CT_PolyLine`.
+///
+/// The schema types that hold it: `CT_PolyLine`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum MultiplePathLineContent {
+    /// The element `w10:anchorlock`, a `AnchorLocationIsLocked`.
     AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLocked),
+    /// The element `xvml:ClientData`, a `AttachedObjectData`.
     AttachedObjectData(vml_spreadsheet_drawing::AttachedObjectData),
+    /// The element `w10:borderbottom`, a `BottomBorder`.
     BottomBorder(vml_wordprocessing_drawing::BottomBorder),
+    /// The element `o:callout`, a `Callout`.
     Callout(super::vml_office_drawing::Callout),
+    /// The element `o:signatureline`, a `DigitalSignatureLine`.
     DigitalSignatureLine(super::vml_office_drawing::DigitalSignatureLine),
+    /// The element `o:extrusion`, a `Extrusion`.
     Extrusion(super::vml_office_drawing::Extrusion),
+    /// The element `v:imagedata`, a `ImageData`.
     ImageData(ImageData),
+    /// The element `o:ink`, a `Ink`.
     Ink(super::vml_office_drawing::Ink),
+    /// The element `w10:borderleft`, a `LeftBorder`.
     LeftBorder(vml_wordprocessing_drawing::LeftBorder),
+    /// The element `v:stroke`, a `LineStrokeSettings`.
     LineStrokeSettings(LineStrokeSettings),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `w10:borderright`, a `RightBorder`.
     RightBorder(vml_wordprocessing_drawing::RightBorder),
+    /// The element `v:formulas`, a `SetOfFormulas`.
     SetOfFormulas(SetOfFormulas),
+    /// The element `v:handles`, a `SetOfHandles`.
     SetOfHandles(SetOfHandles),
+    /// The element `v:shadow`, a `ShadowEffect`.
     ShadowEffect(ShadowEffect),
+    /// The element `o:clippath`, a `ShapeClippingPath`.
     ShapeClippingPath(super::vml_office_drawing::ShapeClippingPath),
+    /// The element `v:fill`, a `ShapeFillProperties`.
     ShapeFillProperties(ShapeFillProperties),
+    /// The element `v:path`, a `ShapePath`.
     ShapePath(ShapePath),
+    /// The element `o:lock`, a `ShapeProtections`.
     ShapeProtections(super::vml_office_drawing::ShapeProtections),
+    /// The element `o:skew`, a `SkewTransform`.
     SkewTransform(super::vml_office_drawing::SkewTransform),
+    /// The element `v:textbox`, a `TextBox`.
     TextBox(TextBox),
+    /// The element `v:textpath`, a `TextLayoutPath`.
     TextLayoutPath(TextLayoutPath),
+    /// The element `w10:wrap`, a `TextWrapping`.
     TextWrapping(vml_wordprocessing_drawing::TextWrapping),
+    /// The element `w10:bordertop`, a `TopBorder`.
     TopBorder(vml_wordprocessing_drawing::TopBorder),
+    /// The element `pvml:textdata`, a `VMLDiagramText`.
     VMLDiagramText(vml_presentation_drawing::VMLDiagramText),
 }
 
-/// 19.1.2.13 oval (Oval): the tag `v:oval`, schema type `CT_Oval`.
+/// The `v:oval` element, Oval (ECMA-376 Part 4, section 19.1.2.13). Its schema type is `CT_Oval`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1898,65 +2323,121 @@ pub enum MultiplePathLineContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Oval {
+    /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:allowoverlap`, when the element has it.
     pub allowoverlap: Option<common_simple_types::BooleanValue>,
+    /// The attribute `alt`, when the element has it.
     pub alt: Option<String>,
+    /// The attribute `o:borderbottomcolor`, when the element has it.
     pub borderbottomcolor: Option<String>,
+    /// The attribute `o:borderleftcolor`, when the element has it.
     pub borderleftcolor: Option<String>,
+    /// The attribute `o:borderrightcolor`, when the element has it.
     pub borderrightcolor: Option<String>,
+    /// The attribute `o:bordertopcolor`, when the element has it.
     pub bordertopcolor: Option<String>,
+    /// The attribute `o:bullet`, when the element has it.
     pub bullet: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:button`, when the element has it.
     pub button: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:bwmode`, when the element has it.
     pub bwmode: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `o:bwnormal`, when the element has it.
     pub bwnormal: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `o:bwpure`, when the element has it.
     pub bwpure: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `chromakey`, when the element has it.
     pub chromakey: Option<String>,
+    /// The attribute `class`, when the element has it.
     pub class: Option<String>,
+    /// The attribute `o:clip`, when the element has it.
     pub clip: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:cliptowrap`, when the element has it.
     pub cliptowrap: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:connectortype`, when the element has it.
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
+    /// The children that are an item of `ShapeElementContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<ShapeElementContent>,
+    /// The attribute `coordorigin`, when the element has it.
     pub coordorigin: Option<String>,
+    /// The attribute `coordsize`, when the element has it.
     pub coordsize: Option<String>,
+    /// The attribute `o:dgmlayout`, when the element has it.
     pub dgmlayout: Option<super::vml_office_drawing::DiagramLayoutType>,
+    /// The attribute `o:dgmlayoutmru`, when the element has it.
     pub dgmlayoutmru: Option<super::vml_office_drawing::DiagramLayoutType>,
+    /// The attribute `o:dgmnodekind`, when the element has it.
     pub dgmnodekind: Option<String>,
+    /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
+    /// The attribute `filled`, when the element has it.
     pub filled: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:forcedash`, when the element has it.
     pub forcedash: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hr`, when the element has it.
     pub hr: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hralign`, when the element has it.
     pub hralign: Option<super::vml_office_drawing::StHrAlign>,
+    /// The attribute `href`, when the element has it.
     pub href: Option<String>,
+    /// The attribute `o:hrnoshade`, when the element has it.
     pub hrnoshade: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hrpct`, when the element has it.
     pub hrpct: Option<String>,
+    /// The attribute `o:hrstd`, when the element has it.
     pub hrstd: Option<common_simple_types::BooleanValue>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `o:insetmode`, when the element has it.
     pub insetmode: Option<super::vml_office_drawing::InsetMarginType>,
+    /// The attribute `insetpen`, when the element has it.
     pub insetpen: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:ole`, when the element has it.
     pub ole: Option<common_simple_types::BooleanValueWithBlankFalseState>,
+    /// The attribute `o:oleicon`, when the element has it.
     pub oleicon: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:oned`, when the element has it.
     pub oned: Option<common_simple_types::BooleanValue>,
+    /// The attribute `opacity`, when the element has it.
     pub opacity: Option<String>,
+    /// The attribute `o:preferrelative`, when the element has it.
     pub preferrelative: Option<common_simple_types::BooleanValue>,
+    /// The attribute `print`, when the element has it.
     pub print: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:regroupid`, when the element has it.
     pub regroupid: Option<String>,
+    /// The attribute `o:spid`, when the element has it.
     pub spid: Option<String>,
+    /// The attribute `o:spt`, when the element has it.
     pub spt: Option<String>,
+    /// The attribute `strokecolor`, when the element has it.
     pub strokecolor: Option<String>,
+    /// The attribute `stroked`, when the element has it.
     pub stroked: Option<common_simple_types::BooleanValue>,
+    /// The attribute `strokeweight`, when the element has it.
     pub strokeweight: Option<String>,
+    /// The attribute `style`, when the element has it.
     pub style: Option<String>,
+    /// The attribute `target`, when the element has it.
     pub target: Option<String>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `o:userdrawn`, when the element has it.
     pub userdrawn: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:userhidden`, when the element has it.
     pub userhidden: Option<common_simple_types::BooleanValue>,
+    /// The attribute `wrapcoords`, when the element has it.
     pub wrapcoords: Option<String>,
 }
 
-/// 19.1.2.16 rect (Rectangle): the tag `v:rect`, schema type `CT_Rect`.
+/// The `v:rect` element, Rectangle (ECMA-376 Part 4, section 19.1.2.16). Its schema type is
+/// `CT_Rect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1968,65 +2449,121 @@ pub struct Oval {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Rectangle {
+    /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:allowoverlap`, when the element has it.
     pub allowoverlap: Option<common_simple_types::BooleanValue>,
+    /// The attribute `alt`, when the element has it.
     pub alt: Option<String>,
+    /// The attribute `o:borderbottomcolor`, when the element has it.
     pub borderbottomcolor: Option<String>,
+    /// The attribute `o:borderleftcolor`, when the element has it.
     pub borderleftcolor: Option<String>,
+    /// The attribute `o:borderrightcolor`, when the element has it.
     pub borderrightcolor: Option<String>,
+    /// The attribute `o:bordertopcolor`, when the element has it.
     pub bordertopcolor: Option<String>,
+    /// The attribute `o:bullet`, when the element has it.
     pub bullet: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:button`, when the element has it.
     pub button: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:bwmode`, when the element has it.
     pub bwmode: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `o:bwnormal`, when the element has it.
     pub bwnormal: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `o:bwpure`, when the element has it.
     pub bwpure: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `chromakey`, when the element has it.
     pub chromakey: Option<String>,
+    /// The attribute `class`, when the element has it.
     pub class: Option<String>,
+    /// The attribute `o:clip`, when the element has it.
     pub clip: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:cliptowrap`, when the element has it.
     pub cliptowrap: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:connectortype`, when the element has it.
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
+    /// The children that are an item of `ShapeElementContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<ShapeElementContent>,
+    /// The attribute `coordorigin`, when the element has it.
     pub coordorigin: Option<String>,
+    /// The attribute `coordsize`, when the element has it.
     pub coordsize: Option<String>,
+    /// The attribute `o:dgmlayout`, when the element has it.
     pub dgmlayout: Option<super::vml_office_drawing::DiagramLayoutType>,
+    /// The attribute `o:dgmlayoutmru`, when the element has it.
     pub dgmlayoutmru: Option<super::vml_office_drawing::DiagramLayoutType>,
+    /// The attribute `o:dgmnodekind`, when the element has it.
     pub dgmnodekind: Option<String>,
+    /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
+    /// The attribute `filled`, when the element has it.
     pub filled: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:forcedash`, when the element has it.
     pub forcedash: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hr`, when the element has it.
     pub hr: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hralign`, when the element has it.
     pub hralign: Option<super::vml_office_drawing::StHrAlign>,
+    /// The attribute `href`, when the element has it.
     pub href: Option<String>,
+    /// The attribute `o:hrnoshade`, when the element has it.
     pub hrnoshade: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hrpct`, when the element has it.
     pub hrpct: Option<String>,
+    /// The attribute `o:hrstd`, when the element has it.
     pub hrstd: Option<common_simple_types::BooleanValue>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `o:insetmode`, when the element has it.
     pub insetmode: Option<super::vml_office_drawing::InsetMarginType>,
+    /// The attribute `insetpen`, when the element has it.
     pub insetpen: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:ole`, when the element has it.
     pub ole: Option<common_simple_types::BooleanValueWithBlankFalseState>,
+    /// The attribute `o:oleicon`, when the element has it.
     pub oleicon: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:oned`, when the element has it.
     pub oned: Option<common_simple_types::BooleanValue>,
+    /// The attribute `opacity`, when the element has it.
     pub opacity: Option<String>,
+    /// The attribute `o:preferrelative`, when the element has it.
     pub preferrelative: Option<common_simple_types::BooleanValue>,
+    /// The attribute `print`, when the element has it.
     pub print: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:regroupid`, when the element has it.
     pub regroupid: Option<String>,
+    /// The attribute `o:spid`, when the element has it.
     pub spid: Option<String>,
+    /// The attribute `o:spt`, when the element has it.
     pub spt: Option<String>,
+    /// The attribute `strokecolor`, when the element has it.
     pub strokecolor: Option<String>,
+    /// The attribute `stroked`, when the element has it.
     pub stroked: Option<common_simple_types::BooleanValue>,
+    /// The attribute `strokeweight`, when the element has it.
     pub strokeweight: Option<String>,
+    /// The attribute `style`, when the element has it.
     pub style: Option<String>,
+    /// The attribute `target`, when the element has it.
     pub target: Option<String>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `o:userdrawn`, when the element has it.
     pub userdrawn: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:userhidden`, when the element has it.
     pub userhidden: Option<common_simple_types::BooleanValue>,
+    /// The attribute `wrapcoords`, when the element has it.
     pub wrapcoords: Option<String>,
 }
 
-/// 19.1.2.17 roundrect (Rounded Rectangle): the tag `v:roundrect`, schema type `CT_RoundRect`.
+/// The `v:roundrect` element, Rounded Rectangle (ECMA-376 Part 4, section 19.1.2.17). Its schema
+/// type is `CT_RoundRect`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2038,66 +2575,123 @@ pub struct Rectangle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RoundedRectangle {
+    /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:allowoverlap`, when the element has it.
     pub allowoverlap: Option<common_simple_types::BooleanValue>,
+    /// The attribute `alt`, when the element has it.
     pub alt: Option<String>,
+    /// The attribute `arcsize`, when the element has it.
     pub arcsize: Option<String>,
+    /// The attribute `o:borderbottomcolor`, when the element has it.
     pub borderbottomcolor: Option<String>,
+    /// The attribute `o:borderleftcolor`, when the element has it.
     pub borderleftcolor: Option<String>,
+    /// The attribute `o:borderrightcolor`, when the element has it.
     pub borderrightcolor: Option<String>,
+    /// The attribute `o:bordertopcolor`, when the element has it.
     pub bordertopcolor: Option<String>,
+    /// The attribute `o:bullet`, when the element has it.
     pub bullet: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:button`, when the element has it.
     pub button: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:bwmode`, when the element has it.
     pub bwmode: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `o:bwnormal`, when the element has it.
     pub bwnormal: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `o:bwpure`, when the element has it.
     pub bwpure: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `chromakey`, when the element has it.
     pub chromakey: Option<String>,
+    /// The attribute `class`, when the element has it.
     pub class: Option<String>,
+    /// The attribute `o:clip`, when the element has it.
     pub clip: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:cliptowrap`, when the element has it.
     pub cliptowrap: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:connectortype`, when the element has it.
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
+    /// The children that are an item of `ShapeElementContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<ShapeElementContent>,
+    /// The attribute `coordorigin`, when the element has it.
     pub coordorigin: Option<String>,
+    /// The attribute `coordsize`, when the element has it.
     pub coordsize: Option<String>,
+    /// The attribute `o:dgmlayout`, when the element has it.
     pub dgmlayout: Option<super::vml_office_drawing::DiagramLayoutType>,
+    /// The attribute `o:dgmlayoutmru`, when the element has it.
     pub dgmlayoutmru: Option<super::vml_office_drawing::DiagramLayoutType>,
+    /// The attribute `o:dgmnodekind`, when the element has it.
     pub dgmnodekind: Option<String>,
+    /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
+    /// The attribute `filled`, when the element has it.
     pub filled: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:forcedash`, when the element has it.
     pub forcedash: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hr`, when the element has it.
     pub hr: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hralign`, when the element has it.
     pub hralign: Option<super::vml_office_drawing::StHrAlign>,
+    /// The attribute `href`, when the element has it.
     pub href: Option<String>,
+    /// The attribute `o:hrnoshade`, when the element has it.
     pub hrnoshade: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hrpct`, when the element has it.
     pub hrpct: Option<String>,
+    /// The attribute `o:hrstd`, when the element has it.
     pub hrstd: Option<common_simple_types::BooleanValue>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `o:insetmode`, when the element has it.
     pub insetmode: Option<super::vml_office_drawing::InsetMarginType>,
+    /// The attribute `insetpen`, when the element has it.
     pub insetpen: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:ole`, when the element has it.
     pub ole: Option<common_simple_types::BooleanValueWithBlankFalseState>,
+    /// The attribute `o:oleicon`, when the element has it.
     pub oleicon: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:oned`, when the element has it.
     pub oned: Option<common_simple_types::BooleanValue>,
+    /// The attribute `opacity`, when the element has it.
     pub opacity: Option<String>,
+    /// The attribute `o:preferrelative`, when the element has it.
     pub preferrelative: Option<common_simple_types::BooleanValue>,
+    /// The attribute `print`, when the element has it.
     pub print: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:regroupid`, when the element has it.
     pub regroupid: Option<String>,
+    /// The attribute `o:spid`, when the element has it.
     pub spid: Option<String>,
+    /// The attribute `o:spt`, when the element has it.
     pub spt: Option<String>,
+    /// The attribute `strokecolor`, when the element has it.
     pub strokecolor: Option<String>,
+    /// The attribute `stroked`, when the element has it.
     pub stroked: Option<common_simple_types::BooleanValue>,
+    /// The attribute `strokeweight`, when the element has it.
     pub strokeweight: Option<String>,
+    /// The attribute `style`, when the element has it.
     pub style: Option<String>,
+    /// The attribute `target`, when the element has it.
     pub target: Option<String>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `o:userdrawn`, when the element has it.
     pub userdrawn: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:userhidden`, when the element has it.
     pub userhidden: Option<common_simple_types::BooleanValue>,
+    /// The attribute `wrapcoords`, when the element has it.
     pub wrapcoords: Option<String>,
 }
 
-/// 19.1.2.6 formulas (Set of Formulas): the tag `v:formulas`, schema type `CT_Formulas`.
+/// The `v:formulas` element, Set of Formulas (ECMA-376 Part 4, section 19.1.2.6). Its schema type
+/// is `CT_Formulas`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2106,11 +2700,14 @@ pub struct RoundedRectangle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SetOfFormulas {
+    /// The children that are `SingleFormula`, in order.
     pub single_formula: Vec<SingleFormula>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 19.1.2.9 handles (Set of Handles): the tag `v:handles`, schema type `CT_Handles`.
+/// The `v:handles` element, Set of Handles (ECMA-376 Part 4, section 19.1.2.9). Its schema type is
+/// `CT_Handles`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2119,11 +2716,14 @@ pub struct SetOfFormulas {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SetOfHandles {
+    /// The children that are `ShapeHandle`, in order.
     pub shape_handle: Vec<ShapeHandle>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 19.1.2.18 shadow (Shadow Effect): the tag `v:shadow`, schema type `CT_Shadow`.
+/// The `v:shadow` element, Shadow Effect (ECMA-376 Part 4, section 19.1.2.18). Its schema type is
+/// `CT_Shadow`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2132,21 +2732,37 @@ pub struct SetOfHandles {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShadowEffect {
+    /// The attribute `color`, when the element has it.
     pub color: Option<String>,
+    /// The attribute `color2`, when the element has it.
     pub color2: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `matrix`, when the element has it.
     pub matrix: Option<String>,
+    /// The attribute `obscured`, when the element has it.
     pub obscured: Option<common_simple_types::BooleanValue>,
+    /// The attribute `offset`, when the element has it.
     pub offset: Option<String>,
+    /// The attribute `offset2`, when the element has it.
     pub offset2: Option<String>,
+    /// The attribute `on`, when the element has it.
     pub on: Option<common_simple_types::BooleanValue>,
+    /// The attribute `opacity`, when the element has it.
     pub opacity: Option<String>,
+    /// The attribute `origin`, when the element has it.
     pub origin: Option<String>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<ShadowType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 19.1.3.6 `ST_ShadowType` (Shadow Type): the text the file carried.
+/// Shadow Type, the simple type `ST_ShadowType` (ECMA-376 Part 4, section 19.1.3.6), kept as the
+/// text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2155,17 +2771,23 @@ pub struct ShadowEffect {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShadowType(pub String);
-/// The members of `ST_ShadowType`, in alphabetical order.
+/// The members of the enumeration `ST_ShadowType`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ShadowTypeMember {
+    /// The member written `double`.
     Double,
+    /// The member written `emboss`.
     Emboss,
+    /// The member written `perspective`.
     Perspective,
+    /// The member written `single`.
     Single,
 }
 
-/// 19.1.2.19 shape (Shape Definition): the tag `v:shape`, schema type `CT_Shape`.
+/// The `v:shape` element, Shape Definition (ECMA-376 Part 4, section 19.1.2.19). Its schema type is
+/// `CT_Shape`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2177,135 +2799,253 @@ pub enum ShadowTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeDefinition {
+    /// The attribute `adj`, when the element has it.
     pub adj: Option<String>,
+    /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:allowoverlap`, when the element has it.
     pub allowoverlap: Option<common_simple_types::BooleanValue>,
+    /// The attribute `alt`, when the element has it.
     pub alt: Option<String>,
+    /// The attribute `o:borderbottomcolor`, when the element has it.
     pub borderbottomcolor: Option<String>,
+    /// The attribute `o:borderleftcolor`, when the element has it.
     pub borderleftcolor: Option<String>,
+    /// The attribute `o:borderrightcolor`, when the element has it.
     pub borderrightcolor: Option<String>,
+    /// The attribute `o:bordertopcolor`, when the element has it.
     pub bordertopcolor: Option<String>,
+    /// The attribute `o:bullet`, when the element has it.
     pub bullet: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:button`, when the element has it.
     pub button: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:bwmode`, when the element has it.
     pub bwmode: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `o:bwnormal`, when the element has it.
     pub bwnormal: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `o:bwpure`, when the element has it.
     pub bwpure: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `chromakey`, when the element has it.
     pub chromakey: Option<String>,
+    /// The attribute `class`, when the element has it.
     pub class: Option<String>,
+    /// The attribute `o:clip`, when the element has it.
     pub clip: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:cliptowrap`, when the element has it.
     pub cliptowrap: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:connectortype`, when the element has it.
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
+    /// The children that are an item of `ShapeDefinitionContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<ShapeDefinitionContent>,
+    /// The attribute `coordorigin`, when the element has it.
     pub coordorigin: Option<String>,
+    /// The attribute `coordsize`, when the element has it.
     pub coordsize: Option<String>,
+    /// The attribute `o:dgmlayout`, when the element has it.
     pub dgmlayout: Option<super::vml_office_drawing::DiagramLayoutType>,
+    /// The attribute `o:dgmlayoutmru`, when the element has it.
     pub dgmlayoutmru: Option<super::vml_office_drawing::DiagramLayoutType>,
+    /// The attribute `o:dgmnodekind`, when the element has it.
     pub dgmnodekind: Option<String>,
+    /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    /// The attribute `equationxml`, when the element has it.
     pub equationxml: Option<String>,
+    /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
+    /// The attribute `filled`, when the element has it.
     pub filled: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:forcedash`, when the element has it.
     pub forcedash: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:gfxdata`, when the element has it.
     pub gfxdata: Option<String>,
+    /// The attribute `o:hr`, when the element has it.
     pub hr: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hralign`, when the element has it.
     pub hralign: Option<super::vml_office_drawing::StHrAlign>,
+    /// The attribute `href`, when the element has it.
     pub href: Option<String>,
+    /// The attribute `o:hrnoshade`, when the element has it.
     pub hrnoshade: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hrpct`, when the element has it.
     pub hrpct: Option<String>,
+    /// The attribute `o:hrstd`, when the element has it.
     pub hrstd: Option<common_simple_types::BooleanValue>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `o:insetmode`, when the element has it.
     pub insetmode: Option<super::vml_office_drawing::InsetMarginType>,
+    /// The attribute `insetpen`, when the element has it.
     pub insetpen: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:ole`, when the element has it.
     pub ole: Option<common_simple_types::BooleanValueWithBlankFalseState>,
+    /// The attribute `o:oleicon`, when the element has it.
     pub oleicon: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:oned`, when the element has it.
     pub oned: Option<common_simple_types::BooleanValue>,
+    /// The attribute `opacity`, when the element has it.
     pub opacity: Option<String>,
+    /// The attribute `path`, when the element has it.
     pub path: Option<String>,
+    /// The attribute `o:preferrelative`, when the element has it.
     pub preferrelative: Option<common_simple_types::BooleanValue>,
+    /// The attribute `print`, when the element has it.
     pub print: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:regroupid`, when the element has it.
     pub regroupid: Option<String>,
+    /// The attribute `o:spid`, when the element has it.
     pub spid: Option<String>,
+    /// The attribute `o:spt`, when the element has it.
     pub spt: Option<String>,
+    /// The attribute `strokecolor`, when the element has it.
     pub strokecolor: Option<String>,
+    /// The attribute `stroked`, when the element has it.
     pub stroked: Option<common_simple_types::BooleanValue>,
+    /// The attribute `strokeweight`, when the element has it.
     pub strokeweight: Option<String>,
+    /// The attribute `style`, when the element has it.
     pub style: Option<String>,
+    /// The attribute `target`, when the element has it.
     pub target: Option<String>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `o:userdrawn`, when the element has it.
     pub userdrawn: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:userhidden`, when the element has it.
     pub userhidden: Option<common_simple_types::BooleanValue>,
+    /// The attribute `wrapcoords`, when the element has it.
     pub wrapcoords: Option<String>,
 }
 
-/// One item of `CT_Shape`: local choice in `CT_Shape`.
+/// One child element of a choice: local choice in `CT_Shape`.
+///
+/// The schema types that hold it: `CT_Shape`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ShapeDefinitionContent {
+    /// The element `w10:anchorlock`, a `AnchorLocationIsLocked`.
     AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLocked),
+    /// The element `xvml:ClientData`, a `AttachedObjectData`.
     AttachedObjectData(vml_spreadsheet_drawing::AttachedObjectData),
+    /// The element `w10:borderbottom`, a `BottomBorder`.
     BottomBorder(vml_wordprocessing_drawing::BottomBorder),
+    /// The element `o:callout`, a `Callout`.
     Callout(super::vml_office_drawing::Callout),
+    /// The element `o:signatureline`, a `DigitalSignatureLine`.
     DigitalSignatureLine(super::vml_office_drawing::DigitalSignatureLine),
+    /// The element `o:extrusion`, a `Extrusion`.
     Extrusion(super::vml_office_drawing::Extrusion),
+    /// The element `v:imagedata`, a `ImageData`.
     ImageData(ImageData),
+    /// The element `o:ink`, a `Ink`.
     Ink(super::vml_office_drawing::Ink),
+    /// The element `pvml:iscomment`, a `InkAnnotationFlag`.
     InkAnnotationFlag(vml_presentation_drawing::InkAnnotationFlag),
+    /// The element `w10:borderleft`, a `LeftBorder`.
     LeftBorder(vml_wordprocessing_drawing::LeftBorder),
+    /// The element `v:stroke`, a `LineStrokeSettings`.
     LineStrokeSettings(LineStrokeSettings),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `w10:borderright`, a `RightBorder`.
     RightBorder(vml_wordprocessing_drawing::RightBorder),
+    /// The element `v:formulas`, a `SetOfFormulas`.
     SetOfFormulas(SetOfFormulas),
+    /// The element `v:handles`, a `SetOfHandles`.
     SetOfHandles(SetOfHandles),
+    /// The element `v:shadow`, a `ShadowEffect`.
     ShadowEffect(ShadowEffect),
+    /// The element `o:clippath`, a `ShapeClippingPath`.
     ShapeClippingPath(super::vml_office_drawing::ShapeClippingPath),
+    /// The element `v:fill`, a `ShapeFillProperties`.
     ShapeFillProperties(ShapeFillProperties),
+    /// The element `v:path`, a `ShapePath`.
     ShapePath(ShapePath),
+    /// The element `o:lock`, a `ShapeProtections`.
     ShapeProtections(super::vml_office_drawing::ShapeProtections),
+    /// The element `o:skew`, a `SkewTransform`.
     SkewTransform(super::vml_office_drawing::SkewTransform),
+    /// The element `o:equationxml`, a `StorageForAlternateMathContent`.
     StorageForAlternateMathContent(super::vml_office_drawing::StorageForAlternateMathContent),
+    /// The element `v:textbox`, a `TextBox`.
     TextBox(TextBox),
+    /// The element `v:textpath`, a `TextLayoutPath`.
     TextLayoutPath(TextLayoutPath),
+    /// The element `w10:wrap`, a `TextWrapping`.
     TextWrapping(vml_wordprocessing_drawing::TextWrapping),
+    /// The element `w10:bordertop`, a `TopBorder`.
     TopBorder(vml_wordprocessing_drawing::TopBorder),
+    /// The element `pvml:textdata`, a `VMLDiagramText`.
     VMLDiagramText(vml_presentation_drawing::VMLDiagramText),
 }
 
-/// One item of `EG_ShapeElements`, local choice in `CT_Oval`, local choice in `CT_Rect`, local
-/// choice in `CT_RoundRect`.
+/// One child element of a choice: `EG_ShapeElements`, local choice in `CT_Oval`, local choice in
+/// `CT_Rect`, local choice in `CT_RoundRect`.
 ///
-/// Its types: `CT_Arc`, `CT_Curve`, `CT_Image`, `CT_Line`, `CT_Oval`, `CT_Rect`, `CT_RoundRect`,
-/// `CT_Shapetype`.
+/// The schema types that hold it: `CT_Arc`, `CT_Curve`, `CT_Image`, `CT_Line`, `CT_Oval`,
+/// `CT_Rect`, `CT_RoundRect`, `CT_Shapetype`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ShapeElementContent {
+    /// The element `w10:anchorlock`, a `AnchorLocationIsLocked`.
     AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLocked),
+    /// The element `xvml:ClientData`, a `AttachedObjectData`.
     AttachedObjectData(vml_spreadsheet_drawing::AttachedObjectData),
+    /// The element `w10:borderbottom`, a `BottomBorder`.
     BottomBorder(vml_wordprocessing_drawing::BottomBorder),
+    /// The element `o:callout`, a `Callout`.
     Callout(super::vml_office_drawing::Callout),
+    /// The element `o:signatureline`, a `DigitalSignatureLine`.
     DigitalSignatureLine(super::vml_office_drawing::DigitalSignatureLine),
+    /// The element `o:extrusion`, a `Extrusion`.
     Extrusion(super::vml_office_drawing::Extrusion),
+    /// The element `v:imagedata`, a `ImageData`.
     ImageData(ImageData),
+    /// The element `w10:borderleft`, a `LeftBorder`.
     LeftBorder(vml_wordprocessing_drawing::LeftBorder),
+    /// The element `v:stroke`, a `LineStrokeSettings`.
     LineStrokeSettings(LineStrokeSettings),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `w10:borderright`, a `RightBorder`.
     RightBorder(vml_wordprocessing_drawing::RightBorder),
+    /// The element `v:formulas`, a `SetOfFormulas`.
     SetOfFormulas(SetOfFormulas),
+    /// The element `v:handles`, a `SetOfHandles`.
     SetOfHandles(SetOfHandles),
+    /// The element `v:shadow`, a `ShadowEffect`.
     ShadowEffect(ShadowEffect),
+    /// The element `o:clippath`, a `ShapeClippingPath`.
     ShapeClippingPath(super::vml_office_drawing::ShapeClippingPath),
+    /// The element `v:fill`, a `ShapeFillProperties`.
     ShapeFillProperties(ShapeFillProperties),
+    /// The element `v:path`, a `ShapePath`.
     ShapePath(ShapePath),
+    /// The element `o:lock`, a `ShapeProtections`.
     ShapeProtections(super::vml_office_drawing::ShapeProtections),
+    /// The element `o:skew`, a `SkewTransform`.
     SkewTransform(super::vml_office_drawing::SkewTransform),
+    /// The element `v:textbox`, a `TextBox`.
     TextBox(TextBox),
+    /// The element `v:textpath`, a `TextLayoutPath`.
     TextLayoutPath(TextLayoutPath),
+    /// The element `w10:wrap`, a `TextWrapping`.
     TextWrapping(vml_wordprocessing_drawing::TextWrapping),
+    /// The element `w10:bordertop`, a `TopBorder`.
     TopBorder(vml_wordprocessing_drawing::TopBorder),
+    /// The element `pvml:textdata`, a `VMLDiagramText`.
     VMLDiagramText(vml_presentation_drawing::VMLDiagramText),
 }
 
-/// 19.1.2.5 fill (Shape Fill Properties): the tag `v:fill`, schema type `CT_Fill`.
+/// The `v:fill` element, Shape Fill Properties (ECMA-376 Part 4, section 19.1.2.5). Its schema type
+/// is `CT_Fill`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2314,39 +3054,73 @@ pub enum ShapeElementContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeFillProperties {
+    /// The attribute `alignshape`, when the element has it.
     pub alignshape: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:althref`, when the element has it.
     pub althref: Option<String>,
+    /// The attribute `angle`, when the element has it.
     pub angle: Option<String>,
+    /// The attribute `aspect`, when the element has it.
     pub aspect: Option<ImageScalingBehavior>,
+    /// The attribute `color`, when the element has it.
     pub color: Option<String>,
+    /// The attribute `color2`, when the element has it.
     pub color2: Option<String>,
+    /// The attribute `colors`, when the element has it.
     pub colors: Option<String>,
+    /// The attribute `o:detectmouseclick`, when the element has it.
     pub detectmouseclick: Option<common_simple_types::BooleanValue>,
+    /// The attribute `focus`, when the element has it.
     pub focus: Option<String>,
+    /// The attribute `focusposition`, when the element has it.
     pub focusposition: Option<String>,
+    /// The attribute `focussize`, when the element has it.
     pub focussize: Option<String>,
+    /// The attribute `o:href`, when the element has it.
     pub href: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `method`, when the element has it.
     pub method: Option<GradientFillComputationType>,
+    /// The attribute `on`, when the element has it.
     pub on: Option<common_simple_types::BooleanValue>,
+    /// The attribute `opacity`, when the element has it.
     pub opacity: Option<String>,
+    /// The attribute `o:opacity2`, when the element has it.
     pub opacity2: Option<String>,
+    /// The attribute `origin`, when the element has it.
     pub origin: Option<String>,
+    /// The attribute `position`, when the element has it.
     pub position: Option<String>,
+    /// The attribute `r:id`, when the element has it.
     pub r_id: Option<String>,
+    /// The attribute `recolor`, when the element has it.
     pub recolor: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:relid`, when the element has it.
     pub relid: Option<String>,
+    /// The attribute `rotate`, when the element has it.
     pub rotate: Option<common_simple_types::BooleanValue>,
+    /// The child that is `super::vml_office_drawing::ShapeFillExtendedProperties`, when there is
+    /// one.
     pub shape_fill_extended_properties:
         Option<Box<super::vml_office_drawing::ShapeFillExtendedProperties>>,
+    /// The attribute `size`, when the element has it.
     pub size: Option<String>,
+    /// The attribute `src`, when the element has it.
     pub src: Option<String>,
+    /// The attribute `o:title`, when the element has it.
     pub title: Option<String>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<ShapeFillType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 19.1.3.4 `ST_FillType` (Shape Fill Type): the text the file carried.
+/// Shape Fill Type, the simple type `ST_FillType` (ECMA-376 Part 4, section 19.1.3.4), kept as the
+/// text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2355,19 +3129,27 @@ pub struct ShapeFillProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeFillType(pub String);
-/// The members of `ST_FillType`, in alphabetical order.
+/// The members of the enumeration `ST_FillType`, in alphabetical order. `as_str` gives the text of
+/// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ShapeFillTypeMember {
+    /// The member written `frame`.
     Frame,
+    /// The member written `gradient`.
     Gradient,
+    /// The member written `gradientRadial`.
     GradientRadial,
+    /// The member written `pattern`.
     Pattern,
+    /// The member written `solid`.
     Solid,
+    /// The member written `tile`.
     Tile,
 }
 
-/// 19.1.2.7 group (Shape Group): the tag `v:group`, schema type `CT_Group`.
+/// The `v:group` element, Shape Group (ECMA-376 Part 4, section 19.1.2.7). Its schema type is
+/// `CT_Group`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2379,92 +3161,177 @@ pub enum ShapeFillTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeGroup {
+    /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:allowoverlap`, when the element has it.
     pub allowoverlap: Option<common_simple_types::BooleanValue>,
+    /// The attribute `alt`, when the element has it.
     pub alt: Option<String>,
+    /// The attribute `o:borderbottomcolor`, when the element has it.
     pub borderbottomcolor: Option<String>,
+    /// The attribute `o:borderleftcolor`, when the element has it.
     pub borderleftcolor: Option<String>,
+    /// The attribute `o:borderrightcolor`, when the element has it.
     pub borderrightcolor: Option<String>,
+    /// The attribute `o:bordertopcolor`, when the element has it.
     pub bordertopcolor: Option<String>,
+    /// The attribute `o:bullet`, when the element has it.
     pub bullet: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:button`, when the element has it.
     pub button: Option<common_simple_types::BooleanValue>,
+    /// The attribute `class`, when the element has it.
     pub class: Option<String>,
+    /// The children that are an item of `ShapeGroupContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<ShapeGroupContent>,
+    /// The attribute `coordorigin`, when the element has it.
     pub coordorigin: Option<String>,
+    /// The attribute `coordsize`, when the element has it.
     pub coordsize: Option<String>,
+    /// The attribute `o:dgmlayout`, when the element has it.
     pub dgmlayout: Option<super::vml_office_drawing::DiagramLayoutType>,
+    /// The attribute `o:dgmlayoutmru`, when the element has it.
     pub dgmlayoutmru: Option<super::vml_office_drawing::DiagramLayoutType>,
+    /// The attribute `o:dgmnodekind`, when the element has it.
     pub dgmnodekind: Option<String>,
+    /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    /// The attribute `editas`, when the element has it.
     pub editas: Option<ShapeGroupingTypes>,
+    /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
+    /// The attribute `filled`, when the element has it.
     pub filled: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hr`, when the element has it.
     pub hr: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hralign`, when the element has it.
     pub hralign: Option<super::vml_office_drawing::StHrAlign>,
+    /// The attribute `href`, when the element has it.
     pub href: Option<String>,
+    /// The attribute `o:hrnoshade`, when the element has it.
     pub hrnoshade: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hrpct`, when the element has it.
     pub hrpct: Option<String>,
+    /// The attribute `o:hrstd`, when the element has it.
     pub hrstd: Option<common_simple_types::BooleanValue>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `o:insetmode`, when the element has it.
     pub insetmode: Option<super::vml_office_drawing::InsetMarginType>,
+    /// The attribute `o:oned`, when the element has it.
     pub oned: Option<common_simple_types::BooleanValue>,
+    /// The attribute `print`, when the element has it.
     pub print: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:regroupid`, when the element has it.
     pub regroupid: Option<String>,
+    /// The attribute `o:spid`, when the element has it.
     pub spid: Option<String>,
+    /// The attribute `style`, when the element has it.
     pub style: Option<String>,
+    /// The attribute `o:tablelimits`, when the element has it.
     pub tablelimits: Option<String>,
+    /// The attribute `o:tableproperties`, when the element has it.
     pub tableproperties: Option<String>,
+    /// The attribute `target`, when the element has it.
     pub target: Option<String>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `o:userdrawn`, when the element has it.
     pub userdrawn: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:userhidden`, when the element has it.
     pub userhidden: Option<common_simple_types::BooleanValue>,
+    /// The attribute `wrapcoords`, when the element has it.
     pub wrapcoords: Option<String>,
 }
 
-/// One item of `CT_Group`: local choice in `CT_Group`.
+/// One child element of a choice: local choice in `CT_Group`.
+///
+/// The schema types that hold it: `CT_Group`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ShapeGroupContent {
+    /// The element `w10:anchorlock`, a `AnchorLocationIsLocked`.
     AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLocked),
+    /// The element `v:arc`, a `ArcSegment`.
     ArcSegment(ArcSegment),
+    /// The element `xvml:ClientData`, a `AttachedObjectData`.
     AttachedObjectData(vml_spreadsheet_drawing::AttachedObjectData),
+    /// The element `v:curve`, a `BezierCurve`.
     BezierCurve(BezierCurve),
+    /// The element `w10:borderbottom`, a `BottomBorder`.
     BottomBorder(vml_wordprocessing_drawing::BottomBorder),
+    /// The element `o:callout`, a `Callout`.
     Callout(super::vml_office_drawing::Callout),
+    /// The element `o:signatureline`, a `DigitalSignatureLine`.
     DigitalSignatureLine(super::vml_office_drawing::DigitalSignatureLine),
+    /// The element `o:extrusion`, a `Extrusion`.
     Extrusion(super::vml_office_drawing::Extrusion),
+    /// The element `v:imagedata`, a `ImageData`.
     ImageData(ImageData),
+    /// The element `v:image`, a `ImageFile`.
     ImageFile(ImageFile),
+    /// The element `w10:borderleft`, a `LeftBorder`.
     LeftBorder(vml_wordprocessing_drawing::LeftBorder),
+    /// The element `v:line`, a `Line`.
     Line(Line),
+    /// The element `v:stroke`, a `LineStrokeSettings`.
     LineStrokeSettings(LineStrokeSettings),
+    /// The element `v:polyline`, a `MultiplePathLine`.
     MultiplePathLine(MultiplePathLine),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `v:oval`, a `Oval`.
     Oval(Oval),
+    /// The element `v:rect`, a `Rectangle`.
     Rectangle(Rectangle),
+    /// The element `w10:borderright`, a `RightBorder`.
     RightBorder(vml_wordprocessing_drawing::RightBorder),
+    /// The element `v:roundrect`, a `RoundedRectangle`.
     RoundedRectangle(RoundedRectangle),
+    /// The element `v:formulas`, a `SetOfFormulas`.
     SetOfFormulas(SetOfFormulas),
+    /// The element `v:handles`, a `SetOfHandles`.
     SetOfHandles(SetOfHandles),
+    /// The element `v:shadow`, a `ShadowEffect`.
     ShadowEffect(ShadowEffect),
+    /// The element `o:clippath`, a `ShapeClippingPath`.
     ShapeClippingPath(super::vml_office_drawing::ShapeClippingPath),
+    /// The element `v:shape`, a `ShapeDefinition`.
     ShapeDefinition(ShapeDefinition),
+    /// The element `v:fill`, a `ShapeFillProperties`.
     ShapeFillProperties(ShapeFillProperties),
+    /// The element `v:group`, a `ShapeGroup`.
     ShapeGroup(ShapeGroup),
+    /// The element `v:path`, a `ShapePath`.
     ShapePath(ShapePath),
+    /// The element `o:lock`, a `ShapeProtections`.
     ShapeProtections(super::vml_office_drawing::ShapeProtections),
+    /// The element `v:shapetype`, a `ShapeTemplate`.
     ShapeTemplate(ShapeTemplate),
+    /// The element `o:skew`, a `SkewTransform`.
     SkewTransform(super::vml_office_drawing::SkewTransform),
+    /// The element `v:textbox`, a `TextBox`.
     TextBox(TextBox),
+    /// The element `v:textpath`, a `TextLayoutPath`.
     TextLayoutPath(TextLayoutPath),
+    /// The element `w10:wrap`, a `TextWrapping`.
     TextWrapping(vml_wordprocessing_drawing::TextWrapping),
+    /// The element `w10:bordertop`, a `TopBorder`.
     TopBorder(vml_wordprocessing_drawing::TopBorder),
+    /// The element `o:diagram`, a `VMLDiagram`.
     VMLDiagram(super::vml_office_drawing::VMLDiagram),
+    /// The element `pvml:textdata`, a `VMLDiagramText`.
     VMLDiagramText(vml_presentation_drawing::VMLDiagramText),
 }
 
-/// 19.1.3.1 `ST_EditAs` (Shape Grouping Types): the text the file carried.
+/// Shape Grouping Types, the simple type `ST_EditAs` (ECMA-376 Part 4, section 19.1.3.1), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2473,20 +3340,28 @@ pub enum ShapeGroupContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeGroupingTypes(pub String);
-/// The members of `ST_EditAs`, in alphabetical order.
+/// The members of the enumeration `ST_EditAs`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ShapeGroupingTypesMember {
+    /// The member written `bullseye`.
     Bullseye,
+    /// The member written `canvas`.
     Canvas,
+    /// The member written `cycle`.
     Cycle,
+    /// The member written `orgchart`.
     Orgchart,
+    /// The member written `radial`.
     Radial,
+    /// The member written `stacked`.
     Stacked,
+    /// The member written `venn`.
     Venn,
 }
 
-/// 19.1.2.8 h (Shape Handle): the tag `v:h`, schema type `CT_H`.
+/// The `v:h` element, Shape Handle (ECMA-376 Part 4, section 19.1.2.8). Its schema type is `CT_H`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2495,19 +3370,30 @@ pub enum ShapeGroupingTypesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeHandle {
+    /// The attribute `invx`, when the element has it.
     pub invx: Option<common_simple_types::BooleanValue>,
+    /// The attribute `invy`, when the element has it.
     pub invy: Option<common_simple_types::BooleanValue>,
+    /// The attribute `map`, when the element has it.
     pub map: Option<String>,
+    /// The attribute `polar`, when the element has it.
     pub polar: Option<String>,
+    /// The attribute `position`, when the element has it.
     pub position: Option<String>,
+    /// The attribute `radiusrange`, when the element has it.
     pub radiusrange: Option<String>,
+    /// The attribute `switch`, when the element has it.
     pub switch: Option<common_simple_types::BooleanValueWithBlankFalseState>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `xrange`, when the element has it.
     pub xrange: Option<String>,
+    /// The attribute `yrange`, when the element has it.
     pub yrange: Option<String>,
 }
 
-/// 19.1.2.14 path (Shape Path): the tag `v:path`, schema type `CT_Path`.
+/// The `v:path` element, Shape Path (ECMA-376 Part 4, section 19.1.2.14). Its schema type is
+/// `CT_Path`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2516,25 +3402,42 @@ pub struct ShapeHandle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapePath {
+    /// The attribute `arrowok`, when the element has it.
     pub arrowok: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:connectangles`, when the element has it.
     pub connectangles: Option<String>,
+    /// The attribute `o:connectlocs`, when the element has it.
     pub connectlocs: Option<String>,
+    /// The attribute `o:connecttype`, when the element has it.
     pub connecttype: Option<super::vml_office_drawing::ConnectionLocationsType>,
+    /// The attribute `o:extrusionok`, when the element has it.
     pub extrusionok: Option<common_simple_types::BooleanValue>,
+    /// The attribute `fillok`, when the element has it.
     pub fillok: Option<common_simple_types::BooleanValue>,
+    /// The attribute `gradientshapeok`, when the element has it.
     pub gradientshapeok: Option<common_simple_types::BooleanValue>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `insetpenok`, when the element has it.
     pub insetpenok: Option<common_simple_types::BooleanValue>,
+    /// The attribute `limo`, when the element has it.
     pub limo: Option<String>,
+    /// The attribute `shadowok`, when the element has it.
     pub shadowok: Option<common_simple_types::BooleanValue>,
+    /// The attribute `strokeok`, when the element has it.
     pub strokeok: Option<common_simple_types::BooleanValue>,
+    /// The attribute `textboxrect`, when the element has it.
     pub textboxrect: Option<String>,
+    /// The attribute `textpathok`, when the element has it.
     pub textpathok: Option<common_simple_types::BooleanValue>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `v`, when the element has it.
     pub v: Option<String>,
 }
 
-/// 19.1.2.20 shapetype (Shape Template): the tag `v:shapetype`, schema type `CT_Shapetype`.
+/// The `v:shapetype` element, Shape Template (ECMA-376 Part 4, section 19.1.2.20). Its schema type
+/// is `CT_Shapetype`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2546,69 +3449,129 @@ pub struct ShapePath {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeTemplate {
+    /// The attribute `adj`, when the element has it.
     pub adj: Option<String>,
+    /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:allowoverlap`, when the element has it.
     pub allowoverlap: Option<common_simple_types::BooleanValue>,
+    /// The attribute `alt`, when the element has it.
     pub alt: Option<String>,
+    /// The attribute `o:borderbottomcolor`, when the element has it.
     pub borderbottomcolor: Option<String>,
+    /// The attribute `o:borderleftcolor`, when the element has it.
     pub borderleftcolor: Option<String>,
+    /// The attribute `o:borderrightcolor`, when the element has it.
     pub borderrightcolor: Option<String>,
+    /// The attribute `o:bordertopcolor`, when the element has it.
     pub bordertopcolor: Option<String>,
+    /// The attribute `o:bullet`, when the element has it.
     pub bullet: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:button`, when the element has it.
     pub button: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:bwmode`, when the element has it.
     pub bwmode: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `o:bwnormal`, when the element has it.
     pub bwnormal: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `o:bwpure`, when the element has it.
     pub bwpure: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// The attribute `chromakey`, when the element has it.
     pub chromakey: Option<String>,
+    /// The attribute `class`, when the element has it.
     pub class: Option<String>,
+    /// The attribute `o:clip`, when the element has it.
     pub clip: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:cliptowrap`, when the element has it.
     pub cliptowrap: Option<common_simple_types::BooleanValue>,
+    /// The child that is `super::vml_office_drawing::Complex`, when there is one.
     pub complex: Option<Box<super::vml_office_drawing::Complex>>,
+    /// The attribute `o:connectortype`, when the element has it.
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
+    /// The children that are an item of `ShapeElementContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<ShapeElementContent>,
+    /// The attribute `coordorigin`, when the element has it.
     pub coordorigin: Option<String>,
+    /// The attribute `coordsize`, when the element has it.
     pub coordsize: Option<String>,
+    /// The attribute `o:dgmlayout`, when the element has it.
     pub dgmlayout: Option<super::vml_office_drawing::DiagramLayoutType>,
+    /// The attribute `o:dgmlayoutmru`, when the element has it.
     pub dgmlayoutmru: Option<super::vml_office_drawing::DiagramLayoutType>,
+    /// The attribute `o:dgmnodekind`, when the element has it.
     pub dgmnodekind: Option<String>,
+    /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
+    /// The attribute `filled`, when the element has it.
     pub filled: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:forcedash`, when the element has it.
     pub forcedash: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hr`, when the element has it.
     pub hr: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hralign`, when the element has it.
     pub hralign: Option<super::vml_office_drawing::StHrAlign>,
+    /// The attribute `href`, when the element has it.
     pub href: Option<String>,
+    /// The attribute `o:hrnoshade`, when the element has it.
     pub hrnoshade: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:hrpct`, when the element has it.
     pub hrpct: Option<String>,
+    /// The attribute `o:hrstd`, when the element has it.
     pub hrstd: Option<common_simple_types::BooleanValue>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `o:insetmode`, when the element has it.
     pub insetmode: Option<super::vml_office_drawing::InsetMarginType>,
+    /// The attribute `insetpen`, when the element has it.
     pub insetpen: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:master`, when the element has it.
     pub master: Option<String>,
+    /// The attribute `o:ole`, when the element has it.
     pub ole: Option<common_simple_types::BooleanValueWithBlankFalseState>,
+    /// The attribute `o:oleicon`, when the element has it.
     pub oleicon: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:oned`, when the element has it.
     pub oned: Option<common_simple_types::BooleanValue>,
+    /// The attribute `opacity`, when the element has it.
     pub opacity: Option<String>,
+    /// The attribute `path`, when the element has it.
     pub path: Option<String>,
+    /// The attribute `o:preferrelative`, when the element has it.
     pub preferrelative: Option<common_simple_types::BooleanValue>,
+    /// The attribute `print`, when the element has it.
     pub print: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:regroupid`, when the element has it.
     pub regroupid: Option<String>,
+    /// The attribute `o:spid`, when the element has it.
     pub spid: Option<String>,
+    /// The attribute `o:spt`, when the element has it.
     pub spt: Option<String>,
+    /// The attribute `strokecolor`, when the element has it.
     pub strokecolor: Option<String>,
+    /// The attribute `stroked`, when the element has it.
     pub stroked: Option<common_simple_types::BooleanValue>,
+    /// The attribute `strokeweight`, when the element has it.
     pub strokeweight: Option<String>,
+    /// The attribute `style`, when the element has it.
     pub style: Option<String>,
+    /// The attribute `target`, when the element has it.
     pub target: Option<String>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `o:userdrawn`, when the element has it.
     pub userdrawn: Option<common_simple_types::BooleanValue>,
+    /// The attribute `o:userhidden`, when the element has it.
     pub userhidden: Option<common_simple_types::BooleanValue>,
+    /// The attribute `wrapcoords`, when the element has it.
     pub wrapcoords: Option<String>,
 }
 
-/// 19.1.2.4 f (Single Formula): the tag `v:f`, schema type `CT_F`.
+/// The `v:f` element, Single Formula (ECMA-376 Part 4, section 19.1.2.4). Its schema type is
+/// `CT_F`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2617,11 +3580,17 @@ pub struct ShapeTemplate {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SingleFormula {
+    /// The attribute `eqn`, when the element has it.
     pub eqn: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 19.1.3.7 `ST_StrokeArrowLength` (Stroke Arrowhead Length): the text the file carried.
+/// Stroke Arrowhead Length, the simple type `ST_StrokeArrowLength` (ECMA-376 Part 4, section
+/// 19.1.3.7), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2630,16 +3599,24 @@ pub struct SingleFormula {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StrokeArrowheadLength(pub String);
-/// The members of `ST_StrokeArrowLength`, in alphabetical order.
+/// The members of the enumeration `ST_StrokeArrowLength`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum StrokeArrowheadLengthMember {
+    /// The member written `long`.
     Long,
+    /// The member written `medium`.
     Medium,
+    /// The member written `short`.
     Short,
 }
 
-/// 19.1.3.8 `ST_StrokeArrowType` (Stroke Arrowhead Type): the text the file carried.
+/// Stroke Arrowhead Type, the simple type `ST_StrokeArrowType` (ECMA-376 Part 4, section 19.1.3.8),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2648,19 +3625,30 @@ pub enum StrokeArrowheadLengthMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StrokeArrowheadType(pub String);
-/// The members of `ST_StrokeArrowType`, in alphabetical order.
+/// The members of the enumeration `ST_StrokeArrowType`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum StrokeArrowheadTypeMember {
+    /// The member written `block`.
     Block,
+    /// The member written `classic`.
     Classic,
+    /// The member written `diamond`.
     Diamond,
+    /// The member written `none`.
     None,
+    /// The member written `open`.
     Open,
+    /// The member written `oval`.
     Oval,
 }
 
-/// 19.1.3.9 `ST_StrokeArrowWidth` (Stroke Arrowhead Width): the text the file carried.
+/// Stroke Arrowhead Width, the simple type `ST_StrokeArrowWidth` (ECMA-376 Part 4, section
+/// 19.1.3.9), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2669,16 +3657,24 @@ pub enum StrokeArrowheadTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StrokeArrowheadWidth(pub String);
-/// The members of `ST_StrokeArrowWidth`, in alphabetical order.
+/// The members of the enumeration `ST_StrokeArrowWidth`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum StrokeArrowheadWidthMember {
+    /// The member written `medium`.
     Medium,
+    /// The member written `narrow`.
     Narrow,
+    /// The member written `wide`.
     Wide,
 }
 
-/// 19.1.3.10 `ST_StrokeEndCap` (Stroke End Cap Type): the text the file carried.
+/// Stroke End Cap Type, the simple type `ST_StrokeEndCap` (ECMA-376 Part 4, section 19.1.3.10),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2687,16 +3683,24 @@ pub enum StrokeArrowheadWidthMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StrokeEndCapType(pub String);
-/// The members of `ST_StrokeEndCap`, in alphabetical order.
+/// The members of the enumeration `ST_StrokeEndCap`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum StrokeEndCapTypeMember {
+    /// The member written `flat`.
     Flat,
+    /// The member written `round`.
     Round,
+    /// The member written `square`.
     Square,
 }
 
-/// 19.1.3.12 `ST_StrokeLineStyle` (Stroke Line Style): the text the file carried.
+/// Stroke Line Style, the simple type `ST_StrokeLineStyle` (ECMA-376 Part 4, section 19.1.3.12),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2705,18 +3709,25 @@ pub enum StrokeEndCapTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StrokeLineStyle(pub String);
-/// The members of `ST_StrokeLineStyle`, in alphabetical order.
+/// The members of the enumeration `ST_StrokeLineStyle`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum StrokeLineStyleMember {
+    /// The member written `single`.
     Single,
+    /// The member written `thickBetweenThin`.
     ThickBetweenThin,
+    /// The member written `thickThin`.
     ThickThin,
+    /// The member written `thinThick`.
     ThinThick,
+    /// The member written `thinThin`.
     ThinThin,
 }
 
-/// 19.1.2.22 textbox (Text Box): the tag `v:textbox`, schema type `CT_Textbox`.
+/// The `v:textbox` element, Text Box (ECMA-376 Part 4, section 19.1.2.22). Its schema type is
+/// `CT_Textbox`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2728,24 +3739,38 @@ pub enum StrokeLineStyleMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextBox {
+    /// The child that is an item of `TextBoxContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Option<Box<TextBoxContent>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `inset`, when the element has it.
     pub inset: Option<String>,
+    /// The attribute `o:insetmode`, when the element has it.
     pub insetmode: Option<super::vml_office_drawing::InsetMarginType>,
+    /// The attribute `o:singleclick`, when the element has it.
     pub singleclick: Option<common_simple_types::BooleanValue>,
+    /// The attribute `style`, when the element has it.
     pub style: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_Textbox`: local choice in `CT_Textbox`.
+/// One child element of a choice: local choice in `CT_Textbox`.
+///
+/// The schema types that hold it: `CT_Textbox`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum TextBoxContent {
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `w:txbxContent`, a `RichTextBoxContentContainer`.
     RichTextBoxContentContainer(super::wordprocessing::RichTextBoxContentContainer),
 }
 
-/// 19.1.2.23 textpath (Text Layout Path): the tag `v:textpath`, schema type `CT_TextPath`.
+/// The `v:textpath` element, Text Layout Path (ECMA-376 Part 4, section 19.1.2.23). Its schema type
+/// is `CT_TextPath`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2754,18 +3779,31 @@ pub enum TextBoxContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextLayoutPath {
+    /// The attribute `fitpath`, when the element has it.
     pub fitpath: Option<common_simple_types::BooleanValue>,
+    /// The attribute `fitshape`, when the element has it.
     pub fitshape: Option<common_simple_types::BooleanValue>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `on`, when the element has it.
     pub on: Option<common_simple_types::BooleanValue>,
+    /// The attribute `string`, when the element has it.
     pub string: Option<String>,
+    /// The attribute `style`, when the element has it.
     pub style: Option<String>,
+    /// The attribute `trim`, when the element has it.
     pub trim: Option<common_simple_types::BooleanValue>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `xscale`, when the element has it.
     pub xscale: Option<common_simple_types::BooleanValue>,
 }
 
-/// 19.1.3.2 `ST_Ext` (VML Extension Handling Behaviors): the text the file carried.
+/// VML Extension Handling Behaviors, the simple type `ST_Ext` (ECMA-376 Part 4, section 19.1.3.2),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2774,12 +3812,16 @@ pub struct TextLayoutPath {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct VMLExtensionHandlingBehaviors(pub String);
-/// The members of `ST_Ext`, in alphabetical order.
+/// The members of the enumeration `ST_Ext`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum VMLExtensionHandlingBehaviorsMember {
+    /// The member written `backwardCompatible`.
     BackwardCompatible,
+    /// The member written `edit`.
     Edit,
+    /// The member written `view`.
     View,
 }
 
@@ -3004,7 +4046,7 @@ impl GradientFillComputationTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -3191,7 +4233,7 @@ impl ImageScalingBehaviorMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -3323,7 +4365,7 @@ impl LineJoinTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -3961,7 +5003,7 @@ impl ShadowTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4472,7 +5514,7 @@ impl ShapeFillTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -4778,7 +5820,7 @@ impl ShapeGroupingTypesMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5001,7 +6043,7 @@ impl StrokeArrowheadLengthMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5058,7 +6100,7 @@ impl StrokeArrowheadTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5112,7 +6154,7 @@ impl StrokeArrowheadWidthMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5166,7 +6208,7 @@ impl StrokeEndCapTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5218,7 +6260,7 @@ impl StrokeLineStyleMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5355,7 +6397,7 @@ impl VMLExtensionHandlingBehaviorsMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

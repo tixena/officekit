@@ -212,8 +212,11 @@
 //! The hooks of the `x` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_core::spreadsheet`.
 //!
-//! The namespace is `http://schemas.openxmlformats.org/spreadsheetml/2006/main`.
+//! The namespace is `http://schemas.openxmlformats.org/spreadsheetml/2006/main`. Its prefix, `x`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_core::spreadsheet::*;
 
 use officekit_markup_base::Written;
@@ -229,22 +232,32 @@ use std::io;
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::spreadsheet` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `Alignment`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn alignment(&mut self, _node: &Alignment) -> Option<Alignment> {
         None
     }
 
+    /// Asked for each `Author`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn author(&mut self, _node: &Author) -> Option<Author> {
         None
     }
 
+    /// Asked for each `Authors`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn authors(&mut self, _node: &Authors) -> Option<Authors> {
         None
     }
 
+    /// Asked for each `AutoFilterColumn`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn auto_filter_column(&mut self, _node: &AutoFilterColumn) -> Option<AutoFilterColumn> {
         None
     }
 
+    /// Asked for each `AutoFilterColumnContent`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn auto_filter_column_content(
         &mut self,
         _node: &AutoFilterColumnContent,
@@ -252,54 +265,80 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `AutoFilterSettings`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn auto_filter_settings(&mut self, _node: &AutoFilterSettings) -> Option<AutoFilterSettings> {
         None
     }
 
+    /// Asked for each `AutoSortScope`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn auto_sort_scope(&mut self, _node: &AutoSortScope) -> Option<AutoSortScope> {
         None
     }
 
+    /// Asked for each `BackgroundColor`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn background_color(&mut self, _node: &BackgroundColor) -> Option<BackgroundColor> {
         None
     }
 
+    /// Asked for each `BackgroundImage`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn background_image(&mut self, _node: &BackgroundImage) -> Option<BackgroundImage> {
         None
     }
 
+    /// Asked for each `Bold`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn bold(&mut self, _node: &Bold) -> Option<Bold> {
         None
     }
 
+    /// Asked for each `Boolean`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn boolean(&mut self, _node: &Boolean) -> Option<Boolean> {
         None
     }
 
+    /// Asked for each `Border`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn border(&mut self, _node: &Border) -> Option<Border> {
         None
     }
 
+    /// Asked for each `Borders`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn borders(&mut self, _node: &Borders) -> Option<Borders> {
         None
     }
 
+    /// Asked for each `BottomBorder`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn bottom_border(&mut self, _node: &BottomBorder) -> Option<BottomBorder> {
         None
     }
 
+    /// Asked for each `Break`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn r#break(&mut self, _node: &Break) -> Option<Break> {
         None
     }
 
+    /// Asked for each `CacheItemContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn cache_item(&mut self, _node: &CacheItemContent) -> Option<CacheItemContent> {
         None
     }
 
+    /// Asked for each `CacheItemContent` in a list. `None` leaves the item to its own `transform`,
+    /// and `Some` puts the items it holds, any number of them, in its place.
     fn cache_item_items(&mut self, _node: &CacheItemContent) -> Option<Vec<CacheItemContent>> {
         None
     }
 
+    /// Asked for each `CachedWorksheetData`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn cached_worksheet_data(
         &mut self,
         _node: &CachedWorksheetData,
@@ -307,6 +346,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `CalculatedColumnFormula`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn calculated_column_formula(
         &mut self,
         _node: &CalculatedColumnFormula,
@@ -314,22 +355,32 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `CalculatedItem`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn calculated_item(&mut self, _node: &CalculatedItem) -> Option<CalculatedItem> {
         None
     }
 
+    /// Asked for each `CalculatedItems`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn calculated_items(&mut self, _node: &CalculatedItems) -> Option<CalculatedItems> {
         None
     }
 
+    /// Asked for each `CalculatedMember`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn calculated_member(&mut self, _node: &CalculatedMember) -> Option<CalculatedMember> {
         None
     }
 
+    /// Asked for each `CalculatedMembers`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn calculated_members(&mut self, _node: &CalculatedMembers) -> Option<CalculatedMembers> {
         None
     }
 
+    /// Asked for each `CalculationChainInfo`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn calculation_chain_info(
         &mut self,
         _node: &CalculationChainInfo,
@@ -337,6 +388,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `CalculationProperties`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn calculation_properties(
         &mut self,
         _node: &CalculationProperties,
@@ -344,62 +397,92 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Cell`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn cell(&mut self, _node: &Cell) -> Option<Cell> {
         None
     }
 
+    /// Asked for each `CellCalcCell`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn cell_calc_cell(&mut self, _node: &CellCalcCell) -> Option<CellCalcCell> {
         None
     }
 
+    /// Asked for each `CellFormats`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn cell_formats(&mut self, _node: &CellFormats) -> Option<CellFormats> {
         None
     }
 
+    /// Asked for each `CellMetadata`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn cell_metadata(&mut self, _node: &CellMetadata) -> Option<CellMetadata> {
         None
     }
 
+    /// Asked for each `CellProperties`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn cell_properties(&mut self, _node: &CellProperties) -> Option<CellProperties> {
         None
     }
 
+    /// Asked for each `CellSmartTag`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn cell_smart_tag(&mut self, _node: &CellSmartTag) -> Option<CellSmartTag> {
         None
     }
 
+    /// Asked for each `CellSmartTags`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn cell_smart_tags(&mut self, _node: &CellSmartTags) -> Option<CellSmartTags> {
         None
     }
 
+    /// Asked for each `CellStyle`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn cell_style(&mut self, _node: &CellStyle) -> Option<CellStyle> {
         None
     }
 
+    /// Asked for each `CellStyles`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn cell_styles(&mut self, _node: &CellStyles) -> Option<CellStyles> {
         None
     }
 
+    /// Asked for each `CellValue`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn cell_value(&mut self, _node: &CellValue) -> Option<CellValue> {
         None
     }
 
+    /// Asked for each `CellWatchItem`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn cell_watch_item(&mut self, _node: &CellWatchItem) -> Option<CellWatchItem> {
         None
     }
 
+    /// Asked for each `CellWatchItems`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn cell_watch_items(&mut self, _node: &CellWatchItems) -> Option<CellWatchItems> {
         None
     }
 
+    /// Asked for each `CharacterSet`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn character_set(&mut self, _node: &CharacterSet) -> Option<CharacterSet> {
         None
     }
 
+    /// Asked for each `CharacterValue`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn character_value(&mut self, _node: &CharacterValue) -> Option<CharacterValue> {
         None
     }
 
+    /// Asked for each `CharacterValueXStringElement`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn character_value_x_string_element(
         &mut self,
         _node: &CharacterValueXStringElement,
@@ -407,10 +490,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ChartSheet`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn chart_sheet(&mut self, _node: &ChartSheet) -> Option<ChartSheet> {
         None
     }
 
+    /// Asked for each `ChartSheetPageSetup`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn chart_sheet_page_setup(
         &mut self,
         _node: &ChartSheetPageSetup,
@@ -418,6 +505,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ChartSheetProperties`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn chart_sheet_properties(
         &mut self,
         _node: &ChartSheetProperties,
@@ -425,6 +514,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ChartSheetProtection`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn chart_sheet_protection(
         &mut self,
         _node: &ChartSheetProtection,
@@ -432,14 +523,20 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ChartSheetView`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn chart_sheet_view(&mut self, _node: &ChartSheetView) -> Option<ChartSheetView> {
         None
     }
 
+    /// Asked for each `ChartSheetViews`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn chart_sheet_views(&mut self, _node: &ChartSheetViews) -> Option<ChartSheetViews> {
         None
     }
 
+    /// Asked for each `ColorFilterCriteria`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn color_filter_criteria(
         &mut self,
         _node: &ColorFilterCriteria,
@@ -447,30 +544,44 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ColorIndexes`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn color_indexes(&mut self, _node: &ColorIndexes) -> Option<ColorIndexes> {
         None
     }
 
+    /// Asked for each `ColorScale`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn color_scale(&mut self, _node: &ColorScale) -> Option<ColorScale> {
         None
     }
 
+    /// Asked for each `Colors`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn colors(&mut self, _node: &Colors) -> Option<Colors> {
         None
     }
 
+    /// Asked for each `ColumnFields`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn column_fields(&mut self, _node: &ColumnFields) -> Option<ColumnFields> {
         None
     }
 
+    /// Asked for each `ColumnInformation`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn column_information(&mut self, _node: &ColumnInformation) -> Option<ColumnInformation> {
         None
     }
 
+    /// Asked for each `ColumnItems`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn column_items(&mut self, _node: &ColumnItems) -> Option<ColumnItems> {
         None
     }
 
+    /// Asked for each `ColumnOLAPHierarchies`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn column_olap_hierarchies(
         &mut self,
         _node: &ColumnOLAPHierarchies,
@@ -478,6 +589,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ColumnOLAPHierarchyReferences`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn column_olap_hierarchy_references(
         &mut self,
         _node: &ColumnOLAPHierarchyReferences,
@@ -485,6 +598,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ColumnWidthFormatting`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn column_width_formatting(
         &mut self,
         _node: &ColumnWidthFormatting,
@@ -492,6 +607,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ColumnXMLProperties`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn column_xml_properties(
         &mut self,
         _node: &ColumnXMLProperties,
@@ -499,26 +616,38 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Comment`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn comment(&mut self, _node: &Comment) -> Option<Comment> {
         None
     }
 
+    /// Asked for each `CommentProperties`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn comment_properties(&mut self, _node: &CommentProperties) -> Option<CommentProperties> {
         None
     }
 
+    /// Asked for each `CommentText`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn comment_text(&mut self, _node: &CommentText) -> Option<CommentText> {
         None
     }
 
+    /// Asked for each `Comments`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn comments(&mut self, _node: &Comments) -> Option<Comments> {
         None
     }
 
+    /// Asked for each `Condense`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn condense(&mut self, _node: &Condense) -> Option<Condense> {
         None
     }
 
+    /// Asked for each `ConditionalFormatValueObject`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn conditional_format_value_object(
         &mut self,
         _node: &ConditionalFormatValueObject,
@@ -526,10 +655,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ConditionalFormats`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn conditional_formats(&mut self, _node: &ConditionalFormats) -> Option<ConditionalFormats> {
         None
     }
 
+    /// Asked for each `ConditionalFormatting`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn conditional_formatting(
         &mut self,
         _node: &ConditionalFormatting,
@@ -537,6 +670,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ConditionalFormattingConditionalFormat`. `None` rebuilds it from its
+    /// transformed children, and `Some` puts the node it holds in its place.
     fn conditional_formatting_conditional_format(
         &mut self,
         _node: &ConditionalFormattingConditionalFormat,
@@ -544,6 +679,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ConditionalFormattingRule`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn conditional_formatting_rule(
         &mut self,
         _node: &ConditionalFormattingRule,
@@ -551,18 +688,26 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Connection`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn connection(&mut self, _node: &Connection) -> Option<Connection> {
         None
     }
 
+    /// Asked for each `Connections`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn connections(&mut self, _node: &Connections) -> Option<Connections> {
         None
     }
 
+    /// Asked for each `ConsolidationSource`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn consolidation_source(&mut self, _node: &ConsolidationSource) -> Option<ConsolidationSource> {
         None
     }
 
+    /// Asked for each `CustomChartSheetView`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn custom_chart_sheet_view(
         &mut self,
         _node: &CustomChartSheetView,
@@ -570,6 +715,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `CustomChartSheetViews`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn custom_chart_sheet_views(
         &mut self,
         _node: &CustomChartSheetViews,
@@ -577,6 +724,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `CustomFilterCriteria`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn custom_filter_criteria(
         &mut self,
         _node: &CustomFilterCriteria,
@@ -584,30 +733,44 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `CustomFilters`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn custom_filters(&mut self, _node: &CustomFilters) -> Option<CustomFilters> {
         None
     }
 
+    /// Asked for each `CustomProperties`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn custom_properties(&mut self, _node: &CustomProperties) -> Option<CustomProperties> {
         None
     }
 
+    /// Asked for each `CustomProperty`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn custom_property(&mut self, _node: &CustomProperty) -> Option<CustomProperty> {
         None
     }
 
+    /// Asked for each `CustomSheetView`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn custom_sheet_view(&mut self, _node: &CustomSheetView) -> Option<CustomSheetView> {
         None
     }
 
+    /// Asked for each `CustomSheetViews`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn custom_sheet_views(&mut self, _node: &CustomSheetViews) -> Option<CustomSheetViews> {
         None
     }
 
+    /// Asked for each `CustomWorkbookView`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn custom_workbook_view(&mut self, _node: &CustomWorkbookView) -> Option<CustomWorkbookView> {
         None
     }
 
+    /// Asked for each `CustomWorkbookViews`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn custom_workbook_views(
         &mut self,
         _node: &CustomWorkbookViews,
@@ -615,18 +778,26 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `DataBar`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn data_bar(&mut self, _node: &DataBar) -> Option<DataBar> {
         None
     }
 
+    /// Asked for each `DataBarColor`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn data_bar_color(&mut self, _node: &DataBarColor) -> Option<DataBarColor> {
         None
     }
 
+    /// Asked for each `DataConsolidate`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn data_consolidate(&mut self, _node: &DataConsolidate) -> Option<DataConsolidate> {
         None
     }
 
+    /// Asked for each `DataConsolidationReference`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn data_consolidation_reference(
         &mut self,
         _node: &DataConsolidationReference,
@@ -634,6 +805,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `DataConsolidationReferences`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn data_consolidation_references(
         &mut self,
         _node: &DataConsolidationReferences,
@@ -641,58 +814,86 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `DataFieldItem`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn data_field_item(&mut self, _node: &DataFieldItem) -> Option<DataFieldItem> {
         None
     }
 
+    /// Asked for each `DataFields`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn data_fields(&mut self, _node: &DataFields) -> Option<DataFields> {
         None
     }
 
+    /// Asked for each `DataValidation`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn data_validation(&mut self, _node: &DataValidation) -> Option<DataValidation> {
         None
     }
 
+    /// Asked for each `DataValidations`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn data_validations(&mut self, _node: &DataValidations) -> Option<DataValidations> {
         None
     }
 
+    /// Asked for each `DatabaseProperties`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn database_properties(&mut self, _node: &DatabaseProperties) -> Option<DatabaseProperties> {
         None
     }
 
+    /// Asked for each `DateGrouping`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn date_grouping(&mut self, _node: &DateGrouping) -> Option<DateGrouping> {
         None
     }
 
+    /// Asked for each `DateTime`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn date_time(&mut self, _node: &DateTime) -> Option<DateTime> {
         None
     }
 
+    /// Asked for each `DDEConnection`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn dde_connection(&mut self, _node: &DDEConnection) -> Option<DDEConnection> {
         None
     }
 
+    /// Asked for each `DDEItemDefinition`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn dde_item_definition(&mut self, _node: &DDEItemDefinition) -> Option<DDEItemDefinition> {
         None
     }
 
+    /// Asked for each `DDEItemsCollection`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn dde_items_collection(&mut self, _node: &DDEItemsCollection) -> Option<DDEItemsCollection> {
         None
     }
 
+    /// Asked for each `DDELinkValue`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn dde_link_value(&mut self, _node: &DDELinkValue) -> Option<DDELinkValue> {
         None
     }
 
+    /// Asked for each `DDENameValues`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn dde_name_values(&mut self, _node: &DDENameValues) -> Option<DDENameValues> {
         None
     }
 
+    /// Asked for each `DefinedName`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn defined_name(&mut self, _node: &DefinedName) -> Option<DefinedName> {
         None
     }
 
+    /// Asked for each `DefinedNameExternalDefinedName`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn defined_name_external_defined_name(
         &mut self,
         _node: &DefinedNameExternalDefinedName,
@@ -700,26 +901,38 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `DefinedNames`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn defined_names(&mut self, _node: &DefinedNames) -> Option<DefinedNames> {
         None
     }
 
+    /// Asked for each `DeletedField`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn deleted_field(&mut self, _node: &DeletedField) -> Option<DeletedField> {
         None
     }
 
+    /// Asked for each `DeletedFields`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn deleted_fields(&mut self, _node: &DeletedFields) -> Option<DeletedFields> {
         None
     }
 
+    /// Asked for each `Diagonal`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn diagonal(&mut self, _node: &Diagonal) -> Option<Diagonal> {
         None
     }
 
+    /// Asked for each `DialogSheet`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn dialog_sheet(&mut self, _node: &DialogSheet) -> Option<DialogSheet> {
         None
     }
 
+    /// Asked for each `DiscreteGroupingProperties`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn discrete_grouping_properties(
         &mut self,
         _node: &DiscreteGroupingProperties,
@@ -727,10 +940,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Drawing`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn drawing(&mut self, _node: &Drawing) -> Option<Drawing> {
         None
     }
 
+    /// Asked for each `DrawingReferenceInHeaderFooter`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn drawing_reference_in_header_footer(
         &mut self,
         _node: &DrawingReferenceInHeaderFooter,
@@ -738,14 +955,20 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `DynamicFilter`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn dynamic_filter(&mut self, _node: &DynamicFilter) -> Option<DynamicFilter> {
         None
     }
 
+    /// Asked for each `EmbeddedControl`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn embedded_control(&mut self, _node: &EmbeddedControl) -> Option<EmbeddedControl> {
         None
     }
 
+    /// Asked for each `EmbeddedControlProperties`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn embedded_control_properties(
         &mut self,
         _node: &EmbeddedControlProperties,
@@ -753,14 +976,20 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `EmbeddedControls`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn embedded_controls(&mut self, _node: &EmbeddedControls) -> Option<EmbeddedControls> {
         None
     }
 
+    /// Asked for each `EmbeddedObject`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn embedded_object(&mut self, _node: &EmbeddedObject) -> Option<EmbeddedObject> {
         None
     }
 
+    /// Asked for each `EmbeddedObjectProperties`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn embedded_object_properties(
         &mut self,
         _node: &EmbeddedObjectProperties,
@@ -768,54 +997,80 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `EmbeddedObjectSize`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn embedded_object_size(&mut self, _node: &EmbeddedObjectSize) -> Option<EmbeddedObjectSize> {
         None
     }
 
+    /// Asked for each `EmbeddedObjects`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn embedded_objects(&mut self, _node: &EmbeddedObjects) -> Option<EmbeddedObjects> {
         None
     }
 
+    /// Asked for each `Entries`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn entries(&mut self, _node: &Entries) -> Option<Entries> {
         None
     }
 
+    /// Asked for each `EntriesContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn entries_content(&mut self, _node: &EntriesContent) -> Option<EntriesContent> {
         None
     }
 
+    /// Asked for each `EntriesContent` in a list. `None` leaves the item to its own `transform`,
+    /// and `Some` puts the items it holds, any number of them, in its place.
     fn entries_content_items(&mut self, _node: &EntriesContent) -> Option<Vec<EntriesContent>> {
         None
     }
 
+    /// Asked for each `ErrorValue`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn error_value(&mut self, _node: &ErrorValue) -> Option<ErrorValue> {
         None
     }
 
+    /// Asked for each `EvenPageFooter`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn even_page_footer(&mut self, _node: &EvenPageFooter) -> Option<EvenPageFooter> {
         None
     }
 
+    /// Asked for each `EvenPageHeader`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn even_page_header(&mut self, _node: &EvenPageHeader) -> Option<EvenPageHeader> {
         None
     }
 
+    /// Asked for each `Extend`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn extend(&mut self, _node: &Extend) -> Option<Extend> {
         None
     }
 
+    /// Asked for each `Extension`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn extension(&mut self, _node: &Extension) -> Option<Extension> {
         None
     }
 
+    /// Asked for each `ExternalCellData`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn external_cell_data(&mut self, _node: &ExternalCellData) -> Option<ExternalCellData> {
         None
     }
 
+    /// Asked for each `ExternalReference`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn external_reference(&mut self, _node: &ExternalReference) -> Option<ExternalReference> {
         None
     }
 
+    /// Asked for each `ExternalReferenceContent`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn external_reference_content(
         &mut self,
         _node: &ExternalReferenceContent,
@@ -823,6 +1078,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ExternalReferenceExternalLink`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn external_reference_external_link(
         &mut self,
         _node: &ExternalReferenceExternalLink,
@@ -830,10 +1087,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ExternalReferences`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn external_references(&mut self, _node: &ExternalReferences) -> Option<ExternalReferences> {
         None
     }
 
+    /// Asked for each `ExternalSheetDataSet`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn external_sheet_data_set(
         &mut self,
         _node: &ExternalSheetDataSet,
@@ -841,14 +1102,20 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ExternalWorkbook`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn external_workbook(&mut self, _node: &ExternalWorkbook) -> Option<ExternalWorkbook> {
         None
     }
 
+    /// Asked for each `Field`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn field(&mut self, _node: &Field) -> Option<Field> {
         None
     }
 
+    /// Asked for each `FieldGroupProperties`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn field_group_properties(
         &mut self,
         _node: &FieldGroupProperties,
@@ -856,18 +1123,26 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `FieldItems`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn field_items(&mut self, _node: &FieldItems) -> Option<FieldItems> {
         None
     }
 
+    /// Asked for each `Fields`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn fields(&mut self, _node: &Fields) -> Option<Fields> {
         None
     }
 
+    /// Asked for each `FieldsUsage`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn fields_usage(&mut self, _node: &FieldsUsage) -> Option<FieldsUsage> {
         None
     }
 
+    /// Asked for each `FileRecoveryProperties`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn file_recovery_properties(
         &mut self,
         _node: &FileRecoveryProperties,
@@ -875,62 +1150,92 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `FileSharing`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn file_sharing(&mut self, _node: &FileSharing) -> Option<FileSharing> {
         None
     }
 
+    /// Asked for each `FileVersion`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn file_version(&mut self, _node: &FileVersion) -> Option<FileVersion> {
         None
     }
 
+    /// Asked for each `Fill`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn fill(&mut self, _node: &Fill) -> Option<Fill> {
         None
     }
 
+    /// Asked for each `FillContent`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn fill_content(&mut self, _node: &FillContent) -> Option<FillContent> {
         None
     }
 
+    /// Asked for each `Fills`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn fills(&mut self, _node: &Fills) -> Option<Fills> {
         None
     }
 
+    /// Asked for each `Filter`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn filter(&mut self, _node: &Filter) -> Option<Filter> {
         None
     }
 
+    /// Asked for each `FilterCriteria`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn filter_criteria(&mut self, _node: &FilterCriteria) -> Option<FilterCriteria> {
         None
     }
 
+    /// Asked for each `Filters`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn filters(&mut self, _node: &Filters) -> Option<Filters> {
         None
     }
 
+    /// Asked for each `FirstPageFooter`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn first_page_footer(&mut self, _node: &FirstPageFooter) -> Option<FirstPageFooter> {
         None
     }
 
+    /// Asked for each `FirstPageHeader`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn first_page_header(&mut self, _node: &FirstPageHeader) -> Option<FirstPageHeader> {
         None
     }
 
+    /// Asked for each `Font`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn font(&mut self, _node: &Font) -> Option<Font> {
         None
     }
 
+    /// Asked for each `FontContent`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn font_content(&mut self, _node: &FontContent) -> Option<FontContent> {
         None
     }
 
+    /// Asked for each `FontContent` in a list. `None` leaves the item to its own `transform`, and
+    /// `Some` puts the items it holds, any number of them, in its place.
     fn font_content_items(&mut self, _node: &FontContent) -> Option<Vec<FontContent>> {
         None
     }
 
+    /// Asked for each `FontFamily`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn font_family(&mut self, _node: &FontFamily) -> Option<FontFamily> {
         None
     }
 
+    /// Asked for each `FontFamilyIntProperty`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn font_family_int_property(
         &mut self,
         _node: &FontFamilyIntProperty,
@@ -938,66 +1243,98 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `FontName`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn font_name(&mut self, _node: &FontName) -> Option<FontName> {
         None
     }
 
+    /// Asked for each `FontRFont`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn font_r_font(&mut self, _node: &FontRFont) -> Option<FontRFont> {
         None
     }
 
+    /// Asked for each `FontSize`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn font_size(&mut self, _node: &FontSize) -> Option<FontSize> {
         None
     }
 
+    /// Asked for each `Fonts`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn fonts(&mut self, _node: &Fonts) -> Option<Fonts> {
         None
     }
 
+    /// Asked for each `ForegroundColor`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn foreground_color(&mut self, _node: &ForegroundColor) -> Option<ForegroundColor> {
         None
     }
 
+    /// Asked for each `Format`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn format(&mut self, _node: &Format) -> Option<Format> {
         None
     }
 
+    /// Asked for each `Formats`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn formats(&mut self, _node: &Formats) -> Option<Formats> {
         None
     }
 
+    /// Asked for each `Formatting`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn formatting(&mut self, _node: &Formatting) -> Option<Formatting> {
         None
     }
 
+    /// Asked for each `FormattingRecords`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn formatting_records(&mut self, _node: &FormattingRecords) -> Option<FormattingRecords> {
         None
     }
 
+    /// Asked for each `Formula`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn formula(&mut self, _node: &Formula) -> Option<Formula> {
         None
     }
 
+    /// Asked for each `Formula1`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn formula1(&mut self, _node: &Formula1) -> Option<Formula1> {
         None
     }
 
+    /// Asked for each `Formula2`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn formula2(&mut self, _node: &Formula2) -> Option<Formula2> {
         None
     }
 
+    /// Asked for each `FormulaF`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn formula_f(&mut self, _node: &FormulaF) -> Option<FormulaF> {
         None
     }
 
+    /// Asked for each `FunctionGroup`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn function_group(&mut self, _node: &FunctionGroup) -> Option<FunctionGroup> {
         None
     }
 
+    /// Asked for each `FunctionGroups`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn function_groups(&mut self, _node: &FunctionGroups) -> Option<FunctionGroups> {
         None
     }
 
+    /// Asked for each `FutureFeatureDataStorageArea`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn future_feature_data_storage_area(
         &mut self,
         _node: &FutureFeatureDataStorageArea,
@@ -1005,10 +1342,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `FutureMetadata`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn future_metadata(&mut self, _node: &FutureMetadata) -> Option<FutureMetadata> {
         None
     }
 
+    /// Asked for each `FutureMetadataBlock`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn future_metadata_block(
         &mut self,
         _node: &FutureMetadataBlock,
@@ -1016,6 +1357,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `GenericObjectLinkConnection`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn generic_object_link_connection(
         &mut self,
         _node: &GenericObjectLinkConnection,
@@ -1023,18 +1366,26 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Gradient`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn gradient(&mut self, _node: &Gradient) -> Option<Gradient> {
         None
     }
 
+    /// Asked for each `GradientStop`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn gradient_stop(&mut self, _node: &GradientStop) -> Option<GradientStop> {
         None
     }
 
+    /// Asked for each `Header`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn header(&mut self, _node: &Header) -> Option<Header> {
         None
     }
 
+    /// Asked for each `HeaderFooterSettings`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn header_footer_settings(
         &mut self,
         _node: &HeaderFooterSettings,
@@ -1042,6 +1393,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `HorizontalInnerBorders`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn horizontal_inner_borders(
         &mut self,
         _node: &HorizontalInnerBorders,
@@ -1049,42 +1402,62 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Hyperlink`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn hyperlink(&mut self, _node: &Hyperlink) -> Option<Hyperlink> {
         None
     }
 
+    /// Asked for each `Hyperlinks`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn hyperlinks(&mut self, _node: &Hyperlinks) -> Option<Hyperlinks> {
         None
     }
 
+    /// Asked for each `IconFilter`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn icon_filter(&mut self, _node: &IconFilter) -> Option<IconFilter> {
         None
     }
 
+    /// Asked for each `IconSet`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn icon_set(&mut self, _node: &IconSet) -> Option<IconSet> {
         None
     }
 
+    /// Asked for each `IgnoredError`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn ignored_error(&mut self, _node: &IgnoredError) -> Option<IgnoredError> {
         None
     }
 
+    /// Asked for each `IgnoredErrors`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn ignored_errors(&mut self, _node: &IgnoredErrors) -> Option<IgnoredErrors> {
         None
     }
 
+    /// Asked for each `InputCells`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn input_cells(&mut self, _node: &InputCells) -> Option<InputCells> {
         None
     }
 
+    /// Asked for each `Italic`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn italic(&mut self, _node: &Italic) -> Option<Italic> {
         None
     }
 
+    /// Asked for each `KPIMDXMetadata`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn kpimdx_metadata(&mut self, _node: &KPIMDXMetadata) -> Option<KPIMDXMetadata> {
         None
     }
 
+    /// Asked for each `LeadingEdgeBorderLeft`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn leading_edge_border_left(
         &mut self,
         _node: &LeadingEdgeBorderLeft,
@@ -1092,6 +1465,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `LeadingEdgeBorderStart`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn leading_edge_border_start(
         &mut self,
         _node: &LeadingEdgeBorderStart,
@@ -1099,6 +1474,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `LegacyDrawingReference`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn legacy_drawing_reference(
         &mut self,
         _node: &LegacyDrawingReference,
@@ -1106,6 +1483,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `LegacyDrawingReferenceInHeaderFooter`. `None` rebuilds it from its
+    /// transformed children, and `Some` puts the node it holds in its place.
     fn legacy_drawing_reference_in_header_footer(
         &mut self,
         _node: &LegacyDrawingReferenceInHeaderFooter,
@@ -1113,14 +1492,20 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ListOfComments`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn list_of_comments(&mut self, _node: &ListOfComments) -> Option<ListOfComments> {
         None
     }
 
+    /// Asked for each `Main`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn main(&mut self, _node: &Main) -> Option<Main> {
         None
     }
 
+    /// Asked for each `MDXMetadataInformation`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn mdx_metadata_information(
         &mut self,
         _node: &MDXMetadataInformation,
@@ -1128,14 +1513,20 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `MDXMetadataRecord`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn mdx_metadata_record(&mut self, _node: &MDXMetadataRecord) -> Option<MDXMetadataRecord> {
         None
     }
 
+    /// Asked for each `Member`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn member(&mut self, _node: &Member) -> Option<Member> {
         None
     }
 
+    /// Asked for each `MemberPropertiesMap`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn member_properties_map(
         &mut self,
         _node: &MemberPropertiesMap,
@@ -1143,6 +1534,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `MemberPropertyIndex`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn member_property_index(
         &mut self,
         _node: &MemberPropertyIndex,
@@ -1150,6 +1543,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `MemberPropertyMDXMetadata`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn member_property_mdx_metadata(
         &mut self,
         _node: &MemberPropertyMDXMetadata,
@@ -1157,6 +1552,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `MemberUniqueNameIndex`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn member_unique_name_index(
         &mut self,
         _node: &MemberUniqueNameIndex,
@@ -1164,30 +1561,44 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Members`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn members(&mut self, _node: &Members) -> Option<Members> {
         None
     }
 
+    /// Asked for each `MergeCells`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn merge_cells(&mut self, _node: &MergeCells) -> Option<MergeCells> {
         None
     }
 
+    /// Asked for each `MergedCell`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn merged_cell(&mut self, _node: &MergedCell) -> Option<MergedCell> {
         None
     }
 
+    /// Asked for each `Metadata`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn metadata(&mut self, _node: &Metadata) -> Option<Metadata> {
         None
     }
 
+    /// Asked for each `MetadataBlock`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn metadata_block(&mut self, _node: &MetadataBlock) -> Option<MetadataBlock> {
         None
     }
 
+    /// Asked for each `MetadataRecord`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn metadata_record(&mut self, _node: &MetadataRecord) -> Option<MetadataRecord> {
         None
     }
 
+    /// Asked for each `MetadataStringStore`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn metadata_string_store(
         &mut self,
         _node: &MetadataStringStore,
@@ -1195,6 +1606,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `MetadataTypeInformation`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn metadata_type_information(
         &mut self,
         _node: &MetadataTypeInformation,
@@ -1202,6 +1615,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `MetadataTypesCollection`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn metadata_types_collection(
         &mut self,
         _node: &MetadataTypesCollection,
@@ -1209,10 +1624,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `MRUColors`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn mru_colors(&mut self, _node: &MRUColors) -> Option<MRUColors> {
         None
     }
 
+    /// Asked for each `MultidimensionalExpressionMetadataContent`. `None` rebuilds it from its
+    /// transformed children, and `Some` puts the node it holds in its place.
     fn multidimensional_expression_metadata(
         &mut self,
         _node: &MultidimensionalExpressionMetadataContent,
@@ -1220,14 +1639,20 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `NamedLinks`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn named_links(&mut self, _node: &NamedLinks) -> Option<NamedLinks> {
         None
     }
 
+    /// Asked for each `NestedRevisionContent`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn nested_revision(&mut self, _node: &NestedRevisionContent) -> Option<NestedRevisionContent> {
         None
     }
 
+    /// Asked for each `NestedRevisionContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn nested_revision_items(
         &mut self,
         _node: &NestedRevisionContent,
@@ -1235,10 +1660,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `NewCellData`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn new_cell_data(&mut self, _node: &NewCellData) -> Option<NewCellData> {
         None
     }
 
+    /// Asked for each `NewFormattingInformation`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn new_formatting_information(
         &mut self,
         _node: &NewFormattingInformation,
@@ -1246,10 +1675,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `NoValue`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn no_value(&mut self, _node: &NoValue) -> Option<NoValue> {
         None
     }
 
+    /// Asked for each `NoValueTableMissing`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn no_value_table_missing(
         &mut self,
         _node: &NoValueTableMissing,
@@ -1257,62 +1690,92 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `NumberFormat`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn number_format(&mut self, _node: &NumberFormat) -> Option<NumberFormat> {
         None
     }
 
+    /// Asked for each `NumberFormats`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn number_formats(&mut self, _node: &NumberFormats) -> Option<NumberFormats> {
         None
     }
 
+    /// Asked for each `Numeric`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn numeric(&mut self, _node: &Numeric) -> Option<Numeric> {
         None
     }
 
+    /// Asked for each `ObjectCellAnchor`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn object_cell_anchor(&mut self, _node: &ObjectCellAnchor) -> Option<ObjectCellAnchor> {
         None
     }
 
+    /// Asked for each `ObjectLinkItem`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn object_link_item(&mut self, _node: &ObjectLinkItem) -> Option<ObjectLinkItem> {
         None
     }
 
+    /// Asked for each `ObjectLinkItems`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn object_link_items(&mut self, _node: &ObjectLinkItems) -> Option<ObjectLinkItems> {
         None
     }
 
+    /// Asked for each `OddHeader`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn odd_header(&mut self, _node: &OddHeader) -> Option<OddHeader> {
         None
     }
 
+    /// Asked for each `OddPageFooter`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn odd_page_footer(&mut self, _node: &OddPageFooter) -> Option<OddPageFooter> {
         None
     }
 
+    /// Asked for each `OLAPDimension`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn olap_dimension(&mut self, _node: &OLAPDimension) -> Option<OLAPDimension> {
         None
     }
 
+    /// Asked for each `OLAPDimensions`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn olap_dimensions(&mut self, _node: &OLAPDimensions) -> Option<OLAPDimensions> {
         None
     }
 
+    /// Asked for each `OLAPGroup`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn olap_group(&mut self, _node: &OLAPGroup) -> Option<OLAPGroup> {
         None
     }
 
+    /// Asked for each `OLAPGroupItems`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn olap_group_items(&mut self, _node: &OLAPGroupItems) -> Option<OLAPGroupItems> {
         None
     }
 
+    /// Asked for each `OLAPGroupMember`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn olap_group_member(&mut self, _node: &OLAPGroupMember) -> Option<OLAPGroupMember> {
         None
     }
 
+    /// Asked for each `OLAPGroupMembers`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn olap_group_members(&mut self, _node: &OLAPGroupMembers) -> Option<OLAPGroupMembers> {
         None
     }
 
+    /// Asked for each `OLAPGroupingLevelsGroupLevel`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn olap_grouping_levels_group_level(
         &mut self,
         _node: &OLAPGroupingLevelsGroupLevel,
@@ -1320,6 +1783,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `OLAPGroupingLevelsGroupLevels`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn olap_grouping_levels_group_levels(
         &mut self,
         _node: &OLAPGroupingLevelsGroupLevels,
@@ -1327,14 +1792,20 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `OLAPHierarchy`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn olap_hierarchy(&mut self, _node: &OLAPHierarchy) -> Option<OLAPHierarchy> {
         None
     }
 
+    /// Asked for each `OLAPLevelGroups`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn olap_level_groups(&mut self, _node: &OLAPLevelGroups) -> Option<OLAPLevelGroups> {
         None
     }
 
+    /// Asked for each `OLAPMeasureGroupMap`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn olap_measure_group_map(
         &mut self,
         _node: &OLAPMeasureGroupMap,
@@ -1342,6 +1813,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `OLAPMeasureGroupMaps`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn olap_measure_group_maps(
         &mut self,
         _node: &OLAPMeasureGroupMaps,
@@ -1349,6 +1822,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `OLAPMeasureGroupMeasureGroup`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn olap_measure_group_measure_group(
         &mut self,
         _node: &OLAPMeasureGroupMeasureGroup,
@@ -1356,10 +1831,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `OLAPMeasureGroups`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn olap_measure_groups(&mut self, _node: &OLAPMeasureGroups) -> Option<OLAPMeasureGroups> {
         None
     }
 
+    /// Asked for each `OLAPMemberProperties`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn olap_member_properties(
         &mut self,
         _node: &OLAPMemberProperties,
@@ -1367,34 +1846,50 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `OLAPMemberProperty`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn olap_member_property(&mut self, _node: &OLAPMemberProperty) -> Option<OLAPMemberProperty> {
         None
     }
 
+    /// Asked for each `OLAPProperties`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn olap_properties(&mut self, _node: &OLAPProperties) -> Option<OLAPProperties> {
         None
     }
 
+    /// Asked for each `OLAPQueryCache`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn olap_query_cache(&mut self, _node: &OLAPQueryCache) -> Option<OLAPQueryCache> {
         None
     }
 
+    /// Asked for each `OLAPSet`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn olap_set(&mut self, _node: &OLAPSet) -> Option<OLAPSet> {
         None
     }
 
+    /// Asked for each `OLAPKPIs`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn olapkp_is(&mut self, _node: &OLAPKPIs) -> Option<OLAPKPIs> {
         None
     }
 
+    /// Asked for each `OLAPKPI`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn olapkpi(&mut self, _node: &OLAPKPI) -> Option<OLAPKPI> {
         None
     }
 
+    /// Asked for each `OldCellData`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn old_cell_data(&mut self, _node: &OldCellData) -> Option<OldCellData> {
         None
     }
 
+    /// Asked for each `OldFormattingInformation`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn old_formatting_information(
         &mut self,
         _node: &OldFormattingInformation,
@@ -1402,42 +1897,62 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `OldFormula`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn old_formula(&mut self, _node: &OldFormula) -> Option<OldFormula> {
         None
     }
 
+    /// Asked for each `Outline`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn outline(&mut self, _node: &Outline) -> Option<Outline> {
         None
     }
 
+    /// Asked for each `OutlineProperties`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn outline_properties(&mut self, _node: &OutlineProperties) -> Option<OutlineProperties> {
         None
     }
 
+    /// Asked for each `PageField`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn page_field(&mut self, _node: &PageField) -> Option<PageField> {
         None
     }
 
+    /// Asked for each `PageFieldItems`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn page_field_items(&mut self, _node: &PageFieldItems) -> Option<PageFieldItems> {
         None
     }
 
+    /// Asked for each `PageItem`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn page_item(&mut self, _node: &PageItem) -> Option<PageItem> {
         None
     }
 
+    /// Asked for each `PageItemValues`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn page_item_values(&mut self, _node: &PageItemValues) -> Option<PageItemValues> {
         None
     }
 
+    /// Asked for each `PageItems`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn page_items(&mut self, _node: &PageItems) -> Option<PageItems> {
         None
     }
 
+    /// Asked for each `PageMargins`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn page_margins(&mut self, _node: &PageMargins) -> Option<PageMargins> {
         None
     }
 
+    /// Asked for each `PageSetupProperties`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn page_setup_properties(
         &mut self,
         _node: &PageSetupProperties,
@@ -1445,38 +1960,56 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `PageSetupSettings`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn page_setup_settings(&mut self, _node: &PageSetupSettings) -> Option<PageSetupSettings> {
         None
     }
 
+    /// Asked for each `ParameterProperties`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn parameter_properties(&mut self, _node: &ParameterProperties) -> Option<ParameterProperties> {
         None
     }
 
+    /// Asked for each `Pattern`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn pattern(&mut self, _node: &Pattern) -> Option<Pattern> {
         None
     }
 
+    /// Asked for each `PhoneticProperties`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn phonetic_properties(&mut self, _node: &PhoneticProperties) -> Option<PhoneticProperties> {
         None
     }
 
+    /// Asked for each `PhoneticRun`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn phonetic_run(&mut self, _node: &PhoneticRun) -> Option<PhoneticRun> {
         None
     }
 
+    /// Asked for each `PivotArea`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn pivot_area(&mut self, _node: &PivotArea) -> Option<PivotArea> {
         None
     }
 
+    /// Asked for each `PivotAreas`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn pivot_areas(&mut self, _node: &PivotAreas) -> Option<PivotAreas> {
         None
     }
 
+    /// Asked for each `PivotCache`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn pivot_cache(&mut self, _node: &PivotCache) -> Option<PivotCache> {
         None
     }
 
+    /// Asked for each `PivotCacheDefinition`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn pivot_cache_definition(
         &mut self,
         _node: &PivotCacheDefinition,
@@ -1484,18 +2017,26 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `PivotCacheField`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn pivot_cache_field(&mut self, _node: &PivotCacheField) -> Option<PivotCacheField> {
         None
     }
 
+    /// Asked for each `PivotCacheFieldId`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn pivot_cache_field_id(&mut self, _node: &PivotCacheFieldId) -> Option<PivotCacheFieldId> {
         None
     }
 
+    /// Asked for each `PivotCacheFields`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn pivot_cache_fields(&mut self, _node: &PivotCacheFields) -> Option<PivotCacheFields> {
         None
     }
 
+    /// Asked for each `PivotCacheHierarchies`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn pivot_cache_hierarchies(
         &mut self,
         _node: &PivotCacheHierarchies,
@@ -1503,6 +2044,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `PivotCacheHierarchy`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn pivot_cache_hierarchy(
         &mut self,
         _node: &PivotCacheHierarchy,
@@ -1510,10 +2053,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `PivotCacheRecord`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn pivot_cache_record(&mut self, _node: &PivotCacheRecord) -> Option<PivotCacheRecord> {
         None
     }
 
+    /// Asked for each `PivotCacheRecordContent`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn pivot_cache_record_content(
         &mut self,
         _node: &PivotCacheRecordContent,
@@ -1521,6 +2068,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `PivotCacheRecordContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn pivot_cache_record_content_items(
         &mut self,
         _node: &PivotCacheRecordContent,
@@ -1528,10 +2077,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `PivotCacheRecords`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn pivot_cache_records(&mut self, _node: &PivotCacheRecords) -> Option<PivotCacheRecords> {
         None
     }
 
+    /// Asked for each `PivotCacheSourceDescription`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn pivot_cache_source_description(
         &mut self,
         _node: &PivotCacheSourceDescription,
@@ -1539,6 +2092,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `PivotCacheSourceDescriptionContent`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn pivot_cache_source_description_content(
         &mut self,
         _node: &PivotCacheSourceDescriptionContent,
@@ -1546,18 +2101,26 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `PivotCaches`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn pivot_caches(&mut self, _node: &PivotCaches) -> Option<PivotCaches> {
         None
     }
 
+    /// Asked for each `PivotChartFormat`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn pivot_chart_format(&mut self, _node: &PivotChartFormat) -> Option<PivotChartFormat> {
         None
     }
 
+    /// Asked for each `PivotChartFormats`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn pivot_chart_formats(&mut self, _node: &PivotChartFormats) -> Option<PivotChartFormats> {
         None
     }
 
+    /// Asked for each `PivotTableAdvancedFilter`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn pivot_table_advanced_filter(
         &mut self,
         _node: &PivotTableAdvancedFilter,
@@ -1565,6 +2128,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `PivotTableDefinition`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn pivot_table_definition(
         &mut self,
         _node: &PivotTableDefinition,
@@ -1572,10 +2137,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `PivotTableField`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn pivot_table_field(&mut self, _node: &PivotTableField) -> Option<PivotTableField> {
         None
     }
 
+    /// Asked for each `PivotTableFieldItem`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn pivot_table_field_item(
         &mut self,
         _node: &PivotTableFieldItem,
@@ -1583,22 +2152,32 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `PivotTableFields`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn pivot_table_fields(&mut self, _node: &PivotTableFields) -> Option<PivotTableFields> {
         None
     }
 
+    /// Asked for each `PivotTableFormat`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn pivot_table_format(&mut self, _node: &PivotTableFormat) -> Option<PivotTableFormat> {
         None
     }
 
+    /// Asked for each `PivotTableFormats`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn pivot_table_formats(&mut self, _node: &PivotTableFormats) -> Option<PivotTableFormats> {
         None
     }
 
+    /// Asked for each `PivotTableLocation`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn pivot_table_location(&mut self, _node: &PivotTableLocation) -> Option<PivotTableLocation> {
         None
     }
 
+    /// Asked for each `PivotTableOLAPHierarchies`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn pivot_table_olap_hierarchies(
         &mut self,
         _node: &PivotTableOLAPHierarchies,
@@ -1606,6 +2185,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `PivotTableSelection`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn pivot_table_selection(
         &mut self,
         _node: &PivotTableSelection,
@@ -1613,22 +2194,32 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `PivotTableStyle`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn pivot_table_style(&mut self, _node: &PivotTableStyle) -> Option<PivotTableStyle> {
         None
     }
 
+    /// Asked for each `PrintOptions`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn print_options(&mut self, _node: &PrintOptions) -> Option<PrintOptions> {
         None
     }
 
+    /// Asked for each `ProtectedRange`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn protected_range(&mut self, _node: &ProtectedRange) -> Option<ProtectedRange> {
         None
     }
 
+    /// Asked for each `ProtectedRanges`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn protected_ranges(&mut self, _node: &ProtectedRanges) -> Option<ProtectedRanges> {
         None
     }
 
+    /// Asked for each `ProtectionProperties`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn protection_properties(
         &mut self,
         _node: &ProtectionProperties,
@@ -1636,26 +2227,38 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Query`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn query(&mut self, _node: &Query) -> Option<Query> {
         None
     }
 
+    /// Asked for each `QueryParameters`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn query_parameters(&mut self, _node: &QueryParameters) -> Option<QueryParameters> {
         None
     }
 
+    /// Asked for each `QueryTable`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn query_table(&mut self, _node: &QueryTable) -> Option<QueryTable> {
         None
     }
 
+    /// Asked for each `QueryTableField`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn query_table_field(&mut self, _node: &QueryTableField) -> Option<QueryTableField> {
         None
     }
 
+    /// Asked for each `QueryTableFields`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn query_table_fields(&mut self, _node: &QueryTableFields) -> Option<QueryTableFields> {
         None
     }
 
+    /// Asked for each `QueryTableRefreshInformation`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn query_table_refresh_information(
         &mut self,
         _node: &QueryTableRefreshInformation,
@@ -1663,6 +2266,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `RangeGroupingProperties`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn range_grouping_properties(
         &mut self,
         _node: &RangeGroupingProperties,
@@ -1670,42 +2275,62 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `RangeSet`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn range_set(&mut self, _node: &RangeSet) -> Option<RangeSet> {
         None
     }
 
+    /// Asked for each `RangeSets`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn range_sets(&mut self, _node: &RangeSets) -> Option<RangeSets> {
         None
     }
 
+    /// Asked for each `Reference`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn reference(&mut self, _node: &Reference) -> Option<Reference> {
         None
     }
 
+    /// Asked for each `References`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn references(&mut self, _node: &References) -> Option<References> {
         None
     }
 
+    /// Asked for each `ReferencesTr`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn references_tr(&mut self, _node: &ReferencesTr) -> Option<ReferencesTr> {
         None
     }
 
+    /// Asked for each `Reviewed`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn reviewed(&mut self, _node: &Reviewed) -> Option<Reviewed> {
         None
     }
 
+    /// Asked for each `ReviewedList`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn reviewed_list(&mut self, _node: &ReviewedList) -> Option<ReviewedList> {
         None
     }
 
+    /// Asked for each `RevisionAutoFormat`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn revision_auto_format(&mut self, _node: &RevisionAutoFormat) -> Option<RevisionAutoFormat> {
         None
     }
 
+    /// Asked for each `RevisionCellChange`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn revision_cell_change(&mut self, _node: &RevisionCellChange) -> Option<RevisionCellChange> {
         None
     }
 
+    /// Asked for each `RevisionCellComment`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn revision_cell_comment(
         &mut self,
         _node: &RevisionCellComment,
@@ -1713,14 +2338,20 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `RevisionCellMove`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn revision_cell_move(&mut self, _node: &RevisionCellMove) -> Option<RevisionCellMove> {
         None
     }
 
+    /// Asked for each `RevisionCustomView`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn revision_custom_view(&mut self, _node: &RevisionCustomView) -> Option<RevisionCustomView> {
         None
     }
 
+    /// Asked for each `RevisionDefinedName`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn revision_defined_name(
         &mut self,
         _node: &RevisionDefinedName,
@@ -1728,14 +2359,20 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `RevisionFormat`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn revision_format(&mut self, _node: &RevisionFormat) -> Option<RevisionFormat> {
         None
     }
 
+    /// Asked for each `RevisionHeaders`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn revision_headers(&mut self, _node: &RevisionHeaders) -> Option<RevisionHeaders> {
         None
     }
 
+    /// Asked for each `RevisionInsertSheet`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn revision_insert_sheet(
         &mut self,
         _node: &RevisionInsertSheet,
@@ -1743,6 +2380,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `RevisionMergeConflict`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn revision_merge_conflict(
         &mut self,
         _node: &RevisionMergeConflict,
@@ -1750,10 +2389,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `RevisionQueryTable`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn revision_query_table(&mut self, _node: &RevisionQueryTable) -> Option<RevisionQueryTable> {
         None
     }
 
+    /// Asked for each `RevisionRowColumnInsertDelete`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn revision_row_column_insert_delete(
         &mut self,
         _node: &RevisionRowColumnInsertDelete,
@@ -1761,18 +2404,26 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `RevisionSheetName`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn revision_sheet_name(&mut self, _node: &RevisionSheetName) -> Option<RevisionSheetName> {
         None
     }
 
+    /// Asked for each `Revisions`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn revisions(&mut self, _node: &Revisions) -> Option<Revisions> {
         None
     }
 
+    /// Asked for each `RevisionsContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn revisions_content(&mut self, _node: &RevisionsContent) -> Option<RevisionsContent> {
         None
     }
 
+    /// Asked for each `RevisionsContent` in a list. `None` leaves the item to its own `transform`,
+    /// and `Some` puts the items it holds, any number of them, in its place.
     fn revisions_content_items(
         &mut self,
         _node: &RevisionsContent,
@@ -1780,46 +2431,68 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `RGBColor`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn rgb_color(&mut self, _node: &RGBColor) -> Option<RGBColor> {
         None
     }
 
+    /// Asked for each `RichTextInline`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn rich_text_inline(&mut self, _node: &RichTextInline) -> Option<RichTextInline> {
         None
     }
 
+    /// Asked for each `RichTextRun`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn rich_text_run(&mut self, _node: &RichTextRun) -> Option<RichTextRun> {
         None
     }
 
+    /// Asked for each `Row`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn row(&mut self, _node: &Row) -> Option<Row> {
         None
     }
 
+    /// Asked for each `RowBreaks`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn row_breaks(&mut self, _node: &RowBreaks) -> Option<RowBreaks> {
         None
     }
 
+    /// Asked for each `RowExternalRow`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn row_external_row(&mut self, _node: &RowExternalRow) -> Option<RowExternalRow> {
         None
     }
 
+    /// Asked for each `RowFields`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn row_fields(&mut self, _node: &RowFields) -> Option<RowFields> {
         None
     }
 
+    /// Asked for each `RowItems`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn row_items(&mut self, _node: &RowItems) -> Option<RowItems> {
         None
     }
 
+    /// Asked for each `RowItemsI`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn row_items_i(&mut self, _node: &RowItemsI) -> Option<RowItemsI> {
         None
     }
 
+    /// Asked for each `RowOLAPHierarchies`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn row_olap_hierarchies(&mut self, _node: &RowOLAPHierarchies) -> Option<RowOLAPHierarchies> {
         None
     }
 
+    /// Asked for each `RowOLAPHierarchyReferences`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn row_olap_hierarchy_references(
         &mut self,
         _node: &RowOLAPHierarchyReferences,
@@ -1827,10 +2500,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `RunProperties`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn run_properties(&mut self, _node: &RunProperties) -> Option<RunProperties> {
         None
     }
 
+    /// Asked for each `RunPropertiesContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn run_properties_content(
         &mut self,
         _node: &RunPropertiesContent,
@@ -1838,6 +2515,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `RunPropertiesContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn run_properties_content_items(
         &mut self,
         _node: &RunPropertiesContent,
@@ -1845,58 +2524,86 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Scenario`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn scenario(&mut self, _node: &Scenario) -> Option<Scenario> {
         None
     }
 
+    /// Asked for each `Scenarios`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn scenarios(&mut self, _node: &Scenarios) -> Option<Scenarios> {
         None
     }
 
+    /// Asked for each `Scheme`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn scheme(&mut self, _node: &Scheme) -> Option<Scheme> {
         None
     }
 
+    /// Asked for each `SecurityDescriptor`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn security_descriptor(&mut self, _node: &SecurityDescriptor) -> Option<SecurityDescriptor> {
         None
     }
 
+    /// Asked for each `Selection`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn selection(&mut self, _node: &Selection) -> Option<Selection> {
         None
     }
 
+    /// Asked for each `ServerFormat`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn server_format(&mut self, _node: &ServerFormat) -> Option<ServerFormat> {
         None
     }
 
+    /// Asked for each `ServerFormats`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn server_formats(&mut self, _node: &ServerFormats) -> Option<ServerFormats> {
         None
     }
 
+    /// Asked for each `SetMDXMetadata`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn set_mdx_metadata(&mut self, _node: &SetMDXMetadata) -> Option<SetMDXMetadata> {
         None
     }
 
+    /// Asked for each `Sets`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn sets(&mut self, _node: &Sets) -> Option<Sets> {
         None
     }
 
+    /// Asked for each `Shadow`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn shadow(&mut self, _node: &Shadow) -> Option<Shadow> {
         None
     }
 
+    /// Asked for each `SharedItems`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn shared_items(&mut self, _node: &SharedItems) -> Option<SharedItems> {
         None
     }
 
+    /// Asked for each `SharedItemsIndex`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn shared_items_index(&mut self, _node: &SharedItemsIndex) -> Option<SharedItemsIndex> {
         None
     }
 
+    /// Asked for each `SharedStringTable`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn shared_string_table(&mut self, _node: &SharedStringTable) -> Option<SharedStringTable> {
         None
     }
 
+    /// Asked for each `SheetCalculationProperties`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn sheet_calculation_properties(
         &mut self,
         _node: &SheetCalculationProperties,
@@ -1904,10 +2611,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `SheetData`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn sheet_data(&mut self, _node: &SheetData) -> Option<SheetData> {
         None
     }
 
+    /// Asked for each `SheetFormatProperties`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn sheet_format_properties(
         &mut self,
         _node: &SheetFormatProperties,
@@ -1915,26 +2626,38 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `SheetId`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn sheet_id(&mut self, _node: &SheetId) -> Option<SheetId> {
         None
     }
 
+    /// Asked for each `SheetIdMap`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn sheet_id_map(&mut self, _node: &SheetIdMap) -> Option<SheetIdMap> {
         None
     }
 
+    /// Asked for each `SheetInformation`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn sheet_information(&mut self, _node: &SheetInformation) -> Option<SheetInformation> {
         None
     }
 
+    /// Asked for each `SheetName`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn sheet_name(&mut self, _node: &SheetName) -> Option<SheetName> {
         None
     }
 
+    /// Asked for each `SheetProperties`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn sheet_properties(&mut self, _node: &SheetProperties) -> Option<SheetProperties> {
         None
     }
 
+    /// Asked for each `SheetProtectionOptions`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn sheet_protection_options(
         &mut self,
         _node: &SheetProtectionOptions,
@@ -1942,22 +2665,32 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `SheetTabColor`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn sheet_tab_color(&mut self, _node: &SheetTabColor) -> Option<SheetTabColor> {
         None
     }
 
+    /// Asked for each `SheetViews`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn sheet_views(&mut self, _node: &SheetViews) -> Option<SheetViews> {
         None
     }
 
+    /// Asked for each `Sheets`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn sheets(&mut self, _node: &Sheets) -> Option<Sheets> {
         None
     }
 
+    /// Asked for each `SingleCells`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn single_cells(&mut self, _node: &SingleCells) -> Option<SingleCells> {
         None
     }
 
+    /// Asked for each `SmartTagPropertiesCellSmartTagPr`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn smart_tag_properties_cell_smart_tag_pr(
         &mut self,
         _node: &SmartTagPropertiesCellSmartTagPr,
@@ -1965,6 +2698,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `SmartTagPropertiesSmartTagPr`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn smart_tag_properties_smart_tag_pr(
         &mut self,
         _node: &SmartTagPropertiesSmartTagPr,
@@ -1972,46 +2707,68 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `SmartTagType`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn smart_tag_type(&mut self, _node: &SmartTagType) -> Option<SmartTagType> {
         None
     }
 
+    /// Asked for each `SmartTagTypes`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn smart_tag_types(&mut self, _node: &SmartTagTypes) -> Option<SmartTagTypes> {
         None
     }
 
+    /// Asked for each `SmartTags`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn smart_tags(&mut self, _node: &SmartTags) -> Option<SmartTags> {
         None
     }
 
+    /// Asked for each `SortByTuple`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn sort_by_tuple(&mut self, _node: &SortByTuple) -> Option<SortByTuple> {
         None
     }
 
+    /// Asked for each `SortCondition`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn sort_condition(&mut self, _node: &SortCondition) -> Option<SortCondition> {
         None
     }
 
+    /// Asked for each `SortState`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn sort_state(&mut self, _node: &SortState) -> Option<SortState> {
         None
     }
 
+    /// Asked for each `StrikeThrough`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn strike_through(&mut self, _node: &StrikeThrough) -> Option<StrikeThrough> {
         None
     }
 
+    /// Asked for each `StringItem`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn string_item(&mut self, _node: &StringItem) -> Option<StringItem> {
         None
     }
 
+    /// Asked for each `StringsInSubtopic`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn strings_in_subtopic(&mut self, _node: &StringsInSubtopic) -> Option<StringsInSubtopic> {
         None
     }
 
+    /// Asked for each `StyleSheet`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn style_sheet(&mut self, _node: &StyleSheet) -> Option<StyleSheet> {
         None
     }
 
+    /// Asked for each `SupportingWorkbookSheetNames`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn supporting_workbook_sheet_names(
         &mut self,
         _node: &SupportingWorkbookSheetNames,
@@ -2019,34 +2776,50 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Table`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn table(&mut self, _node: &Table) -> Option<Table> {
         None
     }
 
+    /// Asked for each `TableColumn`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn table_column(&mut self, _node: &TableColumn) -> Option<TableColumn> {
         None
     }
 
+    /// Asked for each `TableColumns`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn table_columns(&mut self, _node: &TableColumns) -> Option<TableColumns> {
         None
     }
 
+    /// Asked for each `TablePart`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn table_part(&mut self, _node: &TablePart) -> Option<TablePart> {
         None
     }
 
+    /// Asked for each `TableParts`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn table_parts(&mut self, _node: &TableParts) -> Option<TableParts> {
         None
     }
 
+    /// Asked for each `TableProperties`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn table_properties(&mut self, _node: &TableProperties) -> Option<TableProperties> {
         None
     }
 
+    /// Asked for each `TableStyle`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn table_style(&mut self, _node: &TableStyle) -> Option<TableStyle> {
         None
     }
 
+    /// Asked for each `TableStyleTableStyleElement`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn table_style_table_style_element(
         &mut self,
         _node: &TableStyleTableStyleElement,
@@ -2054,6 +2827,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `TableStyleTableStyleInfo`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn table_style_table_style_info(
         &mut self,
         _node: &TableStyleTableStyleInfo,
@@ -2061,26 +2836,38 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `TableStyles`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn table_styles(&mut self, _node: &TableStyles) -> Option<TableStyles> {
         None
     }
 
+    /// Asked for each `Tables`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn tables(&mut self, _node: &Tables) -> Option<Tables> {
         None
     }
 
+    /// Asked for each `TablesContent`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn tables_content(&mut self, _node: &TablesContent) -> Option<TablesContent> {
         None
     }
 
+    /// Asked for each `TablesContent` in a list. `None` leaves the item to its own `transform`, and
+    /// `Some` puts the items it holds, any number of them, in its place.
     fn tables_content_items(&mut self, _node: &TablesContent) -> Option<Vec<TablesContent>> {
         None
     }
 
+    /// Asked for each `Text`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn text(&mut self, _node: &Text) -> Option<Text> {
         None
     }
 
+    /// Asked for each `TextImportFieldSettings`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn text_import_field_settings(
         &mut self,
         _node: &TextImportFieldSettings,
@@ -2088,26 +2875,38 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `TextImportSettings`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn text_import_settings(&mut self, _node: &TextImportSettings) -> Option<TextImportSettings> {
         None
     }
 
+    /// Asked for each `Top10`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn top10(&mut self, _node: &Top10) -> Option<Top10> {
         None
     }
 
+    /// Asked for each `TopBorder`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn top_border(&mut self, _node: &TopBorder) -> Option<TopBorder> {
         None
     }
 
+    /// Asked for each `Topic`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn topic(&mut self, _node: &Topic) -> Option<Topic> {
         None
     }
 
+    /// Asked for each `TotalsRowFormula`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn totals_row_formula(&mut self, _node: &TotalsRowFormula) -> Option<TotalsRowFormula> {
         None
     }
 
+    /// Asked for each `TrailingEdgeBorderEnd`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn trailing_edge_border_end(
         &mut self,
         _node: &TrailingEdgeBorderEnd,
@@ -2115,6 +2914,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `TrailingEdgeBorderRight`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn trailing_edge_border_right(
         &mut self,
         _node: &TrailingEdgeBorderRight,
@@ -2122,50 +2923,74 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Tuple`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn tuple(&mut self, _node: &Tuple) -> Option<Tuple> {
         None
     }
 
+    /// Asked for each `TupleCache`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn tuple_cache(&mut self, _node: &TupleCache) -> Option<TupleCache> {
         None
     }
 
+    /// Asked for each `TupleMDXMetadata`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn tuple_mdx_metadata(&mut self, _node: &TupleMDXMetadata) -> Option<TupleMDXMetadata> {
         None
     }
 
+    /// Asked for each `Tuples`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn tuples(&mut self, _node: &Tuples) -> Option<Tuples> {
         None
     }
 
+    /// Asked for each `Underline`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn underline(&mut self, _node: &Underline) -> Option<Underline> {
         None
     }
 
+    /// Asked for each `Undo`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn undo(&mut self, _node: &Undo) -> Option<Undo> {
         None
     }
 
+    /// Asked for each `UserInformation`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn user_information(&mut self, _node: &UserInformation) -> Option<UserInformation> {
         None
     }
 
+    /// Asked for each `UserList`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn user_list(&mut self, _node: &UserList) -> Option<UserList> {
         None
     }
 
+    /// Asked for each `Value`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn value(&mut self, _node: &Value) -> Option<Value> {
         None
     }
 
+    /// Asked for each `ValueMetadata`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn value_metadata(&mut self, _node: &ValueMetadata) -> Option<ValueMetadata> {
         None
     }
 
+    /// Asked for each `VerticalAlignment`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn vertical_alignment(&mut self, _node: &VerticalAlignment) -> Option<VerticalAlignment> {
         None
     }
 
+    /// Asked for each `VerticalInnerBorder`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn vertical_inner_border(
         &mut self,
         _node: &VerticalInnerBorder,
@@ -2173,14 +2998,20 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `VerticalPageBreaks`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn vertical_page_breaks(&mut self, _node: &VerticalPageBreaks) -> Option<VerticalPageBreaks> {
         None
     }
 
+    /// Asked for each `ViewPane`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn view_pane(&mut self, _node: &ViewPane) -> Option<ViewPane> {
         None
     }
 
+    /// Asked for each `VolatileDependencyType`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn volatile_dependency_type(
         &mut self,
         _node: &VolatileDependencyType,
@@ -2188,6 +3019,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `VolatileDependencyTypes`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn volatile_dependency_types(
         &mut self,
         _node: &VolatileDependencyTypes,
@@ -2195,18 +3028,26 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `WebPublishObjects`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn web_publish_objects(&mut self, _node: &WebPublishObjects) -> Option<WebPublishObjects> {
         None
     }
 
+    /// Asked for each `WebPublishingItem`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn web_publishing_item(&mut self, _node: &WebPublishingItem) -> Option<WebPublishingItem> {
         None
     }
 
+    /// Asked for each `WebPublishingItems`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn web_publishing_items(&mut self, _node: &WebPublishingItems) -> Option<WebPublishingItems> {
         None
     }
 
+    /// Asked for each `WebPublishingObject`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn web_publishing_object(
         &mut self,
         _node: &WebPublishingObject,
@@ -2214,6 +3055,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `WebPublishingProperties`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn web_publishing_properties(
         &mut self,
         _node: &WebPublishingProperties,
@@ -2221,38 +3064,56 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `WebQueryProperties`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn web_query_properties(&mut self, _node: &WebQueryProperties) -> Option<WebQueryProperties> {
         None
     }
 
+    /// Asked for each `Workbook`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn workbook(&mut self, _node: &Workbook) -> Option<Workbook> {
         None
     }
 
+    /// Asked for each `WorkbookProperties`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn workbook_properties(&mut self, _node: &WorkbookProperties) -> Option<WorkbookProperties> {
         None
     }
 
+    /// Asked for each `WorkbookProtection`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn workbook_protection(&mut self, _node: &WorkbookProtection) -> Option<WorkbookProtection> {
         None
     }
 
+    /// Asked for each `WorkbookView`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn workbook_view(&mut self, _node: &WorkbookView) -> Option<WorkbookView> {
         None
     }
 
+    /// Asked for each `WorkbookViews`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn workbook_views(&mut self, _node: &WorkbookViews) -> Option<WorkbookViews> {
         None
     }
 
+    /// Asked for each `Worksheet`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn worksheet(&mut self, _node: &Worksheet) -> Option<Worksheet> {
         None
     }
 
+    /// Asked for each `WorksheetDimensions`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn worksheet_dimensions(&mut self, _node: &WorksheetDimensions) -> Option<WorksheetDimensions> {
         None
     }
 
+    /// Asked for each `WorksheetPivotCacheSource`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn worksheet_pivot_cache_source(
         &mut self,
         _node: &WorksheetPivotCacheSource,
@@ -2260,13 +3121,18 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `WorksheetView`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn worksheet_view(&mut self, _node: &WorksheetView) -> Option<WorksheetView> {
         None
     }
 
+    /// Asked when a `Alignment` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_alignment(
         &mut self,
         _node: &Alignment,
@@ -2275,23 +3141,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Author` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_author(&mut self, _node: &Author, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Authors` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_authors(&mut self, _node: &Authors, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `AutoFilterColumn` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_auto_filter_column(
         &mut self,
         _node: &AutoFilterColumn,
@@ -2300,9 +3175,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `AutoFilterColumnContent` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_auto_filter_column_content(
         &mut self,
         _node: &AutoFilterColumnContent,
@@ -2311,9 +3189,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `AutoFilterSettings` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_auto_filter_settings(
         &mut self,
         _node: &AutoFilterSettings,
@@ -2322,9 +3203,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `AutoSortScope` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_auto_sort_scope(
         &mut self,
         _node: &AutoSortScope,
@@ -2333,9 +3217,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BackgroundColor` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_background_color(
         &mut self,
         _node: &BackgroundColor,
@@ -2344,9 +3231,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BackgroundImage` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_background_image(
         &mut self,
         _node: &BackgroundImage,
@@ -2355,37 +3245,52 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Bold` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_bold(&mut self, _node: &Bold, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Boolean` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_boolean(&mut self, _node: &Boolean, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Border` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_border(&mut self, _node: &Border, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Borders` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_borders(&mut self, _node: &Borders, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `BottomBorder` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_bottom_border(
         &mut self,
         _node: &BottomBorder,
@@ -2394,16 +3299,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Break` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_break(&mut self, _node: &Break, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `CacheItemContent` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cache_item(
         &mut self,
         _node: &CacheItemContent,
@@ -2412,9 +3323,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CacheItemContent` in a list is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cache_item_items(
         &mut self,
         _node: &CacheItemContent,
@@ -2423,9 +3337,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CachedWorksheetData` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cached_worksheet_data(
         &mut self,
         _node: &CachedWorksheetData,
@@ -2434,9 +3351,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CalculatedColumnFormula` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_calculated_column_formula(
         &mut self,
         _node: &CalculatedColumnFormula,
@@ -2445,9 +3365,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CalculatedItem` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_calculated_item(
         &mut self,
         _node: &CalculatedItem,
@@ -2456,9 +3379,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CalculatedItems` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_calculated_items(
         &mut self,
         _node: &CalculatedItems,
@@ -2467,9 +3393,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CalculatedMember` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_calculated_member(
         &mut self,
         _node: &CalculatedMember,
@@ -2478,9 +3407,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CalculatedMembers` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_calculated_members(
         &mut self,
         _node: &CalculatedMembers,
@@ -2489,9 +3421,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CalculationChainInfo` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_calculation_chain_info(
         &mut self,
         _node: &CalculationChainInfo,
@@ -2500,9 +3435,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CalculationProperties` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_calculation_properties(
         &mut self,
         _node: &CalculationProperties,
@@ -2511,16 +3449,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Cell` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cell(&mut self, _node: &Cell, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `CellCalcCell` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cell_calc_cell(
         &mut self,
         _node: &CellCalcCell,
@@ -2529,9 +3473,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CellFormats` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cell_formats(
         &mut self,
         _node: &CellFormats,
@@ -2540,9 +3487,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CellMetadata` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cell_metadata(
         &mut self,
         _node: &CellMetadata,
@@ -2551,9 +3501,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CellProperties` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cell_properties(
         &mut self,
         _node: &CellProperties,
@@ -2562,9 +3515,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CellSmartTag` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cell_smart_tag(
         &mut self,
         _node: &CellSmartTag,
@@ -2573,9 +3529,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CellSmartTags` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cell_smart_tags(
         &mut self,
         _node: &CellSmartTags,
@@ -2584,9 +3543,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CellStyle` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cell_style(
         &mut self,
         _node: &CellStyle,
@@ -2595,9 +3557,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CellStyles` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cell_styles(
         &mut self,
         _node: &CellStyles,
@@ -2606,9 +3571,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CellValue` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cell_value(
         &mut self,
         _node: &CellValue,
@@ -2617,9 +3585,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CellWatchItem` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cell_watch_item(
         &mut self,
         _node: &CellWatchItem,
@@ -2628,9 +3599,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CellWatchItems` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cell_watch_items(
         &mut self,
         _node: &CellWatchItems,
@@ -2639,9 +3613,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CharacterSet` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_character_set(
         &mut self,
         _node: &CharacterSet,
@@ -2650,9 +3627,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CharacterValue` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_character_value(
         &mut self,
         _node: &CharacterValue,
@@ -2661,9 +3641,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CharacterValueXStringElement` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_character_value_x_string_element(
         &mut self,
         _node: &CharacterValueXStringElement,
@@ -2672,9 +3655,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ChartSheet` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_chart_sheet(
         &mut self,
         _node: &ChartSheet,
@@ -2683,9 +3669,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ChartSheetPageSetup` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_chart_sheet_page_setup(
         &mut self,
         _node: &ChartSheetPageSetup,
@@ -2694,9 +3683,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ChartSheetProperties` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_chart_sheet_properties(
         &mut self,
         _node: &ChartSheetProperties,
@@ -2705,9 +3697,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ChartSheetProtection` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_chart_sheet_protection(
         &mut self,
         _node: &ChartSheetProtection,
@@ -2716,9 +3711,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ChartSheetView` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_chart_sheet_view(
         &mut self,
         _node: &ChartSheetView,
@@ -2727,9 +3725,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ChartSheetViews` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_chart_sheet_views(
         &mut self,
         _node: &ChartSheetViews,
@@ -2738,9 +3739,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ColorFilterCriteria` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_color_filter_criteria(
         &mut self,
         _node: &ColorFilterCriteria,
@@ -2749,9 +3753,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ColorIndexes` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_color_indexes(
         &mut self,
         _node: &ColorIndexes,
@@ -2760,9 +3767,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ColorScale` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_color_scale(
         &mut self,
         _node: &ColorScale,
@@ -2771,16 +3781,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Colors` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_colors(&mut self, _node: &Colors, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ColumnFields` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_column_fields(
         &mut self,
         _node: &ColumnFields,
@@ -2789,9 +3805,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ColumnInformation` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_column_information(
         &mut self,
         _node: &ColumnInformation,
@@ -2800,9 +3819,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ColumnItems` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_column_items(
         &mut self,
         _node: &ColumnItems,
@@ -2811,9 +3833,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ColumnOLAPHierarchies` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_column_olap_hierarchies(
         &mut self,
         _node: &ColumnOLAPHierarchies,
@@ -2822,9 +3847,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ColumnOLAPHierarchyReferences` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_column_olap_hierarchy_references(
         &mut self,
         _node: &ColumnOLAPHierarchyReferences,
@@ -2833,9 +3861,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ColumnWidthFormatting` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_column_width_formatting(
         &mut self,
         _node: &ColumnWidthFormatting,
@@ -2844,9 +3875,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ColumnXMLProperties` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_column_xml_properties(
         &mut self,
         _node: &ColumnXMLProperties,
@@ -2855,16 +3889,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Comment` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_comment(&mut self, _node: &Comment, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `CommentProperties` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_comment_properties(
         &mut self,
         _node: &CommentProperties,
@@ -2873,9 +3913,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CommentText` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_comment_text(
         &mut self,
         _node: &CommentText,
@@ -2884,9 +3927,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Comments` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_comments(
         &mut self,
         _node: &Comments,
@@ -2895,9 +3941,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Condense` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_condense(
         &mut self,
         _node: &Condense,
@@ -2906,9 +3955,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ConditionalFormatValueObject` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_conditional_format_value_object(
         &mut self,
         _node: &ConditionalFormatValueObject,
@@ -2917,9 +3969,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ConditionalFormats` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_conditional_formats(
         &mut self,
         _node: &ConditionalFormats,
@@ -2928,9 +3983,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ConditionalFormatting` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_conditional_formatting(
         &mut self,
         _node: &ConditionalFormatting,
@@ -2939,9 +3997,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ConditionalFormattingConditionalFormat` is written through. `Written::Yes`
+    /// means the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_conditional_formatting_conditional_format(
         &mut self,
         _node: &ConditionalFormattingConditionalFormat,
@@ -2950,9 +4011,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ConditionalFormattingRule` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_conditional_formatting_rule(
         &mut self,
         _node: &ConditionalFormattingRule,
@@ -2961,9 +4025,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Connection` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_connection(
         &mut self,
         _node: &Connection,
@@ -2972,9 +4039,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Connections` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_connections(
         &mut self,
         _node: &Connections,
@@ -2983,9 +4053,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ConsolidationSource` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_consolidation_source(
         &mut self,
         _node: &ConsolidationSource,
@@ -2994,9 +4067,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CustomChartSheetView` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_custom_chart_sheet_view(
         &mut self,
         _node: &CustomChartSheetView,
@@ -3005,9 +4081,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CustomChartSheetViews` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_custom_chart_sheet_views(
         &mut self,
         _node: &CustomChartSheetViews,
@@ -3016,9 +4095,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CustomFilterCriteria` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_custom_filter_criteria(
         &mut self,
         _node: &CustomFilterCriteria,
@@ -3027,9 +4109,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CustomFilters` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_custom_filters(
         &mut self,
         _node: &CustomFilters,
@@ -3038,9 +4123,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CustomProperties` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_custom_properties(
         &mut self,
         _node: &CustomProperties,
@@ -3049,9 +4137,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CustomProperty` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_custom_property(
         &mut self,
         _node: &CustomProperty,
@@ -3060,9 +4151,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CustomSheetView` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_custom_sheet_view(
         &mut self,
         _node: &CustomSheetView,
@@ -3071,9 +4165,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CustomSheetViews` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_custom_sheet_views(
         &mut self,
         _node: &CustomSheetViews,
@@ -3082,9 +4179,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CustomWorkbookView` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_custom_workbook_view(
         &mut self,
         _node: &CustomWorkbookView,
@@ -3093,9 +4193,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CustomWorkbookViews` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_custom_workbook_views(
         &mut self,
         _node: &CustomWorkbookViews,
@@ -3104,9 +4207,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DataBar` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_data_bar(
         &mut self,
         _node: &DataBar,
@@ -3115,9 +4221,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DataBarColor` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_data_bar_color(
         &mut self,
         _node: &DataBarColor,
@@ -3126,9 +4235,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DataConsolidate` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_data_consolidate(
         &mut self,
         _node: &DataConsolidate,
@@ -3137,9 +4249,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DataConsolidationReference` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_data_consolidation_reference(
         &mut self,
         _node: &DataConsolidationReference,
@@ -3148,9 +4263,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DataConsolidationReferences` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_data_consolidation_references(
         &mut self,
         _node: &DataConsolidationReferences,
@@ -3159,9 +4277,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DataFieldItem` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_data_field_item(
         &mut self,
         _node: &DataFieldItem,
@@ -3170,9 +4291,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DataFields` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_data_fields(
         &mut self,
         _node: &DataFields,
@@ -3181,9 +4305,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DataValidation` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_data_validation(
         &mut self,
         _node: &DataValidation,
@@ -3192,9 +4319,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DataValidations` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_data_validations(
         &mut self,
         _node: &DataValidations,
@@ -3203,9 +4333,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DatabaseProperties` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_database_properties(
         &mut self,
         _node: &DatabaseProperties,
@@ -3214,9 +4347,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DateGrouping` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_date_grouping(
         &mut self,
         _node: &DateGrouping,
@@ -3225,9 +4361,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DateTime` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_date_time(
         &mut self,
         _node: &DateTime,
@@ -3236,9 +4375,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DDEConnection` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_dde_connection(
         &mut self,
         _node: &DDEConnection,
@@ -3247,9 +4389,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DDEItemDefinition` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_dde_item_definition(
         &mut self,
         _node: &DDEItemDefinition,
@@ -3258,9 +4403,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DDEItemsCollection` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_dde_items_collection(
         &mut self,
         _node: &DDEItemsCollection,
@@ -3269,9 +4417,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DDELinkValue` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_dde_link_value(
         &mut self,
         _node: &DDELinkValue,
@@ -3280,9 +4431,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DDENameValues` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_dde_name_values(
         &mut self,
         _node: &DDENameValues,
@@ -3291,9 +4445,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DefinedName` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_defined_name(
         &mut self,
         _node: &DefinedName,
@@ -3302,9 +4459,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DefinedNameExternalDefinedName` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_defined_name_external_defined_name(
         &mut self,
         _node: &DefinedNameExternalDefinedName,
@@ -3313,9 +4473,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DefinedNames` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_defined_names(
         &mut self,
         _node: &DefinedNames,
@@ -3324,9 +4487,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DeletedField` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_deleted_field(
         &mut self,
         _node: &DeletedField,
@@ -3335,9 +4501,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DeletedFields` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_deleted_fields(
         &mut self,
         _node: &DeletedFields,
@@ -3346,9 +4515,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Diagonal` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_diagonal(
         &mut self,
         _node: &Diagonal,
@@ -3357,9 +4529,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DialogSheet` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_dialog_sheet(
         &mut self,
         _node: &DialogSheet,
@@ -3368,9 +4543,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DiscreteGroupingProperties` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_discrete_grouping_properties(
         &mut self,
         _node: &DiscreteGroupingProperties,
@@ -3379,16 +4557,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Drawing` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_drawing(&mut self, _node: &Drawing, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `DrawingReferenceInHeaderFooter` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_drawing_reference_in_header_footer(
         &mut self,
         _node: &DrawingReferenceInHeaderFooter,
@@ -3397,9 +4581,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DynamicFilter` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_dynamic_filter(
         &mut self,
         _node: &DynamicFilter,
@@ -3408,9 +4595,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `EmbeddedControl` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_embedded_control(
         &mut self,
         _node: &EmbeddedControl,
@@ -3419,9 +4609,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `EmbeddedControlProperties` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_embedded_control_properties(
         &mut self,
         _node: &EmbeddedControlProperties,
@@ -3430,9 +4623,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `EmbeddedControls` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_embedded_controls(
         &mut self,
         _node: &EmbeddedControls,
@@ -3441,9 +4637,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `EmbeddedObject` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_embedded_object(
         &mut self,
         _node: &EmbeddedObject,
@@ -3452,9 +4651,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `EmbeddedObjectProperties` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_embedded_object_properties(
         &mut self,
         _node: &EmbeddedObjectProperties,
@@ -3463,9 +4665,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `EmbeddedObjectSize` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_embedded_object_size(
         &mut self,
         _node: &EmbeddedObjectSize,
@@ -3474,9 +4679,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `EmbeddedObjects` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_embedded_objects(
         &mut self,
         _node: &EmbeddedObjects,
@@ -3485,16 +4693,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Entries` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_entries(&mut self, _node: &Entries, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `EntriesContent` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_entries_content(
         &mut self,
         _node: &EntriesContent,
@@ -3503,9 +4717,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `EntriesContent` in a list is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_entries_content_items(
         &mut self,
         _node: &EntriesContent,
@@ -3514,9 +4731,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ErrorValue` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_error_value(
         &mut self,
         _node: &ErrorValue,
@@ -3525,9 +4745,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `EvenPageFooter` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_even_page_footer(
         &mut self,
         _node: &EvenPageFooter,
@@ -3536,9 +4759,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `EvenPageHeader` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_even_page_header(
         &mut self,
         _node: &EvenPageHeader,
@@ -3547,16 +4773,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Extend` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_extend(&mut self, _node: &Extend, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Extension` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_extension(
         &mut self,
         _node: &Extension,
@@ -3565,9 +4797,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExternalCellData` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_external_cell_data(
         &mut self,
         _node: &ExternalCellData,
@@ -3576,9 +4811,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExternalReference` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_external_reference(
         &mut self,
         _node: &ExternalReference,
@@ -3587,9 +4825,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExternalReferenceContent` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_external_reference_content(
         &mut self,
         _node: &ExternalReferenceContent,
@@ -3598,9 +4839,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExternalReferenceExternalLink` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_external_reference_external_link(
         &mut self,
         _node: &ExternalReferenceExternalLink,
@@ -3609,9 +4853,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExternalReferences` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_external_references(
         &mut self,
         _node: &ExternalReferences,
@@ -3620,9 +4867,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExternalSheetDataSet` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_external_sheet_data_set(
         &mut self,
         _node: &ExternalSheetDataSet,
@@ -3631,9 +4881,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExternalWorkbook` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_external_workbook(
         &mut self,
         _node: &ExternalWorkbook,
@@ -3642,16 +4895,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Field` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_field(&mut self, _node: &Field, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `FieldGroupProperties` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_field_group_properties(
         &mut self,
         _node: &FieldGroupProperties,
@@ -3660,9 +4919,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FieldItems` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_field_items(
         &mut self,
         _node: &FieldItems,
@@ -3671,16 +4933,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Fields` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_fields(&mut self, _node: &Fields, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `FieldsUsage` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_fields_usage(
         &mut self,
         _node: &FieldsUsage,
@@ -3689,9 +4957,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FileRecoveryProperties` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_file_recovery_properties(
         &mut self,
         _node: &FileRecoveryProperties,
@@ -3700,9 +4971,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FileSharing` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_file_sharing(
         &mut self,
         _node: &FileSharing,
@@ -3711,9 +4985,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FileVersion` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_file_version(
         &mut self,
         _node: &FileVersion,
@@ -3722,16 +4999,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Fill` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_fill(&mut self, _node: &Fill, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `FillContent` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_fill_content(
         &mut self,
         _node: &FillContent,
@@ -3740,23 +5023,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Fills` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_fills(&mut self, _node: &Fills, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Filter` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_filter(&mut self, _node: &Filter, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `FilterCriteria` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_filter_criteria(
         &mut self,
         _node: &FilterCriteria,
@@ -3765,16 +5057,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Filters` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_filters(&mut self, _node: &Filters, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `FirstPageFooter` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_first_page_footer(
         &mut self,
         _node: &FirstPageFooter,
@@ -3783,9 +5081,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FirstPageHeader` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_first_page_header(
         &mut self,
         _node: &FirstPageHeader,
@@ -3794,16 +5095,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Font` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_font(&mut self, _node: &Font, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `FontContent` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_font_content(
         &mut self,
         _node: &FontContent,
@@ -3812,9 +5119,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FontContent` in a list is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_font_content_items(
         &mut self,
         _node: &FontContent,
@@ -3823,9 +5133,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FontFamily` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_font_family(
         &mut self,
         _node: &FontFamily,
@@ -3834,9 +5147,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FontFamilyIntProperty` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_font_family_int_property(
         &mut self,
         _node: &FontFamilyIntProperty,
@@ -3845,9 +5161,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FontName` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_font_name(
         &mut self,
         _node: &FontName,
@@ -3856,9 +5175,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FontRFont` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_font_r_font(
         &mut self,
         _node: &FontRFont,
@@ -3867,9 +5189,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FontSize` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_font_size(
         &mut self,
         _node: &FontSize,
@@ -3878,16 +5203,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Fonts` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_fonts(&mut self, _node: &Fonts, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ForegroundColor` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_foreground_color(
         &mut self,
         _node: &ForegroundColor,
@@ -3896,23 +5227,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Format` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_format(&mut self, _node: &Format, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Formats` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_formats(&mut self, _node: &Formats, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Formatting` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_formatting(
         &mut self,
         _node: &Formatting,
@@ -3921,9 +5261,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FormattingRecords` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_formatting_records(
         &mut self,
         _node: &FormattingRecords,
@@ -3932,16 +5275,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Formula` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_formula(&mut self, _node: &Formula, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Formula1` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_formula1(
         &mut self,
         _node: &Formula1,
@@ -3950,9 +5299,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Formula2` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_formula2(
         &mut self,
         _node: &Formula2,
@@ -3961,9 +5313,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FormulaF` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_formula_f(
         &mut self,
         _node: &FormulaF,
@@ -3972,9 +5327,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FunctionGroup` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_function_group(
         &mut self,
         _node: &FunctionGroup,
@@ -3983,9 +5341,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FunctionGroups` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_function_groups(
         &mut self,
         _node: &FunctionGroups,
@@ -3994,9 +5355,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FutureFeatureDataStorageArea` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_future_feature_data_storage_area(
         &mut self,
         _node: &FutureFeatureDataStorageArea,
@@ -4005,9 +5369,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FutureMetadata` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_future_metadata(
         &mut self,
         _node: &FutureMetadata,
@@ -4016,9 +5383,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FutureMetadataBlock` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_future_metadata_block(
         &mut self,
         _node: &FutureMetadataBlock,
@@ -4027,9 +5397,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `GenericObjectLinkConnection` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_generic_object_link_connection(
         &mut self,
         _node: &GenericObjectLinkConnection,
@@ -4038,9 +5411,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Gradient` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_gradient(
         &mut self,
         _node: &Gradient,
@@ -4049,9 +5425,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `GradientStop` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_gradient_stop(
         &mut self,
         _node: &GradientStop,
@@ -4060,16 +5439,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Header` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_header(&mut self, _node: &Header, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `HeaderFooterSettings` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_header_footer_settings(
         &mut self,
         _node: &HeaderFooterSettings,
@@ -4078,9 +5463,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `HorizontalInnerBorders` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_horizontal_inner_borders(
         &mut self,
         _node: &HorizontalInnerBorders,
@@ -4089,9 +5477,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Hyperlink` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_hyperlink(
         &mut self,
         _node: &Hyperlink,
@@ -4100,9 +5491,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Hyperlinks` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_hyperlinks(
         &mut self,
         _node: &Hyperlinks,
@@ -4111,9 +5505,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `IconFilter` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_icon_filter(
         &mut self,
         _node: &IconFilter,
@@ -4122,9 +5519,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `IconSet` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_icon_set(
         &mut self,
         _node: &IconSet,
@@ -4133,9 +5533,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `IgnoredError` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ignored_error(
         &mut self,
         _node: &IgnoredError,
@@ -4144,9 +5547,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `IgnoredErrors` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ignored_errors(
         &mut self,
         _node: &IgnoredErrors,
@@ -4155,9 +5561,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `InputCells` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_input_cells(
         &mut self,
         _node: &InputCells,
@@ -4166,16 +5575,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Italic` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_italic(&mut self, _node: &Italic, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `KPIMDXMetadata` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_kpimdx_metadata(
         &mut self,
         _node: &KPIMDXMetadata,
@@ -4184,9 +5599,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LeadingEdgeBorderLeft` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_leading_edge_border_left(
         &mut self,
         _node: &LeadingEdgeBorderLeft,
@@ -4195,9 +5613,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LeadingEdgeBorderStart` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_leading_edge_border_start(
         &mut self,
         _node: &LeadingEdgeBorderStart,
@@ -4206,9 +5627,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LegacyDrawingReference` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_legacy_drawing_reference(
         &mut self,
         _node: &LegacyDrawingReference,
@@ -4217,9 +5641,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LegacyDrawingReferenceInHeaderFooter` is written through. `Written::Yes` means
+    /// the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_legacy_drawing_reference_in_header_footer(
         &mut self,
         _node: &LegacyDrawingReferenceInHeaderFooter,
@@ -4228,9 +5655,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ListOfComments` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_list_of_comments(
         &mut self,
         _node: &ListOfComments,
@@ -4239,16 +5669,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Main` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_main(&mut self, _node: &Main, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `MDXMetadataInformation` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_mdx_metadata_information(
         &mut self,
         _node: &MDXMetadataInformation,
@@ -4257,9 +5693,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MDXMetadataRecord` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_mdx_metadata_record(
         &mut self,
         _node: &MDXMetadataRecord,
@@ -4268,16 +5707,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Member` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_member(&mut self, _node: &Member, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `MemberPropertiesMap` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_member_properties_map(
         &mut self,
         _node: &MemberPropertiesMap,
@@ -4286,9 +5731,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MemberPropertyIndex` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_member_property_index(
         &mut self,
         _node: &MemberPropertyIndex,
@@ -4297,9 +5745,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MemberPropertyMDXMetadata` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_member_property_mdx_metadata(
         &mut self,
         _node: &MemberPropertyMDXMetadata,
@@ -4308,9 +5759,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MemberUniqueNameIndex` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_member_unique_name_index(
         &mut self,
         _node: &MemberUniqueNameIndex,
@@ -4319,16 +5773,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Members` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_members(&mut self, _node: &Members, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `MergeCells` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_merge_cells(
         &mut self,
         _node: &MergeCells,
@@ -4337,9 +5797,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MergedCell` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_merged_cell(
         &mut self,
         _node: &MergedCell,
@@ -4348,9 +5811,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Metadata` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_metadata(
         &mut self,
         _node: &Metadata,
@@ -4359,9 +5825,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MetadataBlock` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_metadata_block(
         &mut self,
         _node: &MetadataBlock,
@@ -4370,9 +5839,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MetadataRecord` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_metadata_record(
         &mut self,
         _node: &MetadataRecord,
@@ -4381,9 +5853,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MetadataStringStore` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_metadata_string_store(
         &mut self,
         _node: &MetadataStringStore,
@@ -4392,9 +5867,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MetadataTypeInformation` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_metadata_type_information(
         &mut self,
         _node: &MetadataTypeInformation,
@@ -4403,9 +5881,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MetadataTypesCollection` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_metadata_types_collection(
         &mut self,
         _node: &MetadataTypesCollection,
@@ -4414,9 +5895,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MRUColors` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_mru_colors(
         &mut self,
         _node: &MRUColors,
@@ -4425,9 +5909,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MultidimensionalExpressionMetadataContent` is written through. `Written::Yes`
+    /// means the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_multidimensional_expression_metadata(
         &mut self,
         _node: &MultidimensionalExpressionMetadataContent,
@@ -4436,9 +5923,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NamedLinks` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_named_links(
         &mut self,
         _node: &NamedLinks,
@@ -4447,9 +5937,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NestedRevisionContent` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_nested_revision(
         &mut self,
         _node: &NestedRevisionContent,
@@ -4458,9 +5951,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NestedRevisionContent` in a list is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_nested_revision_items(
         &mut self,
         _node: &NestedRevisionContent,
@@ -4469,9 +5965,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NewCellData` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_new_cell_data(
         &mut self,
         _node: &NewCellData,
@@ -4480,9 +5979,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NewFormattingInformation` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_new_formatting_information(
         &mut self,
         _node: &NewFormattingInformation,
@@ -4491,9 +5993,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NoValue` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_no_value(
         &mut self,
         _node: &NoValue,
@@ -4502,9 +6007,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NoValueTableMissing` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_no_value_table_missing(
         &mut self,
         _node: &NoValueTableMissing,
@@ -4513,9 +6021,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NumberFormat` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_number_format(
         &mut self,
         _node: &NumberFormat,
@@ -4524,9 +6035,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NumberFormats` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_number_formats(
         &mut self,
         _node: &NumberFormats,
@@ -4535,16 +6049,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Numeric` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_numeric(&mut self, _node: &Numeric, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ObjectCellAnchor` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_object_cell_anchor(
         &mut self,
         _node: &ObjectCellAnchor,
@@ -4553,9 +6073,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ObjectLinkItem` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_object_link_item(
         &mut self,
         _node: &ObjectLinkItem,
@@ -4564,9 +6087,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ObjectLinkItems` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_object_link_items(
         &mut self,
         _node: &ObjectLinkItems,
@@ -4575,9 +6101,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `OddHeader` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_odd_header(
         &mut self,
         _node: &OddHeader,
@@ -4586,9 +6115,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `OddPageFooter` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_odd_page_footer(
         &mut self,
         _node: &OddPageFooter,
@@ -4597,9 +6129,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `OLAPDimension` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_olap_dimension(
         &mut self,
         _node: &OLAPDimension,
@@ -4608,9 +6143,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `OLAPDimensions` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_olap_dimensions(
         &mut self,
         _node: &OLAPDimensions,
@@ -4619,9 +6157,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `OLAPGroup` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_olap_group(
         &mut self,
         _node: &OLAPGroup,
@@ -4630,9 +6171,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `OLAPGroupItems` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_olap_group_items(
         &mut self,
         _node: &OLAPGroupItems,
@@ -4641,9 +6185,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `OLAPGroupMember` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_olap_group_member(
         &mut self,
         _node: &OLAPGroupMember,
@@ -4652,9 +6199,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `OLAPGroupMembers` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_olap_group_members(
         &mut self,
         _node: &OLAPGroupMembers,
@@ -4663,9 +6213,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `OLAPGroupingLevelsGroupLevel` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_olap_grouping_levels_group_level(
         &mut self,
         _node: &OLAPGroupingLevelsGroupLevel,
@@ -4674,9 +6227,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `OLAPGroupingLevelsGroupLevels` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_olap_grouping_levels_group_levels(
         &mut self,
         _node: &OLAPGroupingLevelsGroupLevels,
@@ -4685,9 +6241,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `OLAPHierarchy` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_olap_hierarchy(
         &mut self,
         _node: &OLAPHierarchy,
@@ -4696,9 +6255,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `OLAPLevelGroups` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_olap_level_groups(
         &mut self,
         _node: &OLAPLevelGroups,
@@ -4707,9 +6269,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `OLAPMeasureGroupMap` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_olap_measure_group_map(
         &mut self,
         _node: &OLAPMeasureGroupMap,
@@ -4718,9 +6283,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `OLAPMeasureGroupMaps` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_olap_measure_group_maps(
         &mut self,
         _node: &OLAPMeasureGroupMaps,
@@ -4729,9 +6297,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `OLAPMeasureGroupMeasureGroup` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_olap_measure_group_measure_group(
         &mut self,
         _node: &OLAPMeasureGroupMeasureGroup,
@@ -4740,9 +6311,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `OLAPMeasureGroups` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_olap_measure_groups(
         &mut self,
         _node: &OLAPMeasureGroups,
@@ -4751,9 +6325,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `OLAPMemberProperties` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_olap_member_properties(
         &mut self,
         _node: &OLAPMemberProperties,
@@ -4762,9 +6339,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `OLAPMemberProperty` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_olap_member_property(
         &mut self,
         _node: &OLAPMemberProperty,
@@ -4773,9 +6353,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `OLAPProperties` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_olap_properties(
         &mut self,
         _node: &OLAPProperties,
@@ -4784,9 +6367,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `OLAPQueryCache` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_olap_query_cache(
         &mut self,
         _node: &OLAPQueryCache,
@@ -4795,9 +6381,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `OLAPSet` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_olap_set(
         &mut self,
         _node: &OLAPSet,
@@ -4806,9 +6395,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `OLAPKPIs` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_olapkp_is(
         &mut self,
         _node: &OLAPKPIs,
@@ -4817,16 +6409,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `OLAPKPI` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_olapkpi(&mut self, _node: &OLAPKPI, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `OldCellData` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_old_cell_data(
         &mut self,
         _node: &OldCellData,
@@ -4835,9 +6433,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `OldFormattingInformation` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_old_formatting_information(
         &mut self,
         _node: &OldFormattingInformation,
@@ -4846,9 +6447,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `OldFormula` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_old_formula(
         &mut self,
         _node: &OldFormula,
@@ -4857,16 +6461,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Outline` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_outline(&mut self, _node: &Outline, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `OutlineProperties` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_outline_properties(
         &mut self,
         _node: &OutlineProperties,
@@ -4875,9 +6485,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PageField` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_page_field(
         &mut self,
         _node: &PageField,
@@ -4886,9 +6499,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PageFieldItems` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_page_field_items(
         &mut self,
         _node: &PageFieldItems,
@@ -4897,9 +6513,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PageItem` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_page_item(
         &mut self,
         _node: &PageItem,
@@ -4908,9 +6527,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PageItemValues` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_page_item_values(
         &mut self,
         _node: &PageItemValues,
@@ -4919,9 +6541,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PageItems` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_page_items(
         &mut self,
         _node: &PageItems,
@@ -4930,9 +6555,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PageMargins` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_page_margins(
         &mut self,
         _node: &PageMargins,
@@ -4941,9 +6569,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PageSetupProperties` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_page_setup_properties(
         &mut self,
         _node: &PageSetupProperties,
@@ -4952,9 +6583,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PageSetupSettings` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_page_setup_settings(
         &mut self,
         _node: &PageSetupSettings,
@@ -4963,9 +6597,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ParameterProperties` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_parameter_properties(
         &mut self,
         _node: &ParameterProperties,
@@ -4974,16 +6611,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Pattern` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pattern(&mut self, _node: &Pattern, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `PhoneticProperties` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_phonetic_properties(
         &mut self,
         _node: &PhoneticProperties,
@@ -4992,9 +6635,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PhoneticRun` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_phonetic_run(
         &mut self,
         _node: &PhoneticRun,
@@ -5003,9 +6649,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotArea` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_area(
         &mut self,
         _node: &PivotArea,
@@ -5014,9 +6663,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotAreas` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_areas(
         &mut self,
         _node: &PivotAreas,
@@ -5025,9 +6677,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotCache` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_cache(
         &mut self,
         _node: &PivotCache,
@@ -5036,9 +6691,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotCacheDefinition` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_cache_definition(
         &mut self,
         _node: &PivotCacheDefinition,
@@ -5047,9 +6705,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotCacheField` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_cache_field(
         &mut self,
         _node: &PivotCacheField,
@@ -5058,9 +6719,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotCacheFieldId` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_cache_field_id(
         &mut self,
         _node: &PivotCacheFieldId,
@@ -5069,9 +6733,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotCacheFields` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_cache_fields(
         &mut self,
         _node: &PivotCacheFields,
@@ -5080,9 +6747,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotCacheHierarchies` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_cache_hierarchies(
         &mut self,
         _node: &PivotCacheHierarchies,
@@ -5091,9 +6761,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotCacheHierarchy` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_cache_hierarchy(
         &mut self,
         _node: &PivotCacheHierarchy,
@@ -5102,9 +6775,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotCacheRecord` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_cache_record(
         &mut self,
         _node: &PivotCacheRecord,
@@ -5113,9 +6789,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotCacheRecordContent` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_cache_record_content(
         &mut self,
         _node: &PivotCacheRecordContent,
@@ -5124,9 +6803,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotCacheRecordContent` in a list is written through. `Written::Yes` means
+    /// the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_cache_record_content_items(
         &mut self,
         _node: &PivotCacheRecordContent,
@@ -5135,9 +6817,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotCacheRecords` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_cache_records(
         &mut self,
         _node: &PivotCacheRecords,
@@ -5146,9 +6831,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotCacheSourceDescription` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_cache_source_description(
         &mut self,
         _node: &PivotCacheSourceDescription,
@@ -5157,9 +6845,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotCacheSourceDescriptionContent` is written through. `Written::Yes` means
+    /// the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_cache_source_description_content(
         &mut self,
         _node: &PivotCacheSourceDescriptionContent,
@@ -5168,9 +6859,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotCaches` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_caches(
         &mut self,
         _node: &PivotCaches,
@@ -5179,9 +6873,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotChartFormat` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_chart_format(
         &mut self,
         _node: &PivotChartFormat,
@@ -5190,9 +6887,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotChartFormats` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_chart_formats(
         &mut self,
         _node: &PivotChartFormats,
@@ -5201,9 +6901,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotTableAdvancedFilter` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_table_advanced_filter(
         &mut self,
         _node: &PivotTableAdvancedFilter,
@@ -5212,9 +6915,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotTableDefinition` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_table_definition(
         &mut self,
         _node: &PivotTableDefinition,
@@ -5223,9 +6929,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotTableField` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_table_field(
         &mut self,
         _node: &PivotTableField,
@@ -5234,9 +6943,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotTableFieldItem` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_table_field_item(
         &mut self,
         _node: &PivotTableFieldItem,
@@ -5245,9 +6957,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotTableFields` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_table_fields(
         &mut self,
         _node: &PivotTableFields,
@@ -5256,9 +6971,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotTableFormat` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_table_format(
         &mut self,
         _node: &PivotTableFormat,
@@ -5267,9 +6985,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotTableFormats` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_table_formats(
         &mut self,
         _node: &PivotTableFormats,
@@ -5278,9 +6999,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotTableLocation` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_table_location(
         &mut self,
         _node: &PivotTableLocation,
@@ -5289,9 +7013,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotTableOLAPHierarchies` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_table_olap_hierarchies(
         &mut self,
         _node: &PivotTableOLAPHierarchies,
@@ -5300,9 +7027,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotTableSelection` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_table_selection(
         &mut self,
         _node: &PivotTableSelection,
@@ -5311,9 +7041,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PivotTableStyle` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pivot_table_style(
         &mut self,
         _node: &PivotTableStyle,
@@ -5322,9 +7055,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PrintOptions` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_print_options(
         &mut self,
         _node: &PrintOptions,
@@ -5333,9 +7069,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ProtectedRange` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_protected_range(
         &mut self,
         _node: &ProtectedRange,
@@ -5344,9 +7083,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ProtectedRanges` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_protected_ranges(
         &mut self,
         _node: &ProtectedRanges,
@@ -5355,9 +7097,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ProtectionProperties` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_protection_properties(
         &mut self,
         _node: &ProtectionProperties,
@@ -5366,16 +7111,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Query` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_query(&mut self, _node: &Query, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `QueryParameters` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_query_parameters(
         &mut self,
         _node: &QueryParameters,
@@ -5384,9 +7135,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `QueryTable` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_query_table(
         &mut self,
         _node: &QueryTable,
@@ -5395,9 +7149,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `QueryTableField` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_query_table_field(
         &mut self,
         _node: &QueryTableField,
@@ -5406,9 +7163,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `QueryTableFields` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_query_table_fields(
         &mut self,
         _node: &QueryTableFields,
@@ -5417,9 +7177,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `QueryTableRefreshInformation` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_query_table_refresh_information(
         &mut self,
         _node: &QueryTableRefreshInformation,
@@ -5428,9 +7191,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RangeGroupingProperties` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_range_grouping_properties(
         &mut self,
         _node: &RangeGroupingProperties,
@@ -5439,9 +7205,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RangeSet` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_range_set(
         &mut self,
         _node: &RangeSet,
@@ -5450,9 +7219,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RangeSets` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_range_sets(
         &mut self,
         _node: &RangeSets,
@@ -5461,9 +7233,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Reference` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_reference(
         &mut self,
         _node: &Reference,
@@ -5472,9 +7247,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `References` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_references(
         &mut self,
         _node: &References,
@@ -5483,9 +7261,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ReferencesTr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_references_tr(
         &mut self,
         _node: &ReferencesTr,
@@ -5494,9 +7275,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Reviewed` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_reviewed(
         &mut self,
         _node: &Reviewed,
@@ -5505,9 +7289,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ReviewedList` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_reviewed_list(
         &mut self,
         _node: &ReviewedList,
@@ -5516,9 +7303,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RevisionAutoFormat` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_revision_auto_format(
         &mut self,
         _node: &RevisionAutoFormat,
@@ -5527,9 +7317,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RevisionCellChange` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_revision_cell_change(
         &mut self,
         _node: &RevisionCellChange,
@@ -5538,9 +7331,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RevisionCellComment` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_revision_cell_comment(
         &mut self,
         _node: &RevisionCellComment,
@@ -5549,9 +7345,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RevisionCellMove` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_revision_cell_move(
         &mut self,
         _node: &RevisionCellMove,
@@ -5560,9 +7359,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RevisionCustomView` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_revision_custom_view(
         &mut self,
         _node: &RevisionCustomView,
@@ -5571,9 +7373,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RevisionDefinedName` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_revision_defined_name(
         &mut self,
         _node: &RevisionDefinedName,
@@ -5582,9 +7387,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RevisionFormat` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_revision_format(
         &mut self,
         _node: &RevisionFormat,
@@ -5593,9 +7401,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RevisionHeaders` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_revision_headers(
         &mut self,
         _node: &RevisionHeaders,
@@ -5604,9 +7415,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RevisionInsertSheet` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_revision_insert_sheet(
         &mut self,
         _node: &RevisionInsertSheet,
@@ -5615,9 +7429,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RevisionMergeConflict` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_revision_merge_conflict(
         &mut self,
         _node: &RevisionMergeConflict,
@@ -5626,9 +7443,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RevisionQueryTable` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_revision_query_table(
         &mut self,
         _node: &RevisionQueryTable,
@@ -5637,9 +7457,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RevisionRowColumnInsertDelete` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_revision_row_column_insert_delete(
         &mut self,
         _node: &RevisionRowColumnInsertDelete,
@@ -5648,9 +7471,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RevisionSheetName` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_revision_sheet_name(
         &mut self,
         _node: &RevisionSheetName,
@@ -5659,9 +7485,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Revisions` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_revisions(
         &mut self,
         _node: &Revisions,
@@ -5670,9 +7499,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RevisionsContent` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_revisions_content(
         &mut self,
         _node: &RevisionsContent,
@@ -5681,9 +7513,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RevisionsContent` in a list is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_revisions_content_items(
         &mut self,
         _node: &RevisionsContent,
@@ -5692,9 +7527,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RGBColor` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_rgb_color(
         &mut self,
         _node: &RGBColor,
@@ -5703,9 +7541,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RichTextInline` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_rich_text_inline(
         &mut self,
         _node: &RichTextInline,
@@ -5714,9 +7555,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RichTextRun` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_rich_text_run(
         &mut self,
         _node: &RichTextRun,
@@ -5725,16 +7569,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Row` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_row(&mut self, _node: &Row, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `RowBreaks` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_row_breaks(
         &mut self,
         _node: &RowBreaks,
@@ -5743,9 +7593,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RowExternalRow` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_row_external_row(
         &mut self,
         _node: &RowExternalRow,
@@ -5754,9 +7607,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RowFields` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_row_fields(
         &mut self,
         _node: &RowFields,
@@ -5765,9 +7621,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RowItems` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_row_items(
         &mut self,
         _node: &RowItems,
@@ -5776,9 +7635,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RowItemsI` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_row_items_i(
         &mut self,
         _node: &RowItemsI,
@@ -5787,9 +7649,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RowOLAPHierarchies` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_row_olap_hierarchies(
         &mut self,
         _node: &RowOLAPHierarchies,
@@ -5798,9 +7663,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RowOLAPHierarchyReferences` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_row_olap_hierarchy_references(
         &mut self,
         _node: &RowOLAPHierarchyReferences,
@@ -5809,9 +7677,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RunProperties` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_run_properties(
         &mut self,
         _node: &RunProperties,
@@ -5820,9 +7691,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RunPropertiesContent` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_run_properties_content(
         &mut self,
         _node: &RunPropertiesContent,
@@ -5831,9 +7705,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RunPropertiesContent` in a list is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_run_properties_content_items(
         &mut self,
         _node: &RunPropertiesContent,
@@ -5842,9 +7719,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Scenario` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_scenario(
         &mut self,
         _node: &Scenario,
@@ -5853,9 +7733,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Scenarios` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_scenarios(
         &mut self,
         _node: &Scenarios,
@@ -5864,16 +7747,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Scheme` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_scheme(&mut self, _node: &Scheme, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `SecurityDescriptor` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_security_descriptor(
         &mut self,
         _node: &SecurityDescriptor,
@@ -5882,9 +7771,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Selection` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_selection(
         &mut self,
         _node: &Selection,
@@ -5893,9 +7785,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ServerFormat` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_server_format(
         &mut self,
         _node: &ServerFormat,
@@ -5904,9 +7799,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ServerFormats` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_server_formats(
         &mut self,
         _node: &ServerFormats,
@@ -5915,9 +7813,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SetMDXMetadata` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_set_mdx_metadata(
         &mut self,
         _node: &SetMDXMetadata,
@@ -5926,23 +7827,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Sets` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sets(&mut self, _node: &Sets, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Shadow` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shadow(&mut self, _node: &Shadow, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `SharedItems` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shared_items(
         &mut self,
         _node: &SharedItems,
@@ -5951,9 +7861,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SharedItemsIndex` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shared_items_index(
         &mut self,
         _node: &SharedItemsIndex,
@@ -5962,9 +7875,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SharedStringTable` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shared_string_table(
         &mut self,
         _node: &SharedStringTable,
@@ -5973,9 +7889,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SheetCalculationProperties` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sheet_calculation_properties(
         &mut self,
         _node: &SheetCalculationProperties,
@@ -5984,9 +7903,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SheetData` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sheet_data(
         &mut self,
         _node: &SheetData,
@@ -5995,9 +7917,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SheetFormatProperties` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sheet_format_properties(
         &mut self,
         _node: &SheetFormatProperties,
@@ -6006,9 +7931,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SheetId` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sheet_id(
         &mut self,
         _node: &SheetId,
@@ -6017,9 +7945,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SheetIdMap` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sheet_id_map(
         &mut self,
         _node: &SheetIdMap,
@@ -6028,9 +7959,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SheetInformation` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sheet_information(
         &mut self,
         _node: &SheetInformation,
@@ -6039,9 +7973,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SheetName` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sheet_name(
         &mut self,
         _node: &SheetName,
@@ -6050,9 +7987,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SheetProperties` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sheet_properties(
         &mut self,
         _node: &SheetProperties,
@@ -6061,9 +8001,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SheetProtectionOptions` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sheet_protection_options(
         &mut self,
         _node: &SheetProtectionOptions,
@@ -6072,9 +8015,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SheetTabColor` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sheet_tab_color(
         &mut self,
         _node: &SheetTabColor,
@@ -6083,9 +8029,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SheetViews` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sheet_views(
         &mut self,
         _node: &SheetViews,
@@ -6094,16 +8043,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Sheets` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sheets(&mut self, _node: &Sheets, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `SingleCells` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_single_cells(
         &mut self,
         _node: &SingleCells,
@@ -6112,9 +8067,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SmartTagPropertiesCellSmartTagPr` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_smart_tag_properties_cell_smart_tag_pr(
         &mut self,
         _node: &SmartTagPropertiesCellSmartTagPr,
@@ -6123,9 +8081,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SmartTagPropertiesSmartTagPr` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_smart_tag_properties_smart_tag_pr(
         &mut self,
         _node: &SmartTagPropertiesSmartTagPr,
@@ -6134,9 +8095,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SmartTagType` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_smart_tag_type(
         &mut self,
         _node: &SmartTagType,
@@ -6145,9 +8109,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SmartTagTypes` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_smart_tag_types(
         &mut self,
         _node: &SmartTagTypes,
@@ -6156,9 +8123,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SmartTags` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_smart_tags(
         &mut self,
         _node: &SmartTags,
@@ -6167,9 +8137,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SortByTuple` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sort_by_tuple(
         &mut self,
         _node: &SortByTuple,
@@ -6178,9 +8151,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SortCondition` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sort_condition(
         &mut self,
         _node: &SortCondition,
@@ -6189,9 +8165,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SortState` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sort_state(
         &mut self,
         _node: &SortState,
@@ -6200,9 +8179,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `StrikeThrough` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_strike_through(
         &mut self,
         _node: &StrikeThrough,
@@ -6211,9 +8193,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `StringItem` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_string_item(
         &mut self,
         _node: &StringItem,
@@ -6222,9 +8207,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `StringsInSubtopic` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_strings_in_subtopic(
         &mut self,
         _node: &StringsInSubtopic,
@@ -6233,9 +8221,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `StyleSheet` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_style_sheet(
         &mut self,
         _node: &StyleSheet,
@@ -6244,9 +8235,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SupportingWorkbookSheetNames` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_supporting_workbook_sheet_names(
         &mut self,
         _node: &SupportingWorkbookSheetNames,
@@ -6255,16 +8249,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Table` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_table(&mut self, _node: &Table, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `TableColumn` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_table_column(
         &mut self,
         _node: &TableColumn,
@@ -6273,9 +8273,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TableColumns` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_table_columns(
         &mut self,
         _node: &TableColumns,
@@ -6284,9 +8287,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TablePart` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_table_part(
         &mut self,
         _node: &TablePart,
@@ -6295,9 +8301,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TableParts` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_table_parts(
         &mut self,
         _node: &TableParts,
@@ -6306,9 +8315,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TableProperties` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_table_properties(
         &mut self,
         _node: &TableProperties,
@@ -6317,9 +8329,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TableStyle` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_table_style(
         &mut self,
         _node: &TableStyle,
@@ -6328,9 +8343,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TableStyleTableStyleElement` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_table_style_table_style_element(
         &mut self,
         _node: &TableStyleTableStyleElement,
@@ -6339,9 +8357,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TableStyleTableStyleInfo` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_table_style_table_style_info(
         &mut self,
         _node: &TableStyleTableStyleInfo,
@@ -6350,9 +8371,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TableStyles` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_table_styles(
         &mut self,
         _node: &TableStyles,
@@ -6361,16 +8385,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Tables` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_tables(&mut self, _node: &Tables, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `TablesContent` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_tables_content(
         &mut self,
         _node: &TablesContent,
@@ -6379,9 +8409,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TablesContent` in a list is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_tables_content_items(
         &mut self,
         _node: &TablesContent,
@@ -6390,16 +8423,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Text` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_text(&mut self, _node: &Text, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `TextImportFieldSettings` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_text_import_field_settings(
         &mut self,
         _node: &TextImportFieldSettings,
@@ -6408,9 +8447,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TextImportSettings` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_text_import_settings(
         &mut self,
         _node: &TextImportSettings,
@@ -6419,16 +8461,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Top10` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_top10(&mut self, _node: &Top10, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `TopBorder` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_top_border(
         &mut self,
         _node: &TopBorder,
@@ -6437,16 +8485,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Topic` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_topic(&mut self, _node: &Topic, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `TotalsRowFormula` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_totals_row_formula(
         &mut self,
         _node: &TotalsRowFormula,
@@ -6455,9 +8509,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TrailingEdgeBorderEnd` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_trailing_edge_border_end(
         &mut self,
         _node: &TrailingEdgeBorderEnd,
@@ -6466,9 +8523,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TrailingEdgeBorderRight` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_trailing_edge_border_right(
         &mut self,
         _node: &TrailingEdgeBorderRight,
@@ -6477,16 +8537,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Tuple` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_tuple(&mut self, _node: &Tuple, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `TupleCache` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_tuple_cache(
         &mut self,
         _node: &TupleCache,
@@ -6495,9 +8561,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TupleMDXMetadata` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_tuple_mdx_metadata(
         &mut self,
         _node: &TupleMDXMetadata,
@@ -6506,16 +8575,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Tuples` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_tuples(&mut self, _node: &Tuples, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Underline` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_underline(
         &mut self,
         _node: &Underline,
@@ -6524,16 +8599,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Undo` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_undo(&mut self, _node: &Undo, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `UserInformation` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_user_information(
         &mut self,
         _node: &UserInformation,
@@ -6542,9 +8623,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `UserList` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_user_list(
         &mut self,
         _node: &UserList,
@@ -6553,16 +8637,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Value` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_value(&mut self, _node: &Value, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ValueMetadata` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_value_metadata(
         &mut self,
         _node: &ValueMetadata,
@@ -6571,9 +8661,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `VerticalAlignment` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_vertical_alignment(
         &mut self,
         _node: &VerticalAlignment,
@@ -6582,9 +8675,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `VerticalInnerBorder` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_vertical_inner_border(
         &mut self,
         _node: &VerticalInnerBorder,
@@ -6593,9 +8689,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `VerticalPageBreaks` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_vertical_page_breaks(
         &mut self,
         _node: &VerticalPageBreaks,
@@ -6604,9 +8703,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ViewPane` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_view_pane(
         &mut self,
         _node: &ViewPane,
@@ -6615,9 +8717,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `VolatileDependencyType` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_volatile_dependency_type(
         &mut self,
         _node: &VolatileDependencyType,
@@ -6626,9 +8731,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `VolatileDependencyTypes` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_volatile_dependency_types(
         &mut self,
         _node: &VolatileDependencyTypes,
@@ -6637,9 +8745,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `WebPublishObjects` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_web_publish_objects(
         &mut self,
         _node: &WebPublishObjects,
@@ -6648,9 +8759,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `WebPublishingItem` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_web_publishing_item(
         &mut self,
         _node: &WebPublishingItem,
@@ -6659,9 +8773,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `WebPublishingItems` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_web_publishing_items(
         &mut self,
         _node: &WebPublishingItems,
@@ -6670,9 +8787,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `WebPublishingObject` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_web_publishing_object(
         &mut self,
         _node: &WebPublishingObject,
@@ -6681,9 +8801,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `WebPublishingProperties` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_web_publishing_properties(
         &mut self,
         _node: &WebPublishingProperties,
@@ -6692,9 +8815,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `WebQueryProperties` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_web_query_properties(
         &mut self,
         _node: &WebQueryProperties,
@@ -6703,9 +8829,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Workbook` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_workbook(
         &mut self,
         _node: &Workbook,
@@ -6714,9 +8843,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `WorkbookProperties` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_workbook_properties(
         &mut self,
         _node: &WorkbookProperties,
@@ -6725,9 +8857,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `WorkbookProtection` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_workbook_protection(
         &mut self,
         _node: &WorkbookProtection,
@@ -6736,9 +8871,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `WorkbookView` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_workbook_view(
         &mut self,
         _node: &WorkbookView,
@@ -6747,9 +8885,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `WorkbookViews` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_workbook_views(
         &mut self,
         _node: &WorkbookViews,
@@ -6758,9 +8899,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Worksheet` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_worksheet(
         &mut self,
         _node: &Worksheet,
@@ -6769,9 +8913,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `WorksheetDimensions` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_worksheet_dimensions(
         &mut self,
         _node: &WorksheetDimensions,
@@ -6780,9 +8927,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `WorksheetPivotCacheSource` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_worksheet_pivot_cache_source(
         &mut self,
         _node: &WorksheetPivotCacheSource,
@@ -6791,9 +8941,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `WorksheetView` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_worksheet_view(
         &mut self,
         _node: &WorksheetView,
@@ -6802,9 +8955,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `XMLColumnProperties` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_xml_column_properties(
         &mut self,
         _node: &XMLColumnProperties,
@@ -6813,9 +8969,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `XMLMappingDataBinding` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_xml_mapping_data_binding(
         &mut self,
         _node: &XMLMappingDataBinding,
@@ -6824,9 +8983,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `XMLMappingMapInfo` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_xml_mapping_map_info(
         &mut self,
         _node: &XMLMappingMapInfo,
@@ -6835,9 +8997,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `XMLMappingProperties` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_xml_mapping_properties(
         &mut self,
         _node: &XMLMappingProperties,
@@ -6846,9 +9011,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `XMLSchema` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_xml_schema(
         &mut self,
         _node: &XMLSchema,
@@ -6857,6 +9025,8 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked for each `XMLColumnProperties`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn xml_column_properties(
         &mut self,
         _node: &XMLColumnProperties,
@@ -6864,6 +9034,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `XMLMappingDataBinding`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn xml_mapping_data_binding(
         &mut self,
         _node: &XMLMappingDataBinding,
@@ -6871,10 +9043,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `XMLMappingMapInfo`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn xml_mapping_map_info(&mut self, _node: &XMLMappingMapInfo) -> Option<XMLMappingMapInfo> {
         None
     }
 
+    /// Asked for each `XMLMappingProperties`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn xml_mapping_properties(
         &mut self,
         _node: &XMLMappingProperties,
@@ -6882,6 +9058,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `XMLSchema`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn xml_schema(&mut self, _node: &XMLSchema) -> Option<XMLSchema> {
         None
     }
@@ -6893,22 +9071,30 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::spreadsheet` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `Alignment`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn alignment(&mut self, _node: &Alignment) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Author`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn author(&mut self, _node: &Author) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Authors`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn authors(&mut self, _node: &Authors) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `AutoFilterColumn`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn auto_filter_column(&mut self, _node: &AutoFilterColumn) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `AutoFilterColumnContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn auto_filter_column_content(
         &mut self,
         _node: &AutoFilterColumnContent,
@@ -6916,6 +9102,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `AutoFilterSettings`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn auto_filter_settings(
         &mut self,
         _node: &AutoFilterSettings,
@@ -6923,46 +9111,63 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `AutoSortScope`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn auto_sort_scope(&mut self, _node: &AutoSortScope) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BackgroundColor`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn background_color(&mut self, _node: &BackgroundColor) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BackgroundImage`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn background_image(&mut self, _node: &BackgroundImage) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Bold`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn bold(&mut self, _node: &Bold) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Boolean`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn boolean(&mut self, _node: &Boolean) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Border`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn border(&mut self, _node: &Border) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Borders`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn borders(&mut self, _node: &Borders) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BottomBorder`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn bottom_border(&mut self, _node: &BottomBorder) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Break`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn r#break(&mut self, _node: &Break) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CacheItemContent`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn cache_item(&mut self, _node: &CacheItemContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CachedWorksheetData`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn cached_worksheet_data(
         &mut self,
         _node: &CachedWorksheetData,
@@ -6970,6 +9175,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CalculatedColumnFormula`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn calculated_column_formula(
         &mut self,
         _node: &CalculatedColumnFormula,
@@ -6977,22 +9184,32 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CalculatedItem`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn calculated_item(&mut self, _node: &CalculatedItem) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CalculatedItems`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn calculated_items(&mut self, _node: &CalculatedItems) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CalculatedMember`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn calculated_member(&mut self, _node: &CalculatedMember) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CalculatedMembers`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn calculated_members(&mut self, _node: &CalculatedMembers) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CalculationChainInfo`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn calculation_chain_info(
         &mut self,
         _node: &CalculationChainInfo,
@@ -7000,6 +9217,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CalculationProperties`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn calculation_properties(
         &mut self,
         _node: &CalculationProperties,
@@ -7007,62 +9226,91 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Cell`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn cell(&mut self, _node: &Cell) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CellCalcCell`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn cell_calc_cell(&mut self, _node: &CellCalcCell) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CellFormats`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn cell_formats(&mut self, _node: &CellFormats) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CellMetadata`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn cell_metadata(&mut self, _node: &CellMetadata) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CellProperties`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn cell_properties(&mut self, _node: &CellProperties) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CellSmartTag`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn cell_smart_tag(&mut self, _node: &CellSmartTag) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CellSmartTags`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn cell_smart_tags(&mut self, _node: &CellSmartTags) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CellStyle`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn cell_style(&mut self, _node: &CellStyle) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CellStyles`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn cell_styles(&mut self, _node: &CellStyles) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CellValue`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn cell_value(&mut self, _node: &CellValue) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CellWatchItem`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn cell_watch_item(&mut self, _node: &CellWatchItem) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CellWatchItems`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn cell_watch_items(&mut self, _node: &CellWatchItems) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CharacterSet`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn character_set(&mut self, _node: &CharacterSet) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CharacterValue`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn character_value(&mut self, _node: &CharacterValue) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CharacterValueXStringElement`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn character_value_x_string_element(
         &mut self,
         _node: &CharacterValueXStringElement,
@@ -7070,10 +9318,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ChartSheet`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn chart_sheet(&mut self, _node: &ChartSheet) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ChartSheetPageSetup`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn chart_sheet_page_setup(
         &mut self,
         _node: &ChartSheetPageSetup,
@@ -7081,6 +9333,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ChartSheetProperties`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn chart_sheet_properties(
         &mut self,
         _node: &ChartSheetProperties,
@@ -7088,6 +9342,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ChartSheetProtection`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn chart_sheet_protection(
         &mut self,
         _node: &ChartSheetProtection,
@@ -7095,14 +9351,20 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ChartSheetView`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn chart_sheet_view(&mut self, _node: &ChartSheetView) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ChartSheetViews`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn chart_sheet_views(&mut self, _node: &ChartSheetViews) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ColorFilterCriteria`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn color_filter_criteria(
         &mut self,
         _node: &ColorFilterCriteria,
@@ -7110,30 +9372,43 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ColorIndexes`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn color_indexes(&mut self, _node: &ColorIndexes) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ColorScale`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn color_scale(&mut self, _node: &ColorScale) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Colors`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn colors(&mut self, _node: &Colors) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ColumnFields`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn column_fields(&mut self, _node: &ColumnFields) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ColumnInformation`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn column_information(&mut self, _node: &ColumnInformation) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ColumnItems`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn column_items(&mut self, _node: &ColumnItems) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ColumnOLAPHierarchies`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn column_olap_hierarchies(
         &mut self,
         _node: &ColumnOLAPHierarchies,
@@ -7141,6 +9416,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ColumnOLAPHierarchyReferences`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn column_olap_hierarchy_references(
         &mut self,
         _node: &ColumnOLAPHierarchyReferences,
@@ -7148,6 +9425,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ColumnWidthFormatting`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn column_width_formatting(
         &mut self,
         _node: &ColumnWidthFormatting,
@@ -7155,6 +9434,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ColumnXMLProperties`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn column_xml_properties(
         &mut self,
         _node: &ColumnXMLProperties,
@@ -7162,26 +9443,35 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Comment`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn comment(&mut self, _node: &Comment) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CommentProperties`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn comment_properties(&mut self, _node: &CommentProperties) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CommentText`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn comment_text(&mut self, _node: &CommentText) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Comments`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn comments(&mut self, _node: &Comments) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Condense`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn condense(&mut self, _node: &Condense) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ConditionalFormatValueObject`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn conditional_format_value_object(
         &mut self,
         _node: &ConditionalFormatValueObject,
@@ -7189,6 +9479,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ConditionalFormats`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn conditional_formats(
         &mut self,
         _node: &ConditionalFormats,
@@ -7196,6 +9488,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ConditionalFormatting`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn conditional_formatting(
         &mut self,
         _node: &ConditionalFormatting,
@@ -7203,6 +9497,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ConditionalFormattingConditionalFormat`. `Descend::Yes` walks into its children,
+    /// and `Descend::No` skips them.
     fn conditional_formatting_conditional_format(
         &mut self,
         _node: &ConditionalFormattingConditionalFormat,
@@ -7210,6 +9506,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ConditionalFormattingRule`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn conditional_formatting_rule(
         &mut self,
         _node: &ConditionalFormattingRule,
@@ -7217,14 +9515,20 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Connection`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn connection(&mut self, _node: &Connection) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Connections`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn connections(&mut self, _node: &Connections) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ConsolidationSource`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn consolidation_source(
         &mut self,
         _node: &ConsolidationSource,
@@ -7232,6 +9536,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CustomChartSheetView`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn custom_chart_sheet_view(
         &mut self,
         _node: &CustomChartSheetView,
@@ -7239,6 +9545,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CustomChartSheetViews`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn custom_chart_sheet_views(
         &mut self,
         _node: &CustomChartSheetViews,
@@ -7246,6 +9554,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CustomFilterCriteria`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn custom_filter_criteria(
         &mut self,
         _node: &CustomFilterCriteria,
@@ -7253,26 +9563,38 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CustomFilters`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn custom_filters(&mut self, _node: &CustomFilters) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CustomProperties`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn custom_properties(&mut self, _node: &CustomProperties) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CustomProperty`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn custom_property(&mut self, _node: &CustomProperty) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CustomSheetView`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn custom_sheet_view(&mut self, _node: &CustomSheetView) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CustomSheetViews`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn custom_sheet_views(&mut self, _node: &CustomSheetViews) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CustomWorkbookView`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn custom_workbook_view(
         &mut self,
         _node: &CustomWorkbookView,
@@ -7280,6 +9602,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CustomWorkbookViews`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn custom_workbook_views(
         &mut self,
         _node: &CustomWorkbookViews,
@@ -7287,18 +9611,25 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DataBar`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn data_bar(&mut self, _node: &DataBar) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DataBarColor`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn data_bar_color(&mut self, _node: &DataBarColor) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DataConsolidate`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn data_consolidate(&mut self, _node: &DataConsolidate) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DataConsolidationReference`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn data_consolidation_reference(
         &mut self,
         _node: &DataConsolidationReference,
@@ -7306,6 +9637,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DataConsolidationReferences`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn data_consolidation_references(
         &mut self,
         _node: &DataConsolidationReferences,
@@ -7313,22 +9646,32 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DataFieldItem`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn data_field_item(&mut self, _node: &DataFieldItem) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DataFields`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn data_fields(&mut self, _node: &DataFields) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DataValidation`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn data_validation(&mut self, _node: &DataValidation) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DataValidations`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn data_validations(&mut self, _node: &DataValidations) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DatabaseProperties`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn database_properties(
         &mut self,
         _node: &DatabaseProperties,
@@ -7336,22 +9679,31 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DateGrouping`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn date_grouping(&mut self, _node: &DateGrouping) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DateTime`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn date_time(&mut self, _node: &DateTime) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DDEConnection`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn dde_connection(&mut self, _node: &DDEConnection) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DDEItemDefinition`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn dde_item_definition(&mut self, _node: &DDEItemDefinition) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DDEItemsCollection`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn dde_items_collection(
         &mut self,
         _node: &DDEItemsCollection,
@@ -7359,18 +9711,26 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DDELinkValue`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn dde_link_value(&mut self, _node: &DDELinkValue) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DDENameValues`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn dde_name_values(&mut self, _node: &DDENameValues) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DefinedName`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn defined_name(&mut self, _node: &DefinedName) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DefinedNameExternalDefinedName`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn defined_name_external_defined_name(
         &mut self,
         _node: &DefinedNameExternalDefinedName,
@@ -7378,26 +9738,37 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DefinedNames`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn defined_names(&mut self, _node: &DefinedNames) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DeletedField`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn deleted_field(&mut self, _node: &DeletedField) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DeletedFields`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn deleted_fields(&mut self, _node: &DeletedFields) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Diagonal`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn diagonal(&mut self, _node: &Diagonal) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DialogSheet`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn dialog_sheet(&mut self, _node: &DialogSheet) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DiscreteGroupingProperties`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn discrete_grouping_properties(
         &mut self,
         _node: &DiscreteGroupingProperties,
@@ -7405,10 +9776,13 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Drawing`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn drawing(&mut self, _node: &Drawing) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DrawingReferenceInHeaderFooter`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn drawing_reference_in_header_footer(
         &mut self,
         _node: &DrawingReferenceInHeaderFooter,
@@ -7416,14 +9790,20 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DynamicFilter`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn dynamic_filter(&mut self, _node: &DynamicFilter) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `EmbeddedControl`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn embedded_control(&mut self, _node: &EmbeddedControl) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `EmbeddedControlProperties`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn embedded_control_properties(
         &mut self,
         _node: &EmbeddedControlProperties,
@@ -7431,14 +9811,20 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `EmbeddedControls`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn embedded_controls(&mut self, _node: &EmbeddedControls) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `EmbeddedObject`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn embedded_object(&mut self, _node: &EmbeddedObject) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `EmbeddedObjectProperties`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn embedded_object_properties(
         &mut self,
         _node: &EmbeddedObjectProperties,
@@ -7446,6 +9832,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `EmbeddedObjectSize`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn embedded_object_size(
         &mut self,
         _node: &EmbeddedObjectSize,
@@ -7453,46 +9841,66 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `EmbeddedObjects`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn embedded_objects(&mut self, _node: &EmbeddedObjects) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Entries`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn entries(&mut self, _node: &Entries) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `EntriesContent`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn entries_content(&mut self, _node: &EntriesContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ErrorValue`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn error_value(&mut self, _node: &ErrorValue) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `EvenPageFooter`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn even_page_footer(&mut self, _node: &EvenPageFooter) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `EvenPageHeader`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn even_page_header(&mut self, _node: &EvenPageHeader) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Extend`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn extend(&mut self, _node: &Extend) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Extension`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn extension(&mut self, _node: &Extension) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExternalCellData`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn external_cell_data(&mut self, _node: &ExternalCellData) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExternalReference`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn external_reference(&mut self, _node: &ExternalReference) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExternalReferenceContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn external_reference_content(
         &mut self,
         _node: &ExternalReferenceContent,
@@ -7500,6 +9908,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExternalReferenceExternalLink`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn external_reference_external_link(
         &mut self,
         _node: &ExternalReferenceExternalLink,
@@ -7507,6 +9917,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExternalReferences`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn external_references(
         &mut self,
         _node: &ExternalReferences,
@@ -7514,6 +9926,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExternalSheetDataSet`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn external_sheet_data_set(
         &mut self,
         _node: &ExternalSheetDataSet,
@@ -7521,14 +9935,19 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExternalWorkbook`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn external_workbook(&mut self, _node: &ExternalWorkbook) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Field`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn field(&mut self, _node: &Field) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FieldGroupProperties`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn field_group_properties(
         &mut self,
         _node: &FieldGroupProperties,
@@ -7536,18 +9955,25 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FieldItems`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn field_items(&mut self, _node: &FieldItems) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Fields`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn fields(&mut self, _node: &Fields) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FieldsUsage`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn fields_usage(&mut self, _node: &FieldsUsage) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FileRecoveryProperties`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn file_recovery_properties(
         &mut self,
         _node: &FileRecoveryProperties,
@@ -7555,58 +9981,81 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FileSharing`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn file_sharing(&mut self, _node: &FileSharing) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FileVersion`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn file_version(&mut self, _node: &FileVersion) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Fill`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn fill(&mut self, _node: &Fill) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FillContent`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn fill_content(&mut self, _node: &FillContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Fills`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn fills(&mut self, _node: &Fills) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Filter`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn filter(&mut self, _node: &Filter) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FilterCriteria`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn filter_criteria(&mut self, _node: &FilterCriteria) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Filters`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn filters(&mut self, _node: &Filters) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FirstPageFooter`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn first_page_footer(&mut self, _node: &FirstPageFooter) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FirstPageHeader`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn first_page_header(&mut self, _node: &FirstPageHeader) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Font`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn font(&mut self, _node: &Font) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FontContent`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn font_content(&mut self, _node: &FontContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FontFamily`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn font_family(&mut self, _node: &FontFamily) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FontFamilyIntProperty`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn font_family_int_property(
         &mut self,
         _node: &FontFamilyIntProperty,
@@ -7614,66 +10063,89 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FontName`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn font_name(&mut self, _node: &FontName) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FontRFont`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn font_r_font(&mut self, _node: &FontRFont) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FontSize`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn font_size(&mut self, _node: &FontSize) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Fonts`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn fonts(&mut self, _node: &Fonts) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ForegroundColor`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn foreground_color(&mut self, _node: &ForegroundColor) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Format`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn format(&mut self, _node: &Format) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Formats`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn formats(&mut self, _node: &Formats) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Formatting`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn formatting(&mut self, _node: &Formatting) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FormattingRecords`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn formatting_records(&mut self, _node: &FormattingRecords) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Formula`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn formula(&mut self, _node: &Formula) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Formula1`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn formula1(&mut self, _node: &Formula1) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Formula2`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn formula2(&mut self, _node: &Formula2) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FormulaF`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn formula_f(&mut self, _node: &FormulaF) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FunctionGroup`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn function_group(&mut self, _node: &FunctionGroup) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FunctionGroups`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn function_groups(&mut self, _node: &FunctionGroups) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FutureFeatureDataStorageArea`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn future_feature_data_storage_area(
         &mut self,
         _node: &FutureFeatureDataStorageArea,
@@ -7681,10 +10153,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FutureMetadata`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn future_metadata(&mut self, _node: &FutureMetadata) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FutureMetadataBlock`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn future_metadata_block(
         &mut self,
         _node: &FutureMetadataBlock,
@@ -7692,6 +10168,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `GenericObjectLinkConnection`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn generic_object_link_connection(
         &mut self,
         _node: &GenericObjectLinkConnection,
@@ -7699,18 +10177,24 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Gradient`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn gradient(&mut self, _node: &Gradient) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `GradientStop`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn gradient_stop(&mut self, _node: &GradientStop) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Header`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn header(&mut self, _node: &Header) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `HeaderFooterSettings`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn header_footer_settings(
         &mut self,
         _node: &HeaderFooterSettings,
@@ -7718,6 +10202,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `HorizontalInnerBorders`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn horizontal_inner_borders(
         &mut self,
         _node: &HorizontalInnerBorders,
@@ -7725,42 +10211,60 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Hyperlink`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn hyperlink(&mut self, _node: &Hyperlink) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Hyperlinks`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn hyperlinks(&mut self, _node: &Hyperlinks) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `IconFilter`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn icon_filter(&mut self, _node: &IconFilter) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `IconSet`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn icon_set(&mut self, _node: &IconSet) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `IgnoredError`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn ignored_error(&mut self, _node: &IgnoredError) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `IgnoredErrors`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn ignored_errors(&mut self, _node: &IgnoredErrors) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `InputCells`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn input_cells(&mut self, _node: &InputCells) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Italic`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn italic(&mut self, _node: &Italic) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `KPIMDXMetadata`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn kpimdx_metadata(&mut self, _node: &KPIMDXMetadata) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LeadingEdgeBorderLeft`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn leading_edge_border_left(
         &mut self,
         _node: &LeadingEdgeBorderLeft,
@@ -7768,6 +10272,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LeadingEdgeBorderStart`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn leading_edge_border_start(
         &mut self,
         _node: &LeadingEdgeBorderStart,
@@ -7775,6 +10281,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LegacyDrawingReference`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn legacy_drawing_reference(
         &mut self,
         _node: &LegacyDrawingReference,
@@ -7782,6 +10290,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LegacyDrawingReferenceInHeaderFooter`. `Descend::Yes` walks into its children,
+    /// and `Descend::No` skips them.
     fn legacy_drawing_reference_in_header_footer(
         &mut self,
         _node: &LegacyDrawingReferenceInHeaderFooter,
@@ -7789,14 +10299,19 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ListOfComments`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn list_of_comments(&mut self, _node: &ListOfComments) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Main`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn main(&mut self, _node: &Main) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MDXMetadataInformation`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn mdx_metadata_information(
         &mut self,
         _node: &MDXMetadataInformation,
@@ -7804,14 +10319,19 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MDXMetadataRecord`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn mdx_metadata_record(&mut self, _node: &MDXMetadataRecord) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Member`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn member(&mut self, _node: &Member) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MemberPropertiesMap`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn member_properties_map(
         &mut self,
         _node: &MemberPropertiesMap,
@@ -7819,6 +10339,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MemberPropertyIndex`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn member_property_index(
         &mut self,
         _node: &MemberPropertyIndex,
@@ -7826,6 +10348,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MemberPropertyMDXMetadata`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn member_property_mdx_metadata(
         &mut self,
         _node: &MemberPropertyMDXMetadata,
@@ -7833,6 +10357,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MemberUniqueNameIndex`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn member_unique_name_index(
         &mut self,
         _node: &MemberUniqueNameIndex,
@@ -7840,30 +10366,42 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Members`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn members(&mut self, _node: &Members) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MergeCells`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn merge_cells(&mut self, _node: &MergeCells) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MergedCell`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn merged_cell(&mut self, _node: &MergedCell) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Metadata`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn metadata(&mut self, _node: &Metadata) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MetadataBlock`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn metadata_block(&mut self, _node: &MetadataBlock) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MetadataRecord`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn metadata_record(&mut self, _node: &MetadataRecord) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MetadataStringStore`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn metadata_string_store(
         &mut self,
         _node: &MetadataStringStore,
@@ -7871,6 +10409,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MetadataTypeInformation`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn metadata_type_information(
         &mut self,
         _node: &MetadataTypeInformation,
@@ -7878,6 +10418,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MetadataTypesCollection`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn metadata_types_collection(
         &mut self,
         _node: &MetadataTypesCollection,
@@ -7885,10 +10427,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MRUColors`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn mru_colors(&mut self, _node: &MRUColors) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MultidimensionalExpressionMetadataContent`. `Descend::Yes` walks into its
+    /// children, and `Descend::No` skips them.
     fn multidimensional_expression_metadata(
         &mut self,
         _node: &MultidimensionalExpressionMetadataContent,
@@ -7896,18 +10442,26 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NamedLinks`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn named_links(&mut self, _node: &NamedLinks) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NestedRevisionContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn nested_revision(&mut self, _node: &NestedRevisionContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NewCellData`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn new_cell_data(&mut self, _node: &NewCellData) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NewFormattingInformation`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn new_formatting_information(
         &mut self,
         _node: &NewFormattingInformation,
@@ -7915,10 +10469,13 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NoValue`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn no_value(&mut self, _node: &NoValue) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NoValueTableMissing`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn no_value_table_missing(
         &mut self,
         _node: &NoValueTableMissing,
@@ -7926,62 +10483,91 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NumberFormat`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn number_format(&mut self, _node: &NumberFormat) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NumberFormats`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn number_formats(&mut self, _node: &NumberFormats) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Numeric`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn numeric(&mut self, _node: &Numeric) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ObjectCellAnchor`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn object_cell_anchor(&mut self, _node: &ObjectCellAnchor) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ObjectLinkItem`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn object_link_item(&mut self, _node: &ObjectLinkItem) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ObjectLinkItems`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn object_link_items(&mut self, _node: &ObjectLinkItems) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OddHeader`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn odd_header(&mut self, _node: &OddHeader) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OddPageFooter`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn odd_page_footer(&mut self, _node: &OddPageFooter) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OLAPDimension`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn olap_dimension(&mut self, _node: &OLAPDimension) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OLAPDimensions`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn olap_dimensions(&mut self, _node: &OLAPDimensions) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OLAPGroup`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn olap_group(&mut self, _node: &OLAPGroup) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OLAPGroupItems`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn olap_group_items(&mut self, _node: &OLAPGroupItems) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OLAPGroupMember`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn olap_group_member(&mut self, _node: &OLAPGroupMember) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OLAPGroupMembers`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn olap_group_members(&mut self, _node: &OLAPGroupMembers) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OLAPGroupingLevelsGroupLevel`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn olap_grouping_levels_group_level(
         &mut self,
         _node: &OLAPGroupingLevelsGroupLevel,
@@ -7989,6 +10575,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OLAPGroupingLevelsGroupLevels`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn olap_grouping_levels_group_levels(
         &mut self,
         _node: &OLAPGroupingLevelsGroupLevels,
@@ -7996,14 +10584,20 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OLAPHierarchy`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn olap_hierarchy(&mut self, _node: &OLAPHierarchy) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OLAPLevelGroups`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn olap_level_groups(&mut self, _node: &OLAPLevelGroups) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OLAPMeasureGroupMap`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn olap_measure_group_map(
         &mut self,
         _node: &OLAPMeasureGroupMap,
@@ -8011,6 +10605,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OLAPMeasureGroupMaps`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn olap_measure_group_maps(
         &mut self,
         _node: &OLAPMeasureGroupMaps,
@@ -8018,6 +10614,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OLAPMeasureGroupMeasureGroup`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn olap_measure_group_measure_group(
         &mut self,
         _node: &OLAPMeasureGroupMeasureGroup,
@@ -8025,10 +10623,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OLAPMeasureGroups`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn olap_measure_groups(&mut self, _node: &OLAPMeasureGroups) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OLAPMemberProperties`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn olap_member_properties(
         &mut self,
         _node: &OLAPMemberProperties,
@@ -8036,6 +10638,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OLAPMemberProperty`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn olap_member_property(
         &mut self,
         _node: &OLAPMemberProperty,
@@ -8043,30 +10647,41 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OLAPProperties`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn olap_properties(&mut self, _node: &OLAPProperties) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OLAPQueryCache`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn olap_query_cache(&mut self, _node: &OLAPQueryCache) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OLAPSet`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn olap_set(&mut self, _node: &OLAPSet) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OLAPKPIs`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn olapkp_is(&mut self, _node: &OLAPKPIs) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OLAPKPI`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn olapkpi(&mut self, _node: &OLAPKPI) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OldCellData`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn old_cell_data(&mut self, _node: &OldCellData) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OldFormattingInformation`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn old_formatting_information(
         &mut self,
         _node: &OldFormattingInformation,
@@ -8074,42 +10689,60 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OldFormula`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn old_formula(&mut self, _node: &OldFormula) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Outline`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn outline(&mut self, _node: &Outline) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `OutlineProperties`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn outline_properties(&mut self, _node: &OutlineProperties) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PageField`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn page_field(&mut self, _node: &PageField) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PageFieldItems`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn page_field_items(&mut self, _node: &PageFieldItems) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PageItem`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn page_item(&mut self, _node: &PageItem) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PageItemValues`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn page_item_values(&mut self, _node: &PageItemValues) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PageItems`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn page_items(&mut self, _node: &PageItems) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PageMargins`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn page_margins(&mut self, _node: &PageMargins) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PageSetupProperties`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn page_setup_properties(
         &mut self,
         _node: &PageSetupProperties,
@@ -8117,10 +10750,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PageSetupSettings`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn page_setup_settings(&mut self, _node: &PageSetupSettings) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ParameterProperties`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn parameter_properties(
         &mut self,
         _node: &ParameterProperties,
@@ -8128,10 +10765,13 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Pattern`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn pattern(&mut self, _node: &Pattern) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PhoneticProperties`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn phonetic_properties(
         &mut self,
         _node: &PhoneticProperties,
@@ -8139,22 +10779,32 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PhoneticRun`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn phonetic_run(&mut self, _node: &PhoneticRun) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotArea`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn pivot_area(&mut self, _node: &PivotArea) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotAreas`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn pivot_areas(&mut self, _node: &PivotAreas) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotCache`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn pivot_cache(&mut self, _node: &PivotCache) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotCacheDefinition`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn pivot_cache_definition(
         &mut self,
         _node: &PivotCacheDefinition,
@@ -8162,10 +10812,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotCacheField`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn pivot_cache_field(&mut self, _node: &PivotCacheField) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotCacheFieldId`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn pivot_cache_field_id(
         &mut self,
         _node: &PivotCacheFieldId,
@@ -8173,10 +10827,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotCacheFields`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn pivot_cache_fields(&mut self, _node: &PivotCacheFields) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotCacheHierarchies`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn pivot_cache_hierarchies(
         &mut self,
         _node: &PivotCacheHierarchies,
@@ -8184,6 +10842,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotCacheHierarchy`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn pivot_cache_hierarchy(
         &mut self,
         _node: &PivotCacheHierarchy,
@@ -8191,10 +10851,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotCacheRecord`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn pivot_cache_record(&mut self, _node: &PivotCacheRecord) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotCacheRecordContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn pivot_cache_record_content(
         &mut self,
         _node: &PivotCacheRecordContent,
@@ -8202,10 +10866,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotCacheRecords`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn pivot_cache_records(&mut self, _node: &PivotCacheRecords) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotCacheSourceDescription`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn pivot_cache_source_description(
         &mut self,
         _node: &PivotCacheSourceDescription,
@@ -8213,6 +10881,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotCacheSourceDescriptionContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn pivot_cache_source_description_content(
         &mut self,
         _node: &PivotCacheSourceDescriptionContent,
@@ -8220,18 +10890,26 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotCaches`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn pivot_caches(&mut self, _node: &PivotCaches) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotChartFormat`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn pivot_chart_format(&mut self, _node: &PivotChartFormat) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotChartFormats`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn pivot_chart_formats(&mut self, _node: &PivotChartFormats) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotTableAdvancedFilter`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn pivot_table_advanced_filter(
         &mut self,
         _node: &PivotTableAdvancedFilter,
@@ -8239,6 +10917,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotTableDefinition`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn pivot_table_definition(
         &mut self,
         _node: &PivotTableDefinition,
@@ -8246,10 +10926,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotTableField`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn pivot_table_field(&mut self, _node: &PivotTableField) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotTableFieldItem`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn pivot_table_field_item(
         &mut self,
         _node: &PivotTableFieldItem,
@@ -8257,18 +10941,26 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotTableFields`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn pivot_table_fields(&mut self, _node: &PivotTableFields) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotTableFormat`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn pivot_table_format(&mut self, _node: &PivotTableFormat) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotTableFormats`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn pivot_table_formats(&mut self, _node: &PivotTableFormats) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotTableLocation`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn pivot_table_location(
         &mut self,
         _node: &PivotTableLocation,
@@ -8276,6 +10968,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotTableOLAPHierarchies`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn pivot_table_olap_hierarchies(
         &mut self,
         _node: &PivotTableOLAPHierarchies,
@@ -8283,6 +10977,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotTableSelection`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn pivot_table_selection(
         &mut self,
         _node: &PivotTableSelection,
@@ -8290,22 +10986,32 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PivotTableStyle`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn pivot_table_style(&mut self, _node: &PivotTableStyle) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PrintOptions`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn print_options(&mut self, _node: &PrintOptions) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ProtectedRange`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn protected_range(&mut self, _node: &ProtectedRange) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ProtectedRanges`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn protected_ranges(&mut self, _node: &ProtectedRanges) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ProtectionProperties`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn protection_properties(
         &mut self,
         _node: &ProtectionProperties,
@@ -8313,26 +11019,37 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Query`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn query(&mut self, _node: &Query) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `QueryParameters`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn query_parameters(&mut self, _node: &QueryParameters) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `QueryTable`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn query_table(&mut self, _node: &QueryTable) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `QueryTableField`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn query_table_field(&mut self, _node: &QueryTableField) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `QueryTableFields`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn query_table_fields(&mut self, _node: &QueryTableFields) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `QueryTableRefreshInformation`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn query_table_refresh_information(
         &mut self,
         _node: &QueryTableRefreshInformation,
@@ -8340,6 +11057,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RangeGroupingProperties`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn range_grouping_properties(
         &mut self,
         _node: &RangeGroupingProperties,
@@ -8347,34 +11066,48 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RangeSet`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn range_set(&mut self, _node: &RangeSet) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RangeSets`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn range_sets(&mut self, _node: &RangeSets) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Reference`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn reference(&mut self, _node: &Reference) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `References`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn references(&mut self, _node: &References) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ReferencesTr`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn references_tr(&mut self, _node: &ReferencesTr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Reviewed`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn reviewed(&mut self, _node: &Reviewed) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ReviewedList`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn reviewed_list(&mut self, _node: &ReviewedList) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RevisionAutoFormat`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn revision_auto_format(
         &mut self,
         _node: &RevisionAutoFormat,
@@ -8382,6 +11115,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RevisionCellChange`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn revision_cell_change(
         &mut self,
         _node: &RevisionCellChange,
@@ -8389,6 +11124,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RevisionCellComment`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn revision_cell_comment(
         &mut self,
         _node: &RevisionCellComment,
@@ -8396,10 +11133,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RevisionCellMove`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn revision_cell_move(&mut self, _node: &RevisionCellMove) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RevisionCustomView`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn revision_custom_view(
         &mut self,
         _node: &RevisionCustomView,
@@ -8407,6 +11148,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RevisionDefinedName`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn revision_defined_name(
         &mut self,
         _node: &RevisionDefinedName,
@@ -8414,14 +11157,20 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RevisionFormat`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn revision_format(&mut self, _node: &RevisionFormat) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RevisionHeaders`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn revision_headers(&mut self, _node: &RevisionHeaders) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RevisionInsertSheet`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn revision_insert_sheet(
         &mut self,
         _node: &RevisionInsertSheet,
@@ -8429,6 +11178,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RevisionMergeConflict`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn revision_merge_conflict(
         &mut self,
         _node: &RevisionMergeConflict,
@@ -8436,6 +11187,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RevisionQueryTable`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn revision_query_table(
         &mut self,
         _node: &RevisionQueryTable,
@@ -8443,6 +11196,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RevisionRowColumnInsertDelete`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn revision_row_column_insert_delete(
         &mut self,
         _node: &RevisionRowColumnInsertDelete,
@@ -8450,54 +11205,77 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RevisionSheetName`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn revision_sheet_name(&mut self, _node: &RevisionSheetName) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Revisions`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn revisions(&mut self, _node: &Revisions) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RevisionsContent`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn revisions_content(&mut self, _node: &RevisionsContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RGBColor`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn rgb_color(&mut self, _node: &RGBColor) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RichTextInline`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn rich_text_inline(&mut self, _node: &RichTextInline) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RichTextRun`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn rich_text_run(&mut self, _node: &RichTextRun) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Row`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn row(&mut self, _node: &Row) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RowBreaks`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn row_breaks(&mut self, _node: &RowBreaks) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RowExternalRow`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn row_external_row(&mut self, _node: &RowExternalRow) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RowFields`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn row_fields(&mut self, _node: &RowFields) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RowItems`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn row_items(&mut self, _node: &RowItems) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RowItemsI`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn row_items_i(&mut self, _node: &RowItemsI) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RowOLAPHierarchies`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn row_olap_hierarchies(
         &mut self,
         _node: &RowOLAPHierarchies,
@@ -8505,6 +11283,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RowOLAPHierarchyReferences`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn row_olap_hierarchy_references(
         &mut self,
         _node: &RowOLAPHierarchyReferences,
@@ -8512,10 +11292,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RunProperties`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn run_properties(&mut self, _node: &RunProperties) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RunPropertiesContent`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn run_properties_content(
         &mut self,
         _node: &RunPropertiesContent,
@@ -8523,18 +11307,24 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Scenario`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn scenario(&mut self, _node: &Scenario) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Scenarios`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn scenarios(&mut self, _node: &Scenarios) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Scheme`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn scheme(&mut self, _node: &Scheme) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SecurityDescriptor`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn security_descriptor(
         &mut self,
         _node: &SecurityDescriptor,
@@ -8542,42 +11332,60 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Selection`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn selection(&mut self, _node: &Selection) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ServerFormat`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn server_format(&mut self, _node: &ServerFormat) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ServerFormats`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn server_formats(&mut self, _node: &ServerFormats) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SetMDXMetadata`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn set_mdx_metadata(&mut self, _node: &SetMDXMetadata) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Sets`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sets(&mut self, _node: &Sets) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Shadow`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn shadow(&mut self, _node: &Shadow) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SharedItems`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn shared_items(&mut self, _node: &SharedItems) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SharedItemsIndex`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn shared_items_index(&mut self, _node: &SharedItemsIndex) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SharedStringTable`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn shared_string_table(&mut self, _node: &SharedStringTable) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SheetCalculationProperties`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn sheet_calculation_properties(
         &mut self,
         _node: &SheetCalculationProperties,
@@ -8585,10 +11393,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SheetData`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn sheet_data(&mut self, _node: &SheetData) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SheetFormatProperties`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn sheet_format_properties(
         &mut self,
         _node: &SheetFormatProperties,
@@ -8596,26 +11408,37 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SheetId`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sheet_id(&mut self, _node: &SheetId) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SheetIdMap`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn sheet_id_map(&mut self, _node: &SheetIdMap) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SheetInformation`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn sheet_information(&mut self, _node: &SheetInformation) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SheetName`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn sheet_name(&mut self, _node: &SheetName) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SheetProperties`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn sheet_properties(&mut self, _node: &SheetProperties) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SheetProtectionOptions`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn sheet_protection_options(
         &mut self,
         _node: &SheetProtectionOptions,
@@ -8623,22 +11446,31 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SheetTabColor`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn sheet_tab_color(&mut self, _node: &SheetTabColor) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SheetViews`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn sheet_views(&mut self, _node: &SheetViews) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Sheets`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sheets(&mut self, _node: &Sheets) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SingleCells`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn single_cells(&mut self, _node: &SingleCells) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SmartTagPropertiesCellSmartTagPr`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn smart_tag_properties_cell_smart_tag_pr(
         &mut self,
         _node: &SmartTagPropertiesCellSmartTagPr,
@@ -8646,6 +11478,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SmartTagPropertiesSmartTagPr`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn smart_tag_properties_smart_tag_pr(
         &mut self,
         _node: &SmartTagPropertiesSmartTagPr,
@@ -8653,46 +11487,68 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SmartTagType`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn smart_tag_type(&mut self, _node: &SmartTagType) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SmartTagTypes`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn smart_tag_types(&mut self, _node: &SmartTagTypes) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SmartTags`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn smart_tags(&mut self, _node: &SmartTags) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SortByTuple`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn sort_by_tuple(&mut self, _node: &SortByTuple) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SortCondition`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn sort_condition(&mut self, _node: &SortCondition) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SortState`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn sort_state(&mut self, _node: &SortState) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `StrikeThrough`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn strike_through(&mut self, _node: &StrikeThrough) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `StringItem`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn string_item(&mut self, _node: &StringItem) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `StringsInSubtopic`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn strings_in_subtopic(&mut self, _node: &StringsInSubtopic) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `StyleSheet`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn style_sheet(&mut self, _node: &StyleSheet) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SupportingWorkbookSheetNames`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn supporting_workbook_sheet_names(
         &mut self,
         _node: &SupportingWorkbookSheetNames,
@@ -8700,34 +11556,49 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Table`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn table(&mut self, _node: &Table) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TableColumn`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn table_column(&mut self, _node: &TableColumn) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TableColumns`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn table_columns(&mut self, _node: &TableColumns) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TablePart`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn table_part(&mut self, _node: &TablePart) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TableParts`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn table_parts(&mut self, _node: &TableParts) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TableProperties`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn table_properties(&mut self, _node: &TableProperties) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TableStyle`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn table_style(&mut self, _node: &TableStyle) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TableStyleTableStyleElement`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn table_style_table_style_element(
         &mut self,
         _node: &TableStyleTableStyleElement,
@@ -8735,6 +11606,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TableStyleTableStyleInfo`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn table_style_table_style_info(
         &mut self,
         _node: &TableStyleTableStyleInfo,
@@ -8742,22 +11615,30 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TableStyles`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn table_styles(&mut self, _node: &TableStyles) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Tables`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn tables(&mut self, _node: &Tables) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TablesContent`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn tables_content(&mut self, _node: &TablesContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Text`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn text(&mut self, _node: &Text) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TextImportFieldSettings`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn text_import_field_settings(
         &mut self,
         _node: &TextImportFieldSettings,
@@ -8765,6 +11646,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TextImportSettings`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn text_import_settings(
         &mut self,
         _node: &TextImportSettings,
@@ -8772,22 +11655,30 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Top10`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn top10(&mut self, _node: &Top10) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TopBorder`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn top_border(&mut self, _node: &TopBorder) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Topic`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn topic(&mut self, _node: &Topic) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TotalsRowFormula`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn totals_row_formula(&mut self, _node: &TotalsRowFormula) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TrailingEdgeBorderEnd`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn trailing_edge_border_end(
         &mut self,
         _node: &TrailingEdgeBorderEnd,
@@ -8795,6 +11686,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TrailingEdgeBorderRight`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn trailing_edge_border_right(
         &mut self,
         _node: &TrailingEdgeBorderRight,
@@ -8802,50 +11695,69 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Tuple`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn tuple(&mut self, _node: &Tuple) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TupleCache`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn tuple_cache(&mut self, _node: &TupleCache) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TupleMDXMetadata`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn tuple_mdx_metadata(&mut self, _node: &TupleMDXMetadata) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Tuples`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn tuples(&mut self, _node: &Tuples) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Underline`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn underline(&mut self, _node: &Underline) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Undo`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn undo(&mut self, _node: &Undo) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `UserInformation`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn user_information(&mut self, _node: &UserInformation) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `UserList`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn user_list(&mut self, _node: &UserList) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Value`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn value(&mut self, _node: &Value) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ValueMetadata`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn value_metadata(&mut self, _node: &ValueMetadata) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `VerticalAlignment`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn vertical_alignment(&mut self, _node: &VerticalAlignment) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `VerticalInnerBorder`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn vertical_inner_border(
         &mut self,
         _node: &VerticalInnerBorder,
@@ -8853,6 +11765,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `VerticalPageBreaks`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn vertical_page_breaks(
         &mut self,
         _node: &VerticalPageBreaks,
@@ -8860,10 +11774,13 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ViewPane`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn view_pane(&mut self, _node: &ViewPane) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `VolatileDependencyType`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn volatile_dependency_type(
         &mut self,
         _node: &VolatileDependencyType,
@@ -8871,6 +11788,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `VolatileDependencyTypes`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn volatile_dependency_types(
         &mut self,
         _node: &VolatileDependencyTypes,
@@ -8878,14 +11797,20 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `WebPublishObjects`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn web_publish_objects(&mut self, _node: &WebPublishObjects) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `WebPublishingItem`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn web_publishing_item(&mut self, _node: &WebPublishingItem) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `WebPublishingItems`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn web_publishing_items(
         &mut self,
         _node: &WebPublishingItems,
@@ -8893,6 +11818,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `WebPublishingObject`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn web_publishing_object(
         &mut self,
         _node: &WebPublishingObject,
@@ -8900,6 +11827,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `WebPublishingProperties`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn web_publishing_properties(
         &mut self,
         _node: &WebPublishingProperties,
@@ -8907,6 +11836,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `WebQueryProperties`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn web_query_properties(
         &mut self,
         _node: &WebQueryProperties,
@@ -8914,10 +11845,13 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Workbook`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn workbook(&mut self, _node: &Workbook) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `WorkbookProperties`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn workbook_properties(
         &mut self,
         _node: &WorkbookProperties,
@@ -8925,6 +11859,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `WorkbookProtection`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn workbook_protection(
         &mut self,
         _node: &WorkbookProtection,
@@ -8932,18 +11868,26 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `WorkbookView`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn workbook_view(&mut self, _node: &WorkbookView) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `WorkbookViews`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn workbook_views(&mut self, _node: &WorkbookViews) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Worksheet`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn worksheet(&mut self, _node: &Worksheet) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `WorksheetDimensions`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn worksheet_dimensions(
         &mut self,
         _node: &WorksheetDimensions,
@@ -8951,6 +11895,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `WorksheetPivotCacheSource`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn worksheet_pivot_cache_source(
         &mut self,
         _node: &WorksheetPivotCacheSource,
@@ -8958,10 +11904,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `WorksheetView`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn worksheet_view(&mut self, _node: &WorksheetView) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `XMLColumnProperties`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn xml_column_properties(
         &mut self,
         _node: &XMLColumnProperties,
@@ -8969,6 +11919,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `XMLMappingDataBinding`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn xml_mapping_data_binding(
         &mut self,
         _node: &XMLMappingDataBinding,
@@ -8976,6 +11928,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `XMLMappingMapInfo`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn xml_mapping_map_info(
         &mut self,
         _node: &XMLMappingMapInfo,
@@ -8983,6 +11937,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `XMLMappingProperties`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn xml_mapping_properties(
         &mut self,
         _node: &XMLMappingProperties,
@@ -8990,6 +11946,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `XMLSchema`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn xml_schema(&mut self, _node: &XMLSchema) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

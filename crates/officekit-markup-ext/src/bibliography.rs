@@ -212,8 +212,11 @@
 //! The hooks of the `b` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_base::bibliography`.
 //!
-//! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/bibliography`.
+//! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/bibliography`. Its prefix, `b`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_base::bibliography::*;
 
 use officekit_markup_base::Written;
@@ -229,6 +232,8 @@ use std::io;
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::bibliography` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `AbbreviatedCaseNumber`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn abbreviated_case_number(
         &mut self,
         _node: &AbbreviatedCaseNumber,
@@ -236,62 +241,92 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `AlbumTitle`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn album_title(&mut self, _node: &AlbumTitle) -> Option<AlbumTitle> {
         None
     }
 
+    /// Asked for each `Artist`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn artist(&mut self, _node: &Artist) -> Option<Artist> {
         None
     }
 
+    /// Asked for each `Author`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn author(&mut self, _node: &Author) -> Option<Author> {
         None
     }
 
+    /// Asked for each `BookAuthor`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn book_author(&mut self, _node: &BookAuthor) -> Option<BookAuthor> {
         None
     }
 
+    /// Asked for each `BookTitle`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn book_title(&mut self, _node: &BookTitle) -> Option<BookTitle> {
         None
     }
 
+    /// Asked for each `BroadcastTitle`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn broadcast_title(&mut self, _node: &BroadcastTitle) -> Option<BroadcastTitle> {
         None
     }
 
+    /// Asked for each `Broadcaster`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn broadcaster(&mut self, _node: &Broadcaster) -> Option<Broadcaster> {
         None
     }
 
+    /// Asked for each `CaseNumber`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn case_number(&mut self, _node: &CaseNumber) -> Option<CaseNumber> {
         None
     }
 
+    /// Asked for each `ChapterNumber`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn chapter_number(&mut self, _node: &ChapterNumber) -> Option<ChapterNumber> {
         None
     }
 
+    /// Asked for each `City`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn city(&mut self, _node: &City) -> Option<City> {
         None
     }
 
+    /// Asked for each `Comments`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn comments(&mut self, _node: &Comments) -> Option<Comments> {
         None
     }
 
+    /// Asked for each `Compiler`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn compiler(&mut self, _node: &Compiler) -> Option<Compiler> {
         None
     }
 
+    /// Asked for each `Composer`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn composer(&mut self, _node: &Composer) -> Option<Composer> {
         None
     }
 
+    /// Asked for each `Conductor`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn conductor(&mut self, _node: &Conductor) -> Option<Conductor> {
         None
     }
 
+    /// Asked for each `ConferenceOrProceedingsName`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn conference_or_proceedings_name(
         &mut self,
         _node: &ConferenceOrProceedingsName,
@@ -299,10 +334,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ContributorsList`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn contributors_list(&mut self, _node: &ContributorsList) -> Option<ContributorsList> {
         None
     }
 
+    /// Asked for each `ContributorsListContent`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn contributors_list_content(
         &mut self,
         _node: &ContributorsListContent,
@@ -310,6 +349,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ContributorsListContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn contributors_list_content_items(
         &mut self,
         _node: &ContributorsListContent,
@@ -317,102 +358,152 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `CorporateAuthor`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn corporate_author(&mut self, _node: &CorporateAuthor) -> Option<CorporateAuthor> {
         None
     }
 
+    /// Asked for each `Counsel`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn counsel(&mut self, _node: &Counsel) -> Option<Counsel> {
         None
     }
 
+    /// Asked for each `CountryOrRegion`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn country_or_region(&mut self, _node: &CountryOrRegion) -> Option<CountryOrRegion> {
         None
     }
 
+    /// Asked for each `Court`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn court(&mut self, _node: &Court) -> Option<Court> {
         None
     }
 
+    /// Asked for each `Day`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn day(&mut self, _node: &Day) -> Option<Day> {
         None
     }
 
+    /// Asked for each `DayAccessed`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn day_accessed(&mut self, _node: &DayAccessed) -> Option<DayAccessed> {
         None
     }
 
+    /// Asked for each `Department`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn department(&mut self, _node: &Department) -> Option<Department> {
         None
     }
 
+    /// Asked for each `Director`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn director(&mut self, _node: &Director) -> Option<Director> {
         None
     }
 
+    /// Asked for each `Distributor`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn distributor(&mut self, _node: &Distributor) -> Option<Distributor> {
         None
     }
 
+    /// Asked for each `Editor`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn editor(&mut self, _node: &Editor) -> Option<Editor> {
         None
     }
 
+    /// Asked for each `EditorEdition`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn editor_edition(&mut self, _node: &EditorEdition) -> Option<EditorEdition> {
         None
     }
 
+    /// Asked for each `Guid`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn guid(&mut self, _node: &Guid) -> Option<Guid> {
         None
     }
 
+    /// Asked for each `Institution`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn institution(&mut self, _node: &Institution) -> Option<Institution> {
         None
     }
 
+    /// Asked for each `InternetSiteTitle`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn internet_site_title(&mut self, _node: &InternetSiteTitle) -> Option<InternetSiteTitle> {
         None
     }
 
+    /// Asked for each `Interviewee`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn interviewee(&mut self, _node: &Interviewee) -> Option<Interviewee> {
         None
     }
 
+    /// Asked for each `Interviewer`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn interviewer(&mut self, _node: &Interviewer) -> Option<Interviewer> {
         None
     }
 
+    /// Asked for each `Inventor`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn inventor(&mut self, _node: &Inventor) -> Option<Inventor> {
         None
     }
 
+    /// Asked for each `Issue`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn issue(&mut self, _node: &Issue) -> Option<Issue> {
         None
     }
 
+    /// Asked for each `JournalName`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn journal_name(&mut self, _node: &JournalName) -> Option<JournalName> {
         None
     }
 
+    /// Asked for each `LocaleID`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn locale_id(&mut self, _node: &LocaleID) -> Option<LocaleID> {
         None
     }
 
+    /// Asked for each `Medium`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn medium(&mut self, _node: &Medium) -> Option<Medium> {
         None
     }
 
+    /// Asked for each `Month`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn month(&mut self, _node: &Month) -> Option<Month> {
         None
     }
 
+    /// Asked for each `MonthAccessed`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn month_accessed(&mut self, _node: &MonthAccessed) -> Option<MonthAccessed> {
         None
     }
 
+    /// Asked for each `NameList`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn name_list(&mut self, _node: &NameList) -> Option<NameList> {
         None
     }
 
+    /// Asked for each `NameOrCorporateContent`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn name_or_corporate(
         &mut self,
         _node: &NameOrCorporateContent,
@@ -420,34 +511,50 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `NumberOfVolumes`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn number_of_volumes(&mut self, _node: &NumberOfVolumes) -> Option<NumberOfVolumes> {
         None
     }
 
+    /// Asked for each `Pages`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn pages(&mut self, _node: &Pages) -> Option<Pages> {
         None
     }
 
+    /// Asked for each `PatentNumber`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn patent_number(&mut self, _node: &PatentNumber) -> Option<PatentNumber> {
         None
     }
 
+    /// Asked for each `PatentType`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn patent_type(&mut self, _node: &PatentType) -> Option<PatentType> {
         None
     }
 
+    /// Asked for each `Performer`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn performer(&mut self, _node: &Performer) -> Option<Performer> {
         None
     }
 
+    /// Asked for each `PeriodicalTitle`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn periodical_title(&mut self, _node: &PeriodicalTitle) -> Option<PeriodicalTitle> {
         None
     }
 
+    /// Asked for each `Person`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn person(&mut self, _node: &Person) -> Option<Person> {
         None
     }
 
+    /// Asked for each `PersonsFirstOrGivenName`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn persons_first_or_given_name(
         &mut self,
         _node: &PersonsFirstOrGivenName,
@@ -455,6 +562,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `PersonsLastOrFamilyName`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn persons_last_or_family_name(
         &mut self,
         _node: &PersonsLastOrFamilyName,
@@ -462,6 +571,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `PersonsMiddleOrOtherName`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn persons_middle_or_other_name(
         &mut self,
         _node: &PersonsMiddleOrOtherName,
@@ -469,105 +580,156 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ProducerName`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn producer_name(&mut self, _node: &ProducerName) -> Option<ProducerName> {
         None
     }
 
+    /// Asked for each `ProductionCompany`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn production_company(&mut self, _node: &ProductionCompany) -> Option<ProductionCompany> {
         None
     }
 
+    /// Asked for each `PublicationTitle`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn publication_title(&mut self, _node: &PublicationTitle) -> Option<PublicationTitle> {
         None
     }
 
+    /// Asked for each `Publisher`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn publisher(&mut self, _node: &Publisher) -> Option<Publisher> {
         None
     }
 
+    /// Asked for each `RecordingNumber`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn recording_number(&mut self, _node: &RecordingNumber) -> Option<RecordingNumber> {
         None
     }
 
+    /// Asked for each `ReferenceOrder`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn reference_order(&mut self, _node: &ReferenceOrder) -> Option<ReferenceOrder> {
         None
     }
 
+    /// Asked for each `Reporter`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn reporter(&mut self, _node: &Reporter) -> Option<Reporter> {
         None
     }
 
+    /// Asked for each `ShortTitle`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn short_title(&mut self, _node: &ShortTitle) -> Option<ShortTitle> {
         None
     }
 
+    /// Asked for each `Source`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn source(&mut self, _node: &Source) -> Option<Source> {
         None
     }
 
+    /// Asked for each `SourceContent`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn source_content(&mut self, _node: &SourceContent) -> Option<SourceContent> {
         None
     }
 
+    /// Asked for each `SourceContent` in a list. `None` leaves the item to its own `transform`, and
+    /// `Some` puts the items it holds, any number of them, in its place.
     fn source_content_items(&mut self, _node: &SourceContent) -> Option<Vec<SourceContent>> {
         None
     }
 
+    /// Asked for each `SourceType`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn source_type(&mut self, _node: &SourceType) -> Option<SourceType> {
         None
     }
 
+    /// Asked for each `Sources`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn sources(&mut self, _node: &Sources) -> Option<Sources> {
         None
     }
 
+    /// Asked for each `StandardNumber`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn standard_number(&mut self, _node: &StandardNumber) -> Option<StandardNumber> {
         None
     }
 
+    /// Asked for each `StateOrProvince`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn state_or_province(&mut self, _node: &StateOrProvince) -> Option<StateOrProvince> {
         None
     }
 
+    /// Asked for each `Station`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn station(&mut self, _node: &Station) -> Option<Station> {
         None
     }
 
+    /// Asked for each `Tag`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn tag(&mut self, _node: &Tag) -> Option<Tag> {
         None
     }
 
+    /// Asked for each `Theater`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn theater(&mut self, _node: &Theater) -> Option<Theater> {
         None
     }
 
+    /// Asked for each `ThesisType`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn thesis_type(&mut self, _node: &ThesisType) -> Option<ThesisType> {
         None
     }
 
+    /// Asked for each `Title`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn title(&mut self, _node: &Title) -> Option<Title> {
         None
     }
 
+    /// Asked for each `Translator`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn translator(&mut self, _node: &Translator) -> Option<Translator> {
         None
     }
 
+    /// Asked for each `Url`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn url(&mut self, _node: &Url) -> Option<Url> {
         None
     }
 
+    /// Asked for each `Version`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn version(&mut self, _node: &Version) -> Option<Version> {
         None
     }
 
+    /// Asked for each `Volume`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn volume(&mut self, _node: &Volume) -> Option<Volume> {
         None
     }
 
+    /// Asked when a `AbbreviatedCaseNumber` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_abbreviated_case_number(
         &mut self,
         _node: &AbbreviatedCaseNumber,
@@ -576,9 +738,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `AlbumTitle` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_album_title(
         &mut self,
         _node: &AlbumTitle,
@@ -587,23 +752,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Artist` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_artist(&mut self, _node: &Artist, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Author` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_author(&mut self, _node: &Author, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `BookAuthor` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_book_author(
         &mut self,
         _node: &BookAuthor,
@@ -612,9 +786,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BookTitle` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_book_title(
         &mut self,
         _node: &BookTitle,
@@ -623,9 +800,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BroadcastTitle` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_broadcast_title(
         &mut self,
         _node: &BroadcastTitle,
@@ -634,9 +814,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Broadcaster` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_broadcaster(
         &mut self,
         _node: &Broadcaster,
@@ -645,9 +828,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CaseNumber` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_case_number(
         &mut self,
         _node: &CaseNumber,
@@ -656,9 +842,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ChapterNumber` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_chapter_number(
         &mut self,
         _node: &ChapterNumber,
@@ -667,16 +856,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `City` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_city(&mut self, _node: &City, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Comments` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_comments(
         &mut self,
         _node: &Comments,
@@ -685,9 +880,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Compiler` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_compiler(
         &mut self,
         _node: &Compiler,
@@ -696,9 +894,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Composer` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_composer(
         &mut self,
         _node: &Composer,
@@ -707,9 +908,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Conductor` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_conductor(
         &mut self,
         _node: &Conductor,
@@ -718,9 +922,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ConferenceOrProceedingsName` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_conference_or_proceedings_name(
         &mut self,
         _node: &ConferenceOrProceedingsName,
@@ -729,9 +936,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ContributorsList` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_contributors_list(
         &mut self,
         _node: &ContributorsList,
@@ -740,9 +950,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ContributorsListContent` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_contributors_list_content(
         &mut self,
         _node: &ContributorsListContent,
@@ -751,9 +964,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ContributorsListContent` in a list is written through. `Written::Yes` means
+    /// the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_contributors_list_content_items(
         &mut self,
         _node: &ContributorsListContent,
@@ -762,9 +978,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CorporateAuthor` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_corporate_author(
         &mut self,
         _node: &CorporateAuthor,
@@ -773,16 +992,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Counsel` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_counsel(&mut self, _node: &Counsel, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `CountryOrRegion` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_country_or_region(
         &mut self,
         _node: &CountryOrRegion,
@@ -791,23 +1016,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Court` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_court(&mut self, _node: &Court, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Day` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_day(&mut self, _node: &Day, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `DayAccessed` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_day_accessed(
         &mut self,
         _node: &DayAccessed,
@@ -816,9 +1050,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Department` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_department(
         &mut self,
         _node: &Department,
@@ -827,9 +1064,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Director` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_director(
         &mut self,
         _node: &Director,
@@ -838,9 +1078,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Distributor` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_distributor(
         &mut self,
         _node: &Distributor,
@@ -849,16 +1092,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Editor` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_editor(&mut self, _node: &Editor, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `EditorEdition` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_editor_edition(
         &mut self,
         _node: &EditorEdition,
@@ -867,16 +1116,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Guid` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_guid(&mut self, _node: &Guid, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Institution` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_institution(
         &mut self,
         _node: &Institution,
@@ -885,9 +1140,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `InternetSiteTitle` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_internet_site_title(
         &mut self,
         _node: &InternetSiteTitle,
@@ -896,9 +1154,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Interviewee` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_interviewee(
         &mut self,
         _node: &Interviewee,
@@ -907,9 +1168,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Interviewer` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_interviewer(
         &mut self,
         _node: &Interviewer,
@@ -918,9 +1182,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Inventor` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_inventor(
         &mut self,
         _node: &Inventor,
@@ -929,16 +1196,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Issue` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_issue(&mut self, _node: &Issue, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `JournalName` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_journal_name(
         &mut self,
         _node: &JournalName,
@@ -947,9 +1220,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LocaleID` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_locale_id(
         &mut self,
         _node: &LocaleID,
@@ -958,23 +1234,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Medium` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_medium(&mut self, _node: &Medium, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Month` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_month(&mut self, _node: &Month, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `MonthAccessed` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_month_accessed(
         &mut self,
         _node: &MonthAccessed,
@@ -983,9 +1268,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NameList` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_name_list(
         &mut self,
         _node: &NameList,
@@ -994,9 +1282,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NameOrCorporateContent` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_name_or_corporate(
         &mut self,
         _node: &NameOrCorporateContent,
@@ -1005,9 +1296,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NumberOfVolumes` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_number_of_volumes(
         &mut self,
         _node: &NumberOfVolumes,
@@ -1016,16 +1310,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Pages` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pages(&mut self, _node: &Pages, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `PatentNumber` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_patent_number(
         &mut self,
         _node: &PatentNumber,
@@ -1034,9 +1334,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PatentType` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_patent_type(
         &mut self,
         _node: &PatentType,
@@ -1045,9 +1348,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Performer` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_performer(
         &mut self,
         _node: &Performer,
@@ -1056,9 +1362,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PeriodicalTitle` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_periodical_title(
         &mut self,
         _node: &PeriodicalTitle,
@@ -1067,16 +1376,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Person` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_person(&mut self, _node: &Person, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `PersonsFirstOrGivenName` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_persons_first_or_given_name(
         &mut self,
         _node: &PersonsFirstOrGivenName,
@@ -1085,9 +1400,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PersonsLastOrFamilyName` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_persons_last_or_family_name(
         &mut self,
         _node: &PersonsLastOrFamilyName,
@@ -1096,9 +1414,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PersonsMiddleOrOtherName` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_persons_middle_or_other_name(
         &mut self,
         _node: &PersonsMiddleOrOtherName,
@@ -1107,9 +1428,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ProducerName` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_producer_name(
         &mut self,
         _node: &ProducerName,
@@ -1118,9 +1442,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ProductionCompany` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_production_company(
         &mut self,
         _node: &ProductionCompany,
@@ -1129,9 +1456,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PublicationTitle` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_publication_title(
         &mut self,
         _node: &PublicationTitle,
@@ -1140,9 +1470,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Publisher` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_publisher(
         &mut self,
         _node: &Publisher,
@@ -1151,9 +1484,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RecordingNumber` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_recording_number(
         &mut self,
         _node: &RecordingNumber,
@@ -1162,9 +1498,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ReferenceOrder` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_reference_order(
         &mut self,
         _node: &ReferenceOrder,
@@ -1173,9 +1512,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Reporter` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_reporter(
         &mut self,
         _node: &Reporter,
@@ -1184,9 +1526,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShortTitle` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_short_title(
         &mut self,
         _node: &ShortTitle,
@@ -1195,16 +1540,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Source` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_source(&mut self, _node: &Source, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `SourceContent` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_source_content(
         &mut self,
         _node: &SourceContent,
@@ -1213,9 +1564,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SourceContent` in a list is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_source_content_items(
         &mut self,
         _node: &SourceContent,
@@ -1224,9 +1578,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SourceType` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_source_type(
         &mut self,
         _node: &SourceType,
@@ -1235,16 +1592,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Sources` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sources(&mut self, _node: &Sources, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `StandardNumber` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_standard_number(
         &mut self,
         _node: &StandardNumber,
@@ -1253,9 +1616,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `StateOrProvince` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_state_or_province(
         &mut self,
         _node: &StateOrProvince,
@@ -1264,30 +1630,42 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Station` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_station(&mut self, _node: &Station, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Tag` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_tag(&mut self, _node: &Tag, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Theater` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_theater(&mut self, _node: &Theater, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ThesisType` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_thesis_type(
         &mut self,
         _node: &ThesisType,
@@ -1296,16 +1674,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Title` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_title(&mut self, _node: &Title, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Translator` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_translator(
         &mut self,
         _node: &Translator,
@@ -1314,44 +1698,62 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Url` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_url(&mut self, _node: &Url, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Version` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_version(&mut self, _node: &Version, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Volume` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_volume(&mut self, _node: &Volume, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Writer` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_writer(&mut self, _node: &Writer, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Year` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_year(&mut self, _node: &Year, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `YearAccessed` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_year_accessed(
         &mut self,
         _node: &YearAccessed,
@@ -1360,14 +1762,20 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked for each `Writer`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn writer(&mut self, _node: &Writer) -> Option<Writer> {
         None
     }
 
+    /// Asked for each `Year`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn year(&mut self, _node: &Year) -> Option<Year> {
         None
     }
 
+    /// Asked for each `YearAccessed`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn year_accessed(&mut self, _node: &YearAccessed) -> Option<YearAccessed> {
         None
     }
@@ -1379,6 +1787,8 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::bibliography` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `AbbreviatedCaseNumber`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn abbreviated_case_number(
         &mut self,
         _node: &AbbreviatedCaseNumber,
@@ -1386,62 +1796,86 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `AlbumTitle`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn album_title(&mut self, _node: &AlbumTitle) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Artist`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn artist(&mut self, _node: &Artist) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Author`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn author(&mut self, _node: &Author) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BookAuthor`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn book_author(&mut self, _node: &BookAuthor) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BookTitle`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn book_title(&mut self, _node: &BookTitle) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BroadcastTitle`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn broadcast_title(&mut self, _node: &BroadcastTitle) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Broadcaster`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn broadcaster(&mut self, _node: &Broadcaster) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CaseNumber`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn case_number(&mut self, _node: &CaseNumber) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ChapterNumber`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn chapter_number(&mut self, _node: &ChapterNumber) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `City`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn city(&mut self, _node: &City) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Comments`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn comments(&mut self, _node: &Comments) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Compiler`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn compiler(&mut self, _node: &Compiler) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Composer`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn composer(&mut self, _node: &Composer) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Conductor`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn conductor(&mut self, _node: &Conductor) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ConferenceOrProceedingsName`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn conference_or_proceedings_name(
         &mut self,
         _node: &ConferenceOrProceedingsName,
@@ -1449,10 +1883,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ContributorsList`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn contributors_list(&mut self, _node: &ContributorsList) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ContributorsListContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn contributors_list_content(
         &mut self,
         _node: &ContributorsListContent,
@@ -1460,102 +1898,140 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CorporateAuthor`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn corporate_author(&mut self, _node: &CorporateAuthor) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Counsel`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn counsel(&mut self, _node: &Counsel) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CountryOrRegion`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn country_or_region(&mut self, _node: &CountryOrRegion) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Court`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn court(&mut self, _node: &Court) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Day`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn day(&mut self, _node: &Day) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DayAccessed`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn day_accessed(&mut self, _node: &DayAccessed) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Department`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn department(&mut self, _node: &Department) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Director`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn director(&mut self, _node: &Director) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Distributor`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn distributor(&mut self, _node: &Distributor) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Editor`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn editor(&mut self, _node: &Editor) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `EditorEdition`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn editor_edition(&mut self, _node: &EditorEdition) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Guid`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn guid(&mut self, _node: &Guid) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Institution`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn institution(&mut self, _node: &Institution) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `InternetSiteTitle`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn internet_site_title(&mut self, _node: &InternetSiteTitle) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Interviewee`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn interviewee(&mut self, _node: &Interviewee) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Interviewer`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn interviewer(&mut self, _node: &Interviewer) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Inventor`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn inventor(&mut self, _node: &Inventor) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Issue`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn issue(&mut self, _node: &Issue) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `JournalName`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn journal_name(&mut self, _node: &JournalName) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LocaleID`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn locale_id(&mut self, _node: &LocaleID) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Medium`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn medium(&mut self, _node: &Medium) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Month`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn month(&mut self, _node: &Month) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MonthAccessed`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn month_accessed(&mut self, _node: &MonthAccessed) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NameList`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn name_list(&mut self, _node: &NameList) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NameOrCorporateContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn name_or_corporate(
         &mut self,
         _node: &NameOrCorporateContent,
@@ -1563,34 +2039,48 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NumberOfVolumes`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn number_of_volumes(&mut self, _node: &NumberOfVolumes) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Pages`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn pages(&mut self, _node: &Pages) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PatentNumber`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn patent_number(&mut self, _node: &PatentNumber) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PatentType`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn patent_type(&mut self, _node: &PatentType) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Performer`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn performer(&mut self, _node: &Performer) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PeriodicalTitle`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn periodical_title(&mut self, _node: &PeriodicalTitle) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Person`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn person(&mut self, _node: &Person) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PersonsFirstOrGivenName`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn persons_first_or_given_name(
         &mut self,
         _node: &PersonsFirstOrGivenName,
@@ -1598,6 +2088,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PersonsLastOrFamilyName`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn persons_last_or_family_name(
         &mut self,
         _node: &PersonsLastOrFamilyName,
@@ -1605,6 +2097,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PersonsMiddleOrOtherName`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn persons_middle_or_other_name(
         &mut self,
         _node: &PersonsMiddleOrOtherName,
@@ -1612,106 +2106,146 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ProducerName`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn producer_name(&mut self, _node: &ProducerName) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ProductionCompany`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn production_company(&mut self, _node: &ProductionCompany) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PublicationTitle`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn publication_title(&mut self, _node: &PublicationTitle) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Publisher`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn publisher(&mut self, _node: &Publisher) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RecordingNumber`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn recording_number(&mut self, _node: &RecordingNumber) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ReferenceOrder`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn reference_order(&mut self, _node: &ReferenceOrder) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Reporter`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn reporter(&mut self, _node: &Reporter) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShortTitle`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn short_title(&mut self, _node: &ShortTitle) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Source`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn source(&mut self, _node: &Source) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SourceContent`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn source_content(&mut self, _node: &SourceContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SourceType`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn source_type(&mut self, _node: &SourceType) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Sources`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sources(&mut self, _node: &Sources) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `StandardNumber`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn standard_number(&mut self, _node: &StandardNumber) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `StateOrProvince`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn state_or_province(&mut self, _node: &StateOrProvince) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Station`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn station(&mut self, _node: &Station) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Tag`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn tag(&mut self, _node: &Tag) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Theater`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn theater(&mut self, _node: &Theater) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ThesisType`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn thesis_type(&mut self, _node: &ThesisType) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Title`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn title(&mut self, _node: &Title) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Translator`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn translator(&mut self, _node: &Translator) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Url`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn url(&mut self, _node: &Url) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Version`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn version(&mut self, _node: &Version) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Volume`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn volume(&mut self, _node: &Volume) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Writer`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn writer(&mut self, _node: &Writer) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Year`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn year(&mut self, _node: &Year) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `YearAccessed`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn year_accessed(&mut self, _node: &YearAccessed) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

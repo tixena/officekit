@@ -16,7 +16,11 @@ mod tests;
 /// and each code's name, finding, parse from its name, and template.
 macro_rules! codes {
     ($($code:ident, $kind:ident, $template:literal;)*) => {
-        /// officekit's codes: one per error SDK 3.5.1 can report, and the three for a file that declares Strict that it does not.
+        /// What a validation found: one code per error the Open XML SDK 3.5.1 can report, and three for
+        /// a file that declares Strict and holds content only Transitional allows.
+        ///
+        /// Each code has a message template, a name, and the [`Finding`] that reports it. Match on it
+        /// with a wildcard arm; more codes may come.
         #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
         #[non_exhaustive]
         pub enum ErrorCode {
@@ -24,6 +28,7 @@ macro_rules! codes {
         }
 
         impl ErrorCode {
+            /// Every code, in declaration order.
             pub const ALL: &'static [Self] = &[$(Self::$code),*];
 
             /// The variant's name.
@@ -34,6 +39,7 @@ macro_rules! codes {
                 }
             }
 
+            /// The check that reports this code.
             #[must_use]
             pub const fn kind(self) -> Finding {
                 match self {
@@ -41,6 +47,7 @@ macro_rules! codes {
                 }
             }
 
+            /// The code named `text`, as [`ErrorCode::as_str`] writes it; `None` for any other text.
             #[must_use]
             pub fn parse(text: &str) -> Option<Self> {
                 Self::ALL.iter().copied().find(|code| code.as_str() == text)
@@ -73,6 +80,7 @@ impl Errors {
         self.cap != 0 && self.found.len() >= self.cap
     }
 
+    /// The errors kept, in the order they were pushed.
     #[must_use]
     pub fn into_vec(self) -> Vec<ValidationError> {
         self.found
@@ -100,9 +108,13 @@ impl Errors {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 #[non_exhaustive]
 pub enum Finding {
+    /// A rule of markup compatibility, such as the attributes of `mc:AlternateContent`.
     MarkupCompatibility,
+    /// A rule of the package: its relationships and the parts they name.
     Package,
+    /// A rule of the schema: which elements, attributes and values an element allows.
     Schema,
+    /// A rule the schema cannot say, such as an attribute that depends on another.
     Semantic,
 }
 
@@ -126,13 +138,18 @@ impl Finding {
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[non_exhaustive]
 pub struct Step {
+    /// The 1-based place among the earlier siblings with the same namespace and local name.
     pub index: u32,
+    /// The local name of the element.
     pub local: String,
+    /// The namespace URI of the element.
     pub namespace: String,
+    /// The prefix the file gives the namespace; empty for none.
     pub prefix: String,
 }
 
 impl Step {
+    /// A step on the element `local` of `namespace`, written with `prefix`, the `index`-th of its name.
     #[must_use]
     pub fn new(prefix: &str, namespace: &str, local: &str, index: u32) -> Self {
         Self {
@@ -198,8 +215,11 @@ codes! {
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[non_exhaustive]
 pub struct ValidationError {
+    /// What was found.
     pub code: ErrorCode,
+    /// The code's message with its values filled in.
     pub message: String,
+    /// The part the error is in; `None` when it is not in one part.
     pub part: Option<PartName>,
     /// The element the error is on; `None` for a package error.
     pub path: Option<Vec<Step>>,

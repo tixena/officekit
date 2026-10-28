@@ -18,3 +18,7 @@ binary-format = ["officekit-markup-base/binary-format", "officekit-markup-ext/bi
 [dependencies]
 officekit-markup-base.workspace = true
 officekit-markup-ext.workspace = true
+
+# Without binary-format: rustdoc of rkyv's derives on every type needs more memory than docs.rs gives.
+[package.metadata.docs.rs]
+features = []

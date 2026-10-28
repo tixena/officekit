@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `pic` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.openxmlformats.org/drawingml/2006/picture`, which files write with the prefix `pic`.
 //!
-//! The namespace is `http://schemas.openxmlformats.org/drawingml/2006/picture`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 pub mod read;
 pub mod write;
@@ -313,8 +313,8 @@ pub static SHAPE_PROPERTIES_SHAPE: officekit_markup_base::Shape = officekit_mark
     text: false,
 };
 
-/// 20.2.2.3 `cNvPr` (Non-Visual Drawing Properties): the tag `pic:cNvPr`, schema type
-/// `CT_NonVisualDrawingProps`.
+/// The `pic:cNvPr` element, Non-Visual Drawing Properties (ECMA-376 Part 1, section 20.2.2.3). Its
+/// schema type is `CT_NonVisualDrawingProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -326,22 +326,31 @@ pub static SHAPE_PROPERTIES_SHAPE: officekit_markup_base::Shape = officekit_mark
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualDrawingProperties {
+    /// The child that is `super::drawing::ClickHyperlink`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub click_hyperlink: Option<Box<super::drawing::ClickHyperlink>>,
+    /// The attribute `descr`, when the element has it.
     pub descr: Option<String>,
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The attribute `hidden`, when the element has it.
     pub hidden: Option<String>,
+    /// The child that is `super::drawing::HyperlinkForHover`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHover>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<super::drawing::DrawingElementID>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.2.2.2 `cNvPicPr` (Non-Visual Picture Drawing Properties): the tag `pic:cNvPicPr`, schema type
-/// `CT_NonVisualPictureProperties`.
+/// The `pic:cNvPicPr` element, Non-Visual Picture Drawing Properties (ECMA-376 Part 1, section
+/// 20.2.2.2). Its schema type is `CT_NonVisualPictureProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -353,16 +362,20 @@ pub struct NonVisualDrawingProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualPictureDrawingProperties {
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The child that is `super::drawing::PictureLocks`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub picture_locks: Option<Box<super::drawing::PictureLocks>>,
+    /// The attribute `preferRelativeResize`, when the element has it.
     pub prefer_relative_resize: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.2.2.4 `nvPicPr` (Non-Visual Picture Properties): the tag `pic:nvPicPr`, schema type
-/// `CT_PictureNonVisual`.
+/// The `pic:nvPicPr` element, Non-Visual Picture Properties (ECMA-376 Part 1, section 20.2.2.4).
+/// Its schema type is `CT_PictureNonVisual`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -374,14 +387,18 @@ pub struct NonVisualPictureDrawingProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NonVisualPictureProperties {
+    /// The child that is `NonVisualDrawingProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
+    /// The child that is `NonVisualPictureDrawingProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_picture_drawing_properties: Box<NonVisualPictureDrawingProperties>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.2.2.5 pic (Picture): the tag `pic:pic`, schema type `CT_Picture`.
+/// The `pic:pic` element, Picture (ECMA-376 Part 1, section 20.2.2.5). Its schema type is
+/// `CT_Picture`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -393,19 +410,26 @@ pub struct NonVisualPictureProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Picture {
+    /// The child that is `super::office_drawing_2010_picture::ExtLst`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub ext_lst: Option<Box<super::office_drawing_2010_picture::ExtLst>>,
+    /// The child that is `PictureFill`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub fill: Box<PictureFill>,
+    /// The child that is `NonVisualPictureProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_picture_properties: Box<NonVisualPictureProperties>,
+    /// The child that is `ShapeProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub shape_properties: Box<ShapeProperties>,
+    /// The child that is `super::office_drawing_2010_picture::Style`, when there is one.
     pub style: Option<Box<super::office_drawing_2010_picture::Style>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.2.2.1 `blipFill` (Picture Fill): the tag `pic:blipFill`, schema type `CT_BlipFillProperties`.
+/// The `pic:blipFill` element, Picture Fill (ECMA-376 Part 1, section 20.2.2.1). Its schema type is
+/// `CT_BlipFillProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -417,16 +441,23 @@ pub struct Picture {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PictureFill {
+    /// The child that is `super::drawing::Blip`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub blip: Option<Box<super::drawing::Blip>>,
+    /// The child that is an item of `super::drawing::FillModeContent`, when there is one.
     pub content: Option<Box<super::drawing::FillModeContent>>,
+    /// The attribute `dpi`, when the element has it.
     pub dpi: Option<String>,
+    /// The attribute `rotWithShape`, when the element has it.
     pub rot_with_shape: Option<String>,
+    /// The child that is `super::drawing::SourceRectangle`, when there is one.
     pub source_rectangle: Option<Box<super::drawing::SourceRectangle>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 20.2.2.6 `spPr` (Shape Properties): the tag `pic:spPr`, schema type `CT_ShapeProperties`.
+/// The `pic:spPr` element, Shape Properties (ECMA-376 Part 1, section 20.2.2.6). Its schema type is
+/// `CT_ShapeProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -438,21 +469,31 @@ pub struct PictureFill {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShapeProperties {
+    /// The child that is `super::drawing::Apply3DShapeProperties`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub apply_3d: Option<Box<super::drawing::Apply3DShapeProperties>>,
+    /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
+    /// The child that is an item of `super::drawing::EffectPropertiesContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContent>>,
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The child that is an item of `super::drawing::FillPropertiesContent`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContent>>,
+    /// The child that is an item of `super::drawing::GeometryContent`, when there is one.
     pub geometry_content: Option<Box<super::drawing::GeometryContent>>,
+    /// The child that is `super::drawing::Outline`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub outline: Option<Box<super::drawing::Outline>>,
+    /// The child that is `super::drawing::Scene3d`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub scene3d: Option<Box<super::drawing::Scene3d>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `super::drawing::XfrmTransform2D`, when there is one.
     pub xfrm_transform2d: Option<Box<super::drawing::XfrmTransform2D>>,
 }
 

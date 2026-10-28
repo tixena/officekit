@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `xxpim` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/spreadsheetml/2020/pivotNov2020`, which files write with the prefix `xxpim`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2020/pivotNov2020`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -259,6 +261,8 @@ pub static IGNORABLE_AFTER_VERSION_SHAPE: officekit_markup_base::Shape =
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_spreadsheetml_2020_pivot_nov2020` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `DataFieldFutureData`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn data_field_future_data(
         &mut self,
         _node: &DataFieldFutureData,
@@ -266,6 +270,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `IgnorableAfterVersion`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn ignorable_after_version(
         &mut self,
         _node: &IgnorableAfterVersion,
@@ -273,6 +279,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ImplicitMeasureSupport`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn implicit_measure_support(
         &mut self,
         _node: &ImplicitMeasureSupport,
@@ -280,9 +288,12 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked when a `DataFieldFutureData` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_data_field_future_data(
         &mut self,
         _node: &DataFieldFutureData,
@@ -291,9 +302,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `IgnorableAfterVersion` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ignorable_after_version(
         &mut self,
         _node: &IgnorableAfterVersion,
@@ -302,9 +316,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ImplicitMeasureSupport` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_implicit_measure_support(
         &mut self,
         _node: &ImplicitMeasureSupport,
@@ -314,7 +331,8 @@ pub trait Context: crate::Context {
     }
 }
 
-/// The tag `xxpim:dataFieldFutureData`, schema type `CT_DataFieldFutureData` of SDK 3.5.1's data.
+/// The `xxpim:dataFieldFutureData` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_DataFieldFutureData`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -323,12 +341,16 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DataFieldFutureData {
+    /// The attribute `sourceField`, when the element has it.
     pub source_field: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `version`, when the element has it.
     pub version: Option<String>,
 }
 
-/// The tag `xxpim:ignorableAfterVersion`, schema type `CT_Ignorable` of SDK 3.5.1's data.
+/// The `xxpim:ignorableAfterVersion` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `CT_Ignorable`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -337,11 +359,14 @@ pub struct DataFieldFutureData {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct IgnorableAfterVersion {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `version`, when the element has it.
     pub version: Option<String>,
 }
 
-/// The tag `xxpim:implicitMeasureSupport`, schema type `boolean` of SDK 3.5.1's data.
+/// The `xxpim:implicitMeasureSupport` element, declared by the schema data of the Open XML SDK,
+/// version 3.5.1. Its schema type is `boolean`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -350,7 +375,9 @@ pub struct IgnorableAfterVersion {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ImplicitMeasureSupport {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
@@ -360,6 +387,8 @@ pub struct ImplicitMeasureSupport {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_spreadsheetml_2020_pivot_nov2020` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `DataFieldFutureData`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn data_field_future_data(
         &mut self,
         _node: &DataFieldFutureData,
@@ -367,6 +396,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `IgnorableAfterVersion`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn ignorable_after_version(
         &mut self,
         _node: &IgnorableAfterVersion,
@@ -374,6 +405,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ImplicitMeasureSupport`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn implicit_measure_support(
         &mut self,
         _node: &ImplicitMeasureSupport,

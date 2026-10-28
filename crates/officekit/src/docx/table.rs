@@ -11,10 +11,7 @@ use officekit_markup::wordprocessing::{
 
 /// Row operations on a [`Table`].
 pub trait TableRows {
-    /// Appends a row after the last list item with one cell per text.
-    ///
-    /// # Panics
-    /// Never: the row it returns was pushed by the call.
+    /// Appends a row after the last row, with one cell per text, and returns it.
     fn append_row(&mut self, texts: &[&str]) -> &mut TableRow;
 
     /// Inserts `row` so that it becomes row `index`; an index equal to the row count puts it right

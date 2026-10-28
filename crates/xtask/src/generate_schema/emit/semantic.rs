@@ -990,8 +990,8 @@ fn render_table(
     }
     summary.rows = rows.len();
     let mut text = format!(
-        "{header}\n/// Every semantic constraint SDK 3.5.1 registers, one row per constraint on each element\n\
-         /// type, sorted by type id and in SDK 3.5.1's order within a type.\n"
+        "{header}\n/// Every semantic constraint the Open XML SDK, version 3.5.1, registers, one row per constraint\n\
+         /// on each element type, sorted by type id and in the SDK's order within a type.\n"
     );
     render::statement(
         "pub static SEMANTIC_CONSTRAINTS: &[Registration] = ",

@@ -212,8 +212,11 @@
 //! The hooks of the `vt` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_base::document_properties_variant_types`.
 //!
-//! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes`.
+//! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes`. Its prefix, `vt`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_base::document_properties_variant_types::*;
 
 use officekit_markup_base::Written;
@@ -229,34 +232,50 @@ use std::io;
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::document_properties_variant_types` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `Array`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn array(&mut self, _node: &Array) -> Option<Array> {
         None
     }
 
+    /// Asked for each `ArrayContent`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn array_content(&mut self, _node: &ArrayContent) -> Option<ArrayContent> {
         None
     }
 
+    /// Asked for each `ArrayContent` in a list. `None` leaves the item to its own `transform`, and
+    /// `Some` puts the items it holds, any number of them, in its place.
     fn array_content_items(&mut self, _node: &ArrayContent) -> Option<Vec<ArrayContent>> {
         None
     }
 
+    /// Asked for each `BasicString`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn basic_string(&mut self, _node: &BasicString) -> Option<BasicString> {
         None
     }
 
+    /// Asked for each `BinaryBlob`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn binary_blob(&mut self, _node: &BinaryBlob) -> Option<BinaryBlob> {
         None
     }
 
+    /// Asked for each `BinaryBlobObject`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn binary_blob_object(&mut self, _node: &BinaryBlobObject) -> Option<BinaryBlobObject> {
         None
     }
 
+    /// Asked for each `BinaryStorage`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn binary_storage(&mut self, _node: &BinaryStorage) -> Option<BinaryStorage> {
         None
     }
 
+    /// Asked for each `BinaryStorageObject`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn binary_storage_object(
         &mut self,
         _node: &BinaryStorageObject,
@@ -264,14 +283,20 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `BinaryStream`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn binary_stream(&mut self, _node: &BinaryStream) -> Option<BinaryStream> {
         None
     }
 
+    /// Asked for each `BinaryStreamObject`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn binary_stream_object(&mut self, _node: &BinaryStreamObject) -> Option<BinaryStreamObject> {
         None
     }
 
+    /// Asked for each `BinaryVersionedStream`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn binary_versioned_stream(
         &mut self,
         _node: &BinaryVersionedStream,
@@ -279,128 +304,190 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Boolean`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn boolean(&mut self, _node: &Boolean) -> Option<Boolean> {
         None
     }
 
+    /// Asked for each `ClassID`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn class_id(&mut self, _node: &ClassID) -> Option<ClassID> {
         None
     }
 
+    /// Asked for each `Currency`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn currency(&mut self, _node: &Currency) -> Option<Currency> {
         None
     }
 
+    /// Asked for each `DateAndTime`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn date_and_time(&mut self, _node: &DateAndTime) -> Option<DateAndTime> {
         None
     }
 
+    /// Asked for each `Decimal`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn decimal(&mut self, _node: &Decimal) -> Option<Decimal> {
         None
     }
 
+    /// Asked for each `Empty`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn empty(&mut self, _node: &Empty) -> Option<Empty> {
         None
     }
 
+    /// Asked for each `ErrorStatusCode`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn error_status_code(&mut self, _node: &ErrorStatusCode) -> Option<ErrorStatusCode> {
         None
     }
 
+    /// Asked for each `FileTime`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn file_time(&mut self, _node: &FileTime) -> Option<FileTime> {
         None
     }
 
+    /// Asked for each `I1`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn i1(&mut self, _node: &I1) -> Option<I1> {
         None
     }
 
+    /// Asked for each `I2`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn i2(&mut self, _node: &I2) -> Option<I2> {
         None
     }
 
+    /// Asked for each `I4`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn i4(&mut self, _node: &I4) -> Option<I4> {
         None
     }
 
+    /// Asked for each `I8`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn i8(&mut self, _node: &I8) -> Option<I8> {
         None
     }
 
+    /// Asked for each `Integer`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn integer(&mut self, _node: &Integer) -> Option<Integer> {
         None
     }
 
+    /// Asked for each `Lpstr`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn lpstr(&mut self, _node: &Lpstr) -> Option<Lpstr> {
         None
     }
 
+    /// Asked for each `Lpwstr`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn lpwstr(&mut self, _node: &Lpwstr) -> Option<Lpwstr> {
         None
     }
 
+    /// Asked for each `Null`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn null(&mut self, _node: &Null) -> Option<Null> {
         None
     }
 
+    /// Asked for each `R4`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn r4(&mut self, _node: &R4) -> Option<R4> {
         None
     }
 
+    /// Asked for each `R8`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn r8(&mut self, _node: &R8) -> Option<R8> {
         None
     }
 
+    /// Asked for each `Ui1`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn ui1(&mut self, _node: &Ui1) -> Option<Ui1> {
         None
     }
 
+    /// Asked for each `Ui2`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn ui2(&mut self, _node: &Ui2) -> Option<Ui2> {
         None
     }
 
+    /// Asked for each `Ui4`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn ui4(&mut self, _node: &Ui4) -> Option<Ui4> {
         None
     }
 
+    /// Asked for each `Ui8`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn ui8(&mut self, _node: &Ui8) -> Option<Ui8> {
         None
     }
 
+    /// Asked for each `UnsignedInteger`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn unsigned_integer(&mut self, _node: &UnsignedInteger) -> Option<UnsignedInteger> {
         None
     }
 
+    /// Asked for each `Variant`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn variant(&mut self, _node: &Variant) -> Option<Variant> {
         None
     }
 
+    /// Asked for each `VariantContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn variant_content(&mut self, _node: &VariantContent) -> Option<VariantContent> {
         None
     }
 
+    /// Asked for each `Vector`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn vector(&mut self, _node: &Vector) -> Option<Vector> {
         None
     }
 
+    /// Asked for each `VectorContent`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn vector_content(&mut self, _node: &VectorContent) -> Option<VectorContent> {
         None
     }
 
+    /// Asked for each `VectorContent` in a list. `None` leaves the item to its own `transform`, and
+    /// `Some` puts the items it holds, any number of them, in its place.
     fn vector_content_items(&mut self, _node: &VectorContent) -> Option<Vec<VectorContent>> {
         None
     }
 
+    /// Asked when a `Array` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_array(&mut self, _node: &Array, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ArrayContent` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_array_content(
         &mut self,
         _node: &ArrayContent,
@@ -409,9 +496,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ArrayContent` in a list is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_array_content_items(
         &mut self,
         _node: &ArrayContent,
@@ -420,9 +510,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BasicString` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_basic_string(
         &mut self,
         _node: &BasicString,
@@ -431,9 +524,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BinaryBlob` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_binary_blob(
         &mut self,
         _node: &BinaryBlob,
@@ -442,9 +538,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BinaryBlobObject` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_binary_blob_object(
         &mut self,
         _node: &BinaryBlobObject,
@@ -453,9 +552,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BinaryStorage` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_binary_storage(
         &mut self,
         _node: &BinaryStorage,
@@ -464,9 +566,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BinaryStorageObject` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_binary_storage_object(
         &mut self,
         _node: &BinaryStorageObject,
@@ -475,9 +580,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BinaryStream` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_binary_stream(
         &mut self,
         _node: &BinaryStream,
@@ -486,9 +594,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BinaryStreamObject` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_binary_stream_object(
         &mut self,
         _node: &BinaryStreamObject,
@@ -497,9 +608,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BinaryVersionedStream` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_binary_versioned_stream(
         &mut self,
         _node: &BinaryVersionedStream,
@@ -508,16 +622,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Boolean` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_boolean(&mut self, _node: &Boolean, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ClassID` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_class_id(
         &mut self,
         _node: &ClassID,
@@ -526,9 +646,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Currency` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_currency(
         &mut self,
         _node: &Currency,
@@ -537,9 +660,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DateAndTime` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_date_and_time(
         &mut self,
         _node: &DateAndTime,
@@ -548,23 +674,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Decimal` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_decimal(&mut self, _node: &Decimal, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Empty` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_empty(&mut self, _node: &Empty, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ErrorStatusCode` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_error_status_code(
         &mut self,
         _node: &ErrorStatusCode,
@@ -573,9 +708,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FileTime` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_file_time(
         &mut self,
         _node: &FileTime,
@@ -584,107 +722,152 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `I1` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_i1(&mut self, _node: &I1, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `I2` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_i2(&mut self, _node: &I2, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `I4` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_i4(&mut self, _node: &I4, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `I8` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_i8(&mut self, _node: &I8, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Integer` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_integer(&mut self, _node: &Integer, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Lpstr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_lpstr(&mut self, _node: &Lpstr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Lpwstr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_lpwstr(&mut self, _node: &Lpwstr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Null` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_null(&mut self, _node: &Null, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `R4` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_r4(&mut self, _node: &R4, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `R8` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_r8(&mut self, _node: &R8, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Ui1` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ui1(&mut self, _node: &Ui1, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Ui2` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ui2(&mut self, _node: &Ui2, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Ui4` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ui4(&mut self, _node: &Ui4, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Ui8` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ui8(&mut self, _node: &Ui8, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `UnsignedInteger` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_unsigned_integer(
         &mut self,
         _node: &UnsignedInteger,
@@ -693,16 +876,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Variant` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_variant(&mut self, _node: &Variant, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `VariantContent` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_variant_content(
         &mut self,
         _node: &VariantContent,
@@ -711,16 +900,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Vector` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_vector(&mut self, _node: &Vector, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `VectorContent` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_vector_content(
         &mut self,
         _node: &VectorContent,
@@ -729,9 +924,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `VectorContent` in a list is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_vector_content_items(
         &mut self,
         _node: &VectorContent,
@@ -747,30 +945,43 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::document_properties_variant_types` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `Array`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn array(&mut self, _node: &Array) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ArrayContent`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn array_content(&mut self, _node: &ArrayContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BasicString`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn basic_string(&mut self, _node: &BasicString) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BinaryBlob`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn binary_blob(&mut self, _node: &BinaryBlob) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BinaryBlobObject`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn binary_blob_object(&mut self, _node: &BinaryBlobObject) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BinaryStorage`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn binary_storage(&mut self, _node: &BinaryStorage) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BinaryStorageObject`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn binary_storage_object(
         &mut self,
         _node: &BinaryStorageObject,
@@ -778,10 +989,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BinaryStream`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn binary_stream(&mut self, _node: &BinaryStream) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BinaryStreamObject`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn binary_stream_object(
         &mut self,
         _node: &BinaryStreamObject,
@@ -789,6 +1004,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BinaryVersionedStream`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn binary_versioned_stream(
         &mut self,
         _node: &BinaryVersionedStream,
@@ -796,110 +1013,142 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Boolean`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn boolean(&mut self, _node: &Boolean) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ClassID`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn class_id(&mut self, _node: &ClassID) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Currency`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn currency(&mut self, _node: &Currency) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DateAndTime`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn date_and_time(&mut self, _node: &DateAndTime) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Decimal`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn decimal(&mut self, _node: &Decimal) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Empty`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn empty(&mut self, _node: &Empty) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ErrorStatusCode`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn error_status_code(&mut self, _node: &ErrorStatusCode) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FileTime`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn file_time(&mut self, _node: &FileTime) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `I1`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn i1(&mut self, _node: &I1) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `I2`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn i2(&mut self, _node: &I2) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `I4`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn i4(&mut self, _node: &I4) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `I8`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn i8(&mut self, _node: &I8) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Integer`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn integer(&mut self, _node: &Integer) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Lpstr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn lpstr(&mut self, _node: &Lpstr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Lpwstr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn lpwstr(&mut self, _node: &Lpwstr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Null`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn null(&mut self, _node: &Null) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `R4`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn r4(&mut self, _node: &R4) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `R8`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn r8(&mut self, _node: &R8) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Ui1`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ui1(&mut self, _node: &Ui1) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Ui2`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ui2(&mut self, _node: &Ui2) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Ui4`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ui4(&mut self, _node: &Ui4) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Ui8`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ui8(&mut self, _node: &Ui8) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `UnsignedInteger`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn unsigned_integer(&mut self, _node: &UnsignedInteger) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Variant`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn variant(&mut self, _node: &Variant) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `VariantContent`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn variant_content(&mut self, _node: &VariantContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Vector`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn vector(&mut self, _node: &Vector) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `VectorContent`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn vector_content(&mut self, _node: &VectorContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

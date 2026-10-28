@@ -1,12 +1,74 @@
-//! `officekit-traversal` holds the traversals of officekit's typed tree. Every node of
-//! `officekit_markup::<namespace>` has its `Transform`, which builds an owned node from a
-//! reference to one, the context deciding what changes; its `Visit`, which shows it to a visitor;
-//! and its `WriteThrough`, whose result goes to a part writer as it is made. Every enum has its
-//! `Item`, with the list hooks a list of its items asks.
+//! The traversals of officekit's typed tree: change it, look through it, or write it out.
 //!
-//! The crate root is the runtime the generated traversals call: the walk of a node's children,
-//! the rebase of its unknown content, the write-through writer, and the functions that ask the
-//! hooks of `officekit_markup::Context` and `officekit_markup::Visitor`.
+//! The typed tree is `officekit_markup`: one module per Office Open XML namespace, with a struct
+//! for each element and an enum for each list of alternative children. This crate gives every
+//! struct and enum three ways to be walked.
+//!
+//! - [`Transform`] builds a changed copy of a node. A context decides what changes.
+//! - [`Visit`] shows a node and its children to a visitor, which can skip a subtree.
+//! - [`WriteThrough`] writes a node to a part writer as it is made, so no second tree is built.
+//!
+//! Every enum also gets an [`Item`], which carries the hooks of a list of its items.
+//!
+//! The hooks are not defined here. A context implements [`officekit_markup::Context`], a visitor
+//! implements [`officekit_markup::Visitor`], and each opts into a namespace by returning itself
+//! from that namespace's accessor, such as `wordprocessing()`. An accessor left at its default
+//! returns `None`, and the namespace is then left as it is. The generic elements the schemas do
+//! not declare go to `Context::element` and `Visitor::element`.
+//!
+//! The namespace modules of this crate hold only the generated implementations of these traits.
+//! The crate root holds the runtime they call: [`Walk`], [`Through`], [`Place`], [`Rebase`], the
+//! [`Unchanged`] context, and the functions that ask the hooks. Code that only uses the traversals
+//! does not need those.
+//!
+//! The crate has no features. It sits above `officekit-markup` and `officekit-xml`, and
+//! `officekit` uses it for Strict saves.
+//!
+//! # Example
+//!
+//! A context that renames a generic element, and a visitor that counts elements. Both run on a
+//! generic [`Node`], the same way they run on any typed node.
+//!
+//! ```
+//! use officekit_markup::{Context, Descend, Visitor};
+//! use officekit_traversal::{Transform, Visit};
+//! use officekit_xml::element::{Element, Node};
+//! use officekit_xml::name::QName;
+//!
+//! struct Rename;
+//!
+//! impl Context for Rename {
+//!     fn element(&mut self, node: &Element) -> Option<Element> {
+//!         (node.name.local == "old").then(|| Element::new(QName::unprefixed("new", "")))
+//!     }
+//! }
+//!
+//! struct Count(usize);
+//!
+//! impl Visitor for Count {
+//!     fn element(&mut self, _node: &Element) -> Descend {
+//!         self.0 += 1;
+//!         Descend::Yes
+//!     }
+//! }
+//!
+//! let mut root = Element::new(QName::unprefixed("root", ""));
+//! root.children
+//!     .push(Node::Element(Element::new(QName::unprefixed("old", ""))));
+//!
+//! let changed = Node::Element(root).transform(&mut Rename);
+//! let mut count = Count(0);
+//! changed.visit(&mut count);
+//! assert_eq!(count.0, 2);
+//!
+//! let Node::Element(root) = changed else {
+//!     panic!("the root stays an element");
+//! };
+//! let Some(Node::Element(child)) = root.children.first() else {
+//!     panic!("the root keeps its child");
+//! };
+//! assert_eq!(child.name.local, "new");
+//! ```
 
 // The traversal modules, generated in a file of their own: module declarations
 // go before the imports, and `include!` places them where it stands.
@@ -29,6 +91,8 @@ mod tests;
 /// Writes a node's unknown children at their places while its declared
 /// children are written: each `Extra` before the declared child its `after`
 /// names, and the rest after the last one.
+///
+/// It is the runtime of generated code; a caller has no use for it.
 #[derive(Debug)]
 pub struct Place<'unknown> {
     known: usize,
@@ -37,6 +101,8 @@ pub struct Place<'unknown> {
 
 /// How many declared children each original declared child of a node became
 /// in its transform, in document order.
+///
+/// It is the runtime of generated code; a caller has no use for it.
 #[derive(Debug, Default)]
 pub struct Rebase {
     /// The node's `unknown.absent`.
@@ -53,6 +119,8 @@ pub struct Rebase {
 /// declared children in schema order, each written through, with each list's
 /// `Other` items among them and each `Extra` at its place. An element
 /// nothing is written into ends as an empty tag, as the generic tree writes it.
+///
+/// It is the runtime of generated code; a caller has no use for it.
 pub struct Through<'out, 'sink, 'node> {
     element: Element,
     opened: bool,
@@ -64,6 +132,9 @@ pub struct Through<'out, 'sink, 'node> {
 }
 
 /// A context with no hooks: writing through it writes a node as it is.
+///
+/// Build it with `Unchanged::default()`. A list's spliced items are written with it, so the
+/// context is not asked about them again.
 #[derive(Clone, Copy, Debug, Default)]
 #[non_exhaustive]
 pub struct Unchanged;
@@ -71,6 +142,8 @@ pub struct Unchanged;
 /// Walks a typed node's children for a visitor in document order: its
 /// declared children in schema order, with each `Extra` before the declared
 /// child its place names and the rest after the last one.
+///
+/// It is the runtime of generated code; a caller has no use for it.
 #[derive(Debug)]
 pub struct Walk<'node> {
     known: usize,
@@ -110,8 +183,8 @@ pub trait Item: Sized {
 /// Every node type: from a reference to a node, an owned node, with the
 /// context deciding what changes.
 pub trait Transform: Sized {
-    /// Ask the context about this node; rebuild from transformed children if
-    /// it answers `None`.
+    /// Ask the context's hook for this node, found through the accessor of the node's namespace;
+    /// rebuild from transformed children if it answers `None`, or gives no hook.
     #[must_use]
     fn transform(&self, ctx: &mut dyn Context) -> Self;
 
@@ -121,7 +194,8 @@ pub trait Transform: Sized {
     fn transform_children(&self, ctx: &mut dyn Context) -> Self;
 }
 
-/// A declared child's field rebuilt: each of its nodes transformed.
+/// A declared child's field rebuilt: each of its nodes transformed. It is implemented for the
+/// three shapes of a child field: `Box<T>`, `Option<Box<T>>`, and `Vec<T>`.
 pub trait TransformNodes: Nodes {
     /// The field rebuilt with each of its nodes transformed.
     #[must_use]
@@ -135,7 +209,7 @@ pub trait TransformNodes: Nodes {
 /// its children.
 pub trait Visit {
     /// Show this node to the visitor, then walk its children unless the
-    /// visitor answers `Descend::No`.
+    /// visitor answers [`Descend::No`].
     fn visit(&self, visitor: &mut dyn Visitor);
 
     /// Walk this node's children without showing the node to the visitor.
@@ -209,6 +283,7 @@ impl<'unknown> Place<'unknown> {
         Ok(())
     }
 
+    /// A writer of the unknown children of a node, none written yet.
     #[must_use]
     pub const fn new(unknown: &'unknown Unknown) -> Self {
         Self { known: 0, unknown }
@@ -614,6 +689,7 @@ impl<'node> Walk<'node> {
         }
     }
 
+    /// A walk over the children of a node whose unknown content is `unknown`, none visited yet.
     #[must_use]
     pub fn new(unknown: &'node Unknown) -> Self {
         Self {

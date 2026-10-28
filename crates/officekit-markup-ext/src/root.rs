@@ -215,64 +215,87 @@
 /// The root of every context, which each namespace's `Context` extends and no other trait.
 ///
 /// It holds the hooks for content the schemas do not declare, and one accessor per namespace,
-/// through which a context opts into that namespace's hooks by returning itself.
+/// through which a context opts into that namespace's hooks by returning `Some(self)`. An accessor
+/// answers `None` by default, so a context is never asked about a namespace it did not opt into.
+///
+/// The `officekit-traversal` crate calls the hooks: `Transform` asks the tree and list hooks, and
+/// `WriteThrough` asks the write hooks. `read` and `write` never do.
 pub trait Context {
+    /// The `additional_characteristics::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn additional_characteristics(
         &mut self,
     ) -> Option<&mut dyn additional_characteristics::Context> {
         None
     }
 
+    /// The `bibliography::Context` hooks. `None` until this opts in by returning `Some(self)`.
     fn bibliography(&mut self) -> Option<&mut dyn bibliography::Context> {
         None
     }
 
+    /// The `chart::Context` hooks. `None` until this opts in by returning `Some(self)`.
     fn chart(&mut self) -> Option<&mut dyn chart::Context> {
         None
     }
 
+    /// The `chart_drawing::Context` hooks. `None` until this opts in by returning `Some(self)`.
     fn chart_drawing(&mut self) -> Option<&mut dyn chart_drawing::Context> {
         None
     }
 
+    /// The `common_simple_types::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn common_simple_types(&mut self) -> Option<&mut dyn common_simple_types::Context> {
         None
     }
 
+    /// The `custom_xml_data_properties::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn custom_xml_data_properties(
         &mut self,
     ) -> Option<&mut dyn custom_xml_data_properties::Context> {
         None
     }
 
+    /// The `custom_xml_schema_properties::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn custom_xml_schema_properties(
         &mut self,
     ) -> Option<&mut dyn custom_xml_schema_properties::Context> {
         None
     }
 
+    /// The `diagram::Context` hooks. `None` until this opts in by returning `Some(self)`.
     fn diagram(&mut self) -> Option<&mut dyn diagram::Context> {
         None
     }
 
+    /// The `document_properties_custom::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn document_properties_custom(
         &mut self,
     ) -> Option<&mut dyn document_properties_custom::Context> {
         None
     }
 
+    /// The `document_properties_extended::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn document_properties_extended(
         &mut self,
     ) -> Option<&mut dyn document_properties_extended::Context> {
         None
     }
 
+    /// The `document_properties_variant_types::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn document_properties_variant_types(
         &mut self,
     ) -> Option<&mut dyn document_properties_variant_types::Context> {
         None
     }
 
+    /// The `drawing::Context` hooks. `None` until this opts in by returning `Some(self)`.
     fn drawing(&mut self) -> Option<&mut dyn drawing::Context> {
         None
     }
@@ -284,642 +307,865 @@ pub trait Context {
         None
     }
 
+    /// The `locked_canvas::Context` hooks. `None` until this opts in by returning `Some(self)`.
     fn locked_canvas(&mut self) -> Option<&mut dyn locked_canvas::Context> {
         None
     }
 
+    /// The `math::Context` hooks. `None` until this opts in by returning `Some(self)`.
     fn math(&mut self) -> Option<&mut dyn math::Context> {
         None
     }
 
+    /// The `office_2009_07_customui::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_2009_07_customui(&mut self) -> Option<&mut dyn office_2009_07_customui::Context> {
         None
     }
 
+    /// The `office_2019_extlst::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_2019_extlst(&mut self) -> Option<&mut dyn office_2019_extlst::Context> {
         None
     }
 
+    /// The `office_2020_mip_label_metadata::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_2020_mip_label_metadata(
         &mut self,
     ) -> Option<&mut dyn office_2020_mip_label_metadata::Context> {
         None
     }
 
+    /// The `office_drawing_2007_8_2_chart::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2007_8_2_chart(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2007_8_2_chart::Context> {
         None
     }
 
+    /// The `office_drawing_2008_diagram::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2008_diagram(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2008_diagram::Context> {
         None
     }
 
+    /// The `office_drawing_2010_chart_drawing::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_drawing_2010_chart_drawing(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2010_chart_drawing::Context> {
         None
     }
 
+    /// The `office_drawing_2010_compatibility::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_drawing_2010_compatibility(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2010_compatibility::Context> {
         None
     }
 
+    /// The `office_drawing_2010_diagram::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2010_diagram(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2010_diagram::Context> {
         None
     }
 
+    /// The `office_drawing_2010_main::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2010_main(&mut self) -> Option<&mut dyn office_drawing_2010_main::Context> {
         None
     }
 
+    /// The `office_drawing_2010_picture::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2010_picture(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2010_picture::Context> {
         None
     }
 
+    /// The `office_drawing_2010_slicer::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2010_slicer(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2010_slicer::Context> {
         None
     }
 
+    /// The `office_drawing_2012_chart::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2012_chart(&mut self) -> Option<&mut dyn office_drawing_2012_chart::Context> {
         None
     }
 
+    /// The `office_drawing_2012_chart_style::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2012_chart_style(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2012_chart_style::Context> {
         None
     }
 
+    /// The `office_drawing_2012_main::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2012_main(&mut self) -> Option<&mut dyn office_drawing_2012_main::Context> {
         None
     }
 
+    /// The `office_drawing_2012_timeslicer::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2012_timeslicer(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2012_timeslicer::Context> {
         None
     }
 
+    /// The `office_drawing_2013_main_command::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_drawing_2013_main_command(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2013_main_command::Context> {
         None
     }
 
+    /// The `office_drawing_2014_chart::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2014_chart(&mut self) -> Option<&mut dyn office_drawing_2014_chart::Context> {
         None
     }
 
+    /// The `office_drawing_2014_chart_ac::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2014_chart_ac(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2014_chart_ac::Context> {
         None
     }
 
+    /// The `office_drawing_2014_chartex::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2014_chartex(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2014_chartex::Context> {
         None
     }
 
+    /// The `office_drawing_2014_main::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2014_main(&mut self) -> Option<&mut dyn office_drawing_2014_main::Context> {
         None
     }
 
+    /// The `office_drawing_2016_11_diagram::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2016_11_diagram(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2016_11_diagram::Context> {
         None
     }
 
+    /// The `office_drawing_2016_11_main::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2016_11_main(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2016_11_main::Context> {
         None
     }
 
+    /// The `office_drawing_2016_12_diagram::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2016_12_diagram(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2016_12_diagram::Context> {
         None
     }
 
+    /// The `office_drawing_2016_svg_main::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2016_svg_main(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2016_svg_main::Context> {
         None
     }
 
+    /// The `office_drawing_2017_03_chart::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2017_03_chart(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2017_03_chart::Context> {
         None
     }
 
+    /// The `office_drawing_2017_decorative::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2017_decorative(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2017_decorative::Context> {
         None
     }
 
+    /// The `office_drawing_2017_model3d::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2017_model3d(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2017_model3d::Context> {
         None
     }
 
+    /// The `office_drawing_2018_animation::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2018_animation(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2018_animation::Context> {
         None
     }
 
+    /// The `office_drawing_2018_animation_model3d::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_drawing_2018_animation_model3d(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2018_animation_model3d::Context> {
         None
     }
 
+    /// The `office_drawing_2018_hyperlinkcolor::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_drawing_2018_hyperlinkcolor(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2018_hyperlinkcolor::Context> {
         None
     }
 
+    /// The `office_drawing_2018_sketchyshapes::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_drawing_2018_sketchyshapes(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2018_sketchyshapes::Context> {
         None
     }
 
+    /// The `office_drawing_2020_classification_shape::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_drawing_2020_classification_shape(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2020_classification_shape::Context> {
         None
     }
 
+    /// The `office_drawing_2021_livefeed::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2021_livefeed(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2021_livefeed::Context> {
         None
     }
 
+    /// The `office_drawing_2021_oembed::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2021_oembed(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2021_oembed::Context> {
         None
     }
 
+    /// The `office_drawing_2021_scriptlink::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2021_scriptlink(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2021_scriptlink::Context> {
         None
     }
 
+    /// The `office_drawing_2022_imageformula::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_drawing_2022_imageformula(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2022_imageformula::Context> {
         None
     }
 
+    /// The `office_excel_2006_main::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_excel_2006_main(&mut self) -> Option<&mut dyn office_excel_2006_main::Context> {
         None
     }
 
+    /// The `office_excel_2010_spreadsheet_drawing::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_excel_2010_spreadsheet_drawing(
         &mut self,
     ) -> Option<&mut dyn office_excel_2010_spreadsheet_drawing::Context> {
         None
     }
 
+    /// The `office_powerpoint_2010_main::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_powerpoint_2010_main(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2010_main::Context> {
         None
     }
 
+    /// The `office_powerpoint_2012_main::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_powerpoint_2012_main(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2012_main::Context> {
         None
     }
 
+    /// The `office_powerpoint_2012_roaming_settings::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_powerpoint_2012_roaming_settings(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2012_roaming_settings::Context> {
         None
     }
 
+    /// The `office_powerpoint_2013_main_command::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_powerpoint_2013_main_command(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2013_main_command::Context> {
         None
     }
 
+    /// The `office_powerpoint_2015_main::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_powerpoint_2015_main(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2015_main::Context> {
         None
     }
 
+    /// The `office_powerpoint_2017_10_main::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_powerpoint_2017_10_main(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2017_10_main::Context> {
         None
     }
 
+    /// The `office_powerpoint_2017_3_main::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_powerpoint_2017_3_main(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2017_3_main::Context> {
         None
     }
 
+    /// The `office_powerpoint_2018_4_main::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_powerpoint_2018_4_main(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2018_4_main::Context> {
         None
     }
 
+    /// The `office_powerpoint_2018_8_main::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_powerpoint_2018_8_main(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2018_8_main::Context> {
         None
     }
 
+    /// The `office_powerpoint_2019_12_main::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_powerpoint_2019_12_main(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2019_12_main::Context> {
         None
     }
 
+    /// The `office_powerpoint_2019_9_main_command::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_powerpoint_2019_9_main_command(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2019_9_main_command::Context> {
         None
     }
 
+    /// The `office_powerpoint_2020_02_main::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_powerpoint_2020_02_main(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2020_02_main::Context> {
         None
     }
 
+    /// The `office_powerpoint_2021_06_main::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_powerpoint_2021_06_main(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2021_06_main::Context> {
         None
     }
 
+    /// The `office_powerpoint_2022_03_main::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_powerpoint_2022_03_main(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2022_03_main::Context> {
         None
     }
 
+    /// The `office_powerpoint_2022_08_main::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_powerpoint_2022_08_main(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2022_08_main::Context> {
         None
     }
 
+    /// The `office_powerpoint_2023_02_main::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_powerpoint_2023_02_main(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2023_02_main::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2009_9_main::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2009_9_main(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2009_9_main::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2010_11_ac::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_spreadsheetml_2010_11_ac(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2010_11_ac::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2010_11_main::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2010_11_main(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2010_11_main::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2011_1_ac::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_spreadsheetml_2011_1_ac(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2011_1_ac::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2014_11_main::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2014_11_main(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2014_11_main::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2014_revision::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2014_revision(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2014_revision::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2016_pivotdefaultlayout::Context` hooks. `None` until this opts in
+    /// by returning `Some(self)`.
     fn office_spreadsheetml_2016_pivotdefaultlayout(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2016_pivotdefaultlayout::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2017_dynamicarray::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2017_dynamicarray(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2017_dynamicarray::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2017_richdata::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2017_richdata(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2017_richdata::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2017_richdata2::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2017_richdata2(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2017_richdata2::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2018_calcfeatures::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2018_calcfeatures(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2018_calcfeatures::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2018_threadedcomments::Context` hooks. `None` until this opts in
+    /// by returning `Some(self)`.
     fn office_spreadsheetml_2018_threadedcomments(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2018_threadedcomments::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2019_extlinksprops::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2019_extlinksprops(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2019_extlinksprops::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2019_namedsheetviews::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2019_namedsheetviews(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2019_namedsheetviews::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2020_pivot_nov2020::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2020_pivot_nov2020(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2020_pivot_nov2020::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2020_richdatawebimage::Context` hooks. `None` until this opts in
+    /// by returning `Some(self)`.
     fn office_spreadsheetml_2020_richdatawebimage(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2020_richdatawebimage::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2020_richvaluerefresh::Context` hooks. `None` until this opts in
+    /// by returning `Some(self)`.
     fn office_spreadsheetml_2020_richvaluerefresh(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2020_richvaluerefresh::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2020_threadedcomments2::Context` hooks. `None` until this opts in
+    /// by returning `Some(self)`.
     fn office_spreadsheetml_2020_threadedcomments2(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2020_threadedcomments2::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2021_extlinks2021::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2021_extlinks2021(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2021_extlinks2021::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2022_featurepropertybag::Context` hooks. `None` until this opts in
+    /// by returning `Some(self)`.
     fn office_spreadsheetml_2022_featurepropertybag(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2022_featurepropertybag::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2022_pivot_rich_data::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2022_pivot_rich_data(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2022_pivot_rich_data::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2022_pivot_version_info::Context` hooks. `None` until this opts in
+    /// by returning `Some(self)`.
     fn office_spreadsheetml_2022_pivot_version_info(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2022_pivot_version_info::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2022_richvaluerel::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2022_richvaluerel(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2022_richvaluerel::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2023_data_source_versioning::Context` hooks. `None` until this
+    /// opts in by returning `Some(self)`.
     fn office_spreadsheetml_2023_data_source_versioning(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2023_data_source_versioning::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2023_external_code_service::Context` hooks. `None` until this opts
+    /// in by returning `Some(self)`.
     fn office_spreadsheetml_2023_external_code_service(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2023_external_code_service::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2023_ms_forms::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2023_ms_forms(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2023_ms_forms::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2023_pivot2023_calculation::Context` hooks. `None` until this opts
+    /// in by returning `Some(self)`.
     fn office_spreadsheetml_2023_pivot2023_calculation(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2023_pivot2023_calculation::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2024_pivot_auto_refresh::Context` hooks. `None` until this opts in
+    /// by returning `Some(self)`.
     fn office_spreadsheetml_2024_pivot_auto_refresh(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2024_pivot_auto_refresh::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2024_pivot_dynamic_arrays::Context` hooks. `None` until this opts
+    /// in by returning `Some(self)`.
     fn office_spreadsheetml_2024_pivot_dynamic_arrays(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2024_pivot_dynamic_arrays::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2024_workbook_compatibility_version::Context` hooks. `None` until
+    /// this opts in by returning `Some(self)`.
     fn office_spreadsheetml_2024_workbook_compatibility_version(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2024_workbook_compatibility_version::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2025_external_code_service2::Context` hooks. `None` until this
+    /// opts in by returning `Some(self)`.
     fn office_spreadsheetml_2025_external_code_service2(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2025_external_code_service2::Context> {
         None
     }
 
+    /// The `office_spreadsheetml_2025_pivot_data_source::Context` hooks. `None` until this opts in
+    /// by returning `Some(self)`.
     fn office_spreadsheetml_2025_pivot_data_source(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2025_pivot_data_source::Context> {
         None
     }
 
+    /// The `office_tasks_2019_documenttasks::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_tasks_2019_documenttasks(
         &mut self,
     ) -> Option<&mut dyn office_tasks_2019_documenttasks::Context> {
         None
     }
 
+    /// The `office_thememl_2012_main::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_thememl_2012_main(&mut self) -> Option<&mut dyn office_thememl_2012_main::Context> {
         None
     }
 
+    /// The `office_webextensions_taskpanes_2010_11::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_webextensions_taskpanes_2010_11(
         &mut self,
     ) -> Option<&mut dyn office_webextensions_taskpanes_2010_11::Context> {
         None
     }
 
+    /// The `office_webextensions_webextension_2010_11::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_webextensions_webextension_2010_11(
         &mut self,
     ) -> Option<&mut dyn office_webextensions_webextension_2010_11::Context> {
         None
     }
 
+    /// The `office_word_2010_wordml::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_word_2010_wordml(&mut self) -> Option<&mut dyn office_word_2010_wordml::Context> {
         None
     }
 
+    /// The `office_word_2010_wordprocessing_canvas::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_word_2010_wordprocessing_canvas(
         &mut self,
     ) -> Option<&mut dyn office_word_2010_wordprocessing_canvas::Context> {
         None
     }
 
+    /// The `office_word_2010_wordprocessing_drawing::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_word_2010_wordprocessing_drawing(
         &mut self,
     ) -> Option<&mut dyn office_word_2010_wordprocessing_drawing::Context> {
         None
     }
 
+    /// The `office_word_2010_wordprocessing_group::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_word_2010_wordprocessing_group(
         &mut self,
     ) -> Option<&mut dyn office_word_2010_wordprocessing_group::Context> {
         None
     }
 
+    /// The `office_word_2010_wordprocessing_shape::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_word_2010_wordprocessing_shape(
         &mut self,
     ) -> Option<&mut dyn office_word_2010_wordprocessing_shape::Context> {
         None
     }
 
+    /// The `office_word_2012_wordml::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_word_2012_wordml(&mut self) -> Option<&mut dyn office_word_2012_wordml::Context> {
         None
     }
 
+    /// The `office_word_2012_wordprocessing_drawing::Context` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_word_2012_wordprocessing_drawing(
         &mut self,
     ) -> Option<&mut dyn office_word_2012_wordprocessing_drawing::Context> {
         None
     }
 
+    /// The `office_word_2015_wordml_symex::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_word_2015_wordml_symex(
         &mut self,
     ) -> Option<&mut dyn office_word_2015_wordml_symex::Context> {
         None
     }
 
+    /// The `office_word_2016_wordml_cid::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_word_2016_wordml_cid(
         &mut self,
     ) -> Option<&mut dyn office_word_2016_wordml_cid::Context> {
         None
     }
 
+    /// The `office_word_2018_wordml::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_word_2018_wordml(&mut self) -> Option<&mut dyn office_word_2018_wordml::Context> {
         None
     }
 
+    /// The `office_word_2018_wordml_cex::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_word_2018_wordml_cex(
         &mut self,
     ) -> Option<&mut dyn office_word_2018_wordml_cex::Context> {
         None
     }
 
+    /// The `office_word_2020_oembed::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_word_2020_oembed(&mut self) -> Option<&mut dyn office_word_2020_oembed::Context> {
         None
     }
 
+    /// The `picture::Context` hooks. `None` until this opts in by returning `Some(self)`.
     fn picture(&mut self) -> Option<&mut dyn picture::Context> {
         None
     }
 
+    /// The `presentation::Context` hooks. `None` until this opts in by returning `Some(self)`.
     fn presentation(&mut self) -> Option<&mut dyn presentation::Context> {
         None
     }
 
+    /// The `spreadsheet::Context` hooks. `None` until this opts in by returning `Some(self)`.
     fn spreadsheet(&mut self) -> Option<&mut dyn spreadsheet::Context> {
         None
     }
 
+    /// The `spreadsheet_drawing::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn spreadsheet_drawing(&mut self) -> Option<&mut dyn spreadsheet_drawing::Context> {
         None
     }
 
+    /// The `vml::Context` hooks. `None` until this opts in by returning `Some(self)`.
     fn vml(&mut self) -> Option<&mut dyn vml::Context> {
         None
     }
 
+    /// The `vml_office_drawing::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn vml_office_drawing(&mut self) -> Option<&mut dyn vml_office_drawing::Context> {
         None
     }
 
+    /// The `vml_presentation_drawing::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn vml_presentation_drawing(&mut self) -> Option<&mut dyn vml_presentation_drawing::Context> {
         None
     }
 
+    /// The `vml_spreadsheet_drawing::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn vml_spreadsheet_drawing(&mut self) -> Option<&mut dyn vml_spreadsheet_drawing::Context> {
         None
     }
 
+    /// The `vml_wordprocessing_drawing::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn vml_wordprocessing_drawing(
         &mut self,
     ) -> Option<&mut dyn vml_wordprocessing_drawing::Context> {
         None
     }
 
+    /// The `wordprocessing::Context` hooks. `None` until this opts in by returning `Some(self)`.
     fn wordprocessing(&mut self) -> Option<&mut dyn wordprocessing::Context> {
         None
     }
 
+    /// The `wordprocessing_drawing::Context` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn wordprocessing_drawing(&mut self) -> Option<&mut dyn wordprocessing_drawing::Context> {
         None
     }
@@ -938,64 +1184,86 @@ pub trait Context {
 /// The root of every visitor, which each namespace's `Visitor` extends and no other trait.
 ///
 /// It holds the hook for content the schemas do not declare, and one accessor per namespace,
-/// through which a visitor opts into that namespace's hooks by returning itself.
+/// through which a visitor opts into that namespace's hooks by returning `Some(self)`. An accessor
+/// answers `None` by default, so a visitor is never shown a namespace it did not opt into.
+///
+/// The `officekit-traversal` crate calls the hooks through `Visit`.
 pub trait Visitor {
+    /// The `additional_characteristics::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn additional_characteristics(
         &mut self,
     ) -> Option<&mut dyn additional_characteristics::Visitor> {
         None
     }
 
+    /// The `bibliography::Visitor` hooks. `None` until this opts in by returning `Some(self)`.
     fn bibliography(&mut self) -> Option<&mut dyn bibliography::Visitor> {
         None
     }
 
+    /// The `chart::Visitor` hooks. `None` until this opts in by returning `Some(self)`.
     fn chart(&mut self) -> Option<&mut dyn chart::Visitor> {
         None
     }
 
+    /// The `chart_drawing::Visitor` hooks. `None` until this opts in by returning `Some(self)`.
     fn chart_drawing(&mut self) -> Option<&mut dyn chart_drawing::Visitor> {
         None
     }
 
+    /// The `common_simple_types::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn common_simple_types(&mut self) -> Option<&mut dyn common_simple_types::Visitor> {
         None
     }
 
+    /// The `custom_xml_data_properties::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn custom_xml_data_properties(
         &mut self,
     ) -> Option<&mut dyn custom_xml_data_properties::Visitor> {
         None
     }
 
+    /// The `custom_xml_schema_properties::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn custom_xml_schema_properties(
         &mut self,
     ) -> Option<&mut dyn custom_xml_schema_properties::Visitor> {
         None
     }
 
+    /// The `diagram::Visitor` hooks. `None` until this opts in by returning `Some(self)`.
     fn diagram(&mut self) -> Option<&mut dyn diagram::Visitor> {
         None
     }
 
+    /// The `document_properties_custom::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn document_properties_custom(
         &mut self,
     ) -> Option<&mut dyn document_properties_custom::Visitor> {
         None
     }
 
+    /// The `document_properties_extended::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn document_properties_extended(
         &mut self,
     ) -> Option<&mut dyn document_properties_extended::Visitor> {
         None
     }
 
+    /// The `document_properties_variant_types::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn document_properties_variant_types(
         &mut self,
     ) -> Option<&mut dyn document_properties_variant_types::Visitor> {
         None
     }
 
+    /// The `drawing::Visitor` hooks. `None` until this opts in by returning `Some(self)`.
     fn drawing(&mut self) -> Option<&mut dyn drawing::Visitor> {
         None
     }
@@ -1005,642 +1273,865 @@ pub trait Visitor {
         Descend::Yes
     }
 
+    /// The `locked_canvas::Visitor` hooks. `None` until this opts in by returning `Some(self)`.
     fn locked_canvas(&mut self) -> Option<&mut dyn locked_canvas::Visitor> {
         None
     }
 
+    /// The `math::Visitor` hooks. `None` until this opts in by returning `Some(self)`.
     fn math(&mut self) -> Option<&mut dyn math::Visitor> {
         None
     }
 
+    /// The `office_2009_07_customui::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_2009_07_customui(&mut self) -> Option<&mut dyn office_2009_07_customui::Visitor> {
         None
     }
 
+    /// The `office_2019_extlst::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_2019_extlst(&mut self) -> Option<&mut dyn office_2019_extlst::Visitor> {
         None
     }
 
+    /// The `office_2020_mip_label_metadata::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_2020_mip_label_metadata(
         &mut self,
     ) -> Option<&mut dyn office_2020_mip_label_metadata::Visitor> {
         None
     }
 
+    /// The `office_drawing_2007_8_2_chart::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2007_8_2_chart(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2007_8_2_chart::Visitor> {
         None
     }
 
+    /// The `office_drawing_2008_diagram::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2008_diagram(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2008_diagram::Visitor> {
         None
     }
 
+    /// The `office_drawing_2010_chart_drawing::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_drawing_2010_chart_drawing(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2010_chart_drawing::Visitor> {
         None
     }
 
+    /// The `office_drawing_2010_compatibility::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_drawing_2010_compatibility(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2010_compatibility::Visitor> {
         None
     }
 
+    /// The `office_drawing_2010_diagram::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2010_diagram(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2010_diagram::Visitor> {
         None
     }
 
+    /// The `office_drawing_2010_main::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2010_main(&mut self) -> Option<&mut dyn office_drawing_2010_main::Visitor> {
         None
     }
 
+    /// The `office_drawing_2010_picture::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2010_picture(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2010_picture::Visitor> {
         None
     }
 
+    /// The `office_drawing_2010_slicer::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2010_slicer(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2010_slicer::Visitor> {
         None
     }
 
+    /// The `office_drawing_2012_chart::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2012_chart(&mut self) -> Option<&mut dyn office_drawing_2012_chart::Visitor> {
         None
     }
 
+    /// The `office_drawing_2012_chart_style::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2012_chart_style(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2012_chart_style::Visitor> {
         None
     }
 
+    /// The `office_drawing_2012_main::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2012_main(&mut self) -> Option<&mut dyn office_drawing_2012_main::Visitor> {
         None
     }
 
+    /// The `office_drawing_2012_timeslicer::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2012_timeslicer(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2012_timeslicer::Visitor> {
         None
     }
 
+    /// The `office_drawing_2013_main_command::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_drawing_2013_main_command(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2013_main_command::Visitor> {
         None
     }
 
+    /// The `office_drawing_2014_chart::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2014_chart(&mut self) -> Option<&mut dyn office_drawing_2014_chart::Visitor> {
         None
     }
 
+    /// The `office_drawing_2014_chart_ac::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2014_chart_ac(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2014_chart_ac::Visitor> {
         None
     }
 
+    /// The `office_drawing_2014_chartex::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2014_chartex(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2014_chartex::Visitor> {
         None
     }
 
+    /// The `office_drawing_2014_main::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2014_main(&mut self) -> Option<&mut dyn office_drawing_2014_main::Visitor> {
         None
     }
 
+    /// The `office_drawing_2016_11_diagram::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2016_11_diagram(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2016_11_diagram::Visitor> {
         None
     }
 
+    /// The `office_drawing_2016_11_main::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2016_11_main(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2016_11_main::Visitor> {
         None
     }
 
+    /// The `office_drawing_2016_12_diagram::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2016_12_diagram(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2016_12_diagram::Visitor> {
         None
     }
 
+    /// The `office_drawing_2016_svg_main::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2016_svg_main(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2016_svg_main::Visitor> {
         None
     }
 
+    /// The `office_drawing_2017_03_chart::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2017_03_chart(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2017_03_chart::Visitor> {
         None
     }
 
+    /// The `office_drawing_2017_decorative::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2017_decorative(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2017_decorative::Visitor> {
         None
     }
 
+    /// The `office_drawing_2017_model3d::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2017_model3d(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2017_model3d::Visitor> {
         None
     }
 
+    /// The `office_drawing_2018_animation::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2018_animation(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2018_animation::Visitor> {
         None
     }
 
+    /// The `office_drawing_2018_animation_model3d::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_drawing_2018_animation_model3d(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2018_animation_model3d::Visitor> {
         None
     }
 
+    /// The `office_drawing_2018_hyperlinkcolor::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_drawing_2018_hyperlinkcolor(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2018_hyperlinkcolor::Visitor> {
         None
     }
 
+    /// The `office_drawing_2018_sketchyshapes::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_drawing_2018_sketchyshapes(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2018_sketchyshapes::Visitor> {
         None
     }
 
+    /// The `office_drawing_2020_classification_shape::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_drawing_2020_classification_shape(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2020_classification_shape::Visitor> {
         None
     }
 
+    /// The `office_drawing_2021_livefeed::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2021_livefeed(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2021_livefeed::Visitor> {
         None
     }
 
+    /// The `office_drawing_2021_oembed::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2021_oembed(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2021_oembed::Visitor> {
         None
     }
 
+    /// The `office_drawing_2021_scriptlink::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_drawing_2021_scriptlink(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2021_scriptlink::Visitor> {
         None
     }
 
+    /// The `office_drawing_2022_imageformula::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_drawing_2022_imageformula(
         &mut self,
     ) -> Option<&mut dyn office_drawing_2022_imageformula::Visitor> {
         None
     }
 
+    /// The `office_excel_2006_main::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_excel_2006_main(&mut self) -> Option<&mut dyn office_excel_2006_main::Visitor> {
         None
     }
 
+    /// The `office_excel_2010_spreadsheet_drawing::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_excel_2010_spreadsheet_drawing(
         &mut self,
     ) -> Option<&mut dyn office_excel_2010_spreadsheet_drawing::Visitor> {
         None
     }
 
+    /// The `office_powerpoint_2010_main::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_powerpoint_2010_main(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2010_main::Visitor> {
         None
     }
 
+    /// The `office_powerpoint_2012_main::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_powerpoint_2012_main(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2012_main::Visitor> {
         None
     }
 
+    /// The `office_powerpoint_2012_roaming_settings::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_powerpoint_2012_roaming_settings(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2012_roaming_settings::Visitor> {
         None
     }
 
+    /// The `office_powerpoint_2013_main_command::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_powerpoint_2013_main_command(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2013_main_command::Visitor> {
         None
     }
 
+    /// The `office_powerpoint_2015_main::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_powerpoint_2015_main(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2015_main::Visitor> {
         None
     }
 
+    /// The `office_powerpoint_2017_10_main::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_powerpoint_2017_10_main(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2017_10_main::Visitor> {
         None
     }
 
+    /// The `office_powerpoint_2017_3_main::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_powerpoint_2017_3_main(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2017_3_main::Visitor> {
         None
     }
 
+    /// The `office_powerpoint_2018_4_main::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_powerpoint_2018_4_main(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2018_4_main::Visitor> {
         None
     }
 
+    /// The `office_powerpoint_2018_8_main::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_powerpoint_2018_8_main(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2018_8_main::Visitor> {
         None
     }
 
+    /// The `office_powerpoint_2019_12_main::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_powerpoint_2019_12_main(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2019_12_main::Visitor> {
         None
     }
 
+    /// The `office_powerpoint_2019_9_main_command::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_powerpoint_2019_9_main_command(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2019_9_main_command::Visitor> {
         None
     }
 
+    /// The `office_powerpoint_2020_02_main::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_powerpoint_2020_02_main(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2020_02_main::Visitor> {
         None
     }
 
+    /// The `office_powerpoint_2021_06_main::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_powerpoint_2021_06_main(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2021_06_main::Visitor> {
         None
     }
 
+    /// The `office_powerpoint_2022_03_main::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_powerpoint_2022_03_main(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2022_03_main::Visitor> {
         None
     }
 
+    /// The `office_powerpoint_2022_08_main::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_powerpoint_2022_08_main(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2022_08_main::Visitor> {
         None
     }
 
+    /// The `office_powerpoint_2023_02_main::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_powerpoint_2023_02_main(
         &mut self,
     ) -> Option<&mut dyn office_powerpoint_2023_02_main::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2009_9_main::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2009_9_main(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2009_9_main::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2010_11_ac::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_spreadsheetml_2010_11_ac(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2010_11_ac::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2010_11_main::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2010_11_main(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2010_11_main::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2011_1_ac::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_spreadsheetml_2011_1_ac(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2011_1_ac::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2014_11_main::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2014_11_main(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2014_11_main::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2014_revision::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2014_revision(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2014_revision::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2016_pivotdefaultlayout::Visitor` hooks. `None` until this opts in
+    /// by returning `Some(self)`.
     fn office_spreadsheetml_2016_pivotdefaultlayout(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2016_pivotdefaultlayout::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2017_dynamicarray::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2017_dynamicarray(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2017_dynamicarray::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2017_richdata::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2017_richdata(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2017_richdata::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2017_richdata2::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2017_richdata2(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2017_richdata2::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2018_calcfeatures::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2018_calcfeatures(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2018_calcfeatures::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2018_threadedcomments::Visitor` hooks. `None` until this opts in
+    /// by returning `Some(self)`.
     fn office_spreadsheetml_2018_threadedcomments(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2018_threadedcomments::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2019_extlinksprops::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2019_extlinksprops(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2019_extlinksprops::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2019_namedsheetviews::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2019_namedsheetviews(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2019_namedsheetviews::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2020_pivot_nov2020::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2020_pivot_nov2020(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2020_pivot_nov2020::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2020_richdatawebimage::Visitor` hooks. `None` until this opts in
+    /// by returning `Some(self)`.
     fn office_spreadsheetml_2020_richdatawebimage(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2020_richdatawebimage::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2020_richvaluerefresh::Visitor` hooks. `None` until this opts in
+    /// by returning `Some(self)`.
     fn office_spreadsheetml_2020_richvaluerefresh(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2020_richvaluerefresh::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2020_threadedcomments2::Visitor` hooks. `None` until this opts in
+    /// by returning `Some(self)`.
     fn office_spreadsheetml_2020_threadedcomments2(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2020_threadedcomments2::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2021_extlinks2021::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2021_extlinks2021(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2021_extlinks2021::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2022_featurepropertybag::Visitor` hooks. `None` until this opts in
+    /// by returning `Some(self)`.
     fn office_spreadsheetml_2022_featurepropertybag(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2022_featurepropertybag::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2022_pivot_rich_data::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2022_pivot_rich_data(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2022_pivot_rich_data::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2022_pivot_version_info::Visitor` hooks. `None` until this opts in
+    /// by returning `Some(self)`.
     fn office_spreadsheetml_2022_pivot_version_info(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2022_pivot_version_info::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2022_richvaluerel::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2022_richvaluerel(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2022_richvaluerel::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2023_data_source_versioning::Visitor` hooks. `None` until this
+    /// opts in by returning `Some(self)`.
     fn office_spreadsheetml_2023_data_source_versioning(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2023_data_source_versioning::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2023_external_code_service::Visitor` hooks. `None` until this opts
+    /// in by returning `Some(self)`.
     fn office_spreadsheetml_2023_external_code_service(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2023_external_code_service::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2023_ms_forms::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_spreadsheetml_2023_ms_forms(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2023_ms_forms::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2023_pivot2023_calculation::Visitor` hooks. `None` until this opts
+    /// in by returning `Some(self)`.
     fn office_spreadsheetml_2023_pivot2023_calculation(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2023_pivot2023_calculation::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2024_pivot_auto_refresh::Visitor` hooks. `None` until this opts in
+    /// by returning `Some(self)`.
     fn office_spreadsheetml_2024_pivot_auto_refresh(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2024_pivot_auto_refresh::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2024_pivot_dynamic_arrays::Visitor` hooks. `None` until this opts
+    /// in by returning `Some(self)`.
     fn office_spreadsheetml_2024_pivot_dynamic_arrays(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2024_pivot_dynamic_arrays::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2024_workbook_compatibility_version::Visitor` hooks. `None` until
+    /// this opts in by returning `Some(self)`.
     fn office_spreadsheetml_2024_workbook_compatibility_version(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2024_workbook_compatibility_version::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2025_external_code_service2::Visitor` hooks. `None` until this
+    /// opts in by returning `Some(self)`.
     fn office_spreadsheetml_2025_external_code_service2(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2025_external_code_service2::Visitor> {
         None
     }
 
+    /// The `office_spreadsheetml_2025_pivot_data_source::Visitor` hooks. `None` until this opts in
+    /// by returning `Some(self)`.
     fn office_spreadsheetml_2025_pivot_data_source(
         &mut self,
     ) -> Option<&mut dyn office_spreadsheetml_2025_pivot_data_source::Visitor> {
         None
     }
 
+    /// The `office_tasks_2019_documenttasks::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_tasks_2019_documenttasks(
         &mut self,
     ) -> Option<&mut dyn office_tasks_2019_documenttasks::Visitor> {
         None
     }
 
+    /// The `office_thememl_2012_main::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_thememl_2012_main(&mut self) -> Option<&mut dyn office_thememl_2012_main::Visitor> {
         None
     }
 
+    /// The `office_webextensions_taskpanes_2010_11::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_webextensions_taskpanes_2010_11(
         &mut self,
     ) -> Option<&mut dyn office_webextensions_taskpanes_2010_11::Visitor> {
         None
     }
 
+    /// The `office_webextensions_webextension_2010_11::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_webextensions_webextension_2010_11(
         &mut self,
     ) -> Option<&mut dyn office_webextensions_webextension_2010_11::Visitor> {
         None
     }
 
+    /// The `office_word_2010_wordml::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_word_2010_wordml(&mut self) -> Option<&mut dyn office_word_2010_wordml::Visitor> {
         None
     }
 
+    /// The `office_word_2010_wordprocessing_canvas::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_word_2010_wordprocessing_canvas(
         &mut self,
     ) -> Option<&mut dyn office_word_2010_wordprocessing_canvas::Visitor> {
         None
     }
 
+    /// The `office_word_2010_wordprocessing_drawing::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_word_2010_wordprocessing_drawing(
         &mut self,
     ) -> Option<&mut dyn office_word_2010_wordprocessing_drawing::Visitor> {
         None
     }
 
+    /// The `office_word_2010_wordprocessing_group::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_word_2010_wordprocessing_group(
         &mut self,
     ) -> Option<&mut dyn office_word_2010_wordprocessing_group::Visitor> {
         None
     }
 
+    /// The `office_word_2010_wordprocessing_shape::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_word_2010_wordprocessing_shape(
         &mut self,
     ) -> Option<&mut dyn office_word_2010_wordprocessing_shape::Visitor> {
         None
     }
 
+    /// The `office_word_2012_wordml::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_word_2012_wordml(&mut self) -> Option<&mut dyn office_word_2012_wordml::Visitor> {
         None
     }
 
+    /// The `office_word_2012_wordprocessing_drawing::Visitor` hooks. `None` until this opts in by
+    /// returning `Some(self)`.
     fn office_word_2012_wordprocessing_drawing(
         &mut self,
     ) -> Option<&mut dyn office_word_2012_wordprocessing_drawing::Visitor> {
         None
     }
 
+    /// The `office_word_2015_wordml_symex::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_word_2015_wordml_symex(
         &mut self,
     ) -> Option<&mut dyn office_word_2015_wordml_symex::Visitor> {
         None
     }
 
+    /// The `office_word_2016_wordml_cid::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_word_2016_wordml_cid(
         &mut self,
     ) -> Option<&mut dyn office_word_2016_wordml_cid::Visitor> {
         None
     }
 
+    /// The `office_word_2018_wordml::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_word_2018_wordml(&mut self) -> Option<&mut dyn office_word_2018_wordml::Visitor> {
         None
     }
 
+    /// The `office_word_2018_wordml_cex::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_word_2018_wordml_cex(
         &mut self,
     ) -> Option<&mut dyn office_word_2018_wordml_cex::Visitor> {
         None
     }
 
+    /// The `office_word_2020_oembed::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn office_word_2020_oembed(&mut self) -> Option<&mut dyn office_word_2020_oembed::Visitor> {
         None
     }
 
+    /// The `picture::Visitor` hooks. `None` until this opts in by returning `Some(self)`.
     fn picture(&mut self) -> Option<&mut dyn picture::Visitor> {
         None
     }
 
+    /// The `presentation::Visitor` hooks. `None` until this opts in by returning `Some(self)`.
     fn presentation(&mut self) -> Option<&mut dyn presentation::Visitor> {
         None
     }
 
+    /// The `spreadsheet::Visitor` hooks. `None` until this opts in by returning `Some(self)`.
     fn spreadsheet(&mut self) -> Option<&mut dyn spreadsheet::Visitor> {
         None
     }
 
+    /// The `spreadsheet_drawing::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn spreadsheet_drawing(&mut self) -> Option<&mut dyn spreadsheet_drawing::Visitor> {
         None
     }
 
+    /// The `vml::Visitor` hooks. `None` until this opts in by returning `Some(self)`.
     fn vml(&mut self) -> Option<&mut dyn vml::Visitor> {
         None
     }
 
+    /// The `vml_office_drawing::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn vml_office_drawing(&mut self) -> Option<&mut dyn vml_office_drawing::Visitor> {
         None
     }
 
+    /// The `vml_presentation_drawing::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn vml_presentation_drawing(&mut self) -> Option<&mut dyn vml_presentation_drawing::Visitor> {
         None
     }
 
+    /// The `vml_spreadsheet_drawing::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn vml_spreadsheet_drawing(&mut self) -> Option<&mut dyn vml_spreadsheet_drawing::Visitor> {
         None
     }
 
+    /// The `vml_wordprocessing_drawing::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn vml_wordprocessing_drawing(
         &mut self,
     ) -> Option<&mut dyn vml_wordprocessing_drawing::Visitor> {
         None
     }
 
+    /// The `wordprocessing::Visitor` hooks. `None` until this opts in by returning `Some(self)`.
     fn wordprocessing(&mut self) -> Option<&mut dyn wordprocessing::Visitor> {
         None
     }
 
+    /// The `wordprocessing_drawing::Visitor` hooks. `None` until this opts in by returning
+    /// `Some(self)`.
     fn wordprocessing_drawing(&mut self) -> Option<&mut dyn wordprocessing_drawing::Visitor> {
         None
     }

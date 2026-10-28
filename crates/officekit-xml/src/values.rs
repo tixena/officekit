@@ -87,6 +87,7 @@ impl DateTime {
 }
 
 impl Measure {
+    /// A measure of `value` in `unit`.
     #[must_use]
     pub const fn new(unit: MeasureUnit, value: f64) -> Self {
         Self { unit, value }
@@ -94,6 +95,7 @@ impl Measure {
 }
 
 impl ValueError {
+    /// The error for `text` that is no value of `simple_type`.
     #[must_use]
     pub const fn new(simple_type: &'static str, text: String) -> Self {
         Self { simple_type, text }

@@ -23,6 +23,9 @@ binary-format = [
     "officekit-xml/binary-format",
 ]
 
+[package.metadata.docs.rs]
+all-features = true
+
 [dependencies]
 officekit-markup.workspace = true
 officekit-packaging.workspace = true

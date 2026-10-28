@@ -212,8 +212,11 @@
 //! The hooks of the `xxl21` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_base::office_spreadsheetml_2021_extlinks2021`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2021/extlinks2021`.
+//! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2021/extlinks2021`. Its prefix, `xxl21`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_base::office_spreadsheetml_2021_extlinks2021::*;
 
 use officekit_markup_base::Written;
@@ -229,21 +232,30 @@ use std::io;
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_spreadsheetml_2021_extlinks2021` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `AbsoluteUrl`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn absolute_url(&mut self, _node: &AbsoluteUrl) -> Option<AbsoluteUrl> {
         None
     }
 
+    /// Asked for each `AlternateUrls`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn alternate_urls(&mut self, _node: &AlternateUrls) -> Option<AlternateUrls> {
         None
     }
 
+    /// Asked for each `RelativeUrl`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn relative_url(&mut self, _node: &RelativeUrl) -> Option<RelativeUrl> {
         None
     }
 
+    /// Asked when a `AbsoluteUrl` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_absolute_url(
         &mut self,
         _node: &AbsoluteUrl,
@@ -252,9 +264,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `AlternateUrls` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_alternate_urls(
         &mut self,
         _node: &AlternateUrls,
@@ -263,9 +278,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RelativeUrl` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_relative_url(
         &mut self,
         _node: &RelativeUrl,
@@ -281,14 +299,20 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_spreadsheetml_2021_extlinks2021` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `AbsoluteUrl`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn absolute_url(&mut self, _node: &AbsoluteUrl) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `AlternateUrls`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn alternate_urls(&mut self, _node: &AlternateUrls) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RelativeUrl`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn relative_url(&mut self, _node: &RelativeUrl) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

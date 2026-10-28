@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `lc` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.openxmlformats.org/drawingml/2006/lockedCanvas`, which files write with the prefix `lc`.
 //!
-//! The namespace is `http://schemas.openxmlformats.org/drawingml/2006/lockedCanvas`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 pub mod read;
 pub mod write;
@@ -245,8 +245,8 @@ pub static LOCKED_CANVAS_CONTAINER_SHAPE: officekit_markup_base::Shape =
         text: false,
     };
 
-/// 20.3.2.1 `lockedCanvas` (Locked Canvas Container): the tag `lc:lockedCanvas`, schema type
-/// `CT_GvmlGroupShape`.
+/// The `lc:lockedCanvas` element, Locked Canvas Container (ECMA-376 Part 1, section 20.3.2.1). Its
+/// schema type is `CT_GvmlGroupShape`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -258,14 +258,20 @@ pub static LOCKED_CANVAS_CONTAINER_SHAPE: officekit_markup_base::Shape =
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LockedCanvasContainer {
+    /// The children that are an item of `super::drawing::GroupShapeContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<super::drawing::GroupShapeContent>,
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The child that is `super::drawing::NonVisualPropertiesForAGroupShape`, which the schema
+    /// requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_properties_for_a_group_shape:
         Box<super::drawing::NonVisualPropertiesForAGroupShape>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `super::drawing::VisualGroupShapeProperties`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub visual_group_shape_properties: Box<super::drawing::VisualGroupShapeProperties>,
 }

@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `m` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.openxmlformats.org/officeDocument/2006/math`, which files write with the prefix `m`.
 //!
-//! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/math`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -1491,7 +1491,7 @@ static ST_CHAR_FACETS: officekit_markup_base::Facets = officekit_markup_base::Fa
     patterns: &[],
 };
 
-/// 22.1.2.1 acc (Accent): the tag `m:acc`, schema type `CT_Acc`.
+/// The `m:acc` element, Accent (ECMA-376 Part 1, section 22.1.2.1). Its schema type is `CT_Acc`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1503,13 +1503,17 @@ static ST_CHAR_FACETS: officekit_markup_base::Facets = officekit_markup_base::Fa
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Accent {
+    /// The child that is `E`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub e: Box<E>,
+    /// The child that is `AccentProperties`, when there is one.
     pub properties: Option<Box<AccentProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.2 `accPr` (Accent Properties): the tag `m:accPr`, schema type `CT_AccPr`.
+/// The `m:accPr` element, Accent Properties (ECMA-376 Part 1, section 22.1.2.2). Its schema type is
+/// `CT_AccPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1518,12 +1522,16 @@ pub struct Accent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AccentProperties {
+    /// The child that is `Character`, when there is one.
     pub character: Option<Box<Character>>,
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.4 `alnScr` (Align Scripts): the tag `m:alnScr`, schema type `CT_OnOff`.
+/// The `m:alnScr` element, Align Scripts (ECMA-376 Part 1, section 22.1.2.4). Its schema type is
+/// `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1532,11 +1540,14 @@ pub struct AccentProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AlignScripts {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 22.1.2.3 aln (Alignment): the tag `m:aln`, schema type `CT_OnOff`.
+/// The `m:aln` element, Alignment (ECMA-376 Part 1, section 22.1.2.3). Its schema type is
+/// `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1545,11 +1556,14 @@ pub struct AlignScripts {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Alignment {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 22.1.2.5 `argPr` (Argument Properties): the tag `m:argPr`, schema type `CT_OMathArgPr`.
+/// The `m:argPr` element, Argument Properties (ECMA-376 Part 1, section 22.1.2.5). Its schema type
+/// is `CT_OMathArgPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1558,11 +1572,14 @@ pub struct Alignment {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArgumentProperties {
+    /// The child that is `ArgumentSize`, when there is one.
     pub argument_size: Option<Box<ArgumentSize>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.6 `argSz` (Argument Size): the tag `m:argSz`, schema type `CT_Integer2`.
+/// The `m:argSz` element, Argument Size (ECMA-376 Part 1, section 22.1.2.6). Its schema type is
+/// `CT_Integer2`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1571,11 +1588,14 @@ pub struct ArgumentProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArgumentSize {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<Integer2>,
 }
 
-/// 22.1.2.34 `eqArr` (Array Object): the tag `m:eqArr`, schema type `CT_EqArr`.
+/// The `m:eqArr` element, Array Object (ECMA-376 Part 1, section 22.1.2.34). Its schema type is
+/// `CT_EqArr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1587,13 +1607,17 @@ pub struct ArgumentSize {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArrayObject {
+    /// The child that is `ArrayProperties`, when there is one.
     pub array_properties: Option<Box<ArrayProperties>>,
+    /// The children that are `E`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub e: Vec<E>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.35 `eqArrPr` (Array Properties): the tag `m:eqArrPr`, schema type `CT_EqArrPr`.
+/// The `m:eqArrPr` element, Array Properties (ECMA-376 Part 1, section 22.1.2.35). Its schema type
+/// is `CT_EqArrPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1602,16 +1626,23 @@ pub struct ArrayObject {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ArrayProperties {
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// The child that is `MatrixBaseJustification`, when there is one.
     pub matrix_base_justification: Option<Box<MatrixBaseJustification>>,
+    /// The child that is `MaximumDistribution`, when there is one.
     pub maximum_distribution: Option<Box<MaximumDistribution>>,
+    /// The child that is `ObjectDistribution`, when there is one.
     pub object_distribution: Option<Box<ObjectDistribution>>,
+    /// The child that is `RSp`, when there is one.
     pub r_sp: Option<Box<RSp>>,
+    /// The child that is `RowSpacingRule`, when there is one.
     pub row_spacing_rule: Option<Box<RowSpacingRule>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.7 bar (Bar): the tag `m:bar`, schema type `CT_Bar`.
+/// The `m:bar` element, Bar (ECMA-376 Part 1, section 22.1.2.7). Its schema type is `CT_Bar`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1623,13 +1654,17 @@ pub struct ArrayProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Bar {
+    /// The child that is `E`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub e: Box<E>,
+    /// The child that is `BarProperties`, when there is one.
     pub properties: Option<Box<BarProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.8 `barPr` (Bar Properties): the tag `m:barPr`, schema type `CT_BarPr`.
+/// The `m:barPr` element, Bar Properties (ECMA-376 Part 1, section 22.1.2.8). Its schema type is
+/// `CT_BarPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1638,12 +1673,16 @@ pub struct Bar {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BarProperties {
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// The child that is `Position`, when there is one.
     pub position: Option<Box<Position>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.11 `borderBox` (Border-Box Object): the tag `m:borderBox`, schema type `CT_BorderBox`.
+/// The `m:borderBox` element, Border-Box Object (ECMA-376 Part 1, section 22.1.2.11). Its schema
+/// type is `CT_BorderBox`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1655,14 +1694,17 @@ pub struct BarProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BorderBoxObject {
+    /// The child that is `BorderBoxProperties`, when there is one.
     pub border_box_properties: Option<Box<BorderBoxProperties>>,
+    /// The child that is `E`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub e: Box<E>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.12 `borderBoxPr` (Border-Box Properties): the tag `m:borderBoxPr`, schema type
-/// `CT_BorderBoxPr`.
+/// The `m:borderBoxPr` element, Border-Box Properties (ECMA-376 Part 1, section 22.1.2.12). Its
+/// schema type is `CT_BorderBoxPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1671,22 +1713,32 @@ pub struct BorderBoxObject {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BorderBoxProperties {
+    /// The child that is `BorderBoxStrikethroughBottomLeftToTopRight`, when there is one.
     pub border_box_strikethrough_bottom_left_to_top_right:
         Option<Box<BorderBoxStrikethroughBottomLeftToTopRight>>,
+    /// The child that is `BorderBoxStrikethroughHorizontal`, when there is one.
     pub border_box_strikethrough_horizontal: Option<Box<BorderBoxStrikethroughHorizontal>>,
+    /// The child that is `BorderBoxStrikethroughTopLeftToBottomRight`, when there is one.
     pub border_box_strikethrough_top_left_to_bottom_right:
         Option<Box<BorderBoxStrikethroughTopLeftToBottomRight>>,
+    /// The child that is `BorderBoxStrikethroughVertical`, when there is one.
     pub border_box_strikethrough_vertical: Option<Box<BorderBoxStrikethroughVertical>>,
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// The child that is `HideBottomEdge`, when there is one.
     pub hide_bottom_edge: Option<Box<HideBottomEdge>>,
+    /// The child that is `HideLeftEdge`, when there is one.
     pub hide_left_edge: Option<Box<HideLeftEdge>>,
+    /// The child that is `HideRightEdge`, when there is one.
     pub hide_right_edge: Option<Box<HideRightEdge>>,
+    /// The child that is `HideTopEdge`, when there is one.
     pub hide_top_edge: Option<Box<HideTopEdge>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.107 `strikeBLTR` (Border Box Strikethrough Bottom-Left to Top-Right): the tag
-/// `m:strikeBLTR`, schema type `CT_OnOff`.
+/// The `m:strikeBLTR` element, Border Box Strikethrough Bottom-Left to Top-Right (ECMA-376 Part 1,
+/// section 22.1.2.107). Its schema type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1695,12 +1747,14 @@ pub struct BorderBoxProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BorderBoxStrikethroughBottomLeftToTopRight {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 22.1.2.108 `strikeH` (Border Box Strikethrough Horizontal): the tag `m:strikeH`, schema type
-/// `CT_OnOff`.
+/// The `m:strikeH` element, Border Box Strikethrough Horizontal (ECMA-376 Part 1, section
+/// 22.1.2.108). Its schema type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1709,12 +1763,14 @@ pub struct BorderBoxStrikethroughBottomLeftToTopRight {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BorderBoxStrikethroughHorizontal {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 22.1.2.109 `strikeTLBR` (Border Box Strikethrough Top-Left to Bottom-Right): the tag
-/// `m:strikeTLBR`, schema type `CT_OnOff`.
+/// The `m:strikeTLBR` element, Border Box Strikethrough Top-Left to Bottom-Right (ECMA-376 Part 1,
+/// section 22.1.2.109). Its schema type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1723,12 +1779,14 @@ pub struct BorderBoxStrikethroughHorizontal {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BorderBoxStrikethroughTopLeftToBottomRight {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 22.1.2.110 `strikeV` (Border Box Strikethrough Vertical): the tag `m:strikeV`, schema type
-/// `CT_OnOff`.
+/// The `m:strikeV` element, Border Box Strikethrough Vertical (ECMA-376 Part 1, section
+/// 22.1.2.110). Its schema type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1737,11 +1795,14 @@ pub struct BorderBoxStrikethroughTopLeftToBottomRight {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BorderBoxStrikethroughVertical {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 22.1.2.13 box (Box Object): the tag `m:box`, schema type `CT_Box`.
+/// The `m:box` element, Box Object (ECMA-376 Part 1, section 22.1.2.13). Its schema type is
+/// `CT_Box`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1753,13 +1814,17 @@ pub struct BorderBoxStrikethroughVertical {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BoxObject {
+    /// The child that is `BoxProperties`, when there is one.
     pub box_properties: Option<Box<BoxProperties>>,
+    /// The child that is `E`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub e: Box<E>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.14 `boxPr` (Box Properties): the tag `m:boxPr`, schema type `CT_BoxPr`.
+/// The `m:boxPr` element, Box Properties (ECMA-376 Part 1, section 22.1.2.14). Its schema type is
+/// `CT_BoxPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1768,16 +1833,24 @@ pub struct BoxObject {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BoxProperties {
+    /// The child that is `Alignment`, when there is one.
     pub alignment: Option<Box<Alignment>>,
+    /// The child that is `Break`, when there is one.
     pub r#break: Option<Box<Break>>,
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// The child that is `Differential`, when there is one.
     pub differential: Option<Box<Differential>>,
+    /// The child that is `NoBreak`, when there is one.
     pub no_break: Option<Box<NoBreak>>,
+    /// The child that is `OperatorEmulator`, when there is one.
     pub operator_emulator: Option<Box<OperatorEmulator>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.15 brk (Break): the tag `m:brk`, schema type `CT_ManualBreak`.
+/// The `m:brk` element, Break (ECMA-376 Part 1, section 22.1.2.15). Its schema type is
+/// `CT_ManualBreak`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1786,11 +1859,17 @@ pub struct BoxProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Break {
+    /// The attribute `m:alnAt`, when the element has it.
     pub aln_at: Option<Integer255>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.3.1 `ST_BreakBin` (Break Binary Operators): the text the file carried.
+/// Break Binary Operators, the simple type `ST_BreakBin` (ECMA-376 Part 1, section 22.1.3.1), kept
+/// as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1799,16 +1878,21 @@ pub struct Break {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BreakBinaryOperators(pub String);
-/// The members of `ST_BreakBin`, in alphabetical order.
+/// The members of the enumeration `ST_BreakBin`, in alphabetical order. `as_str` gives the text of
+/// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum BreakBinaryOperatorsMember {
+    /// The member written `after`.
     After,
+    /// The member written `before`.
     Before,
+    /// The member written `repeat`.
     Repeat,
 }
 
-/// 22.1.2.16 `brkBin` (Break on Binary Operators): the tag `m:brkBin`, schema type `CT_BreakBin`.
+/// The `m:brkBin` element, Break on Binary Operators (ECMA-376 Part 1, section 22.1.2.16). Its
+/// schema type is `CT_BreakBin`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1817,12 +1901,14 @@ pub enum BreakBinaryOperatorsMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BreakOnBinaryOperators {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<BreakBinaryOperators>,
 }
 
-/// 22.1.2.17 `brkBinSub` (Break on Binary Subtraction): the tag `m:brkBinSub`, schema type
-/// `CT_BreakBinSub`.
+/// The `m:brkBinSub` element, Break on Binary Subtraction (ECMA-376 Part 1, section 22.1.2.17). Its
+/// schema type is `CT_BreakBinSub`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1831,11 +1917,14 @@ pub struct BreakOnBinaryOperators {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BreakOnBinarySubtraction {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<StBreakBinSub>,
 }
 
-/// 22.1.2.20 chr (Character): the tag `m:chr`, schema type `CT_Char`.
+/// The `m:chr` element, Character (ECMA-376 Part 1, section 22.1.2.20). Its schema type is
+/// `CT_Char`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1844,11 +1933,14 @@ pub struct BreakOnBinarySubtraction {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Character {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<StChar>,
 }
 
-/// 22.1.2.23 `ctrlPr` (Control Properties): the tag `m:ctrlPr`, schema type `CT_CtrlPr`.
+/// The `m:ctrlPr` element, Control Properties (ECMA-376 Part 1, section 22.1.2.23). Its schema type
+/// is `CT_CtrlPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1857,21 +1949,32 @@ pub struct Character {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ControlProperties {
+    /// The child that is an item of `ControlPropertiesContent`, when there is one.
     pub content: Option<Box<ControlPropertiesContent>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_CtrlPr`: `EG_RPrMath`.
+/// One child element of a choice: `EG_RPrMath`.
+///
+/// The schema types that hold it: `CT_CtrlPr`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ControlPropertiesContent {
+    /// The element `w:del`, a `DeletedMathControlCharacter`.
     DeletedMathControlCharacter(super::wordprocessing::DeletedMathControlCharacter),
+    /// The element `w:ins`, a `InsertedMathControlCharacter`.
     InsertedMathControlCharacter(super::wordprocessing::InsertedMathControlCharacter),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `w:rPr`, a `RunProperties`.
     RunProperties(super::wordprocessing::RunProperties),
 }
 
-/// 22.1.2.25 `defJc` (Default Justification): the tag `m:defJc`, schema type `CT_OMathJc`.
+/// The `m:defJc` element, Default Justification (ECMA-376 Part 1, section 22.1.2.25). Its schema
+/// type is `CT_OMathJc`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1880,11 +1983,14 @@ pub enum ControlPropertiesContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DefaultJustification {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<StJc>,
 }
 
-/// 22.1.2.26 deg (Degree): the tag `m:deg`, schema type `CT_OMathArg`.
+/// The `m:deg` element, Degree (ECMA-376 Part 1, section 22.1.2.26). Its schema type is
+/// `CT_OMathArg`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1896,14 +2002,19 @@ pub struct DefaultJustification {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Degree {
+    /// The child that is `ArgumentProperties`, when there is one.
     pub argument_properties: Option<Box<ArgumentProperties>>,
+    /// The children that are an item of `OfficeMathContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<OfficeMathContent>,
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.10 `begChr` (Delimiter Beginning Character): the tag `m:begChr`, schema type `CT_Char`.
+/// The `m:begChr` element, Delimiter Beginning Character (ECMA-376 Part 1, section 22.1.2.10). Its
+/// schema type is `CT_Char`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1912,11 +2023,14 @@ pub struct Degree {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DelimiterBeginningCharacter {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<StChar>,
 }
 
-/// 22.1.2.33 `endChr` (Delimiter Ending Character): the tag `m:endChr`, schema type `CT_Char`.
+/// The `m:endChr` element, Delimiter Ending Character (ECMA-376 Part 1, section 22.1.2.33). Its
+/// schema type is `CT_Char`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1925,11 +2039,14 @@ pub struct DelimiterBeginningCharacter {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DelimiterEndingCharacter {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<StChar>,
 }
 
-/// 22.1.2.24 d (Delimiter Object): the tag `m:d`, schema type `CT_D`.
+/// The `m:d` element, Delimiter Object (ECMA-376 Part 1, section 22.1.2.24). Its schema type is
+/// `CT_D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1941,13 +2058,17 @@ pub struct DelimiterEndingCharacter {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DelimiterObject {
+    /// The child that is `DelimiterProperties`, when there is one.
     pub delimiter_properties: Option<Box<DelimiterProperties>>,
+    /// The children that are `E`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub e: Vec<E>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.31 `dPr` (Delimiter Properties): the tag `m:dPr`, schema type `CT_DPr`.
+/// The `m:dPr` element, Delimiter Properties (ECMA-376 Part 1, section 22.1.2.31). Its schema type
+/// is `CT_DPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1956,16 +2077,24 @@ pub struct DelimiterObject {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DelimiterProperties {
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// The child that is `DelimiterBeginningCharacter`, when there is one.
     pub delimiter_beginning_character: Option<Box<DelimiterBeginningCharacter>>,
+    /// The child that is `DelimiterEndingCharacter`, when there is one.
     pub delimiter_ending_character: Option<Box<DelimiterEndingCharacter>>,
+    /// The child that is `DelimiterSeparatorCharacter`, when there is one.
     pub delimiter_separator_character: Option<Box<DelimiterSeparatorCharacter>>,
+    /// The child that is `Grow`, when there is one.
     pub grow: Option<Box<Grow>>,
+    /// The child that is `Shp`, when there is one.
     pub shp: Option<Box<Shp>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.95 `sepChr` (Delimiter Separator Character): the tag `m:sepChr`, schema type `CT_Char`.
+/// The `m:sepChr` element, Delimiter Separator Character (ECMA-376 Part 1, section 22.1.2.95). Its
+/// schema type is `CT_Char`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1974,11 +2103,14 @@ pub struct DelimiterProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DelimiterSeparatorCharacter {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<StChar>,
 }
 
-/// 22.1.2.28 den (Denominator): the tag `m:den`, schema type `CT_OMathArg`.
+/// The `m:den` element, Denominator (ECMA-376 Part 1, section 22.1.2.28). Its schema type is
+/// `CT_OMathArg`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1990,14 +2122,19 @@ pub struct DelimiterSeparatorCharacter {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Denominator {
+    /// The child that is `ArgumentProperties`, when there is one.
     pub argument_properties: Option<Box<ArgumentProperties>>,
+    /// The children that are an item of `OfficeMathContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<OfficeMathContent>,
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.29 diff (Differential): the tag `m:diff`, schema type `CT_OnOff`.
+/// The `m:diff` element, Differential (ECMA-376 Part 1, section 22.1.2.29). Its schema type is
+/// `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2006,11 +2143,13 @@ pub struct Denominator {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Differential {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// The tag `m:e`, schema type `CT_OMathArg`.
+/// The `m:e` element. Its schema type is `CT_OMathArg`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2022,14 +2161,19 @@ pub struct Differential {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct E {
+    /// The child that is `ArgumentProperties`, when there is one.
     pub argument_properties: Option<Box<ArgumentProperties>>,
+    /// The children that are an item of `OfficeMathContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<OfficeMathContent>,
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.36 f (Fraction Object): the tag `m:f`, schema type `CT_F`.
+/// The `m:f` element, Fraction Object (ECMA-376 Part 1, section 22.1.2.36). Its schema type is
+/// `CT_F`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2041,15 +2185,20 @@ pub struct E {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FractionObject {
+    /// The child that is `Denominator`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub denominator: Box<Denominator>,
+    /// The child that is `FractionProperties`, when there is one.
     pub fraction_properties: Option<Box<FractionProperties>>,
+    /// The child that is `Numerator`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub numerator: Box<Numerator>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.38 `fPr` (Fraction Properties): the tag `m:fPr`, schema type `CT_FPr`.
+/// The `m:fPr` element, Fraction Properties (ECMA-376 Part 1, section 22.1.2.38). Its schema type
+/// is `CT_FPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2058,12 +2207,16 @@ pub struct FractionObject {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FractionProperties {
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// The child that is `FractionType`, when there is one.
     pub fraction_type: Option<Box<FractionType>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.118 type (Fraction type): the tag `m:type`, schema type `CT_FType`.
+/// The `m:type` element, Fraction type (ECMA-376 Part 1, section 22.1.2.118). Its schema type is
+/// `CT_FType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2072,11 +2225,14 @@ pub struct FractionProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FractionType {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<StFType>,
 }
 
-/// 22.1.2.39 func (Function Apply Object): the tag `m:func`, schema type `CT_Func`.
+/// The `m:func` element, Function Apply Object (ECMA-376 Part 1, section 22.1.2.39). Its schema
+/// type is `CT_Func`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2088,15 +2244,20 @@ pub struct FractionType {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FunctionApplyObject {
+    /// The child that is `E`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub e: Box<E>,
+    /// The child that is `FunctionName`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub function_name: Box<FunctionName>,
+    /// The child that is `FunctionProperties`, when there is one.
     pub function_properties: Option<Box<FunctionProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.37 `fName` (Function Name): the tag `m:fName`, schema type `CT_OMathArg`.
+/// The `m:fName` element, Function Name (ECMA-376 Part 1, section 22.1.2.37). Its schema type is
+/// `CT_OMathArg`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2108,14 +2269,19 @@ pub struct FunctionApplyObject {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FunctionName {
+    /// The child that is `ArgumentProperties`, when there is one.
     pub argument_properties: Option<Box<ArgumentProperties>>,
+    /// The children that are an item of `OfficeMathContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<OfficeMathContent>,
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.40 `funcPr` (Function Properties): the tag `m:funcPr`, schema type `CT_FuncPr`.
+/// The `m:funcPr` element, Function Properties (ECMA-376 Part 1, section 22.1.2.40). Its schema
+/// type is `CT_FuncPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2124,11 +2290,14 @@ pub struct FunctionName {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FunctionProperties {
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.41 `groupChr` (Group-Character Object): the tag `m:groupChr`, schema type `CT_GroupChr`.
+/// The `m:groupChr` element, Group-Character Object (ECMA-376 Part 1, section 22.1.2.41). Its
+/// schema type is `CT_GroupChr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2140,14 +2309,17 @@ pub struct FunctionProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GroupCharacterObject {
+    /// The child that is `E`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub e: Box<E>,
+    /// The child that is `GroupCharacterProperties`, when there is one.
     pub group_character_properties: Option<Box<GroupCharacterProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.42 `groupChrPr` (Group-Character Properties): the tag `m:groupChrPr`, schema type
-/// `CT_GroupChrPr`.
+/// The `m:groupChrPr` element, Group-Character Properties (ECMA-376 Part 1, section 22.1.2.42). Its
+/// schema type is `CT_GroupChrPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2156,14 +2328,19 @@ pub struct GroupCharacterObject {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GroupCharacterProperties {
+    /// The child that is `Character`, when there is one.
     pub character: Option<Box<Character>>,
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// The child that is `Position`, when there is one.
     pub position: Option<Box<Position>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `VerticalJustification`, when there is one.
     pub vertical_justification: Option<Box<VerticalJustification>>,
 }
 
-/// The tag `m:grow`, schema type `CT_OnOff`.
+/// The `m:grow` element. Its schema type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2172,11 +2349,14 @@ pub struct GroupCharacterProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Grow {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 22.1.2.44 `hideBot` (Hide Bottom Edge): the tag `m:hideBot`, schema type `CT_OnOff`.
+/// The `m:hideBot` element, Hide Bottom Edge (ECMA-376 Part 1, section 22.1.2.44). Its schema type
+/// is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2185,11 +2365,14 @@ pub struct Grow {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HideBottomEdge {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 22.1.2.27 `degHide` (Hide Degree): the tag `m:degHide`, schema type `CT_OnOff`.
+/// The `m:degHide` element, Hide Degree (ECMA-376 Part 1, section 22.1.2.27). Its schema type is
+/// `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2198,11 +2381,14 @@ pub struct HideBottomEdge {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HideDegree {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 22.1.2.45 `hideLeft` (Hide Left Edge): the tag `m:hideLeft`, schema type `CT_OnOff`.
+/// The `m:hideLeft` element, Hide Left Edge (ECMA-376 Part 1, section 22.1.2.45). Its schema type
+/// is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2211,11 +2397,14 @@ pub struct HideDegree {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HideLeftEdge {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 22.1.2.46 `hideRight` (Hide Right Edge): the tag `m:hideRight`, schema type `CT_OnOff`.
+/// The `m:hideRight` element, Hide Right Edge (ECMA-376 Part 1, section 22.1.2.46). Its schema type
+/// is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2224,11 +2413,14 @@ pub struct HideLeftEdge {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HideRightEdge {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 22.1.2.47 `hideTop` (Hide Top Edge): the tag `m:hideTop`, schema type `CT_OnOff`.
+/// The `m:hideTop` element, Hide Top Edge (ECMA-376 Part 1, section 22.1.2.47). Its schema type is
+/// `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2237,11 +2429,16 @@ pub struct HideRightEdge {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HideTopEdge {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// `ST_Integer2`: the text the file carried.
+/// The simple type `ST_Integer2`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2251,7 +2448,10 @@ pub struct HideTopEdge {
 #[non_exhaustive]
 pub struct Integer2(pub String);
 
-/// `ST_Integer255`: the text the file carried.
+/// The simple type `ST_Integer255`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2261,7 +2461,8 @@ pub struct Integer2(pub String);
 #[non_exhaustive]
 pub struct Integer255(pub String);
 
-/// 22.1.2.49 `intLim` (Integral Limit Locations): the tag `m:intLim`, schema type `CT_LimLoc`.
+/// The `m:intLim` element, Integral Limit Locations (ECMA-376 Part 1, section 22.1.2.49). Its
+/// schema type is `CT_LimLoc`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2270,12 +2471,14 @@ pub struct Integer255(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct IntegralLimitLocations {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<LimitLocation>,
 }
 
-/// 22.1.2.48 `interSp` (Inter-Equation Spacing): the tag `m:interSp`, schema type
-/// `CT_TwipsMeasure`.
+/// The `m:interSp` element, Inter-Equation Spacing (ECMA-376 Part 1, section 22.1.2.48). Its schema
+/// type is `CT_TwipsMeasure`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2284,12 +2487,14 @@ pub struct IntegralLimitLocations {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct InterEquationSpacing {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
 
-/// 22.1.2.50 `intraSp` (Intra-Equation Spacing): the tag `m:intraSp`, schema type
-/// `CT_TwipsMeasure`.
+/// The `m:intraSp` element, Intra-Equation Spacing (ECMA-376 Part 1, section 22.1.2.50). Its schema
+/// type is `CT_TwipsMeasure`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2298,11 +2503,14 @@ pub struct InterEquationSpacing {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct IntraEquationSpacing {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
 
-/// 22.1.2.51 jc (Justification): the tag `m:jc`, schema type `CT_OMathJc`.
+/// The `m:jc` element, Justification (ECMA-376 Part 1, section 22.1.2.51). Its schema type is
+/// `CT_OMathJc`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2311,11 +2519,14 @@ pub struct IntraEquationSpacing {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Justification {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<StJc>,
 }
 
-/// 22.1.2.59 `lMargin` (Left Margin): the tag `m:lMargin`, schema type `CT_TwipsMeasure`.
+/// The `m:lMargin` element, Left Margin (ECMA-376 Part 1, section 22.1.2.59). Its schema type is
+/// `CT_TwipsMeasure`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2324,11 +2535,13 @@ pub struct Justification {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LeftMargin {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
 
-/// The tag `m:limLoc`, schema type `CT_LimLoc`.
+/// The `m:limLoc` element. Its schema type is `CT_LimLoc`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2337,11 +2550,14 @@ pub struct LeftMargin {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LimLoc {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<LimitLocation>,
 }
 
-/// 22.1.2.52 lim (Limit): the tag `m:lim`, schema type `CT_OMathArg`.
+/// The `m:lim` element, Limit (ECMA-376 Part 1, section 22.1.2.52). Its schema type is
+/// `CT_OMathArg`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2353,14 +2569,22 @@ pub struct LimLoc {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Limit {
+    /// The child that is `ArgumentProperties`, when there is one.
     pub argument_properties: Option<Box<ArgumentProperties>>,
+    /// The children that are an item of `OfficeMathContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<OfficeMathContent>,
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.3.8 `ST_LimLoc` (Limit Location): the text the file carried.
+/// Limit Location, the simple type `ST_LimLoc` (ECMA-376 Part 1, section 22.1.3.8), kept as the
+/// text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2369,15 +2593,19 @@ pub struct Limit {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LimitLocation(pub String);
-/// The members of `ST_LimLoc`, in alphabetical order.
+/// The members of the enumeration `ST_LimLoc`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum LimitLocationMember {
+    /// The member written `subSup`.
     SubSup,
+    /// The member written `undOvr`.
     UndOvr,
 }
 
-/// 22.1.2.58 lit (Literal): the tag `m:lit`, schema type `CT_OnOff`.
+/// The `m:lit` element, Literal (ECMA-376 Part 1, section 22.1.2.58). Its schema type is
+/// `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2386,11 +2614,14 @@ pub enum LimitLocationMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Literal {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 22.1.2.54 `limLow` (Lower-Limit Object): the tag `m:limLow`, schema type `CT_LimLow`.
+/// The `m:limLow` element, Lower-Limit Object (ECMA-376 Part 1, section 22.1.2.54). Its schema type
+/// is `CT_LimLow`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2402,15 +2633,20 @@ pub struct Literal {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LowerLimitObject {
+    /// The child that is `E`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub e: Box<E>,
+    /// The child that is `Limit`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub limit: Box<Limit>,
+    /// The child that is `LowerLimitProperties`, when there is one.
     pub lower_limit_properties: Option<Box<LowerLimitProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.55 `limLowPr` (Lower-Limit Properties): the tag `m:limLowPr`, schema type `CT_LimLowPr`.
+/// The `m:limLowPr` element, Lower-Limit Properties (ECMA-376 Part 1, section 22.1.2.55). Its
+/// schema type is `CT_LimLowPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2419,11 +2655,14 @@ pub struct LowerLimitObject {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LowerLimitProperties {
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.61 `mathFont` (Math Font): the tag `m:mathFont`, schema type `CT_String`.
+/// The `m:mathFont` element, Math Font (ECMA-376 Part 1, section 22.1.2.61). Its schema type is
+/// `CT_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2432,11 +2671,14 @@ pub struct LowerLimitProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MathFont {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// 22.1.2.62 `mathPr` (Math Properties): the tag `m:mathPr`, schema type `CT_MathPr`.
+/// The `m:mathPr` element, Math Properties (ECMA-376 Part 1, section 22.1.2.62). Its schema type is
+/// `CT_MathPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2445,34 +2687,58 @@ pub struct MathFont {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MathProperties {
+    /// The child that is `BreakOnBinaryOperators`, when there is one.
     pub break_on_binary_operators: Option<Box<BreakOnBinaryOperators>>,
+    /// The child that is `BreakOnBinarySubtraction`, when there is one.
     pub break_on_binary_subtraction: Option<Box<BreakOnBinarySubtraction>>,
+    /// The child that is an item of `MathPropertiesContent`, when there is one.
     pub content: Option<Box<MathPropertiesContent>>,
+    /// The child that is `DefaultJustification`, when there is one.
     pub default_justification: Option<Box<DefaultJustification>>,
+    /// The child that is `IntegralLimitLocations`, when there is one.
     pub integral_limit_locations: Option<Box<IntegralLimitLocations>>,
+    /// The child that is `InterEquationSpacing`, when there is one.
     pub inter_equation_spacing: Option<Box<InterEquationSpacing>>,
+    /// The child that is `IntraEquationSpacing`, when there is one.
     pub intra_equation_spacing: Option<Box<IntraEquationSpacing>>,
+    /// The child that is `LeftMargin`, when there is one.
     pub left_margin: Option<Box<LeftMargin>>,
+    /// The child that is `MathFont`, when there is one.
     pub math_font: Option<Box<MathFont>>,
+    /// The child that is `NaryLim`, when there is one.
     pub nary_lim: Option<Box<NaryLim>>,
+    /// The child that is `PostParagraphSpacing`, when there is one.
     pub post_paragraph_spacing: Option<Box<PostParagraphSpacing>>,
+    /// The child that is `PreParagraphSpacing`, when there is one.
     pub pre_paragraph_spacing: Option<Box<PreParagraphSpacing>>,
+    /// The child that is `RightMargin`, when there is one.
     pub right_margin: Option<Box<RightMargin>>,
+    /// The child that is `SmallFraction`, when there is one.
     pub small_fraction: Option<Box<SmallFraction>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `UseDisplayMathDefaults`, when there is one.
     pub use_display_math_defaults: Option<Box<UseDisplayMathDefaults>>,
 }
 
-/// One item of `CT_MathPr`: local choice in `CT_MathPr`.
+/// One child element of a choice: local choice in `CT_MathPr`.
+///
+/// The schema types that hold it: `CT_MathPr`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum MathPropertiesContent {
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `m:wrapIndent`, a `WrapIndent`.
     WrapIndent(WrapIndent),
+    /// The element `m:wrapRight`, a `WrapRight`.
     WrapRight(WrapRight),
 }
 
-/// 22.1.2.9 `baseJc` (Matrix Base Justification): the tag `m:baseJc`, schema type `CT_YAlign`.
+/// The `m:baseJc` element, Matrix Base Justification (ECMA-376 Part 1, section 22.1.2.9). Its
+/// schema type is `CT_YAlign`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2481,11 +2747,14 @@ pub enum MathPropertiesContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MatrixBaseJustification {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::VerticalAlignmentLocation>,
 }
 
-/// 22.1.2.64 mc (Matrix Column): the tag `m:mc`, schema type `CT_MC`.
+/// The `m:mc` element, Matrix Column (ECMA-376 Part 1, section 22.1.2.64). Its schema type is
+/// `CT_MC`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2494,11 +2763,14 @@ pub struct MatrixBaseJustification {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MatrixColumn {
+    /// The child that is `MatrixColumnProperties`, when there is one.
     pub properties: Option<Box<MatrixColumnProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.21 count (Matrix Column Count): the tag `m:count`, schema type `CT_Integer255`.
+/// The `m:count` element, Matrix Column Count (ECMA-376 Part 1, section 22.1.2.21). Its schema type
+/// is `CT_Integer255`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2507,11 +2779,14 @@ pub struct MatrixColumn {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MatrixColumnCount {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<Integer255>,
 }
 
-/// 22.1.2.18 `cGp` (Matrix Column Gap): the tag `m:cGp`, schema type `CT_UnSignedInteger`.
+/// The `m:cGp` element, Matrix Column Gap (ECMA-376 Part 1, section 22.1.2.18). Its schema type is
+/// `CT_UnSignedInteger`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2520,11 +2795,14 @@ pub struct MatrixColumnCount {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MatrixColumnGap {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<UnsignedInteger>,
 }
 
-/// 22.1.2.19 `cGpRule` (Matrix Column Gap Rule): the tag `m:cGpRule`, schema type `CT_SpacingRule`.
+/// The `m:cGpRule` element, Matrix Column Gap Rule (ECMA-376 Part 1, section 22.1.2.19). Its schema
+/// type is `CT_SpacingRule`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2533,11 +2811,14 @@ pub struct MatrixColumnGap {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MatrixColumnGapRule {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<SpacingRule>,
 }
 
-/// 22.1.2.65 `mcJc` (Matrix Column Justification): the tag `m:mcJc`, schema type `CT_XAlign`.
+/// The `m:mcJc` element, Matrix Column Justification (ECMA-376 Part 1, section 22.1.2.65). Its
+/// schema type is `CT_XAlign`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2546,11 +2827,14 @@ pub struct MatrixColumnGapRule {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MatrixColumnJustification {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::HorizontalAlignmentLocation>,
 }
 
-/// 22.1.2.66 `mcPr` (Matrix Column Properties): the tag `m:mcPr`, schema type `CT_MCPr`.
+/// The `m:mcPr` element, Matrix Column Properties (ECMA-376 Part 1, section 22.1.2.66). Its schema
+/// type is `CT_MCPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2559,12 +2843,16 @@ pub struct MatrixColumnJustification {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MatrixColumnProperties {
+    /// The child that is `MatrixColumnCount`, when there is one.
     pub matrix_column_count: Option<Box<MatrixColumnCount>>,
+    /// The child that is `MatrixColumnJustification`, when there is one.
     pub matrix_column_justification: Option<Box<MatrixColumnJustification>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.67 mcs (Matrix Columns): the tag `m:mcs`, schema type `CT_MCS`.
+/// The `m:mcs` element, Matrix Columns (ECMA-376 Part 1, section 22.1.2.67). Its schema type is
+/// `CT_MCS`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2573,11 +2861,14 @@ pub struct MatrixColumnProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MatrixColumns {
+    /// The children that are `MatrixColumn`, in order.
     pub matrix_column: Vec<MatrixColumn>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.60 m (Matrix Object): the tag `m:m`, schema type `CT_M`.
+/// The `m:m` element, Matrix Object (ECMA-376 Part 1, section 22.1.2.60). Its schema type is
+/// `CT_M`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2589,13 +2880,17 @@ pub struct MatrixColumns {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MatrixObject {
+    /// The child that is `MatrixProperties`, when there is one.
     pub matrix_properties: Option<Box<MatrixProperties>>,
+    /// The children that are `MatrixRow`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub matrix_row: Vec<MatrixRow>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.68 `mPr` (Matrix Properties): the tag `m:mPr`, schema type `CT_MPr`.
+/// The `m:mPr` element, Matrix Properties (ECMA-376 Part 1, section 22.1.2.68). Its schema type is
+/// `CT_MPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2604,19 +2899,29 @@ pub struct MatrixObject {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MatrixProperties {
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// The child that is `MatrixBaseJustification`, when there is one.
     pub matrix_base_justification: Option<Box<MatrixBaseJustification>>,
+    /// The child that is `MatrixColumnGap`, when there is one.
     pub matrix_column_gap: Option<Box<MatrixColumnGap>>,
+    /// The child that is `MatrixColumnGapRule`, when there is one.
     pub matrix_column_gap_rule: Option<Box<MatrixColumnGapRule>>,
+    /// The child that is `MatrixColumns`, when there is one.
     pub matrix_columns: Option<Box<MatrixColumns>>,
+    /// The child that is `MinimumMatrixColumnWidth`, when there is one.
     pub minimum_matrix_column_width: Option<Box<MinimumMatrixColumnWidth>>,
+    /// The child that is `PlcHide`, when there is one.
     pub plc_hide: Option<Box<PlcHide>>,
+    /// The child that is `RSp`, when there is one.
     pub r_sp: Option<Box<RSp>>,
+    /// The child that is `RowSpacingRule`, when there is one.
     pub row_spacing_rule: Option<Box<RowSpacingRule>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.69 mr (Matrix Row): the tag `m:mr`, schema type `CT_MR`.
+/// The `m:mr` element, Matrix Row (ECMA-376 Part 1, section 22.1.2.69). Its schema type is `CT_MR`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2628,12 +2933,15 @@ pub struct MatrixProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MatrixRow {
+    /// The children that are `E`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub e: Vec<E>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.63 `maxDist` (Maximum Distribution): the tag `m:maxDist`, schema type `CT_OnOff`.
+/// The `m:maxDist` element, Maximum Distribution (ECMA-376 Part 1, section 22.1.2.63). Its schema
+/// type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2642,12 +2950,14 @@ pub struct MatrixRow {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MaximumDistribution {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 22.1.2.22 `cSp` (Minimum Matrix Column Width): the tag `m:cSp`, schema type
-/// `CT_UnSignedInteger`.
+/// The `m:cSp` element, Minimum Matrix Column Width (ECMA-376 Part 1, section 22.1.2.22). Its
+/// schema type is `CT_UnSignedInteger`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2656,11 +2966,13 @@ pub struct MaximumDistribution {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MinimumMatrixColumnWidth {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<UnsignedInteger>,
 }
 
-/// The tag `m:nary`, schema type `CT_Nary`.
+/// The `m:nary` element. Its schema type is `CT_Nary`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2672,17 +2984,22 @@ pub struct MinimumMatrixColumnWidth {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Nary {
+    /// The child that is `E`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub e: Box<E>,
+    /// The child that is `NaryPr`, when there is one.
     pub pr: Option<Box<NaryPr>>,
+    /// The child that is `Sub`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub sub: Box<Sub>,
+    /// The child that is `Sup`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub sup: Box<Sup>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `m:naryLim`, schema type `CT_LimLoc`.
+/// The `m:naryLim` element. Its schema type is `CT_LimLoc`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2691,11 +3008,13 @@ pub struct Nary {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NaryLim {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<LimitLocation>,
 }
 
-/// The tag `m:naryPr`, schema type `CT_NaryPr`.
+/// The `m:naryPr` element. Its schema type is `CT_NaryPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2704,16 +3023,24 @@ pub struct NaryLim {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NaryPr {
+    /// The child that is `Character`, when there is one.
     pub character: Option<Box<Character>>,
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// The child that is `Grow`, when there is one.
     pub grow: Option<Box<Grow>>,
+    /// The child that is `LimLoc`, when there is one.
     pub lim_loc: Option<Box<LimLoc>>,
+    /// The child that is `SubHide`, when there is one.
     pub sub_hide: Option<Box<SubHide>>,
+    /// The child that is `SupHide`, when there is one.
     pub sup_hide: Option<Box<SupHide>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.73 `noBreak` (No Break): the tag `m:noBreak`, schema type `CT_OnOff`.
+/// The `m:noBreak` element, No Break (ECMA-376 Part 1, section 22.1.2.73). Its schema type is
+/// `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2722,11 +3049,14 @@ pub struct NaryPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NoBreak {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 22.1.2.74 nor (Normal Text): the tag `m:nor`, schema type `CT_OnOff`.
+/// The `m:nor` element, Normal Text (ECMA-376 Part 1, section 22.1.2.74). Its schema type is
+/// `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2735,11 +3065,14 @@ pub struct NoBreak {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NormalText {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 22.1.2.75 num (Numerator): the tag `m:num`, schema type `CT_OMathArg`.
+/// The `m:num` element, Numerator (ECMA-376 Part 1, section 22.1.2.75). Its schema type is
+/// `CT_OMathArg`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2751,14 +3084,19 @@ pub struct NormalText {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Numerator {
+    /// The child that is `ArgumentProperties`, when there is one.
     pub argument_properties: Option<Box<ArgumentProperties>>,
+    /// The children that are an item of `OfficeMathContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<OfficeMathContent>,
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.76 `objDist` (Object Distribution): the tag `m:objDist`, schema type `CT_OnOff`.
+/// The `m:objDist` element, Object Distribution (ECMA-376 Part 1, section 22.1.2.76). Its schema
+/// type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2767,11 +3105,14 @@ pub struct Numerator {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ObjectDistribution {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 22.1.2.77 `oMath` (Office Math): the tag `m:oMath`, schema type `CT_OMath`.
+/// The `m:oMath` element, Office Math (ECMA-376 Part 1, section 22.1.2.77). Its schema type is
+/// `CT_OMath`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2783,78 +3124,141 @@ pub struct ObjectDistribution {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct OfficeMath {
+    /// The children that are an item of `OfficeMathContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<OfficeMathContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_OMath`, `CT_OMathArg`: `EG_OMathElements`.
+/// One child element of a choice: `EG_OMathElements`.
+///
+/// The schema types that hold it: `CT_OMath`, `CT_OMathArg`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum OfficeMathContent {
+    /// The element `m:acc`, a `Accent`.
     Accent(Accent),
+    /// The element `m:eqArr`, a `ArrayObject`.
     ArrayObject(ArrayObject),
+    /// The element `m:bar`, a `Bar`.
     Bar(Bar),
+    /// The element `w:bookmarkEnd`, a `BookmarkEnd`.
     BookmarkEnd(super::wordprocessing::BookmarkEnd),
+    /// The element `w:bookmarkStart`, a `BookmarkStart`.
     BookmarkStart(super::wordprocessing::BookmarkStart),
+    /// The element `m:borderBox`, a `BorderBoxObject`.
     BorderBoxObject(BorderBoxObject),
+    /// The element `m:box`, a `BoxObject`.
     BoxObject(BoxObject),
+    /// The element `w:commentRangeEnd`, a `CommentAnchorRangeEnd`.
     CommentAnchorRangeEnd(super::wordprocessing::CommentAnchorRangeEnd),
+    /// The element `w:commentRangeStart`, a `CommentAnchorRangeStart`.
     CommentAnchorRangeStart(super::wordprocessing::CommentAnchorRangeStart),
+    /// The element `w14:conflictDel`, a `ConflictDelRunTrackChange`.
     ConflictDelRunTrackChange(super::office_word_2010_wordml::ConflictDelRunTrackChange),
+    /// The element `w14:conflictIns`, a `ConflictInsRunTrackChange`.
     ConflictInsRunTrackChange(super::office_word_2010_wordml::ConflictInsRunTrackChange),
+    /// The element `w:customXmlDelRangeEnd`, a `CustomXMLMarkupDeletionEnd`.
     CustomXMLMarkupDeletionEnd(super::wordprocessing::CustomXMLMarkupDeletionEnd),
+    /// The element `w:customXmlDelRangeStart`, a `CustomXMLMarkupDeletionStart`.
     CustomXMLMarkupDeletionStart(super::wordprocessing::CustomXMLMarkupDeletionStart),
+    /// The element `w:customXmlInsRangeEnd`, a `CustomXMLMarkupInsertionEnd`.
     CustomXMLMarkupInsertionEnd(super::wordprocessing::CustomXMLMarkupInsertionEnd),
+    /// The element `w:customXmlInsRangeStart`, a `CustomXMLMarkupInsertionStart`.
     CustomXMLMarkupInsertionStart(super::wordprocessing::CustomXMLMarkupInsertionStart),
+    /// The element `w:customXmlMoveFromRangeEnd`, a `CustomXMLMarkupMoveSourceEnd`.
     CustomXMLMarkupMoveSourceEnd(super::wordprocessing::CustomXMLMarkupMoveSourceEnd),
+    /// The element `w:customXmlMoveFromRangeStart`, a `CustomXMLMarkupMoveSourceStart`.
     CustomXMLMarkupMoveSourceStart(super::wordprocessing::CustomXMLMarkupMoveSourceStart),
+    /// The element `w14:customXmlConflictDelRangeEnd`, a `CustomXmlConflictDelRangeEnd`.
     CustomXmlConflictDelRangeEnd(super::office_word_2010_wordml::CustomXmlConflictDelRangeEnd),
+    /// The element `w14:customXmlConflictDelRangeStart`, a `CustomXmlConflictDelRangeStart`.
     CustomXmlConflictDelRangeStart(super::office_word_2010_wordml::CustomXmlConflictDelRangeStart),
+    /// The element `w14:customXmlConflictInsRangeEnd`, a `CustomXmlConflictInsRangeEnd`.
     CustomXmlConflictInsRangeEnd(super::office_word_2010_wordml::CustomXmlConflictInsRangeEnd),
+    /// The element `w14:customXmlConflictInsRangeStart`, a `CustomXmlConflictInsRangeStart`.
     CustomXmlConflictInsRangeStart(super::office_word_2010_wordml::CustomXmlConflictInsRangeStart),
+    /// The element `w:customXmlMoveToRangeEnd`, a `CustomXmlMoveToRangeEnd`.
     CustomXmlMoveToRangeEnd(super::wordprocessing::CustomXmlMoveToRangeEnd),
+    /// The element `w:customXmlMoveToRangeStart`, a `CustomXmlMoveToRangeStart`.
     CustomXmlMoveToRangeStart(super::wordprocessing::CustomXmlMoveToRangeStart),
+    /// The element `w:del`, a `DeletedRunContent`.
     DeletedRunContent(super::wordprocessing::DeletedRunContent),
+    /// The element `m:d`, a `DelimiterObject`.
     DelimiterObject(DelimiterObject),
+    /// The element `m:f`, a `FractionObject`.
     FractionObject(FractionObject),
+    /// The element `m:func`, a `FunctionApplyObject`.
     FunctionApplyObject(FunctionApplyObject),
+    /// The element `m:groupChr`, a `GroupCharacterObject`.
     GroupCharacterObject(GroupCharacterObject),
+    /// The element `w:hyperlink`, a `Hyperlink`.
     Hyperlink(super::wordprocessing::Hyperlink),
+    /// The element `w:customXml`, a `InlineLevelCustomXMLElement`.
     InlineLevelCustomXMLElement(super::wordprocessing::InlineLevelCustomXMLElement),
+    /// The element `w:smartTag`, a `InlineLevelSmartTag`.
     InlineLevelSmartTag(super::wordprocessing::InlineLevelSmartTag),
+    /// The element `w:sdt`, a `InlineLevelStructuredDocumentTag`.
     InlineLevelStructuredDocumentTag(super::wordprocessing::InlineLevelStructuredDocumentTag),
+    /// The element `w:ins`, a `InsertedRunContent`.
     InsertedRunContent(super::wordprocessing::InsertedRunContent),
+    /// The element `m:limLow`, a `LowerLimitObject`.
     LowerLimitObject(LowerLimitObject),
+    /// The element `m:m`, a `MatrixObject`.
     MatrixObject(MatrixObject),
+    /// The element `w:moveToRangeEnd`, a `MoveDestinationLocationContainerEnd`.
     MoveDestinationLocationContainerEnd(super::wordprocessing::MoveDestinationLocationContainerEnd),
+    /// The element `w:moveToRangeStart`, a `MoveDestinationLocationContainerStart`.
     MoveDestinationLocationContainerStart(
         super::wordprocessing::MoveDestinationLocationContainerStart,
     ),
+    /// The element `w:moveTo`, a `MoveDestinationRunContent`.
     MoveDestinationRunContent(super::wordprocessing::MoveDestinationRunContent),
+    /// The element `w:moveFromRangeEnd`, a `MoveSourceLocationContainerEnd`.
     MoveSourceLocationContainerEnd(super::wordprocessing::MoveSourceLocationContainerEnd),
+    /// The element `w:moveFromRangeStart`, a `MoveSourceLocationContainerStart`.
     MoveSourceLocationContainerStart(super::wordprocessing::MoveSourceLocationContainerStart),
+    /// The element `w:moveFrom`, a `MoveSourceRunContent`.
     MoveSourceRunContent(super::wordprocessing::MoveSourceRunContent),
+    /// The element `m:nary`, a `Nary`.
     Nary(Nary),
+    /// The element `m:oMath`, a `OfficeMath`.
     OfficeMath(OfficeMath),
+    /// The element `m:oMathPara`, a `OfficeMathParagraph`.
     OfficeMathParagraph(OfficeMathParagraph),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `m:phant`, a `PhantomObject`.
     PhantomObject(PhantomObject),
+    /// The element `m:sPre`, a `PreSubSuperscriptObject`.
     PreSubSuperscriptObject(PreSubSuperscriptObject),
+    /// The element `w:proofErr`, a `ProofingErrorAnchor`.
     ProofingErrorAnchor(super::wordprocessing::ProofingErrorAnchor),
+    /// The element `m:rad`, a `RadicalObject`.
     RadicalObject(RadicalObject),
+    /// The element `w:permEnd`, a `RangePermissionEnd`.
     RangePermissionEnd(super::wordprocessing::RangePermissionEnd),
+    /// The element `w:permStart`, a `RangePermissionStart`.
     RangePermissionStart(super::wordprocessing::RangePermissionStart),
+    /// The element `m:r`, a `Run`.
     Run(Run),
+    /// The element `w:fldSimple`, a `SimpleField`.
     SimpleField(super::wordprocessing::SimpleField),
+    /// The element `m:sSubSup`, a `SubSuperscriptObject`.
     SubSuperscriptObject(SubSuperscriptObject),
+    /// The element `m:sSub`, a `SubscriptObject`.
     SubscriptObject(SubscriptObject),
+    /// The element `m:sSup`, a `SuperscriptObject`.
     SuperscriptObject(SuperscriptObject),
+    /// The element `m:limUpp`, a `UpperLimitObject`.
     UpperLimitObject(UpperLimitObject),
 }
 
-/// 22.1.2.78 `oMathPara` (Office Math Paragraph): the tag `m:oMathPara`, schema type
-/// `CT_OMathPara`.
+/// The `m:oMathPara` element, Office Math Paragraph (ECMA-376 Part 1, section 22.1.2.78). Its
+/// schema type is `CT_OMathPara`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2866,28 +3270,41 @@ pub enum OfficeMathContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct OfficeMathParagraph {
+    /// The children that are `super::office_word_2010_wordml::ConflictDelRunTrackChange`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub conflict_del_run_track_change:
         Vec<super::office_word_2010_wordml::ConflictDelRunTrackChange>,
+    /// The children that are `super::office_word_2010_wordml::ConflictInsRunTrackChange`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub conflict_ins_run_track_change:
         Vec<super::office_word_2010_wordml::ConflictInsRunTrackChange>,
+    /// The children that are `super::office_word_2010_wordml::CustomXmlConflictDelRangeEnd`, in
+    /// order.
     pub custom_xml_conflict_del_range_end:
         Vec<super::office_word_2010_wordml::CustomXmlConflictDelRangeEnd>,
+    /// The children that are `super::office_word_2010_wordml::CustomXmlConflictDelRangeStart`, in
+    /// order.
     pub custom_xml_conflict_del_range_start:
         Vec<super::office_word_2010_wordml::CustomXmlConflictDelRangeStart>,
+    /// The children that are `super::office_word_2010_wordml::CustomXmlConflictInsRangeEnd`, in
+    /// order.
     pub custom_xml_conflict_ins_range_end:
         Vec<super::office_word_2010_wordml::CustomXmlConflictInsRangeEnd>,
+    /// The children that are `super::office_word_2010_wordml::CustomXmlConflictInsRangeStart`, in
+    /// order.
     pub custom_xml_conflict_ins_range_start:
         Vec<super::office_word_2010_wordml::CustomXmlConflictInsRangeStart>,
+    /// The children that are `OfficeMath`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub office_math: Vec<OfficeMath>,
+    /// The child that is `OfficeMathParagraphProperties`, when there is one.
     pub properties: Option<Box<OfficeMathParagraphProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.79 `oMathParaPr` (Office Math Paragraph Properties): the tag `m:oMathParaPr`, schema type
-/// `CT_OMathParaPr`.
+/// The `m:oMathParaPr` element, Office Math Paragraph Properties (ECMA-376 Part 1, section
+/// 22.1.2.79). Its schema type is `CT_OMathParaPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2896,11 +3313,14 @@ pub struct OfficeMathParagraph {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct OfficeMathParagraphProperties {
+    /// The child that is `Justification`, when there is one.
     pub justification: Option<Box<Justification>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.80 `opEmu` (Operator Emulator): the tag `m:opEmu`, schema type `CT_OnOff`.
+/// The `m:opEmu` element, Operator Emulator (ECMA-376 Part 1, section 22.1.2.80). Its schema type
+/// is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2909,11 +3329,14 @@ pub struct OfficeMathParagraphProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct OperatorEmulator {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 22.1.2.81 phant (Phantom Object): the tag `m:phant`, schema type `CT_Phant`.
+/// The `m:phant` element, Phantom Object (ECMA-376 Part 1, section 22.1.2.81). Its schema type is
+/// `CT_Phant`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2925,13 +3348,17 @@ pub struct OperatorEmulator {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PhantomObject {
+    /// The child that is `E`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub e: Box<E>,
+    /// The child that is `PhantomProperties`, when there is one.
     pub phantom_properties: Option<Box<PhantomProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.82 `phantPr` (Phantom Properties): the tag `m:phantPr`, schema type `CT_PhantPr`.
+/// The `m:phantPr` element, Phantom Properties (ECMA-376 Part 1, section 22.1.2.82). Its schema
+/// type is `CT_PhantPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2940,16 +3367,24 @@ pub struct PhantomObject {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PhantomProperties {
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// The child that is `PhantomShow`, when there is one.
     pub phantom_show: Option<Box<PhantomShow>>,
+    /// The child that is `PhantomZeroAscent`, when there is one.
     pub phantom_zero_ascent: Option<Box<PhantomZeroAscent>>,
+    /// The child that is `PhantomZeroDescent`, when there is one.
     pub phantom_zero_descent: Option<Box<PhantomZeroDescent>>,
+    /// The child that is `PhantomZeroWidth`, when there is one.
     pub phantom_zero_width: Option<Box<PhantomZeroWidth>>,
+    /// The child that is `Transp`, when there is one.
     pub transp: Option<Box<Transp>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.96 show (Phantom Show): the tag `m:show`, schema type `CT_OnOff`.
+/// The `m:show` element, Phantom Show (ECMA-376 Part 1, section 22.1.2.96). Its schema type is
+/// `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2958,11 +3393,14 @@ pub struct PhantomProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PhantomShow {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 22.1.2.122 `zeroAsc` (Phantom Zero Ascent): the tag `m:zeroAsc`, schema type `CT_OnOff`.
+/// The `m:zeroAsc` element, Phantom Zero Ascent (ECMA-376 Part 1, section 22.1.2.122). Its schema
+/// type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2971,11 +3409,14 @@ pub struct PhantomShow {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PhantomZeroAscent {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 22.1.2.123 `zeroDesc` (Phantom Zero Descent): the tag `m:zeroDesc`, schema type `CT_OnOff`.
+/// The `m:zeroDesc` element, Phantom Zero Descent (ECMA-376 Part 1, section 22.1.2.123). Its schema
+/// type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2984,11 +3425,14 @@ pub struct PhantomZeroAscent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PhantomZeroDescent {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 22.1.2.124 `zeroWid` (Phantom Zero Width): the tag `m:zeroWid`, schema type `CT_OnOff`.
+/// The `m:zeroWid` element, Phantom Zero Width (ECMA-376 Part 1, section 22.1.2.124). Its schema
+/// type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2997,11 +3441,13 @@ pub struct PhantomZeroDescent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PhantomZeroWidth {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// The tag `m:plcHide`, schema type `CT_OnOff`.
+/// The `m:plcHide` element. Its schema type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3010,11 +3456,14 @@ pub struct PhantomZeroWidth {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PlcHide {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 22.1.2.84 pos (Position): the tag `m:pos`, schema type `CT_TopBot`.
+/// The `m:pos` element, Position (ECMA-376 Part 1, section 22.1.2.84). Its schema type is
+/// `CT_TopBot`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3023,11 +3472,14 @@ pub struct PlcHide {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Position {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<TopBottom>,
 }
 
-/// 22.1.2.85 `postSp` (Post-Paragraph Spacing): the tag `m:postSp`, schema type `CT_TwipsMeasure`.
+/// The `m:postSp` element, Post-Paragraph Spacing (ECMA-376 Part 1, section 22.1.2.85). Its schema
+/// type is `CT_TwipsMeasure`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3036,11 +3488,14 @@ pub struct Position {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PostParagraphSpacing {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
 
-/// 22.1.2.86 `preSp` (Pre-Paragraph Spacing): the tag `m:preSp`, schema type `CT_TwipsMeasure`.
+/// The `m:preSp` element, Pre-Paragraph Spacing (ECMA-376 Part 1, section 22.1.2.86). Its schema
+/// type is `CT_TwipsMeasure`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3049,11 +3504,14 @@ pub struct PostParagraphSpacing {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PreParagraphSpacing {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
 
-/// 22.1.2.99 `sPre` (Pre-Sub-Superscript Object): the tag `m:sPre`, schema type `CT_SPre`.
+/// The `m:sPre` element, Pre-Sub-Superscript Object (ECMA-376 Part 1, section 22.1.2.99). Its
+/// schema type is `CT_SPre`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3065,18 +3523,23 @@ pub struct PreParagraphSpacing {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PreSubSuperscriptObject {
+    /// The child that is `E`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub e: Box<E>,
+    /// The child that is `PreSubSuperscriptProperties`, when there is one.
     pub pre_sub_superscript_properties: Option<Box<PreSubSuperscriptProperties>>,
+    /// The child that is `Sub`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub sub: Box<Sub>,
+    /// The child that is `Sup`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub sup: Box<Sup>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.100 `sPrePr` (Pre-Sub-Superscript Properties): the tag `m:sPrePr`, schema type
-/// `CT_SPrePr`.
+/// The `m:sPrePr` element, Pre-Sub-Superscript Properties (ECMA-376 Part 1, section 22.1.2.100).
+/// Its schema type is `CT_SPrePr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3085,11 +3548,13 @@ pub struct PreSubSuperscriptObject {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PreSubSuperscriptProperties {
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `m:rSp`, schema type `CT_UnSignedInteger`.
+/// The `m:rSp` element. Its schema type is `CT_UnSignedInteger`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3098,11 +3563,14 @@ pub struct PreSubSuperscriptProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RSp {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<UnsignedInteger>,
 }
 
-/// 22.1.2.88 rad (Radical Object): the tag `m:rad`, schema type `CT_Rad`.
+/// The `m:rad` element, Radical Object (ECMA-376 Part 1, section 22.1.2.88). Its schema type is
+/// `CT_Rad`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3114,15 +3582,20 @@ pub struct RSp {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RadicalObject {
+    /// The child that is `Degree`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub degree: Box<Degree>,
+    /// The child that is `E`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub e: Box<E>,
+    /// The child that is `RadicalProperties`, when there is one.
     pub radical_properties: Option<Box<RadicalProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.89 `radPr` (Radical Properties): the tag `m:radPr`, schema type `CT_RadPr`.
+/// The `m:radPr` element, Radical Properties (ECMA-376 Part 1, section 22.1.2.89). Its schema type
+/// is `CT_RadPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3131,12 +3604,16 @@ pub struct RadicalObject {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RadicalProperties {
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// The child that is `HideDegree`, when there is one.
     pub hide_degree: Option<Box<HideDegree>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.90 `rMargin` (Right Margin): the tag `m:rMargin`, schema type `CT_TwipsMeasure`.
+/// The `m:rMargin` element, Right Margin (ECMA-376 Part 1, section 22.1.2.90). Its schema type is
+/// `CT_TwipsMeasure`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3145,11 +3622,14 @@ pub struct RadicalProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RightMargin {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
 
-/// 22.1.2.93 `rSpRule` (Row Spacing Rule): the tag `m:rSpRule`, schema type `CT_SpacingRule`.
+/// The `m:rSpRule` element, Row Spacing Rule (ECMA-376 Part 1, section 22.1.2.93). Its schema type
+/// is `CT_SpacingRule`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3158,11 +3638,13 @@ pub struct RightMargin {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RowSpacingRule {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<SpacingRule>,
 }
 
-/// 22.1.2.87 r (Run): the tag `m:r`, schema type `CT_R`.
+/// The `m:r` element, Run (ECMA-376 Part 1, section 22.1.2.87). Its schema type is `CT_R`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3174,55 +3656,99 @@ pub struct RowSpacingRule {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Run {
+    /// The children that are an item of `RunContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<RunContent>,
+    /// The child that is `RunProperties`, when there is one.
     pub properties: Option<Box<RunProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `super::wordprocessing::RunProperties`, when there is one.
     pub w_properties: Option<Box<super::wordprocessing::RunProperties>>,
 }
 
-/// One item of `CT_R`: local choice in `CT_R`.
+/// One child element of a choice: local choice in `CT_R`.
+///
+/// The schema types that hold it: `CT_R`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum RunContent {
+    /// The element `w:ptab`, a `AbsolutePositionTabCharacter`.
     AbsolutePositionTabCharacter(super::wordprocessing::AbsolutePositionTabCharacter),
+    /// The element `w:br`, a `Break`.
     Break(super::wordprocessing::Break),
+    /// The element `w:cr`, a `CarriageReturn`.
     CarriageReturn(super::wordprocessing::CarriageReturn),
+    /// The element `w:commentReference`, a `CommentContentReferenceMark`.
     CommentContentReferenceMark(super::wordprocessing::CommentContentReferenceMark),
+    /// The element `w:annotationRef`, a `CommentInformationBlock`.
     CommentInformationBlock(super::wordprocessing::CommentInformationBlock),
+    /// The element `w:fldChar`, a `ComplexFieldCharacter`.
     ComplexFieldCharacter(super::wordprocessing::ComplexFieldCharacter),
+    /// The element `w:contentPart`, a `ContentPart`.
     ContentPart(super::wordprocessing::ContentPart),
+    /// The element `w:continuationSeparator`, a `ContinuationSeparatorMark`.
     ContinuationSeparatorMark(super::wordprocessing::ContinuationSeparatorMark),
+    /// The element `w:dayLong`, a `DateBlockLongDayFormat`.
     DateBlockLongDayFormat(super::wordprocessing::DateBlockLongDayFormat),
+    /// The element `w:monthLong`, a `DateBlockLongMonthFormat`.
     DateBlockLongMonthFormat(super::wordprocessing::DateBlockLongMonthFormat),
+    /// The element `w:yearLong`, a `DateBlockLongYearFormat`.
     DateBlockLongYearFormat(super::wordprocessing::DateBlockLongYearFormat),
+    /// The element `w:dayShort`, a `DateBlockShortDayFormat`.
     DateBlockShortDayFormat(super::wordprocessing::DateBlockShortDayFormat),
+    /// The element `w:monthShort`, a `DateBlockShortMonthFormat`.
     DateBlockShortMonthFormat(super::wordprocessing::DateBlockShortMonthFormat),
+    /// The element `w:yearShort`, a `DateBlockShortYearFormat`.
     DateBlockShortYearFormat(super::wordprocessing::DateBlockShortYearFormat),
+    /// The element `w:delInstrText`, a `DeletedFieldCode`.
     DeletedFieldCode(super::wordprocessing::DeletedFieldCode),
+    /// The element `w:delText`, a `DeletedText`.
     DeletedText(super::wordprocessing::DeletedText),
+    /// The element `w:drawing`, a `DrawingMLObject`.
     DrawingMLObject(super::wordprocessing::DrawingMLObject),
+    /// The element `w:object`, a `EmbeddedObject`.
     EmbeddedObject(super::wordprocessing::EmbeddedObject),
+    /// The element `w:endnoteReference`, a `EndnoteReference`.
     EndnoteReference(super::wordprocessing::EndnoteReference),
+    /// The element `w:endnoteRef`, a `EndnoteReferenceMark`.
     EndnoteReferenceMark(super::wordprocessing::EndnoteReferenceMark),
+    /// The element `w:instrText`, a `FieldCode`.
     FieldCode(super::wordprocessing::FieldCode),
+    /// The element `w:separator`, a `FootnoteEndnoteSeparatorMark`.
     FootnoteEndnoteSeparatorMark(super::wordprocessing::FootnoteEndnoteSeparatorMark),
+    /// The element `w:footnoteReference`, a `FootnoteReference`.
     FootnoteReference(super::wordprocessing::FootnoteReference),
+    /// The element `w:footnoteRef`, a `FootnoteReferenceMark`.
     FootnoteReferenceMark(super::wordprocessing::FootnoteReferenceMark),
+    /// The element `w:noBreakHyphen`, a `NonBreakingHyphenCharacter`.
     NonBreakingHyphenCharacter(super::wordprocessing::NonBreakingHyphenCharacter),
+    /// The element `w:softHyphen`, a `OptionalHyphenCharacter`.
     OptionalHyphenCharacter(super::wordprocessing::OptionalHyphenCharacter),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `w:pgNum`, a `PageNumberBlock`.
     PageNumberBlock(super::wordprocessing::PageNumberBlock),
+    /// The element `w:ruby`, a `PhoneticGuide`.
     PhoneticGuide(super::wordprocessing::PhoneticGuide),
+    /// The element `w:lastRenderedPageBreak`, a `PositionOfLastCalculatedPageBreak`.
     PositionOfLastCalculatedPageBreak(super::wordprocessing::PositionOfLastCalculatedPageBreak),
+    /// The element `w:sym`, a `SymbolCharacter`.
     SymbolCharacter(super::wordprocessing::SymbolCharacter),
+    /// The element `w:tab`, a `TabCharacter`.
     TabCharacter(super::wordprocessing::TabCharacter),
+    /// The element `m:t`, a `Text`.
     Text(Text),
+    /// The element `w:pict`, a `VMLObject`.
     VMLObject(super::wordprocessing::VMLObject),
+    /// The element `w:t`, a `Text`.
     WordprocessingText(super::wordprocessing::Text),
 }
 
-/// 22.1.2.91 `rPr` (Run Properties): the tag `m:rPr`, schema type `CT_RPR`.
+/// The `m:rPr` element, Run Properties (ECMA-376 Part 1, section 22.1.2.91). Its schema type is
+/// `CT_RPR`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3231,24 +3757,38 @@ pub enum RunContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RunProperties {
+    /// The child that is `Alignment`, when there is one.
     pub alignment: Option<Box<Alignment>>,
+    /// The child that is `Break`, when there is one.
     pub r#break: Option<Box<Break>>,
+    /// The children that are an item of `RunPropertiesContent`, in order.
     pub content: Vec<RunPropertiesContent>,
+    /// The child that is `Literal`, when there is one.
     pub literal: Option<Box<Literal>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_RPR`: local choice in `CT_RPR`.
+/// One child element of a choice: local choice in `CT_RPR`.
+///
+/// The schema types that hold it: `CT_RPR`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum RunPropertiesContent {
+    /// The element `m:nor`, a `NormalText`.
     NormalText(NormalText),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `m:scr`, a `Script`.
     Script(Script),
+    /// The element `m:sty`, a `Sty`.
     Sty(Sty),
 }
 
-/// 22.1.2.94 scr (Script): the tag `m:scr`, schema type `CT_Script`.
+/// The `m:scr` element, Script (ECMA-376 Part 1, section 22.1.2.94). Its schema type is
+/// `CT_Script`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3257,11 +3797,13 @@ pub enum RunPropertiesContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Script {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<StScript>,
 }
 
-/// The tag `m:shp`, schema type `CT_Shp`.
+/// The `m:shp` element. Its schema type is `CT_Shp`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3270,11 +3812,14 @@ pub struct Script {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Shp {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<StShp>,
 }
 
-/// 22.1.2.98 `smallFrac` (Small Fraction): the tag `m:smallFrac`, schema type `CT_OnOff`.
+/// The `m:smallFrac` element, Small Fraction (ECMA-376 Part 1, section 22.1.2.98). Its schema type
+/// is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3283,11 +3828,17 @@ pub struct Shp {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SmallFraction {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 22.1.3.11 `ST_SpacingRule` (Spacing Rule): the text the file carried.
+/// Spacing Rule, the simple type `ST_SpacingRule` (ECMA-376 Part 1, section 22.1.3.11), kept as the
+/// text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3297,7 +3848,11 @@ pub struct SmallFraction {
 #[non_exhaustive]
 pub struct SpacingRule(pub String);
 
-/// 22.1.3.2 `ST_BreakBinSub` (Break on Binary Subtraction): the text the file carried.
+/// Break on Binary Subtraction, the simple type `ST_BreakBinSub` (ECMA-376 Part 1, section
+/// 22.1.3.2), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3306,16 +3861,24 @@ pub struct SpacingRule(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StBreakBinSub(pub String);
-/// The members of `ST_BreakBinSub`, in alphabetical order.
+/// The members of the enumeration `ST_BreakBinSub`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum StBreakBinSubMember {
+    /// The member written `--`.
     MinusMinus,
+    /// The member written `-+`.
     MinusPlus,
+    /// The member written `+-`.
     PlusMinus,
 }
 
-/// 22.1.3.3 `ST_Char` (Character): the text the file carried.
+/// Character, the simple type `ST_Char` (ECMA-376 Part 1, section 22.1.3.3), kept as the text the
+/// file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3325,7 +3888,11 @@ pub enum StBreakBinSubMember {
 #[non_exhaustive]
 pub struct StChar(pub String);
 
-/// 22.1.3.4 `ST_FType` (Fraction Type): the text the file carried.
+/// Fraction Type, the simple type `ST_FType` (ECMA-376 Part 1, section 22.1.3.4), kept as the text
+/// the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3334,17 +3901,26 @@ pub struct StChar(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StFType(pub String);
-/// The members of `ST_FType`, in alphabetical order.
+/// The members of the enumeration `ST_FType`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum StFTypeMember {
+    /// The member written `bar`.
     Bar,
+    /// The member written `lin`.
     Lin,
+    /// The member written `noBar`.
     NoBar,
+    /// The member written `skw`.
     Skw,
 }
 
-/// 22.1.3.7 `ST_Jc` (Justification): the text the file carried.
+/// Justification, the simple type `ST_Jc` (ECMA-376 Part 1, section 22.1.3.7), kept as the text the
+/// file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3353,17 +3929,26 @@ pub enum StFTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StJc(pub String);
-/// The members of `ST_Jc`, in alphabetical order.
+/// The members of the enumeration `ST_Jc`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum StJcMember {
+    /// The member written `center`.
     Center,
+    /// The member written `centerGroup`.
     CenterGroup,
+    /// The member written `left`.
     Left,
+    /// The member written `right`.
     Right,
 }
 
-/// 22.1.3.9 `ST_Script` (Script): the text the file carried.
+/// Script, the simple type `ST_Script` (ECMA-376 Part 1, section 22.1.3.9), kept as the text the
+/// file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3372,19 +3957,29 @@ pub enum StJcMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StScript(pub String);
-/// The members of `ST_Script`, in alphabetical order.
+/// The members of the enumeration `ST_Script`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum StScriptMember {
+    /// The member written `double-struck`.
     DoubleStruck,
+    /// The member written `fraktur`.
     Fraktur,
+    /// The member written `monospace`.
     Monospace,
+    /// The member written `roman`.
     Roman,
+    /// The member written `sans-serif`.
     SansSerif,
+    /// The member written `script`.
     Script,
 }
 
-/// `ST_Shp`: the text the file carried.
+/// The simple type `ST_Shp`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3393,15 +3988,18 @@ pub enum StScriptMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StShp(pub String);
-/// The members of `ST_Shp`, in alphabetical order.
+/// The members of the enumeration `ST_Shp`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum StShpMember {
+    /// The member written `centered`.
     Centered,
+    /// The member written `match`.
     Match,
 }
 
-/// The tag `m:sty`, schema type `CT_Style`.
+/// The `m:sty` element. Its schema type is `CT_Style`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3410,11 +4008,17 @@ pub enum StShpMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Sty {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<Style>,
 }
 
-/// 22.1.3.12 `ST_Style` (Style): the text the file carried.
+/// Style, the simple type `ST_Style` (ECMA-376 Part 1, section 22.1.3.12), kept as the text the
+/// file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3423,17 +4027,22 @@ pub struct Sty {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Style(pub String);
-/// The members of `ST_Style`, in alphabetical order.
+/// The members of the enumeration `ST_Style`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum StyleMember {
+    /// The member written `b`.
     B,
+    /// The member written `bi`.
     Bi,
+    /// The member written `i`.
     I,
+    /// The member written `p`.
     P,
 }
 
-/// The tag `m:sub`, schema type `CT_OMathArg`.
+/// The `m:sub` element. Its schema type is `CT_OMathArg`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3445,14 +4054,18 @@ pub enum StyleMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Sub {
+    /// The child that is `ArgumentProperties`, when there is one.
     pub argument_properties: Option<Box<ArgumentProperties>>,
+    /// The children that are an item of `OfficeMathContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<OfficeMathContent>,
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `m:subHide`, schema type `CT_OnOff`.
+/// The `m:subHide` element. Its schema type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3461,11 +4074,14 @@ pub struct Sub {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SubHide {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 22.1.2.103 `sSubSup` (Sub-Superscript Object): the tag `m:sSubSup`, schema type `CT_SSubSup`.
+/// The `m:sSubSup` element, Sub-Superscript Object (ECMA-376 Part 1, section 22.1.2.103). Its
+/// schema type is `CT_SSubSup`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3477,18 +4093,23 @@ pub struct SubHide {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SubSuperscriptObject {
+    /// The child that is `E`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub e: Box<E>,
+    /// The child that is `Sub`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub sub: Box<Sub>,
+    /// The child that is `SubSuperscriptProperties`, when there is one.
     pub sub_superscript_properties: Option<Box<SubSuperscriptProperties>>,
+    /// The child that is `Sup`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub sup: Box<Sup>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.104 `sSubSupPr` (Sub-Superscript Properties): the tag `m:sSubSupPr`, schema type
-/// `CT_SSubSupPr`.
+/// The `m:sSubSupPr` element, Sub-Superscript Properties (ECMA-376 Part 1, section 22.1.2.104). Its
+/// schema type is `CT_SSubSupPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3497,12 +4118,16 @@ pub struct SubSuperscriptObject {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SubSuperscriptProperties {
+    /// The child that is `AlignScripts`, when there is one.
     pub align_scripts: Option<Box<AlignScripts>>,
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.101 `sSub` (Subscript Object): the tag `m:sSub`, schema type `CT_SSub`.
+/// The `m:sSub` element, Subscript Object (ECMA-376 Part 1, section 22.1.2.101). Its schema type is
+/// `CT_SSub`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3514,15 +4139,20 @@ pub struct SubSuperscriptProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SubscriptObject {
+    /// The child that is `E`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub e: Box<E>,
+    /// The child that is `Sub`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub sub: Box<Sub>,
+    /// The child that is `SubscriptProperties`, when there is one.
     pub subscript_properties: Option<Box<SubscriptProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.102 `sSubPr` (Subscript Properties): the tag `m:sSubPr`, schema type `CT_SSubPr`.
+/// The `m:sSubPr` element, Subscript Properties (ECMA-376 Part 1, section 22.1.2.102). Its schema
+/// type is `CT_SSubPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3531,11 +4161,13 @@ pub struct SubscriptObject {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SubscriptProperties {
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `m:sup`, schema type `CT_OMathArg`.
+/// The `m:sup` element. Its schema type is `CT_OMathArg`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3547,14 +4179,18 @@ pub struct SubscriptProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Sup {
+    /// The child that is `ArgumentProperties`, when there is one.
     pub argument_properties: Option<Box<ArgumentProperties>>,
+    /// The children that are an item of `OfficeMathContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<OfficeMathContent>,
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `m:supHide`, schema type `CT_OnOff`.
+/// The `m:supHide` element. Its schema type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3563,11 +4199,14 @@ pub struct Sup {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SupHide {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 22.1.2.105 `sSup` (Superscript Object): the tag `m:sSup`, schema type `CT_SSup`.
+/// The `m:sSup` element, Superscript Object (ECMA-376 Part 1, section 22.1.2.105). Its schema type
+/// is `CT_SSup`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3579,15 +4218,20 @@ pub struct SupHide {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SuperscriptObject {
+    /// The child that is `E`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub e: Box<E>,
+    /// The child that is `Sup`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub sup: Box<Sup>,
+    /// The child that is `SuperscriptProperties`, when there is one.
     pub superscript_properties: Option<Box<SuperscriptProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.106 `sSupPr` (Superscript Properties): the tag `m:sSupPr`, schema type `CT_SSupPr`.
+/// The `m:sSupPr` element, Superscript Properties (ECMA-376 Part 1, section 22.1.2.106). Its schema
+/// type is `CT_SSupPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3596,11 +4240,13 @@ pub struct SuperscriptObject {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SuperscriptProperties {
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.116 t (Text): the tag `m:t`, schema type `CT_Text`.
+/// The `m:t` element, Text (ECMA-376 Part 1, section 22.1.2.116). Its schema type is `CT_Text`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3609,12 +4255,19 @@ pub struct SuperscriptProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Text {
+    /// The attribute `xml:space`, when the element has it.
     pub space: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The element's text.
     pub value: String,
 }
 
-/// 22.1.3.13 `ST_TopBot` (Top-Bottom): the text the file carried.
+/// Top-Bottom, the simple type `ST_TopBot` (ECMA-376 Part 1, section 22.1.3.13), kept as the text
+/// the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3623,15 +4276,18 @@ pub struct Text {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TopBottom(pub String);
-/// The members of `ST_TopBot`, in alphabetical order.
+/// The members of the enumeration `ST_TopBot`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TopBottomMember {
+    /// The member written `bot`.
     Bot,
+    /// The member written `top`.
     Top,
 }
 
-/// The tag `m:transp`, schema type `CT_OnOff`.
+/// The `m:transp` element. Its schema type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3640,11 +4296,17 @@ pub enum TopBottomMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Transp {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 22.1.3.14 `ST_UnSignedInteger` (Unsigned integer.): the text the file carried.
+/// Unsigned integer., the simple type `ST_UnSignedInteger` (ECMA-376 Part 1, section 22.1.3.14),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3654,7 +4316,8 @@ pub struct Transp {
 #[non_exhaustive]
 pub struct UnsignedInteger(pub String);
 
-/// 22.1.2.56 `limUpp` (Upper-Limit Object): the tag `m:limUpp`, schema type `CT_LimUpp`.
+/// The `m:limUpp` element, Upper-Limit Object (ECMA-376 Part 1, section 22.1.2.56). Its schema type
+/// is `CT_LimUpp`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3666,15 +4329,20 @@ pub struct UnsignedInteger(pub String);
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct UpperLimitObject {
+    /// The child that is `E`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub e: Box<E>,
+    /// The child that is `Limit`, which the schema requires.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub limit: Box<Limit>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The child that is `UpperLimitProperties`, when there is one.
     pub upper_limit_properties: Option<Box<UpperLimitProperties>>,
 }
 
-/// 22.1.2.57 `limUppPr` (Upper-Limit Properties): the tag `m:limUppPr`, schema type `CT_LimUppPr`.
+/// The `m:limUppPr` element, Upper-Limit Properties (ECMA-376 Part 1, section 22.1.2.57). Its
+/// schema type is `CT_LimUppPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3683,11 +4351,14 @@ pub struct UpperLimitObject {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct UpperLimitProperties {
+    /// The child that is `ControlProperties`, when there is one.
     pub control_properties: Option<Box<ControlProperties>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// 22.1.2.30 `dispDef` (Use Display Math Defaults): the tag `m:dispDef`, schema type `CT_OnOff`.
+/// The `m:dispDef` element, Use Display Math Defaults (ECMA-376 Part 1, section 22.1.2.30). Its
+/// schema type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3696,11 +4367,14 @@ pub struct UpperLimitProperties {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct UseDisplayMathDefaults {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
-/// 22.1.2.119 `vertJc` (Vertical Justification): the tag `m:vertJc`, schema type `CT_TopBot`.
+/// The `m:vertJc` element, Vertical Justification (ECMA-376 Part 1, section 22.1.2.119). Its schema
+/// type is `CT_TopBot`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3709,11 +4383,14 @@ pub struct UseDisplayMathDefaults {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct VerticalJustification {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<TopBottom>,
 }
 
-/// 22.1.2.120 `wrapIndent` (Wrap Indent): the tag `m:wrapIndent`, schema type `CT_TwipsMeasure`.
+/// The `m:wrapIndent` element, Wrap Indent (ECMA-376 Part 1, section 22.1.2.120). Its schema type
+/// is `CT_TwipsMeasure`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3722,11 +4399,14 @@ pub struct VerticalJustification {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct WrapIndent {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
 
-/// 22.1.2.121 `wrapRight` (Wrap Right): the tag `m:wrapRight`, schema type `CT_OnOff`.
+/// The `m:wrapRight` element, Wrap Right (ECMA-376 Part 1, section 22.1.2.121). Its schema type is
+/// `CT_OnOff`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3735,7 +4415,9 @@ pub struct WrapIndent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct WrapRight {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `m:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -4195,7 +4877,7 @@ impl BreakBinaryOperatorsMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -5118,7 +5800,7 @@ impl LimitLocationMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -6901,7 +7583,7 @@ impl StBreakBinSubMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -6975,7 +7657,7 @@ impl StFTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -7026,7 +7708,7 @@ impl StJcMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -7079,7 +7761,7 @@ impl StScriptMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -7128,7 +7810,7 @@ impl StShpMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -7203,7 +7885,7 @@ impl StyleMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -7491,7 +8173,7 @@ impl TopBottomMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

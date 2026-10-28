@@ -21,11 +21,17 @@ pub type NamespaceId = u8;
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[non_exhaustive]
 pub enum OfficeVersion {
+    /// The current Microsoft 365 release.
     Microsoft365,
+    /// Office 2010.
     Office2010,
+    /// Office 2013.
     Office2013,
+    /// Office 2016.
     Office2016,
+    /// Office 2019.
     Office2019,
+    /// Office 2021.
     Office2021,
 }
 
@@ -35,8 +41,11 @@ pub enum OfficeVersion {
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[non_exhaustive]
 pub enum Namespace {
+    /// A namespace in the table, by its id. Its Transitional and Strict URIs are the same value.
     Known(NamespaceId),
+    /// No namespace: an unprefixed attribute, or an element with no default namespace.
     None,
+    /// A URI the table does not know, kept as written.
     Other(Arc<str>),
 }
 
@@ -50,8 +59,11 @@ pub enum Namespace {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct QName {
+    /// The name after the colon.
     pub local: String,
+    /// The namespace the prefix stands for.
     pub namespace: Namespace,
+    /// The prefix as written; empty when there is none.
     pub prefix: String,
 }
 
@@ -103,6 +115,7 @@ impl OfficeVersion {
 }
 
 impl QName {
+    /// A name from its three parts, as they are.
     #[must_use]
     pub const fn new(prefix: String, local: String, namespace: Namespace) -> Self {
         Self {
@@ -112,6 +125,8 @@ impl QName {
         }
     }
 
+    /// A name written as `prefix:local`, in the namespace `uri`. A known URI of either class
+    /// gives `Namespace::Known`.
     #[must_use]
     pub fn prefixed(prefix: &str, local: &str, uri: &str) -> Self {
         Self {
@@ -121,14 +136,15 @@ impl QName {
         }
     }
 
+    /// A name with no prefix, in the namespace `uri`; an empty `uri` gives `Namespace::None`.
     #[must_use]
     pub fn unprefixed(local: &str, uri: &str) -> Self {
         Self::prefixed("", local, uri)
     }
 }
 
-/// The tag of a name in the namespace table; `None` for a namespace the table
-/// does not know.
+/// The tag of a name in the namespace table: the namespace id (`None` for no namespace) and the
+/// local name. Returns `None` for a namespace the table does not know.
 #[must_use]
 pub const fn tag_of(name: &QName) -> Option<(Option<NamespaceId>, &str)> {
     let local = name.local.as_str();

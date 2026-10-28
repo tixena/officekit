@@ -33,11 +33,17 @@ const STANDARD_INPUT: &str = "standard input";
 const ZIP_SIGNATURE: &[u8] = b"PK\x03\x04";
 
 /// A Word, Excel or `PowerPoint` file, whichever its main part names.
+///
+/// Open one with [`from_bytes`](Self::from_bytes) when you do not know which type a file is. Match
+/// the variant to reach the file type, and keep a wildcard arm: the enum is `#[non_exhaustive]`.
 #[derive(Debug)]
 #[non_exhaustive]
 pub enum OfficeFile {
+    /// A workbook, the `.xlsx` family.
     Excel(Xlsx),
+    /// A presentation, the `.pptx` family.
     PowerPoint(Pptx),
+    /// A Word document, the `.docx` family.
     Word(Docx),
 }
 
@@ -45,9 +51,31 @@ impl OfficeFile {
     /// The file `bytes` hold, by its main part's content type: one of `WordprocessingKind::ALL`,
     /// `SpreadsheetKind::ALL` or `PresentationKind::ALL`.
     ///
+    #[cfg_attr(
+        feature = "transitional",
+        doc = "
+```rust
+use officekit::docx::Docx;
+use officekit::office_file::OfficeFile;
+use officekit_packaging::package::OpenOptions;
+use officekit_parts::kinds::WordprocessingKind;
+
+# fn main() -> Result<(), Box<dyn core::error::Error>> {
+let bytes = Docx::new(WordprocessingKind::Document)?.package().to_bytes()?;
+let file = OfficeFile::from_bytes(bytes, OpenOptions::default())?;
+assert!(matches!(file, OfficeFile::Word(_)));
+# Ok(())
+# }
+```
+"
+    )]
+    ///
     /// # Errors
     ///
-    /// The errors of [`Package::from_bytes`] and of [`from_package`](Self::from_package).
+    /// The errors of [`Package::from_bytes`]. [`PackageError::ClassNotEnabled`] for a file whose
+    /// class has its feature off. [`PackageError::ContentType`] for a main part that is none of a
+    /// Word, Excel or `PowerPoint` main part. [`PackageError::MissingPart`] when the package
+    /// relates no main part.
     pub fn from_bytes(bytes: Vec<u8>, options: OpenOptions) -> Result<Self, PackageError> {
         Self::from_package(Package::from_bytes(bytes)?, options)
     }
@@ -55,6 +83,25 @@ impl OfficeFile {
     /// The model of `bytes`: a Word, Excel or `PowerPoint` file when they open with the zip
     /// signature `PK\x03\x04`, else markdown text, turned into a Word file. A relative picture
     /// path in the markdown is found from `folder`; with no folder it fails.
+    ///
+    /// ```rust
+    /// use officekit::markdown::MarkdownOptions;
+    /// use officekit::office_file::OfficeFile;
+    /// use officekit_packaging::package::OpenOptions;
+    /// use os_shim::mock::MemorySystem;
+    ///
+    /// # fn main() -> Result<(), Box<dyn core::error::Error>> {
+    /// let file = OfficeFile::from_input(
+    ///     &MemorySystem::new(),
+    ///     b"one\ntwo\n".to_vec(),
+    ///     None,
+    ///     OpenOptions::default(),
+    ///     MarkdownOptions::default(),
+    /// )?;
+    /// assert!(matches!(file, OfficeFile::Word(_)));
+    /// # Ok(())
+    /// # }
+    /// ```
     ///
     /// # Errors
     ///
@@ -131,7 +178,8 @@ impl OfficeFile {
         }
     }
 
-    /// The file in the Transitional class, and the warnings of the save.
+    /// The file in the Transitional class, and the warnings of the save. Needs the feature
+    /// `transitional`.
     ///
     /// # Errors
     ///

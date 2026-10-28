@@ -34,6 +34,9 @@ const INTEGERS: [(&str, i128, i128); 13] = [
     ("unsignedShort", 0, 0xFFFF),
 ];
 
+/// What every simple type's newtype does.
+const VALUE_NOTE: &str = "`value` checks the text and gives the typed value, or a `ValueError`. A text that is no value stays stored as it was.";
+
 /// A simple type the generator gives a newtype.
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 #[non_exhaustive]
@@ -344,11 +347,15 @@ pub fn name(
         bail!("the simple type {local} is named {}", simple.name);
     }
     simple.doc = heading.map_or_else(
-        || format!("`{local}`: the text the file carried."),
+        || {
+            format!(
+                "The simple type `{local}`, kept as the text the file carried.\n\n{VALUE_NOTE}"
+            )
+        },
         |found| {
             format!(
-                "{} `{local}` ({}): the text the file carried.",
-                found.section, found.title
+                "{}, the simple type `{local}` (ECMA-376 Part {}, section {}), kept as the text the file carried.\n\n{VALUE_NOTE}",
+                found.title, found.part, found.section
             )
         },
     );
@@ -961,18 +968,24 @@ fn member_enum(simple: &Simple, members: &[Member]) -> String {
     let mut out = layout::doc(
         0,
         &format!(
-            "The members of `{}`, in alphabetical order.",
+            "The members of the enumeration `{}`, in alphabetical order. `as_str` gives the text of a member.",
             simple.xsd_name()
         ),
     );
     out.push_str("#[derive(Clone, Copy, Debug, Eq, PartialEq)]\n#[non_exhaustive]\n");
     let _ = writeln!(out, "pub enum {}Member {{", simple.name);
-    let mut variants: Vec<&str> = members
+    let mut variants: Vec<(&str, &str)> = members
         .iter()
-        .map(|member| member.variant.as_str())
+        .map(|member| (member.variant.as_str(), member.value.as_str()))
         .collect();
     variants.sort_unstable();
-    for variant in variants {
+    for (variant, value) in variants {
+        let text = if value.is_empty() {
+            "The member written as an empty string.".to_owned()
+        } else {
+            format!("The member written `{value}`.")
+        };
+        out.push_str(&layout::doc(4, &text));
         let _ = writeln!(out, "    {variant},");
     }
     out.push_str("}\n");
@@ -1016,7 +1029,7 @@ fn member_impls(runtime: &str, simple: &Simple, members: &[Member], uses: &mut U
     let _ = write!(
         out,
         "\n    /// The text the member stands for.\n    #[must_use]\n    pub fn as_str(self) -> &'static str {{\n        {runtime}::member_text(Self::MEMBERS, self)\n    }}\n\
-         \n    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for\n    /// ECMA-376's own.\n    #[must_use]\n    pub fn introduced(self) -> Option<OfficeVersion> {{\n        {runtime}::member_version(Self::MEMBERS, self)\n    }}\n}}\n",
+         \n    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for\n    /// ECMA-376's own.\n    #[must_use]\n    pub fn introduced(self) -> Option<OfficeVersion> {{\n        {runtime}::member_version(Self::MEMBERS, self)\n    }}\n}}\n",
     );
     out
 }
@@ -1238,6 +1251,10 @@ fn union_text(
     let _ = writeln!(definition, "#[derive({derives})]\n#[non_exhaustive]");
     let _ = writeln!(definition, "pub enum {member_name} {{");
     for (variant, output) in variants {
+        definition.push_str(&layout::doc(
+            4,
+            &format!("A value of the member type `{output}`."),
+        ));
         let _ = writeln!(definition, "    {variant}({output}),");
     }
     definition.push_str("}\n");

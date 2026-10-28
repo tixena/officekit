@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `a16` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/drawing/2014/main`, which files write with the prefix `a16`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/drawing/2014/main`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -261,7 +263,8 @@ pub static PRED_DE_REF_SHAPE: officekit_markup_base::Shape = officekit_markup_ba
     text: false,
 };
 
-/// The tag `a16:colId`, schema type `CT_Identifier` of SDK 3.5.1's data.
+/// The `a16:colId` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Identifier`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -270,6 +273,7 @@ pub static PRED_DE_REF_SHAPE: officekit_markup_base::Shape = officekit_markup_ba
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ColId {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -282,36 +286,52 @@ pub struct ColId {
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_drawing_2014_main` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `ColId`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn col_id(&mut self, _node: &ColId) -> Option<ColId> {
         None
     }
 
+    /// Asked for each `CreationId`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn creation_id(&mut self, _node: &CreationId) -> Option<CreationId> {
         None
     }
 
+    /// Asked for each `CxnDERefs`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn cxn_de_refs(&mut self, _node: &CxnDERefs) -> Option<CxnDERefs> {
         None
     }
 
+    /// Asked for each `PredDERef`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn pred_de_ref(&mut self, _node: &PredDERef) -> Option<PredDERef> {
         None
     }
 
+    /// Asked for each `RowId`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn row_id(&mut self, _node: &RowId) -> Option<RowId> {
         None
     }
 
+    /// Asked when a `ColId` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_col_id(&mut self, _node: &ColId, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `CreationId` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_creation_id(
         &mut self,
         _node: &CreationId,
@@ -320,9 +340,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CxnDERefs` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cxn_de_refs(
         &mut self,
         _node: &CxnDERefs,
@@ -331,9 +354,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PredDERef` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pred_de_ref(
         &mut self,
         _node: &PredDERef,
@@ -342,15 +368,19 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RowId` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_row_id(&mut self, _node: &RowId, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 }
 
-/// The tag `a16:creationId`, schema type `CT_CreationId` of SDK 3.5.1's data.
+/// The `a16:creationId` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_CreationId`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -359,11 +389,14 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CreationId {
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a16:cxnDERefs`, schema type `CT_ConnectableReferences` of SDK 3.5.1's data.
+/// The `a16:cxnDERefs` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ConnectableReferences`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -372,13 +405,16 @@ pub struct CreationId {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CxnDERefs {
+    /// The attribute `end`, when the element has it.
     pub end: Option<String>,
+    /// The attribute `st`, when the element has it.
     pub st: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a16:predDERef`, schema type `CT_PredecessorDrawingElementReference` of SDK 3.5.1's
-/// data.
+/// The `a16:predDERef` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_PredecessorDrawingElementReference`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -387,11 +423,14 @@ pub struct CxnDERefs {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PredDERef {
+    /// The attribute `pred`, when the element has it.
     pub pred: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `a16:rowId`, schema type `CT_Identifier` of SDK 3.5.1's data.
+/// The `a16:rowId` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Identifier`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -400,6 +439,7 @@ pub struct PredDERef {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RowId {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -409,22 +449,30 @@ pub struct RowId {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_drawing_2014_main` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `ColId`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn col_id(&mut self, _node: &ColId) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CreationId`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn creation_id(&mut self, _node: &CreationId) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CxnDERefs`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn cxn_de_refs(&mut self, _node: &CxnDERefs) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PredDERef`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn pred_de_ref(&mut self, _node: &PredDERef) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RowId`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn row_id(&mut self, _node: &RowId) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

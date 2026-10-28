@@ -212,8 +212,11 @@
 //! The hooks of the `xvml` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_base::vml_spreadsheet_drawing`.
 //!
-//! The namespace is `urn:schemas-microsoft-com:office:excel`.
+//! The namespace is `urn:schemas-microsoft-com:office:excel`. Its prefix, `xvml`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_base::vml_spreadsheet_drawing::*;
 
 use officekit_markup_base::Written;
@@ -229,14 +232,20 @@ use std::io;
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::vml_spreadsheet_drawing` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `Anchor`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn anchor(&mut self, _node: &Anchor) -> Option<Anchor> {
         None
     }
 
+    /// Asked for each `AttachedObjectData`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn attached_object_data(&mut self, _node: &AttachedObjectData) -> Option<AttachedObjectData> {
         None
     }
 
+    /// Asked for each `AttachedObjectDataContent`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn attached_object_data_content(
         &mut self,
         _node: &AttachedObjectDataContent,
@@ -244,6 +253,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `AttachedObjectDataContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn attached_object_data_content_items(
         &mut self,
         _node: &AttachedObjectDataContent,
@@ -251,42 +262,62 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `AutoFill`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn auto_fill(&mut self, _node: &AutoFill) -> Option<AutoFill> {
         None
     }
 
+    /// Asked for each `AutoLine`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn auto_line(&mut self, _node: &AutoLine) -> Option<AutoLine> {
         None
     }
 
+    /// Asked for each `AutomaticallySize`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn automatically_size(&mut self, _node: &AutomaticallySize) -> Option<AutomaticallySize> {
         None
     }
 
+    /// Asked for each `CallbackType`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn callback_type(&mut self, _node: &CallbackType) -> Option<CallbackType> {
         None
     }
 
+    /// Asked for each `CameraSourceRange`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn camera_source_range(&mut self, _node: &CameraSourceRange) -> Option<CameraSourceRange> {
         None
     }
 
+    /// Asked for each `CameraTool`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn camera_tool(&mut self, _node: &CameraTool) -> Option<CameraTool> {
         None
     }
 
+    /// Asked for each `CancelButton`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn cancel_button(&mut self, _node: &CancelButton) -> Option<CancelButton> {
         None
     }
 
+    /// Asked for each `Checked`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn checked(&mut self, _node: &Checked) -> Option<Checked> {
         None
     }
 
+    /// Asked for each `ClipboardFormat`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn clipboard_format(&mut self, _node: &ClipboardFormat) -> Option<ClipboardFormat> {
         None
     }
 
+    /// Asked for each `CommentColumnTarget`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn comment_column_target(
         &mut self,
         _node: &CommentColumnTarget,
@@ -294,10 +325,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `CommentRowTarget`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn comment_row_target(&mut self, _node: &CommentRowTarget) -> Option<CommentRowTarget> {
         None
     }
 
+    /// Asked for each `CommentVisibilityToggle`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn comment_visibility_toggle(
         &mut self,
         _node: &CommentVisibilityToggle,
@@ -305,6 +340,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `CommentsColumnIsHidden`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn comments_column_is_hidden(
         &mut self,
         _node: &CommentsColumnIsHidden,
@@ -312,6 +349,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `CommentsRowIsHidden`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn comments_row_is_hidden(
         &mut self,
         _node: &CommentsRowIsHidden,
@@ -319,26 +358,38 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `DefaultButton`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn default_button(&mut self, _node: &DefaultButton) -> Option<DefaultButton> {
         None
     }
 
+    /// Asked for each `DefaultSizeToggle`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn default_size_toggle(&mut self, _node: &DefaultSizeToggle) -> Option<DefaultSizeToggle> {
         None
     }
 
+    /// Asked for each `Disable3DNoThreeD`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn disable3d_no_three_d(&mut self, _node: &Disable3DNoThreeD) -> Option<Disable3DNoThreeD> {
         None
     }
 
+    /// Asked for each `Disable3DNoThreeD2`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn disable3d_no_three_d2(&mut self, _node: &Disable3DNoThreeD2) -> Option<Disable3DNoThreeD2> {
         None
     }
 
+    /// Asked for each `DismissButton`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn dismiss_button(&mut self, _node: &DismissButton) -> Option<DismissButton> {
         None
     }
 
+    /// Asked for each `DropdownColorToggle`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn dropdown_color_toggle(
         &mut self,
         _node: &DropdownColorToggle,
@@ -346,6 +397,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `DropdownMaximumLines`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn dropdown_maximum_lines(
         &mut self,
         _node: &DropdownMaximumLines,
@@ -353,10 +406,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `DropdownStyle`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn dropdown_style(&mut self, _node: &DropdownStyle) -> Option<DropdownStyle> {
         None
     }
 
+    /// Asked for each `DynamicDataExchange`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn dynamic_data_exchange(
         &mut self,
         _node: &DynamicDataExchange,
@@ -364,10 +421,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `EmbeddedControl`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn embedded_control(&mut self, _node: &EmbeddedControl) -> Option<EmbeddedControl> {
         None
     }
 
+    /// Asked for each `FarEastAlignmentToggle`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn far_east_alignment_toggle(
         &mut self,
         _node: &FarEastAlignmentToggle,
@@ -375,18 +436,26 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `FirstRadioButton`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn first_radio_button(&mut self, _node: &FirstRadioButton) -> Option<FirstRadioButton> {
         None
     }
 
+    /// Asked for each `FontAutoScale`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn font_auto_scale(&mut self, _node: &FontAutoScale) -> Option<FontAutoScale> {
         None
     }
 
+    /// Asked for each `HelpButton`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn help_button(&mut self, _node: &HelpButton) -> Option<HelpButton> {
         None
     }
 
+    /// Asked for each `HorizontalTextAlignment`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn horizontal_text_alignment(
         &mut self,
         _node: &HorizontalTextAlignment,
@@ -394,6 +463,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `HTMLScriptAttributes`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn html_script_attributes(
         &mut self,
         _node: &HTMLScriptAttributes,
@@ -401,22 +472,32 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `HTMLScriptLanguage`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn html_script_language(&mut self, _node: &HTMLScriptLanguage) -> Option<HTMLScriptLanguage> {
         None
     }
 
+    /// Asked for each `HTMLScriptLocation`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn html_script_location(&mut self, _node: &HTMLScriptLocation) -> Option<HTMLScriptLocation> {
         None
     }
 
+    /// Asked for each `HTMLScriptText`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn html_script_text(&mut self, _node: &HTMLScriptText) -> Option<HTMLScriptText> {
         None
     }
 
+    /// Asked for each `LinkedFormula`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn linked_formula(&mut self, _node: &LinkedFormula) -> Option<LinkedFormula> {
         None
     }
 
+    /// Asked for each `LinkedFormulaGroupBox`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn linked_formula_group_box(
         &mut self,
         _node: &LinkedFormulaGroupBox,
@@ -424,6 +505,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ListItemsSourceRange`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn list_items_source_range(
         &mut self,
         _node: &ListItemsSourceRange,
@@ -431,38 +514,56 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `LockToggle`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn lock_toggle(&mut self, _node: &LockToggle) -> Option<LockToggle> {
         None
     }
 
+    /// Asked for each `MacroDisableToggle`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn macro_disable_toggle(&mut self, _node: &MacroDisableToggle) -> Option<MacroDisableToggle> {
         None
     }
 
+    /// Asked for each `MinimumWidth`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn minimum_width(&mut self, _node: &MinimumWidth) -> Option<MinimumWidth> {
         None
     }
 
+    /// Asked for each `MoveWithCells`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn move_with_cells(&mut self, _node: &MoveWithCells) -> Option<MoveWithCells> {
         None
     }
 
+    /// Asked for each `MultiLine`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn multi_line(&mut self, _node: &MultiLine) -> Option<MultiLine> {
         None
     }
 
+    /// Asked for each `MultipleSelections`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn multiple_selections(&mut self, _node: &MultipleSelections) -> Option<MultipleSelections> {
         None
     }
 
+    /// Asked for each `NonLinkedListItem`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn non_linked_list_item(&mut self, _node: &NonLinkedListItem) -> Option<NonLinkedListItem> {
         None
     }
 
+    /// Asked for each `PasswordEdit`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn password_edit(&mut self, _node: &PasswordEdit) -> Option<PasswordEdit> {
         None
     }
 
+    /// Asked for each `PrimaryKeyboardAccelerator`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn primary_keyboard_accelerator(
         &mut self,
         _node: &PrimaryKeyboardAccelerator,
@@ -470,14 +571,20 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `PrintToggle`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn print_toggle(&mut self, _node: &PrintToggle) -> Option<PrintToggle> {
         None
     }
 
+    /// Asked for each `RecalculationToggle`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn recalculation_toggle(&mut self, _node: &RecalculationToggle) -> Option<RecalculationToggle> {
         None
     }
 
+    /// Asked for each `ReferenceToCustomFunction`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn reference_to_custom_function(
         &mut self,
         _node: &ReferenceToCustomFunction,
@@ -485,22 +592,32 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ResizeWithCells`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn resize_with_cells(&mut self, _node: &ResizeWithCells) -> Option<ResizeWithCells> {
         None
     }
 
+    /// Asked for each `ScrollBarIncrement`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn scroll_bar_increment(&mut self, _node: &ScrollBarIncrement) -> Option<ScrollBarIncrement> {
         None
     }
 
+    /// Asked for each `ScrollBarMaximum`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn scroll_bar_maximum(&mut self, _node: &ScrollBarMaximum) -> Option<ScrollBarMaximum> {
         None
     }
 
+    /// Asked for each `ScrollBarMinimum`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn scroll_bar_minimum(&mut self, _node: &ScrollBarMinimum) -> Option<ScrollBarMinimum> {
         None
     }
 
+    /// Asked for each `ScrollBarOrientation`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn scroll_bar_orientation(
         &mut self,
         _node: &ScrollBarOrientation,
@@ -508,6 +625,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ScrollBarPageIncrement`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn scroll_bar_page_increment(
         &mut self,
         _node: &ScrollBarPageIncrement,
@@ -515,14 +634,20 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ScrollBarPosition`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn scroll_bar_position(&mut self, _node: &ScrollBarPosition) -> Option<ScrollBarPosition> {
         None
     }
 
+    /// Asked for each `ScrollBarWidth`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn scroll_bar_width(&mut self, _node: &ScrollBarWidth) -> Option<ScrollBarWidth> {
         None
     }
 
+    /// Asked for each `SecondaryKeyboardAccelerator`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn secondary_keyboard_accelerator(
         &mut self,
         _node: &SecondaryKeyboardAccelerator,
@@ -530,38 +655,56 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `SelectedEntry`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn selected_entry(&mut self, _node: &SelectedEntry) -> Option<SelectedEntry> {
         None
     }
 
+    /// Asked for each `SelectionType`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn selection_type(&mut self, _node: &SelectionType) -> Option<SelectionType> {
         None
     }
 
+    /// Asked for each `TextFormula`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn text_formula(&mut self, _node: &TextFormula) -> Option<TextFormula> {
         None
     }
 
+    /// Asked for each `TextLock`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn text_lock(&mut self, _node: &TextLock) -> Option<TextLock> {
         None
     }
 
+    /// Asked for each `UIObjectToggle`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn ui_object_toggle(&mut self, _node: &UIObjectToggle) -> Option<UIObjectToggle> {
         None
     }
 
+    /// Asked for each `ValidID`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn valid_id(&mut self, _node: &ValidID) -> Option<ValidID> {
         None
     }
 
+    /// Asked for each `ValidationType`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn validation_type(&mut self, _node: &ValidationType) -> Option<ValidationType> {
         None
     }
 
+    /// Asked for each `VerticalScroll`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn vertical_scroll(&mut self, _node: &VerticalScroll) -> Option<VerticalScroll> {
         None
     }
 
+    /// Asked for each `VerticalTextAlignment`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn vertical_text_alignment(
         &mut self,
         _node: &VerticalTextAlignment,
@@ -569,16 +712,22 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked when a `Anchor` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_anchor(&mut self, _node: &Anchor, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `AttachedObjectData` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_attached_object_data(
         &mut self,
         _node: &AttachedObjectData,
@@ -587,9 +736,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `AttachedObjectDataContent` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_attached_object_data_content(
         &mut self,
         _node: &AttachedObjectDataContent,
@@ -598,9 +750,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `AttachedObjectDataContent` in a list is written through. `Written::Yes` means
+    /// the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_attached_object_data_content_items(
         &mut self,
         _node: &AttachedObjectDataContent,
@@ -609,9 +764,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `AutoFill` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_auto_fill(
         &mut self,
         _node: &AutoFill,
@@ -620,9 +778,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `AutoLine` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_auto_line(
         &mut self,
         _node: &AutoLine,
@@ -631,9 +792,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `AutomaticallySize` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_automatically_size(
         &mut self,
         _node: &AutomaticallySize,
@@ -642,9 +806,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CallbackType` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_callback_type(
         &mut self,
         _node: &CallbackType,
@@ -653,9 +820,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CameraSourceRange` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_camera_source_range(
         &mut self,
         _node: &CameraSourceRange,
@@ -664,9 +834,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CameraTool` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_camera_tool(
         &mut self,
         _node: &CameraTool,
@@ -675,9 +848,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CancelButton` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cancel_button(
         &mut self,
         _node: &CancelButton,
@@ -686,16 +862,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Checked` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_checked(&mut self, _node: &Checked, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ClipboardFormat` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_clipboard_format(
         &mut self,
         _node: &ClipboardFormat,
@@ -704,9 +886,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CommentColumnTarget` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_comment_column_target(
         &mut self,
         _node: &CommentColumnTarget,
@@ -715,9 +900,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CommentRowTarget` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_comment_row_target(
         &mut self,
         _node: &CommentRowTarget,
@@ -726,9 +914,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CommentVisibilityToggle` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_comment_visibility_toggle(
         &mut self,
         _node: &CommentVisibilityToggle,
@@ -737,9 +928,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CommentsColumnIsHidden` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_comments_column_is_hidden(
         &mut self,
         _node: &CommentsColumnIsHidden,
@@ -748,9 +942,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CommentsRowIsHidden` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_comments_row_is_hidden(
         &mut self,
         _node: &CommentsRowIsHidden,
@@ -759,9 +956,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DefaultButton` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_default_button(
         &mut self,
         _node: &DefaultButton,
@@ -770,9 +970,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DefaultSizeToggle` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_default_size_toggle(
         &mut self,
         _node: &DefaultSizeToggle,
@@ -781,9 +984,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Disable3DNoThreeD` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_disable3d_no_three_d(
         &mut self,
         _node: &Disable3DNoThreeD,
@@ -792,9 +998,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Disable3DNoThreeD2` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_disable3d_no_three_d2(
         &mut self,
         _node: &Disable3DNoThreeD2,
@@ -803,9 +1012,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DismissButton` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_dismiss_button(
         &mut self,
         _node: &DismissButton,
@@ -814,9 +1026,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DropdownColorToggle` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_dropdown_color_toggle(
         &mut self,
         _node: &DropdownColorToggle,
@@ -825,9 +1040,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DropdownMaximumLines` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_dropdown_maximum_lines(
         &mut self,
         _node: &DropdownMaximumLines,
@@ -836,9 +1054,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DropdownStyle` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_dropdown_style(
         &mut self,
         _node: &DropdownStyle,
@@ -847,9 +1068,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DynamicDataExchange` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_dynamic_data_exchange(
         &mut self,
         _node: &DynamicDataExchange,
@@ -858,9 +1082,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `EmbeddedControl` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_embedded_control(
         &mut self,
         _node: &EmbeddedControl,
@@ -869,9 +1096,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FarEastAlignmentToggle` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_far_east_alignment_toggle(
         &mut self,
         _node: &FarEastAlignmentToggle,
@@ -880,9 +1110,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FirstRadioButton` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_first_radio_button(
         &mut self,
         _node: &FirstRadioButton,
@@ -891,9 +1124,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FontAutoScale` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_font_auto_scale(
         &mut self,
         _node: &FontAutoScale,
@@ -902,9 +1138,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `HelpButton` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_help_button(
         &mut self,
         _node: &HelpButton,
@@ -913,9 +1152,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `HorizontalTextAlignment` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_horizontal_text_alignment(
         &mut self,
         _node: &HorizontalTextAlignment,
@@ -924,9 +1166,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `HTMLScriptAttributes` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_html_script_attributes(
         &mut self,
         _node: &HTMLScriptAttributes,
@@ -935,9 +1180,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `HTMLScriptLanguage` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_html_script_language(
         &mut self,
         _node: &HTMLScriptLanguage,
@@ -946,9 +1194,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `HTMLScriptLocation` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_html_script_location(
         &mut self,
         _node: &HTMLScriptLocation,
@@ -957,9 +1208,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `HTMLScriptText` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_html_script_text(
         &mut self,
         _node: &HTMLScriptText,
@@ -968,9 +1222,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LinkedFormula` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_linked_formula(
         &mut self,
         _node: &LinkedFormula,
@@ -979,9 +1236,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LinkedFormulaGroupBox` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_linked_formula_group_box(
         &mut self,
         _node: &LinkedFormulaGroupBox,
@@ -990,9 +1250,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ListItemsSourceRange` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_list_items_source_range(
         &mut self,
         _node: &ListItemsSourceRange,
@@ -1001,9 +1264,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LockToggle` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_lock_toggle(
         &mut self,
         _node: &LockToggle,
@@ -1012,9 +1278,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MacroDisableToggle` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_macro_disable_toggle(
         &mut self,
         _node: &MacroDisableToggle,
@@ -1023,9 +1292,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MinimumWidth` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_minimum_width(
         &mut self,
         _node: &MinimumWidth,
@@ -1034,9 +1306,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MoveWithCells` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_move_with_cells(
         &mut self,
         _node: &MoveWithCells,
@@ -1045,9 +1320,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MultiLine` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_multi_line(
         &mut self,
         _node: &MultiLine,
@@ -1056,9 +1334,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MultipleSelections` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_multiple_selections(
         &mut self,
         _node: &MultipleSelections,
@@ -1067,9 +1348,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NonLinkedListItem` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_non_linked_list_item(
         &mut self,
         _node: &NonLinkedListItem,
@@ -1078,9 +1362,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PasswordEdit` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_password_edit(
         &mut self,
         _node: &PasswordEdit,
@@ -1089,9 +1376,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PrimaryKeyboardAccelerator` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_primary_keyboard_accelerator(
         &mut self,
         _node: &PrimaryKeyboardAccelerator,
@@ -1100,9 +1390,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PrintToggle` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_print_toggle(
         &mut self,
         _node: &PrintToggle,
@@ -1111,9 +1404,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RecalculationToggle` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_recalculation_toggle(
         &mut self,
         _node: &RecalculationToggle,
@@ -1122,9 +1418,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ReferenceToCustomFunction` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_reference_to_custom_function(
         &mut self,
         _node: &ReferenceToCustomFunction,
@@ -1133,9 +1432,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ResizeWithCells` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_resize_with_cells(
         &mut self,
         _node: &ResizeWithCells,
@@ -1144,9 +1446,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ScrollBarIncrement` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_scroll_bar_increment(
         &mut self,
         _node: &ScrollBarIncrement,
@@ -1155,9 +1460,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ScrollBarMaximum` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_scroll_bar_maximum(
         &mut self,
         _node: &ScrollBarMaximum,
@@ -1166,9 +1474,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ScrollBarMinimum` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_scroll_bar_minimum(
         &mut self,
         _node: &ScrollBarMinimum,
@@ -1177,9 +1488,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ScrollBarOrientation` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_scroll_bar_orientation(
         &mut self,
         _node: &ScrollBarOrientation,
@@ -1188,9 +1502,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ScrollBarPageIncrement` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_scroll_bar_page_increment(
         &mut self,
         _node: &ScrollBarPageIncrement,
@@ -1199,9 +1516,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ScrollBarPosition` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_scroll_bar_position(
         &mut self,
         _node: &ScrollBarPosition,
@@ -1210,9 +1530,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ScrollBarWidth` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_scroll_bar_width(
         &mut self,
         _node: &ScrollBarWidth,
@@ -1221,9 +1544,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SecondaryKeyboardAccelerator` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_secondary_keyboard_accelerator(
         &mut self,
         _node: &SecondaryKeyboardAccelerator,
@@ -1232,9 +1558,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SelectedEntry` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_selected_entry(
         &mut self,
         _node: &SelectedEntry,
@@ -1243,9 +1572,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SelectionType` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_selection_type(
         &mut self,
         _node: &SelectionType,
@@ -1254,9 +1586,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TextFormula` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_text_formula(
         &mut self,
         _node: &TextFormula,
@@ -1265,9 +1600,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TextLock` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_text_lock(
         &mut self,
         _node: &TextLock,
@@ -1276,9 +1614,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `UIObjectToggle` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ui_object_toggle(
         &mut self,
         _node: &UIObjectToggle,
@@ -1287,9 +1628,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ValidID` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_valid_id(
         &mut self,
         _node: &ValidID,
@@ -1298,9 +1642,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ValidationType` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_validation_type(
         &mut self,
         _node: &ValidationType,
@@ -1309,9 +1656,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `VerticalScroll` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_vertical_scroll(
         &mut self,
         _node: &VerticalScroll,
@@ -1320,9 +1670,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `VerticalTextAlignment` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_vertical_text_alignment(
         &mut self,
         _node: &VerticalTextAlignment,
@@ -1338,10 +1691,13 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::vml_spreadsheet_drawing` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `Anchor`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn anchor(&mut self, _node: &Anchor) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `AttachedObjectData`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn attached_object_data(
         &mut self,
         _node: &AttachedObjectData,
@@ -1349,6 +1705,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `AttachedObjectDataContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn attached_object_data_content(
         &mut self,
         _node: &AttachedObjectDataContent,
@@ -1356,42 +1714,59 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `AutoFill`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn auto_fill(&mut self, _node: &AutoFill) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `AutoLine`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn auto_line(&mut self, _node: &AutoLine) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `AutomaticallySize`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn automatically_size(&mut self, _node: &AutomaticallySize) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CallbackType`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn callback_type(&mut self, _node: &CallbackType) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CameraSourceRange`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn camera_source_range(&mut self, _node: &CameraSourceRange) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CameraTool`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn camera_tool(&mut self, _node: &CameraTool) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CancelButton`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn cancel_button(&mut self, _node: &CancelButton) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Checked`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn checked(&mut self, _node: &Checked) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ClipboardFormat`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn clipboard_format(&mut self, _node: &ClipboardFormat) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CommentColumnTarget`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn comment_column_target(
         &mut self,
         _node: &CommentColumnTarget,
@@ -1399,10 +1774,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CommentRowTarget`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn comment_row_target(&mut self, _node: &CommentRowTarget) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CommentVisibilityToggle`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn comment_visibility_toggle(
         &mut self,
         _node: &CommentVisibilityToggle,
@@ -1410,6 +1789,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CommentsColumnIsHidden`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn comments_column_is_hidden(
         &mut self,
         _node: &CommentsColumnIsHidden,
@@ -1417,6 +1798,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CommentsRowIsHidden`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn comments_row_is_hidden(
         &mut self,
         _node: &CommentsRowIsHidden,
@@ -1424,14 +1807,20 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DefaultButton`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn default_button(&mut self, _node: &DefaultButton) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DefaultSizeToggle`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn default_size_toggle(&mut self, _node: &DefaultSizeToggle) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Disable3DNoThreeD`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn disable3d_no_three_d(
         &mut self,
         _node: &Disable3DNoThreeD,
@@ -1439,6 +1828,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Disable3DNoThreeD2`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn disable3d_no_three_d2(
         &mut self,
         _node: &Disable3DNoThreeD2,
@@ -1446,10 +1837,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DismissButton`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn dismiss_button(&mut self, _node: &DismissButton) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DropdownColorToggle`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn dropdown_color_toggle(
         &mut self,
         _node: &DropdownColorToggle,
@@ -1457,6 +1852,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DropdownMaximumLines`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn dropdown_maximum_lines(
         &mut self,
         _node: &DropdownMaximumLines,
@@ -1464,10 +1861,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DropdownStyle`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn dropdown_style(&mut self, _node: &DropdownStyle) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DynamicDataExchange`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn dynamic_data_exchange(
         &mut self,
         _node: &DynamicDataExchange,
@@ -1475,10 +1876,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `EmbeddedControl`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn embedded_control(&mut self, _node: &EmbeddedControl) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FarEastAlignmentToggle`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn far_east_alignment_toggle(
         &mut self,
         _node: &FarEastAlignmentToggle,
@@ -1486,18 +1891,26 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FirstRadioButton`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn first_radio_button(&mut self, _node: &FirstRadioButton) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FontAutoScale`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn font_auto_scale(&mut self, _node: &FontAutoScale) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `HelpButton`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn help_button(&mut self, _node: &HelpButton) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `HorizontalTextAlignment`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn horizontal_text_alignment(
         &mut self,
         _node: &HorizontalTextAlignment,
@@ -1505,6 +1918,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `HTMLScriptAttributes`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn html_script_attributes(
         &mut self,
         _node: &HTMLScriptAttributes,
@@ -1512,6 +1927,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `HTMLScriptLanguage`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn html_script_language(
         &mut self,
         _node: &HTMLScriptLanguage,
@@ -1519,6 +1936,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `HTMLScriptLocation`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn html_script_location(
         &mut self,
         _node: &HTMLScriptLocation,
@@ -1526,14 +1945,20 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `HTMLScriptText`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn html_script_text(&mut self, _node: &HTMLScriptText) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LinkedFormula`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn linked_formula(&mut self, _node: &LinkedFormula) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LinkedFormulaGroupBox`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn linked_formula_group_box(
         &mut self,
         _node: &LinkedFormulaGroupBox,
@@ -1541,6 +1966,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ListItemsSourceRange`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn list_items_source_range(
         &mut self,
         _node: &ListItemsSourceRange,
@@ -1548,10 +1975,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LockToggle`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn lock_toggle(&mut self, _node: &LockToggle) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MacroDisableToggle`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn macro_disable_toggle(
         &mut self,
         _node: &MacroDisableToggle,
@@ -1559,18 +1990,26 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MinimumWidth`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn minimum_width(&mut self, _node: &MinimumWidth) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MoveWithCells`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn move_with_cells(&mut self, _node: &MoveWithCells) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MultiLine`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn multi_line(&mut self, _node: &MultiLine) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MultipleSelections`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn multiple_selections(
         &mut self,
         _node: &MultipleSelections,
@@ -1578,6 +2017,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NonLinkedListItem`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn non_linked_list_item(
         &mut self,
         _node: &NonLinkedListItem,
@@ -1585,10 +2026,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PasswordEdit`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn password_edit(&mut self, _node: &PasswordEdit) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PrimaryKeyboardAccelerator`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn primary_keyboard_accelerator(
         &mut self,
         _node: &PrimaryKeyboardAccelerator,
@@ -1596,10 +2041,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PrintToggle`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn print_toggle(&mut self, _node: &PrintToggle) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RecalculationToggle`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn recalculation_toggle(
         &mut self,
         _node: &RecalculationToggle,
@@ -1607,6 +2056,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ReferenceToCustomFunction`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn reference_to_custom_function(
         &mut self,
         _node: &ReferenceToCustomFunction,
@@ -1614,10 +2065,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ResizeWithCells`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn resize_with_cells(&mut self, _node: &ResizeWithCells) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ScrollBarIncrement`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn scroll_bar_increment(
         &mut self,
         _node: &ScrollBarIncrement,
@@ -1625,14 +2080,20 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ScrollBarMaximum`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn scroll_bar_maximum(&mut self, _node: &ScrollBarMaximum) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ScrollBarMinimum`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn scroll_bar_minimum(&mut self, _node: &ScrollBarMinimum) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ScrollBarOrientation`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn scroll_bar_orientation(
         &mut self,
         _node: &ScrollBarOrientation,
@@ -1640,6 +2101,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ScrollBarPageIncrement`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn scroll_bar_page_increment(
         &mut self,
         _node: &ScrollBarPageIncrement,
@@ -1647,14 +2110,20 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ScrollBarPosition`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn scroll_bar_position(&mut self, _node: &ScrollBarPosition) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ScrollBarWidth`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn scroll_bar_width(&mut self, _node: &ScrollBarWidth) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SecondaryKeyboardAccelerator`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn secondary_keyboard_accelerator(
         &mut self,
         _node: &SecondaryKeyboardAccelerator,
@@ -1662,38 +2131,54 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SelectedEntry`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn selected_entry(&mut self, _node: &SelectedEntry) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SelectionType`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn selection_type(&mut self, _node: &SelectionType) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TextFormula`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn text_formula(&mut self, _node: &TextFormula) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TextLock`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn text_lock(&mut self, _node: &TextLock) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `UIObjectToggle`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn ui_object_toggle(&mut self, _node: &UIObjectToggle) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ValidID`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn valid_id(&mut self, _node: &ValidID) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ValidationType`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn validation_type(&mut self, _node: &ValidationType) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `VerticalScroll`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn vertical_scroll(&mut self, _node: &VerticalScroll) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `VerticalTextAlignment`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn vertical_text_alignment(
         &mut self,
         _node: &VerticalTextAlignment,

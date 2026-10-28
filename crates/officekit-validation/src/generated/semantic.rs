@@ -161,8 +161,8 @@
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 
-/// Every semantic constraint SDK 3.5.1 registers, one row per constraint on each element
-/// type, sorted by type id and in SDK 3.5.1's order within a type.
+/// Every semantic constraint the Open XML SDK, version 3.5.1, registers, one row per constraint
+/// on each element type, sorted by type id and in the SDK's order within a type.
 pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
     Registration {
         applications: Applications(0b111),

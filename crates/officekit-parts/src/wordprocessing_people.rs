@@ -342,7 +342,8 @@
 //! A part of Microsoft's extensions, from Office 2013.
 //!
 //! The module holds its content type, its relationship type, and the load and store of its root,
-//! `w15:people`.
+//! `w15:people`. `store_strict` needs the `strict` feature and `store_transitional` the
+//! `transitional` feature.
 
 use crate::part_root::{self, PartRoot};
 use officekit_markup::office_word_2012_wordml;
@@ -362,11 +363,12 @@ use officekit_xml::write::Scope;
 #[cfg(any(feature = "strict", feature = "transitional"))]
 use officekit_xml::write::WriteOptions;
 
-/// The content type SDK 3.5.1's part data gives.
+/// The content type the part data of the Open XML SDK, version 3.5.1, gives for this part.
 pub const CONTENT_TYPE: &str =
     "application/vnd.openxmlformats-officedocument.wordprocessingml.people+xml";
 
-/// One URI in both classes.
+/// The relationship type that names this part, from Microsoft's extensions: one URI in both
+/// classes.
 pub const RELATIONSHIP_TYPE: RelationshipType = RelationshipType::PEOPLE;
 
 impl PartRoot for office_word_2012_wordml::People {
@@ -411,6 +413,8 @@ pub fn load(
 /// Store `root` into the part in the Strict class; the part keeps its
 /// content type, or takes this module's.
 ///
+/// This function needs the `strict` feature.
+///
 /// # Errors
 ///
 /// The errors of [`part_root::store`].
@@ -437,6 +441,8 @@ pub fn store_strict(
 
 /// Store `root` into the part in the Transitional class; the part keeps its
 /// content type, or takes this module's.
+///
+/// This function needs the `transitional` feature.
 ///
 /// # Errors
 ///

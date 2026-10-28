@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `p188` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/powerpoint/2018/8/main`, which files write with the prefix `p188`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/powerpoint/2018/8/main`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -377,7 +379,8 @@ pub static COMMENT_CONTENT_TAGS: officekit_markup_base::Accept = officekit_marku
     ],
 };
 
-/// The tag `p188:author`, schema type `CT_Author` of SDK 3.5.1's data.
+/// The `p188:author` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Author`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -386,16 +389,24 @@ pub static COMMENT_CONTENT_TAGS: officekit_markup_base::Accept = officekit_marku
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Author {
+    /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionList>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `initials`, when the element has it.
     pub initials: Option<String>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `providerId`, when the element has it.
     pub provider_id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `userId`, when the element has it.
     pub user_id: Option<String>,
 }
 
-/// The tag `p188:authorLst`, schema type `CT_AuthorList` of SDK 3.5.1's data.
+/// The `p188:authorLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_AuthorList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -404,11 +415,14 @@ pub struct Author {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AuthorLst {
+    /// The children that are `Author`, in order.
     pub author: Vec<Author>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p188:cm`, schema type `CT_Comment` of SDK 3.5.1's data.
+/// The `p188:cm` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Comment`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -417,28 +431,47 @@ pub struct AuthorLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Cm {
+    /// The attribute `assignedTo`, when the element has it.
     pub assigned_to: Option<String>,
+    /// The attribute `authorId`, when the element has it.
     pub author_id: Option<String>,
+    /// The attribute `complete`, when the element has it.
     pub complete: Option<String>,
+    /// The children that are an item of `CommentContent`, in order.
     pub content: Vec<CommentContent>,
+    /// The attribute `created`, when the element has it.
     pub created: Option<String>,
+    /// The attribute `dueDate`, when the element has it.
     pub due_date: Option<String>,
+    /// The child that is `ExtLstCommentPropertiesExtensionList`, when there is one.
     pub ext_lst_comment_properties_extension_list:
         Option<Box<ExtLstCommentPropertiesExtensionList>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `likes`, when the element has it.
     pub likes: Option<String>,
+    /// The child that is `Pos`, when there is one.
     pub pos: Option<Box<Pos>>,
+    /// The attribute `priority`, when the element has it.
     pub priority: Option<String>,
+    /// The child that is `ReplyLst`, when there is one.
     pub reply_lst: Option<Box<ReplyLst>>,
+    /// The attribute `startDate`, when the element has it.
     pub start_date: Option<String>,
+    /// The attribute `status`, when the element has it.
     pub status: Option<CommentStatus>,
+    /// The attribute `tags`, when the element has it.
     pub tags: Option<String>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// The child that is `TxBody`, when there is one.
     pub tx_body: Option<Box<TxBody>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p188:cmLst`, schema type `CT_CommentList` of SDK 3.5.1's data.
+/// The `p188:cmLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_CommentList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -447,28 +480,46 @@ pub struct Cm {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CmLst {
+    /// The children that are `Cm`, in order.
     pub cm: Vec<Cm>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_Comment`: choice in `CT_Comment`.
+/// One child element of a choice: choice in `CT_Comment`.
+///
+/// The schema types that hold it: `CT_Comment`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum CommentContent {
+    /// The element `oac:deMkLst`, a `DeMkLst`.
     DeMkLst(super::office_drawing_2013_main_command::DeMkLst),
+    /// The element `oac:gridColMkLst`, a `GridColMkLst`.
     GridColMkLst(super::office_drawing_2013_main_command::GridColMkLst),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `pc:sldLayoutMkLst`, a `SldLayoutMkLst`.
     SldLayoutMkLst(super::office_powerpoint_2013_main_command::SldLayoutMkLst),
+    /// The element `pc:sldMasterMkLst`, a `SldMasterMkLst`.
     SldMasterMkLst(super::office_powerpoint_2013_main_command::SldMasterMkLst),
+    /// The element `pc:sldMkLst`, a `SldMkLst`.
     SldMkLst(super::office_powerpoint_2013_main_command::SldMkLst),
+    /// The element `oac:tcMkLst`, a `TcMkLst`.
     TcMkLst(super::office_drawing_2013_main_command::TcMkLst),
+    /// The element `oac:trMkLst`, a `TrMkLst`.
     TrMkLst(super::office_drawing_2013_main_command::TrMkLst),
+    /// The element `oac:txBodyMkLst`, a `TxBodyMkLst`.
     TxBodyMkLst(super::office_drawing_2013_main_command::TxBodyMkLst),
+    /// The element `oac:txMkLst`, a `TxMkLst`.
     TxMkLst(super::office_drawing_2013_main_command::TxMkLst),
+    /// The element `p188:unknownAnchor`, a `UnknownAnchor`.
     UnknownAnchor(UnknownAnchor),
 }
 
-/// The tag `p188:commentRel`, schema type `CT_CommentRelationship` of SDK 3.5.1's data.
+/// The `p188:commentRel` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_CommentRelationship`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -477,11 +528,16 @@ pub enum CommentContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CommentRel {
+    /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_CommentStatus`: the text the file carried.
+/// The simple type `ST_CommentStatus`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -490,12 +546,16 @@ pub struct CommentRel {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CommentStatus(pub String);
-/// The members of `ST_CommentStatus`, in alphabetical order.
+/// The members of the enumeration `ST_CommentStatus`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum CommentStatusMember {
+    /// The member written `active`.
     Active,
+    /// The member written `closed`.
     Closed,
+    /// The member written `resolved`.
     Resolved,
 }
 
@@ -508,34 +568,50 @@ pub enum CommentStatusMember {
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_powerpoint_2018_8_main` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `Author`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn author(&mut self, _node: &Author) -> Option<Author> {
         None
     }
 
+    /// Asked for each `AuthorLst`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn author_lst(&mut self, _node: &AuthorLst) -> Option<AuthorLst> {
         None
     }
 
+    /// Asked for each `Cm`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn cm(&mut self, _node: &Cm) -> Option<Cm> {
         None
     }
 
+    /// Asked for each `CmLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn cm_lst(&mut self, _node: &CmLst) -> Option<CmLst> {
         None
     }
 
+    /// Asked for each `CommentContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn comment(&mut self, _node: &CommentContent) -> Option<CommentContent> {
         None
     }
 
+    /// Asked for each `CommentContent` in a list. `None` leaves the item to its own `transform`,
+    /// and `Some` puts the items it holds, any number of them, in its place.
     fn comment_items(&mut self, _node: &CommentContent) -> Option<Vec<CommentContent>> {
         None
     }
 
+    /// Asked for each `CommentRel`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn comment_rel(&mut self, _node: &CommentRel) -> Option<CommentRel> {
         None
     }
 
+    /// Asked for each `ExtLstCommentPropertiesExtensionList`. `None` rebuilds it from its
+    /// transformed children, and `Some` puts the node it holds in its place.
     fn ext_lst_comment_properties_extension_list(
         &mut self,
         _node: &ExtLstCommentPropertiesExtensionList,
@@ -543,6 +619,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ExtLstExtensionList`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn ext_lst_extension_list(
         &mut self,
         _node: &ExtLstExtensionList,
@@ -550,36 +628,52 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Pos`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn pos(&mut self, _node: &Pos) -> Option<Pos> {
         None
     }
 
+    /// Asked for each `Reply`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn reply(&mut self, _node: &Reply) -> Option<Reply> {
         None
     }
 
+    /// Asked for each `ReplyLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn reply_lst(&mut self, _node: &ReplyLst) -> Option<ReplyLst> {
         None
     }
 
+    /// Asked for each `TxBody`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn tx_body(&mut self, _node: &TxBody) -> Option<TxBody> {
         None
     }
 
+    /// Asked for each `UnknownAnchor`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn unknown_anchor(&mut self, _node: &UnknownAnchor) -> Option<UnknownAnchor> {
         None
     }
 
+    /// Asked when a `Author` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_author(&mut self, _node: &Author, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `AuthorLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_author_lst(
         &mut self,
         _node: &AuthorLst,
@@ -588,23 +682,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Cm` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cm(&mut self, _node: &Cm, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `CmLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_cm_lst(&mut self, _node: &CmLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `CommentContent` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_comment(
         &mut self,
         _node: &CommentContent,
@@ -613,9 +716,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CommentContent` in a list is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_comment_items(
         &mut self,
         _node: &CommentContent,
@@ -624,9 +730,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CommentRel` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_comment_rel(
         &mut self,
         _node: &CommentRel,
@@ -635,9 +744,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExtLstCommentPropertiesExtensionList` is written through. `Written::Yes` means
+    /// the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst_comment_properties_extension_list(
         &mut self,
         _node: &ExtLstCommentPropertiesExtensionList,
@@ -646,9 +758,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExtLstExtensionList` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst_extension_list(
         &mut self,
         _node: &ExtLstExtensionList,
@@ -657,23 +772,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Pos` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pos(&mut self, _node: &Pos, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Reply` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_reply(&mut self, _node: &Reply, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ReplyLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_reply_lst(
         &mut self,
         _node: &ReplyLst,
@@ -682,16 +806,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TxBody` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_tx_body(&mut self, _node: &TxBody, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `UnknownAnchor` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_unknown_anchor(
         &mut self,
         _node: &UnknownAnchor,
@@ -701,7 +831,8 @@ pub trait Context: crate::Context {
     }
 }
 
-/// The tag `p188:extLst`, schema type `CT_CommentPropertiesExtensionList` of SDK 3.5.1's data.
+/// The `p188:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_CommentPropertiesExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -710,11 +841,14 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLstCommentPropertiesExtensionList {
+    /// The children that are `presentation::Extension`, in order.
     pub extension: Vec<presentation::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p188:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
+/// The `p188:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -723,11 +857,14 @@ pub struct ExtLstCommentPropertiesExtensionList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLstExtensionList {
+    /// The children that are `presentation::Extension`, in order.
     pub extension: Vec<presentation::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p188:pos`, schema type `CT_Point2D` of SDK 3.5.1's data.
+/// The `p188:pos` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Point2D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -736,12 +873,16 @@ pub struct ExtLstExtensionList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Pos {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `x`, when the element has it.
     pub x: Option<drawing::Coordinate>,
+    /// The attribute `y`, when the element has it.
     pub y: Option<drawing::Coordinate>,
 }
 
-/// The tag `p188:reply`, schema type `CT_CommentReply` of SDK 3.5.1's data.
+/// The `p188:reply` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_CommentReply`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -750,19 +891,29 @@ pub struct Pos {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Reply {
+    /// The attribute `authorId`, when the element has it.
     pub author_id: Option<String>,
+    /// The attribute `created`, when the element has it.
     pub created: Option<String>,
+    /// The child that is `ExtLstCommentPropertiesExtensionList`, when there is one.
     pub ext_lst_comment_properties_extension_list:
         Option<Box<ExtLstCommentPropertiesExtensionList>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `likes`, when the element has it.
     pub likes: Option<String>,
+    /// The attribute `status`, when the element has it.
     pub status: Option<CommentStatus>,
+    /// The attribute `tags`, when the element has it.
     pub tags: Option<String>,
+    /// The child that is `TxBody`, when there is one.
     pub tx_body: Option<Box<TxBody>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p188:replyLst`, schema type `CT_CommentReplyList` of SDK 3.5.1's data.
+/// The `p188:replyLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_CommentReplyList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -771,11 +922,14 @@ pub struct Reply {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ReplyLst {
+    /// The children that are `Reply`, in order.
     pub reply: Vec<Reply>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p188:txBody`, schema type `CT_TextBody` of SDK 3.5.1's data.
+/// The `p188:txBody` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TextBody`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -784,13 +938,18 @@ pub struct ReplyLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TxBody {
+    /// The child that is `drawing::BodyProperties`, which the schema requires.
     pub properties: Box<drawing::BodyProperties>,
+    /// The child that is `drawing::TextListStyles`, when there is one.
     pub text_list_styles: Option<Box<drawing::TextListStyles>>,
+    /// The children that are `drawing::TextParagraphs`, in order.
     pub text_paragraphs: Vec<drawing::TextParagraphs>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p188:unknownAnchor`, schema type `CT_CommentUnknownAnchor` of SDK 3.5.1's data.
+/// The `p188:unknownAnchor` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_CommentUnknownAnchor`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -799,6 +958,7 @@ pub struct TxBody {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct UnknownAnchor {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -808,30 +968,41 @@ pub struct UnknownAnchor {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_powerpoint_2018_8_main` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `Author`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn author(&mut self, _node: &Author) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `AuthorLst`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn author_lst(&mut self, _node: &AuthorLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Cm`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn cm(&mut self, _node: &Cm) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CmLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn cm_lst(&mut self, _node: &CmLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CommentContent`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn comment(&mut self, _node: &CommentContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CommentRel`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn comment_rel(&mut self, _node: &CommentRel) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExtLstCommentPropertiesExtensionList`. `Descend::Yes` walks into its children,
+    /// and `Descend::No` skips them.
     fn ext_lst_comment_properties_extension_list(
         &mut self,
         _node: &ExtLstCommentPropertiesExtensionList,
@@ -839,6 +1010,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExtLstExtensionList`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn ext_lst_extension_list(
         &mut self,
         _node: &ExtLstExtensionList,
@@ -846,22 +1019,28 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Pos`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn pos(&mut self, _node: &Pos) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Reply`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn reply(&mut self, _node: &Reply) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ReplyLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn reply_lst(&mut self, _node: &ReplyLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TxBody`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn tx_body(&mut self, _node: &TxBody) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `UnknownAnchor`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn unknown_anchor(&mut self, _node: &UnknownAnchor) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
@@ -1077,7 +1256,7 @@ impl CommentStatusMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

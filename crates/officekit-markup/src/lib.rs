@@ -209,13 +209,65 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! `officekit-markup` is the typed tree of officekit: one module per Office Open XML namespace,
-//! `officekit_markup::<namespace>`, with its structs, enums, and simple-type newtypes, their
-//! readers in `read` and writers in `write`, and the namespace's hook traits; and the shared
-//! runtime at its root. It gathers `officekit-markup-base`, `officekit-markup-core` and
-//! `officekit-markup-ext` under these paths.
+//! `officekit-markup` is the typed tree of officekit: a Rust type for each element of Office Open
+//! XML, in one module for each namespace.
+//!
+//! A namespace is the group an element name belongs to. `wordprocessing` holds the elements of Word
+//! files, `spreadsheet` those of Excel files, `presentation` those of slide decks, and
+//! `drawing` and `chart` the pictures, shapes and charts all three share. The modules are
+//! `officekit_markup::<namespace>`.
+//!
+//! # A namespace module
+//!
+//! A struct stands for an element with attributes and children, and its fields are the attributes
+//! and children the schema declares. An enum stands for a choice among elements, such as the
+//! content of a paragraph. A newtype stands for a simple type, a value written as text. It keeps the
+//! text as it was read, and `value()` checks it and gives the matching member or an error.
+//!
+//! To get the text of a Word paragraph, loop over the `content` of the `wordprocessing::Paragraph`,
+//! match `ParagraphContent::TextRun`, loop over the `content` of the `TextRun`, and match
+//! `TextRunContent::Text`. Its `value` is the text.
+//!
+//! Each module also has a `read` module, with one function that reads an element into each struct
+//! or enum, and a `write` module, with one function that writes each back to an element. The
+//! elements are those of `officekit-xml`. Strict and Transitional files read the same way. The
+//! `officekit-strict` and `officekit-transitional` crates write a node in one class.
+//!
+//! # Content the schemas do not declare
+//!
+//! The struct of an element has an `unknown` field, an [`Unknown`], and the enum of a choice among
+//! elements an `Other` item. Elements, attributes and namespace declarations the schemas do not
+//! declare go there when a node is read. A write puts them back where they were, so unfamiliar
+//! content survives an edit. A newtype keeps any text, so a value that is no member of its simple
+//! type stays in it, and `value()` gives an error for it.
+//!
+//! Every struct is `#[non_exhaustive]`, and so is every enum but a few choices among elements that
+//! `officekit-markup-ext` matches. Build a struct with `Default` and assign its fields, and give a
+//! `match` on an enum a wildcard arm.
+//!
+//! # Hooks
+//!
+//! [`Context`] and [`Visitor`] are the roots of the hook traits. Each has one method for every
+//! namespace, which returns `None` until a context or visitor opts in by returning `Some(self)`.
+//! The namespace's own `Context` and `Visitor` then have one method for each node. A `Context`
+//! replaces nodes, and a `Visitor` looks at them and says with [`Descend`] whether to go into
+//! their children. The `officekit-traversal` crate calls the hooks.
+//!
+//! # Where the items live
+//!
+//! The runtime is at the root of this crate: the reader, the writer, [`Unknown`] and the simple-type
+//! parsers. It comes from `officekit-markup-base`, with the namespaces the cycle of
+//! `officekit-markup-core` depends on. `officekit-markup-core` holds the namespaces that refer to
+//! each other, and `officekit-markup-ext` the other namespaces and the hook traits. Depend on this
+//! crate, not on those three.
+//!
+//! The `binary-format` feature adds the derives that archive every type with rkyv.
 
+#![recursion_limit = "256"]
+
+#[doc(no_inline)]
 pub use officekit_markup_base::*;
+#[doc(no_inline)]
 pub use officekit_markup_ext::{
     Context, Visitor, additional_characteristics, bibliography, chart, chart_drawing,
     common_simple_types, custom_xml_data_properties, custom_xml_schema_properties, diagram,

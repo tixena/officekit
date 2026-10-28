@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `t` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/tasks/2019/documenttasks`, which files write with the prefix `t`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/tasks/2019/documenttasks`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -395,7 +397,8 @@ pub static TASK_HISTORY_EVENT_CONTENT_TAGS: officekit_markup_base::Accept =
         ],
     };
 
-/// The tag `t:Anchor`, schema type `CT_TaskAnchor` of SDK 3.5.1's data.
+/// The `t:Anchor` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TaskAnchor`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -404,12 +407,16 @@ pub static TASK_HISTORY_EVENT_CONTENT_TAGS: officekit_markup_base::Accept =
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Anchor {
+    /// The child that is `Comment`, when there is one.
     pub comment: Option<Box<Comment>>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `t:Assign`, schema type `CT_TaskUser` of SDK 3.5.1's data.
+/// The `t:Assign` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TaskUser`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -418,10 +425,12 @@ pub struct Anchor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Assign {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `t:Attribution`, schema type `CT_TaskUser` of SDK 3.5.1's data.
+/// The `t:Attribution` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TaskUser`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -430,10 +439,12 @@ pub struct Assign {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Attribution {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `t:Comment`, schema type `CT_CommentAnchor` of SDK 3.5.1's data.
+/// The `t:Comment` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_CommentAnchor`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -442,7 +453,9 @@ pub struct Attribution {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Comment {
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -455,62 +468,92 @@ pub struct Comment {
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_tasks_2019_documenttasks` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `Anchor`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn anchor(&mut self, _node: &Anchor) -> Option<Anchor> {
         None
     }
 
+    /// Asked for each `Assign`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn assign(&mut self, _node: &Assign) -> Option<Assign> {
         None
     }
 
+    /// Asked for each `Attribution`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn attribution(&mut self, _node: &Attribution) -> Option<Attribution> {
         None
     }
 
+    /// Asked for each `Comment`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn comment(&mut self, _node: &Comment) -> Option<Comment> {
         None
     }
 
+    /// Asked for each `Create`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn create(&mut self, _node: &Create) -> Option<Create> {
         None
     }
 
+    /// Asked for each `Delete`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn delete(&mut self, _node: &Delete) -> Option<Delete> {
         None
     }
 
+    /// Asked for each `Event`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn event(&mut self, _node: &Event) -> Option<Event> {
         None
     }
 
+    /// Asked for each `ExtLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
         None
     }
 
+    /// Asked for each `History`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn history(&mut self, _node: &History) -> Option<History> {
         None
     }
 
+    /// Asked for each `Priority`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn priority(&mut self, _node: &Priority) -> Option<Priority> {
         None
     }
 
+    /// Asked for each `Progress`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn progress(&mut self, _node: &Progress) -> Option<Progress> {
         None
     }
 
+    /// Asked for each `Schedule`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn schedule(&mut self, _node: &Schedule) -> Option<Schedule> {
         None
     }
 
+    /// Asked for each `SetTitle`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn set_title(&mut self, _node: &SetTitle) -> Option<SetTitle> {
         None
     }
 
+    /// Asked for each `Task`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn task(&mut self, _node: &Task) -> Option<Task> {
         None
     }
 
+    /// Asked for each `TaskHistoryEventContent`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn task_history_event(
         &mut self,
         _node: &TaskHistoryEventContent,
@@ -518,43 +561,62 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Tasks`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn tasks(&mut self, _node: &Tasks) -> Option<Tasks> {
         None
     }
 
+    /// Asked for each `Unassign`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn unassign(&mut self, _node: &Unassign) -> Option<Unassign> {
         None
     }
 
+    /// Asked for each `UnassignAll`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn unassign_all(&mut self, _node: &UnassignAll) -> Option<UnassignAll> {
         None
     }
 
+    /// Asked for each `Undelete`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn undelete(&mut self, _node: &Undelete) -> Option<Undelete> {
         None
     }
 
+    /// Asked for each `Undo`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn undo(&mut self, _node: &Undo) -> Option<Undo> {
         None
     }
 
+    /// Asked when a `Anchor` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_anchor(&mut self, _node: &Anchor, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Assign` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_assign(&mut self, _node: &Assign, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Attribution` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_attribution(
         &mut self,
         _node: &Attribution,
@@ -563,51 +625,72 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Comment` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_comment(&mut self, _node: &Comment, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Create` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_create(&mut self, _node: &Create, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Delete` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_delete(&mut self, _node: &Delete, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Event` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_event(&mut self, _node: &Event, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `History` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_history(&mut self, _node: &History, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Priority` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_priority(
         &mut self,
         _node: &Priority,
@@ -616,9 +699,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Progress` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_progress(
         &mut self,
         _node: &Progress,
@@ -627,9 +713,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Schedule` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_schedule(
         &mut self,
         _node: &Schedule,
@@ -638,9 +727,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SetTitle` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_set_title(
         &mut self,
         _node: &SetTitle,
@@ -649,16 +741,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Task` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_task(&mut self, _node: &Task, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `TaskHistoryEventContent` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_task_history_event(
         &mut self,
         _node: &TaskHistoryEventContent,
@@ -667,16 +765,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Tasks` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_tasks(&mut self, _node: &Tasks, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Unassign` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_unassign(
         &mut self,
         _node: &Unassign,
@@ -685,9 +789,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `UnassignAll` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_unassign_all(
         &mut self,
         _node: &UnassignAll,
@@ -696,9 +803,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Undelete` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_undelete(
         &mut self,
         _node: &Undelete,
@@ -707,15 +817,19 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Undo` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_undo(&mut self, _node: &Undo, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 }
 
-/// The tag `t:Create`, schema type `CT_TaskCreateEventInfo` of SDK 3.5.1's data.
+/// The `t:Create` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TaskCreateEventInfo`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -724,10 +838,12 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Create {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `t:Delete`, schema type `CT_TaskDeleteEventInfo` of SDK 3.5.1's data.
+/// The `t:Delete` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TaskDeleteEventInfo`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -736,10 +852,12 @@ pub struct Create {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Delete {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `t:Event`, schema type `CT_TaskHistoryEvent` of SDK 3.5.1's data.
+/// The `t:Event` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TaskHistoryEvent`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -748,16 +866,24 @@ pub struct Delete {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Event {
+    /// The child that is `Anchor`, when there is one.
     pub anchor: Option<Box<Anchor>>,
+    /// The child that is `Attribution`, which the schema requires.
     pub attribution: Box<Attribution>,
+    /// The child that is an item of `TaskHistoryEventContent`, when there is one.
     pub content: Option<Box<TaskHistoryEventContent>>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `time`, when the element has it.
     pub time: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `t:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
+/// The `t:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -766,11 +892,14 @@ pub struct Event {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
+    /// The children that are `super::office_2019_extlst::Ext`, in order.
     pub ext: Vec<super::office_2019_extlst::Ext>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `t:History`, schema type `CT_TaskHistory` of SDK 3.5.1's data.
+/// The `t:History` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TaskHistory`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -779,11 +908,14 @@ pub struct ExtLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct History {
+    /// The children that are `Event`, in order.
     pub event: Vec<Event>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `t:Priority`, schema type `CT_TaskPriorityEventInfo` of SDK 3.5.1's data.
+/// The `t:Priority` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TaskPriorityEventInfo`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -792,11 +924,14 @@ pub struct History {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Priority {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `value`, when the element has it.
     pub value: Option<String>,
 }
 
-/// The tag `t:Progress`, schema type `CT_TaskProgressEventInfo` of SDK 3.5.1's data.
+/// The `t:Progress` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TaskProgressEventInfo`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -805,11 +940,14 @@ pub struct Priority {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Progress {
+    /// The attribute `percentComplete`, when the element has it.
     pub percent_complete: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `t:Schedule`, schema type `CT_TaskScheduleEventInfo` of SDK 3.5.1's data.
+/// The `t:Schedule` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TaskScheduleEventInfo`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -818,12 +956,16 @@ pub struct Progress {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Schedule {
+    /// The attribute `dueDate`, when the element has it.
     pub due_date: Option<String>,
+    /// The attribute `startDate`, when the element has it.
     pub start_date: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `t:SetTitle`, schema type `CT_TaskTitleEventInfo` of SDK 3.5.1's data.
+/// The `t:SetTitle` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TaskTitleEventInfo`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -832,11 +974,14 @@ pub struct Schedule {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SetTitle {
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `t:Task`, schema type `CT_Task` of SDK 3.5.1's data.
+/// The `t:Task` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `CT_Task`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -845,32 +990,54 @@ pub struct SetTitle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Task {
+    /// The child that is `Anchor`, when there is one.
     pub anchor: Option<Box<Anchor>>,
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The child that is `History`, when there is one.
     pub history: Option<Box<History>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_TaskHistoryEvent`: choice in `CT_TaskHistoryEvent`.
+/// One child element of a choice: choice in `CT_TaskHistoryEvent`.
+///
+/// The schema types that hold it: `CT_TaskHistoryEvent`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TaskHistoryEventContent {
+    /// The element `t:Assign`, a `Assign`.
     Assign(Assign),
+    /// The element `t:Create`, a `Create`.
     Create(Create),
+    /// The element `t:Delete`, a `Delete`.
     Delete(Delete),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `t:Priority`, a `Priority`.
     Priority(Priority),
+    /// The element `t:Progress`, a `Progress`.
     Progress(Progress),
+    /// The element `t:Schedule`, a `Schedule`.
     Schedule(Schedule),
+    /// The element `t:SetTitle`, a `SetTitle`.
     SetTitle(SetTitle),
+    /// The element `t:Unassign`, a `Unassign`.
     Unassign(Unassign),
+    /// The element `t:UnassignAll`, a `UnassignAll`.
     UnassignAll(UnassignAll),
+    /// The element `t:Undelete`, a `Undelete`.
     Undelete(Undelete),
+    /// The element `t:Undo`, a `Undo`.
     Undo(Undo),
 }
 
-/// The tag `t:Tasks`, schema type `CT_Tasks` of SDK 3.5.1's data.
+/// The `t:Tasks` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Tasks`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -879,12 +1046,16 @@ pub enum TaskHistoryEventContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Tasks {
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// The children that are `Task`, in order.
     pub task: Vec<Task>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `t:Unassign`, schema type `CT_TaskUser` of SDK 3.5.1's data.
+/// The `t:Unassign` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TaskUser`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -893,10 +1064,12 @@ pub struct Tasks {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Unassign {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `t:UnassignAll`, schema type `CT_TaskUnassignAll` of SDK 3.5.1's data.
+/// The `t:UnassignAll` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TaskUnassignAll`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -905,10 +1078,12 @@ pub struct Unassign {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct UnassignAll {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `t:Undelete`, schema type `CT_TaskUndeleteEventInfo` of SDK 3.5.1's data.
+/// The `t:Undelete` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TaskUndeleteEventInfo`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -917,10 +1092,12 @@ pub struct UnassignAll {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Undelete {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `t:Undo`, schema type `CT_TaskUndo` of SDK 3.5.1's data.
+/// The `t:Undo` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
+/// type is `CT_TaskUndo`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -929,7 +1106,9 @@ pub struct Undelete {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Undo {
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -939,62 +1118,79 @@ pub struct Undo {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_tasks_2019_documenttasks` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `Anchor`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn anchor(&mut self, _node: &Anchor) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Assign`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn assign(&mut self, _node: &Assign) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Attribution`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn attribution(&mut self, _node: &Attribution) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Comment`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn comment(&mut self, _node: &Comment) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Create`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn create(&mut self, _node: &Create) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Delete`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn delete(&mut self, _node: &Delete) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Event`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn event(&mut self, _node: &Event) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext_lst(&mut self, _node: &ExtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `History`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn history(&mut self, _node: &History) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Priority`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn priority(&mut self, _node: &Priority) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Progress`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn progress(&mut self, _node: &Progress) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Schedule`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn schedule(&mut self, _node: &Schedule) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SetTitle`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn set_title(&mut self, _node: &SetTitle) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Task`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn task(&mut self, _node: &Task) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TaskHistoryEventContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn task_history_event(
         &mut self,
         _node: &TaskHistoryEventContent,
@@ -1002,22 +1198,28 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Tasks`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn tasks(&mut self, _node: &Tasks) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Unassign`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn unassign(&mut self, _node: &Unassign) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `UnassignAll`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn unassign_all(&mut self, _node: &UnassignAll) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Undelete`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn undelete(&mut self, _node: &Undelete) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Undo`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn undo(&mut self, _node: &Undo) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

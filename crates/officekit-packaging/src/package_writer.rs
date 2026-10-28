@@ -24,6 +24,50 @@ mod tests;
 /// deflated with its sizes in a data descriptor after it; `finish` writes
 /// `[Content_Types].xml` and every relationship part last, because they name
 /// parts and relationships known only at the end.
+///
+/// Make one with [`from_template`](Self::from_template). Copy the parts of a package with
+/// [`copy_parts`](Self::copy_parts), stream a new part with [`part`](Self::part), add relationships
+/// with [`relate`](Self::relate), and end with [`finish`](Self::finish).
+///
+/// ```
+/// use officekit_packaging::package::Package;
+/// use officekit_packaging::package_writer::PackageWriter;
+/// use officekit_packaging::part_name::PartName;
+/// use officekit_packaging::relationship::{Relationship, RelationshipType, TargetMode};
+/// use officekit_xml::element::NamespaceDeclaration;
+/// use officekit_xml::write::Layout;
+///
+/// # fn main() -> Result<(), Box<dyn std::error::Error>> {
+/// let word = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+/// let content_type =
+///     "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml";
+/// let main = PartName::new("/word/document.xml")?;
+///
+/// let mut sink = Vec::new();
+/// let mut writer = PackageWriter::from_template(&mut sink, &Package::new());
+/// let mut part = writer.part(&main, content_type, Layout::Compact)?;
+/// part.declaration()?;
+/// part.start("w:document", &[NamespaceDeclaration::new("w".to_owned(), word.to_owned())], &[])?;
+/// part.end("w:document")?;
+/// let relationship = Relationship::new(
+///     RelationshipType::OFFICE_DOCUMENT.transitional,
+///     "word/document.xml",
+///     TargetMode::Internal,
+/// );
+/// assert_eq!(writer.relate(None, relationship), "rId1");
+/// writer.finish()?;
+///
+/// let package = Package::from_bytes(sink)?;
+/// assert_eq!(package.content_type(&main), Some(content_type));
+/// assert_eq!(
+///     String::from_utf8(package.part_bytes(&main)?)?,
+///     format!(
+///         "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<w:document xmlns:w=\"{word}\"/>"
+///     )
+/// );
+/// # Ok(())
+/// # }
+/// ```
 pub struct PackageWriter<W: Write> {
     defaults: Vec<(String, String)>,
     overrides: Vec<(PartName, String)>,

@@ -212,8 +212,11 @@
 //! The hooks of the `ap` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_base::document_properties_extended`.
 //!
-//! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/extended-properties`.
+//! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/extended-properties`. Its prefix, `ap`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_base::document_properties_extended::*;
 
 use officekit_markup_base::Written;
@@ -229,10 +232,14 @@ use std::io;
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::document_properties_extended` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `ApplicationName`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn application_name(&mut self, _node: &ApplicationName) -> Option<ApplicationName> {
         None
     }
 
+    /// Asked for each `ApplicationSpecificFileProperties`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn application_specific_file_properties(
         &mut self,
         _node: &ApplicationSpecificFileProperties,
@@ -240,6 +247,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ApplicationSpecificFilePropertiesContent`. `None` rebuilds it from its
+    /// transformed children, and `Some` puts the node it holds in its place.
     fn application_specific_file_properties_content(
         &mut self,
         _node: &ApplicationSpecificFilePropertiesContent,
@@ -247,6 +256,9 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ApplicationSpecificFilePropertiesContent` in a list. `None` leaves the item
+    /// to its own `transform`, and `Some` puts the items it holds, any number of them, in its
+    /// place.
     fn application_specific_file_properties_content_items(
         &mut self,
         _node: &ApplicationSpecificFilePropertiesContent,
@@ -254,10 +266,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ApplicationVersion`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn application_version(&mut self, _node: &ApplicationVersion) -> Option<ApplicationVersion> {
         None
     }
 
+    /// Asked for each `CharactersWithSpaces`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn characters_with_spaces(
         &mut self,
         _node: &CharactersWithSpaces,
@@ -265,26 +281,38 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `DigitalSignature`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn digital_signature(&mut self, _node: &DigitalSignature) -> Option<DigitalSignature> {
         None
     }
 
+    /// Asked for each `DocumentSecurity`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn document_security(&mut self, _node: &DocumentSecurity) -> Option<DocumentSecurity> {
         None
     }
 
+    /// Asked for each `HeadingPairs`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn heading_pairs(&mut self, _node: &HeadingPairs) -> Option<HeadingPairs> {
         None
     }
 
+    /// Asked for each `HyperlinkList`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn hyperlink_list(&mut self, _node: &HyperlinkList) -> Option<HyperlinkList> {
         None
     }
 
+    /// Asked for each `HyperlinksChanged`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn hyperlinks_changed(&mut self, _node: &HyperlinksChanged) -> Option<HyperlinksChanged> {
         None
     }
 
+    /// Asked for each `IntendedFormatOfPresentation`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn intended_format_of_presentation(
         &mut self,
         _node: &IntendedFormatOfPresentation,
@@ -292,14 +320,20 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `LinksUpToDate`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn links_up_to_date(&mut self, _node: &LinksUpToDate) -> Option<LinksUpToDate> {
         None
     }
 
+    /// Asked for each `NameOfCompany`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn name_of_company(&mut self, _node: &NameOfCompany) -> Option<NameOfCompany> {
         None
     }
 
+    /// Asked for each `NameOfDocumentTemplate`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn name_of_document_template(
         &mut self,
         _node: &NameOfDocumentTemplate,
@@ -307,10 +341,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `NameOfManager`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn name_of_manager(&mut self, _node: &NameOfManager) -> Option<NameOfManager> {
         None
     }
 
+    /// Asked for each `NumberOfHiddenSlides`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn number_of_hidden_slides(
         &mut self,
         _node: &NumberOfHiddenSlides,
@@ -318,10 +356,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `NumberOfLines`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn number_of_lines(&mut self, _node: &NumberOfLines) -> Option<NumberOfLines> {
         None
     }
 
+    /// Asked for each `NumberOfSlidesContainingNotes`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn number_of_slides_containing_notes(
         &mut self,
         _node: &NumberOfSlidesContainingNotes,
@@ -329,10 +371,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `PartTitles`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn part_titles(&mut self, _node: &PartTitles) -> Option<PartTitles> {
         None
     }
 
+    /// Asked for each `RelativeHyperlinkBase`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn relative_hyperlink_base(
         &mut self,
         _node: &RelativeHyperlinkBase,
@@ -340,10 +386,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `SharedDocument`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn shared_document(&mut self, _node: &SharedDocument) -> Option<SharedDocument> {
         None
     }
 
+    /// Asked for each `SlidesMetadataElement`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn slides_metadata_element(
         &mut self,
         _node: &SlidesMetadataElement,
@@ -351,6 +401,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ThumbnailDisplayMode`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn thumbnail_display_mode(
         &mut self,
         _node: &ThumbnailDisplayMode,
@@ -358,6 +410,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `TotalEditTimeMetadataElement`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn total_edit_time_metadata_element(
         &mut self,
         _node: &TotalEditTimeMetadataElement,
@@ -365,6 +419,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `TotalNumberOfCharacters`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn total_number_of_characters(
         &mut self,
         _node: &TotalNumberOfCharacters,
@@ -372,6 +428,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `TotalNumberOfMultimediaClips`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn total_number_of_multimedia_clips(
         &mut self,
         _node: &TotalNumberOfMultimediaClips,
@@ -379,10 +437,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `TotalNumberOfPages`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn total_number_of_pages(&mut self, _node: &TotalNumberOfPages) -> Option<TotalNumberOfPages> {
         None
     }
 
+    /// Asked for each `TotalNumberOfParagraphs`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn total_number_of_paragraphs(
         &mut self,
         _node: &TotalNumberOfParagraphs,
@@ -390,13 +452,18 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `WordCount`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn word_count(&mut self, _node: &WordCount) -> Option<WordCount> {
         None
     }
 
+    /// Asked when a `ApplicationName` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_application_name(
         &mut self,
         _node: &ApplicationName,
@@ -405,9 +472,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ApplicationSpecificFileProperties` is written through. `Written::Yes` means
+    /// the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_application_specific_file_properties(
         &mut self,
         _node: &ApplicationSpecificFileProperties,
@@ -416,9 +486,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ApplicationSpecificFilePropertiesContent` is written through. `Written::Yes`
+    /// means the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_application_specific_file_properties_content(
         &mut self,
         _node: &ApplicationSpecificFilePropertiesContent,
@@ -427,9 +500,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ApplicationSpecificFilePropertiesContent` in a list is written through.
+    /// `Written::Yes` means the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_application_specific_file_properties_content_items(
         &mut self,
         _node: &ApplicationSpecificFilePropertiesContent,
@@ -438,9 +514,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ApplicationVersion` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_application_version(
         &mut self,
         _node: &ApplicationVersion,
@@ -449,9 +528,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CharactersWithSpaces` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_characters_with_spaces(
         &mut self,
         _node: &CharactersWithSpaces,
@@ -460,9 +542,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DigitalSignature` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_digital_signature(
         &mut self,
         _node: &DigitalSignature,
@@ -471,9 +556,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DocumentSecurity` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_document_security(
         &mut self,
         _node: &DocumentSecurity,
@@ -482,9 +570,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `HeadingPairs` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_heading_pairs(
         &mut self,
         _node: &HeadingPairs,
@@ -493,9 +584,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `HyperlinkList` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_hyperlink_list(
         &mut self,
         _node: &HyperlinkList,
@@ -504,9 +598,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `HyperlinksChanged` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_hyperlinks_changed(
         &mut self,
         _node: &HyperlinksChanged,
@@ -515,9 +612,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `IntendedFormatOfPresentation` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_intended_format_of_presentation(
         &mut self,
         _node: &IntendedFormatOfPresentation,
@@ -526,9 +626,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LinksUpToDate` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_links_up_to_date(
         &mut self,
         _node: &LinksUpToDate,
@@ -537,9 +640,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NameOfCompany` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_name_of_company(
         &mut self,
         _node: &NameOfCompany,
@@ -548,9 +654,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NameOfDocumentTemplate` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_name_of_document_template(
         &mut self,
         _node: &NameOfDocumentTemplate,
@@ -559,9 +668,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NameOfManager` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_name_of_manager(
         &mut self,
         _node: &NameOfManager,
@@ -570,9 +682,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NumberOfHiddenSlides` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_number_of_hidden_slides(
         &mut self,
         _node: &NumberOfHiddenSlides,
@@ -581,9 +696,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NumberOfLines` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_number_of_lines(
         &mut self,
         _node: &NumberOfLines,
@@ -592,9 +710,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NumberOfSlidesContainingNotes` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_number_of_slides_containing_notes(
         &mut self,
         _node: &NumberOfSlidesContainingNotes,
@@ -603,9 +724,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PartTitles` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_part_titles(
         &mut self,
         _node: &PartTitles,
@@ -614,9 +738,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RelativeHyperlinkBase` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_relative_hyperlink_base(
         &mut self,
         _node: &RelativeHyperlinkBase,
@@ -625,9 +752,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SharedDocument` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shared_document(
         &mut self,
         _node: &SharedDocument,
@@ -636,9 +766,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SlidesMetadataElement` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_slides_metadata_element(
         &mut self,
         _node: &SlidesMetadataElement,
@@ -647,9 +780,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ThumbnailDisplayMode` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_thumbnail_display_mode(
         &mut self,
         _node: &ThumbnailDisplayMode,
@@ -658,9 +794,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TotalEditTimeMetadataElement` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_total_edit_time_metadata_element(
         &mut self,
         _node: &TotalEditTimeMetadataElement,
@@ -669,9 +808,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TotalNumberOfCharacters` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_total_number_of_characters(
         &mut self,
         _node: &TotalNumberOfCharacters,
@@ -680,9 +822,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TotalNumberOfMultimediaClips` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_total_number_of_multimedia_clips(
         &mut self,
         _node: &TotalNumberOfMultimediaClips,
@@ -691,9 +836,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TotalNumberOfPages` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_total_number_of_pages(
         &mut self,
         _node: &TotalNumberOfPages,
@@ -702,9 +850,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TotalNumberOfParagraphs` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_total_number_of_paragraphs(
         &mut self,
         _node: &TotalNumberOfParagraphs,
@@ -713,9 +864,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `WordCount` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_word_count(
         &mut self,
         _node: &WordCount,
@@ -731,10 +885,14 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::document_properties_extended` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `ApplicationName`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn application_name(&mut self, _node: &ApplicationName) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ApplicationSpecificFileProperties`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn application_specific_file_properties(
         &mut self,
         _node: &ApplicationSpecificFileProperties,
@@ -742,6 +900,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ApplicationSpecificFilePropertiesContent`. `Descend::Yes` walks into its
+    /// children, and `Descend::No` skips them.
     fn application_specific_file_properties_content(
         &mut self,
         _node: &ApplicationSpecificFilePropertiesContent,
@@ -749,6 +909,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ApplicationVersion`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn application_version(
         &mut self,
         _node: &ApplicationVersion,
@@ -756,6 +918,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CharactersWithSpaces`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn characters_with_spaces(
         &mut self,
         _node: &CharactersWithSpaces,
@@ -763,26 +927,38 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DigitalSignature`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn digital_signature(&mut self, _node: &DigitalSignature) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DocumentSecurity`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn document_security(&mut self, _node: &DocumentSecurity) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `HeadingPairs`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn heading_pairs(&mut self, _node: &HeadingPairs) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `HyperlinkList`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn hyperlink_list(&mut self, _node: &HyperlinkList) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `HyperlinksChanged`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn hyperlinks_changed(&mut self, _node: &HyperlinksChanged) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `IntendedFormatOfPresentation`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn intended_format_of_presentation(
         &mut self,
         _node: &IntendedFormatOfPresentation,
@@ -790,14 +966,20 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LinksUpToDate`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn links_up_to_date(&mut self, _node: &LinksUpToDate) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NameOfCompany`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn name_of_company(&mut self, _node: &NameOfCompany) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NameOfDocumentTemplate`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn name_of_document_template(
         &mut self,
         _node: &NameOfDocumentTemplate,
@@ -805,10 +987,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NameOfManager`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn name_of_manager(&mut self, _node: &NameOfManager) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NumberOfHiddenSlides`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn number_of_hidden_slides(
         &mut self,
         _node: &NumberOfHiddenSlides,
@@ -816,10 +1002,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NumberOfLines`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn number_of_lines(&mut self, _node: &NumberOfLines) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NumberOfSlidesContainingNotes`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn number_of_slides_containing_notes(
         &mut self,
         _node: &NumberOfSlidesContainingNotes,
@@ -827,10 +1017,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PartTitles`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn part_titles(&mut self, _node: &PartTitles) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RelativeHyperlinkBase`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn relative_hyperlink_base(
         &mut self,
         _node: &RelativeHyperlinkBase,
@@ -838,10 +1032,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SharedDocument`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn shared_document(&mut self, _node: &SharedDocument) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SlidesMetadataElement`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn slides_metadata_element(
         &mut self,
         _node: &SlidesMetadataElement,
@@ -849,6 +1047,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ThumbnailDisplayMode`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn thumbnail_display_mode(
         &mut self,
         _node: &ThumbnailDisplayMode,
@@ -856,6 +1056,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TotalEditTimeMetadataElement`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn total_edit_time_metadata_element(
         &mut self,
         _node: &TotalEditTimeMetadataElement,
@@ -863,6 +1065,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TotalNumberOfCharacters`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn total_number_of_characters(
         &mut self,
         _node: &TotalNumberOfCharacters,
@@ -870,6 +1074,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TotalNumberOfMultimediaClips`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn total_number_of_multimedia_clips(
         &mut self,
         _node: &TotalNumberOfMultimediaClips,
@@ -877,6 +1083,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TotalNumberOfPages`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn total_number_of_pages(
         &mut self,
         _node: &TotalNumberOfPages,
@@ -884,6 +1092,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TotalNumberOfParagraphs`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn total_number_of_paragraphs(
         &mut self,
         _node: &TotalNumberOfParagraphs,
@@ -891,6 +1101,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `WordCount`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn word_count(&mut self, _node: &WordCount) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

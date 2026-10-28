@@ -1,6 +1,7 @@
-//! Document protection: the `w:documentProtection` entry of the settings part, in the form
-//! Aspose.Words writes for the Transitional class, or in the form ECMA-376 Part 1 defines for the
-//! Strict one.
+//! Document protection: the `w:documentProtection` entry of the settings part.
+//!
+//! The Transitional form hashes the password with a legacy key. The Strict form is the one
+//! ECMA-376 Part 1 defines: SHA-1 of the salt and the password, through [`SPIN_COUNT`] rounds.
 
 #[cfg(test)]
 mod tests;
@@ -17,7 +18,7 @@ use officekit_markup::wordprocessing::{
 use officekit_xml::conformance::ConformanceClass;
 use sha1::{Digest as _, Sha1};
 
-/// The rounds Aspose.Words 24.6.0 runs after the first hash.
+/// The number of hashing rounds that follow the first hash.
 pub const SPIN_COUNT: u32 = 50_000;
 
 const INITIAL_CODE: [u16; 15] = [
@@ -114,8 +115,8 @@ fn spin(salt: &[u8], input: &[u8]) -> [u8; 20] {
     hash
 }
 
-/// The `w:hash` Aspose.Words writes: the legacy key's four bytes, little-endian, as eight
-/// upper-case hex digits in UTF-16LE, through the rounds.
+/// The `w:hash` of the Transitional form: the legacy key's four bytes, little-endian, as eight
+/// upper-case hex digits in UTF-16LE, through [`SPIN_COUNT`] rounds with the salt.
 #[must_use]
 pub fn legacy_hash(password: &str, salt: &[u8]) -> [u8; 20] {
     let input: Vec<u8> = u32_le(legacy_key(password))
@@ -128,16 +129,16 @@ pub fn legacy_hash(password: &str, salt: &[u8]) -> [u8; 20] {
     spin(salt, &input)
 }
 
-/// The `w:hashValue` of Part 1, 17.15.1.29: the password in UTF-16LE through the rounds, with no
-/// legacy step.
+/// The `w:hashValue` of the Strict form: the password in UTF-16LE through [`SPIN_COUNT`] rounds
+/// with the salt, with no legacy step. ECMA-376 Part 1, 17.15.1.29, defines it.
 #[must_use]
 pub fn hash(password: &str, salt: &[u8]) -> [u8; 20] {
     let input: Vec<u8> = password.encode_utf16().flat_map(utf16_le).collect();
     spin(salt, &input)
 }
 
-/// The `w:documentProtection` entry. An empty password gives `w:edit` and `w:enforcement` alone,
-/// as Aspose.Words writes it.
+/// The `w:documentProtection` entry. An empty password gives `w:edit` and `w:enforcement` alone:
+/// the restriction, with no password to unlock it.
 #[must_use]
 pub fn entry(
     edit: DocumentProtectionTypesMember,

@@ -1,11 +1,100 @@
-//! `officekit-markup-base` is the typed tree's shared runtime, with the namespace modules the
-//! cycle of `officekit-markup-core` depends on; `officekit-markup` gathers it under its paths.
+//! `officekit-markup-base` is the runtime of officekit's typed tree, with the namespaces the
+//! rest of the tree depends on.
 //!
-//! The crate root is the runtime: where unknown content goes when a node is read and written,
-//! and which prefix a written element takes. It holds the reader and writer every generated node
-//! goes through, and the parsers its simple-type newtypes call.
+//! Most code does not name this crate. The `officekit-markup` facade gathers it with
+//! `officekit-markup-core` and `officekit-markup-ext` under one path per namespace,
+//! `officekit_markup::<namespace>`, and `officekit` builds on that facade. Use this crate
+//! directly to write a reader, a writer or a simple-type check by hand.
 //!
-//! - [`class_rules`]: what the two conformance classes' reads and writes share.
+//! # The typed tree
+//!
+//! An Office Open XML part is XML. `officekit_xml::element::Element` holds it as a generic tree.
+//! The typed tree holds the same part as Rust structs and enums: one struct per element type
+//! of the schemas, one enum per list of alternative children, and one newtype per simple type.
+//! A namespace is one module. This crate has [`document_properties_custom`],
+//! [`document_properties_extended`], [`bibliography`], [`common_simple_types`], the VML
+//! namespaces and a few more; each module lists its tags, readers and writers.
+//!
+//! # Reading and writing a node
+//!
+//! Each node type implements [`Read`] and [`Write`]. Each namespace module also has a `read`
+//! module with one function per struct, `read::<node>(&Element) -> Node`, and a `write` module
+//! with `write::<node>(&Node, &mut Scope) -> Element`. The generic [`read`] function calls
+//! [`Read::read`].
+//!
+//! A reader builds a [`Reader`] from the element and the node's [`Shape`]. The reader hands
+//! out each declared attribute and child as a [`Field`] with its index in the shape. A writer
+//! builds a [`Writer`] from the same shape and writes the declared attributes and children in
+//! schema order.
+//!
+//! # Content the schemas do not declare
+//!
+//! A part can hold more than the schemas of one namespace declare: elements of a newer Office
+//! version, vendor extensions, comments, or attributes of another namespace. A read keeps all
+//! of it in place, so a write gives it back.
+//!
+//! - Every struct has a field `unknown` of type [`Unknown`]. It holds the attributes the
+//!   shape does not declare, the namespace declarations of the element, and unknown children
+//!   at positions no list covers, each as an [`Extra`] that names the declared child it follows.
+//! - Every enum that models a list of alternative children has an `Other(Node)` arm. An
+//!   unknown node between list items joins the list there, in order.
+//! - Whitespace-only text between children is dropped.
+//! - A required single child the element lacked is recorded in `unknown.absent`, and the
+//!   writer leaves it out while the field still holds its default.
+//!
+//! Simple types keep their text as read. Calling `.value()` on a newtype checks it later and
+//! gives a `ValueError` for text that does not fit, so a read never fails inside a node.
+//!
+//! # Hooks
+//!
+//! [`Descend`] and [`Written`] are the answers of the hooks that `officekit-markup-ext`
+//! defines for every namespace. `officekit-traversal` calls the hooks while it transforms,
+//! visits or streams a tree.
+//!
+//! # Example
+//!
+//! Read a list of custom document properties that holds a node the schemas do not declare,
+//! change a name, and write it again. The unknown `x:note` element keeps its place between the
+//! two properties.
+//!
+//! ```
+//! use officekit_markup_base::document_properties_custom::read::custom_file_properties;
+//! use officekit_markup_base::document_properties_custom::write;
+//! use officekit_xml::element::Document;
+//! use officekit_xml::parse::parse;
+//! use officekit_xml::write::{Layout, Scope, WriteOptions};
+//!
+//! const OP: &str = "http://schemas.openxmlformats.org/officeDocument/2006/custom-properties";
+//!
+//! let xml = format!(
+//!     "<op:Properties xmlns:op=\"{OP}\" xmlns:x=\"urn:x\">\
+//!      <op:property name=\"Draft\"/><x:note/><op:property name=\"Final\"/></op:Properties>"
+//! );
+//! let root = parse(xml.as_bytes()).expect("well-formed XML").root;
+//! let mut properties = custom_file_properties(&root);
+//! assert_eq!(properties.custom_file_property.len(), 2);
+//! assert_eq!(properties.unknown.children.len(), 1);
+//! assert_eq!(properties.unknown.children[0].after, 1);
+//!
+//! properties.custom_file_property[1].name = Some("Signed".to_owned());
+//! let element = write::custom_file_properties(&properties, &mut Scope::default());
+//! let mut part = Document::new("", element);
+//! part.declaration = None;
+//! part.prolog.clear();
+//! let options = WriteOptions::new(Layout::Compact, false);
+//! let text = String::from_utf8(part.to_xml(options)).expect("UTF-8");
+//! assert_eq!(text, xml.replace("Final", "Signed"));
+//! ```
+//!
+//! # Features
+//!
+//! - `binary-format`: every type also derives the `rkyv` archive traits, for officekit's
+//!   binary form.
+//!
+//! # Modules
+//!
+//! - [`class_rules`][]: what the Strict and Transitional classes share when they read and write a
+//!   node.
 
 #![recursion_limit = "256"]
 #![allow(
@@ -52,16 +141,22 @@ macro_rules! mirror_into {
 /// wildcard among them allows.
 #[derive(Debug)]
 pub struct Accept {
+    /// The namespaces an `xsd:any` wildcard among the arms allows; `None` when there is none.
     pub any: Option<Wildcard>,
+    /// The tag of each arm.
     pub tags: &'static [Tag],
 }
 
 /// The bounds of a floating-point simple type.
 #[derive(Clone, Copy, Debug, Default, PartialEq)]
 pub struct Bounds {
+    /// The value must be below this.
     pub max_exclusive: Option<f64>,
+    /// The value must be at most this.
     pub max_inclusive: Option<f64>,
+    /// The value must be above this.
     pub min_exclusive: Option<f64>,
+    /// The value must be at least this.
     pub min_inclusive: Option<f64>,
 }
 
@@ -85,7 +180,9 @@ pub struct Children<'extra> {
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum Descend {
+    /// Skip the children of the node.
     No,
+    /// Walk into the children of the node.
     Yes,
 }
 
@@ -99,15 +196,20 @@ pub enum Descend {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Extra {
+    /// How many declared children of the parent come before the node.
     pub after: usize,
+    /// The unknown node.
     pub node: Node,
 }
 
 /// The length and pattern facets of a string simple type.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct Facets {
+    /// The exact length, in characters.
     pub length: Option<usize>,
+    /// The most characters.
     pub max_length: Option<usize>,
+    /// The fewest characters.
     pub min_length: Option<usize>,
     /// The text matches one of them whole, when there are any.
     pub patterns: &'static [&'static str],
@@ -118,6 +220,7 @@ pub struct Facets {
 #[derive(Debug)]
 #[non_exhaustive]
 pub enum Field<'element> {
+    /// A declared child element.
     Element(&'element Element),
     /// A node the schemas do not declare, which joins the list of an enum
     /// type at this position as its `Other` item.
@@ -135,7 +238,9 @@ pub type Members<M> = [(M, &'static str, Option<OfficeVersion>)];
 #[derive(Clone, Debug, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum Pending {
+    /// The nodes become `Extra`s of the node's `unknown.children`.
     Extra(Vec<Extra>),
+    /// The nodes join the list as `Other` items.
     List(Vec<Node>),
 }
 
@@ -183,8 +288,11 @@ pub struct Reader<'element> {
 /// child positions in schema order, and whether it holds text.
 #[derive(Debug)]
 pub struct Shape {
+    /// The declared attributes, in schema order.
     pub attributes: &'static [Tag],
+    /// The tag of the node's element.
     pub name: Tag,
+    /// The declared child positions, in schema order.
     pub slots: &'static [Slot],
     /// Simple content: the element's text is its value.
     pub text: bool,
@@ -217,7 +325,8 @@ enum SlotOccurs {
 /// and its local name.
 pub type Tag = (Option<NamespaceId>, &'static str);
 
-/// What every node carries besides its declared attributes and children.
+/// What every node carries besides its declared attributes and children: the content a read
+/// found that the schemas do not declare, kept so a write gives it back.
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -233,6 +342,7 @@ pub struct Unknown {
     pub attributes: Vec<Attribute>,
     /// Unknown children at positions no list covers.
     pub children: Vec<Extra>,
+    /// The `xmlns` declarations the element carried, written back on it.
     pub namespace_declarations: Vec<NamespaceDeclaration>,
 }
 
@@ -241,7 +351,9 @@ pub struct Unknown {
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum Written {
+    /// The hook wrote nothing; the node is written the usual way.
     No,
+    /// The hook wrote the node.
     Yes,
 }
 
@@ -255,6 +367,7 @@ pub enum Wildcard {
     Local,
     /// A namespace other than this one, none excluded.
     Not(NamespaceId),
+    /// Only these namespaces.
     Only(&'static [NamespaceId]),
 }
 
@@ -298,6 +411,7 @@ pub trait Hex: Sized {
 /// A declared child's field as the traversals see it: one node boxed, an
 /// optional one, or a list.
 pub trait Nodes {
+    /// The type of the nodes the field holds.
     type Node;
 
     /// Whether the field is one node equal to its type's default: a required
@@ -362,6 +476,7 @@ impl<'extra> Children<'extra> {
         self.declared(Node::Element(node));
     }
 
+    /// An empty list of children, to be written around these `Extra`s.
     #[must_use]
     pub const fn new(extra: &'extra [Extra]) -> Self {
         Self {
@@ -1022,8 +1137,8 @@ where
         .map_or("", |(_, text, _)| text)
 }
 
-/// The Office version that brought a member, from SDK 3.5.1's data; `None`
-/// for ECMA-376's own.
+/// The Office version that brought a member, from the Open XML SDK 3.5.1 data;
+/// `None` for ECMA-376's own.
 #[must_use]
 pub fn member_version<M>(members: &Members<M>, member: M) -> Option<OfficeVersion>
 where

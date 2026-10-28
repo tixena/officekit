@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `xlrdwi` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/spreadsheetml/2020/richdatawebimage`, which files write with the prefix `xlrdwi`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2020/richdatawebimage`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 pub mod read;
 pub mod write;
@@ -277,8 +279,8 @@ pub static WEB_IMAGES_SRD_SHAPE: officekit_markup_base::Shape = officekit_markup
     text: false,
 };
 
-/// The tag `xlrdwi:address`, schema type `CT_WebImageSupportingRichDataRelationship` of SDK 3.5.1's
-/// data.
+/// The `xlrdwi:address` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_WebImageSupportingRichDataRelationship`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -287,11 +289,12 @@ pub static WEB_IMAGES_SRD_SHAPE: officekit_markup_base::Shape = officekit_markup
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Address {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrdwi:blip`, schema type `CT_WebImageSupportingRichDataRelationship` of SDK 3.5.1's
-/// data.
+/// The `xlrdwi:blip` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_WebImageSupportingRichDataRelationship`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -300,6 +303,7 @@ pub struct Address {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Blip {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -313,54 +317,78 @@ pub struct Blip {
 /// not return itself from `crate::Context::office_spreadsheetml_2020_richdatawebimage` is never
 /// asked.
 pub trait Context: crate::Context {
+    /// Asked for each `Address`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn address(&mut self, _node: &Address) -> Option<Address> {
         None
     }
 
+    /// Asked for each `Blip`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn blip(&mut self, _node: &Blip) -> Option<Blip> {
         None
     }
 
+    /// Asked for each `ExtLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
         None
     }
 
+    /// Asked for each `MoreImagesAddress`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn more_images_address(&mut self, _node: &MoreImagesAddress) -> Option<MoreImagesAddress> {
         None
     }
 
+    /// Asked for each `WebImageSrd`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn web_image_srd(&mut self, _node: &WebImageSrd) -> Option<WebImageSrd> {
         None
     }
 
+    /// Asked for each `WebImagesSrd`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn web_images_srd(&mut self, _node: &WebImagesSrd) -> Option<WebImagesSrd> {
         None
     }
 
+    /// Asked when a `Address` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_address(&mut self, _node: &Address, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Blip` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_blip(&mut self, _node: &Blip, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `MoreImagesAddress` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_more_images_address(
         &mut self,
         _node: &MoreImagesAddress,
@@ -369,9 +397,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `WebImageSrd` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_web_image_srd(
         &mut self,
         _node: &WebImageSrd,
@@ -380,9 +411,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `WebImagesSrd` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_web_images_srd(
         &mut self,
         _node: &WebImagesSrd,
@@ -392,7 +426,8 @@ pub trait Context: crate::Context {
     }
 }
 
-/// The tag `xlrdwi:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
+/// The `xlrdwi:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -401,12 +436,14 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLst {
+    /// The children that are `spreadsheet::Extension`, in order.
     pub extension: Vec<spreadsheet::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrdwi:moreImagesAddress`, schema type `CT_WebImageSupportingRichDataRelationship` of
-/// SDK 3.5.1's data.
+/// The `xlrdwi:moreImagesAddress` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_WebImageSupportingRichDataRelationship`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -415,6 +452,7 @@ pub struct ExtLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MoreImagesAddress {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -424,32 +462,42 @@ pub struct MoreImagesAddress {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_spreadsheetml_2020_richdatawebimage` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `Address`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn address(&mut self, _node: &Address) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Blip`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn blip(&mut self, _node: &Blip) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ext_lst(&mut self, _node: &ExtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MoreImagesAddress`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn more_images_address(&mut self, _node: &MoreImagesAddress) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `WebImageSrd`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn web_image_srd(&mut self, _node: &WebImageSrd) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `WebImagesSrd`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn web_images_srd(&mut self, _node: &WebImagesSrd) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 }
 
-/// The tag `xlrdwi:webImageSrd`, schema type `CT_WebImageSupportingRichData` of SDK 3.5.1's data.
+/// The `xlrdwi:webImageSrd` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_WebImageSupportingRichData`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -458,13 +506,18 @@ pub trait Visitor: crate::Visitor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct WebImageSrd {
+    /// The child that is `Address`, which the schema requires.
     pub address: Box<Address>,
+    /// The child that is `Blip`, when there is one.
     pub blip: Option<Box<Blip>>,
+    /// The child that is `MoreImagesAddress`, when there is one.
     pub more_images_address: Option<Box<MoreImagesAddress>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `xlrdwi:webImagesSrd`, schema type `CT_WebImagesSupportingRichData` of SDK 3.5.1's data.
+/// The `xlrdwi:webImagesSrd` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_WebImagesSupportingRichData`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -473,8 +526,11 @@ pub struct WebImageSrd {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct WebImagesSrd {
+    /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLst>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The children that are `WebImageSrd`, in order.
     pub web_image_srd: Vec<WebImageSrd>,
 }
 

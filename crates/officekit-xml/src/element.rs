@@ -30,7 +30,9 @@ mod tests;
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Attribute {
+    /// The attribute's qualified name.
     pub name: QName,
+    /// The value, unescaped.
     pub value: String,
 }
 
@@ -40,9 +42,13 @@ pub struct Attribute {
 #[derive(Clone, Debug, PartialEq, Eq)]
 #[non_exhaustive]
 pub struct Document {
+    /// The XML declaration's text without `<?` and `?>`; `None` when the part has none.
     pub declaration: Option<String>,
+    /// The nodes after the root: whitespace, comments and processing instructions.
     pub epilog: Vec<Node>,
+    /// The nodes between the declaration and the root.
     pub prolog: Vec<Node>,
+    /// The root element.
     pub root: Element,
 }
 
@@ -59,10 +65,14 @@ pub struct Document {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Element {
+    /// The attributes, in document order. A namespace declaration is not one of them.
     pub attributes: Vec<Attribute>,
+    /// The child nodes, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub children: Vec<Node>,
+    /// The element's qualified name.
     pub name: QName,
+    /// The `xmlns` declarations this element makes, in document order.
     pub namespace_declarations: Vec<NamespaceDeclaration>,
 }
 
@@ -76,7 +86,9 @@ pub struct Element {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NamespaceDeclaration {
+    /// The prefix; empty for a default namespace, `xmlns="..."`.
     pub prefix: String,
+    /// The namespace URI as written.
     pub uri: String,
 }
 
@@ -86,10 +98,20 @@ pub struct NamespaceDeclaration {
 #[derive(Clone, Debug, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum Node {
+    /// A CDATA section's content.
     CData(String),
+    /// A comment's content, without `<!--` and `-->`.
     Comment(String),
+    /// A child element.
     Element(Element),
-    ProcessingInstruction { content: String, target: String },
+    /// A processing instruction.
+    ProcessingInstruction {
+        /// Everything after the target.
+        content: String,
+        /// The name after `<?`.
+        target: String,
+    },
+    /// Text, unescaped.
     Text(String),
 }
 
@@ -101,13 +123,19 @@ pub enum XmlError {
     /// declaration, which a part never has.
     #[error("malformed XML: {0}")]
     Malformed(String),
+    /// `mc:MustUnderstand` names a namespace the target Office version does not understand.
     #[error("mc:MustUnderstand names `{prefix}`, which the target does not understand")]
-    MustUnderstand { prefix: String },
+    MustUnderstand {
+        /// The prefix `mc:MustUnderstand` names.
+        prefix: String,
+    },
+    /// An element or attribute uses a prefix that no declaration in scope binds.
     #[error("undeclared namespace prefix `{0}`")]
     UndeclaredPrefix(String),
 }
 
 impl Attribute {
+    /// An attribute with `name` and `value`, which is stored as given.
     #[must_use]
     pub const fn new(name: QName, value: String) -> Self {
         Self { name, value }
@@ -138,6 +166,11 @@ impl Document {
         mc::apply(self, mode)
     }
 
+    /// The part's bytes: the declaration, the prolog, the root and the epilog, laid out as
+    /// `options` says. Writing what [`parse`](crate::parse::parse) read gives the same elements,
+    /// attributes and text, but the bytes can differ: the writer puts namespace declarations before
+    /// the other attributes, writes characters with its own escapes, and drops the whitespace and
+    /// namespace declarations `options` removes.
     #[must_use]
     pub fn to_xml(&self, options: WriteOptions) -> Vec<u8> {
         write::document(self, options)
@@ -145,6 +178,8 @@ impl Document {
 }
 
 impl Element {
+    /// The value of the attribute named `local` in `namespace`; `None` when there is none. The
+    /// prefix does not matter. Use `Namespace::None` for an attribute with no prefix.
     #[must_use]
     pub fn attribute(&self, namespace: &Namespace, local: &str) -> Option<&str> {
         self.attributes
@@ -155,6 +190,7 @@ impl Element {
             .map(|attribute| attribute.value.as_str())
     }
 
+    /// The children that are elements, in order; text, comments and the like are skipped.
     pub fn child_elements(&self) -> impl Iterator<Item = &Self> {
         self.children.iter().filter_map(|node| {
             if let Node::Element(element) = node {
@@ -194,6 +230,7 @@ impl Element {
 }
 
 impl NamespaceDeclaration {
+    /// A declaration of `uri` under `prefix`; the prefix is empty for a default namespace.
     #[must_use]
     pub const fn new(prefix: String, uri: String) -> Self {
         Self { prefix, uri }

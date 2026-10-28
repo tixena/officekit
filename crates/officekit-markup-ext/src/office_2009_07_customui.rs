@@ -209,11 +209,13 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `mso14` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/2009/07/customui`, which files write with the prefix `mso14`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/2009/07/customui`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
+//!
+//! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -2415,7 +2417,8 @@ pub static RIBBON_CONTENT_TAGS: officekit_markup_base::Accept = officekit_markup
     ],
 };
 
-/// The tag `mso14:backstage`, schema type `CT_Backstage` of SDK 3.5.1's data.
+/// The `mso14:backstage` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_Backstage`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2424,43 +2427,72 @@ pub static RIBBON_CONTENT_TAGS: officekit_markup_base::Accept = officekit_markup
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Backstage {
+    /// The children that are an item of `BackstageContent`, in order.
     pub content: Vec<BackstageContent>,
+    /// The attribute `onHide`, when the element has it.
     pub on_hide: Option<String>,
+    /// The attribute `onShow`, when the element has it.
     pub on_show: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_Backstage`: choice in `CT_Backstage`.
+/// One child element of a choice: choice in `CT_Backstage`.
+///
+/// The schema types that hold it: `CT_Backstage`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum BackstageContent {
+    /// The element `mso14:button`, a `ButtonBackstageFastCommandButton`.
     ButtonBackstageFastCommandButton(ButtonBackstageFastCommandButton),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `mso14:tab`, a `TabBackstageTab`.
     TabBackstageTab(TabBackstageTab),
 }
 
-/// One item of `CT_BackstageGroups`: choice in `CT_BackstageGroups`.
+/// One child element of a choice: choice in `CT_BackstageGroups`.
+///
+/// The schema types that hold it: `CT_BackstageGroups`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum BackstageGroupsContent {
+    /// The element `mso14:group`, a `GroupBackstageGroup`.
     GroupBackstageGroup(GroupBackstageGroup),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `mso14:taskFormGroup`, a `TaskFormGroup`.
     TaskFormGroup(TaskFormGroup),
+    /// The element `mso14:taskGroup`, a `TaskGroup`.
     TaskGroup(TaskGroup),
 }
 
-/// One item of `CT_BackstageMenuGroup`: choice in `CT_BackstageMenuGroup`.
+/// One child element of a choice: choice in `CT_BackstageMenuGroup`.
+///
+/// The schema types that hold it: `CT_BackstageMenuGroup`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum BackstageMenuGroupContent {
+    /// The element `mso14:button`, a `ButtonBackstageMenuButton`.
     ButtonBackstageMenuButton(ButtonBackstageMenuButton),
+    /// The element `mso14:checkBox`, a `CheckBoxBackstageMenuCheckBox`.
     CheckBoxBackstageMenuCheckBox(CheckBoxBackstageMenuCheckBox),
+    /// The element `mso14:menu`, a `MenuBackstageSubMenu`.
     MenuBackstageSubMenu(MenuBackstageSubMenu),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `mso14:toggleButton`, a `ToggleButtonBackstageMenuToggleButton`.
     ToggleButtonBackstageMenuToggleButton(ToggleButtonBackstageMenuToggleButton),
 }
 
-/// The tag `mso14:bottomItems`, schema type `CT_GroupControls` of SDK 3.5.1's data.
+/// The `mso14:bottomItems` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_GroupControls`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2469,11 +2501,14 @@ pub enum BackstageMenuGroupContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BottomItems {
+    /// The children that are an item of `GroupControlsContent`, in order.
     pub content: Vec<GroupControlsContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `mso14:box`, schema type `CT_Box` of SDK 3.5.1's data.
+/// The `mso14:box` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Box`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2485,43 +2520,77 @@ pub struct BottomItems {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BoxBox {
+    /// The attribute `boxStyle`, when the element has it.
     pub box_style: Option<BoxStyle>,
+    /// The children that are an item of `BoxContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<BoxContent>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// One item of `CT_Box`: choice in `CT_Box`.
+/// One child element of a choice: choice in `CT_Box`.
+///
+/// The schema types that hold it: `CT_Box`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum BoxContent {
+    /// The element `mso14:box`, a `BoxBox`.
     BoxBox(BoxBox),
+    /// The element `mso14:button`, a `ButtonButton`.
     ButtonButton(ButtonButton),
+    /// The element `mso14:buttonGroup`, a `ButtonGroup`.
     ButtonGroup(ButtonGroup),
+    /// The element `mso14:checkBox`, a `CheckBoxCheckBox`.
     CheckBoxCheckBox(CheckBoxCheckBox),
+    /// The element `mso14:comboBox`, a `ComboBoxComboBox`.
     ComboBoxComboBox(ComboBoxComboBox),
+    /// The element `mso14:control`, a `ControlControlClone`.
     ControlControlClone(ControlControlClone),
+    /// The element `mso14:dropDown`, a `DropDownDropDownRegular`.
     DropDownDropDownRegular(DropDownDropDownRegular),
+    /// The element `mso14:dynamicMenu`, a `DynamicMenuDynamicMenu`.
     DynamicMenuDynamicMenu(DynamicMenuDynamicMenu),
+    /// The element `mso14:editBox`, a `EditBoxEditBox`.
     EditBoxEditBox(EditBoxEditBox),
+    /// The element `mso14:gallery`, a `GalleryGallery`.
     GalleryGallery(Box<GalleryGallery>),
+    /// The element `mso14:labelControl`, a `LabelControlLabelControl`.
     LabelControlLabelControl(LabelControlLabelControl),
+    /// The element `mso14:menu`, a `MenuMenu`.
     MenuMenu(MenuMenu),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `mso14:splitButton`, a `SplitButtonSplitButton`.
     SplitButtonSplitButton(SplitButtonSplitButton),
+    /// The element `mso14:toggleButton`, a `ToggleButtonToggleButton`.
     ToggleButtonToggleButton(ToggleButtonToggleButton),
 }
 
-/// `ST_BoxStyle`: the text the file carried.
+/// The simple type `ST_BoxStyle`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2530,15 +2599,19 @@ pub enum BoxContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BoxStyle(pub String);
-/// The members of `ST_BoxStyle`, in alphabetical order.
+/// The members of the enumeration `ST_BoxStyle`, in alphabetical order. `as_str` gives the text of
+/// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum BoxStyleMember {
+    /// The member written `horizontal`.
     Horizontal,
+    /// The member written `vertical`.
     Vertical,
 }
 
-/// The tag `mso14:button`, schema type `CT_BackstageFastCommandButton` of SDK 3.5.1's data.
+/// The `mso14:button` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_BackstageFastCommandButton`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2547,31 +2620,54 @@ pub enum BoxStyleMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ButtonBackstageFastCommandButton {
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `isDefinitive`, when the element has it.
     pub is_definitive: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `onAction`, when the element has it.
     pub on_action: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:button`, schema type `CT_BackstageGroupButton` of SDK 3.5.1's data.
+/// The `mso14:button` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_BackstageGroupButton`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2580,32 +2676,56 @@ pub struct ButtonBackstageFastCommandButton {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ButtonBackstageGroupButton {
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `isDefinitive`, when the element has it.
     pub is_definitive: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `onAction`, when the element has it.
     pub on_action: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `style`, when the element has it.
     pub style: Option<Style2>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:button`, schema type `CT_BackstageMenuButton` of SDK 3.5.1's data.
+/// The `mso14:button` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_BackstageMenuButton`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2614,28 +2734,48 @@ pub struct ButtonBackstageGroupButton {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ButtonBackstageMenuButton {
+    /// The attribute `description`, when the element has it.
     pub description: Option<String>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `isDefinitive`, when the element has it.
     pub is_definitive: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `onAction`, when the element has it.
     pub on_action: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:button`, schema type `CT_BackstageRegularButton` of SDK 3.5.1's data.
+/// The `mso14:button` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_BackstageRegularButton`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2644,30 +2784,52 @@ pub struct ButtonBackstageMenuButton {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ButtonBackstageRegularButton {
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `isDefinitive`, when the element has it.
     pub is_definitive: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `onAction`, when the element has it.
     pub on_action: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:button`, schema type `CT_Button` of SDK 3.5.1's data.
+/// The `mso14:button` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Button`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2676,42 +2838,76 @@ pub struct ButtonBackstageRegularButton {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ButtonButton {
+    /// The attribute `description`, when the element has it.
     pub description: Option<String>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getShowImage`, when the element has it.
     pub get_show_image: Option<String>,
+    /// The attribute `getShowLabel`, when the element has it.
     pub get_show_label: Option<String>,
+    /// The attribute `getSize`, when the element has it.
     pub get_size: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `onAction`, when the element has it.
     pub on_action: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `showImage`, when the element has it.
     pub show_image: Option<String>,
+    /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
+    /// The attribute `size`, when the element has it.
     pub size: Option<Size>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:button`, schema type `CT_ButtonRegular` of SDK 3.5.1's data.
+/// The `mso14:button` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ButtonRegular`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2720,40 +2916,72 @@ pub struct ButtonButton {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ButtonButtonRegular {
+    /// The attribute `description`, when the element has it.
     pub description: Option<String>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getShowImage`, when the element has it.
     pub get_show_image: Option<String>,
+    /// The attribute `getShowLabel`, when the element has it.
     pub get_show_label: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `onAction`, when the element has it.
     pub on_action: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `showImage`, when the element has it.
     pub show_image: Option<String>,
+    /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:buttonGroup`, schema type `CT_ButtonGroup` of SDK 3.5.1's data.
+/// The `mso14:buttonGroup` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_ButtonGroup`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2762,35 +2990,60 @@ pub struct ButtonButtonRegular {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ButtonGroup {
+    /// The children that are an item of `ButtonGroupContent`, in order.
     pub content: Vec<ButtonGroupContent>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// One item of `CT_ButtonGroup`: choice in `CT_ButtonGroup`.
+/// One child element of a choice: choice in `CT_ButtonGroup`.
+///
+/// The schema types that hold it: `CT_ButtonGroup`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ButtonGroupContent {
+    /// The element `mso14:button`, a `ButtonButtonRegular`.
     ButtonButtonRegular(ButtonButtonRegular),
+    /// The element `mso14:control`, a `ControlControlCloneRegular`.
     ControlControlCloneRegular(ControlControlCloneRegular),
+    /// The element `mso14:dynamicMenu`, a `DynamicMenuDynamicMenuRegular`.
     DynamicMenuDynamicMenuRegular(DynamicMenuDynamicMenuRegular),
+    /// The element `mso14:gallery`, a `GalleryGalleryRegular`.
     GalleryGalleryRegular(Box<GalleryGalleryRegular>),
+    /// The element `mso14:menu`, a `MenuMenuRegular`.
     MenuMenuRegular(MenuMenuRegular),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `mso14:separator`, a `Separator`.
     Separator(Separator),
+    /// The element `mso14:splitButton`, a `SplitButtonSplitButtonRegular`.
     SplitButtonSplitButtonRegular(SplitButtonSplitButtonRegular),
+    /// The element `mso14:toggleButton`, a `ToggleButtonToggleButtonRegular`.
     ToggleButtonToggleButtonRegular(ToggleButtonToggleButtonRegular),
 }
 
-/// The tag `mso14:button`, schema type `CT_VisibleButton` of SDK 3.5.1's data.
+/// The `mso14:button` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_VisibleButton`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2799,38 +3052,68 @@ pub enum ButtonGroupContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ButtonVisibleButton {
+    /// The attribute `description`, when the element has it.
     pub description: Option<String>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getShowImage`, when the element has it.
     pub get_show_image: Option<String>,
+    /// The attribute `getShowLabel`, when the element has it.
     pub get_show_label: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `onAction`, when the element has it.
     pub on_action: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `showImage`, when the element has it.
     pub show_image: Option<String>,
+    /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `mso14:category`, schema type `CT_TaskFormGroupCategory` of SDK 3.5.1's data.
+/// The `mso14:category` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_TaskFormGroupCategory`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2839,23 +3122,38 @@ pub struct ButtonVisibleButton {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CategoryTaskFormGroupCategory {
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// The children that are `TaskTaskFormGroupTask`, in order.
     pub task_task_form_group_task: Vec<TaskTaskFormGroupTask>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:category`, schema type `CT_TaskGroupCategory` of SDK 3.5.1's data.
+/// The `mso14:category` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_TaskGroupCategory`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2864,23 +3162,38 @@ pub struct CategoryTaskFormGroupCategory {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CategoryTaskGroupCategory {
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// The children that are `TaskTaskGroupTask`, in order.
     pub task_task_group_task: Vec<TaskTaskGroupTask>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:checkBox`, schema type `CT_BackstageCheckBox` of SDK 3.5.1's data.
+/// The `mso14:checkBox` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_BackstageCheckBox`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2889,30 +3202,52 @@ pub struct CategoryTaskGroupCategory {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CheckBoxBackstageCheckBox {
+    /// The attribute `description`, when the element has it.
     pub description: Option<String>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
+    /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getPressed`, when the element has it.
     pub get_pressed: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `onAction`, when the element has it.
     pub on_action: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:checkBox`, schema type `CT_BackstageMenuCheckBox` of SDK 3.5.1's data.
+/// The `mso14:checkBox` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_BackstageMenuCheckBox`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2921,25 +3256,42 @@ pub struct CheckBoxBackstageCheckBox {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CheckBoxBackstageMenuCheckBox {
+    /// The attribute `description`, when the element has it.
     pub description: Option<String>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getPressed`, when the element has it.
     pub get_pressed: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `onAction`, when the element has it.
     pub on_action: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:checkBox`, schema type `CT_CheckBox` of SDK 3.5.1's data.
+/// The `mso14:checkBox` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_CheckBox`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2948,34 +3300,60 @@ pub struct CheckBoxBackstageMenuCheckBox {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CheckBoxCheckBox {
+    /// The attribute `description`, when the element has it.
     pub description: Option<String>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getPressed`, when the element has it.
     pub get_pressed: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `onAction`, when the element has it.
     pub on_action: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:comboBox`, schema type `CT_BackstageComboBox` of SDK 3.5.1's data.
+/// The `mso14:comboBox` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_BackstageComboBox`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -2984,30 +3362,52 @@ pub struct CheckBoxCheckBox {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ComboBoxBackstageComboBox {
+    /// The attribute `alignLabel`, when the element has it.
     pub align_label: Option<Expand>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getItemCount`, when the element has it.
     pub get_item_count: Option<String>,
+    /// The attribute `getItemID`, when the element has it.
     pub get_item_id: Option<String>,
+    /// The attribute `getItemLabel`, when the element has it.
     pub get_item_label: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getText`, when the element has it.
     pub get_text: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The children that are `ItemBackstageItem`, in order.
     pub item_backstage_item: Vec<ItemBackstageItem>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `onChange`, when the element has it.
     pub on_change: Option<String>,
+    /// The attribute `sizeString`, when the element has it.
     pub size_string: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:comboBox`, schema type `CT_ComboBox` of SDK 3.5.1's data.
+/// The `mso14:comboBox` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_ComboBox`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3016,50 +3416,92 @@ pub struct ComboBoxBackstageComboBox {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ComboBoxComboBox {
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getItemCount`, when the element has it.
     pub get_item_count: Option<String>,
+    /// The attribute `getItemID`, when the element has it.
     pub get_item_id: Option<String>,
+    /// The attribute `getItemImage`, when the element has it.
     pub get_item_image: Option<String>,
+    /// The attribute `getItemLabel`, when the element has it.
     pub get_item_label: Option<String>,
+    /// The attribute `getItemScreentip`, when the element has it.
     pub get_item_screentip: Option<String>,
+    /// The attribute `getItemSupertip`, when the element has it.
     pub get_item_supertip: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getShowImage`, when the element has it.
     pub get_show_image: Option<String>,
+    /// The attribute `getShowLabel`, when the element has it.
     pub get_show_label: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `getText`, when the element has it.
     pub get_text: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `invalidateContentOnDrop`, when the element has it.
     pub invalidate_content_on_drop: Option<String>,
+    /// The children that are `ItemItem`, in order.
     pub item_item: Vec<ItemItem>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `maxLength`, when the element has it.
     pub max_length: Option<String>,
+    /// The attribute `onChange`, when the element has it.
     pub on_change: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `showImage`, when the element has it.
     pub show_image: Option<String>,
+    /// The attribute `showItemImage`, when the element has it.
     pub show_item_image: Option<String>,
+    /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
+    /// The attribute `sizeString`, when the element has it.
     pub size_string: Option<String>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:command`, schema type `CT_Command` of SDK 3.5.1's data.
+/// The `mso14:command` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Command`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3068,14 +3510,20 @@ pub struct ComboBoxComboBox {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Command {
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `onAction`, when the element has it.
     pub on_action: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `mso14:commands`, schema type `CT_Commands` of SDK 3.5.1's data.
+/// The `mso14:commands` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_Commands`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -3084,7 +3532,9 @@ pub struct Command {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Commands {
+    /// The children that are `Command`, in order.
     pub command: Vec<Command>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -3097,14 +3547,20 @@ pub struct Commands {
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_2009_07_customui` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `Backstage`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn backstage(&mut self, _node: &Backstage) -> Option<Backstage> {
         None
     }
 
+    /// Asked for each `BackstageContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn backstage_content(&mut self, _node: &BackstageContent) -> Option<BackstageContent> {
         None
     }
 
+    /// Asked for each `BackstageContent` in a list. `None` leaves the item to its own `transform`,
+    /// and `Some` puts the items it holds, any number of them, in its place.
     fn backstage_content_items(
         &mut self,
         _node: &BackstageContent,
@@ -3112,6 +3568,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `BackstageGroupsContent`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn backstage_groups(
         &mut self,
         _node: &BackstageGroupsContent,
@@ -3119,6 +3577,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `BackstageGroupsContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn backstage_groups_items(
         &mut self,
         _node: &BackstageGroupsContent,
@@ -3126,6 +3586,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `BackstageMenuGroupContent`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn backstage_menu_group(
         &mut self,
         _node: &BackstageMenuGroupContent,
@@ -3133,6 +3595,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `BackstageMenuGroupContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn backstage_menu_group_items(
         &mut self,
         _node: &BackstageMenuGroupContent,
@@ -3140,22 +3604,32 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `BottomItems`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn bottom_items(&mut self, _node: &BottomItems) -> Option<BottomItems> {
         None
     }
 
+    /// Asked for each `BoxContent`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn r#box(&mut self, _node: &BoxContent) -> Option<BoxContent> {
         None
     }
 
+    /// Asked for each `BoxBox`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn box_box(&mut self, _node: &BoxBox) -> Option<BoxBox> {
         None
     }
 
+    /// Asked for each `BoxContent` in a list. `None` leaves the item to its own `transform`, and
+    /// `Some` puts the items it holds, any number of them, in its place.
     fn box_items(&mut self, _node: &BoxContent) -> Option<Vec<BoxContent>> {
         None
     }
 
+    /// Asked for each `ButtonBackstageFastCommandButton`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn button_backstage_fast_command_button(
         &mut self,
         _node: &ButtonBackstageFastCommandButton,
@@ -3163,6 +3637,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ButtonBackstageGroupButton`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn button_backstage_group_button(
         &mut self,
         _node: &ButtonBackstageGroupButton,
@@ -3170,6 +3646,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ButtonBackstageMenuButton`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn button_backstage_menu_button(
         &mut self,
         _node: &ButtonBackstageMenuButton,
@@ -3177,6 +3655,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ButtonBackstageRegularButton`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn button_backstage_regular_button(
         &mut self,
         _node: &ButtonBackstageRegularButton,
@@ -3184,10 +3664,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ButtonButton`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn button_button(&mut self, _node: &ButtonButton) -> Option<ButtonButton> {
         None
     }
 
+    /// Asked for each `ButtonButtonRegular`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn button_button_regular(
         &mut self,
         _node: &ButtonButtonRegular,
@@ -3195,14 +3679,20 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ButtonGroup`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn button_group(&mut self, _node: &ButtonGroup) -> Option<ButtonGroup> {
         None
     }
 
+    /// Asked for each `ButtonGroupContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn button_group_content(&mut self, _node: &ButtonGroupContent) -> Option<ButtonGroupContent> {
         None
     }
 
+    /// Asked for each `ButtonGroupContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn button_group_content_items(
         &mut self,
         _node: &ButtonGroupContent,
@@ -3210,6 +3700,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ButtonVisibleButton`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn button_visible_button(
         &mut self,
         _node: &ButtonVisibleButton,
@@ -3217,6 +3709,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `CategoryTaskFormGroupCategory`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn category_task_form_group_category(
         &mut self,
         _node: &CategoryTaskFormGroupCategory,
@@ -3224,6 +3718,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `CategoryTaskGroupCategory`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn category_task_group_category(
         &mut self,
         _node: &CategoryTaskGroupCategory,
@@ -3231,6 +3727,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `CheckBoxBackstageCheckBox`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn check_box_backstage_check_box(
         &mut self,
         _node: &CheckBoxBackstageCheckBox,
@@ -3238,6 +3736,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `CheckBoxBackstageMenuCheckBox`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn check_box_backstage_menu_check_box(
         &mut self,
         _node: &CheckBoxBackstageMenuCheckBox,
@@ -3245,10 +3745,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `CheckBoxCheckBox`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn check_box_check_box(&mut self, _node: &CheckBoxCheckBox) -> Option<CheckBoxCheckBox> {
         None
     }
 
+    /// Asked for each `ComboBoxBackstageComboBox`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn combo_box_backstage_combo_box(
         &mut self,
         _node: &ComboBoxBackstageComboBox,
@@ -3256,26 +3760,38 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ComboBoxComboBox`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn combo_box_combo_box(&mut self, _node: &ComboBoxComboBox) -> Option<ComboBoxComboBox> {
         None
     }
 
+    /// Asked for each `Command`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn command(&mut self, _node: &Command) -> Option<Command> {
         None
     }
 
+    /// Asked for each `Commands`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn commands(&mut self, _node: &Commands) -> Option<Commands> {
         None
     }
 
+    /// Asked for each `ContextMenu`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn context_menu(&mut self, _node: &ContextMenu) -> Option<ContextMenu> {
         None
     }
 
+    /// Asked for each `ContextMenuContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn context_menu_content(&mut self, _node: &ContextMenuContent) -> Option<ContextMenuContent> {
         None
     }
 
+    /// Asked for each `ContextMenuContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn context_menu_content_items(
         &mut self,
         _node: &ContextMenuContent,
@@ -3283,14 +3799,20 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ContextMenus`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn context_menus(&mut self, _node: &ContextMenus) -> Option<ContextMenus> {
         None
     }
 
+    /// Asked for each `ContextualTabs`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn contextual_tabs(&mut self, _node: &ContextualTabs) -> Option<ContextualTabs> {
         None
     }
 
+    /// Asked for each `ControlControlClone`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn control_control_clone(
         &mut self,
         _node: &ControlControlClone,
@@ -3298,6 +3820,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ControlControlCloneQat`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn control_control_clone_qat(
         &mut self,
         _node: &ControlControlCloneQat,
@@ -3305,6 +3829,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ControlControlCloneRegular`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn control_control_clone_regular(
         &mut self,
         _node: &ControlControlCloneRegular,
@@ -3312,18 +3838,26 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `CustomUI`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn custom_ui(&mut self, _node: &CustomUI) -> Option<CustomUI> {
         None
     }
 
+    /// Asked for each `DialogBoxLauncher`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn dialog_box_launcher(&mut self, _node: &DialogBoxLauncher) -> Option<DialogBoxLauncher> {
         None
     }
 
+    /// Asked for each `DocumentControls`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn document_controls(&mut self, _node: &DocumentControls) -> Option<DocumentControls> {
         None
     }
 
+    /// Asked for each `DropDownBackstageDropDown`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn drop_down_backstage_drop_down(
         &mut self,
         _node: &DropDownBackstageDropDown,
@@ -3331,6 +3865,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `DropDownDropDownRegular`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn drop_down_drop_down_regular(
         &mut self,
         _node: &DropDownDropDownRegular,
@@ -3338,6 +3874,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `DynamicMenuDynamicMenu`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn dynamic_menu_dynamic_menu(
         &mut self,
         _node: &DynamicMenuDynamicMenu,
@@ -3345,6 +3883,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `DynamicMenuDynamicMenuRegular`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn dynamic_menu_dynamic_menu_regular(
         &mut self,
         _node: &DynamicMenuDynamicMenuRegular,
@@ -3352,6 +3892,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `EditBoxBackstageEditBox`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn edit_box_backstage_edit_box(
         &mut self,
         _node: &EditBoxBackstageEditBox,
@@ -3359,18 +3901,26 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `EditBoxEditBox`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn edit_box_edit_box(&mut self, _node: &EditBoxEditBox) -> Option<EditBoxEditBox> {
         None
     }
 
+    /// Asked for each `FirstColumn`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn first_column(&mut self, _node: &FirstColumn) -> Option<FirstColumn> {
         None
     }
 
+    /// Asked for each `GalleryGallery`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn gallery_gallery(&mut self, _node: &GalleryGallery) -> Option<GalleryGallery> {
         None
     }
 
+    /// Asked for each `GalleryGalleryRegular`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn gallery_gallery_regular(
         &mut self,
         _node: &GalleryGalleryRegular,
@@ -3378,10 +3928,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `GroupContent`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn group(&mut self, _node: &GroupContent) -> Option<GroupContent> {
         None
     }
 
+    /// Asked for each `GroupBackstageGroup`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn group_backstage_group(
         &mut self,
         _node: &GroupBackstageGroup,
@@ -3389,14 +3943,20 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `GroupBox`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn group_box(&mut self, _node: &GroupBox) -> Option<GroupBox> {
         None
     }
 
+    /// Asked for each `GroupControlsContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn group_controls(&mut self, _node: &GroupControlsContent) -> Option<GroupControlsContent> {
         None
     }
 
+    /// Asked for each `GroupControlsContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn group_controls_items(
         &mut self,
         _node: &GroupControlsContent,
@@ -3404,30 +3964,44 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `GroupGroup`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn group_group(&mut self, _node: &GroupGroup) -> Option<GroupGroup> {
         None
     }
 
+    /// Asked for each `GroupContent` in a list. `None` leaves the item to its own `transform`, and
+    /// `Some` puts the items it holds, any number of them, in its place.
     fn group_items(&mut self, _node: &GroupContent) -> Option<Vec<GroupContent>> {
         None
     }
 
+    /// Asked for each `Hyperlink`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn hyperlink(&mut self, _node: &Hyperlink) -> Option<Hyperlink> {
         None
     }
 
+    /// Asked for each `ImageControl`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn image_control(&mut self, _node: &ImageControl) -> Option<ImageControl> {
         None
     }
 
+    /// Asked for each `ItemBackstageItem`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn item_backstage_item(&mut self, _node: &ItemBackstageItem) -> Option<ItemBackstageItem> {
         None
     }
 
+    /// Asked for each `ItemItem`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn item_item(&mut self, _node: &ItemItem) -> Option<ItemItem> {
         None
     }
 
+    /// Asked for each `LabelControlBackstageLabelControl`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn label_control_backstage_label_control(
         &mut self,
         _node: &LabelControlBackstageLabelControl,
@@ -3435,6 +4009,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `LabelControlLabelControl`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn label_control_label_control(
         &mut self,
         _node: &LabelControlLabelControl,
@@ -3442,14 +4018,20 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `LayoutContainer`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn layout_container(&mut self, _node: &LayoutContainer) -> Option<LayoutContainer> {
         None
     }
 
+    /// Asked for each `MenuContent`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn menu(&mut self, _node: &MenuContent) -> Option<MenuContent> {
         None
     }
 
+    /// Asked for each `MenuBackstagePrimaryMenu`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn menu_backstage_primary_menu(
         &mut self,
         _node: &MenuBackstagePrimaryMenu,
@@ -3457,6 +4039,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `MenuBackstageSubMenu`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn menu_backstage_sub_menu(
         &mut self,
         _node: &MenuBackstageSubMenu,
@@ -3464,30 +4048,44 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `MenuGroup`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn menu_group(&mut self, _node: &MenuGroup) -> Option<MenuGroup> {
         None
     }
 
+    /// Asked for each `MenuContent` in a list. `None` leaves the item to its own `transform`, and
+    /// `Some` puts the items it holds, any number of them, in its place.
     fn menu_items(&mut self, _node: &MenuContent) -> Option<Vec<MenuContent>> {
         None
     }
 
+    /// Asked for each `MenuMenu`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn menu_menu(&mut self, _node: &MenuMenu) -> Option<MenuMenu> {
         None
     }
 
+    /// Asked for each `MenuMenuRegular`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn menu_menu_regular(&mut self, _node: &MenuMenuRegular) -> Option<MenuMenuRegular> {
         None
     }
 
+    /// Asked for each `MenuMenuRoot`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn menu_menu_root(&mut self, _node: &MenuMenuRoot) -> Option<MenuMenuRoot> {
         None
     }
 
+    /// Asked for each `MenuMenuWithTitle`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn menu_menu_with_title(&mut self, _node: &MenuMenuWithTitle) -> Option<MenuMenuWithTitle> {
         None
     }
 
+    /// Asked for each `MenuSeparatorMenuSeparator`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn menu_separator_menu_separator(
         &mut self,
         _node: &MenuSeparatorMenuSeparator,
@@ -3495,6 +4093,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `MenuSeparatorMenuSeparatorNoTitle`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn menu_separator_menu_separator_no_title(
         &mut self,
         _node: &MenuSeparatorMenuSeparatorNoTitle,
@@ -3502,10 +4102,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `MenuWithTitleContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn menu_with_title(&mut self, _node: &MenuWithTitleContent) -> Option<MenuWithTitleContent> {
         None
     }
 
+    /// Asked for each `MenuWithTitleContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn menu_with_title_items(
         &mut self,
         _node: &MenuWithTitleContent,
@@ -3513,18 +4117,26 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `PrimaryItem`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn primary_item(&mut self, _node: &PrimaryItem) -> Option<PrimaryItem> {
         None
     }
 
+    /// Asked for each `PrimaryItemContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn primary_item_content(&mut self, _node: &PrimaryItemContent) -> Option<PrimaryItemContent> {
         None
     }
 
+    /// Asked for each `Qat`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn qat(&mut self, _node: &Qat) -> Option<Qat> {
         None
     }
 
+    /// Asked for each `QuickAccessToolbarItemsContent`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn quick_access_toolbar_items(
         &mut self,
         _node: &QuickAccessToolbarItemsContent,
@@ -3532,6 +4144,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `QuickAccessToolbarItemsContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn quick_access_toolbar_items_items(
         &mut self,
         _node: &QuickAccessToolbarItemsContent,
@@ -3539,42 +4153,62 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `RadioButton`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn radio_button(&mut self, _node: &RadioButton) -> Option<RadioButton> {
         None
     }
 
+    /// Asked for each `RadioGroup`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn radio_group(&mut self, _node: &RadioGroup) -> Option<RadioGroup> {
         None
     }
 
+    /// Asked for each `Ribbon`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ribbon(&mut self, _node: &Ribbon) -> Option<Ribbon> {
         None
     }
 
+    /// Asked for each `RibbonContent`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn ribbon_content(&mut self, _node: &RibbonContent) -> Option<RibbonContent> {
         None
     }
 
+    /// Asked for each `RibbonContent` in a list. `None` leaves the item to its own `transform`, and
+    /// `Some` puts the items it holds, any number of them, in its place.
     fn ribbon_content_items(&mut self, _node: &RibbonContent) -> Option<Vec<RibbonContent>> {
         None
     }
 
+    /// Asked for each `SecondColumn`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn second_column(&mut self, _node: &SecondColumn) -> Option<SecondColumn> {
         None
     }
 
+    /// Asked for each `Separator`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn separator(&mut self, _node: &Separator) -> Option<Separator> {
         None
     }
 
+    /// Asked for each `SharedControls`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn shared_controls(&mut self, _node: &SharedControls) -> Option<SharedControls> {
         None
     }
 
+    /// Asked for each `SimpleGroupsContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn simple_groups(&mut self, _node: &SimpleGroupsContent) -> Option<SimpleGroupsContent> {
         None
     }
 
+    /// Asked for each `SimpleGroupsContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn simple_groups_items(
         &mut self,
         _node: &SimpleGroupsContent,
@@ -3582,10 +4216,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `SplitButtonContent`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn split_button(&mut self, _node: &SplitButtonContent) -> Option<SplitButtonContent> {
         None
     }
 
+    /// Asked for each `SplitButtonSplitButton`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn split_button_split_button(
         &mut self,
         _node: &SplitButtonSplitButton,
@@ -3593,6 +4231,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `SplitButtonSplitButtonRegular`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn split_button_split_button_regular(
         &mut self,
         _node: &SplitButtonSplitButtonRegular,
@@ -3600,6 +4240,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `SplitButtonSplitButtonWithTitle`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn split_button_split_button_with_title(
         &mut self,
         _node: &SplitButtonSplitButtonWithTitle,
@@ -3607,30 +4249,44 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `TabBackstageTab`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn tab_backstage_tab(&mut self, _node: &TabBackstageTab) -> Option<TabBackstageTab> {
         None
     }
 
+    /// Asked for each `TabSet`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn tab_set(&mut self, _node: &TabSet) -> Option<TabSet> {
         None
     }
 
+    /// Asked for each `TabTab`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn tab_tab(&mut self, _node: &TabTab) -> Option<TabTab> {
         None
     }
 
+    /// Asked for each `Tabs`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn tabs(&mut self, _node: &Tabs) -> Option<Tabs> {
         None
     }
 
+    /// Asked for each `TaskFormGroup`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn task_form_group(&mut self, _node: &TaskFormGroup) -> Option<TaskFormGroup> {
         None
     }
 
+    /// Asked for each `TaskGroup`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn task_group(&mut self, _node: &TaskGroup) -> Option<TaskGroup> {
         None
     }
 
+    /// Asked for each `TaskTaskFormGroupTask`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn task_task_form_group_task(
         &mut self,
         _node: &TaskTaskFormGroupTask,
@@ -3638,10 +4294,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `TaskTaskGroupTask`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn task_task_group_task(&mut self, _node: &TaskTaskGroupTask) -> Option<TaskTaskGroupTask> {
         None
     }
 
+    /// Asked for each `ToggleButtonBackstageMenuToggleButton`. `None` rebuilds it from its
+    /// transformed children, and `Some` puts the node it holds in its place.
     fn toggle_button_backstage_menu_toggle_button(
         &mut self,
         _node: &ToggleButtonBackstageMenuToggleButton,
@@ -3649,6 +4309,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ToggleButtonToggleButton`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn toggle_button_toggle_button(
         &mut self,
         _node: &ToggleButtonToggleButton,
@@ -3656,6 +4318,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ToggleButtonToggleButtonRegular`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn toggle_button_toggle_button_regular(
         &mut self,
         _node: &ToggleButtonToggleButtonRegular,
@@ -3663,6 +4327,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ToggleButtonVisibleToggleButton`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn toggle_button_visible_toggle_button(
         &mut self,
         _node: &ToggleButtonVisibleToggleButton,
@@ -3670,13 +4336,18 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `TopItems`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn top_items(&mut self, _node: &TopItems) -> Option<TopItems> {
         None
     }
 
+    /// Asked when a `Backstage` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_backstage(
         &mut self,
         _node: &Backstage,
@@ -3685,9 +4356,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BackstageContent` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_backstage_content(
         &mut self,
         _node: &BackstageContent,
@@ -3696,9 +4370,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BackstageContent` in a list is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_backstage_content_items(
         &mut self,
         _node: &BackstageContent,
@@ -3707,9 +4384,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BackstageGroupsContent` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_backstage_groups(
         &mut self,
         _node: &BackstageGroupsContent,
@@ -3718,9 +4398,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BackstageGroupsContent` in a list is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_backstage_groups_items(
         &mut self,
         _node: &BackstageGroupsContent,
@@ -3729,9 +4412,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BackstageMenuGroupContent` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_backstage_menu_group(
         &mut self,
         _node: &BackstageMenuGroupContent,
@@ -3740,9 +4426,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BackstageMenuGroupContent` in a list is written through. `Written::Yes` means
+    /// the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_backstage_menu_group_items(
         &mut self,
         _node: &BackstageMenuGroupContent,
@@ -3751,9 +4440,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BottomItems` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_bottom_items(
         &mut self,
         _node: &BottomItems,
@@ -3762,23 +4454,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BoxContent` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_box(&mut self, _node: &BoxContent, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `BoxBox` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_box_box(&mut self, _node: &BoxBox, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `BoxContent` in a list is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_box_items(
         &mut self,
         _node: &BoxContent,
@@ -3787,9 +4488,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ButtonBackstageFastCommandButton` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_button_backstage_fast_command_button(
         &mut self,
         _node: &ButtonBackstageFastCommandButton,
@@ -3798,9 +4502,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ButtonBackstageGroupButton` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_button_backstage_group_button(
         &mut self,
         _node: &ButtonBackstageGroupButton,
@@ -3809,9 +4516,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ButtonBackstageMenuButton` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_button_backstage_menu_button(
         &mut self,
         _node: &ButtonBackstageMenuButton,
@@ -3820,9 +4530,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ButtonBackstageRegularButton` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_button_backstage_regular_button(
         &mut self,
         _node: &ButtonBackstageRegularButton,
@@ -3831,9 +4544,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ButtonButton` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_button_button(
         &mut self,
         _node: &ButtonButton,
@@ -3842,9 +4558,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ButtonButtonRegular` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_button_button_regular(
         &mut self,
         _node: &ButtonButtonRegular,
@@ -3853,9 +4572,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ButtonGroup` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_button_group(
         &mut self,
         _node: &ButtonGroup,
@@ -3864,9 +4586,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ButtonGroupContent` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_button_group_content(
         &mut self,
         _node: &ButtonGroupContent,
@@ -3875,9 +4600,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ButtonGroupContent` in a list is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_button_group_content_items(
         &mut self,
         _node: &ButtonGroupContent,
@@ -3886,9 +4614,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ButtonVisibleButton` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_button_visible_button(
         &mut self,
         _node: &ButtonVisibleButton,
@@ -3897,9 +4628,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CategoryTaskFormGroupCategory` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_category_task_form_group_category(
         &mut self,
         _node: &CategoryTaskFormGroupCategory,
@@ -3908,9 +4642,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CategoryTaskGroupCategory` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_category_task_group_category(
         &mut self,
         _node: &CategoryTaskGroupCategory,
@@ -3919,9 +4656,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CheckBoxBackstageCheckBox` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_check_box_backstage_check_box(
         &mut self,
         _node: &CheckBoxBackstageCheckBox,
@@ -3930,9 +4670,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CheckBoxBackstageMenuCheckBox` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_check_box_backstage_menu_check_box(
         &mut self,
         _node: &CheckBoxBackstageMenuCheckBox,
@@ -3941,9 +4684,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CheckBoxCheckBox` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_check_box_check_box(
         &mut self,
         _node: &CheckBoxCheckBox,
@@ -3952,9 +4698,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ComboBoxBackstageComboBox` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_combo_box_backstage_combo_box(
         &mut self,
         _node: &ComboBoxBackstageComboBox,
@@ -3963,9 +4712,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ComboBoxComboBox` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_combo_box_combo_box(
         &mut self,
         _node: &ComboBoxComboBox,
@@ -3974,16 +4726,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Command` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_command(&mut self, _node: &Command, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Commands` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_commands(
         &mut self,
         _node: &Commands,
@@ -3992,9 +4750,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ContextMenu` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_context_menu(
         &mut self,
         _node: &ContextMenu,
@@ -4003,9 +4764,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ContextMenuContent` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_context_menu_content(
         &mut self,
         _node: &ContextMenuContent,
@@ -4014,9 +4778,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ContextMenuContent` in a list is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_context_menu_content_items(
         &mut self,
         _node: &ContextMenuContent,
@@ -4025,9 +4792,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ContextMenus` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_context_menus(
         &mut self,
         _node: &ContextMenus,
@@ -4036,9 +4806,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ContextualTabs` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_contextual_tabs(
         &mut self,
         _node: &ContextualTabs,
@@ -4047,9 +4820,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ControlControlClone` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_control_control_clone(
         &mut self,
         _node: &ControlControlClone,
@@ -4058,9 +4834,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ControlControlCloneQat` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_control_control_clone_qat(
         &mut self,
         _node: &ControlControlCloneQat,
@@ -4069,9 +4848,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ControlControlCloneRegular` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_control_control_clone_regular(
         &mut self,
         _node: &ControlControlCloneRegular,
@@ -4080,9 +4862,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CustomUI` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_custom_ui(
         &mut self,
         _node: &CustomUI,
@@ -4091,9 +4876,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DialogBoxLauncher` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_dialog_box_launcher(
         &mut self,
         _node: &DialogBoxLauncher,
@@ -4102,9 +4890,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DocumentControls` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_document_controls(
         &mut self,
         _node: &DocumentControls,
@@ -4113,9 +4904,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DropDownBackstageDropDown` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_drop_down_backstage_drop_down(
         &mut self,
         _node: &DropDownBackstageDropDown,
@@ -4124,9 +4918,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DropDownDropDownRegular` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_drop_down_drop_down_regular(
         &mut self,
         _node: &DropDownDropDownRegular,
@@ -4135,9 +4932,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DynamicMenuDynamicMenu` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_dynamic_menu_dynamic_menu(
         &mut self,
         _node: &DynamicMenuDynamicMenu,
@@ -4146,9 +4946,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DynamicMenuDynamicMenuRegular` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_dynamic_menu_dynamic_menu_regular(
         &mut self,
         _node: &DynamicMenuDynamicMenuRegular,
@@ -4157,9 +4960,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `EditBoxBackstageEditBox` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_edit_box_backstage_edit_box(
         &mut self,
         _node: &EditBoxBackstageEditBox,
@@ -4168,9 +4974,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `EditBoxEditBox` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_edit_box_edit_box(
         &mut self,
         _node: &EditBoxEditBox,
@@ -4179,9 +4988,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `FirstColumn` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_first_column(
         &mut self,
         _node: &FirstColumn,
@@ -4190,9 +5002,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `GalleryGallery` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_gallery_gallery(
         &mut self,
         _node: &GalleryGallery,
@@ -4201,9 +5016,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `GalleryGalleryRegular` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_gallery_gallery_regular(
         &mut self,
         _node: &GalleryGalleryRegular,
@@ -4212,9 +5030,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `GroupContent` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_group(
         &mut self,
         _node: &GroupContent,
@@ -4223,9 +5044,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `GroupBackstageGroup` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_group_backstage_group(
         &mut self,
         _node: &GroupBackstageGroup,
@@ -4234,9 +5058,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `GroupBox` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_group_box(
         &mut self,
         _node: &GroupBox,
@@ -4245,9 +5072,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `GroupControlsContent` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_group_controls(
         &mut self,
         _node: &GroupControlsContent,
@@ -4256,9 +5086,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `GroupControlsContent` in a list is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_group_controls_items(
         &mut self,
         _node: &GroupControlsContent,
@@ -4267,9 +5100,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `GroupGroup` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_group_group(
         &mut self,
         _node: &GroupGroup,
@@ -4278,9 +5114,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `GroupContent` in a list is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_group_items(
         &mut self,
         _node: &GroupContent,
@@ -4289,9 +5128,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Hyperlink` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_hyperlink(
         &mut self,
         _node: &Hyperlink,
@@ -4300,9 +5142,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ImageControl` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_image_control(
         &mut self,
         _node: &ImageControl,
@@ -4311,9 +5156,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ItemBackstageItem` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_item_backstage_item(
         &mut self,
         _node: &ItemBackstageItem,
@@ -4322,9 +5170,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ItemItem` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_item_item(
         &mut self,
         _node: &ItemItem,
@@ -4333,9 +5184,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LabelControlBackstageLabelControl` is written through. `Written::Yes` means
+    /// the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_label_control_backstage_label_control(
         &mut self,
         _node: &LabelControlBackstageLabelControl,
@@ -4344,9 +5198,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LabelControlLabelControl` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_label_control_label_control(
         &mut self,
         _node: &LabelControlLabelControl,
@@ -4355,9 +5212,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LayoutContainer` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_layout_container(
         &mut self,
         _node: &LayoutContainer,
@@ -4366,9 +5226,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MenuContent` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_menu(
         &mut self,
         _node: &MenuContent,
@@ -4377,9 +5240,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MenuBackstagePrimaryMenu` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_menu_backstage_primary_menu(
         &mut self,
         _node: &MenuBackstagePrimaryMenu,
@@ -4388,9 +5254,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MenuBackstageSubMenu` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_menu_backstage_sub_menu(
         &mut self,
         _node: &MenuBackstageSubMenu,
@@ -4399,9 +5268,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MenuGroup` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_menu_group(
         &mut self,
         _node: &MenuGroup,
@@ -4410,9 +5282,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MenuContent` in a list is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_menu_items(
         &mut self,
         _node: &MenuContent,
@@ -4421,9 +5296,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MenuMenu` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_menu_menu(
         &mut self,
         _node: &MenuMenu,
@@ -4432,9 +5310,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MenuMenuRegular` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_menu_menu_regular(
         &mut self,
         _node: &MenuMenuRegular,
@@ -4443,9 +5324,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MenuMenuRoot` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_menu_menu_root(
         &mut self,
         _node: &MenuMenuRoot,
@@ -4454,9 +5338,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MenuMenuWithTitle` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_menu_menu_with_title(
         &mut self,
         _node: &MenuMenuWithTitle,
@@ -4465,9 +5352,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MenuSeparatorMenuSeparator` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_menu_separator_menu_separator(
         &mut self,
         _node: &MenuSeparatorMenuSeparator,
@@ -4476,9 +5366,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MenuSeparatorMenuSeparatorNoTitle` is written through. `Written::Yes` means
+    /// the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_menu_separator_menu_separator_no_title(
         &mut self,
         _node: &MenuSeparatorMenuSeparatorNoTitle,
@@ -4487,9 +5380,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MenuWithTitleContent` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_menu_with_title(
         &mut self,
         _node: &MenuWithTitleContent,
@@ -4498,9 +5394,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `MenuWithTitleContent` in a list is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_menu_with_title_items(
         &mut self,
         _node: &MenuWithTitleContent,
@@ -4509,9 +5408,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PrimaryItem` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_primary_item(
         &mut self,
         _node: &PrimaryItem,
@@ -4520,9 +5422,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PrimaryItemContent` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_primary_item_content(
         &mut self,
         _node: &PrimaryItemContent,
@@ -4531,16 +5436,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Qat` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_qat(&mut self, _node: &Qat, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `QuickAccessToolbarItemsContent` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_quick_access_toolbar_items(
         &mut self,
         _node: &QuickAccessToolbarItemsContent,
@@ -4549,9 +5460,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `QuickAccessToolbarItemsContent` in a list is written through. `Written::Yes`
+    /// means the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_quick_access_toolbar_items_items(
         &mut self,
         _node: &QuickAccessToolbarItemsContent,
@@ -4560,9 +5474,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RadioButton` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_radio_button(
         &mut self,
         _node: &RadioButton,
@@ -4571,9 +5488,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RadioGroup` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_radio_group(
         &mut self,
         _node: &RadioGroup,
@@ -4582,16 +5502,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Ribbon` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ribbon(&mut self, _node: &Ribbon, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `RibbonContent` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ribbon_content(
         &mut self,
         _node: &RibbonContent,
@@ -4600,9 +5526,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RibbonContent` in a list is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ribbon_content_items(
         &mut self,
         _node: &RibbonContent,
@@ -4611,9 +5540,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SecondColumn` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_second_column(
         &mut self,
         _node: &SecondColumn,
@@ -4622,9 +5554,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Separator` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_separator(
         &mut self,
         _node: &Separator,
@@ -4633,9 +5568,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SharedControls` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shared_controls(
         &mut self,
         _node: &SharedControls,
@@ -4644,9 +5582,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SimpleGroupsContent` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_simple_groups(
         &mut self,
         _node: &SimpleGroupsContent,
@@ -4655,9 +5596,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SimpleGroupsContent` in a list is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_simple_groups_items(
         &mut self,
         _node: &SimpleGroupsContent,
@@ -4666,9 +5610,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SplitButtonContent` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_split_button(
         &mut self,
         _node: &SplitButtonContent,
@@ -4677,9 +5624,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SplitButtonSplitButton` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_split_button_split_button(
         &mut self,
         _node: &SplitButtonSplitButton,
@@ -4688,9 +5638,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SplitButtonSplitButtonRegular` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_split_button_split_button_regular(
         &mut self,
         _node: &SplitButtonSplitButtonRegular,
@@ -4699,9 +5652,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SplitButtonSplitButtonWithTitle` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_split_button_split_button_with_title(
         &mut self,
         _node: &SplitButtonSplitButtonWithTitle,
@@ -4710,9 +5666,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TabBackstageTab` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_tab_backstage_tab(
         &mut self,
         _node: &TabBackstageTab,
@@ -4721,30 +5680,42 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TabSet` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_tab_set(&mut self, _node: &TabSet, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `TabTab` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_tab_tab(&mut self, _node: &TabTab, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Tabs` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_tabs(&mut self, _node: &Tabs, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `TaskFormGroup` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_task_form_group(
         &mut self,
         _node: &TaskFormGroup,
@@ -4753,9 +5724,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TaskGroup` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_task_group(
         &mut self,
         _node: &TaskGroup,
@@ -4764,9 +5738,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TaskTaskFormGroupTask` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_task_task_form_group_task(
         &mut self,
         _node: &TaskTaskFormGroupTask,
@@ -4775,9 +5752,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TaskTaskGroupTask` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_task_task_group_task(
         &mut self,
         _node: &TaskTaskGroupTask,
@@ -4786,9 +5766,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ToggleButtonBackstageMenuToggleButton` is written through. `Written::Yes`
+    /// means the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_toggle_button_backstage_menu_toggle_button(
         &mut self,
         _node: &ToggleButtonBackstageMenuToggleButton,
@@ -4797,9 +5780,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ToggleButtonToggleButton` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_toggle_button_toggle_button(
         &mut self,
         _node: &ToggleButtonToggleButton,
@@ -4808,9 +5794,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ToggleButtonToggleButtonRegular` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_toggle_button_toggle_button_regular(
         &mut self,
         _node: &ToggleButtonToggleButtonRegular,
@@ -4819,9 +5808,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ToggleButtonVisibleToggleButton` is written through. `Written::Yes` means the
+    /// hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_toggle_button_visible_toggle_button(
         &mut self,
         _node: &ToggleButtonVisibleToggleButton,
@@ -4830,9 +5822,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TopItems` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_top_items(
         &mut self,
         _node: &TopItems,
@@ -4842,7 +5837,8 @@ pub trait Context: crate::Context {
     }
 }
 
-/// The tag `mso14:contextMenu`, schema type `CT_ContextMenu` of SDK 3.5.1's data.
+/// The `mso14:contextMenu` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_ContextMenu`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4851,28 +5847,46 @@ pub trait Context: crate::Context {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ContextMenu {
+    /// The children that are an item of `ContextMenuContent`, in order.
     pub content: Vec<ContextMenuContent>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_ContextMenu`: choice in `CT_ContextMenu`.
+/// One child element of a choice: choice in `CT_ContextMenu`.
+///
+/// The schema types that hold it: `CT_ContextMenu`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ContextMenuContent {
+    /// The element `mso14:button`, a `ButtonButtonRegular`.
     ButtonButtonRegular(ButtonButtonRegular),
+    /// The element `mso14:checkBox`, a `CheckBoxCheckBox`.
     CheckBoxCheckBox(CheckBoxCheckBox),
+    /// The element `mso14:control`, a `ControlControlCloneRegular`.
     ControlControlCloneRegular(ControlControlCloneRegular),
+    /// The element `mso14:dynamicMenu`, a `DynamicMenuDynamicMenuRegular`.
     DynamicMenuDynamicMenuRegular(DynamicMenuDynamicMenuRegular),
+    /// The element `mso14:gallery`, a `GalleryGalleryRegular`.
     GalleryGalleryRegular(Box<GalleryGalleryRegular>),
+    /// The element `mso14:menu`, a `MenuMenuRegular`.
     MenuMenuRegular(MenuMenuRegular),
+    /// The element `mso14:menuSeparator`, a `MenuSeparatorMenuSeparatorNoTitle`.
     MenuSeparatorMenuSeparatorNoTitle(MenuSeparatorMenuSeparatorNoTitle),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `mso14:splitButton`, a `SplitButtonSplitButtonRegular`.
     SplitButtonSplitButtonRegular(SplitButtonSplitButtonRegular),
+    /// The element `mso14:toggleButton`, a `ToggleButtonToggleButtonRegular`.
     ToggleButtonToggleButtonRegular(ToggleButtonToggleButtonRegular),
 }
 
-/// The tag `mso14:contextMenus`, schema type `CT_ContextMenus` of SDK 3.5.1's data.
+/// The `mso14:contextMenus` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_ContextMenus`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4881,11 +5895,14 @@ pub enum ContextMenuContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ContextMenus {
+    /// The children that are `ContextMenu`, in order.
     pub context_menu: Vec<ContextMenu>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `mso14:contextualTabs`, schema type `CT_ContextualTabs` of SDK 3.5.1's data.
+/// The `mso14:contextualTabs` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_ContextualTabs`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4894,11 +5911,14 @@ pub struct ContextMenus {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ContextualTabs {
+    /// The children that are `TabSet`, in order.
     pub tab_set: Vec<TabSet>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `mso14:control`, schema type `CT_ControlClone` of SDK 3.5.1's data.
+/// The `mso14:control` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ControlClone`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4907,40 +5927,72 @@ pub struct ContextualTabs {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ControlControlClone {
+    /// The attribute `description`, when the element has it.
     pub description: Option<String>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getShowImage`, when the element has it.
     pub get_show_image: Option<String>,
+    /// The attribute `getShowLabel`, when the element has it.
     pub get_show_label: Option<String>,
+    /// The attribute `getSize`, when the element has it.
     pub get_size: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `showImage`, when the element has it.
     pub show_image: Option<String>,
+    /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
+    /// The attribute `size`, when the element has it.
     pub size: Option<Size>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:control`, schema type `CT_ControlCloneQat` of SDK 3.5.1's data.
+/// The `mso14:control` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ControlCloneQat`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4949,40 +6001,72 @@ pub struct ControlControlClone {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ControlControlCloneQat {
+    /// The attribute `description`, when the element has it.
     pub description: Option<String>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getShowImage`, when the element has it.
     pub get_show_image: Option<String>,
+    /// The attribute `getShowLabel`, when the element has it.
     pub get_show_label: Option<String>,
+    /// The attribute `getSize`, when the element has it.
     pub get_size: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `showImage`, when the element has it.
     pub show_image: Option<String>,
+    /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
+    /// The attribute `size`, when the element has it.
     pub size: Option<Size>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:control`, schema type `CT_ControlCloneRegular` of SDK 3.5.1's data.
+/// The `mso14:control` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ControlCloneRegular`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -4991,36 +6075,64 @@ pub struct ControlControlCloneQat {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ControlControlCloneRegular {
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getShowImage`, when the element has it.
     pub get_show_image: Option<String>,
+    /// The attribute `getShowLabel`, when the element has it.
     pub get_show_label: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `showImage`, when the element has it.
     pub show_image: Option<String>,
+    /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:customUI`, schema type `CT_CustomUI` of SDK 3.5.1's data.
+/// The `mso14:customUI` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_CustomUI`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5029,16 +6141,24 @@ pub struct ControlControlCloneRegular {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CustomUI {
+    /// The child that is `Backstage`, when there is one.
     pub backstage: Option<Box<Backstage>>,
+    /// The child that is `Commands`, when there is one.
     pub commands: Option<Box<Commands>>,
+    /// The child that is `ContextMenus`, when there is one.
     pub context_menus: Option<Box<ContextMenus>>,
+    /// The attribute `loadImage`, when the element has it.
     pub load_image: Option<String>,
+    /// The attribute `onLoad`, when the element has it.
     pub on_load: Option<String>,
+    /// The child that is `Ribbon`, when there is one.
     pub ribbon: Option<Box<Ribbon>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `mso14:dialogBoxLauncher`, schema type `CT_DialogLauncher` of SDK 3.5.1's data.
+/// The `mso14:dialogBoxLauncher` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_DialogLauncher`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5047,11 +6167,14 @@ pub struct CustomUI {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DialogBoxLauncher {
+    /// The child that is `ButtonButtonRegular`, which the schema requires.
     pub button_button_regular: Box<ButtonButtonRegular>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `mso14:documentControls`, schema type `CT_QatItems` of SDK 3.5.1's data.
+/// The `mso14:documentControls` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_QatItems`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5060,11 +6183,14 @@ pub struct DialogBoxLauncher {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DocumentControls {
+    /// The children that are an item of `QuickAccessToolbarItemsContent`, in order.
     pub content: Vec<QuickAccessToolbarItemsContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `mso14:dropDown`, schema type `CT_BackstageDropDown` of SDK 3.5.1's data.
+/// The `mso14:dropDown` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_BackstageDropDown`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5073,34 +6199,60 @@ pub struct DocumentControls {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DropDownBackstageDropDown {
+    /// The attribute `alignLabel`, when the element has it.
     pub align_label: Option<Expand>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getItemCount`, when the element has it.
     pub get_item_count: Option<String>,
+    /// The attribute `getItemID`, when the element has it.
     pub get_item_id: Option<String>,
+    /// The attribute `getItemLabel`, when the element has it.
     pub get_item_label: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getSelectedItemIndex`, when the element has it.
     pub get_selected_item_index: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The children that are `ItemBackstageItem`, in order.
     pub item_backstage_item: Vec<ItemBackstageItem>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `onAction`, when the element has it.
     pub on_action: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `sizeString`, when the element has it.
     pub size_string: Option<String>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:dropDown`, schema type `CT_DropDownRegular` of SDK 3.5.1's data.
+/// The `mso14:dropDown` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_DropDownRegular`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5109,51 +6261,94 @@ pub struct DropDownBackstageDropDown {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DropDownDropDownRegular {
+    /// The children that are `ButtonButtonRegular`, in order.
     pub button_button_regular: Vec<ButtonButtonRegular>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getItemCount`, when the element has it.
     pub get_item_count: Option<String>,
+    /// The attribute `getItemID`, when the element has it.
     pub get_item_id: Option<String>,
+    /// The attribute `getItemImage`, when the element has it.
     pub get_item_image: Option<String>,
+    /// The attribute `getItemLabel`, when the element has it.
     pub get_item_label: Option<String>,
+    /// The attribute `getItemScreentip`, when the element has it.
     pub get_item_screentip: Option<String>,
+    /// The attribute `getItemSupertip`, when the element has it.
     pub get_item_supertip: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getSelectedItemID`, when the element has it.
     pub get_selected_item_id: Option<String>,
+    /// The attribute `getSelectedItemIndex`, when the element has it.
     pub get_selected_item_index: Option<String>,
+    /// The attribute `getShowImage`, when the element has it.
     pub get_show_image: Option<String>,
+    /// The attribute `getShowLabel`, when the element has it.
     pub get_show_label: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The children that are `ItemItem`, in order.
     pub item_item: Vec<ItemItem>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `onAction`, when the element has it.
     pub on_action: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `showImage`, when the element has it.
     pub show_image: Option<String>,
+    /// The attribute `showItemImage`, when the element has it.
     pub show_item_image: Option<String>,
+    /// The attribute `showItemLabel`, when the element has it.
     pub show_item_label: Option<String>,
+    /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
+    /// The attribute `sizeString`, when the element has it.
     pub size_string: Option<String>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:dynamicMenu`, schema type `CT_DynamicMenu` of SDK 3.5.1's data.
+/// The `mso14:dynamicMenu` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_DynamicMenu`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5162,43 +6357,78 @@ pub struct DropDownDropDownRegular {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DynamicMenuDynamicMenu {
+    /// The attribute `description`, when the element has it.
     pub description: Option<String>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getContent`, when the element has it.
     pub get_content: Option<String>,
+    /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getShowImage`, when the element has it.
     pub get_show_image: Option<String>,
+    /// The attribute `getShowLabel`, when the element has it.
     pub get_show_label: Option<String>,
+    /// The attribute `getSize`, when the element has it.
     pub get_size: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `invalidateContentOnDrop`, when the element has it.
     pub invalidate_content_on_drop: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `showImage`, when the element has it.
     pub show_image: Option<String>,
+    /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
+    /// The attribute `size`, when the element has it.
     pub size: Option<Size>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:dynamicMenu`, schema type `CT_DynamicMenuRegular` of SDK 3.5.1's data.
+/// The `mso14:dynamicMenu` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_DynamicMenuRegular`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5207,41 +6437,74 @@ pub struct DynamicMenuDynamicMenu {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DynamicMenuDynamicMenuRegular {
+    /// The attribute `description`, when the element has it.
     pub description: Option<String>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getContent`, when the element has it.
     pub get_content: Option<String>,
+    /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getShowImage`, when the element has it.
     pub get_show_image: Option<String>,
+    /// The attribute `getShowLabel`, when the element has it.
     pub get_show_label: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `invalidateContentOnDrop`, when the element has it.
     pub invalidate_content_on_drop: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `showImage`, when the element has it.
     pub show_image: Option<String>,
+    /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:editBox`, schema type `CT_BackstageEditBox` of SDK 3.5.1's data.
+/// The `mso14:editBox` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_BackstageEditBox`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5250,27 +6513,46 @@ pub struct DynamicMenuDynamicMenuRegular {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EditBoxBackstageEditBox {
+    /// The attribute `alignLabel`, when the element has it.
     pub align_label: Option<Expand>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getText`, when the element has it.
     pub get_text: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `maxLength`, when the element has it.
     pub max_length: Option<String>,
+    /// The attribute `onChange`, when the element has it.
     pub on_change: Option<String>,
+    /// The attribute `sizeString`, when the element has it.
     pub size_string: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:editBox`, schema type `CT_EditBox` of SDK 3.5.1's data.
+/// The `mso14:editBox` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_EditBox`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5279,41 +6561,76 @@ pub struct EditBoxBackstageEditBox {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EditBoxEditBox {
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getShowImage`, when the element has it.
     pub get_show_image: Option<String>,
+    /// The attribute `getShowLabel`, when the element has it.
     pub get_show_label: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `getText`, when the element has it.
     pub get_text: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `maxLength`, when the element has it.
     pub max_length: Option<String>,
+    /// The attribute `onChange`, when the element has it.
     pub on_change: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `showImage`, when the element has it.
     pub show_image: Option<String>,
+    /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
+    /// The attribute `sizeString`, when the element has it.
     pub size_string: Option<String>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// `ST_Expand`: the text the file carried.
+/// The simple type `ST_Expand`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5322,22 +6639,33 @@ pub struct EditBoxEditBox {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Expand(pub String);
-/// The members of `ST_Expand`, in alphabetical order.
+/// The members of the enumeration `ST_Expand`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ExpandMember {
+    /// The member written `bottom`.
     Bottom,
+    /// The member written `bottomLeft`.
     BottomLeft,
+    /// The member written `bottomRight`.
     BottomRight,
+    /// The member written `center`.
     Center,
+    /// The member written `left`.
     Left,
+    /// The member written `right`.
     Right,
+    /// The member written `top`.
     Top,
+    /// The member written `topLeft`.
     TopLeft,
+    /// The member written `topRight`.
     TopRight,
 }
 
-/// The tag `mso14:firstColumn`, schema type `CT_BackstageGroups` of SDK 3.5.1's data.
+/// The `mso14:firstColumn` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_BackstageGroups`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5346,11 +6674,14 @@ pub enum ExpandMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FirstColumn {
+    /// The children that are an item of `BackstageGroupsContent`, in order.
     pub content: Vec<BackstageGroupsContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `mso14:gallery`, schema type `CT_Gallery` of SDK 3.5.1's data.
+/// The `mso14:gallery` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Gallery`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5359,63 +6690,118 @@ pub struct FirstColumn {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GalleryGallery {
+    /// The children that are `ButtonButtonRegular`, in order.
     pub button_button_regular: Vec<ButtonButtonRegular>,
+    /// The attribute `columns`, when the element has it.
     pub columns: Option<String>,
+    /// The attribute `description`, when the element has it.
     pub description: Option<String>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getItemCount`, when the element has it.
     pub get_item_count: Option<String>,
+    /// The attribute `getItemHeight`, when the element has it.
     pub get_item_height: Option<String>,
+    /// The attribute `getItemID`, when the element has it.
     pub get_item_id: Option<String>,
+    /// The attribute `getItemImage`, when the element has it.
     pub get_item_image: Option<String>,
+    /// The attribute `getItemLabel`, when the element has it.
     pub get_item_label: Option<String>,
+    /// The attribute `getItemScreentip`, when the element has it.
     pub get_item_screentip: Option<String>,
+    /// The attribute `getItemSupertip`, when the element has it.
     pub get_item_supertip: Option<String>,
+    /// The attribute `getItemWidth`, when the element has it.
     pub get_item_width: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getSelectedItemID`, when the element has it.
     pub get_selected_item_id: Option<String>,
+    /// The attribute `getSelectedItemIndex`, when the element has it.
     pub get_selected_item_index: Option<String>,
+    /// The attribute `getShowImage`, when the element has it.
     pub get_show_image: Option<String>,
+    /// The attribute `getShowLabel`, when the element has it.
     pub get_show_label: Option<String>,
+    /// The attribute `getSize`, when the element has it.
     pub get_size: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `invalidateContentOnDrop`, when the element has it.
     pub invalidate_content_on_drop: Option<String>,
+    /// The attribute `itemHeight`, when the element has it.
     pub item_height: Option<String>,
+    /// The children that are `ItemItem`, in order.
     pub item_item: Vec<ItemItem>,
+    /// The attribute `itemWidth`, when the element has it.
     pub item_width: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `onAction`, when the element has it.
     pub on_action: Option<String>,
+    /// The attribute `rows`, when the element has it.
     pub rows: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `showImage`, when the element has it.
     pub show_image: Option<String>,
+    /// The attribute `showInRibbon`, when the element has it.
     pub show_in_ribbon: Option<GalleryShowInRibbon>,
+    /// The attribute `showItemImage`, when the element has it.
     pub show_item_image: Option<String>,
+    /// The attribute `showItemLabel`, when the element has it.
     pub show_item_label: Option<String>,
+    /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
+    /// The attribute `size`, when the element has it.
     pub size: Option<Size>,
+    /// The attribute `sizeString`, when the element has it.
     pub size_string: Option<String>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:gallery`, schema type `CT_GalleryRegular` of SDK 3.5.1's data.
+/// The `mso14:gallery` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_GalleryRegular`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5424,61 +6810,116 @@ pub struct GalleryGallery {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GalleryGalleryRegular {
+    /// The children that are `ButtonButtonRegular`, in order.
     pub button_button_regular: Vec<ButtonButtonRegular>,
+    /// The attribute `columns`, when the element has it.
     pub columns: Option<String>,
+    /// The attribute `description`, when the element has it.
     pub description: Option<String>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getItemCount`, when the element has it.
     pub get_item_count: Option<String>,
+    /// The attribute `getItemHeight`, when the element has it.
     pub get_item_height: Option<String>,
+    /// The attribute `getItemID`, when the element has it.
     pub get_item_id: Option<String>,
+    /// The attribute `getItemImage`, when the element has it.
     pub get_item_image: Option<String>,
+    /// The attribute `getItemLabel`, when the element has it.
     pub get_item_label: Option<String>,
+    /// The attribute `getItemScreentip`, when the element has it.
     pub get_item_screentip: Option<String>,
+    /// The attribute `getItemSupertip`, when the element has it.
     pub get_item_supertip: Option<String>,
+    /// The attribute `getItemWidth`, when the element has it.
     pub get_item_width: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getSelectedItemID`, when the element has it.
     pub get_selected_item_id: Option<String>,
+    /// The attribute `getSelectedItemIndex`, when the element has it.
     pub get_selected_item_index: Option<String>,
+    /// The attribute `getShowImage`, when the element has it.
     pub get_show_image: Option<String>,
+    /// The attribute `getShowLabel`, when the element has it.
     pub get_show_label: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `invalidateContentOnDrop`, when the element has it.
     pub invalidate_content_on_drop: Option<String>,
+    /// The attribute `itemHeight`, when the element has it.
     pub item_height: Option<String>,
+    /// The children that are `ItemItem`, in order.
     pub item_item: Vec<ItemItem>,
+    /// The attribute `itemWidth`, when the element has it.
     pub item_width: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `onAction`, when the element has it.
     pub on_action: Option<String>,
+    /// The attribute `rows`, when the element has it.
     pub rows: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `showImage`, when the element has it.
     pub show_image: Option<String>,
+    /// The attribute `showInRibbon`, when the element has it.
     pub show_in_ribbon: Option<GalleryShowInRibbon>,
+    /// The attribute `showItemImage`, when the element has it.
     pub show_item_image: Option<String>,
+    /// The attribute `showItemLabel`, when the element has it.
     pub show_item_label: Option<String>,
+    /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
+    /// The attribute `sizeString`, when the element has it.
     pub size_string: Option<String>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// `ST_GalleryShowInRibbon`: the text the file carried.
+/// The simple type `ST_GalleryShowInRibbon`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5487,15 +6928,19 @@ pub struct GalleryGalleryRegular {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GalleryShowInRibbon(pub String);
-/// The members of `ST_GalleryShowInRibbon`, in alphabetical order.
+/// The members of the enumeration `ST_GalleryShowInRibbon`, in alphabetical order. `as_str` gives
+/// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum GalleryShowInRibbonMember {
+    /// The member written `false`.
     False,
+    /// The member written `0`.
     Value0,
 }
 
-/// The tag `mso14:group`, schema type `CT_BackstageGroup` of SDK 3.5.1's data.
+/// The `mso14:group` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_BackstageGroup`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5504,31 +6949,54 @@ pub enum GalleryShowInRibbonMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GroupBackstageGroup {
+    /// The child that is `BottomItems`, when there is one.
     pub bottom_items: Option<Box<BottomItems>>,
+    /// The attribute `getHelperText`, when the element has it.
     pub get_helper_text: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getShowLabel`, when the element has it.
     pub get_show_label: Option<String>,
+    /// The attribute `getStyle`, when the element has it.
     pub get_style: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `helperText`, when the element has it.
     pub helper_text: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The child that is `PrimaryItem`, when there is one.
     pub primary_item: Option<Box<PrimaryItem>>,
+    /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
+    /// The attribute `style`, when the element has it.
     pub style: Option<Style>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// The child that is `TopItems`, when there is one.
     pub top_items: Option<Box<TopItems>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:groupBox`, schema type `CT_GroupBox` of SDK 3.5.1's data.
+/// The `mso14:groupBox` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_GroupBox`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5540,59 +7008,104 @@ pub struct GroupBackstageGroup {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GroupBox {
+    /// The children that are an item of `GroupControlsContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<GroupControlsContent>,
+    /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_Group`: choice in `CT_Group`.
+/// One child element of a choice: choice in `CT_Group`.
+///
+/// The schema types that hold it: `CT_Group`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum GroupContent {
+    /// The element `mso14:box`, a `BoxBox`.
     BoxBox(BoxBox),
+    /// The element `mso14:button`, a `ButtonButton`.
     ButtonButton(ButtonButton),
+    /// The element `mso14:buttonGroup`, a `ButtonGroup`.
     ButtonGroup(ButtonGroup),
+    /// The element `mso14:checkBox`, a `CheckBoxCheckBox`.
     CheckBoxCheckBox(CheckBoxCheckBox),
+    /// The element `mso14:comboBox`, a `ComboBoxComboBox`.
     ComboBoxComboBox(ComboBoxComboBox),
+    /// The element `mso14:control`, a `ControlControlClone`.
     ControlControlClone(ControlControlClone),
+    /// The element `mso14:dropDown`, a `DropDownDropDownRegular`.
     DropDownDropDownRegular(DropDownDropDownRegular),
+    /// The element `mso14:dynamicMenu`, a `DynamicMenuDynamicMenu`.
     DynamicMenuDynamicMenu(DynamicMenuDynamicMenu),
+    /// The element `mso14:editBox`, a `EditBoxEditBox`.
     EditBoxEditBox(EditBoxEditBox),
+    /// The element `mso14:gallery`, a `GalleryGallery`.
     GalleryGallery(Box<GalleryGallery>),
+    /// The element `mso14:labelControl`, a `LabelControlLabelControl`.
     LabelControlLabelControl(LabelControlLabelControl),
+    /// The element `mso14:menu`, a `MenuMenu`.
     MenuMenu(MenuMenu),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `mso14:separator`, a `Separator`.
     Separator(Separator),
+    /// The element `mso14:splitButton`, a `SplitButtonSplitButton`.
     SplitButtonSplitButton(SplitButtonSplitButton),
+    /// The element `mso14:toggleButton`, a `ToggleButtonToggleButton`.
     ToggleButtonToggleButton(ToggleButtonToggleButton),
 }
 
-/// One item of `CT_GroupBox`, `CT_GroupControls`, `CT_LayoutContainer`: choice in `CT_GroupBox`,
-/// choice in `CT_LayoutContainer`, choice in `CT_GroupControls`.
+/// One child element of a choice: choice in `CT_GroupBox`, choice in `CT_LayoutContainer`, choice
+/// in `CT_GroupControls`.
+///
+/// The schema types that hold it: `CT_GroupBox`, `CT_GroupControls`, `CT_LayoutContainer`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum GroupControlsContent {
+    /// The element `mso14:button`, a `ButtonBackstageGroupButton`.
     ButtonBackstageGroupButton(ButtonBackstageGroupButton),
+    /// The element `mso14:checkBox`, a `CheckBoxBackstageCheckBox`.
     CheckBoxBackstageCheckBox(CheckBoxBackstageCheckBox),
+    /// The element `mso14:comboBox`, a `ComboBoxBackstageComboBox`.
     ComboBoxBackstageComboBox(ComboBoxBackstageComboBox),
+    /// The element `mso14:dropDown`, a `DropDownBackstageDropDown`.
     DropDownBackstageDropDown(DropDownBackstageDropDown),
+    /// The element `mso14:editBox`, a `EditBoxBackstageEditBox`.
     EditBoxBackstageEditBox(EditBoxBackstageEditBox),
+    /// The element `mso14:groupBox`, a `GroupBox`.
     GroupBox(GroupBox),
+    /// The element `mso14:hyperlink`, a `Hyperlink`.
     Hyperlink(Hyperlink),
+    /// The element `mso14:imageControl`, a `ImageControl`.
     ImageControl(ImageControl),
+    /// The element `mso14:labelControl`, a `LabelControlBackstageLabelControl`.
     LabelControlBackstageLabelControl(LabelControlBackstageLabelControl),
+    /// The element `mso14:layoutContainer`, a `LayoutContainer`.
     LayoutContainer(LayoutContainer),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `mso14:radioGroup`, a `RadioGroup`.
     RadioGroup(RadioGroup),
 }
 
-/// The tag `mso14:group`, schema type `CT_Group` of SDK 3.5.1's data.
+/// The `mso14:group` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Group`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5601,35 +7114,62 @@ pub enum GroupControlsContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct GroupGroup {
+    /// The attribute `autoScale`, when the element has it.
     pub auto_scale: Option<String>,
+    /// The attribute `centerVertically`, when the element has it.
     pub center_vertically: Option<String>,
+    /// The children that are an item of `GroupContent`, in order.
     pub content: Vec<GroupContent>,
+    /// The child that is `DialogBoxLauncher`, when there is one.
     pub dialog_box_launcher: Option<Box<DialogBoxLauncher>>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:hyperlink`, schema type `CT_Hyperlink` of SDK 3.5.1's data.
+/// The `mso14:hyperlink` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_Hyperlink`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5638,33 +7178,58 @@ pub struct GroupGroup {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Hyperlink {
+    /// The attribute `alignLabel`, when the element has it.
     pub align_label: Option<Expand>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `getTarget`, when the element has it.
     pub get_target: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `onAction`, when the element has it.
     pub on_action: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// The attribute `target`, when the element has it.
     pub target: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:imageControl`, schema type `CT_ImageControl` of SDK 3.5.1's data.
+/// The `mso14:imageControl` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_ImageControl`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5673,22 +7238,36 @@ pub struct Hyperlink {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ImageControl {
+    /// The attribute `altText`, when the element has it.
     pub alt_text: Option<String>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getAltText`, when the element has it.
     pub get_alt_text: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:item`, schema type `CT_BackstageItem` of SDK 3.5.1's data.
+/// The `mso14:item` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_BackstageItem`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5697,10 +7276,12 @@ pub struct ImageControl {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ItemBackstageItem {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `mso14:item`, schema type `CT_Item` of SDK 3.5.1's data.
+/// The `mso14:item` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Item`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5709,16 +7290,26 @@ pub struct ItemBackstageItem {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ItemItem {
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_ItemSize`: the text the file carried.
+/// The simple type `ST_ItemSize`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5727,15 +7318,19 @@ pub struct ItemItem {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ItemSize(pub String);
-/// The members of `ST_ItemSize`, in alphabetical order.
+/// The members of the enumeration `ST_ItemSize`, in alphabetical order. `as_str` gives the text of
+/// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ItemSizeMember {
+    /// The member written `large`.
     Large,
+    /// The member written `normal`.
     Normal,
 }
 
-/// The tag `mso14:labelControl`, schema type `CT_BackstageLabelControl` of SDK 3.5.1's data.
+/// The `mso14:labelControl` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_BackstageLabelControl`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5744,22 +7339,36 @@ pub enum ItemSizeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LabelControlBackstageLabelControl {
+    /// The attribute `alignLabel`, when the element has it.
     pub align_label: Option<Expand>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `noWrap`, when the element has it.
     pub no_wrap: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:labelControl`, schema type `CT_LabelControl` of SDK 3.5.1's data.
+/// The `mso14:labelControl` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_LabelControl`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5768,30 +7377,54 @@ pub struct LabelControlBackstageLabelControl {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LabelControlLabelControl {
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getShowLabel`, when the element has it.
     pub get_show_label: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// `ST_LayoutChildren`: the text the file carried.
+/// The simple type `ST_LayoutChildren`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5800,15 +7433,19 @@ pub struct LabelControlLabelControl {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LayoutChildren(pub String);
-/// The members of `ST_LayoutChildren`, in alphabetical order.
+/// The members of the enumeration `ST_LayoutChildren`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum LayoutChildrenMember {
+    /// The member written `horizontal`.
     Horizontal,
+    /// The member written `vertical`.
     Vertical,
 }
 
-/// The tag `mso14:layoutContainer`, schema type `CT_LayoutContainer` of SDK 3.5.1's data.
+/// The `mso14:layoutContainer` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_LayoutContainer`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5820,18 +7457,27 @@ pub enum LayoutChildrenMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LayoutContainer {
+    /// The attribute `align`, when the element has it.
     pub align: Option<Expand>,
+    /// The children that are an item of `GroupControlsContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<GroupControlsContent>,
+    /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `layoutChildren`, when the element has it.
     pub layout_children: Option<LayoutChildren>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `mso14:menu`, schema type `CT_BackstagePrimaryMenu` of SDK 3.5.1's data.
+/// The `mso14:menu` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_BackstagePrimaryMenu`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5840,29 +7486,50 @@ pub struct LayoutContainer {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MenuBackstagePrimaryMenu {
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The children that are `MenuGroup`, in order.
     pub group: Vec<MenuGroup>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:menu`, schema type `CT_BackstageSubMenu` of SDK 3.5.1's data.
+/// The `mso14:menu` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_BackstageSubMenu`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5874,45 +7541,78 @@ pub struct MenuBackstagePrimaryMenu {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MenuBackstageSubMenu {
+    /// The attribute `description`, when the element has it.
     pub description: Option<String>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The children that are `MenuGroup`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub group: Vec<MenuGroup>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// One item of `CT_Menu`, `CT_MenuRegular`, `CT_MenuRoot`: choice in `CT_MenuRegular`, choice in
-/// `CT_Menu`, choice in `CT_MenuRoot`.
+/// One child element of a choice: choice in `CT_MenuRegular`, choice in `CT_Menu`, choice in
+/// `CT_MenuRoot`.
+///
+/// The schema types that hold it: `CT_Menu`, `CT_MenuRegular`, `CT_MenuRoot`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum MenuContent {
+    /// The element `mso14:button`, a `ButtonButtonRegular`.
     ButtonButtonRegular(ButtonButtonRegular),
+    /// The element `mso14:checkBox`, a `CheckBoxCheckBox`.
     CheckBoxCheckBox(CheckBoxCheckBox),
+    /// The element `mso14:control`, a `ControlControlCloneRegular`.
     ControlControlCloneRegular(ControlControlCloneRegular),
+    /// The element `mso14:dynamicMenu`, a `DynamicMenuDynamicMenuRegular`.
     DynamicMenuDynamicMenuRegular(DynamicMenuDynamicMenuRegular),
+    /// The element `mso14:gallery`, a `GalleryGalleryRegular`.
     GalleryGalleryRegular(Box<GalleryGalleryRegular>),
+    /// The element `mso14:menu`, a `MenuMenuRegular`.
     MenuMenuRegular(MenuMenuRegular),
+    /// The element `mso14:menuSeparator`, a `MenuSeparatorMenuSeparator`.
     MenuSeparatorMenuSeparator(MenuSeparatorMenuSeparator),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `mso14:splitButton`, a `SplitButtonSplitButtonRegular`.
     SplitButtonSplitButtonRegular(SplitButtonSplitButtonRegular),
+    /// The element `mso14:toggleButton`, a `ToggleButtonToggleButtonRegular`.
     ToggleButtonToggleButtonRegular(ToggleButtonToggleButtonRegular),
 }
 
-/// The tag `mso14:menuGroup`, schema type `CT_BackstageMenuGroup` of SDK 3.5.1's data.
+/// The `mso14:menuGroup` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_BackstageMenuGroup`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5924,18 +7624,27 @@ pub enum MenuContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MenuGroup {
+    /// The children that are an item of `BackstageMenuGroupContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<BackstageMenuGroupContent>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `itemSize`, when the element has it.
     pub item_size: Option<ItemSize>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `mso14:menu`, schema type `CT_Menu` of SDK 3.5.1's data.
+/// The `mso14:menu` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Menu`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5944,43 +7653,78 @@ pub struct MenuGroup {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MenuMenu {
+    /// The children that are an item of `MenuContent`, in order.
     pub content: Vec<MenuContent>,
+    /// The attribute `description`, when the element has it.
     pub description: Option<String>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getShowImage`, when the element has it.
     pub get_show_image: Option<String>,
+    /// The attribute `getShowLabel`, when the element has it.
     pub get_show_label: Option<String>,
+    /// The attribute `getSize`, when the element has it.
     pub get_size: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `itemSize`, when the element has it.
     pub item_size: Option<ItemSize>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `showImage`, when the element has it.
     pub show_image: Option<String>,
+    /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
+    /// The attribute `size`, when the element has it.
     pub size: Option<Size>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:menu`, schema type `CT_MenuRegular` of SDK 3.5.1's data.
+/// The `mso14:menu` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_MenuRegular`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -5992,42 +7736,75 @@ pub struct MenuMenu {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MenuMenuRegular {
+    /// The children that are an item of `MenuContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<MenuContent>,
+    /// The attribute `description`, when the element has it.
     pub description: Option<String>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getShowImage`, when the element has it.
     pub get_show_image: Option<String>,
+    /// The attribute `getShowLabel`, when the element has it.
     pub get_show_label: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `itemSize`, when the element has it.
     pub item_size: Option<ItemSize>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `showImage`, when the element has it.
     pub show_image: Option<String>,
+    /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:menu`, schema type `CT_MenuRoot` of SDK 3.5.1's data.
+/// The `mso14:menu` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_MenuRoot`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6036,14 +7813,20 @@ pub struct MenuMenuRegular {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MenuMenuRoot {
+    /// The children that are an item of `MenuContent`, in order.
     pub content: Vec<MenuContent>,
+    /// The attribute `getTitle`, when the element has it.
     pub get_title: Option<String>,
+    /// The attribute `itemSize`, when the element has it.
     pub item_size: Option<ItemSize>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `mso14:menu`, schema type `CT_MenuWithTitle` of SDK 3.5.1's data.
+/// The `mso14:menu` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_MenuWithTitle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6055,42 +7838,75 @@ pub struct MenuMenuRoot {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MenuMenuWithTitle {
+    /// The children that are an item of `MenuWithTitleContent`, in order.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub content: Vec<MenuWithTitleContent>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getShowImage`, when the element has it.
     pub get_show_image: Option<String>,
+    /// The attribute `getShowLabel`, when the element has it.
     pub get_show_label: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `getTitle`, when the element has it.
     pub get_title: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `itemSize`, when the element has it.
     pub item_size: Option<ItemSize>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `showImage`, when the element has it.
     pub show_image: Option<String>,
+    /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:menuSeparator`, schema type `CT_MenuSeparator` of SDK 3.5.1's data.
+/// The `mso14:menuSeparator` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_MenuSeparator`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6099,19 +7915,30 @@ pub struct MenuMenuWithTitle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MenuSeparatorMenuSeparator {
+    /// The attribute `getTitle`, when the element has it.
     pub get_title: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `mso14:menuSeparator`, schema type `CT_MenuSeparatorNoTitle` of SDK 3.5.1's data.
+/// The `mso14:menuSeparator` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_MenuSeparatorNoTitle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6120,33 +7947,56 @@ pub struct MenuSeparatorMenuSeparator {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct MenuSeparatorMenuSeparatorNoTitle {
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_MenuWithTitle`: choice in `CT_MenuWithTitle`.
+/// One child element of a choice: choice in `CT_MenuWithTitle`.
+///
+/// The schema types that hold it: `CT_MenuWithTitle`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum MenuWithTitleContent {
+    /// The element `mso14:button`, a `ButtonButtonRegular`.
     ButtonButtonRegular(ButtonButtonRegular),
+    /// The element `mso14:checkBox`, a `CheckBoxCheckBox`.
     CheckBoxCheckBox(CheckBoxCheckBox),
+    /// The element `mso14:control`, a `ControlControlCloneRegular`.
     ControlControlCloneRegular(ControlControlCloneRegular),
+    /// The element `mso14:dynamicMenu`, a `DynamicMenuDynamicMenuRegular`.
     DynamicMenuDynamicMenuRegular(DynamicMenuDynamicMenuRegular),
+    /// The element `mso14:gallery`, a `GalleryGalleryRegular`.
     GalleryGalleryRegular(Box<GalleryGalleryRegular>),
+    /// The element `mso14:menu`, a `MenuMenuWithTitle`.
     MenuMenuWithTitle(MenuMenuWithTitle),
+    /// The element `mso14:menuSeparator`, a `MenuSeparatorMenuSeparator`.
     MenuSeparatorMenuSeparator(MenuSeparatorMenuSeparator),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `mso14:splitButton`, a `SplitButtonSplitButtonWithTitle`.
     SplitButtonSplitButtonWithTitle(SplitButtonSplitButtonWithTitle),
+    /// The element `mso14:toggleButton`, a `ToggleButtonToggleButtonRegular`.
     ToggleButtonToggleButtonRegular(ToggleButtonToggleButtonRegular),
 }
 
-/// The tag `mso14:primaryItem`, schema type `CT_PrimaryItem` of SDK 3.5.1's data.
+/// The `mso14:primaryItem` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_PrimaryItem`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6155,20 +8005,30 @@ pub enum MenuWithTitleContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PrimaryItem {
+    /// The child that is an item of `PrimaryItemContent`, which the schema requires.
     pub content: Box<PrimaryItemContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_PrimaryItem`: choice in `CT_PrimaryItem`.
+/// One child element of a choice: choice in `CT_PrimaryItem`.
+///
+/// The schema types that hold it: `CT_PrimaryItem`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum PrimaryItemContent {
+    /// The element `mso14:button`, a `ButtonBackstageRegularButton`.
     ButtonBackstageRegularButton(ButtonBackstageRegularButton),
+    /// The element `mso14:menu`, a `MenuBackstagePrimaryMenu`.
     MenuBackstagePrimaryMenu(MenuBackstagePrimaryMenu),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
 }
 
-/// The tag `mso14:qat`, schema type `CT_Qat` of SDK 3.5.1's data.
+/// The `mso14:qat` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Qat`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6177,22 +8037,34 @@ pub enum PrimaryItemContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Qat {
+    /// The child that is `DocumentControls`, when there is one.
     pub document_controls: Option<Box<DocumentControls>>,
+    /// The child that is `SharedControls`, when there is one.
     pub shared_controls: Option<Box<SharedControls>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_QatItems`: choice in `CT_QatItems`.
+/// One child element of a choice: choice in `CT_QatItems`.
+///
+/// The schema types that hold it: `CT_QatItems`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum QuickAccessToolbarItemsContent {
+    /// The element `mso14:button`, a `ButtonButtonRegular`.
     ButtonButtonRegular(ButtonButtonRegular),
+    /// The element `mso14:control`, a `ControlControlCloneQat`.
     ControlControlCloneQat(ControlControlCloneQat),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `mso14:separator`, a `Separator`.
     Separator(Separator),
 }
 
-/// The tag `mso14:radioButton`, schema type `CT_BackstageItem` of SDK 3.5.1's data.
+/// The `mso14:radioButton` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_BackstageItem`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6201,10 +8073,12 @@ pub enum QuickAccessToolbarItemsContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RadioButton {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `mso14:radioGroup`, schema type `CT_RadioGroup` of SDK 3.5.1's data.
+/// The `mso14:radioGroup` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_RadioGroup`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6213,29 +8087,50 @@ pub struct RadioButton {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RadioGroup {
+    /// The attribute `alignLabel`, when the element has it.
     pub align_label: Option<Expand>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getItemCount`, when the element has it.
     pub get_item_count: Option<String>,
+    /// The attribute `getItemID`, when the element has it.
     pub get_item_id: Option<String>,
+    /// The attribute `getItemLabel`, when the element has it.
     pub get_item_label: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getSelectedItemIndex`, when the element has it.
     pub get_selected_item_index: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `onAction`, when the element has it.
     pub on_action: Option<String>,
+    /// The children that are `RadioButton`, in order.
     pub radio_button: Vec<RadioButton>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:ribbon`, schema type `CT_Ribbon` of SDK 3.5.1's data.
+/// The `mso14:ribbon` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Ribbon`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6244,22 +8139,34 @@ pub struct RadioGroup {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Ribbon {
+    /// The children that are an item of `RibbonContent`, in order.
     pub content: Vec<RibbonContent>,
+    /// The attribute `startFromScratch`, when the element has it.
     pub start_from_scratch: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_Ribbon`: xsd:all in `CT_Ribbon`.
+/// One child element of a choice: xsd:all in `CT_Ribbon`.
+///
+/// The schema types that hold it: `CT_Ribbon`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum RibbonContent {
+    /// The element `mso14:contextualTabs`, a `ContextualTabs`.
     ContextualTabs(ContextualTabs),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `mso14:qat`, a `Qat`.
     Qat(Qat),
+    /// The element `mso14:tabs`, a `Tabs`.
     Tabs(Tabs),
 }
 
-/// The tag `mso14:secondColumn`, schema type `CT_SimpleGroups` of SDK 3.5.1's data.
+/// The `mso14:secondColumn` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_SimpleGroups`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6268,11 +8175,14 @@ pub enum RibbonContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SecondColumn {
+    /// The children that are an item of `SimpleGroupsContent`, in order.
     pub content: Vec<SimpleGroupsContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `mso14:separator`, schema type `CT_Separator` of SDK 3.5.1's data.
+/// The `mso14:separator` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_Separator`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6281,19 +8191,30 @@ pub struct SecondColumn {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Separator {
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:sharedControls`, schema type `CT_QatItems` of SDK 3.5.1's data.
+/// The `mso14:sharedControls` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_QatItems`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6302,20 +8223,32 @@ pub struct Separator {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SharedControls {
+    /// The children that are an item of `QuickAccessToolbarItemsContent`, in order.
     pub content: Vec<QuickAccessToolbarItemsContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_SimpleGroups`: choice in `CT_SimpleGroups`.
+/// One child element of a choice: choice in `CT_SimpleGroups`.
+///
+/// The schema types that hold it: `CT_SimpleGroups`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum SimpleGroupsContent {
+    /// The element `mso14:group`, a `GroupBackstageGroup`.
     GroupBackstageGroup(GroupBackstageGroup),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `mso14:taskGroup`, a `TaskGroup`.
     TaskGroup(TaskGroup),
 }
 
-/// `ST_Size`: the text the file carried.
+/// The simple type `ST_Size`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6324,25 +8257,37 @@ pub enum SimpleGroupsContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Size(pub String);
-/// The members of `ST_Size`, in alphabetical order.
+/// The members of the enumeration `ST_Size`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum SizeMember {
+    /// The member written `large`.
     Large,
+    /// The member written `normal`.
     Normal,
 }
 
-/// One item of `CT_SplitButton`, `CT_SplitButtonRegular`, `CT_SplitButtonWithTitle`: choice in
-/// `CT_SplitButtonRegular`, choice in `CT_SplitButtonWithTitle`, choice in `CT_SplitButton`.
+/// One child element of a choice: choice in `CT_SplitButtonRegular`, choice in
+/// `CT_SplitButtonWithTitle`, choice in `CT_SplitButton`.
+///
+/// The schema types that hold it: `CT_SplitButton`, `CT_SplitButtonRegular`,
+/// `CT_SplitButtonWithTitle`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum SplitButtonContent {
+    /// The element `mso14:button`, a `ButtonVisibleButton`.
     ButtonVisibleButton(ButtonVisibleButton),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `mso14:toggleButton`, a `ToggleButtonVisibleToggleButton`.
     ToggleButtonVisibleToggleButton(ToggleButtonVisibleToggleButton),
 }
 
-/// The tag `mso14:splitButton`, schema type `CT_SplitButton` of SDK 3.5.1's data.
+/// The `mso14:splitButton` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_SplitButton`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6351,30 +8296,52 @@ pub enum SplitButtonContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SplitButtonSplitButton {
+    /// The child that is an item of `SplitButtonContent`, when there is one.
     pub content: Option<Box<SplitButtonContent>>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getShowLabel`, when the element has it.
     pub get_show_label: Option<String>,
+    /// The attribute `getSize`, when the element has it.
     pub get_size: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The child that is `MenuMenuRegular`, when there is one.
     pub menu_menu_regular: Option<Box<MenuMenuRegular>>,
+    /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
+    /// The attribute `size`, when the element has it.
     pub size: Option<Size>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:splitButton`, schema type `CT_SplitButtonRegular` of SDK 3.5.1's data.
+/// The `mso14:splitButton` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_SplitButtonRegular`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6386,29 +8353,49 @@ pub struct SplitButtonSplitButton {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SplitButtonSplitButtonRegular {
+    /// The child that is an item of `SplitButtonContent`, when there is one.
     pub content: Option<Box<SplitButtonContent>>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getShowLabel`, when the element has it.
     pub get_show_label: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The child that is `MenuMenuRegular`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub menu_menu_regular: Option<Box<MenuMenuRegular>>,
+    /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:splitButton`, schema type `CT_SplitButtonWithTitle` of SDK 3.5.1's data.
+/// The `mso14:splitButton` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_SplitButtonWithTitle`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6420,29 +8407,51 @@ pub struct SplitButtonSplitButtonRegular {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SplitButtonSplitButtonWithTitle {
+    /// The child that is an item of `SplitButtonContent`, when there is one.
     pub content: Option<Box<SplitButtonContent>>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getShowLabel`, when the element has it.
     pub get_show_label: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The child that is `MenuMenuWithTitle`, when there is one.
     #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub menu_menu_with_title: Option<Box<MenuMenuWithTitle>>,
+    /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// `ST_Style`: the text the file carried.
+/// The simple type `ST_Style`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6451,16 +8460,23 @@ pub struct SplitButtonSplitButtonWithTitle {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Style(pub String);
-/// The members of `ST_Style`, in alphabetical order.
+/// The members of the enumeration `ST_Style`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum StyleMember {
+    /// The member written `error`.
     Error,
+    /// The member written `normal`.
     Normal,
+    /// The member written `warning`.
     Warning,
 }
 
-/// `ST_Style2`: the text the file carried.
+/// The simple type `ST_Style2`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6469,16 +8485,21 @@ pub enum StyleMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Style2(pub String);
-/// The members of `ST_Style2`, in alphabetical order.
+/// The members of the enumeration `ST_Style2`, in alphabetical order. `as_str` gives the text of a
+/// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum Style2Member {
+    /// The member written `borderless`.
     Borderless,
+    /// The member written `large`.
     Large,
+    /// The member written `normal`.
     Normal,
 }
 
-/// The tag `mso14:tab`, schema type `CT_BackstageTab` of SDK 3.5.1's data.
+/// The `mso14:tab` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_BackstageTab`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6487,35 +8508,62 @@ pub enum Style2Member {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TabBackstageTab {
+    /// The attribute `columnWidthPercent`, when the element has it.
     pub column_width_percent: Option<String>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The child that is `FirstColumn`, when there is one.
     pub first_column: Option<Box<FirstColumn>>,
+    /// The attribute `firstColumnMaxWidth`, when the element has it.
     pub first_column_max_width: Option<String>,
+    /// The attribute `firstColumnMinWidth`, when the element has it.
     pub first_column_min_width: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getTitle`, when the element has it.
     pub get_title: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The child that is `SecondColumn`, when there is one.
     pub second_column: Option<Box<SecondColumn>>,
+    /// The attribute `secondColumnMaxWidth`, when the element has it.
     pub second_column_max_width: Option<String>,
+    /// The attribute `secondColumnMinWidth`, when the element has it.
     pub second_column_min_width: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:tabSet`, schema type `CT_TabSet` of SDK 3.5.1's data.
+/// The `mso14:tabSet` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TabSet`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6524,14 +8572,20 @@ pub struct TabBackstageTab {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TabSet {
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The children that are `TabTab`, in order.
     pub tab_tab: Vec<TabTab>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:tab`, schema type `CT_Tab` of SDK 3.5.1's data.
+/// The `mso14:tab` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Tab`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6540,25 +8594,42 @@ pub struct TabSet {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TabTab {
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The children that are `GroupGroup`, in order.
     pub group_group: Vec<GroupGroup>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:tabs`, schema type `CT_Tabs` of SDK 3.5.1's data.
+/// The `mso14:tabs` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Tabs`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6567,11 +8638,14 @@ pub struct TabTab {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Tabs {
+    /// The children that are `TabTab`, in order.
     pub tab_tab: Vec<TabTab>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `mso14:taskFormGroup`, schema type `CT_TaskFormGroup` of SDK 3.5.1's data.
+/// The `mso14:taskFormGroup` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_TaskFormGroup`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6580,24 +8654,40 @@ pub struct Tabs {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TaskFormGroup {
+    /// The attribute `allowedTaskSizes`, when the element has it.
     pub allowed_task_sizes: Option<TaskSizes>,
+    /// The children that are `CategoryTaskFormGroupCategory`, in order.
     pub category_task_form_group_category: Vec<CategoryTaskFormGroupCategory>,
+    /// The attribute `getHelperText`, when the element has it.
     pub get_helper_text: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getShowLabel`, when the element has it.
     pub get_show_label: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `helperText`, when the element has it.
     pub helper_text: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:taskGroup`, schema type `CT_TaskGroup` of SDK 3.5.1's data.
+/// The `mso14:taskGroup` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_TaskGroup`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6606,28 +8696,50 @@ pub struct TaskFormGroup {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TaskGroup {
+    /// The attribute `allowedTaskSizes`, when the element has it.
     pub allowed_task_sizes: Option<TaskSizes>,
+    /// The children that are `CategoryTaskGroupCategory`, in order.
     pub category_task_group_category: Vec<CategoryTaskGroupCategory>,
+    /// The attribute `getHelperText`, when the element has it.
     pub get_helper_text: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getShowLabel`, when the element has it.
     pub get_show_label: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `helperText`, when the element has it.
     pub helper_text: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// `ST_TaskSizes`: the text the file carried.
+/// The simple type `ST_TaskSizes`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6636,19 +8748,27 @@ pub struct TaskGroup {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TaskSizes(pub String);
-/// The members of `ST_TaskSizes`, in alphabetical order.
+/// The members of the enumeration `ST_TaskSizes`, in alphabetical order. `as_str` gives the text of
+/// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TaskSizesMember {
+    /// The member written `large`.
     Large,
+    /// The member written `largeMedium`.
     LargeMedium,
+    /// The member written `largeMediumSmall`.
     LargeMediumSmall,
+    /// The member written `medium`.
     Medium,
+    /// The member written `mediumSmall`.
     MediumSmall,
+    /// The member written `small`.
     Small,
 }
 
-/// The tag `mso14:task`, schema type `CT_TaskFormGroupTask` of SDK 3.5.1's data.
+/// The `mso14:task` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TaskFormGroupTask`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6657,32 +8777,56 @@ pub enum TaskSizesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TaskTaskFormGroupTask {
+    /// The attribute `description`, when the element has it.
     pub description: Option<String>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The children that are `GroupBackstageGroup`, in order.
     pub group_backstage_group: Vec<GroupBackstageGroup>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:task`, schema type `CT_TaskGroupTask` of SDK 3.5.1's data.
+/// The `mso14:task` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_TaskGroupTask`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6691,33 +8835,58 @@ pub struct TaskTaskFormGroupTask {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TaskTaskGroupTask {
+    /// The attribute `description`, when the element has it.
     pub description: Option<String>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `isDefinitive`, when the element has it.
     pub is_definitive: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `onAction`, when the element has it.
     pub on_action: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:toggleButton`, schema type `CT_BackstageMenuToggleButton` of SDK 3.5.1's data.
+/// The `mso14:toggleButton` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_BackstageMenuToggleButton`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6726,28 +8895,48 @@ pub struct TaskTaskGroupTask {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ToggleButtonBackstageMenuToggleButton {
+    /// The attribute `description`, when the element has it.
     pub description: Option<String>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getPressed`, when the element has it.
     pub get_pressed: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `onAction`, when the element has it.
     pub on_action: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:toggleButton`, schema type `CT_ToggleButton` of SDK 3.5.1's data.
+/// The `mso14:toggleButton` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_ToggleButton`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6756,43 +8945,78 @@ pub struct ToggleButtonBackstageMenuToggleButton {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ToggleButtonToggleButton {
+    /// The attribute `description`, when the element has it.
     pub description: Option<String>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getPressed`, when the element has it.
     pub get_pressed: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getShowImage`, when the element has it.
     pub get_show_image: Option<String>,
+    /// The attribute `getShowLabel`, when the element has it.
     pub get_show_label: Option<String>,
+    /// The attribute `getSize`, when the element has it.
     pub get_size: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `onAction`, when the element has it.
     pub on_action: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `showImage`, when the element has it.
     pub show_image: Option<String>,
+    /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
+    /// The attribute `size`, when the element has it.
     pub size: Option<Size>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:toggleButton`, schema type `CT_ToggleButtonRegular` of SDK 3.5.1's data.
+/// The `mso14:toggleButton` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_ToggleButtonRegular`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6801,41 +9025,74 @@ pub struct ToggleButtonToggleButton {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ToggleButtonToggleButtonRegular {
+    /// The attribute `description`, when the element has it.
     pub description: Option<String>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getPressed`, when the element has it.
     pub get_pressed: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getShowImage`, when the element has it.
     pub get_show_image: Option<String>,
+    /// The attribute `getShowLabel`, when the element has it.
     pub get_show_label: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `onAction`, when the element has it.
     pub on_action: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `showImage`, when the element has it.
     pub show_image: Option<String>,
+    /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The tag `mso14:toggleButton`, schema type `CT_VisibleToggleButton` of SDK 3.5.1's data.
+/// The `mso14:toggleButton` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_VisibleToggleButton`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6844,39 +9101,70 @@ pub struct ToggleButtonToggleButtonRegular {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ToggleButtonVisibleToggleButton {
+    /// The attribute `description`, when the element has it.
     pub description: Option<String>,
+    /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
+    /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
+    /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
+    /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
+    /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
+    /// The attribute `getPressed`, when the element has it.
     pub get_pressed: Option<String>,
+    /// The attribute `getScreentip`, when the element has it.
     pub get_screentip: Option<String>,
+    /// The attribute `getShowImage`, when the element has it.
     pub get_show_image: Option<String>,
+    /// The attribute `getShowLabel`, when the element has it.
     pub get_show_label: Option<String>,
+    /// The attribute `getSupertip`, when the element has it.
     pub get_supertip: Option<String>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
+    /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
+    /// The attribute `image`, when the element has it.
     pub image: Option<String>,
+    /// The attribute `imageMso`, when the element has it.
     pub image_mso: Option<String>,
+    /// The attribute `insertAfterMso`, when the element has it.
     pub insert_after_mso: Option<String>,
+    /// The attribute `insertAfterQ`, when the element has it.
     pub insert_after_q: Option<String>,
+    /// The attribute `insertBeforeMso`, when the element has it.
     pub insert_before_mso: Option<String>,
+    /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
+    /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
+    /// The attribute `label`, when the element has it.
     pub label: Option<String>,
+    /// The attribute `onAction`, when the element has it.
     pub on_action: Option<String>,
+    /// The attribute `screentip`, when the element has it.
     pub screentip: Option<String>,
+    /// The attribute `showImage`, when the element has it.
     pub show_image: Option<String>,
+    /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
+    /// The attribute `supertip`, when the element has it.
     pub supertip: Option<String>,
+    /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `mso14:topItems`, schema type `CT_GroupControls` of SDK 3.5.1's data.
+/// The `mso14:topItems` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_GroupControls`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -6885,7 +9173,9 @@ pub struct ToggleButtonVisibleToggleButton {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TopItems {
+    /// The children that are an item of `GroupControlsContent`, in order.
     pub content: Vec<GroupControlsContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -6895,14 +9185,20 @@ pub struct TopItems {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_2009_07_customui` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `Backstage`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn backstage(&mut self, _node: &Backstage) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BackstageContent`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn backstage_content(&mut self, _node: &BackstageContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BackstageGroupsContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn backstage_groups(
         &mut self,
         _node: &BackstageGroupsContent,
@@ -6910,6 +9206,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BackstageMenuGroupContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn backstage_menu_group(
         &mut self,
         _node: &BackstageMenuGroupContent,
@@ -6917,18 +9215,25 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BottomItems`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn bottom_items(&mut self, _node: &BottomItems) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BoxContent`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn r#box(&mut self, _node: &BoxContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BoxBox`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn box_box(&mut self, _node: &BoxBox) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ButtonBackstageFastCommandButton`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn button_backstage_fast_command_button(
         &mut self,
         _node: &ButtonBackstageFastCommandButton,
@@ -6936,6 +9241,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ButtonBackstageGroupButton`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn button_backstage_group_button(
         &mut self,
         _node: &ButtonBackstageGroupButton,
@@ -6943,6 +9250,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ButtonBackstageMenuButton`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn button_backstage_menu_button(
         &mut self,
         _node: &ButtonBackstageMenuButton,
@@ -6950,6 +9259,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ButtonBackstageRegularButton`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn button_backstage_regular_button(
         &mut self,
         _node: &ButtonBackstageRegularButton,
@@ -6957,10 +9268,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ButtonButton`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn button_button(&mut self, _node: &ButtonButton) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ButtonButtonRegular`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn button_button_regular(
         &mut self,
         _node: &ButtonButtonRegular,
@@ -6968,10 +9283,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ButtonGroup`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn button_group(&mut self, _node: &ButtonGroup) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ButtonGroupContent`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn button_group_content(
         &mut self,
         _node: &ButtonGroupContent,
@@ -6979,6 +9298,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ButtonVisibleButton`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn button_visible_button(
         &mut self,
         _node: &ButtonVisibleButton,
@@ -6986,6 +9307,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CategoryTaskFormGroupCategory`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn category_task_form_group_category(
         &mut self,
         _node: &CategoryTaskFormGroupCategory,
@@ -6993,6 +9316,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CategoryTaskGroupCategory`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn category_task_group_category(
         &mut self,
         _node: &CategoryTaskGroupCategory,
@@ -7000,6 +9325,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CheckBoxBackstageCheckBox`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn check_box_backstage_check_box(
         &mut self,
         _node: &CheckBoxBackstageCheckBox,
@@ -7007,6 +9334,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CheckBoxBackstageMenuCheckBox`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn check_box_backstage_menu_check_box(
         &mut self,
         _node: &CheckBoxBackstageMenuCheckBox,
@@ -7014,10 +9343,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CheckBoxCheckBox`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn check_box_check_box(&mut self, _node: &CheckBoxCheckBox) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ComboBoxBackstageComboBox`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn combo_box_backstage_combo_box(
         &mut self,
         _node: &ComboBoxBackstageComboBox,
@@ -7025,22 +9358,30 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ComboBoxComboBox`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn combo_box_combo_box(&mut self, _node: &ComboBoxComboBox) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Command`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn command(&mut self, _node: &Command) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Commands`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn commands(&mut self, _node: &Commands) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ContextMenu`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn context_menu(&mut self, _node: &ContextMenu) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ContextMenuContent`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn context_menu_content(
         &mut self,
         _node: &ContextMenuContent,
@@ -7048,14 +9389,20 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ContextMenus`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn context_menus(&mut self, _node: &ContextMenus) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ContextualTabs`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn contextual_tabs(&mut self, _node: &ContextualTabs) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ControlControlClone`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn control_control_clone(
         &mut self,
         _node: &ControlControlClone,
@@ -7063,6 +9410,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ControlControlCloneQat`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn control_control_clone_qat(
         &mut self,
         _node: &ControlControlCloneQat,
@@ -7070,6 +9419,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ControlControlCloneRegular`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn control_control_clone_regular(
         &mut self,
         _node: &ControlControlCloneRegular,
@@ -7077,18 +9428,25 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CustomUI`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn custom_ui(&mut self, _node: &CustomUI) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DialogBoxLauncher`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn dialog_box_launcher(&mut self, _node: &DialogBoxLauncher) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DocumentControls`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn document_controls(&mut self, _node: &DocumentControls) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DropDownBackstageDropDown`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn drop_down_backstage_drop_down(
         &mut self,
         _node: &DropDownBackstageDropDown,
@@ -7096,6 +9454,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DropDownDropDownRegular`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn drop_down_drop_down_regular(
         &mut self,
         _node: &DropDownDropDownRegular,
@@ -7103,6 +9463,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DynamicMenuDynamicMenu`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn dynamic_menu_dynamic_menu(
         &mut self,
         _node: &DynamicMenuDynamicMenu,
@@ -7110,6 +9472,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DynamicMenuDynamicMenuRegular`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn dynamic_menu_dynamic_menu_regular(
         &mut self,
         _node: &DynamicMenuDynamicMenuRegular,
@@ -7117,6 +9481,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `EditBoxBackstageEditBox`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn edit_box_backstage_edit_box(
         &mut self,
         _node: &EditBoxBackstageEditBox,
@@ -7124,18 +9490,26 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `EditBoxEditBox`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn edit_box_edit_box(&mut self, _node: &EditBoxEditBox) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `FirstColumn`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn first_column(&mut self, _node: &FirstColumn) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `GalleryGallery`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn gallery_gallery(&mut self, _node: &GalleryGallery) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `GalleryGalleryRegular`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn gallery_gallery_regular(
         &mut self,
         _node: &GalleryGalleryRegular,
@@ -7143,10 +9517,14 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `GroupContent`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn group(&mut self, _node: &GroupContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `GroupBackstageGroup`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn group_backstage_group(
         &mut self,
         _node: &GroupBackstageGroup,
@@ -7154,34 +9532,48 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `GroupBox`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn group_box(&mut self, _node: &GroupBox) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `GroupControlsContent`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn group_controls(&mut self, _node: &GroupControlsContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `GroupGroup`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn group_group(&mut self, _node: &GroupGroup) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Hyperlink`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn hyperlink(&mut self, _node: &Hyperlink) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ImageControl`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn image_control(&mut self, _node: &ImageControl) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ItemBackstageItem`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn item_backstage_item(&mut self, _node: &ItemBackstageItem) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ItemItem`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn item_item(&mut self, _node: &ItemItem) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LabelControlBackstageLabelControl`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn label_control_backstage_label_control(
         &mut self,
         _node: &LabelControlBackstageLabelControl,
@@ -7189,6 +9581,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LabelControlLabelControl`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn label_control_label_control(
         &mut self,
         _node: &LabelControlLabelControl,
@@ -7196,14 +9590,20 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LayoutContainer`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn layout_container(&mut self, _node: &LayoutContainer) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MenuContent`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn menu(&mut self, _node: &MenuContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MenuBackstagePrimaryMenu`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn menu_backstage_primary_menu(
         &mut self,
         _node: &MenuBackstagePrimaryMenu,
@@ -7211,6 +9611,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MenuBackstageSubMenu`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn menu_backstage_sub_menu(
         &mut self,
         _node: &MenuBackstageSubMenu,
@@ -7218,22 +9620,31 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MenuGroup`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn menu_group(&mut self, _node: &MenuGroup) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MenuMenu`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn menu_menu(&mut self, _node: &MenuMenu) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MenuMenuRegular`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn menu_menu_regular(&mut self, _node: &MenuMenuRegular) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MenuMenuRoot`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn menu_menu_root(&mut self, _node: &MenuMenuRoot) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MenuMenuWithTitle`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn menu_menu_with_title(
         &mut self,
         _node: &MenuMenuWithTitle,
@@ -7241,6 +9652,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MenuSeparatorMenuSeparator`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn menu_separator_menu_separator(
         &mut self,
         _node: &MenuSeparatorMenuSeparator,
@@ -7248,6 +9661,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MenuSeparatorMenuSeparatorNoTitle`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn menu_separator_menu_separator_no_title(
         &mut self,
         _node: &MenuSeparatorMenuSeparatorNoTitle,
@@ -7255,14 +9670,20 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `MenuWithTitleContent`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn menu_with_title(&mut self, _node: &MenuWithTitleContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PrimaryItem`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn primary_item(&mut self, _node: &PrimaryItem) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PrimaryItemContent`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn primary_item_content(
         &mut self,
         _node: &PrimaryItemContent,
@@ -7270,10 +9691,13 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Qat`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn qat(&mut self, _node: &Qat) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `QuickAccessToolbarItemsContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn quick_access_toolbar_items(
         &mut self,
         _node: &QuickAccessToolbarItemsContent,
@@ -7281,42 +9705,61 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RadioButton`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn radio_button(&mut self, _node: &RadioButton) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RadioGroup`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn radio_group(&mut self, _node: &RadioGroup) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Ribbon`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ribbon(&mut self, _node: &Ribbon) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RibbonContent`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn ribbon_content(&mut self, _node: &RibbonContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SecondColumn`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn second_column(&mut self, _node: &SecondColumn) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Separator`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn separator(&mut self, _node: &Separator) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SharedControls`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn shared_controls(&mut self, _node: &SharedControls) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SimpleGroupsContent`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn simple_groups(&mut self, _node: &SimpleGroupsContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SplitButtonContent`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn split_button(&mut self, _node: &SplitButtonContent) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SplitButtonSplitButton`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn split_button_split_button(
         &mut self,
         _node: &SplitButtonSplitButton,
@@ -7324,6 +9767,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SplitButtonSplitButtonRegular`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn split_button_split_button_regular(
         &mut self,
         _node: &SplitButtonSplitButtonRegular,
@@ -7331,6 +9776,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SplitButtonSplitButtonWithTitle`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn split_button_split_button_with_title(
         &mut self,
         _node: &SplitButtonSplitButtonWithTitle,
@@ -7338,30 +9785,41 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TabBackstageTab`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn tab_backstage_tab(&mut self, _node: &TabBackstageTab) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TabSet`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn tab_set(&mut self, _node: &TabSet) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TabTab`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn tab_tab(&mut self, _node: &TabTab) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Tabs`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn tabs(&mut self, _node: &Tabs) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TaskFormGroup`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn task_form_group(&mut self, _node: &TaskFormGroup) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TaskGroup`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn task_group(&mut self, _node: &TaskGroup) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TaskTaskFormGroupTask`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn task_task_form_group_task(
         &mut self,
         _node: &TaskTaskFormGroupTask,
@@ -7369,6 +9827,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TaskTaskGroupTask`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn task_task_group_task(
         &mut self,
         _node: &TaskTaskGroupTask,
@@ -7376,6 +9836,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ToggleButtonBackstageMenuToggleButton`. `Descend::Yes` walks into its children,
+    /// and `Descend::No` skips them.
     fn toggle_button_backstage_menu_toggle_button(
         &mut self,
         _node: &ToggleButtonBackstageMenuToggleButton,
@@ -7383,6 +9845,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ToggleButtonToggleButton`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn toggle_button_toggle_button(
         &mut self,
         _node: &ToggleButtonToggleButton,
@@ -7390,6 +9854,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ToggleButtonToggleButtonRegular`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn toggle_button_toggle_button_regular(
         &mut self,
         _node: &ToggleButtonToggleButtonRegular,
@@ -7397,6 +9863,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ToggleButtonVisibleToggleButton`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn toggle_button_visible_toggle_button(
         &mut self,
         _node: &ToggleButtonVisibleToggleButton,
@@ -7404,6 +9872,7 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TopItems`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn top_items(&mut self, _node: &TopItems) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
@@ -7709,7 +10178,7 @@ impl BoxStyleMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -9189,7 +11658,7 @@ impl ExpandMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -9405,7 +11874,7 @@ impl GalleryShowInRibbonMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -9884,7 +12353,7 @@ impl ItemSizeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -10015,7 +12484,7 @@ impl LayoutChildrenMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -10881,7 +13350,7 @@ impl SizeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -11078,7 +13547,7 @@ impl StyleMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -11132,7 +13601,7 @@ impl Style2Member {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -11403,7 +13872,7 @@ impl TaskSizesMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

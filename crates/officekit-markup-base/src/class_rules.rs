@@ -1,8 +1,9 @@
-//! What the two conformance classes' reads and writes share.
+//! What the Strict and Transitional classes share when they read and write a node.
 //!
-//! Matching a tag of their tables against the tree, reading a node of the
-//! expected tag, and the base dates of a workbook's two date systems
-//! (ECMA-376 Part 1, 18.17.4.1).
+//! The class crates (`officekit-strict` and `officekit-transitional`) match a tag of their
+//! generated tables against a name in the tree with [`is`] and [`order`], and read a node only
+//! when its element has the tag the node expects with [`read`]. [`BASE_1900`] and [`BASE_1904`]
+//! are the base dates of the two date systems of a workbook (ECMA-376 Part 1, 18.17.4.1).
 
 use core::cmp::Ordering;
 
@@ -19,19 +20,24 @@ pub const BASE_1900: i64 = -25_569;
 /// Days from 1970-01-01 to the 1904 date system's base date, 1904-01-01.
 pub const BASE_1904: i64 = -24_107;
 
-/// Whether `name` is the tag `tag`.
+/// Whether `name` is the tag `tag`: the same namespace and the same local name, in either
+/// class's spelling of the namespace.
 #[must_use]
 pub fn is(tag: Tag, name: &QName) -> bool {
     tag_of(name).is_some_and(|found| order(tag, found) == Ordering::Equal)
 }
 
-/// How a table's tag sorts against a tag of the tree.
+/// How a table's tag sorts against a tag of the tree: by namespace id, then by local name.
+///
+/// The generated tables are sorted this way, so a binary search finds a tag with it.
 #[must_use]
 pub fn order(table: Tag, found: (Option<NamespaceId>, &str)) -> Ordering {
     table.0.cmp(&found.0).then_with(|| table.1.cmp(found.1))
 }
 
-/// The node of `T` `element` holds, when it is the tag `tag`.
+/// The node of `T` that `element` holds, when it has the tag `tag`.
+///
+/// `reader` is the generated `read::<node>` function of the node.
 ///
 /// # Errors
 ///

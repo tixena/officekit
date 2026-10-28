@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `w10` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `urn:schemas-microsoft-com:office:word`, which files write with the prefix `w10`.
 //!
-//! The namespace is `urn:schemas-microsoft-com:office:word`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 pub mod read;
 pub mod write;
@@ -271,8 +271,8 @@ pub static TEXT_WRAPPING_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-/// 19.3.2.1 anchorlock (Anchor Location Is Locked): the tag `w10:anchorlock`, schema type
-/// `CT_AnchorLock`.
+/// The `w10:anchorlock` element, Anchor Location Is Locked (ECMA-376 Part 4, section 19.3.2.1). Its
+/// schema type is `CT_AnchorLock`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -281,10 +281,15 @@ pub static TEXT_WRAPPING_SHAPE: crate::Shape = crate::Shape {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct AnchorLocationIsLocked {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 19.3.3.1 `ST_BorderShadow` (Border Shadow Type): the text the file carried.
+/// Border Shadow Type, the simple type `ST_BorderShadow` (ECMA-376 Part 4, section 19.3.3.1), kept
+/// as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -293,17 +298,26 @@ pub struct AnchorLocationIsLocked {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BorderShadowType(pub String);
-/// The members of `ST_BorderShadow`, in alphabetical order.
+/// The members of the enumeration `ST_BorderShadow`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum BorderShadowTypeMember {
+    /// The member written `f`.
     F,
+    /// The member written `false`.
     False,
+    /// The member written `t`.
     T,
+    /// The member written `true`.
     True,
 }
 
-/// 19.3.3.2 `ST_BorderType` (Border Type): the text the file carried.
+/// Border Type, the simple type `ST_BorderType` (ECMA-376 Part 4, section 19.3.3.2), kept as the
+/// text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -312,40 +326,69 @@ pub enum BorderShadowTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BorderType(pub String);
-/// The members of `ST_BorderType`, in alphabetical order.
+/// The members of the enumeration `ST_BorderType`, in alphabetical order. `as_str` gives the text
+/// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum BorderTypeMember {
+    /// The member written `dash`.
     Dash,
+    /// The member written `dashDotDot`.
     DashDotDot,
+    /// The member written `dashDotStroked`.
     DashDotStroked,
+    /// The member written `dashedSmall`.
     DashedSmall,
+    /// The member written `dot`.
     Dot,
+    /// The member written `dotDash`.
     DotDash,
+    /// The member written `double`.
     Double,
+    /// The member written `doubleWave`.
     DoubleWave,
+    /// The member written `HTMLInset`.
     HTMLInset,
+    /// The member written `HTMLOutset`.
     HTMLOutset,
+    /// The member written `hairline`.
     Hairline,
+    /// The member written `none`.
     None,
+    /// The member written `single`.
     Single,
+    /// The member written `thick`.
     Thick,
+    /// The member written `thickBetweenThin`.
     ThickBetweenThin,
+    /// The member written `thickBetweenThinLarge`.
     ThickBetweenThinLarge,
+    /// The member written `thickBetweenThinSmall`.
     ThickBetweenThinSmall,
+    /// The member written `thickThin`.
     ThickThin,
+    /// The member written `thickThinLarge`.
     ThickThinLarge,
+    /// The member written `thickThinSmall`.
     ThickThinSmall,
+    /// The member written `thinThick`.
     ThinThick,
+    /// The member written `thinThickLarge`.
     ThinThickLarge,
+    /// The member written `thinThickSmall`.
     ThinThickSmall,
+    /// The member written `threeDEmboss`.
     ThreeDEmboss,
+    /// The member written `threeDEngrave`.
     ThreeDEngrave,
+    /// The member written `triple`.
     Triple,
+    /// The member written `wave`.
     Wave,
 }
 
-/// 19.3.2.2 borderbottom (Bottom Border): the tag `w10:borderbottom`, schema type `CT_Border`.
+/// The `w10:borderbottom` element, Bottom Border (ECMA-376 Part 4, section 19.3.2.2). Its schema
+/// type is `CT_Border`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -354,13 +397,21 @@ pub enum BorderTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BottomBorder {
+    /// The attribute `shadow`, when the element has it.
     pub shadow: Option<BorderShadowType>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<BorderType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The attribute `width`, when the element has it.
     pub width: Option<String>,
 }
 
-/// 19.3.3.3 `ST_HorizontalAnchor` (Horizontal Anchor Type): the text the file carried.
+/// Horizontal Anchor Type, the simple type `ST_HorizontalAnchor` (ECMA-376 Part 4, section
+/// 19.3.3.3), kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -369,17 +420,23 @@ pub struct BottomBorder {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct HorizontalAnchorType(pub String);
-/// The members of `ST_HorizontalAnchor`, in alphabetical order.
+/// The members of the enumeration `ST_HorizontalAnchor`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum HorizontalAnchorTypeMember {
+    /// The member written `char`.
     Char,
+    /// The member written `margin`.
     Margin,
+    /// The member written `page`.
     Page,
+    /// The member written `text`.
     Text,
 }
 
-/// 19.3.2.3 borderleft (Left Border): the tag `w10:borderleft`, schema type `CT_Border`.
+/// The `w10:borderleft` element, Left Border (ECMA-376 Part 4, section 19.3.2.3). Its schema type
+/// is `CT_Border`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -388,13 +445,18 @@ pub enum HorizontalAnchorTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LeftBorder {
+    /// The attribute `shadow`, when the element has it.
     pub shadow: Option<BorderShadowType>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<BorderType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The attribute `width`, when the element has it.
     pub width: Option<String>,
 }
 
-/// 19.3.2.4 borderright (Right Border): the tag `w10:borderright`, schema type `CT_Border`.
+/// The `w10:borderright` element, Right Border (ECMA-376 Part 4, section 19.3.2.4). Its schema type
+/// is `CT_Border`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -403,13 +465,18 @@ pub struct LeftBorder {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct RightBorder {
+    /// The attribute `shadow`, when the element has it.
     pub shadow: Option<BorderShadowType>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<BorderType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The attribute `width`, when the element has it.
     pub width: Option<String>,
 }
 
-/// 19.3.2.6 wrap (Text Wrapping): the tag `w10:wrap`, schema type `CT_Wrap`.
+/// The `w10:wrap` element, Text Wrapping (ECMA-376 Part 4, section 19.3.2.6). Its schema type is
+/// `CT_Wrap`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -418,14 +485,23 @@ pub struct RightBorder {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextWrapping {
+    /// The attribute `anchorx`, when the element has it.
     pub anchorx: Option<HorizontalAnchorType>,
+    /// The attribute `anchory`, when the element has it.
     pub anchory: Option<VerticalAnchorType>,
+    /// The attribute `side`, when the element has it.
     pub side: Option<TextWrappingSide>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<TextWrappingType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-/// 19.3.3.5 `ST_WrapSide` (Text Wrapping Side): the text the file carried.
+/// Text Wrapping Side, the simple type `ST_WrapSide` (ECMA-376 Part 4, section 19.3.3.5), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -434,17 +510,26 @@ pub struct TextWrapping {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextWrappingSide(pub String);
-/// The members of `ST_WrapSide`, in alphabetical order.
+/// The members of the enumeration `ST_WrapSide`, in alphabetical order. `as_str` gives the text of
+/// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextWrappingSideMember {
+    /// The member written `both`.
     Both,
+    /// The member written `largest`.
     Largest,
+    /// The member written `left`.
     Left,
+    /// The member written `right`.
     Right,
 }
 
-/// 19.3.3.6 `ST_WrapType` (Text Wrapping Type): the text the file carried.
+/// Text Wrapping Type, the simple type `ST_WrapType` (ECMA-376 Part 4, section 19.3.3.6), kept as
+/// the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -453,18 +538,25 @@ pub enum TextWrappingSideMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TextWrappingType(pub String);
-/// The members of `ST_WrapType`, in alphabetical order.
+/// The members of the enumeration `ST_WrapType`, in alphabetical order. `as_str` gives the text of
+/// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextWrappingTypeMember {
+    /// The member written `none`.
     None,
+    /// The member written `square`.
     Square,
+    /// The member written `through`.
     Through,
+    /// The member written `tight`.
     Tight,
+    /// The member written `topAndBottom`.
     TopAndBottom,
 }
 
-/// 19.3.2.5 bordertop (Top Border): the tag `w10:bordertop`, schema type `CT_Border`.
+/// The `w10:bordertop` element, Top Border (ECMA-376 Part 4, section 19.3.2.5). Its schema type is
+/// `CT_Border`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -473,13 +565,21 @@ pub enum TextWrappingTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TopBorder {
+    /// The attribute `shadow`, when the element has it.
     pub shadow: Option<BorderShadowType>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<BorderType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// The attribute `width`, when the element has it.
     pub width: Option<String>,
 }
 
-/// 19.3.3.4 `ST_VerticalAnchor` (Vertical Anchor Type): the text the file carried.
+/// Vertical Anchor Type, the simple type `ST_VerticalAnchor` (ECMA-376 Part 4, section 19.3.3.4),
+/// kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -488,13 +588,18 @@ pub struct TopBorder {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct VerticalAnchorType(pub String);
-/// The members of `ST_VerticalAnchor`, in alphabetical order.
+/// The members of the enumeration `ST_VerticalAnchor`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum VerticalAnchorTypeMember {
+    /// The member written `line`.
     Line,
+    /// The member written `margin`.
     Margin,
+    /// The member written `page`.
     Page,
+    /// The member written `text`.
     Text,
 }
 
@@ -551,7 +656,7 @@ impl BorderShadowTypeMember {
         crate::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -625,7 +730,7 @@ impl BorderTypeMember {
         crate::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -702,7 +807,7 @@ impl HorizontalAnchorTypeMember {
         crate::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -836,7 +941,7 @@ impl TextWrappingSideMember {
         crate::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -888,7 +993,7 @@ impl TextWrappingTypeMember {
         crate::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -965,7 +1070,7 @@ impl VerticalAnchorTypeMember {
         crate::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

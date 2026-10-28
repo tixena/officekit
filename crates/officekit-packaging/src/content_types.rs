@@ -16,8 +16,13 @@ pub(crate) const NAMESPACE: &str = "http://schemas.openxmlformats.org/package/20
 /// The content type every `xml` part gets when nothing else names its type.
 pub(crate) const XML_CONTENT_TYPE: &str = "application/xml";
 
-/// `Default` entries by extension, `Override` entries by part name, in the
-/// order the file has them.
+/// The parsed `[Content_Types].xml`: `Default` entries by extension and `Override` entries by part
+/// name, in the order the file has them.
+///
+/// [`of`](Self::of) gives a part's content type. A package returns its value from
+/// [`Package::content_types`](crate::package::Package::content_types), and the entry lists from
+/// [`Package::content_type_defaults`](crate::package::Package::content_type_defaults) and
+/// [`Package::content_type_overrides`](crate::package::Package::content_type_overrides).
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
 #[cfg_attr(
     feature = "binary-format",

@@ -42,7 +42,10 @@ const LEFT_OUT: &[(&str, &[&str])] = &[
     ),
 ];
 
-/// Checks a package against one target version, stopping at a number of errors.
+/// Checks a package against one Office release, stopping at a number of errors.
+///
+/// It is built with [`Validator::new`], can be limited with [`Validator::with_max_errors`], and
+/// runs with [`Validator::validate`].
 #[derive(Debug, Clone, Copy)]
 pub struct Validator {
     max_errors: usize,
@@ -50,6 +53,7 @@ pub struct Validator {
 }
 
 impl Validator {
+    /// The cap a new validator keeps: 1000 errors.
     pub const DEFAULT_MAX_ERRORS: usize = 1000;
 
     /// Keeps the errors up to the cap; the one that reaches it is kept.
@@ -61,11 +65,15 @@ impl Validator {
         errors
     }
 
+    /// The cap on errors; `0` means no limit.
     #[must_use]
     pub const fn max_errors(&self) -> usize {
         self.max_errors
     }
 
+    /// A validator for `version` with the cap [`Validator::DEFAULT_MAX_ERRORS`].
+    ///
+    /// The release decides which elements, attributes and part types exist.
     #[must_use]
     pub const fn new(version: OfficeVersion) -> Self {
         Self {
@@ -127,6 +135,7 @@ impl Validator {
         errors.into_vec()
     }
 
+    /// The Office release the validator checks against.
     #[must_use]
     pub const fn version(&self) -> OfficeVersion {
         self.version

@@ -209,11 +209,11 @@
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The typed tree of the `p14` namespace: its structs, enums, and
-//! simple-type newtypes, with the readers in `read` and the writers in
-//! `write`.
+//! The typed tree of the namespace `http://schemas.microsoft.com/office/powerpoint/2010/main`, which files write with the prefix `p14`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/powerpoint/2010/main`.
+//! The module has the structs, enums and simple-type newtypes of the namespace's
+//! elements. The `read` module has a function that reads an element into each, and the
+//! `write` module one that writes each back to an element.
 
 #[cfg(feature = "binary-format")]
 mod archive;
@@ -679,7 +679,8 @@ pub static SHOW_EVENT_RECORD_LIST_CONTENT_TAGS: officekit_markup_base::Accept =
         ],
     };
 
-/// The tag `p14:bmk`, schema type `CT_MediaBookmark` of SDK 3.5.1's data.
+/// The `p14:bmk` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_MediaBookmark`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -688,12 +689,16 @@ pub static SHOW_EVENT_RECORD_LIST_CONTENT_TAGS: officekit_markup_base::Accept =
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Bmk {
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `time`, when the element has it.
     pub time: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:bmkLst`, schema type `CT_MediaBookmarkList` of SDK 3.5.1's data.
+/// The `p14:bmkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_MediaBookmarkList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -702,11 +707,14 @@ pub struct Bmk {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BmkLst {
+    /// The children that are `Bmk`, in order.
     pub bmk: Vec<Bmk>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:bmkTgt`, schema type `CT_MediaBookmarkTarget` of SDK 3.5.1's data.
+/// The `p14:bmkTgt` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_MediaBookmarkTarget`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -715,12 +723,16 @@ pub struct BmkLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BmkTgt {
+    /// The attribute `bmkName`, when the element has it.
     pub bmk_name: Option<String>,
+    /// The attribute `spid`, when the element has it.
     pub spid: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:browseMode`, schema type `CT_BrowseMode` of SDK 3.5.1's data.
+/// The `p14:browseMode` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_BrowseMode`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -729,12 +741,14 @@ pub struct BmkTgt {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct BrowseMode {
+    /// The attribute `showStatus`, when the element has it.
     pub show_status: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:cNvContentPartPr`, schema type `CT_NonVisualInkContentPartProperties` of SDK
-/// 3.5.1's data.
+/// The `p14:cNvContentPartPr` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_NonVisualInkContentPartProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -743,13 +757,18 @@ pub struct BrowseMode {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CNvContentPartPr {
+    /// The child that is `super::office_drawing_2010_main::CpLocks`, when there is one.
     pub cp_locks: Option<Box<super::office_drawing_2010_main::CpLocks>>,
+    /// The child that is `super::office_drawing_2010_main::ExtLst`, when there is one.
     pub ext_lst: Option<Box<super::office_drawing_2010_main::ExtLst>>,
+    /// The attribute `isComment`, when the element has it.
     pub is_comment: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:cNvPr`, schema type `CT_NonVisualDrawingProps` of SDK 3.5.1's data.
+/// The `p14:cNvPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_NonVisualDrawingProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -758,18 +777,28 @@ pub struct CNvContentPartPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CNvPr {
+    /// The child that is `super::drawing::ClickHyperlink`, when there is one.
     pub click_hyperlink: Option<Box<super::drawing::ClickHyperlink>>,
+    /// The attribute `descr`, when the element has it.
     pub descr: Option<String>,
+    /// The child that is `super::drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    /// The attribute `hidden`, when the element has it.
     pub hidden: Option<String>,
+    /// The child that is `super::drawing::HyperlinkForHover`, when there is one.
     pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHover>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<super::drawing::DrawingElementID>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `title`, when the element has it.
     pub title: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:conveyor`, schema type `CT_LeftRightDirectionTransition` of SDK 3.5.1's data.
+/// The `p14:conveyor` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_LeftRightDirectionTransition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -778,10 +807,12 @@ pub struct CNvPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Conveyor {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:creationId`, schema type `CT_RandomId` of SDK 3.5.1's data.
+/// The `p14:creationId` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_RandomId`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -790,10 +821,12 @@ pub struct Conveyor {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CreationId {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:defaultImageDpi`, schema type `CT_DefaultImageDpi` of SDK 3.5.1's data.
+/// The `p14:defaultImageDpi` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_DefaultImageDpi`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -802,11 +835,14 @@ pub struct CreationId {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DefaultImageDpi {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `p14:discardImageEditData`, schema type `CT_DiscardImageEditData` of SDK 3.5.1's data.
+/// The `p14:discardImageEditData` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_DiscardImageEditData`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -815,11 +851,14 @@ pub struct DefaultImageDpi {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DiscardImageEditData {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `p14:doors`, schema type `CT_OrientationTransition` of SDK 3.5.1's data.
+/// The `p14:doors` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OrientationTransition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -828,11 +867,14 @@ pub struct DiscardImageEditData {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Doors {
+    /// The attribute `dir`, when the element has it.
     pub dir: Option<super::presentation::Direction>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
+/// The `p14:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -841,11 +883,14 @@ pub struct Doors {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLstExtensionList {
+    /// The children that are `super::presentation::Extension`, in order.
     pub extension: Vec<super::presentation::Extension>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:extLst`, schema type `CT_ExtensionListModify` of SDK 3.5.1's data.
+/// The `p14:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ExtensionListModify`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -854,12 +899,16 @@ pub struct ExtLstExtensionList {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ExtLstExtensionListModify {
+    /// The children that are `super::presentation::Extension`, in order.
     pub extension: Vec<super::presentation::Extension>,
+    /// The attribute `mod`, when the element has it.
     pub r#mod: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:fade`, schema type `CT_MediaFade` of SDK 3.5.1's data.
+/// The `p14:fade` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_MediaFade`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -868,12 +917,16 @@ pub struct ExtLstExtensionListModify {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Fade {
+    /// The attribute `in`, when the element has it.
     pub r#in: Option<String>,
+    /// The attribute `out`, when the element has it.
     pub out: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:ferris`, schema type `CT_LeftRightDirectionTransition` of SDK 3.5.1's data.
+/// The `p14:ferris` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_LeftRightDirectionTransition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -882,10 +935,12 @@ pub struct Fade {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Ferris {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:flash`, schema type `CT_Empty` of SDK 3.5.1's data.
+/// The `p14:flash` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Empty`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -894,10 +949,12 @@ pub struct Ferris {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Flash {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:flip`, schema type `CT_LeftRightDirectionTransition` of SDK 3.5.1's data.
+/// The `p14:flip` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_LeftRightDirectionTransition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -906,10 +963,12 @@ pub struct Flash {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Flip {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:flythrough`, schema type `CT_FlyThroughTransition` of SDK 3.5.1's data.
+/// The `p14:flythrough` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_FlyThroughTransition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -918,12 +977,16 @@ pub struct Flip {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Flythrough {
+    /// The attribute `dir`, when the element has it.
     pub dir: Option<super::presentation::TransitionInOutDirectionType>,
+    /// The attribute `hasBounce`, when the element has it.
     pub has_bounce: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:gallery`, schema type `CT_LeftRightDirectionTransition` of SDK 3.5.1's data.
+/// The `p14:gallery` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_LeftRightDirectionTransition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -932,10 +995,12 @@ pub struct Flythrough {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Gallery {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:glitter`, schema type `CT_GlitterTransition` of SDK 3.5.1's data.
+/// The `p14:glitter` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_GlitterTransition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -944,12 +1009,16 @@ pub struct Gallery {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Glitter {
+    /// The attribute `dir`, when the element has it.
     pub dir: Option<super::presentation::TransitionSideDirectionType>,
+    /// The attribute `pattern`, when the element has it.
     pub pattern: Option<TransitionPattern>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:honeycomb`, schema type `CT_Empty` of SDK 3.5.1's data.
+/// The `p14:honeycomb` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Empty`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -958,10 +1027,12 @@ pub struct Glitter {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Honeycomb {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:laserClr`, schema type `CT_Color` of SDK 3.5.1's data.
+/// The `p14:laserClr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -970,11 +1041,14 @@ pub struct Honeycomb {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LaserClr {
+    /// The child that is an item of `super::drawing::ColorContent`, which the schema requires.
     pub content: Box<super::drawing::ColorContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:laserTraceLst`, schema type `CT_LaserTraceList` of SDK 3.5.1's data.
+/// The `p14:laserTraceLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_LaserTraceList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -983,11 +1057,14 @@ pub struct LaserClr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct LaserTraceLst {
+    /// The children that are `TracePtLst`, in order.
     pub trace_pt_lst: Vec<TracePtLst>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:media`, schema type `CT_Media` of SDK 3.5.1's data.
+/// The `p14:media` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Media`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -996,16 +1073,24 @@ pub struct LaserTraceLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Media {
+    /// The child that is `BmkLst`, when there is one.
     pub bmk_lst: Option<Box<BmkLst>>,
+    /// The attribute `r:embed`, when the element has it.
     pub embed: Option<String>,
+    /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionList>>,
+    /// The child that is `Fade`, when there is one.
     pub fade: Option<Box<Fade>>,
+    /// The attribute `r:link`, when the element has it.
     pub link: Option<String>,
+    /// The child that is `Trim`, when there is one.
     pub trim: Option<Box<Trim>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:modId`, schema type `CT_RandomId` of SDK 3.5.1's data.
+/// The `p14:modId` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RandomId`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1014,10 +1099,12 @@ pub struct Media {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ModId {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:nullEvt`, schema type `CT_NullEventRecord` of SDK 3.5.1's data.
+/// The `p14:nullEvt` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_NullEventRecord`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1026,12 +1113,16 @@ pub struct ModId {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NullEvt {
+    /// The attribute `objId`, when the element has it.
     pub obj_id: Option<String>,
+    /// The attribute `time`, when the element has it.
     pub time: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:nvContentPartPr`, schema type `CT_ContentPartNonVisual` of SDK 3.5.1's data.
+/// The `p14:nvContentPartPr` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_ContentPartNonVisual`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1040,13 +1131,18 @@ pub struct NullEvt {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NvContentPartPr {
+    /// The child that is `CNvContentPartPr`, when there is one.
     pub c: Option<Box<CNvContentPartPr>>,
+    /// The child that is `CNvPr`, which the schema requires.
     pub c_nv_pr: Box<CNvPr>,
+    /// The child that is `NvPr`, which the schema requires.
     pub nv_pr: Box<NvPr>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:nvPr`, schema type `CT_ApplicationNonVisualDrawingProps` of SDK 3.5.1's data.
+/// The `p14:nvPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ApplicationNonVisualDrawingProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1055,16 +1151,25 @@ pub struct NvContentPartPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct NvPr {
+    /// The child that is an item of `super::presentation::NonVisualPropertiesContent`, when there
+    /// is one.
     pub content: Option<Box<super::presentation::NonVisualPropertiesContent>>,
+    /// The child that is `super::presentation::CustomerDataList`, when there is one.
     pub customer_data_list: Option<Box<super::presentation::CustomerDataList>>,
+    /// The child that is `super::presentation::ExtensionList`, when there is one.
     pub extension_list: Option<Box<super::presentation::ExtensionList>>,
+    /// The attribute `isPhoto`, when the element has it.
     pub is_photo: Option<String>,
+    /// The child that is `super::presentation::PlaceholderShape`, when there is one.
     pub placeholder_shape: Option<Box<super::presentation::PlaceholderShape>>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `userDrawn`, when the element has it.
     pub user_drawn: Option<String>,
 }
 
-/// The tag `p14:pan`, schema type `CT_SideDirectionTransition` of SDK 3.5.1's data.
+/// The `p14:pan` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SideDirectionTransition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1073,11 +1178,14 @@ pub struct NvPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Pan {
+    /// The attribute `dir`, when the element has it.
     pub dir: Option<super::presentation::TransitionSideDirectionType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:pauseEvt`, schema type `CT_MediaPlaybackEventRecord` of SDK 3.5.1's data.
+/// The `p14:pauseEvt` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_MediaPlaybackEventRecord`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1086,10 +1194,12 @@ pub struct Pan {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PauseEvt {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:playEvt`, schema type `CT_MediaPlaybackEventRecord` of SDK 3.5.1's data.
+/// The `p14:playEvt` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_MediaPlaybackEventRecord`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1098,10 +1208,12 @@ pub struct PauseEvt {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct PlayEvt {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:prism`, schema type `CT_PrismTransition` of SDK 3.5.1's data.
+/// The `p14:prism` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_PrismTransition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1110,13 +1222,18 @@ pub struct PlayEvt {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Prism {
+    /// The attribute `dir`, when the element has it.
     pub dir: Option<super::presentation::TransitionSideDirectionType>,
+    /// The attribute `isContent`, when the element has it.
     pub is_content: Option<String>,
+    /// The attribute `isInverted`, when the element has it.
     pub is_inverted: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:resumeEvt`, schema type `CT_MediaPlaybackEventRecord` of SDK 3.5.1's data.
+/// The `p14:resumeEvt` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_MediaPlaybackEventRecord`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1125,10 +1242,12 @@ pub struct Prism {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ResumeEvt {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:reveal`, schema type `CT_RevealTransition` of SDK 3.5.1's data.
+/// The `p14:reveal` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RevealTransition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1137,12 +1256,16 @@ pub struct ResumeEvt {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Reveal {
+    /// The attribute `dir`, when the element has it.
     pub dir: Option<TransitionLeftRightDirectionType>,
+    /// The attribute `thruBlk`, when the element has it.
     pub thru_blk: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:ripple`, schema type `CT_RippleTransition` of SDK 3.5.1's data.
+/// The `p14:ripple` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_RippleTransition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1151,11 +1274,14 @@ pub struct Reveal {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Ripple {
+    /// The attribute `dir`, when the element has it.
     pub dir: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:sectionLst`, schema type `CT_SectionList` of SDK 3.5.1's data.
+/// The `p14:sectionLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_SectionList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1164,11 +1290,14 @@ pub struct Ripple {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SectionLst {
+    /// The children that are `SectionSection`, in order.
     pub section_section: Vec<SectionSection>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:sectionPr`, schema type `CT_SectionProperties` of SDK 3.5.1's data.
+/// The `p14:sectionPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SectionProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1177,11 +1306,14 @@ pub struct SectionLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SectionPr {
+    /// The children that are `SectionSectionOld`, in order.
     pub section_section_old: Vec<SectionSectionOld>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:section`, schema type `CT_Section` of SDK 3.5.1's data.
+/// The `p14:section` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Section`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1190,14 +1322,20 @@ pub struct SectionPr {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SectionSection {
+    /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionList>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The child that is `SldIdLst`, which the schema requires.
     pub sld_id_lst: Box<SldIdLst>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:section`, schema type `CT_SectionOld` of SDK 3.5.1's data.
+/// The `p14:section` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SectionOld`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1206,14 +1344,20 @@ pub struct SectionSection {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SectionSectionOld {
+    /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionList>>,
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// The attribute `name`, when the element has it.
     pub name: Option<String>,
+    /// The attribute `slideIdLst`, when the element has it.
     pub slide_id_lst: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:seekEvt`, schema type `CT_MediaSeekEventRecord` of SDK 3.5.1's data.
+/// The `p14:seekEvt` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_MediaSeekEventRecord`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1222,27 +1366,44 @@ pub struct SectionSectionOld {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SeekEvt {
+    /// The attribute `objId`, when the element has it.
     pub obj_id: Option<String>,
+    /// The attribute `seek`, when the element has it.
     pub seek: Option<String>,
+    /// The attribute `time`, when the element has it.
     pub time: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// One item of `CT_ShowEventRecordList`: choice in `CT_ShowEventRecordList`.
+/// One child element of a choice: choice in `CT_ShowEventRecordList`.
+///
+/// The schema types that hold it: `CT_ShowEventRecordList`.
+///
+/// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ShowEventRecordListContent {
+    /// The element `p14:nullEvt`, a `NullEvt`.
     NullEvt(NullEvt),
+    /// An element or node the schemas do not declare at this position.
     Other(Node),
+    /// The element `p14:pauseEvt`, a `PauseEvt`.
     PauseEvt(PauseEvt),
+    /// The element `p14:playEvt`, a `PlayEvt`.
     PlayEvt(PlayEvt),
+    /// The element `p14:resumeEvt`, a `ResumeEvt`.
     ResumeEvt(ResumeEvt),
+    /// The element `p14:seekEvt`, a `SeekEvt`.
     SeekEvt(SeekEvt),
+    /// The element `p14:stopEvt`, a `StopEvt`.
     StopEvt(StopEvt),
+    /// The element `p14:triggerEvt`, a `TriggerEvt`.
     TriggerEvt(TriggerEvt),
 }
 
-/// The tag `p14:showEvtLst`, schema type `CT_ShowEventRecordList` of SDK 3.5.1's data.
+/// The `p14:showEvtLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_ShowEventRecordList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1251,11 +1412,14 @@ pub enum ShowEventRecordListContent {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShowEvtLst {
+    /// The children that are an item of `ShowEventRecordListContent`, in order.
     pub content: Vec<ShowEventRecordListContent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:showMediaCtrls`, schema type `CT_ShowMediaControls` of SDK 3.5.1's data.
+/// The `p14:showMediaCtrls` element, declared by the schema data of the Open XML SDK, version
+/// 3.5.1. Its schema type is `CT_ShowMediaControls`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1264,11 +1428,14 @@ pub struct ShowEvtLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct ShowMediaCtrls {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The tag `p14:shred`, schema type `CT_ShredTransition` of SDK 3.5.1's data.
+/// The `p14:shred` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_ShredTransition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1277,12 +1444,16 @@ pub struct ShowMediaCtrls {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Shred {
+    /// The attribute `dir`, when the element has it.
     pub dir: Option<super::presentation::TransitionInOutDirectionType>,
+    /// The attribute `pattern`, when the element has it.
     pub pattern: Option<TransitionShredPattern>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:sldId`, schema type `CT_SectionSlideIdListEntry` of SDK 3.5.1's data.
+/// The `p14:sldId` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SectionSlideIdListEntry`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1291,11 +1462,14 @@ pub struct Shred {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SldId {
+    /// The attribute `id`, when the element has it.
     pub id: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:sldIdLst`, schema type `CT_SectionSlideIdList` of SDK 3.5.1's data.
+/// The `p14:sldIdLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SectionSlideIdList`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1304,11 +1478,14 @@ pub struct SldId {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct SldIdLst {
+    /// The children that are `SldId`, in order.
     pub sld_id: Vec<SldId>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:stopEvt`, schema type `CT_MediaPlaybackEventRecord` of SDK 3.5.1's data.
+/// The `p14:stopEvt` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_MediaPlaybackEventRecord`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1317,10 +1494,12 @@ pub struct SldIdLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StopEvt {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:switch`, schema type `CT_LeftRightDirectionTransition` of SDK 3.5.1's data.
+/// The `p14:switch` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_LeftRightDirectionTransition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1329,10 +1508,12 @@ pub struct StopEvt {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Switch {
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:tracePt`, schema type `CT_LaserTracePoint` of SDK 3.5.1's data.
+/// The `p14:tracePt` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_LaserTracePoint`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1341,13 +1522,18 @@ pub struct Switch {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TracePt {
+    /// The attribute `t`, when the element has it.
     pub t: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// The attribute `x`, when the element has it.
     pub x: Option<String>,
+    /// The attribute `y`, when the element has it.
     pub y: Option<String>,
 }
 
-/// The tag `p14:tracePtLst`, schema type `CT_LaserTrace` of SDK 3.5.1's data.
+/// The `p14:tracePtLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_LaserTrace`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1356,11 +1542,16 @@ pub struct TracePt {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TracePtLst {
+    /// The children that are `TracePt`, in order.
     pub trace_pt: Vec<TracePt>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// `ST_TransitionLeftRightDirectionType`: the text the file carried.
+/// The simple type `ST_TransitionLeftRightDirectionType`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1369,15 +1560,21 @@ pub struct TracePtLst {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TransitionLeftRightDirectionType(pub String);
-/// The members of `ST_TransitionLeftRightDirectionType`, in alphabetical order.
+/// The members of the enumeration `ST_TransitionLeftRightDirectionType`, in alphabetical order.
+/// `as_str` gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TransitionLeftRightDirectionTypeMember {
+    /// The member written `l`.
     L,
+    /// The member written `r`.
     R,
 }
 
-/// `ST_TransitionPattern`: the text the file carried.
+/// The simple type `ST_TransitionPattern`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1386,15 +1583,21 @@ pub enum TransitionLeftRightDirectionTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TransitionPattern(pub String);
-/// The members of `ST_TransitionPattern`, in alphabetical order.
+/// The members of the enumeration `ST_TransitionPattern`, in alphabetical order. `as_str` gives the
+/// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TransitionPatternMember {
+    /// The member written `diamond`.
     Diamond,
+    /// The member written `hexagon`.
     Hexagon,
 }
 
-/// `ST_TransitionShredPattern`: the text the file carried.
+/// The simple type `ST_TransitionShredPattern`, kept as the text the file carried.
+///
+/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
+/// stays stored as it was.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1403,15 +1606,19 @@ pub enum TransitionPatternMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TransitionShredPattern(pub String);
-/// The members of `ST_TransitionShredPattern`, in alphabetical order.
+/// The members of the enumeration `ST_TransitionShredPattern`, in alphabetical order. `as_str`
+/// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TransitionShredPatternMember {
+    /// The member written `rectangle`.
     Rectangle,
+    /// The member written `strip`.
     Strip,
 }
 
-/// The tag `p14:triggerEvt`, schema type `CT_TriggerEventRecord` of SDK 3.5.1's data.
+/// The `p14:triggerEvt` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_TriggerEventRecord`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1420,13 +1627,18 @@ pub enum TransitionShredPatternMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct TriggerEvt {
+    /// The attribute `objId`, when the element has it.
     pub obj_id: Option<String>,
+    /// The attribute `time`, when the element has it.
     pub time: Option<String>,
+    /// The attribute `type`, when the element has it.
     pub r#type: Option<super::presentation::TriggerEvent>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:trim`, schema type `CT_MediaTrim` of SDK 3.5.1's data.
+/// The `p14:trim` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_MediaTrim`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1435,12 +1647,16 @@ pub struct TriggerEvt {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Trim {
+    /// The attribute `end`, when the element has it.
     pub end: Option<String>,
+    /// The attribute `st`, when the element has it.
     pub st: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:vortex`, schema type `CT_SideDirectionTransition` of SDK 3.5.1's data.
+/// The `p14:vortex` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_SideDirectionTransition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1449,11 +1665,14 @@ pub struct Trim {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Vortex {
+    /// The attribute `dir`, when the element has it.
     pub dir: Option<super::presentation::TransitionSideDirectionType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:warp`, schema type `CT_InOutTransition` of SDK 3.5.1's data.
+/// The `p14:warp` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_InOutTransition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1462,11 +1681,14 @@ pub struct Vortex {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Warp {
+    /// The attribute `dir`, when the element has it.
     pub dir: Option<super::presentation::TransitionInOutDirectionType>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:wheelReverse`, schema type `CT_WheelTransition` of SDK 3.5.1's data.
+/// The `p14:wheelReverse` element, declared by the schema data of the Open XML SDK, version 3.5.1.
+/// Its schema type is `CT_WheelTransition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1475,11 +1697,14 @@ pub struct Warp {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct WheelReverse {
+    /// The attribute `spokes`, when the element has it.
     pub spokes: Option<String>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:window`, schema type `CT_OrientationTransition` of SDK 3.5.1's data.
+/// The `p14:window` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_OrientationTransition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1488,11 +1713,14 @@ pub struct WheelReverse {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Window {
+    /// The attribute `dir`, when the element has it.
     pub dir: Option<super::presentation::Direction>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-/// The tag `p14:xfrm`, schema type `CT_Transform2D` of SDK 3.5.1's data.
+/// The `p14:xfrm` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
+/// schema type is `CT_Transform2D`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -1501,11 +1729,17 @@ pub struct Window {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Xfrm {
+    /// The child that is `super::drawing::Extents`, when there is one.
     pub extents: Option<Box<super::drawing::Extents>>,
+    /// The attribute `flipH`, when the element has it.
     pub flip_h: Option<String>,
+    /// The attribute `flipV`, when the element has it.
     pub flip_v: Option<String>,
+    /// The child that is `super::drawing::Offset`, when there is one.
     pub offset: Option<Box<super::drawing::Offset>>,
+    /// The attribute `rot`, when the element has it.
     pub rot: Option<super::drawing::Angle>,
+    /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
@@ -2703,7 +2937,7 @@ impl TransitionLeftRightDirectionTypeMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -2756,7 +2990,7 @@ impl TransitionPatternMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {
@@ -2813,7 +3047,7 @@ impl TransitionShredPatternMember {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
-    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for
+    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
     #[must_use]
     pub fn introduced(self) -> Option<OfficeVersion> {

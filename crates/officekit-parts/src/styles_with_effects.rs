@@ -342,7 +342,8 @@
 //! A part of Microsoft's extensions, from Office 2010.
 //!
 //! The module holds its content type, its relationship type, and the load and store of its root,
-//! `w:styles`.
+//! `w:styles`. `store_strict` needs the `strict` feature and `store_transitional` the
+//! `transitional` feature.
 
 use crate::part_root;
 use officekit_markup::wordprocessing;
@@ -355,10 +356,11 @@ use officekit_xml::conformance::ConformanceClass;
 #[cfg(any(feature = "strict", feature = "transitional"))]
 use officekit_xml::write::WriteOptions;
 
-/// The content type SDK 3.5.1's part data gives.
+/// The content type the part data of the Open XML SDK, version 3.5.1, gives for this part.
 pub const CONTENT_TYPE: &str = "application/vnd.ms-word.stylesWithEffects+xml";
 
-/// One URI in both classes.
+/// The relationship type that names this part, from Microsoft's extensions: one URI in both
+/// classes.
 pub const RELATIONSHIP_TYPE: RelationshipType = RelationshipType::STYLES_WITH_EFFECTS;
 
 /// The part's typed root, read from either class.
@@ -376,6 +378,8 @@ pub fn load(
 
 /// Store `root` into the part in the Strict class; the part keeps its
 /// content type, or takes this module's.
+///
+/// This function needs the `strict` feature.
 ///
 /// # Errors
 ///
@@ -403,6 +407,8 @@ pub fn store_strict(
 
 /// Store `root` into the part in the Transitional class; the part keeps its
 /// content type, or takes this module's.
+///
+/// This function needs the `transitional` feature.
 ///
 /// # Errors
 ///

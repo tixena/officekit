@@ -212,8 +212,11 @@
 //! The hooks of the `p14` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_core::office_powerpoint_2010_main`.
 //!
-//! The namespace is `http://schemas.microsoft.com/office/powerpoint/2010/main`.
+//! The namespace is `http://schemas.microsoft.com/office/powerpoint/2010/main`. Its prefix, `p14`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_core::office_powerpoint_2010_main::*;
 
 use officekit_markup_base::Written;
@@ -229,42 +232,62 @@ use std::io;
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::office_powerpoint_2010_main` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `Bmk`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn bmk(&mut self, _node: &Bmk) -> Option<Bmk> {
         None
     }
 
+    /// Asked for each `BmkLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn bmk_lst(&mut self, _node: &BmkLst) -> Option<BmkLst> {
         None
     }
 
+    /// Asked for each `BmkTgt`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn bmk_tgt(&mut self, _node: &BmkTgt) -> Option<BmkTgt> {
         None
     }
 
+    /// Asked for each `BrowseMode`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn browse_mode(&mut self, _node: &BrowseMode) -> Option<BrowseMode> {
         None
     }
 
+    /// Asked for each `CNvContentPartPr`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn c_nv_content_part_pr(&mut self, _node: &CNvContentPartPr) -> Option<CNvContentPartPr> {
         None
     }
 
+    /// Asked for each `CNvPr`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn c_nv_pr(&mut self, _node: &CNvPr) -> Option<CNvPr> {
         None
     }
 
+    /// Asked for each `Conveyor`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn conveyor(&mut self, _node: &Conveyor) -> Option<Conveyor> {
         None
     }
 
+    /// Asked for each `CreationId`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn creation_id(&mut self, _node: &CreationId) -> Option<CreationId> {
         None
     }
 
+    /// Asked for each `DefaultImageDpi`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn default_image_dpi(&mut self, _node: &DefaultImageDpi) -> Option<DefaultImageDpi> {
         None
     }
 
+    /// Asked for each `DiscardImageEditData`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn discard_image_edit_data(
         &mut self,
         _node: &DiscardImageEditData,
@@ -272,10 +295,14 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Doors`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn doors(&mut self, _node: &Doors) -> Option<Doors> {
         None
     }
 
+    /// Asked for each `ExtLstExtensionList`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn ext_lst_extension_list(
         &mut self,
         _node: &ExtLstExtensionList,
@@ -283,6 +310,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ExtLstExtensionListModify`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn ext_lst_extension_list_modify(
         &mut self,
         _node: &ExtLstExtensionListModify,
@@ -290,114 +319,170 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `Fade`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn fade(&mut self, _node: &Fade) -> Option<Fade> {
         None
     }
 
+    /// Asked for each `Ferris`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ferris(&mut self, _node: &Ferris) -> Option<Ferris> {
         None
     }
 
+    /// Asked for each `Flash`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn flash(&mut self, _node: &Flash) -> Option<Flash> {
         None
     }
 
+    /// Asked for each `Flip`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn flip(&mut self, _node: &Flip) -> Option<Flip> {
         None
     }
 
+    /// Asked for each `Flythrough`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn flythrough(&mut self, _node: &Flythrough) -> Option<Flythrough> {
         None
     }
 
+    /// Asked for each `Gallery`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn gallery(&mut self, _node: &Gallery) -> Option<Gallery> {
         None
     }
 
+    /// Asked for each `Glitter`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn glitter(&mut self, _node: &Glitter) -> Option<Glitter> {
         None
     }
 
+    /// Asked for each `Honeycomb`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn honeycomb(&mut self, _node: &Honeycomb) -> Option<Honeycomb> {
         None
     }
 
+    /// Asked for each `LaserClr`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn laser_clr(&mut self, _node: &LaserClr) -> Option<LaserClr> {
         None
     }
 
+    /// Asked for each `LaserTraceLst`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn laser_trace_lst(&mut self, _node: &LaserTraceLst) -> Option<LaserTraceLst> {
         None
     }
 
+    /// Asked for each `Media`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn media(&mut self, _node: &Media) -> Option<Media> {
         None
     }
 
+    /// Asked for each `ModId`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn mod_id(&mut self, _node: &ModId) -> Option<ModId> {
         None
     }
 
+    /// Asked for each `NullEvt`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn null_evt(&mut self, _node: &NullEvt) -> Option<NullEvt> {
         None
     }
 
+    /// Asked for each `NvContentPartPr`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn nv_content_part_pr(&mut self, _node: &NvContentPartPr) -> Option<NvContentPartPr> {
         None
     }
 
+    /// Asked for each `NvPr`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn nv_pr(&mut self, _node: &NvPr) -> Option<NvPr> {
         None
     }
 
+    /// Asked for each `Pan`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn pan(&mut self, _node: &Pan) -> Option<Pan> {
         None
     }
 
+    /// Asked for each `PauseEvt`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn pause_evt(&mut self, _node: &PauseEvt) -> Option<PauseEvt> {
         None
     }
 
+    /// Asked for each `PlayEvt`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn play_evt(&mut self, _node: &PlayEvt) -> Option<PlayEvt> {
         None
     }
 
+    /// Asked for each `Prism`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn prism(&mut self, _node: &Prism) -> Option<Prism> {
         None
     }
 
+    /// Asked for each `ResumeEvt`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn resume_evt(&mut self, _node: &ResumeEvt) -> Option<ResumeEvt> {
         None
     }
 
+    /// Asked for each `Reveal`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn reveal(&mut self, _node: &Reveal) -> Option<Reveal> {
         None
     }
 
+    /// Asked for each `Ripple`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn ripple(&mut self, _node: &Ripple) -> Option<Ripple> {
         None
     }
 
+    /// Asked for each `SectionLst`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn section_lst(&mut self, _node: &SectionLst) -> Option<SectionLst> {
         None
     }
 
+    /// Asked for each `SectionPr`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn section_pr(&mut self, _node: &SectionPr) -> Option<SectionPr> {
         None
     }
 
+    /// Asked for each `SectionSection`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn section_section(&mut self, _node: &SectionSection) -> Option<SectionSection> {
         None
     }
 
+    /// Asked for each `SectionSectionOld`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn section_section_old(&mut self, _node: &SectionSectionOld) -> Option<SectionSectionOld> {
         None
     }
 
+    /// Asked for each `SeekEvt`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn seek_evt(&mut self, _node: &SeekEvt) -> Option<SeekEvt> {
         None
     }
 
+    /// Asked for each `ShowEventRecordListContent`. `None` rebuilds it from its transformed
+    /// children, and `Some` puts the node it holds in its place.
     fn show_event_record_list(
         &mut self,
         _node: &ShowEventRecordListContent,
@@ -405,6 +490,8 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ShowEventRecordListContent` in a list. `None` leaves the item to its own
+    /// `transform`, and `Some` puts the items it holds, any number of them, in its place.
     fn show_event_record_list_items(
         &mut self,
         _node: &ShowEventRecordListContent,
@@ -412,90 +499,132 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `ShowEvtLst`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn show_evt_lst(&mut self, _node: &ShowEvtLst) -> Option<ShowEvtLst> {
         None
     }
 
+    /// Asked for each `ShowMediaCtrls`. `None` rebuilds it from its transformed children, and
+    /// `Some` puts the node it holds in its place.
     fn show_media_ctrls(&mut self, _node: &ShowMediaCtrls) -> Option<ShowMediaCtrls> {
         None
     }
 
+    /// Asked for each `Shred`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn shred(&mut self, _node: &Shred) -> Option<Shred> {
         None
     }
 
+    /// Asked for each `SldId`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn sld_id(&mut self, _node: &SldId) -> Option<SldId> {
         None
     }
 
+    /// Asked for each `SldIdLst`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn sld_id_lst(&mut self, _node: &SldIdLst) -> Option<SldIdLst> {
         None
     }
 
+    /// Asked for each `StopEvt`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn stop_evt(&mut self, _node: &StopEvt) -> Option<StopEvt> {
         None
     }
 
+    /// Asked for each `Switch`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn switch(&mut self, _node: &Switch) -> Option<Switch> {
         None
     }
 
+    /// Asked for each `TracePt`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn trace_pt(&mut self, _node: &TracePt) -> Option<TracePt> {
         None
     }
 
+    /// Asked for each `TracePtLst`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn trace_pt_lst(&mut self, _node: &TracePtLst) -> Option<TracePtLst> {
         None
     }
 
+    /// Asked for each `TriggerEvt`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn trigger_evt(&mut self, _node: &TriggerEvt) -> Option<TriggerEvt> {
         None
     }
 
+    /// Asked for each `Trim`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn trim(&mut self, _node: &Trim) -> Option<Trim> {
         None
     }
 
+    /// Asked for each `Vortex`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn vortex(&mut self, _node: &Vortex) -> Option<Vortex> {
         None
     }
 
+    /// Asked for each `Warp`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn warp(&mut self, _node: &Warp) -> Option<Warp> {
         None
     }
 
+    /// Asked for each `WheelReverse`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn wheel_reverse(&mut self, _node: &WheelReverse) -> Option<WheelReverse> {
         None
     }
 
+    /// Asked for each `Window`. `None` rebuilds it from its transformed children, and `Some` puts
+    /// the node it holds in its place.
     fn window(&mut self, _node: &Window) -> Option<Window> {
         None
     }
 
+    /// Asked when a `Bmk` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_bmk(&mut self, _node: &Bmk, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `BmkLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_bmk_lst(&mut self, _node: &BmkLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `BmkTgt` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_bmk_tgt(&mut self, _node: &BmkTgt, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `BrowseMode` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_browse_mode(
         &mut self,
         _node: &BrowseMode,
@@ -504,9 +633,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CNvContentPartPr` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_c_nv_content_part_pr(
         &mut self,
         _node: &CNvContentPartPr,
@@ -515,16 +647,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CNvPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_c_nv_pr(&mut self, _node: &CNvPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Conveyor` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_conveyor(
         &mut self,
         _node: &Conveyor,
@@ -533,9 +671,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `CreationId` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_creation_id(
         &mut self,
         _node: &CreationId,
@@ -544,9 +685,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DefaultImageDpi` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_default_image_dpi(
         &mut self,
         _node: &DefaultImageDpi,
@@ -555,9 +699,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `DiscardImageEditData` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_discard_image_edit_data(
         &mut self,
         _node: &DiscardImageEditData,
@@ -566,16 +713,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Doors` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_doors(&mut self, _node: &Doors, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExtLstExtensionList` is written through. `Written::Yes` means the hook wrote
+    /// it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst_extension_list(
         &mut self,
         _node: &ExtLstExtensionList,
@@ -584,9 +737,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ExtLstExtensionListModify` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ext_lst_extension_list_modify(
         &mut self,
         _node: &ExtLstExtensionListModify,
@@ -595,37 +751,52 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Fade` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_fade(&mut self, _node: &Fade, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Ferris` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ferris(&mut self, _node: &Ferris, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Flash` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_flash(&mut self, _node: &Flash, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Flip` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_flip(&mut self, _node: &Flip, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Flythrough` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_flythrough(
         &mut self,
         _node: &Flythrough,
@@ -634,23 +805,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Gallery` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_gallery(&mut self, _node: &Gallery, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Glitter` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_glitter(&mut self, _node: &Glitter, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Honeycomb` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_honeycomb(
         &mut self,
         _node: &Honeycomb,
@@ -659,9 +839,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LaserClr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_laser_clr(
         &mut self,
         _node: &LaserClr,
@@ -670,9 +853,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LaserTraceLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_laser_trace_lst(
         &mut self,
         _node: &LaserTraceLst,
@@ -681,23 +867,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Media` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_media(&mut self, _node: &Media, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ModId` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_mod_id(&mut self, _node: &ModId, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `NullEvt` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_null_evt(
         &mut self,
         _node: &NullEvt,
@@ -706,9 +901,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NvContentPartPr` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_nv_content_part_pr(
         &mut self,
         _node: &NvContentPartPr,
@@ -717,23 +915,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `NvPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_nv_pr(&mut self, _node: &NvPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Pan` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pan(&mut self, _node: &Pan, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `PauseEvt` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_pause_evt(
         &mut self,
         _node: &PauseEvt,
@@ -742,9 +949,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `PlayEvt` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_play_evt(
         &mut self,
         _node: &PlayEvt,
@@ -753,16 +963,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Prism` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_prism(&mut self, _node: &Prism, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `ResumeEvt` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_resume_evt(
         &mut self,
         _node: &ResumeEvt,
@@ -771,23 +987,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Reveal` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_reveal(&mut self, _node: &Reveal, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Ripple` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_ripple(&mut self, _node: &Ripple, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `SectionLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_section_lst(
         &mut self,
         _node: &SectionLst,
@@ -796,9 +1021,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SectionPr` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_section_pr(
         &mut self,
         _node: &SectionPr,
@@ -807,9 +1035,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SectionSection` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_section_section(
         &mut self,
         _node: &SectionSection,
@@ -818,9 +1049,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SectionSectionOld` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_section_section_old(
         &mut self,
         _node: &SectionSectionOld,
@@ -829,9 +1063,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `SeekEvt` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_seek_evt(
         &mut self,
         _node: &SeekEvt,
@@ -840,9 +1077,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShowEventRecordListContent` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_show_event_record_list(
         &mut self,
         _node: &ShowEventRecordListContent,
@@ -851,9 +1091,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShowEventRecordListContent` in a list is written through. `Written::Yes` means
+    /// the hook wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_show_event_record_list_items(
         &mut self,
         _node: &ShowEventRecordListContent,
@@ -862,9 +1105,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShowEvtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_show_evt_lst(
         &mut self,
         _node: &ShowEvtLst,
@@ -873,9 +1119,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `ShowMediaCtrls` is written through. `Written::Yes` means the hook wrote it,
+    /// and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_show_media_ctrls(
         &mut self,
         _node: &ShowMediaCtrls,
@@ -884,23 +1133,32 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Shred` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_shred(&mut self, _node: &Shred, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `SldId` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sld_id(&mut self, _node: &SldId, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `SldIdLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_sld_id_lst(
         &mut self,
         _node: &SldIdLst,
@@ -909,9 +1167,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `StopEvt` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_stop_evt(
         &mut self,
         _node: &StopEvt,
@@ -920,16 +1181,22 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Switch` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_switch(&mut self, _node: &Switch, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `TracePt` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_trace_pt(
         &mut self,
         _node: &TracePt,
@@ -938,9 +1205,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TracePtLst` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_trace_pt_lst(
         &mut self,
         _node: &TracePtLst,
@@ -949,9 +1219,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TriggerEvt` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_trigger_evt(
         &mut self,
         _node: &TriggerEvt,
@@ -960,30 +1233,42 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Trim` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_trim(&mut self, _node: &Trim, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Vortex` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_vortex(&mut self, _node: &Vortex, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Warp` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_warp(&mut self, _node: &Warp, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `WheelReverse` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_wheel_reverse(
         &mut self,
         _node: &WheelReverse,
@@ -992,20 +1277,28 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `Window` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_window(&mut self, _node: &Window, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked when a `Xfrm` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_xfrm(&mut self, _node: &Xfrm, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
+    /// Asked for each `Xfrm`. `None` rebuilds it from its transformed children, and `Some` puts the
+    /// node it holds in its place.
     fn xfrm(&mut self, _node: &Xfrm) -> Option<Xfrm> {
         None
     }
@@ -1017,42 +1310,57 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::office_powerpoint_2010_main` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `Bmk`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn bmk(&mut self, _node: &Bmk) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BmkLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn bmk_lst(&mut self, _node: &BmkLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BmkTgt`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn bmk_tgt(&mut self, _node: &BmkTgt) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BrowseMode`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn browse_mode(&mut self, _node: &BrowseMode) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CNvContentPartPr`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn c_nv_content_part_pr(&mut self, _node: &CNvContentPartPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CNvPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn c_nv_pr(&mut self, _node: &CNvPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Conveyor`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn conveyor(&mut self, _node: &Conveyor) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `CreationId`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn creation_id(&mut self, _node: &CreationId) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DefaultImageDpi`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn default_image_dpi(&mut self, _node: &DefaultImageDpi) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `DiscardImageEditData`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn discard_image_edit_data(
         &mut self,
         _node: &DiscardImageEditData,
@@ -1060,10 +1368,13 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Doors`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn doors(&mut self, _node: &Doors) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExtLstExtensionList`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn ext_lst_extension_list(
         &mut self,
         _node: &ExtLstExtensionList,
@@ -1071,6 +1382,8 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ExtLstExtensionListModify`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn ext_lst_extension_list_modify(
         &mut self,
         _node: &ExtLstExtensionListModify,
@@ -1078,114 +1391,152 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Fade`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn fade(&mut self, _node: &Fade) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Ferris`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ferris(&mut self, _node: &Ferris) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Flash`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn flash(&mut self, _node: &Flash) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Flip`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn flip(&mut self, _node: &Flip) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Flythrough`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn flythrough(&mut self, _node: &Flythrough) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Gallery`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn gallery(&mut self, _node: &Gallery) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Glitter`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn glitter(&mut self, _node: &Glitter) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Honeycomb`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn honeycomb(&mut self, _node: &Honeycomb) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LaserClr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn laser_clr(&mut self, _node: &LaserClr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LaserTraceLst`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn laser_trace_lst(&mut self, _node: &LaserTraceLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Media`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn media(&mut self, _node: &Media) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ModId`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn mod_id(&mut self, _node: &ModId) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NullEvt`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn null_evt(&mut self, _node: &NullEvt) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NvContentPartPr`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn nv_content_part_pr(&mut self, _node: &NvContentPartPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `NvPr`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn nv_pr(&mut self, _node: &NvPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Pan`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn pan(&mut self, _node: &Pan) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PauseEvt`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn pause_evt(&mut self, _node: &PauseEvt) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `PlayEvt`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn play_evt(&mut self, _node: &PlayEvt) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Prism`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn prism(&mut self, _node: &Prism) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ResumeEvt`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn resume_evt(&mut self, _node: &ResumeEvt) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Reveal`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn reveal(&mut self, _node: &Reveal) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Ripple`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn ripple(&mut self, _node: &Ripple) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SectionLst`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn section_lst(&mut self, _node: &SectionLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SectionPr`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn section_pr(&mut self, _node: &SectionPr) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SectionSection`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn section_section(&mut self, _node: &SectionSection) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SectionSectionOld`. `Descend::Yes` walks into its children, and `Descend::No`
+    /// skips them.
     fn section_section_old(&mut self, _node: &SectionSectionOld) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SeekEvt`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn seek_evt(&mut self, _node: &SeekEvt) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShowEventRecordListContent`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn show_event_record_list(
         &mut self,
         _node: &ShowEventRecordListContent,
@@ -1193,66 +1544,87 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShowEvtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn show_evt_lst(&mut self, _node: &ShowEvtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `ShowMediaCtrls`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn show_media_ctrls(&mut self, _node: &ShowMediaCtrls) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Shred`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn shred(&mut self, _node: &Shred) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SldId`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sld_id(&mut self, _node: &SldId) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `SldIdLst`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn sld_id_lst(&mut self, _node: &SldIdLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `StopEvt`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn stop_evt(&mut self, _node: &StopEvt) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Switch`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn switch(&mut self, _node: &Switch) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TracePt`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn trace_pt(&mut self, _node: &TracePt) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TracePtLst`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn trace_pt_lst(&mut self, _node: &TracePtLst) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TriggerEvt`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn trigger_evt(&mut self, _node: &TriggerEvt) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Trim`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn trim(&mut self, _node: &Trim) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Vortex`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn vortex(&mut self, _node: &Vortex) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Warp`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn warp(&mut self, _node: &Warp) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `WheelReverse`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn wheel_reverse(&mut self, _node: &WheelReverse) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Window`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn window(&mut self, _node: &Window) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `Xfrm`. `Descend::Yes` walks into its children, and `Descend::No` skips them.
     fn xfrm(&mut self, _node: &Xfrm) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }

@@ -212,8 +212,11 @@
 //! The hooks of the `w10` namespace, `Context` and `Visitor`, beside its typed
 //! tree, re-exported from `officekit_markup_base::vml_wordprocessing_drawing`.
 //!
-//! The namespace is `urn:schemas-microsoft-com:office:word`.
+//! The namespace is `urn:schemas-microsoft-com:office:word`. Its prefix, `w10`, is the
+//! short name a file gives it in the names of its elements. `Context` replaces nodes,
+//! `Visitor` looks at them, and `officekit-traversal` calls both.
 
+#[doc(no_inline)]
 pub use officekit_markup_base::vml_wordprocessing_drawing::*;
 
 use officekit_markup_base::Written;
@@ -229,6 +232,8 @@ use std::io;
 /// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
 /// not return itself from `crate::Context::vml_wordprocessing_drawing` is never asked.
 pub trait Context: crate::Context {
+    /// Asked for each `AnchorLocationIsLocked`. `None` rebuilds it from its transformed children,
+    /// and `Some` puts the node it holds in its place.
     fn anchor_location_is_locked(
         &mut self,
         _node: &AnchorLocationIsLocked,
@@ -236,29 +241,42 @@ pub trait Context: crate::Context {
         None
     }
 
+    /// Asked for each `BottomBorder`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn bottom_border(&mut self, _node: &BottomBorder) -> Option<BottomBorder> {
         None
     }
 
+    /// Asked for each `LeftBorder`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn left_border(&mut self, _node: &LeftBorder) -> Option<LeftBorder> {
         None
     }
 
+    /// Asked for each `RightBorder`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn right_border(&mut self, _node: &RightBorder) -> Option<RightBorder> {
         None
     }
 
+    /// Asked for each `TextWrapping`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn text_wrapping(&mut self, _node: &TextWrapping) -> Option<TextWrapping> {
         None
     }
 
+    /// Asked for each `TopBorder`. `None` rebuilds it from its transformed children, and `Some`
+    /// puts the node it holds in its place.
     fn top_border(&mut self, _node: &TopBorder) -> Option<TopBorder> {
         None
     }
 
+    /// Asked when a `AnchorLocationIsLocked` is written through. `Written::Yes` means the hook
+    /// wrote it, and `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_anchor_location_is_locked(
         &mut self,
         _node: &AnchorLocationIsLocked,
@@ -267,9 +285,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `BottomBorder` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_bottom_border(
         &mut self,
         _node: &BottomBorder,
@@ -278,9 +299,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `LeftBorder` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_left_border(
         &mut self,
         _node: &LeftBorder,
@@ -289,9 +313,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `RightBorder` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_right_border(
         &mut self,
         _node: &RightBorder,
@@ -300,9 +327,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TextWrapping` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_text_wrapping(
         &mut self,
         _node: &TextWrapping,
@@ -311,9 +341,12 @@ pub trait Context: crate::Context {
         Ok(Written::No)
     }
 
+    /// Asked when a `TopBorder` is written through. `Written::Yes` means the hook wrote it, and
+    /// `Written::No` leaves it to the tree hook.
+    ///
     /// # Errors
     ///
-    /// The sink's.
+    /// The errors of the sink the part is written to.
     fn write_top_border(
         &mut self,
         _node: &TopBorder,
@@ -329,6 +362,8 @@ pub trait Context: crate::Context {
 /// `Descend::No` to skip them. A visitor that does not return itself from
 /// `crate::Visitor::vml_wordprocessing_drawing` is never asked.
 pub trait Visitor: crate::Visitor {
+    /// Shown each `AnchorLocationIsLocked`. `Descend::Yes` walks into its children, and
+    /// `Descend::No` skips them.
     fn anchor_location_is_locked(
         &mut self,
         _node: &AnchorLocationIsLocked,
@@ -336,22 +371,32 @@ pub trait Visitor: crate::Visitor {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `BottomBorder`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn bottom_border(&mut self, _node: &BottomBorder) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `LeftBorder`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn left_border(&mut self, _node: &LeftBorder) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `RightBorder`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn right_border(&mut self, _node: &RightBorder) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TextWrapping`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn text_wrapping(&mut self, _node: &TextWrapping) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
 
+    /// Shown each `TopBorder`. `Descend::Yes` walks into its children, and `Descend::No` skips
+    /// them.
     fn top_border(&mut self, _node: &TopBorder) -> officekit_markup_base::Descend {
         officekit_markup_base::Descend::Yes
     }
