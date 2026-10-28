@@ -146,7 +146,7 @@ just all      # lint, build, test
 just lint     # clippy (restriction + pedantic + nursery denied) on the workspace, then officekit in each feature build and officekit-markdown with all features; fmt check; rustfmt check of every tests.rs
 just build
 just test     # the workspace, then officekit and officekit-markdown with all features, then officekit with strict alone
-just docs     # cargo doc --workspace --no-deps
+just docs     # the docs of each library crate, as docs.rs builds them
 just audit    # cargo audit
 just bpublish # build the CLI for this machine's target and add it to the GitHub release of the version
 ```

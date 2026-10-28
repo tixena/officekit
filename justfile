@@ -76,9 +76,16 @@ test-coverage-html:
 audit:
     cargo audit
 
-# Generate API documentation.
+# Document each library crate as docs.rs does: one crate at a time, with the
+# features its [package.metadata.docs.rs] names.
 docs:
-    cargo doc --workspace --no-deps
+    cargo doc --no-deps -p officekit-xml --all-features
+    cargo doc --no-deps -p officekit-markup-base --all-features
+    cargo doc --no-deps -p officekit-markup-core
+    cargo doc --no-deps -p officekit-markup
+    cargo doc --no-deps -p officekit-strict
+    cargo doc --no-deps -p officekit --all-features
+    cargo doc --no-deps -p officekit-markdown --all-features
 
 # Validate every Office file in a folder with SDK 3.5.1 and print its errors as
 # JSON. Not part of `all`: it needs .NET 10 and NuGet.
