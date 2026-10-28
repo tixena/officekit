@@ -14,18 +14,20 @@ repository = "https://github.com/eburgos/officekit"
 [workspace.dependencies]
 # Every entry turns its default features off: each crate turns on the
 # features it uses, and no more.
-officekit = { path = "crates/officekit", default-features = false }
-officekit-markup = { path = "crates/officekit-markup" }
-officekit-markup-base = { path = "crates/officekit-markup-base" }
-officekit-markup-core = { path = "crates/officekit-markup-core" }
-officekit-markup-ext = { path = "crates/officekit-markup-ext" }
-officekit-packaging = { path = "crates/officekit-packaging" }
-officekit-parts = { path = "crates/officekit-parts", default-features = false }
-officekit-strict = { path = "crates/officekit-strict" }
-officekit-transitional = { path = "crates/officekit-transitional" }
-officekit-traversal = { path = "crates/officekit-traversal" }
-officekit-validation = { path = "crates/officekit-validation" }
-officekit-xml = { path = "crates/officekit-xml" }
+
+# The workspace's own crates: the folder here, the version on crates.io
+officekit = { version = "0.1.0", path = "crates/officekit", default-features = false }
+officekit-markup = { version = "0.1.0", path = "crates/officekit-markup" }
+officekit-markup-base = { version = "0.1.0", path = "crates/officekit-markup-base" }
+officekit-markup-core = { version = "0.1.0", path = "crates/officekit-markup-core" }
+officekit-markup-ext = { version = "0.1.0", path = "crates/officekit-markup-ext" }
+officekit-packaging = { version = "0.1.0", path = "crates/officekit-packaging" }
+officekit-parts = { version = "0.1.0", path = "crates/officekit-parts", default-features = false }
+officekit-strict = { version = "0.1.0", path = "crates/officekit-strict" }
+officekit-transitional = { version = "0.1.0", path = "crates/officekit-transitional" }
+officekit-traversal = { version = "0.1.0", path = "crates/officekit-traversal" }
+officekit-validation = { version = "0.1.0", path = "crates/officekit-validation" }
+officekit-xml = { version = "0.1.0", path = "crates/officekit-xml" }
 
 # CLI framework
 clap = { version = "4", default-features = false }
