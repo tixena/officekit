@@ -1,0 +1,242 @@
+//! Relationships (ECMA-376 Part 2, 9.3): what each relationship part holds,
+//! how a target resolves against its source, and the relationship types in
+//! both conformance classes' spelling.
+
+#[cfg(feature = "binary-format")]
+mod archive;
+
+use core::iter;
+
+use crate::conformance::ConformanceClass;
+use crate::element::{Attribute, Document, Element, NamespaceDeclaration, Node};
+use crate::name::{Namespace, QName};
+
+use crate::packaging::error::PackageError;
+use crate::packaging::package::DECLARATION;
+use crate::packaging::part_name::PartName;
+
+#[cfg(test)]
+mod tests;
+
+/// The namespace of a relationship part.
+pub(crate) const NAMESPACE: &str = "http://schemas.openxmlformats.org/package/2006/relationships";
+
+/// The content type of a relationship part, the `rels` extension's `Default`.
+pub const RELATIONSHIPS_CONTENT_TYPE: &str =
+    "application/vnd.openxmlformats-package.relationships+xml";
+
+/// A relationship with its target resolved and the target part's content type.
+#[derive(Clone, Debug, PartialEq, Eq)]
+#[non_exhaustive]
+pub struct RelatedPart {
+    /// The target part's content type; `None` for an external target.
+    pub content_type: Option<String>,
+    /// The relationship's id, such as `rId1`.
+    pub id: String,
+    /// The part or external address the relationship points to.
+    pub target: Target,
+    /// The relationship type, as the URI the file spells.
+    pub type_uri: String,
+}
+
+/// One `Relationship` element, as written.
+#[derive(Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(
+    feature = "binary-format",
+    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
+)]
+#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[non_exhaustive]
+pub struct Relationship {
+    /// The `Id` attribute, such as `rId1`; empty until the relationship is added to a package.
+    pub id: String,
+    /// The `Target` attribute: relative to the source's folder when internal.
+    pub target: String,
+    /// The `TargetMode` attribute; `Internal` when the attribute is absent.
+    pub target_mode: TargetMode,
+    /// The `Type` attribute: the URI that says what the target is.
+    pub type_uri: String,
+}
+
+/// A relationship type in both classes' spelling.
+///
+/// The associated constants name the standard types, such as `RelationshipType::OFFICE_DOCUMENT`,
+/// `RelationshipType::IMAGE` and `RelationshipType::STYLES`. [`ALL`](Self::ALL) lists them. Pass
+/// a constant's `transitional` or `strict` field, or [`in_class`](Self::in_class), where a method
+/// takes a type URI.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[non_exhaustive]
+pub struct RelationshipType {
+    /// The URI Strict files spell.
+    pub strict: &'static str,
+    /// The URI Transitional files spell.
+    pub transitional: &'static str,
+}
+
+/// Where a relationship points: a part of this package, or a URI outside it.
+#[derive(Clone, Debug, PartialEq, Eq)]
+#[non_exhaustive]
+pub enum Target {
+    /// A URI outside the package, such as the address of a hyperlink.
+    External(String),
+    /// A part of the same package.
+    Part(PartName),
+}
+
+/// The `TargetMode` attribute of a relationship. With `binary-format`, rkyv
+/// archives it through its mirror in `archive`.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[non_exhaustive]
+pub enum TargetMode {
+    /// The target is a URI outside the package.
+    External,
+    /// The target is a part of the package; this is the default when the attribute is absent.
+    Internal,
+}
+
+impl Relationship {
+    /// A relationship of type `type_uri` to `target`, relative to the source's
+    /// folder when internal, with no id yet.
+    #[must_use]
+    pub fn new(type_uri: &str, target: &str, target_mode: TargetMode) -> Self {
+        Self {
+            id: String::new(),
+            target: target.to_owned(),
+            target_mode,
+            type_uri: type_uri.to_owned(),
+        }
+    }
+
+    /// Where the relationship points, an internal target resolved against
+    /// `source_directory`.
+    pub(crate) fn resolved(&self, source_directory: &str) -> Result<Target, PackageError> {
+        match self.target_mode {
+            TargetMode::External => Ok(Target::External(self.target.clone())),
+            TargetMode::Internal => resolve(source_directory, &self.target).map(Target::Part),
+        }
+    }
+}
+
+/// The class a package declares through the type of its relationship to its main part: either
+/// spelling of the `officeDocument` type; `None` for any other type.
+#[must_use]
+pub fn class_of_office_document(type_uri: &str) -> Option<ConformanceClass> {
+    let office_document = RelationshipType::OFFICE_DOCUMENT;
+    if type_uri == office_document.strict {
+        Some(ConformanceClass::Strict)
+    } else if type_uri == office_document.transitional {
+        Some(ConformanceClass::Transitional)
+    } else {
+        None
+    }
+}
+
+/// The id a new relationship among `items` takes: `rId` and one more than the
+/// highest `rIdN` they have, so an id removed earlier is not reused while
+/// markup may still name it.
+pub(crate) fn next_id(items: &[Relationship]) -> String {
+    let highest = items
+        .iter()
+        .filter_map(|item| item.id.strip_prefix("rId")?.parse::<u64>().ok())
+        .max()
+        .unwrap_or(0);
+    format!("rId{}", highest + 1)
+}
+
+/// Read the relationships of a parsed relationship part, in order.
+pub(crate) fn parse(document: &Document) -> Result<Vec<Relationship>, String> {
+    if document.root.name.local != "Relationships" {
+        return Err(format!(
+            "the root is <{}>, not <Relationships>",
+            document.root.name.local
+        ));
+    }
+    document
+        .root
+        .child_elements()
+        .map(|element| {
+            let attribute = |local: &str| {
+                element
+                    .attribute(&Namespace::None, local)
+                    .map(str::to_owned)
+                    .ok_or_else(|| format!("a relationship without {local}"))
+            };
+            let target_mode =
+                if element.attribute(&Namespace::None, "TargetMode") == Some("External") {
+                    TargetMode::External
+                } else {
+                    TargetMode::Internal
+                };
+            Ok(Relationship {
+                id: attribute("Id")?,
+                target: attribute("Target")?,
+                target_mode,
+                type_uri: attribute("Type")?,
+            })
+        })
+        .collect()
+}
+
+/// The target a relationship from `source_directory` writes for `target`:
+/// `../embeddings/sheet.xlsx` from `/word/charts`, `word/document.xml` from
+/// the package, whose directory is the empty string.
+pub(crate) fn relative(source_directory: &str, target: &PartName) -> String {
+    let from: Vec<&str> = source_directory.split('/').skip(1).collect();
+    let to: Vec<&str> = target.as_str().split('/').skip(1).collect();
+    let common = from
+        .iter()
+        .zip(&to)
+        .take_while(|(left, right)| left == right)
+        .count()
+        .min(to.len() - 1);
+    let mut segments: Vec<&str> = iter::repeat_n("..", from.len() - common).collect();
+    segments.extend(&to[common..]);
+    segments.join("/")
+}
+
+/// Resolve an internal target against its source's directory, `..` segments
+/// included (Part 2, 9.3.5).
+pub(crate) fn resolve(source_directory: &str, target: &str) -> Result<PartName, PackageError> {
+    let joined = if target.starts_with('/') {
+        target.to_owned()
+    } else {
+        format!("{source_directory}/{target}")
+    };
+    let mut segments: Vec<&str> = Vec::new();
+    for segment in joined.split('/').skip(1) {
+        match segment {
+            ".." => {
+                segments.pop();
+            }
+            "." => {}
+            other => segments.push(other),
+        }
+    }
+    PartName::new(&format!("/{}", segments.join("/")))
+}
+
+/// The relationship part that holds `items`.
+pub(crate) fn to_document(items: &[Relationship]) -> Document {
+    let mut root = Element::new(QName::unprefixed("Relationships", NAMESPACE));
+    root.namespace_declarations.push(NamespaceDeclaration::new(
+        String::new(),
+        NAMESPACE.to_owned(),
+    ));
+    for relationship in items {
+        let mut attributes = vec![
+            ("Id", relationship.id.as_str()),
+            ("Type", relationship.type_uri.as_str()),
+            ("Target", relationship.target.as_str()),
+        ];
+        if relationship.target_mode == TargetMode::External {
+            attributes.push(("TargetMode", "External"));
+        }
+        let mut element = Element::new(QName::unprefixed("Relationship", NAMESPACE));
+        element.attributes = attributes
+            .into_iter()
+            .map(|(name, value)| Attribute::new(QName::unprefixed(name, ""), value.to_owned()))
+            .collect();
+        root.children.push(Node::Element(element));
+    }
+    Document::new(DECLARATION, root)
+}

@@ -37,9 +37,18 @@ impl Class {
             Self::Transitional => ("transitional", "Transitional"),
         }
     }
+
+    /// The path, from a namespace module, of the module that holds the class's
+    /// trait, and where the text says `include!` brings the namespace modules.
+    const fn root(self) -> (&'static str, &'static str) {
+        match self {
+            Self::Strict => ("crate", "the crate root"),
+            Self::Transitional => ("super", "the `transitional` module"),
+        }
+    }
 }
 
-/// `<module>.rs` of `officekit-strict` or `officekit-transitional`: every node's impl.
+/// `<module>.rs` of `officekit-strict` or of `officekit::transitional`: every node's impl.
 #[must_use]
 pub fn module(
     header: &str,
@@ -61,7 +70,7 @@ pub fn module(
             "checks"
         }
     );
-    let _ = writeln!(out, "use crate::{upper};");
+    let _ = writeln!(out, "use {}::{upper};", class.root().0);
     let flat = format!("use officekit_markup::{module}::{{self, read, write}};");
     // rustfmt breaks a braced import whose line, semicolon included, reaches the width.
     let own = if flat.len() >= layout::MAX_WIDTH {
@@ -104,11 +113,17 @@ pub fn module(
 #[must_use]
 pub fn modules(header: &str, class: Class, names: &[String]) -> String {
     let (lower, _) = class.names();
+    let (_, place) = class.root();
+    let path = if class == Class::Strict {
+        format!("officekit_{lower}")
+    } else {
+        format!("officekit::{lower}")
+    };
     let mut out = String::from(header);
     let _ = writeln!(
         out,
-        "// The namespace modules, `officekit_{lower}::<namespace>`, brought into the\n\
-         // crate root with `include!` ahead of its imports.\n"
+        "// The namespace modules, `{path}::<namespace>`, brought into\n\
+         // {place} with `include!` ahead of its imports.\n"
     );
     for name in names {
         let _ = writeln!(out, "pub mod {name};");
@@ -145,13 +160,13 @@ pub fn strict_rules(header: &str, prefixes: &[String], rules: &Rules) -> String 
     out
 }
 
-/// `rules.rs` of `officekit-transitional`: the values a Transitional write refuses.
+/// `rules.rs` of `officekit::transitional`: the values a Transitional write refuses.
 #[must_use]
 pub fn transitional_rules(header: &str, prefixes: &[String], rules: &Rules) -> String {
     let mut out = String::from(header);
     out.push_str(
         "// The table of the Transitional check, generated from the comparison of the\n\
-         // two schema sets, brought into the crate root with `include!`.\n",
+         // two schema sets, brought into the `transitional` module with `include!`.\n",
     );
     let namespaces: BTreeSet<u8> = rules
         .strict_only
@@ -466,6 +481,7 @@ fn constants(prefixes: &[String], namespaces: &BTreeSet<u8>) -> String {
 /// One node's impl of the class's trait.
 fn impl_text(class: Class, module: &str, prefixes: &[String], found: &Impl) -> String {
     let (lower, upper) = class.names();
+    let (root, _) = class.root();
     let mut out = layout::impl_header(upper, &format!("{module}::{}", found.name));
     let _ = writeln!(
         out,
@@ -494,10 +510,10 @@ fn impl_text(class: Class, module: &str, prefixes: &[String], found: &Impl) -> S
         vec![Expr::atom("self"), Expr::atom("&mut Scope::default()")],
     );
     let call = found.conformance.as_ref().map_or_else(
-        || Expr::call("crate::write", vec![written.clone()]),
+        || Expr::call(&format!("{root}::write"), vec![written.clone()]),
         |conformance| {
             Expr::call(
-                "crate::write_root",
+                &format!("{root}::write_root"),
                 vec![written.clone(), tag(prefixes, conformance)],
             )
         },

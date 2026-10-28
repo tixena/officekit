@@ -7,13 +7,13 @@
 #[cfg(test)]
 mod tests;
 
-use officekit_packaging::content_types::ContentTypes;
-use officekit_packaging::error::PackageError;
-use officekit_packaging::package::{OpenOptions, Package};
-use officekit_packaging::part_name::PartName;
-use officekit_packaging::relationship::{Relationship, TargetMode, class_of_office_document};
-use officekit_parts::{PartModel, bytes_of, model_of};
+use crate::parts::{PartModel, bytes_of, model_of};
 use officekit_xml::conformance::ConformanceClass;
+use officekit_xml::packaging::content_types::ContentTypes;
+use officekit_xml::packaging::error::PackageError;
+use officekit_xml::packaging::package::{OpenOptions, Package};
+use officekit_xml::packaging::part_name::PartName;
+use officekit_xml::packaging::relationship::{Relationship, TargetMode, class_of_office_document};
 use officekit_xml::write::WriteOptions;
 use rkyv::rancor;
 use rkyv::util::AlignedVec;
@@ -77,7 +77,7 @@ enum Part {
 use officekit::binary;
 use officekit::docx::Docx;
 use officekit::office_file::OfficeFile;
-use officekit_parts::kinds::WordprocessingKind;
+use officekit::parts::kinds::WordprocessingKind;
 
 # fn main() -> Result<(), Box<dyn core::error::Error>> {
 let file = OfficeFile::Word(Docx::new(WordprocessingKind::Document)?);

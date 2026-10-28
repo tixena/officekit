@@ -1,5 +1,5 @@
-//! The part modules: one module per part type, `officekit_parts::<part>`, the
-//! relationship types of `officekit-packaging`'s `relationship_type.rs`, and `kinds.rs`.
+//! The part modules: one module per part type, `officekit::parts::<part>`, the
+//! relationship types of `officekit_xml::packaging`'s `relationship_type.rs`, and `kinds.rs`.
 //!
 //! Each part module holds its part's content types, its relationship type in
 //! both classes' spelling, and the load and store of its root. Part 1's part
@@ -36,10 +36,10 @@ pub const DOCUMENT_KINDS_PATH: &str = "crates/xtask/data/document_kinds.toml";
 
 /// The source folder of the part modules, from the workspace root; the index
 /// `lib.rs` sits in it.
-pub const PARTS_PATH: &str = "crates/officekit-parts/src";
+pub const PARTS_PATH: &str = "crates/officekit/src/parts";
 
 /// The generated impl of `RelationshipType`, from the workspace root.
-pub const RELATIONSHIP_TYPE_PATH: &str = "crates/officekit-packaging/src/relationship_type.rs";
+pub const RELATIONSHIP_TYPE_PATH: &str = "crates/officekit-xml/src/packaging/relationship_type.rs";
 
 /// The file types, by the Part 1 section their markup language's parts are
 /// defined in.

@@ -1,15 +1,15 @@
 #![cfg(feature = "transitional")]
 
+use crate::parts::kinds::WordprocessingKind;
 use officekit_markup::Read as _;
 use officekit_markup::wordprocessing::{TextRun, write};
-use officekit_packaging::error::PackageError;
-use officekit_packaging::image::{Image, ImageFormat};
-use officekit_packaging::package::{OpenOptions, Package};
-use officekit_packaging::part_name::PartName;
-use officekit_packaging::relationship::{RelationshipType, Target};
-use officekit_parts::kinds::WordprocessingKind;
 use officekit_xml::element::Element;
 use officekit_xml::name::{Namespace, QName};
+use officekit_xml::packaging::error::PackageError;
+use officekit_xml::packaging::image::{Image, ImageFormat};
+use officekit_xml::packaging::package::{OpenOptions, Package};
+use officekit_xml::packaging::part_name::PartName;
+use officekit_xml::packaging::relationship::{RelationshipType, Target};
 use officekit_xml::write::Scope;
 
 use super::PictureFit;

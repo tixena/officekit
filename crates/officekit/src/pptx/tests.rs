@@ -2,18 +2,18 @@ use core::slice::from_ref;
 #[cfg(feature = "transitional")]
 use std::path::Path;
 
-#[cfg(any(feature = "strict", feature = "transitional"))]
-use officekit_packaging::package::OpenOptions;
-use officekit_packaging::package::Package;
-use officekit_packaging::part_name::PartName;
-use officekit_packaging::relationship::{RelationshipType, Target};
-use officekit_parts::kinds::PresentationKind;
-use officekit_parts::{slide_layout, slide_master, theme};
+use crate::parts::kinds::PresentationKind;
+use crate::parts::{slide_layout, slide_master, theme};
 use officekit_xml::conformance::ConformanceClass;
 #[cfg(feature = "transitional")]
 use officekit_xml::mc::MarkupCompatibility;
 #[cfg(feature = "transitional")]
 use officekit_xml::name::OfficeVersion;
+#[cfg(any(feature = "strict", feature = "transitional"))]
+use officekit_xml::packaging::package::OpenOptions;
+use officekit_xml::packaging::package::Package;
+use officekit_xml::packaging::part_name::PartName;
+use officekit_xml::packaging::relationship::{RelationshipType, Target};
 #[cfg(feature = "transitional")]
 use os_shim::mock::MemorySystem;
 

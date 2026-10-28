@@ -1,0 +1,43 @@
+[package]
+name = "officekit-markdown"
+description = "Markdown for officekit: a Word file from a markdown document, and a markdown document from a Word file"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+include = ["/src/**/*.rs", "/LICENSE"]
+
+[lints]
+workspace = true
+
+[features]
+# The binary form of officekit and of arky's documents.
+binary-format = ["officekit/binary-format", "arky/binary-format"]
+
+[package.metadata.docs.rs]
+all-features = true
+
+[dependencies]
+# The Word file a markdown document becomes, and the Transitional class it is written in
+officekit = { workspace = true, features = ["transitional"] }
+officekit-markup.workspace = true
+officekit-xml.workspace = true
+
+# Markdown documents as a typed tree
+arky.workspace = true
+
+# System abstraction (filesystem, env, temp dirs)
+os-shim.workspace = true
+
+# Error handling
+thiserror.workspace = true
+
+# Pictures a markdown document gives as `data:` addresses
+base64 = { workspace = true, features = ["alloc"] }
+
+# Pictures: an SVG rendered to the PNG Word keeps beside it, a WebP decoded to PNG
+image-webp.workspace = true
+png.workspace = true
+resvg = { workspace = true, features = ["raster-images"] }

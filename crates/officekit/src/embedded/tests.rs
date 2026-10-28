@@ -1,8 +1,8 @@
-use officekit_packaging::package::{OpenOptions, Package};
-use officekit_packaging::part_name::PartName;
-use officekit_packaging::relationship::RelationshipType;
-use officekit_parts::kinds::SpreadsheetKind;
-use officekit_parts::worksheet::CONTENT_TYPE as WORKSHEET;
+use crate::parts::kinds::SpreadsheetKind;
+use crate::parts::worksheet::CONTENT_TYPE as WORKSHEET;
+use officekit_xml::packaging::package::{OpenOptions, Package};
+use officekit_xml::packaging::part_name::PartName;
+use officekit_xml::packaging::relationship::RelationshipType;
 
 #[cfg(feature = "transitional")]
 use super::Embedded;

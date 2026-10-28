@@ -1,15 +1,15 @@
 #![cfg(feature = "transitional")]
 
-use officekit_markup::wordprocessing::{self, Document, DocumentBody};
-use officekit_packaging::error::PackageError;
-use officekit_packaging::package::OpenOptions;
-use officekit_packaging::part_name::PartName;
-use officekit_packaging::relationship::{RelationshipType, Target};
-use officekit_parts::kinds::WordprocessingKind;
-use officekit_parts::{
+use crate::parts::kinds::WordprocessingKind;
+use crate::parts::{
     endnotes, footnotes, numbering_definitions, style_definitions, wordprocessing_comments,
 };
+use officekit_markup::wordprocessing::{self, Document, DocumentBody};
 use officekit_xml::element::Element;
+use officekit_xml::packaging::error::PackageError;
+use officekit_xml::packaging::package::OpenOptions;
+use officekit_xml::packaging::part_name::PartName;
+use officekit_xml::packaging::relationship::{RelationshipType, Target};
 use officekit_xml::write::{Layout, Scope, WriteOptions};
 
 use super::super::Docx;

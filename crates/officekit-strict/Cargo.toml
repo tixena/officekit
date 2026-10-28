@@ -1,6 +1,6 @@
 [package]
 name = "officekit-strict"
-description = "The Strict conformance class of officekit: the read and write of every node of the typed tree in Strict"
+description = "The Strict conformance class of officekit, the read and write of every node of the typed tree in Strict, and the typed tree's traversals: each node's Transform, Visit and WriteThrough"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true

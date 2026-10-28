@@ -10,9 +10,9 @@ use os_shim::real::RealSystem;
 use tempfile::TempDir;
 
 use officekit::docx::Docx;
+use officekit::parts::kinds::SpreadsheetKind;
 use officekit::xlsx::Xlsx;
-use officekit_packaging::package::OpenOptions;
-use officekit_parts::kinds::SpreadsheetKind;
+use officekit_xml::packaging::package::OpenOptions;
 
 const REPORT: &str = "# Report\n\n1. one\n2. two\n";
 

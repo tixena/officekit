@@ -8,14 +8,14 @@ use alloc::collections::btree_map::Entry;
 use alloc::string::{String, ToString as _};
 use alloc::vec::Vec;
 
+use crate::parts::{chart, shared_string_table, worksheet};
 use officekit_markup::spreadsheet::{Cell, RichTextInline, RichTextRun, StringItem, Text};
-use officekit_packaging::error::PackageError;
-use officekit_packaging::package::{OpenOptions, Package};
-use officekit_packaging::part_name::PartName;
-use officekit_packaging::relationship::{RelationshipType, Target};
-use officekit_parts::{chart, shared_string_table, worksheet};
 use officekit_xml::element::{Attribute, Element, Node};
 use officekit_xml::name::{Namespace, QName};
+use officekit_xml::packaging::error::PackageError;
+use officekit_xml::packaging::package::{OpenOptions, Package};
+use officekit_xml::packaging::part_name::PartName;
+use officekit_xml::packaging::relationship::{RelationshipType, Target};
 
 use crate::embedded::{self, Embedded};
 use crate::xlsx::Xlsx;

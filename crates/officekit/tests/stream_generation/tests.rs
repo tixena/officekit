@@ -3,9 +3,9 @@ use core::cell::Cell;
 use std::alloc::System;
 use std::io::{self, Write};
 
-use officekit_packaging::package::Package;
-use officekit_packaging::part_name::PartName;
-use officekit_packaging::relationship::{RelationshipType, Target};
+use officekit_xml::packaging::package::Package;
+use officekit_xml::packaging::part_name::PartName;
+use officekit_xml::packaging::relationship::{RelationshipType, Target};
 
 use super::generation::{generate, template};
 

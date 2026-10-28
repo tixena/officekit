@@ -17,13 +17,13 @@ mod properties;
 use alloc::collections::BTreeSet;
 use core::mem;
 
-use officekit_packaging::error::PackageError;
-use officekit_packaging::package::{OpenOptions, Package};
-use officekit_packaging::part_name::PartName;
 use officekit_xml::element::{Attribute, Element, Node};
 use officekit_xml::mc::with_declarations;
 use officekit_xml::name::table::NAMESPACES;
 use officekit_xml::name::{Namespace, QName};
+use officekit_xml::packaging::error::PackageError;
+use officekit_xml::packaging::package::{OpenOptions, Package};
+use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::write::{Layout, WriteOptions, is_whitespace_text, preserves_space};
 use properties::{Counted, DRAWING, SPREADSHEET, WORDPROCESSING};
 

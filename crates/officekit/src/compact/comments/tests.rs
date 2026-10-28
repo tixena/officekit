@@ -1,6 +1,6 @@
 use core::fmt::{self, Write as _};
 
-use officekit_packaging::package::Package;
+use officekit_xml::packaging::package::Package;
 
 use crate::compact::tests::{HEADER, MAIN, W, name, package, text};
 use crate::compact::{Comments, Compaction, compact_package};

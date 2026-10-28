@@ -1,6 +1,6 @@
 [package]
 name = "officekit"
-description = "Open Packaging Conventions and the Office Open XML document model"
+description = "Office Open XML documents, .docx, .xlsx and .pptx, in either conformance class: their part modules, read, edit, write and validation"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -18,38 +18,26 @@ required-features = ["strict", "transitional"]
 
 [features]
 default = ["transitional"]
-transitional = ["officekit-parts/transitional", "dep:officekit-transitional"]
-strict = ["officekit-parts/strict", "dep:officekit-strict", "dep:officekit-traversal"]
-markdown = ["transitional", "dep:arky", "dep:image-webp", "dep:png", "dep:resvg"]
+# The `transitional` module: the Transitional class, every node's read and write, and the
+# conversion of date cells.
+transitional = []
+strict = ["dep:officekit-strict"]
 # The `binary` module: officekit's binary form, an rkyv archive of a file's model.
-binary-format = ["dep:rkyv", "officekit-parts/binary-format", "arky?/binary-format"]
+binary-format = ["dep:rkyv", "officekit-markup/binary-format", "officekit-xml/binary-format"]
 
 [package.metadata.docs.rs]
 all-features = true
 
 [dependencies]
-# The XML layer: element tree, names, values, markup compatibility, part reader and writer
+# The XML and package layer: element tree, names, values, part reader and writer, and the
+# container with its part names, content types, relationships and image parts
 officekit-xml.workspace = true
 
 # The typed tree: one module per namespace, with readers, writers and hooks
 officekit-markup.workspace = true
 
-# The traversals of the typed tree: the Strict read of a workbook transforms it
-officekit-traversal = { workspace = true, optional = true }
-
-# The package layer: the container, part names, content types, relationships, image parts
-officekit-packaging.workspace = true
-
-# The part modules: each part type's content type, relationship type, load and store
-officekit-parts = { workspace = true, default-features = false }
-
-# The validation tables the merge of runs reads
-officekit-validation.workspace = true
-
-# The Transitional class: every node's read and write, and the conversion of date cells
-officekit-transitional = { workspace = true, optional = true }
-
-# The Strict class: every node's read and write
+# The Strict class, every node's read and write, and the traversals the Strict read of a
+# workbook transforms it with
 officekit-strict = { workspace = true, optional = true }
 
 # System abstraction (filesystem, env, temp dirs); its zip feature moves a
@@ -62,27 +50,19 @@ thiserror.workspace = true
 # officekit's binary form: the model of a whole package archived and read back
 rkyv = { workspace = true, optional = true, features = ["alloc", "bytecheck"] }
 
-# A folder's manifest is JSON
-serde_json.workspace = true
+# A folder's manifest and the validator's records are JSON
+serde_json = { workspace = true, features = ["alloc", "default", "std", "unbounded_depth"] }
 
 # Hashes a document-protection password, and writes the hash and salt as text
 sha1.workspace = true
 base64 = { workspace = true, features = ["alloc"] }
 
-# Cleans a folder name
-regex = { workspace = true, features = ["std"] }
-
-# Markdown documents as a typed tree
-arky = { workspace = true, optional = true }
-
-# Pictures: an SVG rendered to the PNG Word keeps beside it, a WebP decoded to PNG
-image-webp = { workspace = true, optional = true }
-png = { workspace = true, optional = true }
-resvg = { workspace = true, optional = true, features = ["raster-images"] }
+# Cleans a folder name, and runs the pattern facets of the validation tables, matched whole
+regex = { workspace = true, features = ["std", "unicode-gencat"] }
 
 [dev-dependencies]
 # The write-through tests and the timing example walk the typed tree
-officekit-traversal.workspace = true
+officekit-strict.workspace = true
 
 # The round-trip example takes its folder from the command line
 clap = { workspace = true, features = ["std", "derive"] }

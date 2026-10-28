@@ -93,12 +93,12 @@ fn a_struct_rebuilds_its_children_in_schema_order_then_places_its_unknown_conten
     assert_eq!(
         out,
         "        let mut node = self.without_children();\n        \
-         let mut rebase = crate::Rebase::new(&self.unknown);\n        \
-         node.properties = crate::transform_child(&self.properties, ctx, &mut rebase);\n        \
-         node.sup = crate::transform_choice(&self.sup, ctx, &mut rebase);\n        \
-         node.content = crate::transform_items(&self.content, ctx, &mut rebase);\n        \
-         node.sub = crate::transform_child(&self.sub, ctx, &mut rebase);\n        \
-         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);\n        \
+         let mut rebase = super::Rebase::new(&self.unknown);\n        \
+         node.properties = super::transform_child(&self.properties, ctx, &mut rebase);\n        \
+         node.sup = super::transform_choice(&self.sup, ctx, &mut rebase);\n        \
+         node.content = super::transform_items(&self.content, ctx, &mut rebase);\n        \
+         node.sub = super::transform_child(&self.sub, ctx, &mut rebase);\n        \
+         node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);\n        \
          node\n"
     );
     assert_eq!(helpers, "");
@@ -110,7 +110,7 @@ fn a_struct_without_children_places_its_unknown_content_as_read() {
     assert_eq!(
         out,
         "        let mut node = self.without_children();\n        \
-         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());\n        \
+         node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());\n        \
          node\n"
     );
 }
@@ -131,21 +131,21 @@ fn a_struct_too_large_for_one_function_sets_its_fields_in_the_same_order_through
     assert_eq!(
         out,
         "        let mut node = self.without_children();\n        \
-         let mut rebase = crate::Rebase::new(&self.unknown);\n        \
+         let mut rebase = super::Rebase::new(&self.unknown);\n        \
          transform_sample_1(self, &mut node, ctx, &mut rebase);\n        \
          transform_sample_2(self, &mut node, ctx, &mut rebase);\n        \
-         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);\n        \
+         node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);\n        \
          node\n"
     );
     let mut first = String::from(
         "\nfn transform_sample_1(\n    from: &x::Sample,\n    node: &mut x::Sample,\n    \
-         ctx: &mut dyn officekit_markup::Context,\n    rebase: &mut crate::Rebase,\n) {\n",
+         ctx: &mut dyn officekit_markup::Context,\n    rebase: &mut super::Rebase,\n) {\n",
     );
     // Schema order: the children were given from `item_099` down.
     for index in (0..100_usize).rev().take(3) {
         let _ = writeln!(
             first,
-            "    node.item_{index:03} = crate::transform_child(&from.item_{index:03}, ctx, rebase);"
+            "    node.item_{index:03} = super::transform_child(&from.item_{index:03}, ctx, rebase);"
         );
     }
     assert!(helpers.starts_with(&first), "{helpers}");

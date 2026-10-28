@@ -5,27 +5,27 @@ mod tests;
 
 use std::path::Path;
 
+use crate::parts::kinds::SpreadsheetKind;
+#[cfg(feature = "strict")]
+use crate::parts::pivot_table_cache_definition;
+use crate::parts::workbook;
+#[cfg(any(feature = "strict", feature = "transitional"))]
+use crate::parts::worksheet;
+#[cfg(feature = "strict")]
+use crate::parts::{pivot_table, table_definition};
+#[cfg(feature = "transitional")]
+use crate::transitional::dates::{SaveWarning, convert_date_cells};
 #[cfg(feature = "strict")]
 use officekit_markup::spreadsheet;
 use officekit_markup::spreadsheet::Workbook;
-use officekit_packaging::error::PackageError;
-use officekit_packaging::package::{OpenOptions, Package};
-use officekit_packaging::part_name::PartName;
-use officekit_parts::kinds::SpreadsheetKind;
-#[cfg(feature = "strict")]
-use officekit_parts::pivot_table_cache_definition;
-use officekit_parts::workbook;
-#[cfg(any(feature = "strict", feature = "transitional"))]
-use officekit_parts::worksheet;
-#[cfg(feature = "strict")]
-use officekit_parts::{pivot_table, table_definition};
 #[cfg(feature = "strict")]
 use officekit_strict::iso_date_time;
-#[cfg(feature = "transitional")]
-use officekit_transitional::dates::{SaveWarning, convert_date_cells};
 #[cfg(feature = "strict")]
-use officekit_traversal::Transform as _;
+use officekit_strict::traversal::Transform as _;
 use officekit_xml::conformance::ConformanceClass;
+use officekit_xml::packaging::error::PackageError;
+use officekit_xml::packaging::package::{OpenOptions, Package};
+use officekit_xml::packaging::part_name::PartName;
 #[cfg(any(feature = "strict", feature = "transitional"))]
 use officekit_xml::values::parse::boolean;
 use officekit_xml::write::WriteOptions;
@@ -40,7 +40,7 @@ use crate::new_parts;
 ///
 /// Make one with [`new`](Self::new), or open one with [`open`](Self::open) or
 /// [`from_bytes`](Self::from_bytes). [`workbook`](Self::workbook) gives the workbook part as a
-/// typed tree. The cells live in the worksheet parts, which `officekit_parts::worksheet` loads and
+/// typed tree. The cells live in the worksheet parts, which `officekit::parts::worksheet` loads and
 /// stores.
 ///
 #[cfg_attr(
@@ -51,9 +51,9 @@ This writes a number into cell `A1` of the first sheet of a new workbook and rea
 ```rust
 use officekit::xlsx::Xlsx;
 use officekit_markup::spreadsheet::{Cell, CellValue, Row};
-use officekit_packaging::part_name::PartName;
-use officekit_parts::kinds::SpreadsheetKind;
-use officekit_parts::worksheet;
+use officekit_xml::packaging::part_name::PartName;
+use officekit::parts::kinds::SpreadsheetKind;
+use officekit::parts::worksheet;
 use officekit_xml::write::WriteOptions;
 
 # fn main() -> Result<(), Box<dyn core::error::Error>> {
@@ -257,7 +257,7 @@ impl Xlsx {
     ///
     /// # Errors
     ///
-    /// The errors of [`part_root::store`](officekit_parts::part_root::store).
+    /// The errors of [`part_root::store`](crate::parts::part_root::store).
     pub fn set_workbook(&mut self, workbook: &Workbook) -> Result<(), PackageError> {
         file::store(
             &mut self.package,

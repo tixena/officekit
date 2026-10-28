@@ -35,15 +35,13 @@ Built and tested:
 ## Layout
 
 ```
-crates/officekit               library: element trees, file types
+crates/officekit               library: element trees, file types, the part modules, the Transitional class, the validator
+crates/officekit-markdown      library: a Word file from markdown, and markdown from a Word file
 crates/officekit-markup        library: the typed tree, one module per namespace, with readers, writers and hooks
-crates/officekit-packaging     library: the package, part names, content types, relationships, images
-crates/officekit-parts         library: one module per part type: content type, relationship types, load and store
-crates/officekit-strict        library: the Strict class: read and write of every node
-crates/officekit-transitional  library: the Transitional class: read and write of every node, date-cell conversion
-crates/officekit-traversal     library: the typed tree's transforms, visitors and write-through
-crates/officekit-validation    library: the validator and its generated tables
-crates/officekit-xml           library: element tree, names, values, part reader and writer
+crates/officekit-markup-base   library: the typed tree's runtime, and the namespaces its cycle depends on
+crates/officekit-markup-core   library: the typed tree's namespaces that reference each other in a cycle
+crates/officekit-strict        library: the Strict class: read and write of every node; the typed tree's transforms, visitors and write-through
+crates/officekit-xml           library: element tree, names, values, part reader and writer; the package, part names, content types, relationships, images
 crates/officekit-cli           CLI binary
 crates/xtask                   dev tooling (`cargo xtask <subcommand>`), never installed
 ```
@@ -58,27 +56,29 @@ crates/xtask                   dev tooling (`cargo xtask <subcommand>`), never i
 | `embedded` | A document stored in a part of another | A `.docx`, `.xlsx`, or `.pptx` inside a package |
 | `compact` | Run compaction | The merge of neighbouring runs that render the same |
 | `folder` | Expanded documents | A `.docx` as a folder of its parts, and back |
-| `markdown` | Markdown documents (feature `markdown`) | A Word document from an arky markdown document, and back |
+| `parts` | Part types | One generated module per part type of ECMA-376 Part 1 and of Microsoft's extensions: its content type, its relationship type in both classes' spelling, and the load and store of its root |
+| `transitional` | The Transitional class (feature `transitional`) | The generated read and write of every node as Transitional, and the conversion of date cells |
+| `validation` | The validator | Schema, markup compatibility, package and semantic checks, and their generated tables |
 
-`officekit-parts` holds one generated module per part type of ECMA-376 Part 1
-and of Microsoft's extensions: its content type, its relationship type in both
-classes' spelling, and the load and store of its root.
+The crate `officekit-markdown` turns markdown into a Word document and back:
+`from_markdown`, `from_markdown_text` and `save_markdown`, and the traits
+`DocxMarkdown` and `OfficeFileMarkdown`, which add `from_arky`, `to_arky`,
+`save_markdown` and `from_input` to officekit's `Docx` and `OfficeFile`.
 
 ## Features
 
-`officekit` has four features and `officekit-parts` three; the two class
-features of `officekit` turn on those of `officekit-parts`, and so does
-`binary-format`. Each class feature turns on its class crate as an optional
-dependency:
+`officekit` has three features:
 
 | Feature | Default | Enables |
 |---|---|---|
-| `transitional` | yes | The `officekit-transitional` crate (ECMA-376 Part 1 with the migration features of Part 4): the generated read and write of every node of the typed tree as Transitional, and the conversion of date cells to number cells before a Transitional save |
-| `strict` | no | The `officekit-strict` crate (ECMA-376 Part 1): the generated read and write of every node as Strict, and the generated rules that rename, unpack, and refuse what Strict spells differently |
+| `transitional` | yes | The `transitional` module (ECMA-376 Part 1 with the migration features of Part 4): the generated read and write of every node of the typed tree as Transitional, and the conversion of date cells to number cells before a Transitional save |
+| `strict` | no | The `officekit-strict` crate (ECMA-376 Part 1), an optional dependency: the generated read and write of every node as Strict, and the generated rules that rename, unpack, and refuse what Strict spells differently |
 | `binary-format` | no | The `binary` module: officekit's binary form, a file's whole model as an rkyv archive, and back. It turns on rkyv and the archive of every type of the typed tree, the package and the part modules; without it none of that compiles |
-| `markdown` | no | The `markdown` module: a Word document from an arky markdown document, and a Word document written as markdown, its pictures in a folder beside the file or inside the markdown as data URIs. Turns on `transitional` |
 
-Markdown to Word and back changes five things, and nothing else:
+`officekit-markdown` writes a Word document as markdown with its pictures in a
+folder beside the file or inside the markdown as data URIs. Its feature
+`binary-format` turns on officekit's binary form and arky's. Markdown to Word
+and back changes five things, and nothing else:
 
 - A code block loses its language and arguments.
 - A wiki link `[[target|text]]` comes back as `[text](target)`.
@@ -92,7 +92,7 @@ Pictures also come back under the media folder (`report_media/image1.png`), and 
 cargo build -p officekit                                                 # transitional
 cargo build -p officekit --no-default-features --features strict         # strict only
 cargo build -p officekit --all-features                                  # both
-cargo build -p officekit-parts --no-default-features --features strict   # the part modules, strict only
+cargo build -p officekit-markdown                                        # markdown
 ```
 
 ## Design rules
@@ -143,9 +143,9 @@ example); the reason goes to standard error.
 just check    # the gate for each change: fmt, then clippy, build and tests of the workspace with every feature on
 just full     # the full gate: lint, build, test, audit
 just all      # lint, build, test
-just lint     # clippy (restriction + pedantic + nursery denied) on the workspace, then officekit and officekit-parts in each feature build; fmt check; rustfmt check of every tests.rs
+just lint     # clippy (restriction + pedantic + nursery denied) on the workspace, then officekit in each feature build and officekit-markdown with all features; fmt check; rustfmt check of every tests.rs
 just build
-just test     # the workspace, then officekit and officekit-parts with all features, then officekit with strict alone
+just test     # the workspace, then officekit and officekit-markdown with all features, then officekit with strict alone
 just docs     # cargo doc --workspace --no-deps
 just audit    # cargo audit
 just bpublish # build the CLI for this machine's target and add it to the GitHub release of the version
@@ -157,16 +157,14 @@ just bpublish # build the CLI for this machine's target and add it to the GitHub
 
 `cargo xtask generate-schema` writes the typed tree into
 `crates/officekit-markup-base/src`, `crates/officekit-markup-core/src` and
-`crates/officekit-markup-ext/src`, and the facade's `lib.rs` into
 `crates/officekit-markup/src`, its traversals into
-`crates/officekit-traversal/src`, the conformance classes into
-`crates/officekit-transitional/src` and `crates/officekit-strict/src`, the
-part modules of `officekit-parts` (`crates/officekit-parts/src`), the
-validation tables of `officekit-validation`
-(`crates/officekit-validation/src/generated/`), the name table of
+`crates/officekit-strict/src/traversal`, the conformance classes into
+`crates/officekit/src/transitional` and `crates/officekit-strict/src`, the
+part modules into `crates/officekit/src/parts`, the validation tables into
+`crates/officekit/src/validation/generated/`, the name table of
 `officekit-xml` (`crates/officekit-xml/src/name/table.rs`), and the
-relationship types of `officekit-packaging`
-(`crates/officekit-packaging/src/relationship_type.rs`).
+relationship types of its `packaging` module
+(`crates/officekit-xml/src/packaging/relationship_type.rs`).
 Those files are generated and are never edited by hand; change the generator
 in `crates/xtask` and run it again.
 The generator's hand-written inputs live in `crates/xtask/data/`.

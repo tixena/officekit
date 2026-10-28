@@ -11,24 +11,20 @@ mod tests;
 
 use std::path::Path;
 
-#[cfg(feature = "markdown")]
-use arky::parser::ast::Document as ArkyDocument;
-#[cfg(feature = "markdown")]
-use arky::parser::extension::Extension;
+use crate::parts::kinds::WordprocessingKind;
+use crate::parts::{document_settings, header, main_document};
+#[cfg(feature = "transitional")]
+use crate::transitional::dates::SaveWarning;
 use officekit_markup::wordprocessing::{
     BlockContent, Document, DocumentProtectionTypesMember, DocumentSettings, Footer, Header,
     HeaderOrFooterTypeMember, TextRun,
 };
-use officekit_packaging::error::PackageError;
-use officekit_packaging::image::Image;
-use officekit_packaging::package::{OpenOptions, Package};
-use officekit_packaging::part_name::PartName;
-use officekit_packaging::relationship::{RelatedPart, RelationshipType, Target};
-use officekit_parts::kinds::WordprocessingKind;
-use officekit_parts::{document_settings, header, main_document};
-#[cfg(feature = "transitional")]
-use officekit_transitional::dates::SaveWarning;
 use officekit_xml::conformance::ConformanceClass;
+use officekit_xml::packaging::error::PackageError;
+use officekit_xml::packaging::image::Image;
+use officekit_xml::packaging::package::{OpenOptions, Package};
+use officekit_xml::packaging::part_name::PartName;
+use officekit_xml::packaging::relationship::{RelatedPart, RelationshipType, Target};
 use officekit_xml::write::WriteOptions;
 use os_shim::System;
 #[cfg(any(feature = "strict", feature = "transitional"))]
@@ -36,8 +32,6 @@ use os_shim::WriteMode;
 
 use crate::compact::{self, Comments};
 use crate::file;
-#[cfg(feature = "markdown")]
-use crate::markdown::{self, Exported, MarkdownError, MarkdownOptions};
 use crate::new_parts;
 
 /// A `.docx`-family file: its package, its main document part, and the class and kind they give.
@@ -53,7 +47,7 @@ use crate::new_parts;
 /// use officekit::docx::Docx;
 /// use officekit::docx::table::TableRows as _;
 /// use officekit_markup::wordprocessing::{BlockContent, Table};
-/// use officekit_parts::kinds::WordprocessingKind;
+/// use officekit::parts::kinds::WordprocessingKind;
 ///
 /// # fn main() -> Result<(), Box<dyn core::error::Error>> {
 /// let mut docx = Docx::new(WordprocessingKind::Document)?;
@@ -187,28 +181,6 @@ impl Docx {
     pub fn footers(&self) -> Result<Vec<RelatedPart>, PackageError> {
         self.package
             .related_by_type(Some(&self.main), &RelationshipType::FOOTER)
-    }
-
-    /// A new Word document holding `document`. Local picture targets are read through `system`,
-    /// relative to `base`. Needs the feature `markdown`.
-    ///
-    /// # Errors
-    ///
-    /// [`MarkdownError::Image`] when a picture cannot be read or is in no format it stores,
-    /// [`MarkdownError::Write`] when `options.frontmatter` is on and the frontmatter holds a null,
-    /// and [`MarkdownError::Package`] when the new package cannot be built or its parts stored.
-    #[cfg(feature = "markdown")]
-    pub fn from_arky<S, E>(
-        system: &S,
-        base: &Path,
-        document: &ArkyDocument<E>,
-        options: MarkdownOptions,
-    ) -> Result<Self, MarkdownError>
-    where
-        S: System + ?Sized,
-        E: Extension,
-    {
-        markdown::from_arky(system, Some(base), document, options)
     }
 
     /// The file whose bytes are `bytes`.
@@ -368,7 +340,7 @@ impl Docx {
     ///
     /// The errors of [`Package::related_by_type`], [`Package::free_part_name`],
     /// [`Package::relate`], [`document_settings::load`], and
-    /// [`part_root::store`](officekit_parts::part_root::store).
+    /// [`part_root::store`](crate::parts::part_root::store).
     pub fn protect(
         &mut self,
         edit: DocumentProtectionTypesMember,
@@ -513,7 +485,7 @@ impl Docx {
     ///
     /// # Errors
     ///
-    /// The errors of [`part_root::store`](officekit_parts::part_root::store).
+    /// The errors of [`part_root::store`](crate::parts::part_root::store).
     pub fn set_header(&mut self, name: &PartName, content: &Header) -> Result<(), PackageError> {
         file::store(
             &mut self.package,
@@ -529,7 +501,7 @@ impl Docx {
     ///
     /// # Errors
     ///
-    /// The errors of [`part_root::store`](officekit_parts::part_root::store).
+    /// The errors of [`part_root::store`](crate::parts::part_root::store).
     pub fn set_main_document(&mut self, document: &Document) -> Result<(), PackageError> {
         file::store(
             &mut self.package,
@@ -567,23 +539,6 @@ impl Docx {
     /// The options every store through the file writes with, its saves included.
     pub const fn set_write_options(&mut self, options: WriteOptions) {
         self.write_options = options;
-    }
-
-    /// The main document as an arky document. Each picture's target is `{media}/{file name}`,
-    /// the file name that of its image part (`image1.png`). Needs the feature `markdown`.
-    ///
-    /// # Errors
-    ///
-    /// [`MarkdownError::Package`] when the main document, its styles or numbering part, a picture
-    /// or an HTML part cannot be read, and [`MarkdownError::Frontmatter`] when
-    /// `options.frontmatter` is on and the frontmatter part does not read.
-    #[cfg(feature = "markdown")]
-    pub fn to_arky(
-        &self,
-        media: &str,
-        options: MarkdownOptions,
-    ) -> Result<Exported, MarkdownError> {
-        markdown::to_arky(self, self.options, media, options)
     }
 
     /// The file's bytes in the Strict class: as they are when it was read Strict, else every

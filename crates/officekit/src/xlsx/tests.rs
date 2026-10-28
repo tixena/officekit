@@ -1,24 +1,18 @@
 #[cfg(feature = "transitional")]
 use std::path::Path;
 
+use crate::parts::kinds::SpreadsheetKind;
+#[cfg(feature = "strict")]
+use crate::parts::pivot_table_cache_definition;
+use crate::parts::worksheet;
+#[cfg(feature = "strict")]
+use crate::parts::{pivot_table, table_definition};
+#[cfg(all(feature = "strict", feature = "transitional"))]
+use crate::transitional::dates::SaveWarning;
 #[cfg(feature = "strict")]
 use officekit_markup::spreadsheet::WorkbookProperties;
-#[cfg(any(feature = "strict", feature = "transitional"))]
-use officekit_packaging::package::OpenOptions;
-#[cfg(feature = "strict")]
-use officekit_packaging::package::Package;
-use officekit_packaging::part_name::PartName;
-use officekit_packaging::relationship::{RelationshipType, Target};
-use officekit_parts::kinds::SpreadsheetKind;
-#[cfg(feature = "strict")]
-use officekit_parts::pivot_table_cache_definition;
-use officekit_parts::worksheet;
-#[cfg(feature = "strict")]
-use officekit_parts::{pivot_table, table_definition};
 #[cfg(feature = "strict")]
 use officekit_strict::iso_date_time;
-#[cfg(all(feature = "strict", feature = "transitional"))]
-use officekit_transitional::dates::SaveWarning;
 use officekit_xml::conformance::ConformanceClass;
 #[cfg(feature = "strict")]
 use officekit_xml::element::Element;
@@ -28,6 +22,12 @@ use officekit_xml::mc::MarkupCompatibility;
 use officekit_xml::name::Namespace;
 #[cfg(feature = "transitional")]
 use officekit_xml::name::OfficeVersion;
+#[cfg(any(feature = "strict", feature = "transitional"))]
+use officekit_xml::packaging::package::OpenOptions;
+#[cfg(feature = "strict")]
+use officekit_xml::packaging::package::Package;
+use officekit_xml::packaging::part_name::PartName;
+use officekit_xml::packaging::relationship::{RelationshipType, Target};
 #[cfg(feature = "strict")]
 use officekit_xml::parse::parse;
 #[cfg(feature = "transitional")]

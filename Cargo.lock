@@ -708,23 +708,14 @@ dependencies = [
 name = "officekit"
 version = "0.1.0"
 dependencies = [
- "arky",
  "base64 0.22.1",
  "clap",
- "image-webp",
  "officekit-markup",
- "officekit-packaging",
- "officekit-parts",
  "officekit-strict",
- "officekit-transitional",
- "officekit-traversal",
- "officekit-validation",
  "officekit-xml",
  "os-shim",
- "png",
  "quick-xml",
  "regex",
- "resvg",
  "rkyv",
  "serde_json",
  "sha1",
@@ -741,9 +732,7 @@ dependencies = [
  "assert_cmd",
  "clap",
  "officekit",
- "officekit-packaging",
- "officekit-parts",
- "officekit-validation",
+ "officekit-markdown",
  "officekit-xml",
  "os-shim",
  "serde_json",
@@ -751,11 +740,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "officekit-markdown"
+version = "0.1.0"
+dependencies = [
+ "arky",
+ "base64 0.22.1",
+ "image-webp",
+ "officekit",
+ "officekit-markup",
+ "officekit-xml",
+ "os-shim",
+ "png",
+ "resvg",
+ "thiserror",
+]
+
+[[package]]
 name = "officekit-markup"
 version = "0.1.0"
 dependencies = [
  "officekit-markup-base",
- "officekit-markup-ext",
+ "officekit-markup-core",
+ "officekit-xml",
+ "rkyv",
 ]
 
 [[package]]
@@ -776,50 +783,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "officekit-markup-ext"
-version = "0.1.0"
-dependencies = [
- "officekit-markup-base",
- "officekit-markup-core",
- "officekit-xml",
- "rkyv",
-]
-
-[[package]]
-name = "officekit-packaging"
-version = "0.1.0"
-dependencies = [
- "bstr",
- "flate2",
- "imagesize",
- "indexmap",
- "libc",
- "log",
- "officekit-markup",
- "officekit-traversal",
- "officekit-xml",
- "os-shim",
- "rkyv",
- "serde_core",
- "simd-adler32",
- "thiserror",
- "zip",
- "zlib-rs",
-]
-
-[[package]]
-name = "officekit-parts"
-version = "0.1.0"
-dependencies = [
- "officekit-markup",
- "officekit-packaging",
- "officekit-strict",
- "officekit-transitional",
- "officekit-xml",
- "rkyv",
-]
-
-[[package]]
 name = "officekit-strict"
 version = "0.1.0"
 dependencies = [
@@ -828,47 +791,28 @@ dependencies = [
 ]
 
 [[package]]
-name = "officekit-transitional"
-version = "0.1.0"
-dependencies = [
- "officekit-markup",
- "officekit-packaging",
- "officekit-xml",
-]
-
-[[package]]
-name = "officekit-traversal"
-version = "0.1.0"
-dependencies = [
- "officekit-markup",
- "officekit-xml",
-]
-
-[[package]]
-name = "officekit-validation"
-version = "0.1.0"
-dependencies = [
- "officekit-packaging",
- "officekit-xml",
- "os-shim",
- "regex",
- "serde_json",
-]
-
-[[package]]
 name = "officekit-xml"
 version = "0.1.0"
 dependencies = [
  "aho-corasick",
+ "bstr",
+ "flate2",
+ "imagesize",
  "indexmap",
+ "libc",
+ "log",
+ "os-shim",
  "quick-xml",
  "regex",
  "regex-automata",
  "regex-syntax",
  "rkyv",
  "serde_core",
+ "simd-adler32",
  "syn 3.0.5",
  "thiserror",
+ "zip",
+ "zlib-rs",
 ]
 
 [[package]]
@@ -1701,9 +1645,8 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "clap",
+ "officekit",
  "officekit-markup",
- "officekit-packaging",
- "officekit-validation",
  "officekit-xml",
  "os-shim",
  "quick-xml",

@@ -46,14 +46,14 @@
 //! | Open a file without knowing its type | [`office_file::OfficeFile`] | `transitional` or `strict`, for the class of the file |
 //! | Create, open and edit a Word document | [`docx::Docx`] | `transitional` to create and save Transitional, `strict` to save Strict |
 //! | Edit a table, header, footer, picture or chart in a Word document | [`docx::table::TableRows`], `Docx::add_header`, `Docx::set_picture`, `Docx::refresh_chart_caches` | none |
-//! | Read and write workbook cells | [`xlsx::Xlsx`] with `officekit_parts::worksheet` | `transitional` to save Transitional, `strict` to save Strict |
-//! | Read and write slides | [`pptx::Pptx`] with `officekit_parts::slide` | `transitional` to save Transitional, `strict` to save Strict |
-//! | Validate against an Office version | [`Validator`](officekit_validation::validator::Validator) | none |
+//! | Read and write workbook cells | [`xlsx::Xlsx`] with [`parts::worksheet`] | `transitional` to save Transitional, `strict` to save Strict |
+//! | Read and write slides | [`pptx::Pptx`] with [`parts::slide`] | `transitional` to save Transitional, `strict` to save Strict |
+//! | Validate against an Office version | [`Validator`](validation::validator::Validator) | none |
 //! | Convert between Transitional and Strict | `to_bytes_strict` and `to_bytes_transitional` of `Docx`, `Xlsx` and `Pptx` | `strict` or `transitional` |
 //! | Merge neighbouring runs that render the same | [`compact`] | none |
 //! | Open a document stored inside another | [`embedded`] | none |
 //! | Work on a `.docx` as a folder of files | [`folder`] | none |
-//! | Turn markdown into Word and back | `markdown`, `Docx::from_arky`, `Docx::to_arky`, `OfficeFile::from_input` | `markdown` |
+//! | Turn markdown into Word and back | the crate [`officekit-markdown`](https://docs.rs/officekit-markdown) | none |
 //! | Keep a parsed file in a form that opens without parsing XML | `binary` | `binary-format` |
 //!
 //! # Getting started
@@ -69,13 +69,12 @@
 //! ```
 //!
 //! Types you build or pass come from the crate that owns them, and `officekit` re-exports none of
-//! them. `OpenOptions`, `Package` and `PartName` are in `officekit-packaging`, the document kinds
-//! are in `officekit-parts`, and the typed tree is in `officekit-markup`. Add the ones your code
-//! names.
+//! them. `OpenOptions`, `Package` and `PartName` are in the `packaging` module of `officekit-xml`,
+//! the document kinds are in [`parts::kinds`], and the typed tree is in `officekit-markup`. Add
+//! the crates your code names.
 //!
 //! ```toml
-//! officekit-packaging = "0.1"
-//! officekit-parts = "0.1"
+//! officekit-xml = "0.1"
 //! officekit-markup = "0.1"
 //! ```
 //!
@@ -90,8 +89,8 @@ use officekit::docx::Docx;
 use officekit_markup::wordprocessing::{
     BlockContent, Paragraph, ParagraphContent, Text, TextRun, TextRunContent,
 };
-use officekit_packaging::package::OpenOptions;
-use officekit_parts::kinds::WordprocessingKind;
+use officekit_xml::packaging::package::OpenOptions;
+use officekit::parts::kinds::WordprocessingKind;
 
 # fn main() -> Result<(), Box<dyn core::error::Error>> {
 let mut docx = Docx::new(WordprocessingKind::Document)?;
@@ -143,8 +142,8 @@ assert!(found.contains(&"Hello"));
 //! - [`docx`], [`xlsx`] and [`pptx`]: the file types, with their saves and operations.
 //! - [`officekit-markup`](https://docs.rs/officekit-markup): the typed tree, with a page per
 //!   namespace.
-//! - [`officekit-parts`](https://docs.rs/officekit-parts): how to load and store one part.
-//! - [`officekit-validation`](https://docs.rs/officekit-validation): the validator.
+//! - [`parts`]: how to load and store one part.
+//! - [`validation`]: the validator.
 //!
 //! # Use cases
 //!
@@ -173,7 +172,7 @@ use officekit::docx::Docx;
 use officekit_markup::wordprocessing::{
     BlockContent, Paragraph, ParagraphContent, Text, TextRun, TextRunContent,
 };
-use officekit_parts::kinds::WordprocessingKind;
+use officekit::parts::kinds::WordprocessingKind;
 
 # fn main() -> Result<(), Box<dyn core::error::Error>> {
 let mut docx = Docx::new(WordprocessingKind::Document)?;
@@ -230,8 +229,8 @@ assert!(stored.contains("Dear Ada,"));
 ```rust
 use officekit::docx::Docx;
 use officekit::office_file::OfficeFile;
-use officekit_packaging::package::OpenOptions;
-use officekit_parts::kinds::WordprocessingKind;
+use officekit_xml::packaging::package::OpenOptions;
+use officekit::parts::kinds::WordprocessingKind;
 use officekit_xml::conformance::ConformanceClass;
 
 # fn main() -> Result<(), Box<dyn core::error::Error>> {
@@ -268,7 +267,7 @@ assert_eq!(back.conformance_class(), ConformanceClass::Transitional);
 use officekit::binary;
 use officekit::docx::Docx;
 use officekit::office_file::OfficeFile;
-use officekit_parts::kinds::WordprocessingKind;
+use officekit::parts::kinds::WordprocessingKind;
 
 # fn main() -> Result<(), Box<dyn core::error::Error>> {
 let file = OfficeFile::Word(Docx::new(WordprocessingKind::Document)?);
@@ -288,31 +287,24 @@ assert!(matches!(restored, OfficeFile::Word(_)));
 //! `officekit validate FILE --target 365` lists what a version of Office would refuse in a file.
 //! It exits with 0 when there are no errors, 1 when there are errors, and 2 when the check could
 //! not run. In the library, a
-//! [`Validator`](officekit_validation::validator::Validator) checks a package for one
+//! [`Validator`](validation::validator::Validator) checks a package for one
 //! [`OfficeVersion`](officekit_xml::name::OfficeVersion) and stops at a cap of errors.
 //!
-#![cfg_attr(
-    feature = "markdown",
-    doc = r#"
-```rust
-use officekit::markdown::{self, MarkdownOptions};
-use officekit_validation::validator::Validator;
-use officekit_xml::name::OfficeVersion;
-use os_shim::mock::MemorySystem;
-
-# fn main() -> Result<(), Box<dyn core::error::Error>> {
-let system = MemorySystem::new();
-let text = "A | B\n--|--\n1 | 2\n";
-let docx = markdown::from_markdown_text(&system, text, None, MarkdownOptions::default())?;
-
-let validator = Validator::new(OfficeVersion::Microsoft365).with_max_errors(50);
-let errors = validator.validate(docx.package());
-assert!(errors.is_empty(), "{errors:?}");
-# Ok(())
-# }
-```
-"#
-)]
+//! ```rust
+//! use officekit::docx::Docx;
+//! use officekit::parts::kinds::WordprocessingKind;
+//! use officekit::validation::validator::Validator;
+//! use officekit_xml::name::OfficeVersion;
+//!
+//! # fn main() -> Result<(), Box<dyn core::error::Error>> {
+//! let docx = Docx::new(WordprocessingKind::Document)?;
+//!
+//! let validator = Validator::new(OfficeVersion::Microsoft365).with_max_errors(50);
+//! let errors = validator.validate(docx.package());
+//! assert!(errors.is_empty(), "{errors:?}");
+//! # Ok(())
+//! # }
+//! ```
 //!
 //! ## Work on a Word file as a folder
 //!
@@ -330,8 +322,8 @@ use std::path::{Path, PathBuf};
 
 use officekit::docx::Docx;
 use officekit::folder::{self, DEFAULT_SUFFIX, DownOptions, UpOptions};
-use officekit_packaging::package::OpenOptions;
-use officekit_parts::kinds::WordprocessingKind;
+use officekit_xml::packaging::package::OpenOptions;
+use officekit::parts::kinds::WordprocessingKind;
 use os_shim::System as _;
 use os_shim::mock::MemorySystem;
 
@@ -367,33 +359,8 @@ assert_eq!(rebuilt.kind(), WordprocessingKind::Document);
 //! ## Convert between markdown and Word
 //!
 //! `officekit get notes.md -f docx` turns markdown into a Word file, and
-//! `officekit get report.docx -f markdown` turns a Word file into markdown. The conversion goes
-//! through an arky document, carries pictures, and can carry a frontmatter block.
-//!
-#![cfg_attr(
-    feature = "markdown",
-    doc = r#"
-```rust
-use std::path::Path;
-
-use officekit::markdown::{self, MarkdownOptions};
-use os_shim::System as _;
-use os_shim::mock::MemorySystem;
-
-# fn main() -> Result<(), Box<dyn core::error::Error>> {
-let system = MemorySystem::new().with_dir("/notes")?;
-let options = MarkdownOptions::default();
-let docx = markdown::from_markdown_text(&system, "A | B\n--|--\n1 | 2\n", None, options)?;
-
-let path = Path::new("/notes/table.md");
-markdown::save_markdown(&docx, &system, path, options)?;
-let text = system.read_to_string(path)?;
-assert_eq!(text, "| A   | B   |\n| --- | --- |\n| 1   | 2   |\n");
-# Ok(())
-# }
-```
-"#
-)]
+//! `officekit get report.docx -f markdown` turns a Word file into markdown. The conversion is in
+//! the crate [`officekit-markdown`](https://docs.rs/officekit-markdown).
 //!
 //! ## Merge fragmented runs
 //!
@@ -405,7 +372,7 @@ assert_eq!(text, "| A   | B   |\n| --- | --- |\n| 1   | 2   |\n");
 //! ```rust
 //! use officekit::compact::Comments;
 //! use officekit::docx::Docx;
-//! use officekit_parts::kinds::WordprocessingKind;
+//! use officekit::parts::kinds::WordprocessingKind;
 //!
 //! # fn main() -> Result<(), Box<dyn core::error::Error>> {
 //! let mut docx = Docx::new(WordprocessingKind::Document)?;
@@ -430,39 +397,37 @@ assert_eq!(text, "| A   | B   |\n| --- | --- |\n| 1   | 2   |\n");
 //!
 //! The default feature is `transitional`.
 //!
-//! - `transitional`: reads and writes the Transitional class. It turns on `Docx::create`,
-//!   `Xlsx::create`, `Pptx::create`, `save_transitional`, `to_bytes_transitional` and
-//!   `embedded::store_transitional`.
+//! - `transitional`: reads and writes the Transitional class. It turns on the `transitional`
+//!   module, `Docx::create`, `Xlsx::create`, `Pptx::create`, `save_transitional`,
+//!   `to_bytes_transitional` and `embedded::store_transitional`.
 //! - `strict`: reads and writes the Strict class. It turns on `save_strict`, `to_bytes_strict`
-//!   and `embedded::store_strict`.
-//! - `markdown`: turns on `transitional` and the `markdown` module, `Docx::from_arky`,
-//!   `Docx::to_arky` and `OfficeFile::from_input`. It adds the arky crate and the picture
-//!   converters for SVG and `WebP`.
+//!   and `embedded::store_strict`, and adds the crate `officekit-strict`.
 //! - `binary-format`: turns on the `binary` module and gives the typed tree an rkyv archive form.
 //!
 //! A build with neither `transitional` nor `strict` can make files in memory with `Docx::new`,
 //! `Xlsx::new` and `Pptx::new`, but it cannot open a file: opening fails with
-//! [`PackageError::ClassNotEnabled`](officekit_packaging::error::PackageError::ClassNotEnabled).
+//! [`PackageError::ClassNotEnabled`](officekit_xml::packaging::error::PackageError::ClassNotEnabled).
 //!
 //! # The crates behind it
 //!
+//! This crate holds [`parts`], one module per part type with its content type, its relationship
+//! type, and how to load and store its typed root; `transitional`, the Transitional class, the
+//! read and write of every node and the conversion of date cells; and [`validation`], the
+//! validator and its schema tables.
+//!
 //! | Crate | Holds |
 //! | --- | --- |
-//! | [`officekit-packaging`](https://docs.rs/officekit-packaging) | The zip package: parts, part names, content types, relationships and images. |
-//! | [`officekit-xml`](https://docs.rs/officekit-xml) | The generic element tree, names and namespaces, the conformance class, markup compatibility, and the part reader and writer. |
-//! | [`officekit-parts`](https://docs.rs/officekit-parts) | One module per part type: its content type, its relationship type, and how to load and store its typed root. |
-//! | [`officekit-markup`](https://docs.rs/officekit-markup) | The typed tree, one module per namespace. It gathers `officekit-markup-base`, `officekit-markup-core` and `officekit-markup-ext`. |
-//! | [`officekit-transitional`](https://docs.rs/officekit-transitional) | The Transitional class: read and write of every node, and the conversion of date cells. |
-//! | [`officekit-strict`](https://docs.rs/officekit-strict) | The Strict class: read and write of every node. |
-//! | [`officekit-traversal`](https://docs.rs/officekit-traversal) | Transforms, visitors and write-through over the typed tree. |
-//! | [`officekit-validation`](https://docs.rs/officekit-validation) | The validator and its schema tables. |
+//! | [`officekit-xml`](https://docs.rs/officekit-xml) | The generic element tree, names and namespaces, the conformance class, markup compatibility, and the part reader and writer. Its `packaging` module holds the zip package: parts, part names, content types, relationships and images. |
+//! | [`officekit-markup`](https://docs.rs/officekit-markup) | The typed tree, one module per namespace. It gathers `officekit-markup-base` and `officekit-markup-core`. |
+//! | [`officekit-strict`](https://docs.rs/officekit-strict) | The Strict class: read and write of every node. Its `traversal` module holds the transforms, visitors and write-through over the typed tree. |
+//! | [`officekit-markdown`](https://docs.rs/officekit-markdown) | A Word file from markdown, and markdown from a Word file. |
 //! | `officekit-cli` | The `officekit` command line. It has no library. |
 //!
 //! # Limits
 //!
 //! - The file types are `.docx`, `.xlsx` and `.pptx` and their template and macro-enabled
-//!   variants. Another zip package opens as an `officekit_packaging::package::Package` only.
-//! - The folder functions and the markdown conversion work on Word files only.
+//!   variants. Another zip package opens as an `officekit_xml::packaging::package::Package` only.
+//! - The folder functions work on Word files only, and so does `officekit-markdown`.
 //! - [`OfficeFile`](office_file::OfficeFile) saves in the Transitional class only. To save in
 //!   Strict, match the variant and call the file type.
 //! - A save in Strict fails with `PackageError::Write`, naming the first part that holds content
@@ -491,9 +456,11 @@ pub mod docx;
 pub mod embedded;
 mod file;
 pub mod folder;
-#[cfg(feature = "markdown")]
-pub mod markdown;
 mod new_parts;
 pub mod office_file;
+pub mod parts;
 pub mod pptx;
+#[cfg(feature = "transitional")]
+pub mod transitional;
+pub mod validation;
 pub mod xlsx;

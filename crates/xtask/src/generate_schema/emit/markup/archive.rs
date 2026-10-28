@@ -8,7 +8,7 @@
 //! writes beside it would be public and exhaustive. Its mirror, a remote derive
 //! in the private module, holds the archived enum and the resolver, and the
 //! enum's `Archive`, `Serialize` and `Deserialize` hand the work to it.
-//! officekit-parts' `PartModel` archives through a mirror written the same way.
+//! `officekit::parts`' `PartModel` archives through a mirror written the same way.
 
 use core::fmt::Write as _;
 

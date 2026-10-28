@@ -1,6 +1,6 @@
 //! What the Strict and Transitional classes share when they read and write a node.
 //!
-//! The class crates (`officekit-strict` and `officekit-transitional`) match a tag of their
+//! The two classes (`officekit-strict` and `officekit::transitional`) match a tag of their
 //! generated tables against a name in the tree with [`is`] and [`order`], and read a node only
 //! when its element has the tag the node expects with [`read`]. [`BASE_1900`] and [`BASE_1904`]
 //! are the base dates of the two date systems of a workbook (ECMA-376 Part 1, 18.17.4.1).

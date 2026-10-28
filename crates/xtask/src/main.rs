@@ -259,14 +259,13 @@ fn markup_summary(out: &mut dyn Write, summary: &markup::Summary) -> Result<()> 
     writeln!(
         out,
         "wrote the typed tree: {} modules, {in_base} in {}, {in_core} in {} and {in_ext} in {}; \
-         the facade {}; {} ECMA structs over {} tags, {} extension structs; {} choice enums \
+         {} ECMA structs over {} tags, {} extension structs; {} choice enums \
          ({} ECMA ones the data extends), {} xsd:all enums, {} wildcard enums over {} \
          wildcard positions; {} From and TryFrom pairs; {} newtypes, {} with a member enum",
         summary.modules,
         markup::Crate::Base.folder(),
         markup::Crate::Core.folder(),
         markup::Crate::Ext.folder(),
-        markup::MARKUP_PATH,
         summary.ecma_structs,
         summary.ecma_tags,
         summary.extension_structs,

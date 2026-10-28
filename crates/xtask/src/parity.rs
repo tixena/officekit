@@ -2,13 +2,13 @@
 //!
 //! Parity runs one way: an error only officekit reports does not count.
 //! The test-only table from officekit's codes to SDK 3.5.1's error ids
-//! lives here and nowhere in `officekit-validation`.
+//! lives here and nowhere in `officekit::validation`.
 
 use alloc::collections::BTreeMap;
 use std::path::Path;
 
 use anyhow::{Context as _, Result, bail};
-use officekit_validation::error::ErrorCode;
+use officekit::validation::error::ErrorCode;
 use os_shim::System;
 use serde_json::Value;
 

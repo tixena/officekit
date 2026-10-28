@@ -8,8 +8,8 @@ use os_shim::real::RealSystem;
 use serde_json::Value;
 use tempfile::TempDir;
 
-use officekit_packaging::package::Package;
-use officekit_packaging::part_name::PartName;
+use officekit_xml::packaging::package::Package;
+use officekit_xml::packaging::part_name::PartName;
 
 fn run(args: &[&str]) -> Output {
     Command::cargo_bin("officekit")

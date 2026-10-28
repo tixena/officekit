@@ -1,11 +1,11 @@
 //! A `.docx`, `.xlsx`, or `.pptx` stored in a part of another document.
 
-use officekit_packaging::error::PackageError;
-use officekit_packaging::package::{OpenOptions, Package};
-use officekit_packaging::part_name::PartName;
-use officekit_parts::kinds::{PresentationKind, SpreadsheetKind, WordprocessingKind};
+use crate::parts::kinds::{PresentationKind, SpreadsheetKind, WordprocessingKind};
 #[cfg(feature = "transitional")]
-use officekit_transitional::dates::SaveWarning;
+use crate::transitional::dates::SaveWarning;
+use officekit_xml::packaging::error::PackageError;
+use officekit_xml::packaging::package::{OpenOptions, Package};
+use officekit_xml::packaging::part_name::PartName;
 
 use crate::docx::Docx;
 use crate::file;
@@ -33,9 +33,9 @@ pub enum Embedded {
 use officekit::docx::Docx;
 use officekit::embedded::{self, Embedded};
 use officekit::xlsx::Xlsx;
-use officekit_packaging::package::OpenOptions;
-use officekit_packaging::part_name::PartName;
-use officekit_parts::kinds::{SpreadsheetKind, WordprocessingKind};
+use officekit_xml::packaging::package::OpenOptions;
+use officekit_xml::packaging::part_name::PartName;
+use officekit::parts::kinds::{SpreadsheetKind, WordprocessingKind};
 
 # fn main() -> Result<(), Box<dyn core::error::Error>> {
 let workbook = Xlsx::new(SpreadsheetKind::Workbook)?;

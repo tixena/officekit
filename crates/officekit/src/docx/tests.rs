@@ -2,17 +2,13 @@ use core::slice;
 #[cfg(feature = "transitional")]
 use std::path::Path;
 
+#[cfg(feature = "transitional")]
+use crate::parts::kinds::SpreadsheetKind;
+use crate::parts::kinds::WordprocessingKind;
+#[cfg(feature = "transitional")]
+use crate::parts::{document_settings, font_table};
 #[cfg(feature = "strict")]
 use officekit_markup::wordprocessing;
-use officekit_packaging::error::PackageError;
-use officekit_packaging::package::{OpenOptions, Package};
-use officekit_packaging::part_name::PartName;
-use officekit_packaging::relationship::{RelationshipType, Target};
-#[cfg(feature = "transitional")]
-use officekit_parts::kinds::SpreadsheetKind;
-use officekit_parts::kinds::WordprocessingKind;
-#[cfg(feature = "transitional")]
-use officekit_parts::{document_settings, font_table};
 use officekit_xml::conformance::ConformanceClass;
 #[cfg(all(feature = "strict", feature = "transitional"))]
 use officekit_xml::error::WriteError;
@@ -20,6 +16,10 @@ use officekit_xml::error::WriteError;
 use officekit_xml::mc::MarkupCompatibility;
 #[cfg(feature = "transitional")]
 use officekit_xml::name::OfficeVersion;
+use officekit_xml::packaging::error::PackageError;
+use officekit_xml::packaging::package::{OpenOptions, Package};
+use officekit_xml::packaging::part_name::PartName;
+use officekit_xml::packaging::relationship::{RelationshipType, Target};
 #[cfg(feature = "strict")]
 use officekit_xml::parse::parse;
 #[cfg(feature = "strict")]

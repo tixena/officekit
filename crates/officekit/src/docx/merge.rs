@@ -7,16 +7,16 @@ mod tests;
 
 use alloc::collections::{BTreeMap, BTreeSet};
 
-use officekit_markup::wordprocessing::{self, BlockContent, Document, DocumentBody};
-use officekit_packaging::error::PackageError;
-use officekit_packaging::package::{DECLARATION, OpenOptions, Package};
-use officekit_packaging::part_name::PartName;
-use officekit_packaging::relationship::{RelationshipType, Target};
-use officekit_parts::{
+use crate::parts::{
     endnotes, footnotes, numbering_definitions, style_definitions, wordprocessing_comments,
 };
+use officekit_markup::wordprocessing::{self, BlockContent, Document, DocumentBody};
 use officekit_xml::element::{Attribute, Document as Part, Element, NamespaceDeclaration, Node};
 use officekit_xml::name::{Namespace, QName};
+use officekit_xml::packaging::error::PackageError;
+use officekit_xml::packaging::package::{DECLARATION, OpenOptions, Package};
+use officekit_xml::packaging::part_name::PartName;
+use officekit_xml::packaging::relationship::{RelationshipType, Target};
 use officekit_xml::write::Scope;
 
 use super::Docx;

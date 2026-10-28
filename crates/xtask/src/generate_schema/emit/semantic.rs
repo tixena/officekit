@@ -33,7 +33,7 @@ use schematron::Names;
 mod tests;
 
 /// Where `generate-schema` writes the table.
-pub const GENERATED_PATH: &str = "crates/officekit-validation/src/generated/semantic.rs";
+pub const GENERATED_PATH: &str = "crates/officekit/src/validation/generated/semantic.rs";
 
 /// Every application: Word, Excel, and `PowerPoint`.
 const ALL_APPLICATIONS: u8 = 0b111;

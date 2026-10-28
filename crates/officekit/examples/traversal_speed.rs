@@ -19,10 +19,10 @@ use std::time::Instant;
 
 use clap::Parser;
 use officekit_markup::{presentation, spreadsheet, wordprocessing};
-use officekit_packaging::package::{OpenOptions, Package};
-use officekit_packaging::part_name::PartName;
-use officekit_traversal::{Transform, Unchanged, Visit, WriteThrough};
+use officekit_strict::traversal::{Transform, Unchanged, Visit, WriteThrough};
 use officekit_xml::element::Element;
+use officekit_xml::packaging::package::{OpenOptions, Package};
+use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::stream::writer::PartWriter;
 use officekit_xml::write::{Layout, Scope};
 use os_shim::System as _;

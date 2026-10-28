@@ -1,15 +1,15 @@
 //! What the three file types share: the main part, its class, and its kind on open; the store of a
 //! typed root in the file's class; and the bytes of the file in a class.
 
-use officekit_packaging::error::PackageError;
+use crate::parts::part_root::{self, PartRoot};
 #[cfg(any(feature = "strict", feature = "transitional"))]
-use officekit_packaging::package::OpenOptions;
-use officekit_packaging::package::{MainPart, Package};
-use officekit_packaging::part_name::PartName;
-use officekit_parts::part_root::{self, PartRoot};
-#[cfg(any(feature = "strict", feature = "transitional"))]
-use officekit_parts::restore_through_module;
+use crate::parts::restore_through_module;
 use officekit_xml::conformance::ConformanceClass;
+use officekit_xml::packaging::error::PackageError;
+#[cfg(any(feature = "strict", feature = "transitional"))]
+use officekit_xml::packaging::package::OpenOptions;
+use officekit_xml::packaging::package::{MainPart, Package};
+use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::write::WriteOptions;
 
 #[cfg(test)]

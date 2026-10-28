@@ -2,17 +2,17 @@
 //!
 //! Each is written to `<crate>/src/<namespace>.rs` of the crate the graph of
 //! the modules' references assigns it, `officekit-markup-base`,
-//! `officekit-markup-core` or `officekit-markup-ext`, with its readers and
+//! `officekit-markup-core` or `officekit-markup`, with its readers and
 //! writers beside it, and its traversals to
-//! `crates/officekit-traversal/src/<namespace>.rs`, from the schema model of the
-//! Transitional schemas, SDK 3.5.1's extension types and placements, and the
-//! standard's titles. The facade `officekit-markup` re-exports every module.
+//! `crates/officekit-strict/src/traversal/<namespace>.rs`, from the schema model
+//! of the Transitional schemas, SDK 3.5.1's extension types and placements, and
+//! the standard's titles. `officekit-markup` has a module for every namespace.
 //!
 //! Each module holds one struct per distinct pair of tag and schema type,
 //! one flat enum per distinct set of tags a choice position allows, one
 //! newtype per simple type with its member enum, the `From` and `TryFrom`
 //! conversions between enums one of whose tag sets holds the other's, and
-//! the hook traits of its traversals, which `officekit-markup-ext` holds for
+//! the hook traits of its traversals, which `officekit-markup` holds for
 //! every module.
 
 pub(crate) mod archive;
@@ -26,7 +26,6 @@ mod traversal;
 mod writers;
 
 use alloc::collections::{BTreeMap, BTreeSet};
-use core::iter;
 use std::path::{Path, PathBuf};
 
 use anyhow::{Context as _, Result};
@@ -41,11 +40,8 @@ use crate::generate_schema::sdk_data::{DataVersion, SdkData};
 #[cfg(test)]
 mod tests;
 
-/// The folder of the facade, `officekit-markup`, from the workspace root.
-pub const MARKUP_PATH: &str = "crates/officekit-markup/src";
-
 /// The folder of the traversal modules, from the workspace root.
-pub const TRAVERSAL_PATH: &str = "crates/officekit-traversal/src";
+pub const TRAVERSAL_PATH: &str = "crates/officekit-strict/src/traversal";
 
 /// The hand-written table of enum names, from the workspace root.
 pub const ENUM_NAMES_PATH: &str = "crates/xtask/data/enum_names.toml";
@@ -61,8 +57,8 @@ pub enum Crate {
     Base,
     /// `officekit-markup-core`: the largest cycle of modules.
     Core,
-    /// `officekit-markup-ext`: every other module, the root hooks, and the
-    /// hooks of base's and core's modules.
+    /// `officekit-markup`: every other module, the root hooks, and the hooks
+    /// of base's and core's modules.
     Ext,
 }
 
@@ -75,7 +71,7 @@ impl Crate {
         match self {
             Self::Base => "crates/officekit-markup-base/src",
             Self::Core => "crates/officekit-markup-core/src",
-            Self::Ext => "crates/officekit-markup-ext/src",
+            Self::Ext => "crates/officekit-markup/src",
         }
     }
 
@@ -85,7 +81,7 @@ impl Crate {
         match self {
             Self::Base => "officekit_markup_base",
             Self::Core => "officekit_markup_core",
-            Self::Ext => "officekit_markup_ext",
+            Self::Ext => "officekit_markup",
         }
     }
 }
@@ -315,8 +311,7 @@ fn reach(references: &[BTreeSet<usize>], module: usize) -> BTreeSet<usize> {
 }
 
 /// Remove what an earlier run wrote of the typed tree and this run does not:
-/// a namespace module's files in a folder it left, and the facade's former
-/// namespace modules, `modules.rs` and `root.rs`.
+/// a namespace module's files in a folder it left.
 fn remove_stale<S>(
     system: &S,
     catalog: &structs::Catalog,
@@ -326,7 +321,7 @@ where
     S: System + ?Sized,
 {
     let written: BTreeSet<&Path> = files.iter().map(|(path, _)| path.as_path()).collect();
-    for name in iter::once(MARKUP_PATH).chain(Crate::ALL.map(Crate::folder)) {
+    for name in Crate::ALL.map(Crate::folder) {
         let folder = Path::new(name);
         let mut generated = vec![folder.join("modules.rs"), folder.join("root.rs")];
         for module in &catalog.modules {

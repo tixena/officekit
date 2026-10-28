@@ -5,15 +5,15 @@ mod tests;
 
 use std::path::Path;
 
-use officekit_markup::presentation::Presentation;
-use officekit_packaging::error::PackageError;
-use officekit_packaging::package::{OpenOptions, Package};
-use officekit_packaging::part_name::PartName;
-use officekit_parts::kinds::PresentationKind;
-use officekit_parts::presentation;
+use crate::parts::kinds::PresentationKind;
+use crate::parts::presentation;
 #[cfg(feature = "transitional")]
-use officekit_transitional::dates::SaveWarning;
+use crate::transitional::dates::SaveWarning;
+use officekit_markup::presentation::Presentation;
 use officekit_xml::conformance::ConformanceClass;
+use officekit_xml::packaging::error::PackageError;
+use officekit_xml::packaging::package::{OpenOptions, Package};
+use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::write::WriteOptions;
 use os_shim::System;
 #[cfg(any(feature = "strict", feature = "transitional"))]
@@ -27,14 +27,14 @@ use crate::new_parts;
 ///
 /// Make one with [`new`](Self::new), or open one with [`open`](Self::open) or
 /// [`from_bytes`](Self::from_bytes). [`presentation`](Self::presentation) gives the presentation
-/// part as a typed tree. The slides are parts of their own, which `officekit_parts::slide` loads
+/// part as a typed tree. The slides are parts of their own, which `officekit::parts::slide` loads
 /// and stores.
 ///
 /// A new presentation has a slide master, a blank layout and a theme, and no slides.
 ///
 /// ```rust
 /// use officekit::pptx::Pptx;
-/// use officekit_parts::kinds::PresentationKind;
+/// use officekit::parts::kinds::PresentationKind;
 ///
 /// # fn main() -> Result<(), Box<dyn core::error::Error>> {
 /// let pptx = Pptx::new(PresentationKind::Presentation)?;
@@ -244,7 +244,7 @@ impl Pptx {
     ///
     /// # Errors
     ///
-    /// The errors of [`part_root::store`](officekit_parts::part_root::store).
+    /// The errors of [`part_root::store`](crate::parts::part_root::store).
     pub fn set_presentation(&mut self, presentation: &Presentation) -> Result<(), PackageError> {
         file::store(
             &mut self.package,

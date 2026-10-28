@@ -1,14 +1,15 @@
 //! `officekit-strict` is the Strict conformance class of officekit (ECMA-376 Part 1): it reads
-//! and writes every node of the typed tree in Strict.
+//! and writes every node of the typed tree in Strict. Its [`traversal`] module holds the typed
+//! tree's traversals: each node's `Transform`, `Visit` and `WriteThrough`.
 //!
 //! Office Open XML has two conformance classes. Transitional is what Word, Excel and `PowerPoint`
 //! have always written. Strict is the other form: other namespace URIs, other names for some
 //! attributes and values, and no legacy content. A file says which one it is in the
 //! relationship that names its main part.
 //!
-//! Most code does not name this crate. The `officekit` crate turns it on with its feature
-//! `strict`, and its `save_strict` and `to_bytes_strict` write a whole file in Strict. Use this
-//! crate to write one node, or one part, in Strict.
+//! Most code does not name this crate for its Strict write. The `officekit` crate turns it on with
+//! its feature `strict`, and its `save_strict` and `to_bytes_strict` write a whole file in Strict.
+//! Use this crate to write one node, or one part, in Strict, or to walk a typed tree.
 //!
 //! # The [`Strict`] trait
 //!
@@ -42,7 +43,7 @@
 //! in VML has no Strict form.
 //!
 //! A date cell (`t="d"`) exists only in Strict, so the Strict write keeps it as it is. The
-//! `officekit-transitional` crate refuses it and has a function that converts it.
+//! Transitional write of `officekit::transitional` refuses it and has a function that converts it.
 //!
 //! # Example
 //!
@@ -101,6 +102,8 @@
 
 // The namespace modules, `officekit_strict::<namespace>`, generated in a file of their own.
 include!("modules.rs");
+
+pub mod traversal;
 
 use core::cmp::Ordering;
 use core::mem;

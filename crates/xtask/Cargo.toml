@@ -30,7 +30,7 @@ os-shim.workspace = true
 serde_json.workspace = true
 
 # The parity run maps officekit's error codes to SDK 3.5.1's ids.
-officekit-validation.workspace = true
+officekit.workspace = true
 
 # The size of the generic node, which decides the typed tree's boxed arms.
 officekit-xml.workspace = true
@@ -46,7 +46,3 @@ toml = { workspace = true, features = ["serde", "parse"] }
 
 # SHA-256 of the committed tables, for the header of every generated file.
 sha2.workspace = true
-
-[dev-dependencies]
-# The parity tests name the parts of their records.
-officekit-packaging.workspace = true

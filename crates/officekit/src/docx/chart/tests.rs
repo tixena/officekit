@@ -1,11 +1,11 @@
+use crate::parts::chart;
+use crate::parts::kinds::WordprocessingKind;
 #[cfg(feature = "transitional")]
-use officekit_packaging::package::Package;
-use officekit_packaging::part_name::PartName;
-use officekit_packaging::relationship::RelationshipType;
-use officekit_parts::chart;
-use officekit_parts::kinds::WordprocessingKind;
+use crate::parts::{shared_string_table, workbook, worksheet};
 #[cfg(feature = "transitional")]
-use officekit_parts::{shared_string_table, workbook, worksheet};
+use officekit_xml::packaging::package::Package;
+use officekit_xml::packaging::part_name::PartName;
+use officekit_xml::packaging::relationship::RelationshipType;
 
 use super::{ChartRanges, Docx};
 

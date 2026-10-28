@@ -1,8 +1,8 @@
 use alloc::collections::BTreeSet;
 
-use officekit_packaging::package::Package;
-use officekit_packaging::part_name::PartName;
-use officekit_packaging::relationship::RelationshipType;
+use officekit_xml::packaging::package::Package;
+use officekit_xml::packaging::part_name::PartName;
+use officekit_xml::packaging::relationship::RelationshipType;
 use officekit_xml::parse::parse;
 use officekit_xml::write::{Layout, WriteOptions};
 

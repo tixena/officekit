@@ -12,14 +12,14 @@ use serde_json::{Value, json};
 #[cfg(feature = "binary-format")]
 use officekit::binary;
 use officekit::folder::{self, DownOptions, UpOptions};
-use officekit::markdown::MarkdownOptions;
 use officekit::office_file::OfficeFile;
-use officekit_packaging::package::OpenOptions;
-use officekit_packaging::package::Package;
-use officekit_packaging::part_name::PartName;
-use officekit_validation::error::ValidationError;
-use officekit_validation::validator::Validator;
+use officekit::validation::error::ValidationError;
+use officekit::validation::validator::Validator;
+use officekit_markdown::{DocxMarkdown as _, MarkdownOptions, OfficeFileMarkdown as _};
 use officekit_xml::name::OfficeVersion;
+use officekit_xml::packaging::package::OpenOptions;
+use officekit_xml::packaging::package::Package;
+use officekit_xml::packaging::part_name::PartName;
 
 use crate::cli::{
     CatArgs, DownArgs, Form, FormatArgs, GetArgs, PartsArgs, SaveArgs, UpArgs, ValidateArgs,

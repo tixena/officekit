@@ -4,11 +4,11 @@
 
 use alloc::collections::{BTreeMap, BTreeSet};
 
-use officekit_packaging::error::PackageError;
-use officekit_packaging::package::{OpenOptions, Package};
-use officekit_packaging::part_name::PartName;
-use officekit_packaging::relationship::{RelationshipType, Target};
 use officekit_xml::element::{Element, Node};
+use officekit_xml::packaging::error::PackageError;
+use officekit_xml::packaging::package::{OpenOptions, Package};
+use officekit_xml::packaging::part_name::PartName;
+use officekit_xml::packaging::relationship::{RelationshipType, Target};
 
 use super::{STORE, is, prefix};
 

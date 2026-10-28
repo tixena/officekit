@@ -1,9 +1,9 @@
 //! `officekit-markup-base` is the runtime of officekit's typed tree, with the namespaces the
 //! rest of the tree depends on.
 //!
-//! Most code does not name this crate. The `officekit-markup` facade gathers it with
-//! `officekit-markup-core` and `officekit-markup-ext` under one path per namespace,
-//! `officekit_markup::<namespace>`, and `officekit` builds on that facade. Use this crate
+//! Most code does not name this crate. `officekit-markup` gathers it with `officekit-markup-core`
+//! and its own namespaces under one path per namespace, `officekit_markup::<namespace>`, and
+//! `officekit` builds on `officekit-markup`. Use this crate
 //! directly to write a reader, a writer or a simple-type check by hand.
 //!
 //! # The typed tree
@@ -47,9 +47,9 @@
 //!
 //! # Hooks
 //!
-//! [`Descend`] and [`Written`] are the answers of the hooks that `officekit-markup-ext`
-//! defines for every namespace. `officekit-traversal` calls the hooks while it transforms,
-//! visits or streams a tree.
+//! [`Descend`] and [`Written`] are the answers of the hooks that `officekit-markup` defines for
+//! every namespace. `officekit_strict::traversal` calls the hooks while it transforms, visits or
+//! streams a tree.
 //!
 //! # Example
 //!

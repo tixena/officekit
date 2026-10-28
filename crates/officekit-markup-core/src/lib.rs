@@ -1,9 +1,9 @@
 //! `officekit-markup-core` holds the namespaces of officekit's typed tree that reference each
 //! other in a cycle.
 //!
-//! Most code does not name this crate. The `officekit-markup` facade gathers it with
-//! `officekit-markup-base` and `officekit-markup-ext` under one path per namespace,
-//! `officekit_markup::<namespace>`, and `officekit` builds on that facade.
+//! Most code does not name this crate. `officekit-markup` gathers it with `officekit-markup-base`
+//! and its own namespaces under one path per namespace, `officekit_markup::<namespace>`, and
+//! `officekit` builds on `officekit-markup`.
 //!
 //! # What is here
 //!
@@ -24,7 +24,7 @@
 //! the schemas do not declare, is described on the `officekit-markup-base` page.
 //!
 //! The hook traits `Context` and `Visitor` of each namespace in this crate are in
-//! `officekit-markup-ext`, which re-exports these modules beside them.
+//! `officekit-markup`, which re-exports these modules beside them.
 //!
 //! # Features
 //!

@@ -10,7 +10,7 @@ use officekit_markup::wordprocessing::{
     TextRunContent,
 };
 use officekit_markup::{Descend, Written};
-use officekit_traversal::{Visit as _, WriteThrough as _};
+use officekit_strict::traversal::{Visit as _, WriteThrough as _};
 use officekit_xml::stream::writer::PartWriter;
 use officekit_xml::write::Layout;
 

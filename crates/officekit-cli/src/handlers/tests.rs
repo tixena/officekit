@@ -2,12 +2,12 @@ use std::path::{Path, PathBuf};
 
 #[cfg(feature = "binary-format")]
 use officekit::binary::{MAGIC, VERSION};
+use officekit::parts::kinds::SpreadsheetKind;
+use officekit::validation::error::{ErrorCode, Step, ValidationError};
 use officekit::xlsx::Xlsx;
-use officekit_packaging::package::Package;
-use officekit_packaging::part_name::PartName;
-use officekit_parts::kinds::SpreadsheetKind;
-use officekit_validation::error::{ErrorCode, Step, ValidationError};
 use officekit_xml::name::OfficeVersion;
+use officekit_xml::packaging::package::Package;
+use officekit_xml::packaging::part_name::PartName;
 use os_shim::System as _;
 use os_shim::WriteMode;
 use os_shim::mock::MemorySystem;

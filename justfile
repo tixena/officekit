@@ -2,8 +2,8 @@
 default:
     @just --list
 
-# Lint Rust: clippy across the whole workspace, then officekit and
-# officekit-parts in every feature combination, then fmt check, and rustfmt
+# Lint Rust: clippy across the whole workspace, then officekit in every
+# feature combination and officekit-markdown with every feature, then fmt check, and rustfmt
 # over every test file, which reaches the ones `include!` hides. `--workspace`
 # because `default-members` excludes `crates/xtask`. officekit-markup-core is
 # checked first and alone: its compile takes most of the memory cap, so no
@@ -14,14 +14,12 @@ lint:
     cargo clippy -p officekit --all-targets --all-features -- -D warnings
     cargo clippy -p officekit --all-targets --no-default-features -- -D warnings
     cargo clippy -p officekit --all-targets --no-default-features --features strict -- -D warnings
-    cargo clippy -p officekit-parts --all-targets --all-features -- -D warnings
-    cargo clippy -p officekit-parts --all-targets --no-default-features -- -D warnings
-    cargo clippy -p officekit-parts --all-targets --no-default-features --features strict -- -D warnings
+    cargo clippy -p officekit-markdown --all-targets --all-features -- -D warnings
     cargo clippy -p officekit-cli --all-targets --no-default-features -- -D warnings
     cargo fmt --all --check
     # rustfmt does not expand include!, so cargo fmt never reaches the files a
     # crate root includes; rustfmt reaches every module behind each of them.
-    rustfmt --edition 2024 --check crates/*/src/modules.rs crates/officekit-markup-ext/src/root.rs crates/officekit-transitional/src/rules.rs crates/officekit-strict/src/rules.rs crates/officekit-validation/src/generated/*.rs
+    rustfmt --edition 2024 --check crates/*/src/modules.rs crates/officekit-markup/src/root.rs crates/officekit-strict/src/rules.rs crates/officekit-strict/src/traversal/modules.rs crates/officekit/src/transitional/modules.rs crates/officekit/src/transitional/rules.rs crates/officekit/src/validation/generated/*.rs
     find crates -name tests.rs -print0 | xargs -0 rustfmt --edition 2024 --check
 
 # Format Rust.
@@ -33,7 +31,7 @@ build:
     cargo build -p officekit-markup-core
     cargo build --workspace
 
-# Run the test suite, officekit's and officekit-parts' with every class on,
+# Run the test suite, officekit's and officekit-markdown's with every feature on,
 # officekit's with Strict alone, and the CLI's without the binary form. officekit-markup-core builds first and
 # alone. The next line builds the libraries, binaries and examples with the
 # dev-dependencies' features, as the test run resolves them, so `cargo test
@@ -44,7 +42,7 @@ test:
     cargo build --workspace --lib --bins --examples
     cargo test --workspace
     cargo test -p officekit --all-features
-    cargo test -p officekit-parts --all-features
+    cargo test -p officekit-markdown --all-features
     cargo test -p officekit --no-default-features --features strict
     cargo test -p officekit-cli --no-default-features
 
@@ -55,10 +53,10 @@ check:
     cargo fmt --all --check
     # rustfmt does not expand include!, so cargo fmt never reaches the files a
     # crate root includes; rustfmt reaches every module behind each of them.
-    rustfmt --edition 2024 --check crates/*/src/modules.rs crates/officekit-markup-ext/src/root.rs crates/officekit-transitional/src/rules.rs crates/officekit-strict/src/rules.rs crates/officekit-validation/src/generated/*.rs
+    rustfmt --edition 2024 --check crates/*/src/modules.rs crates/officekit-markup/src/root.rs crates/officekit-strict/src/rules.rs crates/officekit-strict/src/traversal/modules.rs crates/officekit/src/transitional/modules.rs crates/officekit/src/transitional/rules.rs crates/officekit/src/validation/generated/*.rs
     find crates -name tests.rs -print0 | xargs -0 rustfmt --edition 2024 --check
     cargo clippy --workspace --all-targets --all-features -- -D warnings
-    # One job: officekit-markup-core peaks at 7 GB, and officekit-markup-ext
+    # One job: officekit-markup-core peaks at 7 GB, and officekit-markup
     # compiling beside it passes the 9 GB cap.
     cargo build --workspace --all-targets --all-features -j 1
     cargo test --workspace --all-features

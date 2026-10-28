@@ -20,7 +20,7 @@ use crate::generate_schema::sdk_data::DataVersion;
 /// rustfmt's widest array items on one line.
 const ARRAY_WIDTH: usize = 60;
 
-/// The crate page of `officekit-parts`.
+/// The page of `officekit::parts`.
 const PAGE: &str = r##"One module per part type: ECMA-376 Part 1's part definitions, then the parts Microsoft's extensions define.
 
 A package holds parts, and every part has a content type and a relationship type. A module here is for one part type. The typed root of a part is the struct of `officekit-markup` for its top element, such as `w:document` for the main part of a Word file.
@@ -32,9 +32,9 @@ Three functions work over every module. `model_of` gives a part's typed root as 
 This builds a package in memory and loads its main part:
 
 ```
-use officekit_packaging::package::{OpenOptions, Package};
-use officekit_packaging::part_name::PartName;
-use officekit_parts::{PartModel, kinds::WordprocessingKind, main_document, model_of};
+use officekit::parts::{PartModel, kinds::WordprocessingKind, main_document, model_of};
+use officekit_xml::packaging::package::{OpenOptions, Package};
+use officekit_xml::packaging::part_name::PartName;
 
 let xml = r#"<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body><w:p/></w:body></w:document>"#;
 let content_type = WordprocessingKind::Document.main_content_type();
@@ -49,7 +49,7 @@ assert!(document.body.is_some());
 
 let model = model_of(&package, &name, OpenOptions::default())?;
 assert!(matches!(model, Some(PartModel::MainDocument(_))));
-# Ok::<(), officekit_packaging::error::PackageError>(())
+# Ok::<(), officekit_xml::packaging::error::PackageError>(())
 ```
 "##;
 
@@ -484,7 +484,7 @@ pub fn files(
             relationship_types(header, joined),
         ),
         (
-            folder.join("lib.rs"),
+            folder.with_extension("rs"),
             parts_text(header, joined, &root_texts, tests),
         ),
         (folder.join("kinds.rs"), kinds_text(header, &joined.kinds)),
@@ -973,7 +973,7 @@ fn lib_imports(
     };
     let _ = write!(
         out,
-        "\nuse crate::part_root::PartRoot;\n{markup_uses}use officekit_packaging::error::PackageError;\nuse officekit_packaging::package::{{DECLARATION, OpenOptions, Package}};\nuse officekit_packaging::part_name::PartName;\nuse officekit_packaging::relationship::RelationshipType;\nuse officekit_xml::conformance::ConformanceClass;\nuse officekit_xml::element::{{Document, Element}};\nuse officekit_xml::error::WriteError;\nuse officekit_xml::name::{{Namespace, NamespaceId}};\n{parse_use}use officekit_xml::write::WriteOptions;\n",
+        "\nuse crate::parts::part_root::PartRoot;\n{markup_uses}use officekit_xml::conformance::ConformanceClass;\nuse officekit_xml::element::{{Document, Element}};\nuse officekit_xml::error::WriteError;\nuse officekit_xml::name::{{Namespace, NamespaceId}};\nuse officekit_xml::packaging::error::PackageError;\nuse officekit_xml::packaging::package::{{DECLARATION, OpenOptions, Package}};\nuse officekit_xml::packaging::part_name::PartName;\nuse officekit_xml::packaging::relationship::RelationshipType;\n{parse_use}use officekit_xml::write::WriteOptions;\n",
     );
 }
 
@@ -1133,7 +1133,7 @@ fn bytes_of(typed: &[(&PartType, &RootText)]) -> String {
 fn archive_text(header: &str, typed: &[(&PartType, &RootText)]) -> String {
     let mut out = String::from(header);
     out.push_str(&inner_doc(
-        "The mirror rkyv archives `crate::PartModel` through: the archived enum and resolver it writes stay in this private module.",
+        "The mirror rkyv archives `crate::parts::PartModel` through: the archived enum and resolver it writes stay in this private module.",
     ));
     out.push('\n');
     let namespaces: BTreeSet<&str> = typed.iter().map(|(_, root)| root.module.as_str()).collect();
@@ -1308,7 +1308,7 @@ fn all_constant(joined: &Joined, out: &mut String) {
     );
 }
 
-/// `officekit-packaging`'s `relationship_type.rs`: the one inherent `impl` of
+/// `officekit_xml::packaging`'s `relationship_type.rs`: the one inherent `impl` of
 /// `RelationshipType`, a constant per type, then its methods.
 fn relationship_types(header: &str, joined: &Joined) -> String {
     let mut out = String::from(header);
@@ -1316,7 +1316,7 @@ fn relationship_types(header: &str, joined: &Joined) -> String {
         "The relationship types of every part module and of the sections of Part 1 that define no part, in both classes' spelling.\n\nPart 1 states the Strict type of each part and Part 4 the Transitional one; the types of the parts Part 2 defines and of Microsoft's extensions are one URI in both classes.\n\nA relationship type is a URI that says what a relationship points at. `RelationshipType` holds the Strict and the Transitional spelling of one. `ALL` lists the constants, `find` gives the type a URI spells, `in_class` gives the spelling a class writes, and `matches` tests a URI against either spelling.",
     ));
     out.push_str(
-        "\nuse crate::relationship::RelationshipType;\nuse officekit_xml::conformance::ConformanceClass;\n\nimpl RelationshipType {\n",
+        "\nuse crate::conformance::ConformanceClass;\nuse crate::packaging::relationship::RelationshipType;\n\nimpl RelationshipType {\n",
     );
     let mut all_written = false;
     for constant in &joined.constants {
@@ -1470,13 +1470,13 @@ fn store_text(path: &str, fallback: &str) -> String {
 /// A module's `use` lines.
 fn uses(root: Option<&RootText>) -> String {
     match root {
-        None => "use officekit_packaging::error::PackageError;\nuse officekit_packaging::package::Package;\nuse officekit_packaging::part_name::PartName;\nuse officekit_packaging::relationship::RelationshipType;\n".to_owned(),
+        None => "use officekit_xml::packaging::error::PackageError;\nuse officekit_xml::packaging::package::Package;\nuse officekit_xml::packaging::part_name::PartName;\nuse officekit_xml::packaging::relationship::RelationshipType;\n".to_owned(),
         Some(known) if known.shared => format!(
-            "use crate::part_root;\nuse officekit_markup::{};\nuse officekit_packaging::error::PackageError;\nuse officekit_packaging::package::{{OpenOptions, Package}};\nuse officekit_packaging::part_name::PartName;\nuse officekit_packaging::relationship::RelationshipType;\n{EITHER_CLASS}use officekit_xml::conformance::ConformanceClass;\n{EITHER_CLASS}use officekit_xml::write::WriteOptions;\n",
+            "use crate::parts::part_root;\nuse officekit_markup::{};\n{EITHER_CLASS}use officekit_xml::conformance::ConformanceClass;\nuse officekit_xml::packaging::error::PackageError;\nuse officekit_xml::packaging::package::{{OpenOptions, Package}};\nuse officekit_xml::packaging::part_name::PartName;\nuse officekit_xml::packaging::relationship::RelationshipType;\n{EITHER_CLASS}use officekit_xml::write::WriteOptions;\n",
             known.module
         ),
         Some(known) => format!(
-            "use crate::part_root::{{self, PartRoot}};\nuse officekit_markup::{};\nuse officekit_packaging::error::PackageError;\nuse officekit_packaging::package::{{OpenOptions, Package}};\nuse officekit_packaging::part_name::PartName;\nuse officekit_packaging::relationship::RelationshipType;\n{STRICT_ONLY}use officekit_strict::Strict as _;\n{TRANSITIONAL_ONLY}use officekit_transitional::Transitional as _;\nuse officekit_xml::conformance::ConformanceClass;\nuse officekit_xml::element::Element;\nuse officekit_xml::error::WriteError;\n{SHARED_WRITER}use officekit_xml::write::Scope;\n{EITHER_CLASS}use officekit_xml::write::WriteOptions;\n",
+            "use crate::parts::part_root::{{self, PartRoot}};\n{TRANSITIONAL_ONLY}use crate::transitional::Transitional as _;\nuse officekit_markup::{};\n{STRICT_ONLY}use officekit_strict::Strict as _;\nuse officekit_xml::conformance::ConformanceClass;\nuse officekit_xml::element::Element;\nuse officekit_xml::error::WriteError;\nuse officekit_xml::packaging::error::PackageError;\nuse officekit_xml::packaging::package::{{OpenOptions, Package}};\nuse officekit_xml::packaging::part_name::PartName;\nuse officekit_xml::packaging::relationship::RelationshipType;\n{SHARED_WRITER}use officekit_xml::write::Scope;\n{EITHER_CLASS}use officekit_xml::write::WriteOptions;\n",
             known.module
         ),
     }

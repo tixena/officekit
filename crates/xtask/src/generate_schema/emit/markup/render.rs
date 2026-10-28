@@ -2,8 +2,8 @@
 //! structs, enums, and newtypes, its readers in `read.rs`, writers in
 //! `write.rs` and its enums' rkyv mirrors in `archive.rs` beside it, in the
 //! folder of its crate; each crate's `modules.rs` declaring them; and in
-//! `officekit-markup-ext`, `root.rs` and the hook modules of base's and
-//! core's namespaces; and the facade's `lib.rs`.
+//! `officekit-markup`, `root.rs` and the hook modules of base's and core's
+//! namespaces.
 
 pub mod layout;
 
@@ -20,7 +20,7 @@ use self::layout::{Expr, MAX_WIDTH, doc, line, statement};
 use super::archive::{self, Cycles};
 use super::names;
 use super::structs::{Body, Catalog, EnumDef, EnumKind, Node, Occurs, Target, Value, Wildcard};
-use super::{Crate, MARKUP_PATH, readers, traversal, writers};
+use super::{Crate, readers, traversal, writers};
 
 /// The lines a generated function body holds before its work is split into
 /// helpers, below clippy's `too_many_lines`.
@@ -39,64 +39,6 @@ const XML_NAMES: [(&str, &str); 6] = [
     ("parse::list(", "officekit_xml::values::parse"),
     ("scope: &mut Scope", "officekit_xml::write::Scope"),
 ];
-
-/// The crate page of the facade, and the recursion limit rustdoc needs for the auto traits of
-/// the types it re-exports.
-const FACADE_PAGE: &str = "//! `officekit-markup` is the typed tree of officekit: a Rust type for each element of Office Open\n\
-//! XML, in one module for each namespace.\n\
-//!\n\
-//! A namespace is the group an element name belongs to. `wordprocessing` holds the elements of Word\n\
-//! files, `spreadsheet` those of Excel files, `presentation` those of slide decks, and\n\
-//! `drawing` and `chart` the pictures, shapes and charts all three share. The modules are\n\
-//! `officekit_markup::<namespace>`.\n\
-//!\n\
-//! # A namespace module\n\
-//!\n\
-//! A struct stands for an element with attributes and children, and its fields are the attributes\n\
-//! and children the schema declares. An enum stands for a choice among elements, such as the\n\
-//! content of a paragraph. A newtype stands for a simple type, a value written as text. It keeps the\n\
-//! text as it was read, and `value()` checks it and gives the matching member or an error.\n\
-//!\n\
-//! To get the text of a Word paragraph, loop over the `content` of the `wordprocessing::Paragraph`,\n\
-//! match `ParagraphContent::TextRun`, loop over the `content` of the `TextRun`, and match\n\
-//! `TextRunContent::Text`. Its `value` is the text.\n\
-//!\n\
-//! Each module also has a `read` module, with one function that reads an element into each struct\n\
-//! or enum, and a `write` module, with one function that writes each back to an element. The\n\
-//! elements are those of `officekit-xml`. Strict and Transitional files read the same way. The\n\
-//! `officekit-strict` and `officekit-transitional` crates write a node in one class.\n\
-//!\n\
-//! # Content the schemas do not declare\n\
-//!\n\
-//! The struct of an element has an `unknown` field, an [`Unknown`], and the enum of a choice among\n\
-//! elements an `Other` item. Elements, attributes and namespace declarations the schemas do not\n\
-//! declare go there when a node is read. A write puts them back where they were, so unfamiliar\n\
-//! content survives an edit. A newtype keeps any text, so a value that is no member of its simple\n\
-//! type stays in it, and `value()` gives an error for it.\n\
-//!\n\
-//! Every struct is `#[non_exhaustive]`, and so is every enum but a few choices among elements that\n\
-//! `officekit-markup-ext` matches. Build a struct with `Default` and assign its fields, and give a\n\
-//! `match` on an enum a wildcard arm.\n\
-//!\n\
-//! # Hooks\n\
-//!\n\
-//! [`Context`] and [`Visitor`] are the roots of the hook traits. Each has one method for every\n\
-//! namespace, which returns `None` until a context or visitor opts in by returning `Some(self)`.\n\
-//! The namespace's own `Context` and `Visitor` then have one method for each node. A `Context`\n\
-//! replaces nodes, and a `Visitor` looks at them and says with [`Descend`] whether to go into\n\
-//! their children. The `officekit-traversal` crate calls the hooks.\n\
-//!\n\
-//! # Where the items live\n\
-//!\n\
-//! The runtime is at the root of this crate: the reader, the writer, [`Unknown`] and the simple-type\n\
-//! parsers. It comes from `officekit-markup-base`, with the namespaces the cycle of\n\
-//! `officekit-markup-core` depends on. `officekit-markup-core` holds the namespaces that refer to\n\
-//! each other, and `officekit-markup-ext` the other namespaces and the hook traits. Depend on this\n\
-//! crate, not on those three.\n\
-//!\n\
-//! The `binary-format` feature adds the derives that archive every type with rkyv.\n\
-\n\
-#![recursion_limit = \"256\"]\n\n";
 
 /// The names one module's items take.
 pub struct Names<'catalog> {
@@ -531,8 +473,8 @@ impl ModuleItems {
 
 /// Every file of the typed tree, with its path and text: each namespace
 /// module in the folder of its crate, with the hook module of a base or core
-/// namespace in `officekit-markup-ext`; each crate's `modules.rs`; `root.rs`
-/// in `officekit-markup-ext`; and the facade's `lib.rs`.
+/// namespace in `officekit-markup`; each crate's `modules.rs`; and `root.rs`
+/// in `officekit-markup`.
 ///
 /// # Errors
 ///
@@ -603,10 +545,6 @@ where
     let mut root = String::from(header);
     root.push_str(&traversal::root_text(catalog, &order));
     files.push((ext.join("root.rs"), root));
-    files.push((
-        Path::new(MARKUP_PATH).join("lib.rs"),
-        facade_text(header, catalog),
-    ));
     Ok(files)
 }
 
@@ -643,78 +581,6 @@ fn opened(catalog: &Catalog) -> Result<BTreeSet<usize>> {
         }
     }
     Ok(opened)
-}
-
-/// The facade's `lib.rs`: the runtime of `officekit-markup-base` at its root,
-/// and the root hooks and every namespace module of `officekit-markup-ext`.
-fn facade_text(header: &str, catalog: &Catalog) -> String {
-    let mut items: Vec<&str> = ["Context", "Visitor"]
-        .into_iter()
-        .chain(catalog.modules.iter().map(|module| module.name.as_str()))
-        .collect();
-    items.sort_by(|left, right| {
-        version_key(left)
-            .cmp(&version_key(right))
-            .then_with(|| left.cmp(right))
-    });
-    let mut out = String::from(header);
-    out.push_str(FACADE_PAGE);
-    let _ = writeln!(out, "#[doc(no_inline)]\npub use {}::*;", Crate::Base.name());
-    out.push_str("#[doc(no_inline)]\n");
-    let head = format!("pub use {}::{{", Crate::Ext.name());
-    let flat = format!("{head}{}}};", items.join(", "));
-    if flat.len() <= MAX_WIDTH {
-        out.push_str(&flat);
-        out.push('\n');
-        return out;
-    }
-    out.push_str(&head);
-    let mut row = String::new();
-    for item in items {
-        // rustfmt keeps a line of a list one column short of the width.
-        if !row.is_empty() && layout::INDENT + row.len() + 1 + item.len() + 1 >= MAX_WIDTH {
-            out.push('\n');
-            layout::pad(layout::INDENT, &mut out);
-            out.push_str(&row);
-            row.clear();
-        }
-        if !row.is_empty() {
-            row.push(' ');
-        }
-        row.push_str(item);
-        row.push(',');
-    }
-    out.push('\n');
-    layout::pad(layout::INDENT, &mut out);
-    out.push_str(&row);
-    out.push_str("\n};\n");
-    out
-}
-
-/// A name's key in rustfmt's version sorting: each run of digits by its
-/// value, among the other characters as a digit, and `_` before every other
-/// character.
-fn version_key(name: &str) -> Vec<(u32, u128)> {
-    let mut key = Vec::new();
-    let mut rest = name;
-    while let Some(first) = rest.chars().next() {
-        if first.is_ascii_digit() {
-            let end = rest
-                .find(|character: char| !character.is_ascii_digit())
-                .unwrap_or(rest.len());
-            key.push((u32::from('0') + 1, rest[..end].parse().unwrap_or(u128::MAX)));
-            rest = &rest[end..];
-        } else {
-            let rank = if first == '_' {
-                0
-            } else {
-                u32::from(first) + 1
-            };
-            key.push((rank, 0));
-            rest = &rest[first.len_utf8()..];
-        }
-    }
-    key
 }
 
 /// The reader and writer function names of a module's structs and enums:
@@ -777,7 +643,7 @@ pub fn functions(catalog: &Catalog, module: usize) -> Result<Names<'_>> {
     })
 }
 
-/// A namespace module's file; one of `officekit-markup-ext` holds its hook
+/// A namespace module's file; one of `officekit-markup` holds its hook
 /// traits. `listed` are the enums a list holds, `opened` those that are not
 /// `#[non_exhaustive]`.
 fn module_text(

@@ -210,8 +210,8 @@
 //   021f7654571e30427cd1fd4a0eeb98561f2246fe0d9d0ea36146f3aaa67b4af8  crates/xtask/data/strict_correspondences.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-// The namespace modules, `officekit_strict::<namespace>`, brought into the
-// crate root with `include!` ahead of its imports.
+// The namespace modules, `officekit_strict::<namespace>`, brought into
+// the crate root with `include!` ahead of its imports.
 
 pub mod additional_characteristics;
 pub mod bibliography;

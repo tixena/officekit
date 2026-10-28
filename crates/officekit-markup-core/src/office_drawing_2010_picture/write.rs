@@ -213,7 +213,7 @@
 //! element, its unknown content at its place.
 //!
 //! A write gives back, at their places, the attributes and elements a read kept as unknown.
-//! The `officekit-strict` and `officekit-transitional` crates write a node in one class.
+//! `officekit-strict` and `officekit::transitional` write a node in one class.
 
 use officekit_xml::element::Element;
 use officekit_xml::write::Scope;

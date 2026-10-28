@@ -3,6 +3,8 @@
 #[cfg(test)]
 mod tests;
 
+use crate::parts::part_root::{self, PartRoot};
+use crate::parts::{document_settings, footer, header};
 use officekit_markup::common_simple_types::OnOffValue;
 use officekit_markup::wordprocessing::{
     BlockContent, ContentBlockContent, DifferentEvenOddPageHeadersAndFooters,
@@ -10,14 +12,12 @@ use officekit_markup::wordprocessing::{
     DocumentSettings, FooterReference, HeaderOrFooterTypeMember, HeaderReference, Paragraph,
     SectionPropertiesContent,
 };
-use officekit_packaging::error::PackageError;
-use officekit_packaging::part_name::PartName;
-use officekit_packaging::relationship::{RelatedPart, RelationshipType, Target};
-use officekit_parts::part_root::{self, PartRoot};
-use officekit_parts::{document_settings, footer, header};
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::NamespaceDeclaration;
 use officekit_xml::name::Namespace;
+use officekit_xml::packaging::error::PackageError;
+use officekit_xml::packaging::part_name::PartName;
+use officekit_xml::packaging::relationship::{RelatedPart, RelationshipType, Target};
 
 use crate::file;
 

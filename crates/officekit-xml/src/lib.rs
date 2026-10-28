@@ -1,12 +1,12 @@
-//! The XML layer of officekit: a generic element tree, qualified names, and a part read or
-//! written as XML.
+//! The XML and package layer of officekit: a generic element tree, qualified names, a part read
+//! or written as XML, and the package of parts every Office file is.
 //!
 //! Every part of an Office file that is not an image or another binary is XML. This crate parses
 //! one into a [`Document`](element::Document) and writes it back. It also holds what the
 //! parts share: the table of Office namespaces, the parsers of simple-type values such as `2.5cm`,
 //! markup compatibility, and the two conformance classes of ECMA-376, Strict and Transitional.
 //!
-//! The crate is the bottom of officekit. `officekit-packaging` stores parsed parts as
+//! The crate is the bottom of officekit. Its [`packaging`] module stores parsed parts as
 //! [`Document`](element::Document)s, and the typed tree in `officekit-markup` is read from and
 //! written to [`Element`](element::Element)s. Use it directly to read or change a part without a
 //! typed model, or to find out what a name, a value or a class means.
@@ -25,6 +25,8 @@
 //! - [`stream`][]: a part read forward as events, and a part written one element at a time.
 //! - [`error`][]: [`WriteError`](error::WriteError) and [`ReadError`](error::ReadError), the
 //!   refusals of a class's writer and reader.
+//! - [`packaging`][]: the package: parts, part names, content types, relationships and images,
+//!   and a package written part by part.
 //!
 //! A namespace has one value for its Strict and its Transitional URI. A tree parsed from a Strict
 //! file and one from a Transitional file hold the same
@@ -32,8 +34,8 @@
 //!
 //! # Features
 //!
-//! - `binary-format`: derives the `rkyv` archive of the tree and the names, which officekit's
-//!   binary form stores. It adds no function.
+//! - `binary-format`: derives the `rkyv` archive of the tree, the names and the package's parts,
+//!   which officekit's binary form stores. It adds no function.
 //!
 //! # Parse, change and write a part
 //!
@@ -105,6 +107,7 @@ pub mod element;
 pub mod error;
 pub mod mc;
 pub mod name;
+pub mod packaging;
 pub mod parse;
 pub mod stream;
 pub mod values;

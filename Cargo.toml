@@ -1,6 +1,6 @@
 [workspace]
-members = ["crates/officekit", "crates/officekit-cli", "crates/officekit-markup", "crates/officekit-markup-base", "crates/officekit-markup-core", "crates/officekit-markup-ext", "crates/officekit-packaging", "crates/officekit-parts", "crates/officekit-strict", "crates/officekit-transitional", "crates/officekit-traversal", "crates/officekit-validation", "crates/officekit-xml", "crates/xtask"]
-default-members = ["crates/officekit", "crates/officekit-cli", "crates/officekit-markup", "crates/officekit-markup-base", "crates/officekit-markup-core", "crates/officekit-markup-ext", "crates/officekit-packaging", "crates/officekit-parts", "crates/officekit-strict", "crates/officekit-transitional", "crates/officekit-traversal", "crates/officekit-validation", "crates/officekit-xml"]
+members = ["crates/officekit", "crates/officekit-cli", "crates/officekit-markdown", "crates/officekit-markup", "crates/officekit-markup-base", "crates/officekit-markup-core", "crates/officekit-strict", "crates/officekit-xml", "crates/xtask"]
+default-members = ["crates/officekit", "crates/officekit-cli", "crates/officekit-markdown", "crates/officekit-markup", "crates/officekit-markup-base", "crates/officekit-markup-core", "crates/officekit-strict", "crates/officekit-xml"]
 resolver = "2"
 
 [workspace.package]
@@ -17,16 +17,11 @@ repository = "https://github.com/tixena/officekit"
 
 # The workspace's own crates: the folder here, the version on crates.io
 officekit = { version = "0.1.0", path = "crates/officekit", default-features = false }
+officekit-markdown = { version = "0.1.0", path = "crates/officekit-markdown" }
 officekit-markup = { version = "0.1.0", path = "crates/officekit-markup" }
 officekit-markup-base = { version = "0.1.0", path = "crates/officekit-markup-base" }
 officekit-markup-core = { version = "0.1.0", path = "crates/officekit-markup-core" }
-officekit-markup-ext = { version = "0.1.0", path = "crates/officekit-markup-ext" }
-officekit-packaging = { version = "0.1.0", path = "crates/officekit-packaging" }
-officekit-parts = { version = "0.1.0", path = "crates/officekit-parts", default-features = false }
 officekit-strict = { version = "0.1.0", path = "crates/officekit-strict" }
-officekit-transitional = { version = "0.1.0", path = "crates/officekit-transitional" }
-officekit-traversal = { version = "0.1.0", path = "crates/officekit-traversal" }
-officekit-validation = { version = "0.1.0", path = "crates/officekit-validation" }
 officekit-xml = { version = "0.1.0", path = "crates/officekit-xml" }
 
 # CLI framework
@@ -106,7 +101,7 @@ debug = "line-tables-only"
 [profile.dev.package.officekit-markup-core]
 debug = "line-tables-only"
 
-[profile.dev.package.officekit-markup-ext]
+[profile.dev.package.officekit-markup]
 debug = "line-tables-only"
 
 [workspace.lints.clippy]
@@ -153,7 +148,7 @@ implicit_hasher = "allow"
 # Hook traits give every hook a default, so a context implements only the
 # hooks it needs (D12).
 missing_trait_methods = "allow"
-# The facade officekit-markup and ext's hook modules re-export the typed tree, so callers keep
+# officekit-markup and its hook modules re-export the typed tree, so callers keep
 # the officekit_markup::<namespace> paths (the owner's decision: officekit is a library and must
 # stay easy to use).
 pub_use = "allow"

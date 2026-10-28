@@ -1,8 +1,8 @@
 //! The traversals of the typed tree: each namespace's
 //! hook traits, `Context` and `Visitor`, and the root accessors, one per
-//! namespace, in `officekit_markup_ext`; every node's `Transform`, `Visit`, and
+//! namespace, in `officekit_markup`; every node's `Transform`, `Visit`, and
 //! `WriteThrough`, and each enum's `Item`, in the namespace's module of
-//! `officekit_traversal`.
+//! `officekit_strict::traversal`.
 //!
 //! A struct's hook is its reader's name, its name in snake case; an enum's is
 //! its name without the trailing `Content`, or the full name when that is a
@@ -117,8 +117,8 @@ enum Step {
 }
 
 impl Step {
-    /// The method of `officekit_traversal::Walk` and
-    /// `officekit_traversal::Through` this step calls.
+    /// The method of `officekit_strict::traversal::Walk` and
+    /// `officekit_strict::traversal::Through` this step calls.
     const fn method(self) -> &'static str {
         match self {
             Self::Child => "child",
@@ -156,7 +156,7 @@ pub fn listed(catalog: &Catalog) -> BTreeSet<usize> {
 }
 
 /// Whether a namespace module has a struct or an enum, which its module of
-/// `officekit_traversal` implements the traversals for.
+/// `officekit_strict::traversal` implements the traversals for.
 #[must_use]
 pub fn has_nodes(names: &Names<'_>) -> bool {
     !names.node_functions.is_empty() || !names.enum_functions.is_empty()
@@ -385,7 +385,7 @@ pub fn hook_uses(names: &Names<'_>, uses: &mut Uses) {
     }
 }
 
-/// The module of `officekit-markup-ext` that holds the hook traits of a
+/// The module of `officekit-markup` that holds the hook traits of a
 /// namespace of `home`, base or core, beside its nodes, re-exported.
 #[must_use]
 pub fn hooks_text(
@@ -401,7 +401,7 @@ pub fn hooks_text(
         "//! The hooks of the `{}` namespace, `Context` and `Visitor`, beside its typed\n\
          //! tree, re-exported from `{}::{}`.\n//!\n//! The namespace is `{}`. Its prefix, `{}`, is the\n\
          //! short name a file gives it in the names of its elements. `Context` replaces nodes,\n\
-         //! `Visitor` looks at them, and `officekit-traversal` calls both.\n",
+         //! `Visitor` looks at them, and `officekit_strict::traversal` calls both.\n",
         module.prefix,
         home.name(),
         module.name,
@@ -466,7 +466,7 @@ pub fn root_text(catalog: &Catalog, order: &[usize]) -> String {
          trait.\n\nIt holds the hooks for content the schemas do not declare, and one accessor \
          per namespace, through which a context opts into that namespace's hooks by returning \
          `Some(self)`. An accessor answers `None` by default, so a context is never asked about \
-         a namespace it did not opt into.\n\nThe `officekit-traversal` crate calls the hooks: \
+         a namespace it did not opt into.\n\nThe `traversal` module of `officekit-strict` calls the hooks: \
          `Transform` asks the tree and list hooks, and `WriteThrough` asks the write hooks. \
          `read` and `write` never do.",
     ));
@@ -479,7 +479,7 @@ pub fn root_text(catalog: &Catalog, order: &[usize]) -> String {
          trait.\n\nIt holds the hook for content the schemas do not declare, and one accessor \
          per namespace, through which a visitor opts into that namespace's hooks by returning \
          `Some(self)`. An accessor answers `None` by default, so a visitor is never shown a \
-         namespace it did not opt into.\n\nThe `officekit-traversal` crate calls the hooks \
+         namespace it did not opt into.\n\nThe `traversal` module of `officekit-strict` calls the hooks \
          through `Visit`.",
     ));
     out.push_str("pub trait Visitor {\n");
@@ -506,7 +506,7 @@ pub fn files(header: &str, catalog: &Catalog, folder: &Path) -> Result<Vec<(Path
     let mut modules = String::from(header);
     modules.push_str(
         "// The traversal modules, one per namespace of the typed tree with a node,\n\
-         // brought into the crate root with `include!` ahead of its imports.\n\n",
+         // brought into the `traversal` module with `include!` ahead of its imports.\n\n",
     );
     for module in &order {
         let names = render::functions(catalog, *module)?;
@@ -524,7 +524,7 @@ pub fn files(header: &str, catalog: &Catalog, folder: &Path) -> Result<Vec<(Path
     Ok(files)
 }
 
-/// The text of a namespace's module of `officekit_traversal`.
+/// The text of a namespace's module of `officekit_strict::traversal`.
 #[must_use]
 pub fn text(header: &str, names: &Names<'_>, listed: &BTreeSet<usize>) -> String {
     let catalog = names.catalog;
@@ -589,7 +589,7 @@ pub fn text(header: &str, names: &Names<'_>, listed: &BTreeSet<usize>) -> String
         let _ = writeln!(out, "use officekit_markup::{{\n    {markup},\n}};");
     }
     out.push_str("use officekit_xml::stream::writer::PartWriter;\n\n");
-    let _ = writeln!(out, "use crate::{{{}}};", runtime.join(", "));
+    let _ = writeln!(out, "use super::{{{}}};", runtime.join(", "));
     for (_, text) in impls {
         out.push_str(&text);
     }
@@ -597,7 +597,7 @@ pub fn text(header: &str, names: &Names<'_>, listed: &BTreeSet<usize>) -> String
     out
 }
 
-/// `crate::<ask>(<receiver>.<module>(), <module>::<Hooks>::<hook>, self[, out])`.
+/// `super::<ask>(<receiver>.<module>(), <module>::<Hooks>::<hook>, self[, out])`.
 fn ask(ask: &str, receiver: &str, module: &str, hook: &str, out: bool) -> Expr {
     let mut arguments = vec![
         Expr::call(&format!("{receiver}.{module}"), Vec::new()),
@@ -607,7 +607,7 @@ fn ask(ask: &str, receiver: &str, module: &str, hook: &str, out: bool) -> Expr {
     if out {
         arguments.push(Expr::atom("out"));
     }
-    Expr::call(&format!("crate::{ask}"), arguments)
+    Expr::call(&format!("super::{ask}"), arguments)
 }
 
 /// `transform`, which asks the node's tree hook first.
@@ -705,14 +705,14 @@ fn node_impls(
     let target = format!("{module}::{}", node.name);
     let prefix = bare(hook);
     out.push('\n');
-    out.push_str(&layout::impl_header("crate::Transform", &target));
+    out.push_str(&layout::impl_header("super::Transform", &target));
     transform_method(module, hook, out);
     out.push_str(
         "    fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {\n",
     );
     rebuild(node, &target, prefix, out, helpers);
     out.push_str("    }\n}\n\n");
-    out.push_str(&layout::impl_header("crate::Visit", &target));
+    out.push_str(&layout::impl_header("super::Visit", &target));
     visit_method(module, hook, out);
     out.push_str("    fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {\n");
     walk(node, &target, prefix, out, helpers);
@@ -733,7 +733,7 @@ fn rebuilt_children(node: &Node, from: &str, rebase: &str) -> Vec<(String, Expr)
         .into_iter()
         .map(|(field, step)| {
             let value = Expr::call(
-                &format!("crate::transform_{}", step.method()),
+                &format!("super::transform_{}", step.method()),
                 vec![
                     Expr::Atom(format!("&{from}.{field}")),
                     Expr::atom("ctx"),
@@ -748,7 +748,7 @@ fn rebuilt_children(node: &Node, from: &str, rebase: &str) -> Vec<(String, Expr)
 /// The node's unknown content rebuilt, each `Extra` placed by `rebase`.
 fn rebuilt_unknown(rebase: Expr) -> Expr {
     Expr::call(
-        "crate::transform_unknown",
+        "super::transform_unknown",
         vec![Expr::atom("&self.unknown"), Expr::atom("ctx"), rebase],
     )
 }
@@ -767,14 +767,14 @@ fn assigned_field(indent: &str, name: &str, value: &Expr, out: &mut String) {
 fn rebuild(node: &Node, target: &str, prefix: &str, out: &mut String, helpers: &mut String) {
     let children = rebuilt_children(node, "self", "&mut rebase");
     let rebase = if children.is_empty() {
-        Expr::reference(Expr::call("crate::Rebase::default", Vec::new()))
+        Expr::reference(Expr::call("super::Rebase::default", Vec::new()))
     } else {
         Expr::atom("&rebase")
     };
     let unknown = rebuilt_unknown(rebase);
     let mut body = String::from("        let mut node = self.without_children();\n");
     if !children.is_empty() {
-        body.push_str("        let mut rebase = crate::Rebase::new(&self.unknown);\n");
+        body.push_str("        let mut rebase = super::Rebase::new(&self.unknown);\n");
     }
     for (name, value) in &children {
         assigned_field("        ", name, value, &mut body);
@@ -798,12 +798,12 @@ fn rebuild(node: &Node, target: &str, prefix: &str, out: &mut String, helpers: &
     }
     chunks.push(chunk);
     out.push_str("        let mut node = self.without_children();\n");
-    out.push_str("        let mut rebase = crate::Rebase::new(&self.unknown);\n");
+    out.push_str("        let mut rebase = super::Rebase::new(&self.unknown);\n");
     let parameters = [
         format!("from: &{target}"),
         format!("node: &mut {target}"),
         "ctx: &mut dyn officekit_markup::Context".to_owned(),
-        "rebase: &mut crate::Rebase".to_owned(),
+        "rebase: &mut super::Rebase".to_owned(),
     ];
     for (number, text) in chunks.iter().enumerate() {
         let helper = format!("transform_{prefix}_{}", number + 1);
@@ -845,7 +845,7 @@ fn steps(node: &Node) -> Vec<(&str, Step)> {
 fn walk(node: &Node, target: &str, prefix: &str, out: &mut String, helpers: &mut String) {
     let steps = steps(node);
     if steps.is_empty() {
-        out.push_str("        crate::Walk::new(&self.unknown).finish(visitor);\n");
+        out.push_str("        super::Walk::new(&self.unknown).finish(visitor);\n");
         return;
     }
     let statement = |from: &str, indent: &str, field: &str, step: Step, text: &mut String| {
@@ -861,7 +861,7 @@ fn walk(node: &Node, target: &str, prefix: &str, out: &mut String, helpers: &mut
             text,
         );
     };
-    out.push_str("        let mut walk = crate::Walk::new(&self.unknown);\n");
+    out.push_str("        let mut walk = super::Walk::new(&self.unknown);\n");
     let mut body = String::new();
     for (field, step) in &steps {
         statement("self", "        ", field, *step, &mut body);
@@ -890,7 +890,7 @@ fn walk(node: &Node, target: &str, prefix: &str, out: &mut String, helpers: &mut
                 &format!("fn {helper}"),
                 &[
                     format!("node: &{target}"),
-                    "walk: &mut crate::Walk<'_>".to_owned(),
+                    "walk: &mut super::Walk<'_>".to_owned(),
                     "visitor: &mut dyn officekit_markup::Visitor".to_owned(),
                 ],
                 "",
@@ -969,7 +969,7 @@ fn through(
     layout::statement(
         &format!("        let {binding} = "),
         &Expr::call(
-            "crate::Through::new",
+            "super::Through::new",
             vec![
                 Expr::atom("out"),
                 Expr::Atom(format!("&{module}::{shape}")),
@@ -1011,7 +1011,7 @@ fn through(
 fn through_helper(helper: &str, target: &str, text: &str, out: &mut String, helpers: &mut String) {
     let mut parameters = vec![
         format!("node: &{target}"),
-        "through: &mut crate::Through<'_, '_, '_>".to_owned(),
+        "through: &mut super::Through<'_, '_, '_>".to_owned(),
     ];
     let mut arguments = String::from("self, &mut through");
     if text.contains("ctx") {
@@ -1053,7 +1053,7 @@ fn enum_impls(
     let target = format!("{module}::{}", found.name);
     let prefix = bare(hook);
     out.push('\n');
-    out.push_str(&layout::impl_header("crate::Item", &target));
+    out.push_str(&layout::impl_header("super::Item", &target));
     out.push_str("    fn is_declared(&self) -> bool {\n");
     if found.arms.is_empty() {
         out.push_str("        false\n    }\n");
@@ -1105,7 +1105,7 @@ fn enum_impls(
     }
     out.push_str("}\n\n");
     let arms = arm_list(found);
-    out.push_str(&layout::impl_header("crate::Transform", &target));
+    out.push_str(&layout::impl_header("super::Transform", &target));
     transform_method(module, hook, out);
     out.push_str(
         "    fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {\n",
@@ -1116,7 +1116,7 @@ fn enum_impls(
         chunked_transform(&target, prefix, &arms, out, helpers);
     }
     out.push_str("    }\n}\n\n");
-    out.push_str(&layout::impl_header("crate::Visit", &target));
+    out.push_str(&layout::impl_header("super::Visit", &target));
     visit_method(module, hook, out);
     out.push_str("    fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {\n");
     if let Some(text) = one_chain(&arms, Traversal::Visit) {

@@ -1,9 +1,9 @@
 use core::slice;
 use std::path::Path;
 
-use officekit_packaging::part_name::PartName;
-use officekit_validation::error::{ErrorCode, Step, ValidationError};
+use officekit::validation::error::{ErrorCode, Step, ValidationError};
 use officekit_xml::name::OfficeVersion;
+use officekit_xml::packaging::part_name::PartName;
 use os_shim::mock::MemorySystem;
 use serde_json::{Value, json};
 

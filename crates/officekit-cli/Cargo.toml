@@ -20,21 +20,18 @@ doc = false
 [features]
 default = ["binary-format"]
 # get -f binary and save: officekit's binary form.
-binary-format = ["officekit/binary-format", "arky/binary-format"]
+binary-format = ["officekit/binary-format", "officekit-markdown/binary-format"]
 
 [dependencies]
-officekit = { workspace = true, default-features = false, features = ["markdown"] }
+officekit = { workspace = true, features = ["transitional"] }
+
+# A Word file from markdown text, and markdown from a Word file
+officekit-markdown.workspace = true
 
 # Writing the markdown text
 arky.workspace = true
 
-# Packages, part names and relationships
-officekit-packaging.workspace = true
-
-# The validator
-officekit-validation.workspace = true
-
-# The Office versions a file is validated against
+# Packages, part names and relationships, and the Office versions a file is validated against
 officekit-xml.workspace = true
 
 # CLI framework
@@ -51,5 +48,4 @@ anyhow.workspace = true
 
 [dev-dependencies]
 assert_cmd.workspace = true
-officekit-parts.workspace = true
 tempfile.workspace = true

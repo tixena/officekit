@@ -1,19 +1,19 @@
+#[cfg(feature = "transitional")]
+use crate::parts::document_settings;
+#[cfg(feature = "transitional")]
+use crate::parts::kinds::WordprocessingKind;
 use base64::Engine as _;
 use base64::engine::general_purpose::STANDARD;
 #[cfg(feature = "transitional")]
 use officekit_markup::wordprocessing::DocumentProtectionTypesMember;
-#[cfg(all(feature = "transitional", feature = "strict"))]
-use officekit_packaging::package::OpenOptions;
-#[cfg(feature = "transitional")]
-use officekit_packaging::part_name::PartName;
-#[cfg(feature = "transitional")]
-use officekit_packaging::relationship::{RelationshipType, Target};
-#[cfg(feature = "transitional")]
-use officekit_parts::document_settings;
-#[cfg(feature = "transitional")]
-use officekit_parts::kinds::WordprocessingKind;
 #[cfg(feature = "transitional")]
 use officekit_xml::conformance::ConformanceClass;
+#[cfg(all(feature = "transitional", feature = "strict"))]
+use officekit_xml::packaging::package::OpenOptions;
+#[cfg(feature = "transitional")]
+use officekit_xml::packaging::part_name::PartName;
+#[cfg(feature = "transitional")]
+use officekit_xml::packaging::relationship::{RelationshipType, Target};
 
 use super::{hash, legacy_hash};
 #[cfg(feature = "transitional")]

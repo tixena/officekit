@@ -195,8 +195,8 @@ fn the_module_list_names_each_module() {
             &["chart".to_owned(), "wordprocessing".to_owned()]
         ),
         "// header\n\
-         // The namespace modules, `officekit_transitional::<namespace>`, brought into the\n\
-         // crate root with `include!` ahead of its imports.\n\
+         // The namespace modules, `officekit::transitional::<namespace>`, brought into\n\
+         // the `transitional` module with `include!` ahead of its imports.\n\
          \n\
          pub mod chart;\n\
          pub mod wordprocessing;\n"

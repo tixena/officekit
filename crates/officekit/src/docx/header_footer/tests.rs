@@ -1,20 +1,20 @@
+use crate::parts::document_settings;
+use crate::parts::kinds::WordprocessingKind;
+#[cfg(feature = "transitional")]
+use crate::parts::{footer, header};
 use officekit_markup::wordprocessing::{
     BlockContent, Footer, Header, HeaderOrFooterTypeMember, Paragraph,
 };
 #[cfg(feature = "transitional")]
 use officekit_markup::wordprocessing::{DocumentFinalSectionProperties, SectionPropertiesContent};
-#[cfg(feature = "transitional")]
-use officekit_packaging::error::PackageError;
-#[cfg(feature = "transitional")]
-use officekit_packaging::package::{OpenOptions, Package};
-use officekit_packaging::part_name::PartName;
-use officekit_packaging::relationship::{RelationshipType, Target};
-use officekit_parts::document_settings;
-use officekit_parts::kinds::WordprocessingKind;
-#[cfg(feature = "transitional")]
-use officekit_parts::{footer, header};
 #[cfg(all(feature = "strict", feature = "transitional"))]
 use officekit_xml::conformance::ConformanceClass;
+#[cfg(feature = "transitional")]
+use officekit_xml::packaging::error::PackageError;
+#[cfg(feature = "transitional")]
+use officekit_xml::packaging::package::{OpenOptions, Package};
+use officekit_xml::packaging::part_name::PartName;
+use officekit_xml::packaging::relationship::{RelationshipType, Target};
 
 use crate::docx::Docx;
 
