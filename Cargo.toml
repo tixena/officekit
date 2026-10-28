@@ -10,6 +10,7 @@ rust-version = "1.91"
 authors = ["Eduardo Burgos <eduardo@tixena.com>"]
 license = "MIT"
 repository = "https://github.com/tixena/officekit"
+readme = "README.md"
 
 [workspace.dependencies]
 # Every entry turns its default features off: each crate turns on the
