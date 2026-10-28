@@ -41,7 +41,8 @@ dependencies = [
 [[package]]
 name = "arky"
 version = "0.1.0"
-source = "git+https://github.com/tixena/arky.git#c6f666e54f6b84ce950dc3d6342a0e3adbaffb4a"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "50601fe0cbe3e7e171b0bcd2c5019d26a0e595309999218ebb7cac587b8eead2"
 dependencies = [
  "base64 0.23.1",
  "chrono",
@@ -1455,8 +1456,9 @@ checksum = "fd3ca314f692efd6c868f8408f53fe444634a845f96c028b97d35f6a1f79f0ee"
 
 [[package]]
 name = "tixschema"
-version = "0.1.0"
-source = "git+https://github.com/tixena/tixschema.git#3a53f554667442acd788e7b8ddd8087e1c93bb3d"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3e2b91aad6cdcd135c0bdbb4845a3291f68a0adc58340fdcd06fd8d2fc5f5b60"
 dependencies = [
  "log",
  "proc-macro2",

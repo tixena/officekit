@@ -38,7 +38,7 @@ serde_json = { version = "1.0", default-features = false }
 os-shim = { version = "0.1.2", default-features = false }
 
 # Markdown documents as a typed tree
-arky = { git = "https://github.com/tixena/arky.git", default-features = false }
+arky = { version = "0.1.0", default-features = false }
 
 # Pictures in markdown: an SVG rendered to PNG, a WebP decoded to PNG
 image-webp = { version = "0.2.4", default-features = false }
