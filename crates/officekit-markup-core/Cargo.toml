@@ -7,7 +7,7 @@ rust-version.workspace = true
 authors.workspace = true
 license.workspace = true
 repository.workspace = true
-include = ["/src/**/*.rs", "/LICENSE"]
+include = ["/src/**/*.rs", "/LICENSE", "/LICENSE-OPEN-XML-SDK"]
 
 [lib]
 # The crate's tests are integration tests; a unit-test or bench target would
