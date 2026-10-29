@@ -92,6 +92,7 @@ const STANDARD: &str = r#"<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchem
     <xsd:sequence>
       <xsd:element name="bold" type="CT_Attr" minOccurs="0"/>
       <xsd:element name="tagType" type="CT_TagType" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="flag" type="CT_Attr" minOccurs="0"/>
       <xsd:element name="setting" type="CT_Attr" minOccurs="0"/>
     </xsd:sequence>
   </xsd:complexType>
@@ -121,6 +122,13 @@ const BASE_ROW: &str = r#"
 [[base_type]]
 type = "w:CT_OnOffOnly/w:bidi"
 like = "w:CT_OnOff/w:bold"
+"#;
+
+const ELEMENT_ROW: &str = r#"
+[[element]]
+type = "w:CT_OnOff/w:flag"
+like = "w:CT_OnOff/w:bold"
+parent = "w:CT_Settings/w:settings"
 "#;
 
 const STANDARD_ROW: &str = r#"
@@ -401,6 +409,63 @@ fn a_row_builds_the_types_the_standard_declares_and_places_them() {
             "w:CT_Setting/w:setting"
         ]
     );
+    assert_eq!(settings[1].occurs[0].min, 0);
+    assert_eq!(settings[1].occurs[0].max, 0);
+}
+
+#[test]
+fn an_element_row_adds_an_element_of_the_type_it_is_like_at_most_once() {
+    let mut data = read_word();
+    data.correct(ELEMENT_ROW, &standard()).unwrap();
+
+    let flag = &data.types["w:CT_OnOff/w:flag"];
+    let bold = &data.types["w:CT_OnOff/w:bold"];
+    assert_eq!(flag.name, "w:CT_OnOff/w:flag");
+    assert_eq!(flag.attributes, bold.attributes);
+    assert_eq!(flag.is_derived, bold.is_derived);
+
+    let settings = &data.types["w:CT_Settings/w:settings"]
+        .particle
+        .as_ref()
+        .unwrap()
+        .items;
+    let names: Vec<_> = settings
+        .iter()
+        .map(|i| i.name.as_deref().unwrap())
+        .collect();
+    assert_eq!(
+        names,
+        [
+            "w:CT_OnOff/w:bold",
+            "w:CT_OnOff/w:flag",
+            "w:CT_Setting/w:setting"
+        ]
+    );
+    assert_eq!(settings[1].occurs[0].min, 0);
+    assert_eq!(settings[1].occurs[0].max, 1);
+}
+
+#[test]
+fn an_element_row_that_names_what_the_data_or_the_standard_lacks_stops_the_generator() {
+    for (from, to) in [
+        ("w:CT_OnOff/w:flag", "w:CT_OnOff/w:bold"),
+        (
+            "like = \"w:CT_OnOff/w:bold\"",
+            "like = \"w:CT_Missing/w:bold\"",
+        ),
+        (
+            "parent = \"w:CT_Settings/w:settings\"",
+            "parent = \"w:CT_Missing/w:settings\"",
+        ),
+        ("w:CT_OnOff/w:flag", "w:CT_OnOff/w:other"),
+    ] {
+        let mut data = read_word();
+        assert!(
+            data.correct(&ELEMENT_ROW.replace(from, to), &standard())
+                .is_err(),
+            "{to}"
+        );
+    }
 }
 
 #[test]

@@ -366,6 +366,20 @@ pub const DIVERGENCES: &[Divergence] = &[
         reason: SMART_TAG,
         targets: ALL_TARGETS,
     },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:doNotEmbedSmartTags'"),
+        path: &[(WORD, "settings")],
+        reason: SMART_TAG_SETTINGS,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:saveSmartTagsAsXml'"),
+        path: &[(WORD, "webSettings")],
+        reason: SMART_TAG_SETTINGS,
+        targets: ALL_TARGETS,
+    },
 ];
 
 const ALL_TARGETS: &[&str] = &[
@@ -395,6 +409,9 @@ const LEVEL_JUSTIFICATION: &str = "SDK 3.5.1 gives w:lvlJc the values left, cent
 
 const SMART_TAG: &str = "SDK 3.5.1 leaves out w:smartTag and w:smartTagType; ECMA-376 declares \
     them in EG_ContentRunContent, EG_ContentRunContentBase and CT_Settings, and Word 16 writes them";
+
+const SMART_TAG_SETTINGS: &str = "SDK 3.5.1 leaves out w:doNotEmbedSmartTags and \
+    w:saveSmartTagsAsXml; ECMA-376 declares them in CT_Settings and CT_WebSettings";
 
 const TABLE_JUSTIFICATION: &str = "SDK 3.5.1 gives the w:jc of a table's properties the values \
     left, center and right; ECMA-376 types it CT_JcTable, whose val is ST_JcTable, with start and end";

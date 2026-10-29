@@ -3,9 +3,11 @@
 
 mod standard;
 
+use core::slice;
+
 use anyhow::{Context as _, Result, bail};
 
-use self::standard::FromStandard;
+use self::standard::{FromStandard, place};
 use super::{DataParticle, DataType, Facet, SdkData};
 use crate::generate_schema::model::SchemaSet;
 
@@ -54,6 +56,14 @@ struct Extension {
     type_name: String,
 }
 
+/// One element of a type the data has, which the data leaves out of the
+/// parent the standard declares it in.
+struct Element {
+    like: String,
+    parent: String,
+    type_name: String,
+}
+
 /// Apply every row of the table of corrections to `data`; `standard` is the
 /// Transitional schemas the rows that build types read.
 pub(super) fn apply(data: &mut SdkData, text: &str, standard: &SchemaSet) -> Result<()> {
@@ -90,6 +100,10 @@ pub(super) fn apply(data: &mut SdkData, text: &str, standard: &SchemaSet) -> Res
     for row in FromStandard::rows(rows(&table, "from_standard")?)? {
         row.apply(data, standard)
             .with_context(|| format!("in the correction building `{}`", row.describe()))?;
+    }
+    for row in elements(&table)? {
+        add_element(data, standard, &row)
+            .with_context(|| format!("in the correction adding `{}`", row.type_name))?;
     }
     Ok(())
 }
@@ -233,6 +247,36 @@ fn replace_extension(data: &mut SdkData, row: &Extension) -> Result<()> {
         },
     );
     Ok(())
+}
+
+fn add_element(data: &mut SdkData, standard: &SchemaSet, row: &Element) -> Result<()> {
+    if data.types.contains_key(&row.type_name) {
+        bail!("the data already has `{}`", row.type_name);
+    }
+    known(data, &row.parent)?;
+    let mut built = known(data, &row.like)?.clone();
+    built.name.clone_from(&row.type_name);
+    data.types.insert(row.type_name.clone(), built);
+    place(
+        data,
+        standard,
+        &row.parent,
+        slice::from_ref(&row.type_name),
+        (0, Some(1)),
+    )
+}
+
+fn elements(table: &toml::Table) -> Result<Vec<Element>> {
+    rows(table, "element")?
+        .into_iter()
+        .map(|row| {
+            Ok(Element {
+                like: text_field(row, "like")?,
+                parent: text_field(row, "parent")?,
+                type_name: text_field(row, "type")?,
+            })
+        })
+        .collect()
 }
 
 fn attribute_types(table: &toml::Table) -> Result<Vec<AttributeType>> {

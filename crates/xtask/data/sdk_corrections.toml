@@ -150,3 +150,17 @@ parents = ["w:CT_Settings/w:settings"]
 type = "w:CT_CompatSetting/w:compatSetting"
 attribute = "w:name"
 string = true
+
+# 7. The data leaves out two CT_OnOff smart tag settings that ECMA-376
+# declares: doNotEmbedSmartTags in CT_Settings and saveSmartTagsAsXml in
+# CT_WebSettings (wml.xsd). Each takes the data's type of w:b, the type every
+# CT_OnOff element has, and occurs at most once.
+[[element]]
+type = "w:CT_OnOff/w:doNotEmbedSmartTags"
+like = "w:CT_OnOff/w:b"
+parent = "w:CT_Settings/w:settings"
+
+[[element]]
+type = "w:CT_OnOff/w:saveSmartTagsAsXml"
+like = "w:CT_OnOff/w:b"
+parent = "w:CT_WebSettings/w:webSettings"

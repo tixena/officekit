@@ -157,6 +157,17 @@ fn settings_document(settings: &str) -> Package {
     )
 }
 
+fn web_settings_document(web_settings: &str) -> Package {
+    let part = format!("<w:webSettings {WORD_NAMESPACES}>{web_settings}</w:webSettings>");
+    with_part(
+        word_document("", ""),
+        "/word/webSettings.xml",
+        WEB_SETTINGS,
+        WEB_SETTINGS_CONTENT,
+        &part,
+    )
+}
+
 fn on_off_document(value: &str) -> Package {
     let on = |name: &str| format!(r#"<w:{name} w:val="{value}"/>"#);
     let table = format!(
@@ -525,6 +536,35 @@ fn a_paragraph_and_the_settings_accept_smart_tags() {
         r#"<w:smartTagType w:namespaceuri="urn:schemas-microsoft-com:office:smarttags" w:name="PersonName" w:url="http://example.com/"/>"#,
     );
     accepted_at_every_version(&settings, "w:smartTagType");
+}
+
+#[test]
+fn the_settings_accept_do_not_embed_smart_tags_after_the_shape_defaults() {
+    let package = settings_document(
+        r#"<w:shapeDefaults/><w:doNotEmbedSmartTags/><w:decimalSymbol w:val="."/>"#,
+    );
+    accepted_at_every_version(&package, "w:doNotEmbedSmartTags");
+}
+
+#[test]
+fn the_web_settings_accept_save_smart_tags_as_xml_after_the_target_screen_size() {
+    let package =
+        web_settings_document(r#"<w:targetScreenSz w:val="800x600"/><w:saveSmartTagsAsXml/>"#);
+    accepted_at_every_version(&package, "w:saveSmartTagsAsXml");
+}
+
+#[test]
+fn the_settings_refuse_do_not_embed_smart_tags_before_the_shape_defaults() {
+    let package = settings_document("<w:doNotEmbedSmartTags/><w:shapeDefaults/>");
+    let errors = errors_at(&package, OfficeVersion::Microsoft365, "/w:settings[1]");
+    assert_eq!(errors.len(), 1, "{errors:?}");
+}
+
+#[test]
+fn the_settings_refuse_a_second_do_not_embed_smart_tags() {
+    let package = settings_document("<w:doNotEmbedSmartTags/><w:doNotEmbedSmartTags/>");
+    let errors = errors_at(&package, OfficeVersion::Microsoft365, "/w:settings[1]");
+    assert_eq!(errors.len(), 1, "{errors:?}");
 }
 
 #[test]

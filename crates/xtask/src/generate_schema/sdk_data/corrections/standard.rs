@@ -38,7 +38,7 @@ impl FromStandard {
             data.types.insert(name.clone(), built);
         }
         for parent in &self.parents {
-            self.place(data, standard, parent)?;
+            place(data, standard, parent, &self.types, (0, None))?;
         }
         Ok(())
     }
@@ -75,79 +75,6 @@ impl FromStandard {
         Ok(())
     }
 
-    /// Put the type the standard declares in `parent` after the last element
-    /// the standard declares before it that the parent already holds.
-    fn place(&self, data: &mut SdkData, standard: &SchemaSet, parent: &str) -> Result<()> {
-        let (schema_type, _) = parent
-            .split_once('/')
-            .with_context(|| format!("`{parent}` has no `/`"))?;
-        let declared = declaration(data, standard, schema_type)?;
-        let Content::Particle(content) = &declared.content else {
-            bail!("`{parent}` has no content model in the standard");
-        };
-        let ParticleKind::Sequence(elements) = &content.kind else {
-            bail!("`{parent}` is not a sequence in the standard");
-        };
-        let mut names = Vec::new();
-        for element in elements {
-            let ParticleKind::Element {
-                name,
-                type_ref: _type_ref,
-            } = &element.kind
-            else {
-                bail!("`{parent}` holds an item other than an element in the standard");
-            };
-            names.push(resolve(data, name, &self.types).ok());
-        }
-        let wanted: Vec<usize> = names
-            .iter()
-            .enumerate()
-            .filter(|(_, resolved)| {
-                resolved
-                    .as_ref()
-                    .is_some_and(|found| self.types.contains(found))
-            })
-            .map(|(index, _)| index)
-            .collect();
-        if wanted.is_empty() {
-            bail!("the standard places none of the new types in `{parent}`");
-        }
-        let target = data
-            .types
-            .get_mut(parent)
-            .with_context(|| format!("the data has no `{parent}`"))?;
-        let particle = target
-            .particle
-            .as_mut()
-            .with_context(|| format!("`{parent}` has no content model"))?;
-        for index in wanted {
-            let Some(Some(name)) = names.get(index) else {
-                continue;
-            };
-            let after = names
-                .get(index + 1..)
-                .into_iter()
-                .flatten()
-                .flatten()
-                .find(|following| {
-                    particle
-                        .items
-                        .iter()
-                        .any(|item| item.name.as_deref() == Some(following.as_str()))
-                });
-            let position = after
-                .and_then(|following| {
-                    particle
-                        .items
-                        .iter()
-                        .position(|item| item.name.as_deref() == Some(following.as_str()))
-                })
-                .unwrap_or(particle.items.len());
-            particle.items.insert(position, once(name, 0, None));
-        }
-        Ok(())
-    }
-
     pub(super) fn rows(rows: Vec<&toml::Table>) -> Result<Vec<Self>> {
         rows.into_iter()
             .map(|row| {
@@ -161,6 +88,84 @@ impl FromStandard {
             })
             .collect()
     }
+}
+
+/// Put each of `new` that the standard declares in `parent`'s sequence ahead of
+/// the first element the standard declares after it that the data's sequence
+/// holds, else at the end, occurring `occurs.0` to `occurs.1` times.
+pub(super) fn place(
+    data: &mut SdkData,
+    standard: &SchemaSet,
+    parent: &str,
+    new: &[String],
+    occurs: (u32, Option<u32>),
+) -> Result<()> {
+    let (schema_type, _) = parent
+        .split_once('/')
+        .with_context(|| format!("`{parent}` has no `/`"))?;
+    let declared = declaration(data, standard, schema_type)?;
+    let Content::Particle(content) = &declared.content else {
+        bail!("`{parent}` has no content model in the standard");
+    };
+    let ParticleKind::Sequence(elements) = &content.kind else {
+        bail!("`{parent}` is not a sequence in the standard");
+    };
+    let mut names = Vec::new();
+    for element in elements {
+        let ParticleKind::Element {
+            name,
+            type_ref: _type_ref,
+        } = &element.kind
+        else {
+            bail!("`{parent}` holds an item other than an element in the standard");
+        };
+        names.push(resolve(data, name, new).ok());
+    }
+    let wanted: Vec<usize> = names
+        .iter()
+        .enumerate()
+        .filter(|(_, resolved)| resolved.as_ref().is_some_and(|found| new.contains(found)))
+        .map(|(index, _)| index)
+        .collect();
+    if wanted.is_empty() {
+        bail!("the standard places none of the new types in `{parent}`");
+    }
+    let target = data
+        .types
+        .get_mut(parent)
+        .with_context(|| format!("the data has no `{parent}`"))?;
+    let particle = target
+        .particle
+        .as_mut()
+        .with_context(|| format!("`{parent}` has no content model"))?;
+    for index in wanted {
+        let Some(Some(name)) = names.get(index) else {
+            continue;
+        };
+        let after = names
+            .get(index + 1..)
+            .into_iter()
+            .flatten()
+            .flatten()
+            .find(|following| {
+                particle
+                    .items
+                    .iter()
+                    .any(|item| item.name.as_deref() == Some(following.as_str()))
+            });
+        let position = after
+            .and_then(|following| {
+                particle
+                    .items
+                    .iter()
+                    .position(|item| item.name.as_deref() == Some(following.as_str()))
+            })
+            .unwrap_or(particle.items.len());
+        particle
+            .items
+            .insert(position, once(name, occurs.0, occurs.1));
+    }
+    Ok(())
 }
 
 fn attribute(data: &SdkData, attribute: &AttributeUse, schema_type: &str) -> Result<DataAttribute> {
