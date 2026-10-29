@@ -32,6 +32,7 @@ const W_STRICT: &str = "http://purl.oclc.org/ooxml/wordprocessingml/main";
 const WP: &str = "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing";
 const WP_STRICT: &str = "http://purl.oclc.org/ooxml/drawingml/wordprocessingDrawing";
 const WPG: &str = "http://schemas.microsoft.com/office/word/2010/wordprocessingGroup";
+const WNE: &str = "http://schemas.microsoft.com/office/word/2006/wordml";
 const WPS: &str = "http://schemas.microsoft.com/office/word/2010/wordprocessingShape";
 const X: &str = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
 const X_STRICT: &str = "http://purl.oclc.org/ooxml/spreadsheetml/main";
@@ -409,7 +410,7 @@ fn strict_run_declarations() -> String {
 }
 
 #[test]
-fn word_s_text_box_writes_as_the_ecma_text_box_in_place_of_its_alternate_content() {
+fn word_s_text_box_keeps_its_shape_and_writes_its_text_in_wne_txbx_content() {
     let shape = "<a:graphic><a:graphicData uri=\"{wps}\"><wps:wsp normalEastAsianFlow=\"true\"><wps:cNvSpPr txBox=\"1\"/><wps:spPr/><wps:txbx id=\"3\"><w:txbxContent><w:p><w:r><w:t>Box</w:t></w:r></w:p></w:txbxContent></wps:txbx><wps:bodyPr/></wps:wsp></a:graphicData></a:graphic>";
     let run = format!(
         "<w:r {RUN_DECLARATIONS}><mc:AlternateContent><mc:Choice Requires=\"wps\"><w:drawing><wp:inline>{shape}</wp:inline></w:drawing></mc:Choice><mc:Fallback><w:pict><v:shape/></w:pict></mc:Fallback></mc:AlternateContent></w:r>"
@@ -417,21 +418,21 @@ fn word_s_text_box_writes_as_the_ecma_text_box_in_place_of_its_alternate_content
     assert_eq!(
         strict::<TextRun>(&run),
         format!(
-            "<w:r {}><w:drawing><wp:inline><a:graphic><a:graphicData uri=\"{WP_STRICT}\"><wp:wsp normalEastAsianFlow=\"true\"><wp:cNvSpPr txBox=\"1\"/><wp:spPr/><wp:txbx id=\"3\"><wp:txbxContent><w:p><w:r><w:t>Box</w:t></w:r></w:p></wp:txbxContent></wp:txbx><wp:bodyPr/></wp:wsp></a:graphicData></a:graphic></wp:inline></w:drawing></w:r>",
+            "<w:r {}><w:drawing><wp:inline><a:graphic><a:graphicData uri=\"{WPS}\"><wps:wsp normalEastAsianFlow=\"true\"><wps:cNvSpPr txBox=\"1\"/><wps:spPr/><wps:txbx id=\"3\"><wne:txbxContent xmlns:wne=\"{WNE}\"><w:p><w:r><w:t>Box</w:t></w:r></w:p></wne:txbxContent></wps:txbx><wps:bodyPr/></wps:wsp></a:graphicData></a:graphic></wp:inline></w:drawing></w:r>",
             strict_run_declarations()
         )
     );
 }
 
 #[test]
-fn word_s_shape_outside_alternate_content_converts_in_place_a_linked_text_box_included() {
+fn word_s_shape_outside_alternate_content_keeps_its_shape_a_linked_text_box_included() {
     let run = format!(
         "<w:r {RUN_DECLARATIONS}><w:drawing><wp:anchor><a:graphic><a:graphicData uri=\"{{wps}}\"><wps:wsp><wps:cNvSpPr/><wps:spPr/><wps:linkedTxbx id=\"3\" seq=\"1\"/><wps:bodyPr/></wps:wsp></a:graphicData></a:graphic></wp:anchor></w:drawing></w:r>"
     );
     assert_eq!(
         strict::<TextRun>(&run),
         format!(
-            "<w:r {}><w:drawing><wp:anchor><a:graphic><a:graphicData uri=\"{WP_STRICT}\"><wp:wsp><wp:cNvSpPr/><wp:spPr/><wp:linkedTxbx id=\"3\" seq=\"1\"/><wp:bodyPr/></wp:wsp></a:graphicData></a:graphic></wp:anchor></w:drawing></w:r>",
+            "<w:r {}><w:drawing><wp:anchor><a:graphic><a:graphicData uri=\"{WPS}\"><wps:wsp><wps:cNvSpPr/><wps:spPr/><wps:linkedTxbx id=\"3\" seq=\"1\"/><wps:bodyPr/></wps:wsp></a:graphicData></a:graphic></wp:anchor></w:drawing></w:r>",
             strict_run_declarations()
         )
     );

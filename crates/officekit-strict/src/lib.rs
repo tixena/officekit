@@ -38,9 +38,9 @@
 //!
 //! The rules are keyed by tag, so the walk also reaches content the typed tree keeps as unknown,
 //! such as the branches of `mc:AlternateContent`. Word saves a text box as `mc:AlternateContent`
-//! around Microsoft's `wps:wsp` holding `w:txbxContent`. Strict writes it as ECMA's `wp:wsp`
-//! holding `wp:txbxContent`, in place of the `mc:AlternateContent`. A text box inside a group or
-//! in VML has no Strict form.
+//! around Microsoft's `wps:wsp` holding `w:txbxContent`. Strict writes the `wps:wsp` in place of
+//! the `mc:AlternateContent`, its text in `wne:txbxContent`, as Microsoft documents for Strict. A
+//! text box inside a group or in VML has no Strict form.
 //!
 //! A date cell (`t="d"`) exists only in Strict, so the Strict write keeps it as it is. The
 //! Transitional write of `officekit::transitional` refuses it and has a function that converts it.
@@ -135,6 +135,9 @@ const WORDPROCESSING_DRAWING: &str =
 /// Microsoft's namespace of Word's shape, `wps`, and the `uri` of a `graphicData` holding one.
 const WORDPROCESSING_SHAPE: &str =
     "http://schemas.microsoft.com/office/word/2010/wordprocessingShape";
+
+/// The namespace of Word's text-box content in Strict, `wne`.
+const WORD_ML: &str = "http://schemas.microsoft.com/office/word/2006/wordml";
 
 // The tables of the walk, generated: `ATTRIBUTES`, `CHILDREN`, `CONTEXTUAL`,
 // `ELEMENTS`, `REFUSED_NAMESPACES`, the code tables, and the spellings.
@@ -428,8 +431,7 @@ fn convert(
     if named(element, WORDPROCESSING_DRAWING, "anchor")
         || named(element, WORDPROCESSING_DRAWING, "inline")
     {
-        let prefix = element.name.prefix.clone();
-        rewrite_word_shapes(element, &prefix);
+        word_text_box_content(element);
     }
     refuse_element(element)?;
     for attribute in &element.attributes {
@@ -646,32 +648,33 @@ fn rename_child(element: &mut Element, index: usize, before: &[&str], to: &'stat
     index + 1
 }
 
-/// Write each of Word's shapes inside `element` as ECMA's `wp:wsp` in `prefix`, the prefix of
-/// the `wp:anchor` or `wp:inline` around it, and give the `graphicData` holding it the `wp`
-/// namespace's Strict URI.
-fn rewrite_word_shapes(element: &mut Element, prefix: &str) {
+/// Word's text box in Strict, as Microsoft documents it: the shape stays `wps:wsp` in the
+/// `graphicData` of the `wps` namespace, and the `w:txbxContent` of each `wps:txbx` becomes
+/// `wne:txbxContent`, declaring `wne` itself. A `graphicData` of another namespace is left alone.
+fn word_text_box_content(element: &mut Element) {
     if holds_word_shape(element) {
-        let uri = Namespace::from_uri(WORDPROCESSING_DRAWING)
-            .uri(ConformanceClass::Strict)
-            .to_owned();
-        if let Some(found) = element
-            .attributes
-            .iter_mut()
-            .find(|found| found.name.local == "uri" && found.name.namespace == Namespace::None)
-        {
-            found.value = uri;
-        }
-        for node in &mut element.children {
-            if let Node::Element(shape) = node
-                && named(shape, WORDPROCESSING_SHAPE, "wsp")
-            {
-                to_ecma(shape, prefix);
-            }
-        }
+        write_text_box_content(element);
+        return;
     }
     for node in &mut element.children {
-        if let Node::Element(inner) = node {
-            rewrite_word_shapes(inner, prefix);
+        if let Node::Element(child) = node {
+            word_text_box_content(child);
+        }
+    }
+}
+
+fn write_text_box_content(element: &mut Element) {
+    let text_box = named(element, WORDPROCESSING_SHAPE, "txbx");
+    for node in &mut element.children {
+        if let Node::Element(child) = node {
+            if text_box && named(child, WORDPROCESSING, "txbxContent") {
+                child.name = QName::prefixed("wne", "txbxContent", WORD_ML);
+                child.namespace_declarations.push(NamespaceDeclaration::new(
+                    "wne".to_owned(),
+                    WORD_ML.to_owned(),
+                ));
+            }
+            write_text_box_content(child);
         }
     }
 }
@@ -776,23 +779,6 @@ fn to_child(element: &mut Element, index: usize, local: &str) {
     ));
     child.children.push(Node::Text(attribute.value));
     element.children.insert(0, Node::Element(child));
-}
-
-/// Word's `wps:wsp` as ECMA's `wp:wsp` in `prefix`: each element of the `wps` namespace takes
-/// `wp`, and the `w:txbxContent` of its text box becomes `wp:txbxContent`.
-fn to_ecma(element: &mut Element, prefix: &str) {
-    let text_box = element.name.local == "txbx";
-    element.name = QName::prefixed(prefix, &element.name.local, WORDPROCESSING_DRAWING);
-    for node in &mut element.children {
-        if let Node::Element(child) = node {
-            if child.name.namespace == Namespace::from_uri(WORDPROCESSING_SHAPE) {
-                to_ecma(child, prefix);
-            }
-            if text_box && named(child, WORDPROCESSING, "txbxContent") {
-                child.name = QName::prefixed(prefix, "txbxContent", WORDPROCESSING_DRAWING);
-            }
-        }
-    }
 }
 
 /// Write the packed attribute at `index` as the attributes its bits name,
