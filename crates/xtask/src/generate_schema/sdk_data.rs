@@ -211,8 +211,8 @@ pub struct Validator {
 }
 
 impl SdkData {
-    /// Replace each type and attribute the table of corrections names with
-    /// what it gives.
+    /// Replace each type the table of corrections names with what it gives,
+    /// by every row kind but `[[attribute]]`.
     ///
     /// # Errors
     ///
@@ -220,6 +220,17 @@ impl SdkData {
     /// a child or an attribute the data does not have.
     pub fn correct(&mut self, text: &str, standard: &SchemaSet) -> Result<()> {
         corrections::apply(self, text, standard)
+    }
+
+    /// Replace each attribute the table's `[[attribute]]` rows name with what
+    /// it gives.
+    ///
+    /// # Errors
+    ///
+    /// Text that is not TOML, a row missing a field, or a row naming a type or
+    /// an attribute the data does not have.
+    pub fn correct_attributes(&mut self, text: &str) -> Result<()> {
+        corrections::apply_attributes(self, text)
     }
 
     /// The namespaces dated Office 2010 to Microsoft 365: those with types or

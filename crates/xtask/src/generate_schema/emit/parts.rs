@@ -447,6 +447,7 @@ where
 {
     let kinds_text = read(system, Path::new(DOCUMENT_KINDS_PATH))?;
     let part_roots_text = read(system, Path::new(validation::PART_ROOTS_PATH))?;
+    let sdk_corrections_text = read(system, Path::new(validation::SDK_CORRECTIONS_PATH))?;
     let transitional = SchemaSet::read(system, &inputs.transitional_schemas)?;
     let part_1_text = read(system, &inputs.part1_text)?;
     let part_4_text = read(system, &inputs.part4_text)?;
@@ -479,7 +480,13 @@ where
         },
         &mut joined.notes,
     );
-    let header = header(system, inputs, &kinds_text, &part_roots_text)?;
+    let header = header(
+        system,
+        inputs,
+        &kinds_text,
+        &part_roots_text,
+        &sdk_corrections_text,
+    )?;
     let folder = Path::new(PARTS_PATH);
     let tests = system.is_file(&folder.join("tests.rs")).unwrap_or(false);
     let files = render::files(
@@ -584,7 +591,13 @@ fn global_element(
 }
 
 /// The header of every file, naming its inputs.
-fn header<S>(system: &S, inputs: &Inputs, kinds_text: &str, part_roots_text: &str) -> Result<String>
+fn header<S>(
+    system: &S,
+    inputs: &Inputs,
+    kinds_text: &str,
+    part_roots_text: &str,
+    sdk_corrections_text: &str,
+) -> Result<String>
 where
     S: System + ?Sized,
 {
@@ -623,6 +636,10 @@ where
             (
                 Path::new(validation::PART_ROOTS_PATH),
                 part_roots_text.as_bytes(),
+            ),
+            (
+                Path::new(validation::SDK_CORRECTIONS_PATH),
+                sdk_corrections_text.as_bytes(),
             ),
         ],
     )

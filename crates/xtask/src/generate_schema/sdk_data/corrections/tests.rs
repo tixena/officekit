@@ -240,7 +240,7 @@ fn a_row_missing_a_field_stops_the_generator() {
 #[test]
 fn a_row_renames_the_attribute_it_names() {
     let mut data = read();
-    data.correct(ATTRIBUTE_ROW, &SchemaSet::default()).unwrap();
+    data.correct_attributes(ATTRIBUTE_ROW).unwrap();
     assert_eq!(data.types["x:CT_Inner/x:inner"].attributes[0].qname, ":val");
 }
 
@@ -252,9 +252,40 @@ fn an_attribute_row_naming_what_the_data_lacks_stops_the_generator() {
     ] {
         let mut data = read();
         let error = data
-            .correct(&ATTRIBUTE_ROW.replace(from, to), &SchemaSet::default())
+            .correct_attributes(&ATTRIBUTE_ROW.replace(from, to))
             .unwrap_err();
         assert!(format!("{error:#}").contains(to), "{error:#}");
+    }
+}
+
+#[test]
+fn the_attribute_rows_are_left_to_correct_attributes() {
+    let mut data = read();
+    data.correct(ATTRIBUTE_ROW, &SchemaSet::default()).unwrap();
+    assert_eq!(
+        data.types["x:CT_Inner/x:inner"].attributes[0].qname,
+        "x:val"
+    );
+}
+
+#[test]
+fn no_base_type_row_takes_the_type_of_an_attribute_row_as_like() {
+    let table: toml::Table = include_str!("../../../../data/sdk_corrections.toml")
+        .parse()
+        .unwrap();
+    let changed: Vec<String> = super::attributes(&table)
+        .unwrap()
+        .into_iter()
+        .map(|row| row.type_name)
+        .collect();
+    assert!(changed.contains(&"c16r3:CT_BooleanFalse/c16r3:dispNaAsBlank".to_owned()));
+    for row in super::base_types(&table).unwrap() {
+        assert!(
+            !changed.contains(&row.like),
+            "`{}` takes `{}` as like, which an attribute row changes",
+            row.type_name,
+            row.like
+        );
     }
 }
 

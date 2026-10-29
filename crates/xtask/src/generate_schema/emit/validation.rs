@@ -1633,10 +1633,11 @@ pub fn emit<S>(
 where
     S: System + ?Sized,
 {
-    let data = SdkData::read(system, &inputs.sdk_data)?;
+    let mut data = SdkData::read(system, &inputs.sdk_data)?;
     let sdk_corrections_text = system
         .read_to_string(sdk_corrections_path)
         .with_context(|| format!("cannot read {}", sdk_corrections_path.display()))?;
+    data.correct_attributes(&sdk_corrections_text)?;
     let transitional = SchemaSet::read(system, &inputs.transitional_schemas)?;
     let mut corrected = data.clone();
     corrected.correct(&sdk_corrections_text, &transitional)?;

@@ -64,8 +64,25 @@ struct Element {
     type_name: String,
 }
 
-/// Apply every row of the table of corrections to `data`; `standard` is the
-/// Transitional schemas the rows that build types read.
+/// Apply every `[[attribute]]` row of the table of corrections to `data`.
+pub(super) fn apply_attributes(data: &mut SdkData, text: &str) -> Result<()> {
+    let table: toml::Table = text
+        .parse()
+        .context("the table of corrections is not TOML")?;
+    for row in attributes(&table)? {
+        replace_attribute(data, &row).with_context(|| {
+            format!(
+                "in the correction of `{}` of `{}`",
+                row.replaces, row.type_name
+            )
+        })?;
+    }
+    Ok(())
+}
+
+/// Apply every row of the table of corrections but the `[[attribute]]` rows to
+/// `data`; `standard` is the Transitional schemas the rows that build types
+/// read.
 pub(super) fn apply(data: &mut SdkData, text: &str, standard: &SchemaSet) -> Result<()> {
     let table: toml::Table = text
         .parse()
@@ -88,14 +105,6 @@ pub(super) fn apply(data: &mut SdkData, text: &str, standard: &SchemaSet) -> Res
     for row in extensions(&table)? {
         replace_extension(data, &row)
             .with_context(|| format!("in the correction of `{}`", row.replaces))?;
-    }
-    for row in attributes(&table)? {
-        replace_attribute(data, &row).with_context(|| {
-            format!(
-                "in the correction of `{}` of `{}`",
-                row.replaces, row.type_name
-            )
-        })?;
     }
     for row in FromStandard::rows(rows(&table, "from_standard")?)? {
         row.apply(data, standard)

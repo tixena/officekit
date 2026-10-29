@@ -32,7 +32,7 @@ use anyhow::{Context as _, Result};
 use os_shim::{System, WriteMode};
 
 use super::namespaces;
-use super::validation::Emitted;
+use super::validation::{self, Emitted};
 use crate::generate_schema::inputs::Inputs;
 use crate::generate_schema::model::{Name, SchemaSet, TypeRef};
 use crate::generate_schema::sdk_data::{DataVersion, SdkData};
@@ -379,6 +379,9 @@ where
     let overrides_text = system
         .read_to_string(Path::new(NAME_OVERRIDES_PATH))
         .with_context(|| format!("cannot read {NAME_OVERRIDES_PATH}"))?;
+    let sdk_corrections_text = system
+        .read_to_string(Path::new(validation::SDK_CORRECTIONS_PATH))
+        .with_context(|| format!("cannot read {}", validation::SDK_CORRECTIONS_PATH))?;
     let data = Data::new(&emitted.data, &transitional);
     let mut catalog = structs::Catalog::build(
         &data,
@@ -410,6 +413,10 @@ where
         &[
             (Path::new(ENUM_NAMES_PATH), enum_names_text.as_bytes()),
             (Path::new(NAME_OVERRIDES_PATH), overrides_text.as_bytes()),
+            (
+                Path::new(validation::SDK_CORRECTIONS_PATH),
+                sdk_corrections_text.as_bytes(),
+            ),
         ],
     )?;
     let mut files = render::files(system, &header, &catalog)?;

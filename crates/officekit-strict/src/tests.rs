@@ -1,4 +1,5 @@
 use officekit_markup::drawing::Alpha;
+use officekit_markup::office_drawing_2017_03_chart::DispNaAsBlank;
 use officekit_markup::presentation::Presentation;
 use officekit_markup::spreadsheet::{
     Border, CalculationChainInfo, Cell, DynamicFilter, PivotArea, ProtectedRange,
@@ -20,6 +21,7 @@ use officekit_xml::write::{Layout, WriteOptions};
 use super::{Strict, iso_date_time};
 
 const A: &str = "http://schemas.openxmlformats.org/drawingml/2006/main";
+const C16R3: &str = "http://schemas.microsoft.com/office/drawing/2017/03/chart";
 const A_STRICT: &str = "http://purl.oclc.org/ooxml/drawingml/main";
 const MC: &str = "http://schemas.openxmlformats.org/markup-compatibility/2006";
 const P: &str = "http://schemas.openxmlformats.org/presentationml/2006/main";
@@ -449,4 +451,14 @@ fn a_text_box_in_a_group_or_in_vml_has_no_strict_form() {
         )),
         Some("pict")
     );
+}
+
+#[test]
+fn a_chart_na_as_blank_reads_and_writes_the_unprefixed_val_word_writes() {
+    let text = format!("<c16r3:dispNaAsBlank xmlns:c16r3=\"{C16R3}\" val=\"1\"/>");
+    let node = DispNaAsBlank::from_strict(&element(&text)).unwrap();
+    assert_eq!(node.val.as_deref(), Some("1"));
+    let mut set = DispNaAsBlank::default();
+    set.val = Some("1".to_owned());
+    assert_eq!(written(set.to_strict().unwrap()), text);
 }
