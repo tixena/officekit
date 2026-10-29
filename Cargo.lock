@@ -708,7 +708,7 @@ dependencies = [
 
 [[package]]
 name = "officekit"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "base64 0.22.1",
  "clap",
@@ -727,7 +727,7 @@ dependencies = [
 
 [[package]]
 name = "officekit-cli"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "anyhow",
  "arky",
@@ -743,7 +743,7 @@ dependencies = [
 
 [[package]]
 name = "officekit-markdown"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "arky",
  "base64 0.22.1",
@@ -759,7 +759,7 @@ dependencies = [
 
 [[package]]
 name = "officekit-markup"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "officekit-markup-base",
  "officekit-markup-core",
@@ -769,7 +769,7 @@ dependencies = [
 
 [[package]]
 name = "officekit-markup-base"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "officekit-xml",
  "rkyv",
@@ -777,7 +777,7 @@ dependencies = [
 
 [[package]]
 name = "officekit-markup-core"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "officekit-markup-base",
  "officekit-xml",
@@ -786,7 +786,7 @@ dependencies = [
 
 [[package]]
 name = "officekit-strict"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "officekit-markup",
  "officekit-xml",
@@ -794,7 +794,7 @@ dependencies = [
 
 [[package]]
 name = "officekit-xml"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "aho-corasick",
  "bstr",
@@ -1643,7 +1643,7 @@ checksum = "23b97319f7b8343df12cc98938e5c3eb436064524c8d2b4e30a1d3a36eecdf81"
 
 [[package]]
 name = "xtask"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "anyhow",
  "clap",

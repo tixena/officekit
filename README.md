@@ -1,7 +1,7 @@
 # officekit
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.1.0-7F6DF2.svg)](Cargo.toml)
+[![Version](https://img.shields.io/badge/version-0.1.1-7F6DF2.svg)](Cargo.toml)
 [![Rust](https://img.shields.io/badge/rust-1.98%2B-orange.svg)](https://rustup.rs)
 [![Made by Tixena Labs](https://img.shields.io/badge/made_by-Tixena_Labs-7F6DF2.svg)](https://tixenalabs.com/)
 
