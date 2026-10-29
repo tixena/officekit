@@ -6,7 +6,7 @@ resolver = "2"
 [workspace.package]
 version = "0.1.0"
 edition = "2024"
-rust-version = "1.91"
+rust-version = "1.98"
 authors = ["Eduardo Burgos <eduardo@tixena.com>"]
 license = "MIT"
 repository = "https://github.com/tixena/officekit"
@@ -36,7 +36,7 @@ serde_json = { version = "1.0.151", default-features = false }
 os-shim = { version = "0.1.2", default-features = false }
 
 # Markdown documents as a typed tree
-arky = { version = "0.1.0", default-features = false }
+arky = { version = "0.1.1", default-features = false }
 
 # Pictures in markdown: an SVG rendered to PNG, a WebP decoded to PNG
 image-webp = { version = "0.2.4", default-features = false }
