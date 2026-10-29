@@ -33,6 +33,30 @@ const SETTINGS: &str =
     "http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings";
 const SETTINGS_CONTENT: &str =
     "application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml";
+const WEB_SETTINGS: &str =
+    "http://schemas.openxmlformats.org/officeDocument/2006/relationships/webSettings";
+const WEB_SETTINGS_CONTENT: &str =
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.webSettings+xml";
+const ON_OFF_ELEMENTS: [&str; 18] = [
+    "cantSplit",
+    "tblHeader",
+    "hidden",
+    "noWrap",
+    "tcFitText",
+    "hideMark",
+    "noResizeAllowed",
+    "linkedToFile",
+    "noBorder",
+    "flatBorders",
+    "autoRedefine",
+    "semiHidden",
+    "unhideWhenUsed",
+    "qFormat",
+    "locked",
+    "personal",
+    "personalCompose",
+    "personalReply",
+];
 const VERSIONS: [OfficeVersion; 6] = [
     OfficeVersion::Office2010,
     OfficeVersion::Office2013,
@@ -130,6 +154,56 @@ fn settings_document(settings: &str) -> Package {
         SETTINGS,
         SETTINGS_CONTENT,
         &part,
+    )
+}
+
+fn on_off_document(value: &str) -> Package {
+    let on = |name: &str| format!(r#"<w:{name} w:val="{value}"/>"#);
+    let table = format!(
+        "<w:tbl><w:tblPr/><w:tblGrid/><w:tr><w:trPr>{}{}{}</w:trPr><w:tc><w:tcPr>{}{}{}</w:tcPr><w:p/></w:tc></w:tr></w:tbl>",
+        on("cantSplit"),
+        on("tblHeader"),
+        on("hidden"),
+        on("noWrap"),
+        on("tcFitText"),
+        on("hideMark"),
+    );
+    let style: String = [
+        "autoRedefine",
+        "hidden",
+        "semiHidden",
+        "unhideWhenUsed",
+        "qFormat",
+        "locked",
+        "personal",
+        "personalCompose",
+        "personalReply",
+    ]
+    .map(on)
+    .concat();
+    let styles = format!(
+        r#"<w:styles {WORD_NAMESPACES}><w:style w:type="paragraph" w:styleId="Body"><w:name w:val="Body"/>{style}</w:style></w:styles>"#
+    );
+    let web = format!(
+        "<w:webSettings {WORD_NAMESPACES}><w:frameset><w:framesetSplitbar>{}{}</w:framesetSplitbar><w:frame>{}{}</w:frame></w:frameset></w:webSettings>",
+        on("noBorder"),
+        on("flatBorders"),
+        on("noResizeAllowed"),
+        on("linkedToFile"),
+    );
+    let package = with_part(
+        word_document("", &table),
+        "/word/styles.xml",
+        STYLES,
+        STYLES_CONTENT,
+        &styles,
+    );
+    with_part(
+        package,
+        "/word/webSettings.xml",
+        WEB_SETTINGS,
+        WEB_SETTINGS_CONTENT,
+        &web,
     )
 }
 
@@ -404,6 +478,25 @@ fn a_table_accepts_every_on_off_value_for_bidi_visual() {
 fn a_table_refuses_a_value_outside_st_on_off_for_bidi_visual() {
     let package = table_document(r#"<w:bidiVisual w:val="maybe"/>"#);
     refused_with(&package, "w:bidiVisual", "InvalidAttributeValue");
+}
+
+#[test]
+fn the_on_off_elements_accept_every_on_off_value() {
+    for value in ["0", "1", "true", "false", "on", "off"] {
+        let package = on_off_document(value);
+        for element in ON_OFF_ELEMENTS {
+            accepted_at_every_version(&package, &format!("w:{element}"));
+        }
+    }
+}
+
+#[test]
+fn an_on_off_element_refuses_a_value_outside_st_on_off() {
+    let package = word_document(
+        "",
+        r#"<w:tbl><w:tblPr/><w:tblGrid/><w:tr><w:trPr><w:cantSplit w:val="maybe"/></w:trPr><w:tc><w:p/></w:tc></w:tr></w:tbl>"#,
+    );
+    refused_with(&package, "w:cantSplit", "InvalidAttributeValue");
 }
 
 #[test]

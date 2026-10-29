@@ -216,7 +216,133 @@ pub const DIVERGENCES: &[Divergence] = &[
         id: "Sch_AttributeValueDataTypeDetailed",
         mentioning: None,
         path: &[(WORD, "bidiVisual")],
-        reason: BIDI_VISUAL,
+        reason: ON_OFF_ONLY,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "cantSplit")],
+        reason: ON_OFF_ONLY,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "tblHeader")],
+        reason: ON_OFF_ONLY,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "hidden")],
+        reason: ON_OFF_ONLY,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "noWrap")],
+        reason: ON_OFF_ONLY,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "tcFitText")],
+        reason: ON_OFF_ONLY,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "hideMark")],
+        reason: ON_OFF_ONLY,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "noResizeAllowed")],
+        reason: ON_OFF_ONLY,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "linkedToFile")],
+        reason: ON_OFF_ONLY,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "noBorder")],
+        reason: ON_OFF_ONLY,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "flatBorders")],
+        reason: ON_OFF_ONLY,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "autoRedefine")],
+        reason: ON_OFF_ONLY,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "semiHidden")],
+        reason: ON_OFF_ONLY,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "unhideWhenUsed")],
+        reason: ON_OFF_ONLY,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "qFormat")],
+        reason: ON_OFF_ONLY,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "locked")],
+        reason: ON_OFF_ONLY,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "personal")],
+        reason: ON_OFF_ONLY,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "personalCompose")],
+        reason: ON_OFF_ONLY,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "personalReply")],
+        reason: ON_OFF_ONLY,
         targets: ALL_TARGETS,
     },
     Divergence {
@@ -254,8 +380,9 @@ const ALL_TARGETS: &[&str] = &[
 const BACKGROUND_FILLED: &str = "SDK 3.5.1 spells the attribute of v:background `fill`; ECMA-376 \
     names it `filled` (vml-main.xsd, AG_Fill)";
 
-const BIDI_VISUAL: &str = "SDK 3.5.1 types w:bidiVisual as CT_OnOffOnly, which takes only on and \
-    off; ECMA-376 types it CT_OnOff (CT_TblPrBase), which takes every ST_OnOff value";
+const ON_OFF_ONLY: &str = "SDK 3.5.1 types these elements as CT_OnOffOnly, which takes only on \
+    and off; ECMA-376 types them CT_OnOff (CT_TblPrBase, CT_TrPrBase, CT_TcPrBase, CT_Frame, \
+    CT_FramesetSplitbar, CT_Style), which takes every ST_OnOff value";
 
 const CHART: &str = "http://schemas.openxmlformats.org/drawingml/2006/chart";
 

@@ -43,6 +43,81 @@ add = ["start", "end"]
 type = "w:CT_OnOffOnly/w:bidiVisual"
 like = "w:CT_OnOff/w:b"
 
+# 3b. The data derives these elements from CT_OnOffOnly as well. ECMA-376
+# types each one CT_OnOff (wml.xsd: CT_TrPrBase, CT_TcPrBase, CT_Frame,
+# CT_FramesetSplitbar, CT_Style), whose val is ST_OnOff.
+[[base_type]]
+type = "w:CT_OnOffOnly/w:cantSplit"
+like = "w:CT_OnOff/w:b"
+
+[[base_type]]
+type = "w:CT_OnOffOnly/w:tblHeader"
+like = "w:CT_OnOff/w:b"
+
+[[base_type]]
+type = "w:CT_OnOffOnly/w:hidden"
+like = "w:CT_OnOff/w:b"
+
+[[base_type]]
+type = "w:CT_OnOffOnly/w:noWrap"
+like = "w:CT_OnOff/w:b"
+
+[[base_type]]
+type = "w:CT_OnOffOnly/w:tcFitText"
+like = "w:CT_OnOff/w:b"
+
+[[base_type]]
+type = "w:CT_OnOffOnly/w:hideMark"
+like = "w:CT_OnOff/w:b"
+
+[[base_type]]
+type = "w:CT_OnOffOnly/w:noResizeAllowed"
+like = "w:CT_OnOff/w:b"
+
+[[base_type]]
+type = "w:CT_OnOffOnly/w:linkedToFile"
+like = "w:CT_OnOff/w:b"
+
+[[base_type]]
+type = "w:CT_OnOffOnly/w:noBorder"
+like = "w:CT_OnOff/w:b"
+
+[[base_type]]
+type = "w:CT_OnOffOnly/w:flatBorders"
+like = "w:CT_OnOff/w:b"
+
+[[base_type]]
+type = "w:CT_OnOffOnly/w:autoRedefine"
+like = "w:CT_OnOff/w:b"
+
+[[base_type]]
+type = "w:CT_OnOffOnly/w:semiHidden"
+like = "w:CT_OnOff/w:b"
+
+[[base_type]]
+type = "w:CT_OnOffOnly/w:unhideWhenUsed"
+like = "w:CT_OnOff/w:b"
+
+[[base_type]]
+type = "w:CT_OnOffOnly/w:qFormat"
+like = "w:CT_OnOff/w:b"
+
+[[base_type]]
+type = "w:CT_OnOffOnly/w:locked"
+like = "w:CT_OnOff/w:b"
+
+[[base_type]]
+type = "w:CT_OnOffOnly/w:personal"
+like = "w:CT_OnOff/w:b"
+
+[[base_type]]
+type = "w:CT_OnOffOnly/w:personalCompose"
+like = "w:CT_OnOff/w:b"
+
+[[base_type]]
+type = "w:CT_OnOffOnly/w:personalReply"
+like = "w:CT_OnOff/w:b"
+
 # 4. ECMA-376 names the attribute `filled` (vml-main.xsd, AG_Fill). The data
 # spells it `fill`, which no schema declares.
 [[attribute]]

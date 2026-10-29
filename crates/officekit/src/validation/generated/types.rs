@@ -346,7 +346,7 @@
 //   bf519385b6d23eb8b28cd78f23c63a7fa7d6dd7f48bb7de09b8e36ad6e22588e  inputs/open-xml-sdk/data/parts/WorksheetThreadedCommentsPart.json
 //   ee0ae0ea09db0cdfae1bc11eef04ea2ff123c8dbdd548e7feec91b14689565f5  inputs/open-xml-sdk/data/parts/XmlSignaturePart.json
 //   e26c4528f8340924ff27391d34681ecde1f597fc5ce3dbf2d354edc9c6071a52  crates/xtask/data/part_roots.toml
-//   d21a1b16172e3389c832d1f0b15a6900c55e600ed67cd1648b13d11eff8dda35  crates/xtask/data/sdk_corrections.toml
+//   92508a0afe203d4dfe44c5479fe3e7c60269fa916c02b6b9748bfc53af1487da  crates/xtask/data/sdk_corrections.toml
 //   dff6adee70b19bb1f9b56e50e9cc20316298c14255ec7e2d6cb0efe795318af0  crates/xtask/data/simple_types.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
@@ -31715,7 +31715,7 @@ pub static SCHEMA_TYPES: &[SchemaType] = &[
         versions: Versions(0b11_1111),
     },
     SchemaType {
-        attributes: ATTRIBUTES_866,
+        attributes: ATTRIBUTES_865,
         children: &[],
         name: "w:CT_OnOffOnly/w:autoRedefine",
         particles: PARTICLES_1,
@@ -31731,7 +31731,7 @@ pub static SCHEMA_TYPES: &[SchemaType] = &[
         versions: Versions(0b11_1111),
     },
     SchemaType {
-        attributes: ATTRIBUTES_866,
+        attributes: ATTRIBUTES_865,
         children: &[],
         name: "w:CT_OnOffOnly/w:cantSplit",
         particles: PARTICLES_1,
@@ -31739,7 +31739,7 @@ pub static SCHEMA_TYPES: &[SchemaType] = &[
         versions: Versions(0b11_1111),
     },
     SchemaType {
-        attributes: ATTRIBUTES_866,
+        attributes: ATTRIBUTES_865,
         children: &[],
         name: "w:CT_OnOffOnly/w:flatBorders",
         particles: PARTICLES_1,
@@ -31747,7 +31747,7 @@ pub static SCHEMA_TYPES: &[SchemaType] = &[
         versions: Versions(0b11_1111),
     },
     SchemaType {
-        attributes: ATTRIBUTES_866,
+        attributes: ATTRIBUTES_865,
         children: &[],
         name: "w:CT_OnOffOnly/w:hidden",
         particles: PARTICLES_1,
@@ -31755,7 +31755,7 @@ pub static SCHEMA_TYPES: &[SchemaType] = &[
         versions: Versions(0b11_1111),
     },
     SchemaType {
-        attributes: ATTRIBUTES_866,
+        attributes: ATTRIBUTES_865,
         children: &[],
         name: "w:CT_OnOffOnly/w:hideMark",
         particles: PARTICLES_1,
@@ -31763,7 +31763,7 @@ pub static SCHEMA_TYPES: &[SchemaType] = &[
         versions: Versions(0b11_1111),
     },
     SchemaType {
-        attributes: ATTRIBUTES_866,
+        attributes: ATTRIBUTES_865,
         children: &[],
         name: "w:CT_OnOffOnly/w:linkedToFile",
         particles: PARTICLES_1,
@@ -31771,7 +31771,7 @@ pub static SCHEMA_TYPES: &[SchemaType] = &[
         versions: Versions(0b11_1111),
     },
     SchemaType {
-        attributes: ATTRIBUTES_866,
+        attributes: ATTRIBUTES_865,
         children: &[],
         name: "w:CT_OnOffOnly/w:locked",
         particles: PARTICLES_1,
@@ -31779,7 +31779,7 @@ pub static SCHEMA_TYPES: &[SchemaType] = &[
         versions: Versions(0b11_1111),
     },
     SchemaType {
-        attributes: ATTRIBUTES_866,
+        attributes: ATTRIBUTES_865,
         children: &[],
         name: "w:CT_OnOffOnly/w:noBorder",
         particles: PARTICLES_1,
@@ -31787,7 +31787,7 @@ pub static SCHEMA_TYPES: &[SchemaType] = &[
         versions: Versions(0b11_1111),
     },
     SchemaType {
-        attributes: ATTRIBUTES_866,
+        attributes: ATTRIBUTES_865,
         children: &[],
         name: "w:CT_OnOffOnly/w:noResizeAllowed",
         particles: PARTICLES_1,
@@ -31795,7 +31795,7 @@ pub static SCHEMA_TYPES: &[SchemaType] = &[
         versions: Versions(0b11_1111),
     },
     SchemaType {
-        attributes: ATTRIBUTES_866,
+        attributes: ATTRIBUTES_865,
         children: &[],
         name: "w:CT_OnOffOnly/w:noWrap",
         particles: PARTICLES_1,
@@ -31803,7 +31803,7 @@ pub static SCHEMA_TYPES: &[SchemaType] = &[
         versions: Versions(0b11_1111),
     },
     SchemaType {
-        attributes: ATTRIBUTES_866,
+        attributes: ATTRIBUTES_865,
         children: &[],
         name: "w:CT_OnOffOnly/w:personal",
         particles: PARTICLES_1,
@@ -31811,7 +31811,7 @@ pub static SCHEMA_TYPES: &[SchemaType] = &[
         versions: Versions(0b11_1111),
     },
     SchemaType {
-        attributes: ATTRIBUTES_866,
+        attributes: ATTRIBUTES_865,
         children: &[],
         name: "w:CT_OnOffOnly/w:personalCompose",
         particles: PARTICLES_1,
@@ -31819,7 +31819,7 @@ pub static SCHEMA_TYPES: &[SchemaType] = &[
         versions: Versions(0b11_1111),
     },
     SchemaType {
-        attributes: ATTRIBUTES_866,
+        attributes: ATTRIBUTES_865,
         children: &[],
         name: "w:CT_OnOffOnly/w:personalReply",
         particles: PARTICLES_1,
@@ -31827,7 +31827,7 @@ pub static SCHEMA_TYPES: &[SchemaType] = &[
         versions: Versions(0b11_1111),
     },
     SchemaType {
-        attributes: ATTRIBUTES_866,
+        attributes: ATTRIBUTES_865,
         children: &[],
         name: "w:CT_OnOffOnly/w:qFormat",
         particles: PARTICLES_1,
@@ -31835,7 +31835,7 @@ pub static SCHEMA_TYPES: &[SchemaType] = &[
         versions: Versions(0b11_1111),
     },
     SchemaType {
-        attributes: ATTRIBUTES_866,
+        attributes: ATTRIBUTES_865,
         children: &[],
         name: "w:CT_OnOffOnly/w:semiHidden",
         particles: PARTICLES_1,
@@ -31843,7 +31843,7 @@ pub static SCHEMA_TYPES: &[SchemaType] = &[
         versions: Versions(0b11_1111),
     },
     SchemaType {
-        attributes: ATTRIBUTES_866,
+        attributes: ATTRIBUTES_865,
         children: &[],
         name: "w:CT_OnOffOnly/w:tblHeader",
         particles: PARTICLES_1,
@@ -31851,7 +31851,7 @@ pub static SCHEMA_TYPES: &[SchemaType] = &[
         versions: Versions(0b11_1111),
     },
     SchemaType {
-        attributes: ATTRIBUTES_866,
+        attributes: ATTRIBUTES_865,
         children: &[],
         name: "w:CT_OnOffOnly/w:tcFitText",
         particles: PARTICLES_1,
@@ -31859,7 +31859,7 @@ pub static SCHEMA_TYPES: &[SchemaType] = &[
         versions: Versions(0b11_1111),
     },
     SchemaType {
-        attributes: ATTRIBUTES_866,
+        attributes: ATTRIBUTES_865,
         children: &[],
         name: "w:CT_OnOffOnly/w:unhideWhenUsed",
         particles: PARTICLES_1,
