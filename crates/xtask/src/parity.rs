@@ -380,6 +380,13 @@ pub const DIVERGENCES: &[Divergence] = &[
         reason: SMART_TAG_SETTINGS,
         targets: ALL_TARGETS,
     },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("wordml:txbxContent'"),
+        path: &[(WORDPROCESSING_SHAPE, "txbx")],
+        reason: STRICT_TEXT_BOX,
+        targets: ALL_TARGETS,
+    },
 ];
 
 const ALL_TARGETS: &[&str] = &[
@@ -413,10 +420,16 @@ const SMART_TAG: &str = "SDK 3.5.1 leaves out w:smartTag and w:smartTagType; ECM
 const SMART_TAG_SETTINGS: &str = "SDK 3.5.1 leaves out w:doNotEmbedSmartTags and \
     w:saveSmartTagsAsXml; ECMA-376 declares them in CT_Settings and CT_WebSettings";
 
+const STRICT_TEXT_BOX: &str = "SDK 3.5.1 gives wps:txbx only w:txbxContent; Microsoft documents \
+    wne:txbxContent in its place in Strict ([MS-ODRAWXML] 2.13.3.2, CT_TextboxInfo)";
+
 const TABLE_JUSTIFICATION: &str = "SDK 3.5.1 gives the w:jc of a table's properties the values \
     left, center and right; ECMA-376 types it CT_JcTable, whose val is ST_JcTable, with start and end";
 
 const VML: &str = "urn:schemas-microsoft-com:vml";
+
+const WORDPROCESSING_SHAPE: &str =
+    "http://schemas.microsoft.com/office/word/2010/wordprocessingShape";
 
 const WORD: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 

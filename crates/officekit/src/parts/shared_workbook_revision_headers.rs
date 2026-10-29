@@ -337,7 +337,7 @@
 //   faa0956ead6fa73f20a3ea60eec008389b059f72512d83029c27109a69a87e0f  crates/xtask/data/enum_names.toml
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 //   e26c4528f8340924ff27391d34681ecde1f597fc5ce3dbf2d354edc9c6071a52  crates/xtask/data/part_roots.toml
-//   58dd2ff5cd660a3ca0d8c0f6ef94fe7c32af9d938c11e29ced708e32923ce3dc  crates/xtask/data/sdk_corrections.toml
+//   61606e119147b2b1aeac979a7bd24768b649ba60df2ad2478ad9531fb84a4d8f  crates/xtask/data/sdk_corrections.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 //! The Shared Workbook Revision Headers Part, defined in ECMA-376 Part 1, section 12.3.16, and

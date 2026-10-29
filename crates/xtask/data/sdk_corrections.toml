@@ -164,3 +164,12 @@ parent = "w:CT_Settings/w:settings"
 type = "w:CT_OnOff/w:saveSmartTagsAsXml"
 like = "w:CT_OnOff/w:b"
 parent = "w:CT_WebSettings/w:webSettings"
+
+# 8. Microsoft documents wne:txbxContent in place of w:txbxContent in Strict
+# ([MS-ODRAWXML] 2.13.3.2, CT_TextboxInfo; [MS-OI29500] 2.1.1779). The data
+# names only w:txbxContent in wps:txbx. wne:txbxContent takes its type.
+[[alternative]]
+type = "wne:CT_TxbxContent/wne:txbxContent"
+like = "w:CT_TxbxContent/w:txbxContent"
+parent = "wps:CT_TextboxInfo/wps:txbx"
+beside = "w:CT_TxbxContent/w:txbxContent"

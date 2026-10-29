@@ -66,6 +66,8 @@ const VERSIONS: [OfficeVersion; 6] = [
     OfficeVersion::Microsoft365,
 ];
 const WORD_NAMESPACES: &str = r#"xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:v="urn:schemas-microsoft-com:vml""#;
+const WNE: &str = "http://schemas.microsoft.com/office/word/2006/wordml";
+const WPS: &str = "http://schemas.microsoft.com/office/word/2010/wordprocessingShape";
 const UNKNOWN: &str = "http://example.com/relationships/unknown";
 
 /// A Word document related by `office_document` whose main part relates to
@@ -222,6 +224,15 @@ fn table_document(table_properties: &str) -> Package {
     word_document(
         "",
         &format!("<w:tbl><w:tblPr>{table_properties}</w:tblPr><w:tblGrid/></w:tbl>"),
+    )
+}
+
+fn text_box(content: &str) -> Package {
+    word_document(
+        "",
+        &format!(
+            r#"<w:p><w:r><w:drawing><wp:inline xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"><wp:extent cx="100" cy="100"/><wp:docPr id="1" name="Box"/><a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><a:graphicData uri="{WPS}"><wps:wsp xmlns:wps="{WPS}"><wps:cNvSpPr txBox="1"/><wps:spPr/><wps:txbx>{content}</wps:txbx><wps:bodyPr/></wps:wsp></a:graphicData></a:graphic></wp:inline></w:drawing></w:r></w:p>"#
+        ),
     )
 }
 
@@ -579,4 +590,30 @@ fn a_compatibility_setting_accepts_a_name_newer_than_the_target() {
         r#"<w:compat><w:compatSetting w:name="useWord2013TrackBottomHyphenation" w:uri="http://schemas.microsoft.com/office/word" w:val="1"/></w:compat>"#,
     );
     accepted_at_every_version(&package, "w:compatSetting");
+}
+
+#[test]
+fn a_text_box_accepts_wne_txbx_content_and_w_txbx_content() {
+    accepted_at_every_version(
+        &text_box(&format!(
+            r#"<wne:txbxContent xmlns:wne="{WNE}"><w:p/></wne:txbxContent>"#
+        )),
+        "txbxContent",
+    );
+    accepted_at_every_version(
+        &text_box("<w:txbxContent><w:p/></w:txbxContent>"),
+        "txbxContent",
+    );
+}
+
+#[test]
+fn wne_txbx_content_outside_a_text_box_is_refused() {
+    let package = word_document(
+        "",
+        &format!(r#"<wne:txbxContent xmlns:wne="{WNE}"><w:p/></wne:txbxContent>"#),
+    );
+    assert_eq!(
+        errors_at(&package, OfficeVersion::Microsoft365, "wne:txbxContent").len(),
+        1
+    );
 }

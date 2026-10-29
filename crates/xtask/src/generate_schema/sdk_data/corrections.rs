@@ -3,6 +3,7 @@
 
 mod standard;
 
+use core::mem;
 use core::slice;
 
 use anyhow::{Context as _, Result, bail};
@@ -64,6 +65,15 @@ struct Element {
     type_name: String,
 }
 
+/// One element the data leaves out of a parent's content, which stands where
+/// another element of the same type stands.
+struct Alternative {
+    beside: String,
+    like: String,
+    parent: String,
+    type_name: String,
+}
+
 /// Apply every `[[attribute]]` row of the table of corrections to `data`.
 pub(super) fn apply_attributes(data: &mut SdkData, text: &str) -> Result<()> {
     let table: toml::Table = text
@@ -112,6 +122,10 @@ pub(super) fn apply(data: &mut SdkData, text: &str, standard: &SchemaSet) -> Res
     }
     for row in elements(&table)? {
         add_element(data, standard, &row)
+            .with_context(|| format!("in the correction adding `{}`", row.type_name))?;
+    }
+    for row in alternatives(&table)? {
+        add_alternative(data, &row)
             .with_context(|| format!("in the correction adding `{}`", row.type_name))?;
     }
     Ok(())
@@ -273,6 +287,79 @@ fn add_element(data: &mut SdkData, standard: &SchemaSet, row: &Element) -> Resul
         slice::from_ref(&row.type_name),
         (0, Some(1)),
     )
+}
+
+fn add_alternative(data: &mut SdkData, row: &Alternative) -> Result<()> {
+    if data.types.contains_key(&row.type_name) {
+        bail!("the data already has `{}`", row.type_name);
+    }
+    let mut built = known(data, &row.like)?.clone();
+    built.name.clone_from(&row.type_name);
+    let parent = data
+        .types
+        .get_mut(&row.parent)
+        .with_context(|| format!("the data has no `{}`", row.parent))?;
+    let placed = parent
+        .particle
+        .as_mut()
+        .is_some_and(|particle| make_choice(particle, &row.beside, &row.type_name));
+    if !placed {
+        bail!("`{}` does not hold `{}`", row.parent, row.beside);
+    }
+    parent.children.push(row.type_name.clone());
+    data.types.insert(row.type_name.clone(), built);
+    Ok(())
+}
+
+/// Replace the first element item named `beside` with a choice of it and
+/// `alternative`, the choice taking the item's occurrences.
+fn make_choice(particle: &mut DataParticle, beside: &str, alternative: &str) -> bool {
+    let Some(position) = particle
+        .items
+        .iter()
+        .position(|item| item.name.as_deref() == Some(beside))
+    else {
+        return particle
+            .items
+            .iter_mut()
+            .any(|item| make_choice(item, beside, alternative));
+    };
+    let item = &mut particle.items[position];
+    let mut first = item.clone();
+    first.occurs.clear();
+    let second = DataParticle {
+        initial_version: item.initial_version,
+        items: Vec::new(),
+        kind: None,
+        name: Some(alternative.to_owned()),
+        namespace: None,
+        occurs: Vec::new(),
+        require_filter: false,
+    };
+    *item = DataParticle {
+        initial_version: None,
+        items: vec![first, second],
+        kind: Some("Choice".to_owned()),
+        name: None,
+        namespace: None,
+        occurs: mem::take(&mut item.occurs),
+        require_filter: false,
+    };
+    true
+}
+
+fn alternatives(table: &toml::Table) -> Result<Vec<Alternative>> {
+    rows(table, "alternative")?
+        .into_iter()
+        .map(|row| {
+            Ok(Alternative {
+                beside: text_field(row, "beside")?,
+                like: text_field(row, "like")?,
+                parent: text_field(row, "parent")?,
+                type_name: text_field(row, "type")?,
+            })
+        })
+        .collect()
 }
 
 fn elements(table: &toml::Table) -> Result<Vec<Element>> {

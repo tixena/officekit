@@ -346,7 +346,7 @@
 //   bf519385b6d23eb8b28cd78f23c63a7fa7d6dd7f48bb7de09b8e36ad6e22588e  inputs/open-xml-sdk/data/parts/WorksheetThreadedCommentsPart.json
 //   ee0ae0ea09db0cdfae1bc11eef04ea2ff123c8dbdd548e7feec91b14689565f5  inputs/open-xml-sdk/data/parts/XmlSignaturePart.json
 //   e26c4528f8340924ff27391d34681ecde1f597fc5ce3dbf2d354edc9c6071a52  crates/xtask/data/part_roots.toml
-//   58dd2ff5cd660a3ca0d8c0f6ef94fe7c32af9d938c11e29ced708e32923ce3dc  crates/xtask/data/sdk_corrections.toml
+//   61606e119147b2b1aeac979a7bd24768b649ba60df2ad2478ad9531fb84a4d8f  crates/xtask/data/sdk_corrections.toml
 //   dff6adee70b19bb1f9b56e50e9cc20316298c14255ec7e2d6cb0efe795318af0  crates/xtask/data/simple_types.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)

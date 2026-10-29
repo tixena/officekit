@@ -131,6 +131,14 @@ like = "w:CT_OnOff/w:bold"
 parent = "w:CT_Settings/w:settings"
 "#;
 
+const ALTERNATIVE_ROW: &str = r#"
+[[alternative]]
+type = "w:CT_OnOff/w:alt"
+like = "w:CT_OnOff/w:bold"
+parent = "w:CT_Settings/w:settings"
+beside = "w:CT_Setting/w:setting"
+"#;
+
 const STANDARD_ROW: &str = r#"
 [[from_standard]]
 types = ["w:CT_Tag/w:tag", "w:CT_TagPr/w:tagPr", "w:CT_TagType/w:tagType"]
@@ -493,6 +501,57 @@ fn an_element_row_that_names_what_the_data_or_the_standard_lacks_stops_the_gener
         let mut data = read_word();
         assert!(
             data.correct(&ELEMENT_ROW.replace(from, to), &standard())
+                .is_err(),
+            "{to}"
+        );
+    }
+}
+
+#[test]
+fn an_alternative_row_puts_the_type_in_a_choice_with_the_item_it_stands_beside() {
+    let mut data = read_word();
+    data.correct(ALTERNATIVE_ROW, &standard()).unwrap();
+
+    let alt = &data.types["w:CT_OnOff/w:alt"];
+    assert_eq!(alt.name, "w:CT_OnOff/w:alt");
+    assert_eq!(alt.attributes, data.types["w:CT_OnOff/w:bold"].attributes);
+
+    let settings = &data.types["w:CT_Settings/w:settings"];
+    assert_eq!(settings.children.last().unwrap(), "w:CT_OnOff/w:alt");
+    let items = &settings.particle.as_ref().unwrap().items;
+    assert_eq!(items[0].name.as_deref(), Some("w:CT_OnOff/w:bold"));
+    let choice = &items[1];
+    assert_eq!(choice.kind.as_deref(), Some("Choice"));
+    assert_eq!(choice.occurs[0].max, 1);
+    let names: Vec<_> = choice
+        .items
+        .iter()
+        .map(|i| i.name.as_deref().unwrap())
+        .collect();
+    assert_eq!(names, ["w:CT_Setting/w:setting", "w:CT_OnOff/w:alt"]);
+    assert!(choice.items.iter().all(|item| item.occurs.is_empty()));
+}
+
+#[test]
+fn an_alternative_row_that_names_what_the_data_lacks_stops_the_generator() {
+    for (from, to) in [
+        ("w:CT_OnOff/w:alt", "w:CT_OnOff/w:bold"),
+        (
+            "like = \"w:CT_OnOff/w:bold\"",
+            "like = \"w:CT_Missing/w:bold\"",
+        ),
+        (
+            "parent = \"w:CT_Settings/w:settings\"",
+            "parent = \"w:CT_Missing/w:settings\"",
+        ),
+        (
+            "beside = \"w:CT_Setting/w:setting\"",
+            "beside = \"w:CT_Missing/w:setting\"",
+        ),
+    ] {
+        let mut data = read_word();
+        assert!(
+            data.correct(&ALTERNATIVE_ROW.replace(from, to), &standard())
                 .is_err(),
             "{to}"
         );
