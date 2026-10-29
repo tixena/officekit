@@ -92,7 +92,7 @@ fn a_required_child_missing_is_missing_with_what_is_expected() {
 
 #[test]
 fn a_child_the_parent_does_not_declare_is_invalid() {
-    let found = mismatch("w:CT_P/w:p", &["pPr", "smartTag"]);
+    let found = mismatch("w:CT_P/w:p", &["pPr", "tbl"]);
     assert_eq!(
         found.map(|(child, code, _)| (child, code)),
         Some((Some(1), ErrorCode::InvalidChild))
