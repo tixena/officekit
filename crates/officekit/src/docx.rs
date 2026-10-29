@@ -33,6 +33,8 @@ use os_shim::WriteMode;
 use crate::compact::{self, Comments};
 use crate::file;
 use crate::new_parts;
+use crate::validation::fix::{Fix, Validation};
+use crate::validation::validator::Validator;
 
 /// A `.docx`-family file: its package, its main document part, and the class and kind they give.
 ///
@@ -584,5 +586,18 @@ impl Docx {
             &mut |_, _| Ok(false),
         )?;
         Ok((bytes, Vec::new()))
+    }
+
+    /// Validation of the file's package by `validator`, after the repairs `fix` names.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`Validator::validate_fixing`].
+    pub fn validate(
+        &mut self,
+        validator: &Validator,
+        fix: Fix,
+    ) -> Result<Validation, PackageError> {
+        validator.validate_fixing(self.package_mut(), fix)
     }
 }

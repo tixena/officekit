@@ -12,6 +12,8 @@ use officekit_xml::packaging::package::{MainPart, OpenOptions, Package};
 use crate::docx::Docx;
 use crate::file;
 use crate::pptx::Pptx;
+use crate::validation::fix::{Fix, Validation};
+use crate::validation::validator::Validator;
 use crate::xlsx::Xlsx;
 
 /// A Word, Excel or `PowerPoint` file, whichever its main part names.
@@ -124,6 +126,23 @@ assert!(matches!(file, OfficeFile::Word(_)));
             Self::Word(docx) => docx.to_bytes_transitional(),
             Self::Excel(xlsx) => xlsx.to_bytes_transitional(),
             Self::PowerPoint(pptx) => pptx.to_bytes_transitional(),
+        }
+    }
+
+    /// Validation of the file's package by `validator`, after the repairs `fix` names.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`Validator::validate_fixing`].
+    pub fn validate(
+        &mut self,
+        validator: &Validator,
+        fix: Fix,
+    ) -> Result<Validation, PackageError> {
+        match self {
+            Self::Excel(xlsx) => xlsx.validate(validator, fix),
+            Self::PowerPoint(pptx) => pptx.validate(validator, fix),
+            Self::Word(docx) => docx.validate(validator, fix),
         }
     }
 }

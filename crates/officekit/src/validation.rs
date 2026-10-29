@@ -87,6 +87,7 @@
 //! ```
 
 pub mod error;
+pub mod fix;
 pub mod generated;
 pub mod package;
 pub mod schema;

@@ -10,11 +10,13 @@ use std::path::Path;
 
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::name::OfficeVersion;
+use officekit_xml::packaging::error::PackageError;
 use officekit_xml::packaging::package::{OpenOptions, Package};
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::{RelationshipType, Target};
 
 use super::error::{ErrorCode, Errors, ValidationError};
+use super::fix::{Fix, Validation, fix_package};
 use super::generated::PART_RULES;
 use super::package;
 use super::schema::types::{ChildKind, PartRule};
@@ -133,6 +135,23 @@ impl Validator {
             }
         }
         errors.into_vec()
+    }
+
+    /// The fix pass `fix` names, then [`Validator::validate`] on the changed package.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`fix_package`].
+    pub fn validate_fixing(
+        &self,
+        package: &mut Package,
+        fix: Fix,
+    ) -> Result<Validation, PackageError> {
+        let fixed = fix_package(package, self.version, fix)?;
+        Ok(Validation {
+            errors: self.validate(package),
+            fixed,
+        })
     }
 
     /// The Office release the validator checks against.

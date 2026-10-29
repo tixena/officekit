@@ -265,18 +265,9 @@ impl ValidationError {
     /// `/w:document[1]/w:body[1]`, with the file's prefixes.
     #[must_use]
     pub fn path_text(&self) -> String {
-        self.path.as_ref().map_or_else(String::new, |steps| {
-            steps
-                .iter()
-                .map(|step| {
-                    if step.prefix.is_empty() {
-                        format!("/{}[{}]", step.local, step.index)
-                    } else {
-                        format!("/{}:{}[{}]", step.prefix, step.local, step.index)
-                    }
-                })
-                .collect()
-        })
+        self.path
+            .as_ref()
+            .map_or_else(String::new, |steps| steps_text(steps))
     }
 
     /// What `officekit validate --json` prints for one error.
@@ -339,4 +330,18 @@ fn fill(template: &str, arguments: &[(&str, &str)]) -> String {
     }
     message.push_str(rest);
     message
+}
+
+/// The steps written as `/w:document[1]/w:body[1]`, with the file's prefixes.
+pub(crate) fn steps_text(steps: &[Step]) -> String {
+    steps
+        .iter()
+        .map(|step| {
+            if step.prefix.is_empty() {
+                format!("/{}[{}]", step.local, step.index)
+            } else {
+                format!("/{}:{}[{}]", step.prefix, step.local, step.index)
+            }
+        })
+        .collect()
 }
