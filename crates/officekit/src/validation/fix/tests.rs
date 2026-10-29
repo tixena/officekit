@@ -1,8 +1,11 @@
 use officekit_xml::name::OfficeVersion;
-use officekit_xml::packaging::package::{OpenOptions, Package};
+#[cfg(feature = "transitional")]
+use officekit_xml::packaging::package::OpenOptions;
+use officekit_xml::packaging::package::Package;
 use officekit_xml::packaging::part_name::PartName;
 
 use super::{Fix, fix_package};
+#[cfg(feature = "transitional")]
 use crate::docx::Docx;
 use crate::validation::error::{ErrorCode, ValidationError};
 use crate::validation::validator::{Validator, reachable_parts};
@@ -155,6 +158,7 @@ fn the_same_id_in_two_parts_is_not_renamed() {
     assert_eq!(fixed, Vec::new());
 }
 
+#[cfg(feature = "transitional")]
 #[test]
 fn off_changes_nothing() {
     let body = format!("{}{}", doc_pr("1"), doc_pr("1"));
