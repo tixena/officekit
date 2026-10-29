@@ -10,6 +10,8 @@ use anyhow::{Context as _, Result, bail};
 use os_shim::System;
 use serde_json::Value;
 
+use super::model::SchemaSet;
+
 #[cfg(test)]
 mod tests;
 
@@ -216,8 +218,8 @@ impl SdkData {
     ///
     /// Text that is not TOML, a row missing a field, or a row naming a type,
     /// a child or an attribute the data does not have.
-    pub fn correct(&mut self, text: &str) -> Result<()> {
-        corrections::apply(self, text)
+    pub fn correct(&mut self, text: &str, standard: &SchemaSet) -> Result<()> {
+        corrections::apply(self, text, standard)
     }
 
     /// The namespaces dated Office 2010 to Microsoft 365: those with types or

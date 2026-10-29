@@ -719,7 +719,7 @@ where
         .with_context(|| format!("cannot read {}", inputs.semantic_dump.display()))?;
     let dump: Value = serde_json::from_str(&dump_text)
         .with_context(|| format!("{} is not JSON", inputs.semantic_dump.display()))?;
-    let by_element = registrations(&emitted.data, &dump)?;
+    let by_element = registrations(&emitted.corrected, &dump)?;
     let mut read: Vec<PathBuf> = vec![inputs.sdk_data.join("namespaces.json")];
     let mut schemas: Vec<PathBuf> = system
         .read_dir(&inputs.sdk_data.join("schemas"))
@@ -922,7 +922,7 @@ fn render_table(
     by_element: &BTreeMap<Name, Registered>,
 ) -> Result<(String, Summary)> {
     let uris: BTreeMap<&str, &str> = emitted
-        .data
+        .corrected
         .namespaces
         .iter()
         .map(|namespace| (namespace.prefix.as_str(), namespace.uri.as_str()))
@@ -938,7 +938,7 @@ fn render_table(
     let mut classes: BTreeMap<&Name, usize> = BTreeMap::new();
     let mut rows = Vec::new();
     for (type_id, (name, type_row)) in emitted
-        .data
+        .corrected
         .types
         .keys()
         .zip(&emitted.tables.types)

@@ -346,7 +346,7 @@
 //   bf519385b6d23eb8b28cd78f23c63a7fa7d6dd7f48bb7de09b8e36ad6e22588e  inputs/open-xml-sdk/data/parts/WorksheetThreadedCommentsPart.json
 //   ee0ae0ea09db0cdfae1bc11eef04ea2ff123c8dbdd548e7feec91b14689565f5  inputs/open-xml-sdk/data/parts/XmlSignaturePart.json
 //   e26c4528f8340924ff27391d34681ecde1f597fc5ce3dbf2d354edc9c6071a52  crates/xtask/data/part_roots.toml
-//   7dcd57a73f549fdc4866426c307e864fa8bc15d0957b675ad141cdb077e5ad80  crates/xtask/data/sdk_corrections.toml
+//   d21a1b16172e3389c832d1f0b15a6900c55e600ed67cd1648b13d11eff8dda35  crates/xtask/data/sdk_corrections.toml
 //   dff6adee70b19bb1f9b56e50e9cc20316298c14255ec7e2d6cb0efe795318af0  crates/xtask/data/simple_types.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
@@ -1190,7 +1190,7 @@ const ITEMS_31: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3227,
+        type_id: 3230,
     },
     Particle::Any {
         max: 1,
@@ -1213,7 +1213,7 @@ const ITEMS_32: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3227,
+        type_id: 3230,
     },
     Particle::Element {
         max: 1,
@@ -1241,7 +1241,7 @@ const ITEMS_33: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3227,
+        type_id: 3230,
     },
     Particle::Element {
         max: 1,
@@ -1274,7 +1274,7 @@ const ITEMS_34: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3227,
+        type_id: 3230,
     },
     Particle::Element {
         max: 1,
@@ -1289,7 +1289,7 @@ const ITEMS_34: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3224,
+        type_id: 3227,
     },
     Particle::Element {
         max: 1,
@@ -4400,7 +4400,7 @@ const ITEMS_152: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4180,
+        type_id: 4183,
     },
 ];
 
@@ -5512,7 +5512,7 @@ const ITEMS_194: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4180,
+        type_id: 4183,
     },
 ];
 
@@ -6769,7 +6769,7 @@ const PARTICLES_171: &[(Versions, Option<Particle>)] = &[
 const ITEMS_240: &[Particle] = &[Particle::Element {
     max: 1,
     min: 1,
-    type_id: 4122,
+    type_id: 4125,
 }];
 
 const PARTICLES_172: &[(Versions, Option<Particle>)] = &[(
@@ -6786,17 +6786,37 @@ const ITEMS_241: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4187,
+        type_id: 4190,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4185,
+        type_id: 4188,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4183,
+        type_id: 4186,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 4158,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 4162,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 4151,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 4189,
     },
     Particle::Element {
         max: 1,
@@ -6811,22 +6831,7 @@ const ITEMS_241: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4148,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 4186,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 4152,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 4156,
+        type_id: 4160,
     },
     Particle::Element {
         max: 1,
@@ -6836,27 +6841,22 @@ const ITEMS_241: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
+        type_id: 4161,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
         type_id: 4154,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4158,
+        type_id: 4156,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4151,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 4153,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 4130,
+        type_id: 4133,
     },
     Particle::Element {
         max: 1,
@@ -6871,22 +6871,22 @@ const ITEMS_241: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4129,
+        type_id: 4132,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4149,
+        type_id: 4152,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4131,
+        type_id: 4134,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4184,
+        type_id: 4187,
     },
     Particle::Element {
         max: 1,
@@ -6896,7 +6896,7 @@ const ITEMS_241: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4128,
+        type_id: 4131,
     },
     Particle::Element {
         max: 1,
@@ -6906,17 +6906,17 @@ const ITEMS_241: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4182,
+        type_id: 4185,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4181,
+        type_id: 4184,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4150,
+        type_id: 4153,
     },
 ];
 
@@ -7696,7 +7696,7 @@ const ITEMS_265: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4189,
+        type_id: 4192,
     },
     Particle::Element {
         max: 1,
@@ -7809,12 +7809,12 @@ const ITEMS_268: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4190,
+        type_id: 4193,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4188,
+        type_id: 4191,
     },
     Particle::Element {
         max: 1,
@@ -8117,7 +8117,7 @@ const PARTICLES_203: &[(Versions, Option<Particle>)] = &[
 const ITEMS_279: &[Particle] = &[Particle::Element {
     max: 1,
     min: 1,
-    type_id: 4189,
+    type_id: 4192,
 }];
 
 const PARTICLES_204: &[(Versions, Option<Particle>)] = &[
@@ -8145,7 +8145,7 @@ const ITEMS_280: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4188,
+        type_id: 4191,
     },
     Particle::Element {
         max: 1,
@@ -8292,7 +8292,7 @@ const ITEMS_284: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4260,
+        type_id: 4263,
     },
     Particle::Element {
         max: 1,
@@ -10182,7 +10182,7 @@ const ITEMS_342: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4193,
+        type_id: 4196,
     },
 ];
 
@@ -11527,7 +11527,7 @@ const ITEMS_391: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4191,
+        type_id: 4194,
     },
     Particle::Element {
         max: 1,
@@ -11678,7 +11678,7 @@ const ITEMS_397: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4191,
+        type_id: 4194,
     },
     Particle::Element {
         max: 1,
@@ -12924,7 +12924,7 @@ const ITEMS_437: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4191,
+        type_id: 4194,
     },
     Particle::Element {
         max: 1,
@@ -13358,7 +13358,7 @@ const ITEMS_452: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4192,
+        type_id: 4195,
     },
     Particle::Element {
         max: 1,
@@ -13650,12 +13650,12 @@ const ITEMS_460: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4119,
+        type_id: 4122,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4194,
+        type_id: 4197,
     },
 ];
 
@@ -13673,12 +13673,12 @@ const ITEMS_461: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4132,
+        type_id: 4135,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4120,
+        type_id: 4123,
     },
     Particle::Element {
         max: 0,
@@ -14254,12 +14254,7 @@ const ITEMS_485: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4195,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4196,
+        type_id: 4198,
     },
     Particle::Element {
         max: 1,
@@ -14269,12 +14264,17 @@ const ITEMS_485: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4198,
+        type_id: 4202,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4197,
+        type_id: 4201,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4200,
     },
 ];
 
@@ -14563,7 +14563,7 @@ const ITEMS_490: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4143,
+        type_id: 4146,
     },
     Particle::Element {
         max: 1,
@@ -14868,12 +14868,12 @@ const ITEMS_497: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4144,
+        type_id: 4147,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4261,
+        type_id: 4264,
     },
 ];
 
@@ -15097,7 +15097,7 @@ const PARTICLES_378: &[(Versions, Option<Particle>)] = &[
 const ITEMS_502: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
-    type_id: 4200,
+    type_id: 4203,
 }];
 
 const PARTICLES_379: &[(Versions, Option<Particle>)] = &[
@@ -15200,7 +15200,7 @@ const ITEMS_506: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4207,
+        type_id: 4210,
     },
     Particle::Element {
         max: 1,
@@ -15254,7 +15254,7 @@ const ITEMS_507: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4207,
+        type_id: 4210,
     },
     Particle::Element {
         max: 0,
@@ -15386,7 +15386,7 @@ const ITEMS_511: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4121,
+        type_id: 4124,
     },
     Particle::Element {
         max: 1,
@@ -15953,7 +15953,12 @@ const ITEMS_530: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4206,
+        type_id: 4209,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 4208,
     },
     Particle::Element {
         max: 1,
@@ -15963,22 +15968,17 @@ const ITEMS_530: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4202,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 4201,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
         type_id: 4204,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4203,
+        type_id: 4207,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 4206,
     },
 ];
 
@@ -16572,7 +16572,7 @@ const ITEMS_549: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4208,
+        type_id: 4211,
     },
 ];
 
@@ -16586,7 +16586,7 @@ const ITEMS_550: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4208,
+        type_id: 4211,
     },
 ];
 
@@ -20028,7 +20028,7 @@ const ITEMS_680: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3146,
+        type_id: 3149,
     },
     Particle::Element {
         max: 1,
@@ -20038,7 +20038,7 @@ const ITEMS_680: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3145,
+        type_id: 3148,
     },
     Particle::Element {
         max: 1,
@@ -20048,7 +20048,7 @@ const ITEMS_680: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3147,
+        type_id: 3150,
     },
     Particle::Element {
         max: 1,
@@ -20058,7 +20058,7 @@ const ITEMS_680: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3148,
+        type_id: 3151,
     },
     Particle::Element {
         max: 1,
@@ -20090,7 +20090,7 @@ const ITEMS_682: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3142,
+        type_id: 3145,
     },
     Particle::Element {
         max: 1,
@@ -20100,7 +20100,7 @@ const ITEMS_682: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3141,
+        type_id: 3144,
     },
     Particle::Element {
         max: 1,
@@ -20238,6 +20238,11 @@ const ITEMS_691: &[Particle] = &[Particle::Composite {
 }];
 
 const ITEMS_692: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3024,
+    },
     Particle::Element {
         max: 1,
         min: 1,
@@ -20534,22 +20539,22 @@ const ITEMS_710: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
+        type_id: 3131,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3129,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3130,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
         type_id: 3128,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3126,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3127,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3125,
     },
     Particle::Element {
         max: 1,
@@ -20619,7 +20624,7 @@ const ITEMS_710: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3075,
+        type_id: 3078,
     },
     Particle::Element {
         max: 1,
@@ -23186,22 +23191,22 @@ const ITEMS_848: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4211,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4209,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4210,
+        type_id: 4214,
     },
     Particle::Element {
         max: 1,
         min: 1,
         type_id: 4212,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4213,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4215,
     },
 ];
 
@@ -23245,7 +23250,7 @@ const ITEMS_850: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4213,
+        type_id: 4216,
     },
 ];
 
@@ -24017,12 +24022,12 @@ const ITEMS_872: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4122,
+        type_id: 4125,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4123,
+        type_id: 4126,
     },
     Particle::Element {
         max: 1,
@@ -24037,7 +24042,17 @@ const ITEMS_872: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4139,
+        type_id: 4142,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4182,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4163,
     },
     Particle::Element {
         max: 1,
@@ -24047,32 +24062,27 @@ const ITEMS_872: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4160,
+        type_id: 4164,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4176,
+        type_id: 4260,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4161,
+        type_id: 4271,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4257,
+        type_id: 4266,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4268,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4263,
+        type_id: 4270,
     },
     Particle::Element {
         max: 1,
@@ -24082,12 +24092,12 @@ const ITEMS_872: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4264,
+        type_id: 4150,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4147,
+        type_id: 4148,
     },
     Particle::Element {
         max: 1,
@@ -24097,37 +24107,32 @@ const ITEMS_872: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4142,
+        type_id: 4222,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4219,
+        type_id: 4223,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4220,
+        type_id: 4221,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4218,
+        type_id: 4143,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4140,
+        type_id: 4144,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4141,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4135,
+        type_id: 4138,
     },
     Particle::Element {
         max: 1,
@@ -24142,22 +24147,22 @@ const ITEMS_872: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
+        type_id: 4130,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4128,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4129,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
         type_id: 4127,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4125,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4126,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4124,
     },
     Particle::Element {
         max: 1,
@@ -25938,7 +25943,7 @@ const ITEMS_939: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4215,
+        type_id: 4218,
     },
     Particle::Element {
         max: 1,
@@ -28782,7 +28787,7 @@ const PARTICLES_762: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1040: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 4214,
+    type_id: 4217,
 }];
 
 const PARTICLES_763: &[(Versions, Option<Particle>)] = &[(
@@ -29454,12 +29459,12 @@ const ITEMS_1066: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4216,
+        type_id: 4219,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4217,
+        type_id: 4220,
     },
 ];
 
@@ -30126,7 +30131,7 @@ const ITEMS_1084: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4269,
+        type_id: 4272,
     },
     Particle::Element {
         max: 1,
@@ -30291,7 +30296,7 @@ const ITEMS_1090: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4269,
+        type_id: 4272,
     },
 ];
 
@@ -30450,7 +30455,7 @@ const ITEMS_1096: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3162,
+        type_id: 3165,
     },
     Particle::Any {
         max: 1,
@@ -30478,47 +30483,52 @@ const ITEMS_1097: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4139,
+        type_id: 4142,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4179,
+        type_id: 4182,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4160,
+        type_id: 4163,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4161,
+        type_id: 4164,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4257,
+        type_id: 4260,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4268,
+        type_id: 4271,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4263,
+        type_id: 4266,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4264,
+        type_id: 4267,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4147,
+        type_id: 4150,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4148,
     },
     Particle::Element {
         max: 1,
@@ -30528,22 +30538,17 @@ const ITEMS_1097: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4142,
+        type_id: 4221,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4218,
+        type_id: 4143,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4140,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4135,
+        type_id: 4138,
     },
     Particle::Element {
         max: 1,
@@ -30586,12 +30591,12 @@ const ITEMS_1098: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4122,
+        type_id: 4125,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4123,
+        type_id: 4126,
     },
     Particle::Element {
         max: 1,
@@ -30606,7 +30611,17 @@ const ITEMS_1098: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4139,
+        type_id: 4142,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4182,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4163,
     },
     Particle::Element {
         max: 1,
@@ -30616,32 +30631,27 @@ const ITEMS_1098: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4160,
+        type_id: 4164,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4176,
+        type_id: 4260,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4161,
+        type_id: 4271,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4257,
+        type_id: 4266,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4268,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4263,
+        type_id: 4270,
     },
     Particle::Element {
         max: 1,
@@ -30651,12 +30661,12 @@ const ITEMS_1098: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4264,
+        type_id: 4150,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4147,
+        type_id: 4148,
     },
     Particle::Element {
         max: 1,
@@ -30666,37 +30676,32 @@ const ITEMS_1098: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4142,
+        type_id: 4222,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4219,
+        type_id: 4223,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4220,
+        type_id: 4221,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4218,
+        type_id: 4143,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4140,
+        type_id: 4144,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4141,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4135,
+        type_id: 4138,
     },
     Particle::Element {
         max: 1,
@@ -30711,22 +30716,22 @@ const ITEMS_1098: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
+        type_id: 4130,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4128,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4129,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
         type_id: 4127,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4125,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4126,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4124,
     },
     Particle::Element {
         max: 1,
@@ -30764,7 +30769,17 @@ const ITEMS_1099: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4139,
+        type_id: 4142,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4182,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4163,
     },
     Particle::Element {
         max: 1,
@@ -30774,72 +30789,62 @@ const ITEMS_1099: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4160,
+        type_id: 4260,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4176,
+        type_id: 4271,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4257,
+        type_id: 4266,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4268,
+        type_id: 4270,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4263,
+        type_id: 4150,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4267,
+        type_id: 4148,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4147,
+        type_id: 4222,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4145,
+        type_id: 4223,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4219,
+        type_id: 4221,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4220,
+        type_id: 4143,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4218,
+        type_id: 4144,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4140,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4141,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4135,
+        type_id: 4138,
     },
     Particle::Element {
         max: 1,
@@ -31443,7 +31448,7 @@ const ITEMS_1130: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3025,
+        type_id: 3028,
     },
     Particle::Element {
         max: 1,
@@ -31607,17 +31612,17 @@ const ITEMS_1135: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3058,
+        type_id: 3061,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3066,
     },
     Particle::Element {
         max: 1,
         min: 0,
         type_id: 3063,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3060,
     },
     Particle::Element {
         max: 9,
@@ -31801,7 +31806,7 @@ const ITEMS_1146: &[Particle] = &[
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 3079,
+        type_id: 3082,
     },
 ];
 
@@ -32424,7 +32429,7 @@ const ITEMS_1170: &[Particle] = &[
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 3116,
+        type_id: 3119,
     },
     Particle::Element {
         max: 1,
@@ -32479,12 +32484,12 @@ const ITEMS_1173: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3043,
+        type_id: 3046,
     },
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 3185,
+        type_id: 3188,
     },
 ];
 
@@ -32810,7 +32815,7 @@ const ITEMS_1187: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3041,
+        type_id: 3044,
     },
     Particle::Element {
         max: 1,
@@ -32838,7 +32843,7 @@ const ITEMS_1188: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3045,
+        type_id: 3048,
     },
     Particle::Element {
         max: 1,
@@ -32858,7 +32863,7 @@ const ITEMS_1188: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3033,
+        type_id: 3036,
     },
     Particle::Element {
         max: 1,
@@ -32989,12 +32994,12 @@ const ITEMS_1196: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3228,
+        type_id: 3231,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3230,
+        type_id: 3233,
     },
 ];
 
@@ -33155,12 +33160,12 @@ const ITEMS_1205: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3168,
+        type_id: 3171,
     },
     Particle::Element {
         max: 25,
         min: 0,
-        type_id: 3067,
+        type_id: 3070,
     },
 ];
 
@@ -33255,7 +33260,7 @@ const ITEMS_1208: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3066,
+        type_id: 3069,
     },
     Particle::Element {
         max: 1,
@@ -33265,7 +33270,7 @@ const ITEMS_1208: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3069,
+        type_id: 3072,
     },
 ];
 
@@ -33293,7 +33298,7 @@ const ITEMS_1209: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3153,
+        type_id: 3156,
     },
 ];
 
@@ -33311,7 +33316,7 @@ const ITEMS_1210: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3028,
+        type_id: 3031,
     },
     Particle::Element {
         max: 1,
@@ -33411,12 +33416,12 @@ const ITEMS_1213: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3046,
+        type_id: 3049,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3068,
+        type_id: 3071,
     },
     Particle::Element {
         max: 1,
@@ -33484,7 +33489,7 @@ const ITEMS_1216: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3046,
+        type_id: 3049,
     },
     Particle::Element {
         max: 1,
@@ -33518,7 +33523,7 @@ const ITEMS_1217: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3161,
+        type_id: 3164,
     },
     Particle::Element {
         max: 1,
@@ -33710,7 +33715,7 @@ const ITEMS_1225: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3061,
+        type_id: 3064,
     },
     Particle::Element {
         max: 1,
@@ -33783,12 +33788,12 @@ const ITEMS_1226: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3030,
+        type_id: 3033,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3044,
+        type_id: 3047,
     },
     Particle::Element {
         max: 1,
@@ -33813,12 +33818,12 @@ const ITEMS_1226: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3026,
+        type_id: 3029,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3039,
+        type_id: 3042,
     },
     Particle::Element {
         max: 1,
@@ -34041,12 +34046,12 @@ const ITEMS_1237: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3153,
+        type_id: 3156,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3150,
+        type_id: 3153,
     },
 ];
 
@@ -34233,12 +34238,12 @@ const ITEMS_1245: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3051,
+        type_id: 3054,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3047,
+        type_id: 3050,
     },
     Particle::Element {
         max: 1,
@@ -34248,7 +34253,7 @@ const ITEMS_1245: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3166,
+        type_id: 3169,
     },
     Particle::Element {
         max: 1,
@@ -34291,17 +34296,17 @@ const ITEMS_1246: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3041,
+        type_id: 3044,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3040,
+        type_id: 3043,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3167,
+        type_id: 3170,
     },
     Particle::Element {
         max: 1,
@@ -34395,7 +34400,7 @@ const PARTICLES_910: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1249: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 3042,
+    type_id: 3045,
 }];
 
 const ITEMS_1250: &[Particle] = &[Particle::Composite {
@@ -34454,7 +34459,7 @@ const ITEMS_1251: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3077,
+        type_id: 3080,
     },
     Particle::Element {
         max: 1,
@@ -34509,7 +34514,7 @@ const ITEMS_1251: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3023,
+        type_id: 3026,
     },
     Particle::Element {
         max: 1,
@@ -34539,17 +34544,17 @@ const ITEMS_1251: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3130,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3129,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
         type_id: 3133,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3132,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3136,
     },
     Particle::Element {
         max: 1,
@@ -34777,12 +34782,12 @@ const ITEMS_1266: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3140,
+        type_id: 3143,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3139,
+        type_id: 3142,
     },
 ];
 
@@ -34797,22 +34802,22 @@ const ITEMS_1268: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3150,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3149,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3151,
+        type_id: 3153,
     },
     Particle::Element {
         max: 1,
         min: 0,
         type_id: 3152,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3154,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3155,
     },
     Particle::Composite {
         items: ITEMS_1267,
@@ -34832,7 +34837,7 @@ const ITEMS_1269: &[Particle] = &[Particle::Composite {
 const ITEMS_1270: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 3062,
+    type_id: 3065,
 }];
 
 const ITEMS_1271: &[Particle] = &[Particle::Composite {
@@ -34941,7 +34946,7 @@ const ITEMS_1272: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3132,
+        type_id: 3135,
     },
     Particle::Element {
         max: 1,
@@ -34989,12 +34994,12 @@ const ITEMS_1276: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3164,
+        type_id: 3167,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3131,
+        type_id: 3134,
     },
     Particle::Element {
         max: 1,
@@ -35014,7 +35019,7 @@ const ITEMS_1276: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3178,
+        type_id: 3181,
     },
 ];
 
@@ -35370,7 +35375,7 @@ const PARTICLES_922: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1297: &[Particle] = &[Particle::Element {
     max: 1,
     min: 1,
-    type_id: 3034,
+    type_id: 3037,
 }];
 
 const PARTICLES_923: &[(Versions, Option<Particle>)] = &[(
@@ -35646,7 +35651,7 @@ const ITEMS_1315: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3167,
+        type_id: 3170,
     },
     Particle::Element {
         max: 1,
@@ -35685,12 +35690,12 @@ const ITEMS_1317: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3094,
+        type_id: 3097,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3134,
+        type_id: 3137,
     },
     Particle::Composite {
         items: ITEMS_1171,
@@ -35948,7 +35953,7 @@ const ITEMS_1326: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3031,
+        type_id: 3034,
     },
     Particle::Element {
         max: 1,
@@ -35981,12 +35986,12 @@ const ITEMS_1327: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3036,
+        type_id: 3039,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3035,
+        type_id: 3038,
     },
     Particle::Element {
         max: 1,
@@ -36103,7 +36108,7 @@ const ITEMS_1330: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3027,
+        type_id: 3030,
     },
     Particle::Element {
         max: 1,
@@ -36139,7 +36144,7 @@ const ITEMS_1330: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3048,
+        type_id: 3051,
     },
     Particle::Composite {
         items: ITEMS_1329,
@@ -36254,7 +36259,7 @@ const ITEMS_1333: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3027,
+        type_id: 3030,
     },
     Particle::Element {
         max: 1,
@@ -36290,7 +36295,7 @@ const ITEMS_1333: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3048,
+        type_id: 3051,
     },
     Particle::Element {
         max: 1,
@@ -36522,7 +36527,7 @@ const ITEMS_1339: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3179,
+        type_id: 3182,
     },
     Particle::Element {
         max: 1,
@@ -36537,7 +36542,7 @@ const ITEMS_1339: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3130,
+        type_id: 3133,
     },
     Particle::Element {
         max: 1,
@@ -36647,7 +36652,7 @@ const ITEMS_1342: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3179,
+        type_id: 3182,
     },
     Particle::Element {
         max: 1,
@@ -36662,7 +36667,7 @@ const ITEMS_1342: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3130,
+        type_id: 3133,
     },
     Particle::Element {
         max: 1,
@@ -36801,17 +36806,17 @@ const ITEMS_1349: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3183,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3181,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
         type_id: 3186,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3184,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3189,
     },
     Particle::Element {
         max: 1,
@@ -36906,7 +36911,7 @@ const ITEMS_1349: &[Particle] = &[
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 3184,
+        type_id: 3187,
     },
     Particle::Element {
         max: 1,
@@ -36931,12 +36936,12 @@ const ITEMS_1349: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3072,
+        type_id: 3075,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3073,
+        type_id: 3076,
     },
     Particle::Element {
         max: 1,
@@ -36951,7 +36956,7 @@ const ITEMS_1349: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3154,
+        type_id: 3157,
     },
     Particle::Element {
         max: 1,
@@ -37001,12 +37006,12 @@ const ITEMS_1349: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3176,
+        type_id: 3179,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3160,
+        type_id: 3163,
     },
     Particle::Element {
         max: 1,
@@ -37021,17 +37026,17 @@ const ITEMS_1349: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3172,
+        type_id: 3175,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3055,
+        type_id: 3058,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3056,
+        type_id: 3059,
     },
     Particle::Element {
         max: 1,
@@ -37056,22 +37061,22 @@ const ITEMS_1349: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3157,
+        type_id: 3160,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3159,
+        type_id: 3162,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3174,
+        type_id: 3177,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3175,
+        type_id: 3178,
     },
     Particle::Element {
         max: 1,
@@ -37081,12 +37086,12 @@ const ITEMS_1349: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3156,
+        type_id: 3159,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3158,
+        type_id: 3161,
     },
     Particle::Element {
         max: 1,
@@ -37226,7 +37231,7 @@ const ITEMS_1349: &[Particle] = &[
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 3029,
+        type_id: 3032,
     },
     Particle::Element {
         max: 1,
@@ -37264,6 +37269,11 @@ const ITEMS_1349: &[Particle] = &[
         type_id: 2956,
     },
     Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3025,
+    },
+    Particle::Element {
         max: 1,
         min: 0,
         type_id: 2302,
@@ -37276,12 +37286,12 @@ const ITEMS_1349: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3032,
+        type_id: 3035,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3038,
+        type_id: 3041,
     },
     Particle::Element {
         max: 1,
@@ -37309,17 +37319,17 @@ const ITEMS_1350: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3183,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3181,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
         type_id: 3186,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3184,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3189,
     },
     Particle::Element {
         max: 1,
@@ -37414,7 +37424,7 @@ const ITEMS_1350: &[Particle] = &[
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 3184,
+        type_id: 3187,
     },
     Particle::Element {
         max: 1,
@@ -37439,12 +37449,12 @@ const ITEMS_1350: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3072,
+        type_id: 3075,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3073,
+        type_id: 3076,
     },
     Particle::Element {
         max: 1,
@@ -37459,7 +37469,7 @@ const ITEMS_1350: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3154,
+        type_id: 3157,
     },
     Particle::Element {
         max: 1,
@@ -37509,12 +37519,12 @@ const ITEMS_1350: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3176,
+        type_id: 3179,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3160,
+        type_id: 3163,
     },
     Particle::Element {
         max: 1,
@@ -37529,17 +37539,17 @@ const ITEMS_1350: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3172,
+        type_id: 3175,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3055,
+        type_id: 3058,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3056,
+        type_id: 3059,
     },
     Particle::Element {
         max: 1,
@@ -37564,22 +37574,22 @@ const ITEMS_1350: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3157,
+        type_id: 3160,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3159,
+        type_id: 3162,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3174,
+        type_id: 3177,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3175,
+        type_id: 3178,
     },
     Particle::Element {
         max: 1,
@@ -37589,12 +37599,12 @@ const ITEMS_1350: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3156,
+        type_id: 3159,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3158,
+        type_id: 3161,
     },
     Particle::Element {
         max: 1,
@@ -37734,7 +37744,7 @@ const ITEMS_1350: &[Particle] = &[
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 3029,
+        type_id: 3032,
     },
     Particle::Element {
         max: 1,
@@ -37772,6 +37782,11 @@ const ITEMS_1350: &[Particle] = &[
         type_id: 2956,
     },
     Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3025,
+    },
+    Particle::Element {
         max: 1,
         min: 0,
         type_id: 2302,
@@ -37784,12 +37799,12 @@ const ITEMS_1350: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3032,
+        type_id: 3035,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3038,
+        type_id: 3041,
     },
     Particle::Element {
         max: 1,
@@ -37915,31 +37930,71 @@ const PARTICLES_958: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1354: &[Particle] = &[
+const ITEMS_1354: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3188,
+}];
+
+const PARTICLES_959: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1354,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1355: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3071,
+        type_id: 3023,
+    },
+    Particle::Composite {
+        items: ITEMS_1143,
+        kind: CompositeKind::Group,
+        max: 0,
+        min: 0,
+    },
+];
+
+const PARTICLES_960: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1355,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1356: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3074,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3053,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3054,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3059,
+        type_id: 3056,
     },
     Particle::Element {
         max: 1,
         min: 0,
         type_id: 3057,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3062,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3060,
     },
     Particle::Element {
         max: 1,
@@ -37954,7 +38009,7 @@ const ITEMS_1354: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3163,
+        type_id: 3166,
     },
     Particle::Element {
         max: 1,
@@ -38009,36 +38064,36 @@ const ITEMS_1354: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3097,
+        type_id: 3100,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3136,
+        type_id: 3139,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3122,
+        type_id: 3125,
     },
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 3099,
+        type_id: 3102,
     },
 ];
 
-const PARTICLES_959: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_961: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_1354,
+        items: ITEMS_1356,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1355: &[Particle] = &[
+const ITEMS_1357: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
@@ -38052,58 +38107,7 @@ const ITEMS_1355: &[Particle] = &[
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 3070,
-    },
-];
-
-const PARTICLES_960: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1355,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1356: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3076,
-}];
-
-const PARTICLES_961: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1356,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1357: &[Particle] = &[
-    Particle::Composite {
-        items: ITEMS_683,
-        kind: CompositeKind::Group,
-        max: 0,
-        min: 0,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3091,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3082,
-    },
-    Particle::Composite {
-        items: ITEMS_1175,
-        kind: CompositeKind::Group,
-        max: 0,
-        min: 0,
+        type_id: 3073,
     },
 ];
 
@@ -38117,7 +38121,58 @@ const PARTICLES_962: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1358: &[Particle] = &[
+const ITEMS_1358: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3079,
+}];
+
+const PARTICLES_963: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1358,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1359: &[Particle] = &[
+    Particle::Composite {
+        items: ITEMS_683,
+        kind: CompositeKind::Group,
+        max: 0,
+        min: 0,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3094,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3085,
+    },
+    Particle::Composite {
+        items: ITEMS_1175,
+        kind: CompositeKind::Group,
+        max: 0,
+        min: 0,
+    },
+];
+
+const PARTICLES_964: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1359,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1360: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
@@ -38160,118 +38215,85 @@ const ITEMS_1358: &[Particle] = &[
     },
 ];
 
-const PARTICLES_963: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_965: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_1358,
+        items: ITEMS_1360,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1359: &[Particle] = &[
+const ITEMS_1361: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3109,
+        type_id: 3112,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3113,
+        type_id: 3116,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3108,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3104,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3117,
     },
     Particle::Element {
         max: 1,
         min: 0,
         type_id: 3105,
     },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3101,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3114,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3102,
-    },
 ];
-
-const PARTICLES_964: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1359,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1360: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3085,
-}];
-
-const ITEMS_1361: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3084,
-}];
-
-const ITEMS_1362: &[Particle] = &[
-    Particle::Composite {
-        items: ITEMS_1360,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    },
-    Particle::Composite {
-        items: ITEMS_1361,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    },
-];
-
-const PARTICLES_965: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1362,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
 
 const PARTICLES_966: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_1360,
+        items: ITEMS_1361,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
+const ITEMS_1362: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3088,
+}];
+
 const ITEMS_1363: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 3083,
+    type_id: 3087,
 }];
 
-const ITEMS_1364: &[Particle] = &[Particle::Composite {
-    items: ITEMS_1363,
-    kind: CompositeKind::Sequence,
-    max: 1,
-    min: 1,
-}];
+const ITEMS_1364: &[Particle] = &[
+    Particle::Composite {
+        items: ITEMS_1362,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    },
+    Particle::Composite {
+        items: ITEMS_1363,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    },
+];
 
 const PARTICLES_967: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -38283,28 +38305,21 @@ const PARTICLES_967: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1365: &[Particle] = &[
-    Particle::Element {
+const PARTICLES_968: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1362,
+        kind: CompositeKind::Sequence,
         max: 1,
-        min: 0,
-        type_id: 3064,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3090,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3089,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2899,
-    },
-];
+        min: 1,
+    }),
+)];
+
+const ITEMS_1365: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 3086,
+}];
 
 const ITEMS_1366: &[Particle] = &[Particle::Composite {
     items: ITEMS_1365,
@@ -38313,11 +38328,38 @@ const ITEMS_1366: &[Particle] = &[Particle::Composite {
     min: 1,
 }];
 
-const ITEMS_1367: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3107,
-}];
+const PARTICLES_969: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1366,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1367: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3067,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3093,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3092,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2899,
+    },
+];
 
 const ITEMS_1368: &[Particle] = &[Particle::Composite {
     items: ITEMS_1367,
@@ -38326,33 +38368,11 @@ const ITEMS_1368: &[Particle] = &[Particle::Composite {
     min: 1,
 }];
 
-const ITEMS_1369: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3086,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3106,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3115,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3080,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3013,
-    },
-];
+const ITEMS_1369: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 3110,
+}];
 
 const ITEMS_1370: &[Particle] = &[Particle::Composite {
     items: ITEMS_1369,
@@ -38361,11 +38381,33 @@ const ITEMS_1370: &[Particle] = &[Particle::Composite {
     min: 1,
 }];
 
-const ITEMS_1371: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3087,
-}];
+const ITEMS_1371: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3089,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3109,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3118,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3083,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3013,
+    },
+];
 
 const ITEMS_1372: &[Particle] = &[Particle::Composite {
     items: ITEMS_1371,
@@ -38377,7 +38419,7 @@ const ITEMS_1372: &[Particle] = &[Particle::Composite {
 const ITEMS_1373: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 3081,
+    type_id: 3090,
 }];
 
 const ITEMS_1374: &[Particle] = &[Particle::Composite {
@@ -38390,7 +38432,7 @@ const ITEMS_1374: &[Particle] = &[Particle::Composite {
 const ITEMS_1375: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 3088,
+    type_id: 3084,
 }];
 
 const ITEMS_1376: &[Particle] = &[Particle::Composite {
@@ -38400,13 +38442,20 @@ const ITEMS_1376: &[Particle] = &[Particle::Composite {
     min: 1,
 }];
 
-const ITEMS_1377: &[Particle] = &[
-    Particle::Composite {
-        items: ITEMS_1366,
-        kind: CompositeKind::Group,
-        max: 1,
-        min: 0,
-    },
+const ITEMS_1377: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 3091,
+}];
+
+const ITEMS_1378: &[Particle] = &[Particle::Composite {
+    items: ITEMS_1377,
+    kind: CompositeKind::Sequence,
+    max: 1,
+    min: 1,
+}];
+
+const ITEMS_1379: &[Particle] = &[
     Particle::Composite {
         items: ITEMS_1368,
         kind: CompositeKind::Group,
@@ -38437,71 +38486,44 @@ const ITEMS_1377: &[Particle] = &[
         max: 1,
         min: 0,
     },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3049,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3050,
-    },
-];
-
-const ITEMS_1378: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3093,
-}];
-
-const ITEMS_1379: &[Particle] = &[
-    Particle::Composite {
-        items: ITEMS_1377,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    },
     Particle::Composite {
         items: ITEMS_1378,
-        kind: CompositeKind::Sequence,
+        kind: CompositeKind::Group,
         max: 1,
-        min: 1,
+        min: 0,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3052,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3053,
     },
 ];
 
-const PARTICLES_968: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
+const ITEMS_1380: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 3096,
+}];
+
+const ITEMS_1381: &[Particle] = &[
+    Particle::Composite {
         items: ITEMS_1379,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
-    }),
-)];
-
-const PARTICLES_969: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1377,
+    },
+    Particle::Composite {
+        items: ITEMS_1380,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
-    }),
-)];
-
-const ITEMS_1380: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 1,
-    type_id: 3092,
-}];
-
-const ITEMS_1381: &[Particle] = &[Particle::Composite {
-    items: ITEMS_1380,
-    kind: CompositeKind::Sequence,
-    max: 1,
-    min: 1,
-}];
+    },
+];
 
 const PARTICLES_970: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -38513,31 +38535,64 @@ const PARTICLES_970: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1382: &[Particle] = &[
+const PARTICLES_971: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1379,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1382: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 1,
+    type_id: 3095,
+}];
+
+const ITEMS_1383: &[Particle] = &[Particle::Composite {
+    items: ITEMS_1382,
+    kind: CompositeKind::Sequence,
+    max: 1,
+    min: 1,
+}];
+
+const PARTICLES_972: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1383,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1384: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3107,
+        type_id: 3110,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3086,
+        type_id: 3089,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3106,
+        type_id: 3109,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3115,
+        type_id: 3118,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3080,
+        type_id: 3083,
     },
     Particle::Element {
         max: 1,
@@ -38547,73 +38602,40 @@ const ITEMS_1382: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3087,
+        type_id: 3090,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3081,
+        type_id: 3084,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3088,
+        type_id: 3091,
     },
 ];
 
-const ITEMS_1383: &[Particle] = &[Particle::Element {
+const ITEMS_1385: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 3096,
+    type_id: 3099,
 }];
 
-const ITEMS_1384: &[Particle] = &[
+const ITEMS_1386: &[Particle] = &[
     Particle::Composite {
-        items: ITEMS_1382,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    },
-    Particle::Composite {
-        items: ITEMS_1383,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    },
-];
-
-const PARTICLES_971: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
         items: ITEMS_1384,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
-    }),
-)];
-
-const PARTICLES_972: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1382,
+    },
+    Particle::Composite {
+        items: ITEMS_1385,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
-    }),
-)];
-
-const ITEMS_1385: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 1,
-    type_id: 3095,
-}];
-
-const ITEMS_1386: &[Particle] = &[Particle::Composite {
-    items: ITEMS_1385,
-    kind: CompositeKind::Sequence,
-    max: 1,
-    min: 1,
-}];
+    },
+];
 
 const PARTICLES_973: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -38625,18 +38647,21 @@ const PARTICLES_973: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1387: &[Particle] = &[
-    Particle::Element {
+const PARTICLES_974: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1384,
+        kind: CompositeKind::Sequence,
         max: 1,
-        min: 0,
-        type_id: 3171,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3170,
-    },
-];
+        min: 1,
+    }),
+)];
+
+const ITEMS_1387: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 1,
+    type_id: 3098,
+}];
 
 const ITEMS_1388: &[Particle] = &[Particle::Composite {
     items: ITEMS_1387,
@@ -38645,87 +38670,54 @@ const ITEMS_1388: &[Particle] = &[Particle::Composite {
     min: 1,
 }];
 
-const ITEMS_1389: &[Particle] = &[
-    Particle::Composite {
-        items: ITEMS_1388,
-        kind: CompositeKind::Group,
-        max: 1,
-        min: 0,
-    },
-    Particle::Composite {
-        items: ITEMS_1370,
-        kind: CompositeKind::Group,
-        max: 1,
-        min: 0,
-    },
-    Particle::Composite {
-        items: ITEMS_1374,
-        kind: CompositeKind::Group,
-        max: 1,
-        min: 0,
-    },
-];
-
-const PARTICLES_974: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1389,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1390: &[Particle] = &[
-    Particle::Composite {
-        items: ITEMS_1370,
-        kind: CompositeKind::Group,
-        max: 1,
-        min: 0,
-    },
-    Particle::Composite {
-        items: ITEMS_1374,
-        kind: CompositeKind::Group,
-        max: 1,
-        min: 0,
-    },
-];
-
 const PARTICLES_975: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_1390,
+        items: ITEMS_1388,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
+const ITEMS_1389: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3174,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3173,
+    },
+];
+
+const ITEMS_1390: &[Particle] = &[Particle::Composite {
+    items: ITEMS_1389,
+    kind: CompositeKind::Sequence,
+    max: 1,
+    min: 1,
+}];
+
 const ITEMS_1391: &[Particle] = &[
-    Particle::Element {
+    Particle::Composite {
+        items: ITEMS_1390,
+        kind: CompositeKind::Group,
         max: 1,
         min: 0,
-        type_id: 2925,
     },
-    Particle::Element {
+    Particle::Composite {
+        items: ITEMS_1372,
+        kind: CompositeKind::Group,
         max: 1,
         min: 0,
-        type_id: 2950,
     },
-    Particle::Element {
+    Particle::Composite {
+        items: ITEMS_1376,
+        kind: CompositeKind::Group,
         max: 1,
         min: 0,
-        type_id: 3098,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3136,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3123,
     },
 ];
 
@@ -38740,16 +38732,17 @@ const PARTICLES_976: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1392: &[Particle] = &[
-    Particle::Element {
+    Particle::Composite {
+        items: ITEMS_1372,
+        kind: CompositeKind::Group,
         max: 1,
         min: 0,
-        type_id: 3119,
     },
     Particle::Composite {
-        items: ITEMS_1153,
+        items: ITEMS_1376,
         kind: CompositeKind::Group,
-        max: 0,
-        min: 1,
+        max: 1,
+        min: 0,
     },
 ];
 
@@ -38764,6 +38757,68 @@ const PARTICLES_977: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1393: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2925,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2950,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3101,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3139,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3126,
+    },
+];
+
+const PARTICLES_978: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1393,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1394: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3122,
+    },
+    Particle::Composite {
+        items: ITEMS_1153,
+        kind: CompositeKind::Group,
+        max: 0,
+        min: 1,
+    },
+];
+
+const PARTICLES_979: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1394,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1395: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
@@ -38816,36 +38871,31 @@ const ITEMS_1393: &[Particle] = &[
     },
 ];
 
-const PARTICLES_978: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_980: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_1393,
+        items: ITEMS_1395,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1394: &[Particle] = &[
+const ITEMS_1396: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3109,
+        type_id: 3112,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3103,
+        type_id: 3106,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3105,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3101,
+        type_id: 3108,
     },
     Particle::Element {
         max: 1,
@@ -38855,21 +38905,26 @@ const ITEMS_1394: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3102,
+        type_id: 3107,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3105,
     },
 ];
 
-const PARTICLES_979: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_981: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_1394,
+        items: ITEMS_1396,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1395: &[Particle] = &[
+const ITEMS_1397: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
@@ -38878,7 +38933,7 @@ const ITEMS_1395: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3108,
+        type_id: 3111,
     },
     Particle::Element {
         max: 1,
@@ -38893,22 +38948,9 @@ const ITEMS_1395: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3177,
+        type_id: 3180,
     },
 ];
-
-const ITEMS_1396: &[Particle] = &[Particle::Composite {
-    items: ITEMS_1395,
-    kind: CompositeKind::Sequence,
-    max: 1,
-    min: 1,
-}];
-
-const ITEMS_1397: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3117,
-}];
 
 const ITEMS_1398: &[Particle] = &[Particle::Composite {
     items: ITEMS_1397,
@@ -38917,7 +38959,20 @@ const ITEMS_1398: &[Particle] = &[Particle::Composite {
     min: 1,
 }];
 
-const ITEMS_1399: &[Particle] = &[
+const ITEMS_1399: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 3120,
+}];
+
+const ITEMS_1400: &[Particle] = &[Particle::Composite {
+    items: ITEMS_1399,
+    kind: CompositeKind::Sequence,
+    max: 1,
+    min: 1,
+}];
+
+const ITEMS_1401: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
@@ -38931,27 +38986,7 @@ const ITEMS_1399: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3118,
-    },
-];
-
-const ITEMS_1400: &[Particle] = &[Particle::Composite {
-    items: ITEMS_1399,
-    kind: CompositeKind::Sequence,
-    max: 1,
-    min: 1,
-}];
-
-const ITEMS_1401: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3130,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2915,
+        type_id: 3121,
     },
 ];
 
@@ -38962,11 +38997,18 @@ const ITEMS_1402: &[Particle] = &[Particle::Composite {
     min: 1,
 }];
 
-const ITEMS_1403: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3180,
-}];
+const ITEMS_1403: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3133,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2915,
+    },
+];
 
 const ITEMS_1404: &[Particle] = &[Particle::Composite {
     items: ITEMS_1403,
@@ -38978,7 +39020,7 @@ const ITEMS_1404: &[Particle] = &[Particle::Composite {
 const ITEMS_1405: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 2903,
+    type_id: 3183,
 }];
 
 const ITEMS_1406: &[Particle] = &[Particle::Composite {
@@ -38988,13 +39030,20 @@ const ITEMS_1406: &[Particle] = &[Particle::Composite {
     min: 1,
 }];
 
-const ITEMS_1407: &[Particle] = &[
-    Particle::Composite {
-        items: ITEMS_1396,
-        kind: CompositeKind::Group,
-        max: 1,
-        min: 0,
-    },
+const ITEMS_1407: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 2903,
+}];
+
+const ITEMS_1408: &[Particle] = &[Particle::Composite {
+    items: ITEMS_1407,
+    kind: CompositeKind::Sequence,
+    max: 1,
+    min: 1,
+}];
+
+const ITEMS_1409: &[Particle] = &[
     Particle::Composite {
         items: ITEMS_1398,
         kind: CompositeKind::Group,
@@ -39025,18 +39074,24 @@ const ITEMS_1407: &[Particle] = &[
         max: 1,
         min: 0,
     },
+    Particle::Composite {
+        items: ITEMS_1408,
+        kind: CompositeKind::Group,
+        max: 1,
+        min: 0,
+    },
 ];
 
-const ITEMS_1408: &[Particle] = &[
+const ITEMS_1410: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3144,
+        type_id: 3147,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3143,
+        type_id: 3146,
     },
     Particle::Element {
         max: 1,
@@ -39045,44 +39100,23 @@ const ITEMS_1408: &[Particle] = &[
     },
 ];
 
-const ITEMS_1409: &[Particle] = &[Particle::Composite {
-    items: ITEMS_1408,
+const ITEMS_1411: &[Particle] = &[Particle::Composite {
+    items: ITEMS_1410,
     kind: CompositeKind::Choice,
     max: 1,
     min: 1,
 }];
 
-const ITEMS_1410: &[Particle] = &[Particle::Composite {
-    items: ITEMS_1409,
+const ITEMS_1412: &[Particle] = &[Particle::Composite {
+    items: ITEMS_1411,
     kind: CompositeKind::Group,
     max: 1,
     min: 0,
 }];
 
-const ITEMS_1411: &[Particle] = &[
-    Particle::Composite {
-        items: ITEMS_1407,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    },
-    Particle::Composite {
-        items: ITEMS_1410,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    },
-];
-
-const ITEMS_1412: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3120,
-}];
-
 const ITEMS_1413: &[Particle] = &[
     Particle::Composite {
-        items: ITEMS_1411,
+        items: ITEMS_1409,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
@@ -39095,30 +39129,28 @@ const ITEMS_1413: &[Particle] = &[
     },
 ];
 
-const PARTICLES_980: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
+const ITEMS_1414: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 3123,
+}];
+
+const ITEMS_1415: &[Particle] = &[
+    Particle::Composite {
         items: ITEMS_1413,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
-    }),
-)];
+    },
+    Particle::Composite {
+        items: ITEMS_1414,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    },
+];
 
-const ITEMS_1414: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 1,
-    type_id: 3121,
-}];
-
-const ITEMS_1415: &[Particle] = &[Particle::Composite {
-    items: ITEMS_1414,
-    kind: CompositeKind::Sequence,
-    max: 1,
-    min: 1,
-}];
-
-const PARTICLES_981: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_982: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1415,
@@ -39128,63 +39160,20 @@ const PARTICLES_981: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const PARTICLES_982: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1411,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
+const ITEMS_1416: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 1,
+    type_id: 3124,
+}];
 
-const ITEMS_1416: &[Particle] = &[
-    Particle::Composite {
-        items: ITEMS_1400,
-        kind: CompositeKind::Group,
-        max: 1,
-        min: 0,
-    },
-    Particle::Composite {
-        items: ITEMS_1404,
-        kind: CompositeKind::Group,
-        max: 1,
-        min: 0,
-    },
-];
+const ITEMS_1417: &[Particle] = &[Particle::Composite {
+    items: ITEMS_1416,
+    kind: CompositeKind::Sequence,
+    max: 1,
+    min: 1,
+}];
 
 const PARTICLES_983: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1416,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1417: &[Particle] = &[
-    Particle::Composite {
-        items: ITEMS_1398,
-        kind: CompositeKind::Group,
-        max: 1,
-        min: 0,
-    },
-    Particle::Composite {
-        items: ITEMS_1400,
-        kind: CompositeKind::Group,
-        max: 1,
-        min: 0,
-    },
-    Particle::Composite {
-        items: ITEMS_1404,
-        kind: CompositeKind::Group,
-        max: 1,
-        min: 0,
-    },
-];
-
-const PARTICLES_984: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1417,
@@ -39194,7 +39183,73 @@ const PARTICLES_984: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
+const PARTICLES_984: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1413,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
 const ITEMS_1418: &[Particle] = &[
+    Particle::Composite {
+        items: ITEMS_1402,
+        kind: CompositeKind::Group,
+        max: 1,
+        min: 0,
+    },
+    Particle::Composite {
+        items: ITEMS_1406,
+        kind: CompositeKind::Group,
+        max: 1,
+        min: 0,
+    },
+];
+
+const PARTICLES_985: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1418,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1419: &[Particle] = &[
+    Particle::Composite {
+        items: ITEMS_1400,
+        kind: CompositeKind::Group,
+        max: 1,
+        min: 0,
+    },
+    Particle::Composite {
+        items: ITEMS_1402,
+        kind: CompositeKind::Group,
+        max: 1,
+        min: 0,
+    },
+    Particle::Composite {
+        items: ITEMS_1406,
+        kind: CompositeKind::Group,
+        max: 1,
+        min: 0,
+    },
+];
+
+const PARTICLES_986: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1419,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1420: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
@@ -39218,12 +39273,12 @@ const ITEMS_1418: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3111,
+        type_id: 3114,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3110,
+        type_id: 3113,
     },
     Particle::Element {
         max: 1,
@@ -39232,14 +39287,14 @@ const ITEMS_1418: &[Particle] = &[
     },
 ];
 
-const ITEMS_1419: &[Particle] = &[Particle::Composite {
-    items: ITEMS_1418,
+const ITEMS_1421: &[Particle] = &[Particle::Composite {
+    items: ITEMS_1420,
     kind: CompositeKind::Choice,
     max: 1,
     min: 1,
 }];
 
-const ITEMS_1420: &[Particle] = &[
+const ITEMS_1422: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
@@ -39258,52 +39313,52 @@ const ITEMS_1420: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3106,
+        type_id: 3109,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3086,
+        type_id: 3089,
     },
 ];
 
-const ITEMS_1421: &[Particle] = &[Particle::Composite {
-    items: ITEMS_1420,
+const ITEMS_1423: &[Particle] = &[Particle::Composite {
+    items: ITEMS_1422,
     kind: CompositeKind::Choice,
     max: 1,
     min: 1,
 }];
 
-const ITEMS_1422: &[Particle] = &[
-    Particle::Composite {
-        items: ITEMS_1419,
-        kind: CompositeKind::Group,
-        max: 0,
-        min: 0,
-    },
+const ITEMS_1424: &[Particle] = &[
     Particle::Composite {
         items: ITEMS_1421,
         kind: CompositeKind::Group,
         max: 0,
         min: 0,
     },
+    Particle::Composite {
+        items: ITEMS_1423,
+        kind: CompositeKind::Group,
+        max: 0,
+        min: 0,
+    },
 ];
 
-const ITEMS_1423: &[Particle] = &[
+const ITEMS_1425: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3150,
+        type_id: 3153,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3149,
+        type_id: 3152,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3137,
+        type_id: 3140,
     },
     Particle::Composite {
         items: ITEMS_1267,
@@ -39313,82 +39368,82 @@ const ITEMS_1423: &[Particle] = &[
     },
 ];
 
-const ITEMS_1424: &[Particle] = &[
+const ITEMS_1426: &[Particle] = &[
     Particle::Composite {
-        items: ITEMS_1422,
+        items: ITEMS_1424,
         kind: CompositeKind::Choice,
         max: 0,
         min: 1,
     },
     Particle::Composite {
-        items: ITEMS_1423,
+        items: ITEMS_1425,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     },
 ];
 
-const PARTICLES_985: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_987: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_1424,
+        items: ITEMS_1426,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const PARTICLES_986: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_988: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_1422,
+        items: ITEMS_1424,
         kind: CompositeKind::Choice,
         max: 0,
         min: 1,
     }),
 )];
 
-const ITEMS_1425: &[Particle] = &[Particle::Composite {
-    items: ITEMS_1421,
+const ITEMS_1427: &[Particle] = &[Particle::Composite {
+    items: ITEMS_1423,
     kind: CompositeKind::Group,
     max: 0,
     min: 0,
 }];
 
-const PARTICLES_987: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_989: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_1425,
+        items: ITEMS_1427,
         kind: CompositeKind::Choice,
         max: 0,
         min: 1,
     }),
 )];
 
-const ITEMS_1426: &[Particle] = &[Particle::Element {
+const ITEMS_1428: &[Particle] = &[Particle::Element {
     max: 1,
     min: 1,
-    type_id: 3135,
+    type_id: 3138,
 }];
 
-const ITEMS_1427: &[Particle] = &[Particle::Composite {
-    items: ITEMS_1426,
+const ITEMS_1429: &[Particle] = &[Particle::Composite {
+    items: ITEMS_1428,
     kind: CompositeKind::Sequence,
     max: 1,
     min: 1,
 }];
 
-const PARTICLES_988: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_990: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_1427,
+        items: ITEMS_1429,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1428: &[Particle] = &[
+const ITEMS_1430: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
@@ -39402,7 +39457,7 @@ const ITEMS_1428: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3037,
+        type_id: 3040,
     },
     Particle::Element {
         max: 1,
@@ -39447,40 +39502,40 @@ const ITEMS_1428: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3078,
+        type_id: 3081,
     },
 ];
 
-const PARTICLES_989: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_991: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_1428,
+        items: ITEMS_1430,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1429: &[Particle] = &[
+const ITEMS_1431: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3192,
+        type_id: 3195,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3193,
+        type_id: 3196,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3191,
+        type_id: 3194,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3189,
+        type_id: 3192,
     },
     Particle::Element {
         max: 1,
@@ -39493,60 +39548,6 @@ const ITEMS_1429: &[Particle] = &[
         type_id: 355,
     },
 ];
-
-const PARTICLES_990: &[(Versions, Option<Particle>)] = &[
-    (
-        Versions(0b00_0001),
-        Some(Particle::Composite {
-            items: ITEMS_9,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
-    (
-        Versions(0b11_1110),
-        Some(Particle::Composite {
-            items: ITEMS_1429,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
-];
-
-const ITEMS_1430: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 355,
-}];
-
-const PARTICLES_991: &[(Versions, Option<Particle>)] = &[
-    (
-        Versions(0b00_0001),
-        Some(Particle::Composite {
-            items: ITEMS_9,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
-    (
-        Versions(0b11_1110),
-        Some(Particle::Composite {
-            items: ITEMS_1430,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
-];
-
-const ITEMS_1431: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3188,
-}];
 
 const PARTICLES_992: &[(Versions, Option<Particle>)] = &[
     (
@@ -39570,9 +39571,9 @@ const PARTICLES_992: &[(Versions, Option<Particle>)] = &[
 ];
 
 const ITEMS_1432: &[Particle] = &[Particle::Element {
-    max: 0,
+    max: 1,
     min: 0,
-    type_id: 3190,
+    type_id: 355,
 }];
 
 const PARTICLES_993: &[(Versions, Option<Particle>)] = &[
@@ -39599,7 +39600,7 @@ const PARTICLES_993: &[(Versions, Option<Particle>)] = &[
 const ITEMS_1433: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
-    type_id: 3192,
+    type_id: 3191,
 }];
 
 const PARTICLES_994: &[(Versions, Option<Particle>)] = &[
@@ -39623,18 +39624,11 @@ const PARTICLES_994: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1434: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3195,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 356,
-    },
-];
+const ITEMS_1434: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3193,
+}];
 
 const PARTICLES_995: &[(Versions, Option<Particle>)] = &[
     (
@@ -39660,7 +39654,7 @@ const PARTICLES_995: &[(Versions, Option<Particle>)] = &[
 const ITEMS_1435: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
-    type_id: 3196,
+    type_id: 3195,
 }];
 
 const PARTICLES_996: &[(Versions, Option<Particle>)] = &[
@@ -39684,54 +39678,100 @@ const PARTICLES_996: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1436: &[Particle] = &[Particle::Element {
+const ITEMS_1436: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3198,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 356,
+    },
+];
+
+const PARTICLES_997: &[(Versions, Option<Particle>)] = &[
+    (
+        Versions(0b00_0001),
+        Some(Particle::Composite {
+            items: ITEMS_9,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+    (
+        Versions(0b11_1110),
+        Some(Particle::Composite {
+            items: ITEMS_1436,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+];
+
+const ITEMS_1437: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3199,
+}];
+
+const PARTICLES_998: &[(Versions, Option<Particle>)] = &[
+    (
+        Versions(0b00_0001),
+        Some(Particle::Composite {
+            items: ITEMS_9,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+    (
+        Versions(0b11_1110),
+        Some(Particle::Composite {
+            items: ITEMS_1437,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+];
+
+const ITEMS_1438: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3204,
+}];
+
+const PARTICLES_999: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1438,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1439: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
     type_id: 3201,
 }];
 
-const PARTICLES_997: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_1000: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_1436,
+        items: ITEMS_1439,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1437: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3198,
-}];
-
-const PARTICLES_998: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1437,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1438: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 4228,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 4229,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 4222,
-    },
+const ITEMS_1440: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
@@ -39745,22 +39785,22 @@ const ITEMS_1438: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4233,
+        type_id: 4225,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4223,
+        type_id: 4234,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4224,
+        type_id: 4235,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4227,
+        type_id: 4236,
     },
     Particle::Element {
         max: 1,
@@ -39770,58 +39810,34 @@ const ITEMS_1438: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
+        type_id: 4227,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
         type_id: 4230,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4225,
+        type_id: 4229,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4221,
+        type_id: 4233,
     },
-];
-
-const PARTICLES_999: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1438,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1439: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3219,
+        type_id: 4228,
     },
     Particle::Element {
         max: 1,
-        min: 1,
-        type_id: 3204,
+        min: 0,
+        type_id: 4224,
     },
 ];
-
-const PARTICLES_1000: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1439,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1440: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3207,
-}];
 
 const PARTICLES_1001: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -39836,28 +39852,13 @@ const PARTICLES_1001: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1441: &[Particle] = &[
     Particle::Element {
         max: 1,
-        min: 1,
-        type_id: 3206,
+        min: 0,
+        type_id: 3222,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3215,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3200,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3216,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3213,
+        type_id: 3207,
     },
 ];
 
@@ -39865,16 +39866,16 @@ const PARTICLES_1002: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1441,
-        kind: CompositeKind::Choice,
+        kind: CompositeKind::Sequence,
         max: 1,
-        min: 0,
+        min: 1,
     }),
 )];
 
 const ITEMS_1442: &[Particle] = &[Particle::Element {
     max: 0,
-    min: 0,
-    type_id: 3209,
+    min: 1,
+    type_id: 3210,
 }];
 
 const PARTICLES_1003: &[(Versions, Option<Particle>)] = &[(
@@ -39887,44 +39888,49 @@ const PARTICLES_1003: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1443: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3217,
-}];
+const ITEMS_1443: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3209,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3218,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3203,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3219,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3216,
+    },
+];
 
 const PARTICLES_1004: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1443,
-        kind: CompositeKind::Sequence,
+        kind: CompositeKind::Choice,
         max: 1,
-        min: 1,
+        min: 0,
     }),
 )];
 
-const ITEMS_1444: &[Particle] = &[
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3211,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3212,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3222,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3203,
-    },
-];
+const ITEMS_1444: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3212,
+}];
 
 const PARTICLES_1005: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -39936,18 +39942,11 @@ const PARTICLES_1005: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1445: &[Particle] = &[
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3202,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3220,
-    },
-];
+const ITEMS_1445: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3220,
+}];
 
 const PARTICLES_1006: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -39961,14 +39960,24 @@ const PARTICLES_1006: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1446: &[Particle] = &[
     Particle::Element {
-        max: 1,
+        max: 0,
         min: 0,
-        type_id: 3205,
+        type_id: 3214,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3215,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3218,
+        type_id: 3225,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3206,
     },
 ];
 
@@ -39982,11 +39991,18 @@ const PARTICLES_1007: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1447: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 1,
-    type_id: 648,
-}];
+const ITEMS_1447: &[Particle] = &[
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3205,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3223,
+    },
+];
 
 const PARTICLES_1008: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -39998,11 +40014,18 @@ const PARTICLES_1008: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1448: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 1,
-    type_id: 647,
-}];
+const ITEMS_1448: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3208,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3221,
+    },
+];
 
 const PARTICLES_1009: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -40014,22 +40037,39 @@ const PARTICLES_1009: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1449: &[Particle] = &[
-    Particle::Element {
+const ITEMS_1449: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 1,
+    type_id: 648,
+}];
+
+const PARTICLES_1010: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1449,
+        kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
-        type_id: 3233,
-    },
-    Particle::Element {
+    }),
+)];
+
+const ITEMS_1450: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 1,
+    type_id: 647,
+}];
+
+const PARTICLES_1011: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1450,
+        kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
-        type_id: 3235,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3237,
-    },
+    }),
+)];
+
+const ITEMS_1451: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -40040,23 +40080,38 @@ const ITEMS_1449: &[Particle] = &[
         min: 1,
         type_id: 3238,
     },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3240,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3239,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3241,
+    },
 ];
 
-const ITEMS_1450: &[Particle] = &[Particle::Composite {
-    items: ITEMS_1449,
+const ITEMS_1452: &[Particle] = &[Particle::Composite {
+    items: ITEMS_1451,
     kind: CompositeKind::Choice,
     max: 1,
     min: 1,
 }];
 
-const ITEMS_1451: &[Particle] = &[Particle::Composite {
-    items: ITEMS_1450,
+const ITEMS_1453: &[Particle] = &[Particle::Composite {
+    items: ITEMS_1452,
     kind: CompositeKind::Sequence,
     max: 1,
     min: 1,
 }];
 
-const ITEMS_1452: &[Particle] = &[
+const ITEMS_1454: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -40065,12 +40120,12 @@ const ITEMS_1452: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3231,
+        type_id: 3234,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3232,
+        type_id: 3235,
     },
     Particle::Element {
         max: 1,
@@ -40080,10 +40135,10 @@ const ITEMS_1452: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3229,
+        type_id: 3232,
     },
     Particle::Composite {
-        items: ITEMS_1451,
+        items: ITEMS_1453,
         kind: CompositeKind::Group,
         max: 1,
         min: 1,
@@ -40106,26 +40161,26 @@ const ITEMS_1452: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3225,
+        type_id: 3228,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3226,
+        type_id: 3229,
     },
 ];
 
-const PARTICLES_1010: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_1012: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_1452,
+        items: ITEMS_1454,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1453: &[Particle] = &[
+const ITEMS_1455: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -40134,7 +40189,7 @@ const ITEMS_1453: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3229,
+        type_id: 3232,
     },
     Particle::Element {
         max: 1,
@@ -40153,42 +40208,7 @@ const ITEMS_1453: &[Particle] = &[
     },
 ];
 
-const PARTICLES_1011: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1453,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1454: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3239,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3241,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 645,
-    },
-];
-
-const ITEMS_1455: &[Particle] = &[Particle::Composite {
-    items: ITEMS_1454,
-    kind: CompositeKind::Choice,
-    max: 1,
-    min: 1,
-}];
-
-const PARTICLES_1012: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_1013: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1455,
@@ -40202,17 +40222,17 @@ const ITEMS_1456: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3240,
+        type_id: 3242,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3241,
+        type_id: 3244,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 646,
+        type_id: 645,
     },
 ];
 
@@ -40223,7 +40243,7 @@ const ITEMS_1457: &[Particle] = &[Particle::Composite {
     min: 1,
 }];
 
-const PARTICLES_1013: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_1014: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1457,
@@ -40237,29 +40257,25 @@ const ITEMS_1458: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 401,
+        type_id: 3243,
     },
     Particle::Element {
-        max: 0,
-        min: 2,
-        type_id: 399,
+        max: 1,
+        min: 1,
+        type_id: 3244,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 646,
     },
 ];
 
-const PARTICLES_1014: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1458,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1459: &[Particle] = &[Particle::Element {
+const ITEMS_1459: &[Particle] = &[Particle::Composite {
+    items: ITEMS_1458,
+    kind: CompositeKind::Choice,
     max: 1,
-    min: 0,
-    type_id: 3229,
+    min: 1,
 }];
 
 const PARTICLES_1015: &[(Versions, Option<Particle>)] = &[(
@@ -40272,11 +40288,18 @@ const PARTICLES_1015: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1460: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 1,
-    type_id: 3234,
-}];
+const ITEMS_1460: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 401,
+    },
+    Particle::Element {
+        max: 0,
+        min: 2,
+        type_id: 399,
+    },
+];
 
 const PARTICLES_1016: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -40288,11 +40311,43 @@ const PARTICLES_1016: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1461: &[Particle] = &[
+const ITEMS_1461: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 3232,
+}];
+
+const PARTICLES_1017: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1461,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1462: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 1,
+    type_id: 3237,
+}];
+
+const PARTICLES_1018: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1462,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1463: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3250,
+        type_id: 3253,
     },
     Particle::Element {
         max: 1,
@@ -40307,16 +40362,16 @@ const ITEMS_1461: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3247,
+        type_id: 3250,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3243,
+        type_id: 3246,
     },
 ];
 
-const ITEMS_1462: &[Particle] = &[
+const ITEMS_1464: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
@@ -40328,7 +40383,7 @@ const ITEMS_1462: &[Particle] = &[
         type_id: 640,
     },
     Particle::Composite {
-        items: ITEMS_1461,
+        items: ITEMS_1463,
         kind: CompositeKind::Choice,
         max: 0,
         min: 0,
@@ -40340,17 +40395,17 @@ const ITEMS_1462: &[Particle] = &[
     },
 ];
 
-const PARTICLES_1017: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_1019: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_1462,
+        items: ITEMS_1464,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1463: &[Particle] = &[
+const ITEMS_1465: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -40378,31 +40433,31 @@ const ITEMS_1463: &[Particle] = &[
     },
 ];
 
-const PARTICLES_1018: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_1020: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_1463,
+        items: ITEMS_1465,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1464: &[Particle] = &[
+const ITEMS_1466: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3250,
+        type_id: 3253,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3246,
+        type_id: 3249,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3244,
+        type_id: 3247,
     },
     Particle::Element {
         max: 1,
@@ -40416,7 +40471,7 @@ const ITEMS_1464: &[Particle] = &[
     },
 ];
 
-const ITEMS_1465: &[Particle] = &[
+const ITEMS_1467: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
@@ -40433,7 +40488,7 @@ const ITEMS_1465: &[Particle] = &[
         type_id: 232,
     },
     Particle::Composite {
-        items: ITEMS_1464,
+        items: ITEMS_1466,
         kind: CompositeKind::Choice,
         max: 0,
         min: 0,
@@ -40442,45 +40497,6 @@ const ITEMS_1465: &[Particle] = &[
         max: 1,
         min: 0,
         type_id: 358,
-    },
-];
-
-const PARTICLES_1019: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1465,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1466: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 359,
-}];
-
-const PARTICLES_1020: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1466,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1467: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3162,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 359,
     },
 ];
 
@@ -40494,7 +40510,46 @@ const PARTICLES_1021: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1468: &[Particle] = &[
+const ITEMS_1468: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 359,
+}];
+
+const PARTICLES_1022: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1468,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1469: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3165,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 359,
+    },
+];
+
+const PARTICLES_1023: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1469,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1470: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -40507,27 +40562,27 @@ const ITEMS_1468: &[Particle] = &[
     },
 ];
 
-const ITEMS_1469: &[Particle] = &[
+const ITEMS_1471: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3249,
+        type_id: 3252,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3248,
+        type_id: 3251,
     },
 ];
 
-const ITEMS_1470: &[Particle] = &[
+const ITEMS_1472: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
         type_id: 303,
     },
     Particle::Composite {
-        items: ITEMS_1468,
+        items: ITEMS_1470,
         kind: CompositeKind::Choice,
         max: 1,
         min: 1,
@@ -40548,7 +40603,7 @@ const ITEMS_1470: &[Particle] = &[
         type_id: 359,
     },
     Particle::Composite {
-        items: ITEMS_1469,
+        items: ITEMS_1471,
         kind: CompositeKind::Choice,
         max: 1,
         min: 0,
@@ -40560,38 +40615,6 @@ const ITEMS_1470: &[Particle] = &[
     },
 ];
 
-const PARTICLES_1022: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1470,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1471: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3308,
-}];
-
-const PARTICLES_1023: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1471,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1472: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3338,
-}];
-
 const PARTICLES_1024: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
@@ -40602,38 +40625,11 @@ const PARTICLES_1024: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1473: &[Particle] = &[
-    Particle::Element {
-        max: 3,
-        min: 0,
-        type_id: 3925,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3257,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3265,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3280,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3571,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3585,
-    },
-];
+const ITEMS_1473: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 3311,
+}];
 
 const PARTICLES_1025: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -40645,18 +40641,11 @@ const PARTICLES_1025: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1474: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3925,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3585,
-    },
-];
+const ITEMS_1474: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 3341,
+}];
 
 const PARTICLES_1026: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -40670,14 +40659,34 @@ const PARTICLES_1026: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1475: &[Particle] = &[
     Particle::Element {
-        max: 0,
-        min: 2,
-        type_id: 3256,
+        max: 3,
+        min: 0,
+        type_id: 3928,
     },
     Particle::Element {
-        max: 0,
-        min: 2,
-        type_id: 3494,
+        max: 1,
+        min: 0,
+        type_id: 3260,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3268,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3283,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3574,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3588,
     },
 ];
 
@@ -40695,12 +40704,12 @@ const ITEMS_1476: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3739,
+        type_id: 3928,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3585,
+        type_id: 3588,
     },
 ];
 
@@ -40714,11 +40723,18 @@ const PARTICLES_1028: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1477: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3258,
-}];
+const ITEMS_1477: &[Particle] = &[
+    Particle::Element {
+        max: 0,
+        min: 2,
+        type_id: 3259,
+    },
+    Particle::Element {
+        max: 0,
+        min: 2,
+        type_id: 3497,
+    },
+];
 
 const PARTICLES_1029: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -40732,19 +40748,14 @@ const PARTICLES_1029: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1478: &[Particle] = &[
     Particle::Element {
-        max: 0,
+        max: 1,
         min: 0,
-        type_id: 3255,
+        type_id: 3742,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4073,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3585,
+        type_id: 3588,
     },
 ];
 
@@ -40761,7 +40772,7 @@ const PARTICLES_1030: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1479: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3260,
+    type_id: 3261,
 }];
 
 const PARTICLES_1031: &[(Versions, Option<Particle>)] = &[(
@@ -40774,11 +40785,23 @@ const PARTICLES_1031: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1480: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3463,
-}];
+const ITEMS_1480: &[Particle] = &[
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3258,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 4076,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3588,
+    },
+];
 
 const PARTICLES_1032: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -40791,7 +40814,7 @@ const PARTICLES_1032: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1481: &[Particle] = &[Particle::Element {
-    max: 2,
+    max: 0,
     min: 1,
     type_id: 3263,
 }];
@@ -40806,38 +40829,11 @@ const PARTICLES_1033: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1482: &[Particle] = &[
-    Particle::Element {
-        max: 2,
-        min: 2,
-        type_id: 3256,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3503,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3493,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3505,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3504,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3492,
-    },
-];
+const ITEMS_1482: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 3466,
+}];
 
 const PARTICLES_1034: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -40849,23 +40845,11 @@ const PARTICLES_1034: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1483: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3269,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3270,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4073,
-    },
-];
+const ITEMS_1483: &[Particle] = &[Particle::Element {
+    max: 2,
+    min: 1,
+    type_id: 3266,
+}];
 
 const PARTICLES_1035: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -40877,11 +40861,38 @@ const PARTICLES_1035: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1484: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 1,
-    type_id: 3925,
-}];
+const ITEMS_1484: &[Particle] = &[
+    Particle::Element {
+        max: 2,
+        min: 2,
+        type_id: 3259,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3506,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3496,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3508,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3507,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3495,
+    },
+];
 
 const PARTICLES_1036: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -40893,11 +40904,23 @@ const PARTICLES_1036: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1485: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3267,
-}];
+const ITEMS_1485: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3272,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3273,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4076,
+    },
+];
 
 const PARTICLES_1037: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -40911,8 +40934,8 @@ const PARTICLES_1037: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1486: &[Particle] = &[Particle::Element {
     max: 1,
-    min: 0,
-    type_id: 3585,
+    min: 1,
+    type_id: 3928,
 }];
 
 const PARTICLES_1038: &[(Versions, Option<Particle>)] = &[(
@@ -40926,9 +40949,9 @@ const PARTICLES_1038: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1487: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3275,
+    max: 0,
+    min: 1,
+    type_id: 3270,
 }];
 
 const PARTICLES_1039: &[(Versions, Option<Particle>)] = &[(
@@ -40942,9 +40965,9 @@ const PARTICLES_1039: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1488: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3274,
+    max: 1,
+    min: 0,
+    type_id: 3588,
 }];
 
 const PARTICLES_1040: &[(Versions, Option<Particle>)] = &[(
@@ -40958,9 +40981,9 @@ const PARTICLES_1040: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1489: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3273,
+    max: 1,
+    min: 0,
+    type_id: 3278,
 }];
 
 const PARTICLES_1041: &[(Versions, Option<Particle>)] = &[(
@@ -40973,18 +40996,11 @@ const PARTICLES_1041: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1490: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3284,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3585,
-    },
-];
+const ITEMS_1490: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3277,
+}];
 
 const PARTICLES_1042: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -40996,18 +41012,11 @@ const PARTICLES_1042: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1491: &[Particle] = &[
-    Particle::Element {
-        max: 0,
-        min: 2,
-        type_id: 3256,
-    },
-    Particle::Element {
-        max: 5,
-        min: 0,
-        type_id: 3254,
-    },
-];
+const ITEMS_1491: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3276,
+}];
 
 const PARTICLES_1043: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -41019,11 +41028,18 @@ const PARTICLES_1043: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1492: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 1,
-    type_id: 4073,
-}];
+const ITEMS_1492: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3287,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3588,
+    },
+];
 
 const PARTICLES_1044: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -41038,13 +41054,13 @@ const PARTICLES_1044: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1493: &[Particle] = &[
     Particle::Element {
         max: 0,
-        min: 0,
-        type_id: 3281,
+        min: 2,
+        type_id: 3259,
     },
     Particle::Element {
-        max: 1,
+        max: 5,
         min: 0,
-        type_id: 3585,
+        type_id: 3257,
     },
 ];
 
@@ -41058,18 +41074,11 @@ const PARTICLES_1045: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1494: &[Particle] = &[
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3283,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3585,
-    },
-];
+const ITEMS_1494: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 1,
+    type_id: 4076,
+}];
 
 const PARTICLES_1046: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -41083,19 +41092,14 @@ const PARTICLES_1046: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1495: &[Particle] = &[
     Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3289,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3293,
+        max: 0,
+        min: 0,
+        type_id: 3284,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3585,
+        type_id: 3588,
     },
 ];
 
@@ -41109,11 +41113,18 @@ const PARTICLES_1047: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1496: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3287,
-}];
+const ITEMS_1496: &[Particle] = &[
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3286,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3588,
+    },
+];
 
 const PARTICLES_1048: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -41125,11 +41136,23 @@ const PARTICLES_1048: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1497: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3291,
-}];
+const ITEMS_1497: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3292,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3296,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3588,
+    },
+];
 
 const PARTICLES_1049: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -41143,8 +41166,8 @@ const PARTICLES_1049: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1498: &[Particle] = &[Particle::Element {
     max: 0,
-    min: 1,
-    type_id: 3288,
+    min: 0,
+    type_id: 3290,
 }];
 
 const PARTICLES_1050: &[(Versions, Option<Particle>)] = &[(
@@ -41158,9 +41181,9 @@ const PARTICLES_1050: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1499: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3286,
+    max: 1,
+    min: 0,
+    type_id: 3294,
 }];
 
 const PARTICLES_1051: &[(Versions, Option<Particle>)] = &[(
@@ -41175,8 +41198,8 @@ const PARTICLES_1051: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1500: &[Particle] = &[Particle::Element {
     max: 0,
-    min: 0,
-    type_id: 3290,
+    min: 1,
+    type_id: 3291,
 }];
 
 const PARTICLES_1052: &[(Versions, Option<Particle>)] = &[(
@@ -41192,7 +41215,7 @@ const PARTICLES_1052: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1501: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3292,
+    type_id: 3289,
 }];
 
 const PARTICLES_1053: &[(Versions, Option<Particle>)] = &[(
@@ -41206,9 +41229,9 @@ const PARTICLES_1053: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1502: &[Particle] = &[Particle::Element {
-    max: 1,
+    max: 0,
     min: 0,
-    type_id: 3560,
+    type_id: 3293,
 }];
 
 const PARTICLES_1054: &[(Versions, Option<Particle>)] = &[(
@@ -41221,23 +41244,11 @@ const PARTICLES_1054: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1503: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3299,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3337,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3585,
-    },
-];
+const ITEMS_1503: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3295,
+}];
 
 const PARTICLES_1055: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -41250,9 +41261,9 @@ const PARTICLES_1055: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1504: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3296,
+    max: 1,
+    min: 0,
+    type_id: 3563,
 }];
 
 const PARTICLES_1056: &[(Versions, Option<Particle>)] = &[(
@@ -41269,22 +41280,17 @@ const ITEMS_1505: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3304,
+        type_id: 3302,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3337,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3735,
+        type_id: 3340,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3585,
+        type_id: 3588,
     },
 ];
 
@@ -41301,7 +41307,7 @@ const PARTICLES_1057: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1506: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3298,
+    type_id: 3299,
 }];
 
 const PARTICLES_1058: &[(Versions, Option<Particle>)] = &[(
@@ -41317,18 +41323,23 @@ const PARTICLES_1058: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1507: &[Particle] = &[
     Particle::Element {
         max: 1,
-        min: 0,
-        type_id: 3300,
+        min: 1,
+        type_id: 3307,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3340,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3738,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3297,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3259,
+        type_id: 3588,
     },
 ];
 
@@ -41342,34 +41353,39 @@ const PARTICLES_1059: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1508: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3925,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3299,
-    },
-];
+const ITEMS_1508: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3301,
+}];
 
 const PARTICLES_1060: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1508,
-        kind: CompositeKind::Choice,
+        kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1509: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3305,
-}];
+const ITEMS_1509: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3303,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3300,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3262,
+    },
+];
 
 const PARTICLES_1061: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -41381,62 +41397,50 @@ const PARTICLES_1061: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1510: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3307,
-}];
+const ITEMS_1510: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3928,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3302,
+    },
+];
 
 const PARTICLES_1062: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1510,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1511: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3285,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3334,
-    },
-];
-
-const PARTICLES_1063: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1511,
         kind: CompositeKind::Choice,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1512: &[Particle] = &[
-    Particle::Element {
+const ITEMS_1511: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3308,
+}];
+
+const PARTICLES_1063: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1511,
+        kind: CompositeKind::Sequence,
         max: 1,
-        min: 0,
-        type_id: 3314,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3311,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3837,
-    },
-];
+        min: 1,
+    }),
+)];
+
+const ITEMS_1512: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3310,
+}];
 
 const PARTICLES_1064: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -41448,27 +41452,46 @@ const PARTICLES_1064: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1513: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3313,
-}];
+const ITEMS_1513: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3288,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3337,
+    },
+];
 
 const PARTICLES_1065: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1513,
-        kind: CompositeKind::Sequence,
+        kind: CompositeKind::Choice,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1514: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3310,
-}];
+const ITEMS_1514: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3317,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3314,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3840,
+    },
+];
 
 const PARTICLES_1066: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -41483,7 +41506,7 @@ const PARTICLES_1066: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1515: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3318,
+    type_id: 3316,
 }];
 
 const PARTICLES_1067: &[(Versions, Option<Particle>)] = &[(
@@ -41497,9 +41520,9 @@ const PARTICLES_1067: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1516: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3322,
+    max: 0,
+    min: 1,
+    type_id: 3313,
 }];
 
 const PARTICLES_1068: &[(Versions, Option<Particle>)] = &[(
@@ -41529,9 +41552,9 @@ const PARTICLES_1069: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1518: &[Particle] = &[Particle::Element {
-    max: 0,
+    max: 1,
     min: 0,
-    type_id: 3320,
+    type_id: 3325,
 }];
 
 const PARTICLES_1070: &[(Versions, Option<Particle>)] = &[(
@@ -41547,7 +41570,7 @@ const PARTICLES_1070: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1519: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3309,
+    type_id: 3324,
 }];
 
 const PARTICLES_1071: &[(Versions, Option<Particle>)] = &[(
@@ -41560,18 +41583,11 @@ const PARTICLES_1071: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1520: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3925,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4073,
-    },
-];
+const ITEMS_1520: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3323,
+}];
 
 const PARTICLES_1072: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -41583,58 +41599,11 @@ const PARTICLES_1072: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1521: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3502,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3501,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3495,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3500,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3496,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3498,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3497,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3499,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3925,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3332,
-    },
-];
+const ITEMS_1521: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3312,
+}];
 
 const PARTICLES_1073: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -41646,11 +41615,18 @@ const PARTICLES_1073: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1522: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3329,
-}];
+const ITEMS_1522: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3928,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4076,
+    },
+];
 
 const PARTICLES_1074: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -41662,11 +41638,58 @@ const PARTICLES_1074: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1523: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3328,
-}];
+const ITEMS_1523: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3505,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3504,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3498,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3503,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3499,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3501,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3500,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3502,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3928,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3335,
+    },
+];
 
 const PARTICLES_1075: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -41678,18 +41701,11 @@ const PARTICLES_1075: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1524: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3336,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3585,
-    },
-];
+const ITEMS_1524: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3332,
+}];
 
 const PARTICLES_1076: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -41704,7 +41720,7 @@ const PARTICLES_1076: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1525: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3335,
+    type_id: 3331,
 }];
 
 const PARTICLES_1077: &[(Versions, Option<Particle>)] = &[(
@@ -41717,11 +41733,18 @@ const PARTICLES_1077: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1526: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3930,
-}];
+const ITEMS_1526: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3339,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3588,
+    },
+];
 
 const PARTICLES_1078: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -41733,18 +41756,11 @@ const PARTICLES_1078: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1527: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3340,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3343,
-    },
-];
+const ITEMS_1527: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3338,
+}];
 
 const PARTICLES_1079: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -41759,7 +41775,7 @@ const PARTICLES_1079: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1528: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3339,
+    type_id: 3933,
 }];
 
 const PARTICLES_1080: &[(Versions, Option<Particle>)] = &[(
@@ -41772,11 +41788,18 @@ const PARTICLES_1080: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1529: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3342,
-}];
+const ITEMS_1529: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3343,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3346,
+    },
+];
 
 const PARTICLES_1081: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -41791,7 +41814,7 @@ const PARTICLES_1081: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1530: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3341,
+    type_id: 3342,
 }];
 
 const PARTICLES_1082: &[(Versions, Option<Particle>)] = &[(
@@ -41807,83 +41830,39 @@ const PARTICLES_1082: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1531: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3346,
+    type_id: 3345,
 }];
 
-const PARTICLES_1083: &[(Versions, Option<Particle>)] = &[
-    (
-        Versions(0b00_0001),
-        Some(Particle::Composite {
-            items: ITEMS_9,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
-    (
-        Versions(0b11_1110),
-        Some(Particle::Composite {
-            items: ITEMS_1531,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
-];
+const PARTICLES_1083: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1531,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
 
-const ITEMS_1532: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3863,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3361,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3376,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3363,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3350,
-    },
-];
+const ITEMS_1532: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3344,
+}];
 
-const PARTICLES_1084: &[(Versions, Option<Particle>)] = &[
-    (
-        Versions(0b00_0001),
-        Some(Particle::Composite {
-            items: ITEMS_9,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
-    (
-        Versions(0b11_1110),
-        Some(Particle::Composite {
-            items: ITEMS_1532,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
-];
+const PARTICLES_1084: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1532,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
 
 const ITEMS_1533: &[Particle] = &[Particle::Element {
-    max: 1,
+    max: 0,
     min: 1,
-    type_id: 3355,
+    type_id: 3349,
 }];
 
 const PARTICLES_1085: &[(Versions, Option<Particle>)] = &[
@@ -41911,17 +41890,27 @@ const ITEMS_1534: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3360,
+        type_id: 3866,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3358,
+        type_id: 3364,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3586,
+        type_id: 3379,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3366,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3353,
     },
 ];
 
@@ -41947,9 +41936,9 @@ const PARTICLES_1086: &[(Versions, Option<Particle>)] = &[
 ];
 
 const ITEMS_1535: &[Particle] = &[Particle::Element {
-    max: 0,
+    max: 1,
     min: 1,
-    type_id: 3354,
+    type_id: 3358,
 }];
 
 const PARTICLES_1087: &[(Versions, Option<Particle>)] = &[
@@ -41973,11 +41962,23 @@ const PARTICLES_1087: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1536: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3357,
-}];
+const ITEMS_1536: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3363,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3361,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3589,
+    },
+];
 
 const PARTICLES_1088: &[(Versions, Option<Particle>)] = &[
     (
@@ -42003,7 +42004,7 @@ const PARTICLES_1088: &[(Versions, Option<Particle>)] = &[
 const ITEMS_1537: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3359,
+    type_id: 3357,
 }];
 
 const PARTICLES_1089: &[(Versions, Option<Particle>)] = &[
@@ -42027,25 +42028,18 @@ const PARTICLES_1089: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1538: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3355,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3353,
-    },
-];
+const ITEMS_1538: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3360,
+}];
 
 const PARTICLES_1090: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
             items: ITEMS_9,
-            kind: CompositeKind::Choice,
+            kind: CompositeKind::Sequence,
             max: 1,
             min: 1,
         }),
@@ -42054,7 +42048,7 @@ const PARTICLES_1090: &[(Versions, Option<Particle>)] = &[
         Versions(0b11_1110),
         Some(Particle::Composite {
             items: ITEMS_1538,
-            kind: CompositeKind::Choice,
+            kind: CompositeKind::Sequence,
             max: 1,
             min: 1,
         }),
@@ -42064,7 +42058,7 @@ const PARTICLES_1090: &[(Versions, Option<Particle>)] = &[
 const ITEMS_1539: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3373,
+    type_id: 3362,
 }];
 
 const PARTICLES_1091: &[(Versions, Option<Particle>)] = &[
@@ -42088,24 +42082,24 @@ const PARTICLES_1091: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1540: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3367,
-}];
-
-const ITEMS_1541: &[Particle] = &[Particle::Composite {
-    items: ITEMS_1540,
-    kind: CompositeKind::Sequence,
-    max: 1,
-    min: 1,
-}];
+const ITEMS_1540: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3358,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3356,
+    },
+];
 
 const PARTICLES_1092: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_532,
+            items: ITEMS_9,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -42114,7 +42108,7 @@ const PARTICLES_1092: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b11_1110),
         Some(Particle::Composite {
-            items: ITEMS_1541,
+            items: ITEMS_1540,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -42122,10 +42116,10 @@ const PARTICLES_1092: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1542: &[Particle] = &[Particle::Element {
+const ITEMS_1541: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3369,
+    type_id: 3376,
 }];
 
 const PARTICLES_1093: &[(Versions, Option<Particle>)] = &[
@@ -42141,7 +42135,7 @@ const PARTICLES_1093: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b11_1110),
         Some(Particle::Composite {
-            items: ITEMS_1542,
+            items: ITEMS_1541,
             kind: CompositeKind::Sequence,
             max: 1,
             min: 1,
@@ -42149,18 +42143,25 @@ const PARTICLES_1093: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1543: &[Particle] = &[Particle::Element {
+const ITEMS_1542: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3814,
+    type_id: 3370,
+}];
+
+const ITEMS_1543: &[Particle] = &[Particle::Composite {
+    items: ITEMS_1542,
+    kind: CompositeKind::Sequence,
+    max: 1,
+    min: 1,
 }];
 
 const PARTICLES_1094: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_9,
-            kind: CompositeKind::Sequence,
+            items: ITEMS_532,
+            kind: CompositeKind::Choice,
             max: 1,
             min: 1,
         }),
@@ -42169,25 +42170,18 @@ const PARTICLES_1094: &[(Versions, Option<Particle>)] = &[
         Versions(0b11_1110),
         Some(Particle::Composite {
             items: ITEMS_1543,
-            kind: CompositeKind::Sequence,
+            kind: CompositeKind::Choice,
             max: 1,
             min: 1,
         }),
     ),
 ];
 
-const ITEMS_1544: &[Particle] = &[
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3356,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3586,
-    },
-];
+const ITEMS_1544: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3372,
+}];
 
 const PARTICLES_1095: &[(Versions, Option<Particle>)] = &[
     (
@@ -42210,18 +42204,11 @@ const PARTICLES_1095: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1545: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3931,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3374,
-    },
-];
+const ITEMS_1545: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3817,
+}];
 
 const PARTICLES_1096: &[(Versions, Option<Particle>)] = &[
     (
@@ -42244,11 +42231,18 @@ const PARTICLES_1096: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1546: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3378,
-}];
+const ITEMS_1546: &[Particle] = &[
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3359,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3589,
+    },
+];
 
 const PARTICLES_1097: &[(Versions, Option<Particle>)] = &[
     (
@@ -42274,28 +42268,13 @@ const PARTICLES_1097: &[(Versions, Option<Particle>)] = &[
 const ITEMS_1547: &[Particle] = &[
     Particle::Element {
         max: 1,
-        min: 0,
-        type_id: 3384,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3385,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3381,
-    },
-    Particle::Element {
-        max: 1,
         min: 1,
-        type_id: 3387,
+        type_id: 3934,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3586,
+        type_id: 3377,
     },
 ];
 
@@ -42321,9 +42300,9 @@ const PARTICLES_1098: &[(Versions, Option<Particle>)] = &[
 ];
 
 const ITEMS_1548: &[Particle] = &[Particle::Element {
-    max: 1,
+    max: 0,
     min: 0,
-    type_id: 3586,
+    type_id: 3381,
 }];
 
 const PARTICLES_1099: &[(Versions, Option<Particle>)] = &[
@@ -42351,12 +42330,27 @@ const ITEMS_1549: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3382,
+        type_id: 3387,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3586,
+        type_id: 3388,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3384,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3390,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3589,
     },
 ];
 
@@ -42381,18 +42375,11 @@ const PARTICLES_1100: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1550: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3383,
-    },
-    Particle::Element {
-        max: 0,
-        min: 1,
-        type_id: 3386,
-    },
-];
+const ITEMS_1550: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 3589,
+}];
 
 const PARTICLES_1101: &[(Versions, Option<Particle>)] = &[
     (
@@ -42419,17 +42406,12 @@ const ITEMS_1551: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3392,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3401,
+        type_id: 3385,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3586,
+        type_id: 3589,
     },
 ];
 
@@ -42454,11 +42436,18 @@ const PARTICLES_1102: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1552: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3391,
-}];
+const ITEMS_1552: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3386,
+    },
+    Particle::Element {
+        max: 0,
+        min: 1,
+        type_id: 3389,
+    },
+];
 
 const PARTICLES_1103: &[(Versions, Option<Particle>)] = &[
     (
@@ -42481,11 +42470,23 @@ const PARTICLES_1103: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1553: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3393,
-}];
+const ITEMS_1553: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3395,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3404,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3589,
+    },
+];
 
 const PARTICLES_1104: &[(Versions, Option<Particle>)] = &[
     (
@@ -42511,7 +42512,7 @@ const PARTICLES_1104: &[(Versions, Option<Particle>)] = &[
 const ITEMS_1554: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3399,
+    type_id: 3394,
 }];
 
 const PARTICLES_1105: &[(Versions, Option<Particle>)] = &[
@@ -42535,28 +42536,11 @@ const PARTICLES_1105: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1555: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3398,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3397,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3362,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3586,
-    },
-];
+const ITEMS_1555: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3396,
+}];
 
 const PARTICLES_1106: &[(Versions, Option<Particle>)] = &[
     (
@@ -42580,9 +42564,9 @@ const PARTICLES_1106: &[(Versions, Option<Particle>)] = &[
 ];
 
 const ITEMS_1556: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3404,
+    max: 0,
+    min: 1,
+    type_id: 3402,
 }];
 
 const PARTICLES_1107: &[(Versions, Option<Particle>)] = &[
@@ -42606,11 +42590,28 @@ const PARTICLES_1107: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1557: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3403,
-}];
+const ITEMS_1557: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3401,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3400,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3365,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3589,
+    },
+];
 
 const PARTICLES_1108: &[(Versions, Option<Particle>)] = &[
     (
@@ -42634,9 +42635,9 @@ const PARTICLES_1108: &[(Versions, Option<Particle>)] = &[
 ];
 
 const ITEMS_1558: &[Particle] = &[Particle::Element {
-    max: 0,
+    max: 1,
     min: 0,
-    type_id: 3402,
+    type_id: 3407,
 }];
 
 const PARTICLES_1109: &[(Versions, Option<Particle>)] = &[
@@ -42663,7 +42664,7 @@ const PARTICLES_1109: &[(Versions, Option<Particle>)] = &[
 const ITEMS_1559: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3389,
+    type_id: 3406,
 }];
 
 const PARTICLES_1110: &[(Versions, Option<Particle>)] = &[
@@ -42689,8 +42690,8 @@ const PARTICLES_1110: &[(Versions, Option<Particle>)] = &[
 
 const ITEMS_1560: &[Particle] = &[Particle::Element {
     max: 0,
-    min: 1,
-    type_id: 3407,
+    min: 0,
+    type_id: 3405,
 }];
 
 const PARTICLES_1111: &[(Versions, Option<Particle>)] = &[
@@ -42717,12 +42718,12 @@ const PARTICLES_1111: &[(Versions, Option<Particle>)] = &[
 const ITEMS_1561: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3411,
+    type_id: 3392,
 }];
 
 const PARTICLES_1112: &[(Versions, Option<Particle>)] = &[
     (
-        Versions(0b00_0011),
+        Versions(0b00_0001),
         Some(Particle::Composite {
             items: ITEMS_9,
             kind: CompositeKind::Sequence,
@@ -42731,7 +42732,7 @@ const PARTICLES_1112: &[(Versions, Option<Particle>)] = &[
         }),
     ),
     (
-        Versions(0b11_1100),
+        Versions(0b11_1110),
         Some(Particle::Composite {
             items: ITEMS_1561,
             kind: CompositeKind::Sequence,
@@ -42744,10 +42745,37 @@ const PARTICLES_1112: &[(Versions, Option<Particle>)] = &[
 const ITEMS_1562: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3412,
+    type_id: 3410,
 }];
 
 const PARTICLES_1113: &[(Versions, Option<Particle>)] = &[
+    (
+        Versions(0b00_0001),
+        Some(Particle::Composite {
+            items: ITEMS_9,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+    (
+        Versions(0b11_1110),
+        Some(Particle::Composite {
+            items: ITEMS_1562,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+];
+
+const ITEMS_1563: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3414,
+}];
+
+const PARTICLES_1114: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0011),
         Some(Particle::Composite {
@@ -42760,7 +42788,7 @@ const PARTICLES_1113: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b11_1100),
         Some(Particle::Composite {
-            items: ITEMS_1562,
+            items: ITEMS_1563,
             kind: CompositeKind::Sequence,
             max: 1,
             min: 1,
@@ -42768,54 +42796,37 @@ const PARTICLES_1113: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1563: &[Particle] = &[Particle::Element {
+const ITEMS_1564: &[Particle] = &[Particle::Element {
     max: 0,
-    min: 0,
-    type_id: 3904,
+    min: 1,
+    type_id: 3415,
 }];
 
-const PARTICLES_1114: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1563,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1564: &[Particle] = &[
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3621,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3839,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3587,
-    },
+const PARTICLES_1115: &[(Versions, Option<Particle>)] = &[
+    (
+        Versions(0b00_0011),
+        Some(Particle::Composite {
+            items: ITEMS_9,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+    (
+        Versions(0b11_1100),
+        Some(Particle::Composite {
+            items: ITEMS_1564,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
 ];
 
-const PARTICLES_1115: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1564,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
 const ITEMS_1565: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 1,
-    type_id: 3736,
+    max: 0,
+    min: 0,
+    type_id: 3907,
 }];
 
 const PARTICLES_1116: &[(Versions, Option<Particle>)] = &[(
@@ -42828,11 +42839,23 @@ const PARTICLES_1116: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1566: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3587,
-}];
+const ITEMS_1566: &[Particle] = &[
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3624,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3842,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3590,
+    },
+];
 
 const PARTICLES_1117: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -42845,9 +42868,9 @@ const PARTICLES_1117: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1567: &[Particle] = &[Particle::Element {
-    max: 0,
+    max: 1,
     min: 1,
-    type_id: 3419,
+    type_id: 3739,
 }];
 
 const PARTICLES_1118: &[(Versions, Option<Particle>)] = &[(
@@ -42861,9 +42884,9 @@ const PARTICLES_1118: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1568: &[Particle] = &[Particle::Element {
-    max: 0,
+    max: 1,
     min: 0,
-    type_id: 3897,
+    type_id: 3590,
 }];
 
 const PARTICLES_1119: &[(Versions, Option<Particle>)] = &[(
@@ -42876,21 +42899,43 @@ const PARTICLES_1119: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1569: &[Particle] = &[
+const ITEMS_1569: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3422,
+}];
+
+const PARTICLES_1120: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1569,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1570: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3900,
+}];
+
+const PARTICLES_1121: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1570,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1571: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3438,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3434,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3436,
+        type_id: 3441,
     },
     Particle::Element {
         max: 1,
@@ -42905,56 +42950,34 @@ const ITEMS_1569: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3432,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3433,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
         type_id: 3440,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3442,
     },
     Particle::Element {
         max: 1,
         min: 0,
         type_id: 3435,
     },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3436,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3443,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3438,
+    },
 ];
-
-const PARTICLES_1120: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1569,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1570: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3507,
-}];
-
-const PARTICLES_1121: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1570,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1571: &[Particle] = &[Particle::Element {
-    max: 65430,
-    min: 0,
-    type_id: 3430,
-}];
 
 const PARTICLES_1122: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -42966,28 +42989,11 @@ const PARTICLES_1122: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1572: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3819,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3612,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3896,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3446,
-    },
-];
+const ITEMS_1572: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 3510,
+}];
 
 const PARTICLES_1123: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -42999,29 +43005,60 @@ const PARTICLES_1123: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1573: &[Particle] = &[
-    Particle::Element {
+const ITEMS_1573: &[Particle] = &[Particle::Element {
+    max: 65430,
+    min: 0,
+    type_id: 3433,
+}];
+
+const PARTICLES_1124: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1573,
+        kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
-        type_id: 3251,
-    },
-    Particle::Any {
-        max: 1,
-        min: 0,
-        namespace: AnyNamespace::Any,
-    },
-];
+    }),
+)];
 
 const ITEMS_1574: &[Particle] = &[
     Particle::Element {
         max: 1,
-        min: 1,
-        type_id: 3251,
+        min: 0,
+        type_id: 3822,
     },
     Particle::Element {
         max: 1,
+        min: 0,
+        type_id: 3615,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3899,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3449,
+    },
+];
+
+const PARTICLES_1125: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1574,
+        kind: CompositeKind::Sequence,
+        max: 1,
         min: 1,
-        type_id: 3347,
+    }),
+)];
+
+const ITEMS_1575: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3254,
     },
     Particle::Any {
         max: 1,
@@ -43030,11 +43067,29 @@ const ITEMS_1574: &[Particle] = &[
     },
 ];
 
-const PARTICLES_1124: &[(Versions, Option<Particle>)] = &[
+const ITEMS_1576: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3254,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3350,
+    },
+    Particle::Any {
+        max: 1,
+        min: 0,
+        namespace: AnyNamespace::Any,
+    },
+];
+
+const PARTICLES_1126: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_1573,
+            items: ITEMS_1575,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -43043,7 +43098,7 @@ const PARTICLES_1124: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b11_1110),
         Some(Particle::Composite {
-            items: ITEMS_1574,
+            items: ITEMS_1576,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -43051,42 +43106,10 @@ const PARTICLES_1124: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1575: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3445,
-}];
-
-const PARTICLES_1125: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1575,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1576: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3444,
-}];
-
-const PARTICLES_1126: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1576,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
 const ITEMS_1577: &[Particle] = &[Particle::Element {
     max: 0,
-    min: 1,
-    type_id: 3449,
+    min: 0,
+    type_id: 3448,
 }];
 
 const PARTICLES_1127: &[(Versions, Option<Particle>)] = &[(
@@ -43099,23 +43122,11 @@ const PARTICLES_1127: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1578: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3614,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3641,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3451,
-    },
-];
+const ITEMS_1578: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3447,
+}];
 
 const PARTICLES_1128: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -43127,84 +43138,32 @@ const PARTICLES_1128: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1579: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3252,
-    },
-    Particle::Any {
-        max: 1,
-        min: 0,
-        namespace: AnyNamespace::Any,
-    },
-];
-
-const ITEMS_1580: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3252,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3345,
-    },
-    Particle::Any {
-        max: 1,
-        min: 0,
-        namespace: AnyNamespace::Any,
-    },
-];
-
-const PARTICLES_1129: &[(Versions, Option<Particle>)] = &[
-    (
-        Versions(0b00_0001),
-        Some(Particle::Composite {
-            items: ITEMS_1579,
-            kind: CompositeKind::Choice,
-            max: 1,
-            min: 1,
-        }),
-    ),
-    (
-        Versions(0b11_1110),
-        Some(Particle::Composite {
-            items: ITEMS_1580,
-            kind: CompositeKind::Choice,
-            max: 1,
-            min: 1,
-        }),
-    ),
-];
-
-const ITEMS_1581: &[Particle] = &[Particle::Element {
+const ITEMS_1579: &[Particle] = &[Particle::Element {
     max: 0,
-    min: 0,
-    type_id: 3450,
+    min: 1,
+    type_id: 3452,
 }];
 
-const PARTICLES_1130: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_1129: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_1581,
+        items: ITEMS_1579,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1582: &[Particle] = &[
+const ITEMS_1580: &[Particle] = &[
     Particle::Element {
         max: 1,
-        min: 1,
-        type_id: 3894,
+        min: 0,
+        type_id: 3617,
     },
     Particle::Element {
         max: 1,
-        min: 1,
-        type_id: 3526,
+        min: 0,
+        type_id: 3644,
     },
     Particle::Element {
         max: 1,
@@ -43213,21 +43172,21 @@ const ITEMS_1582: &[Particle] = &[
     },
 ];
 
-const PARTICLES_1131: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_1130: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_1582,
-        kind: CompositeKind::Choice,
+        items: ITEMS_1580,
+        kind: CompositeKind::Sequence,
         max: 1,
-        min: 0,
+        min: 1,
     }),
 )];
 
-const ITEMS_1583: &[Particle] = &[
+const ITEMS_1581: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3327,
+        type_id: 3255,
     },
     Particle::Any {
         max: 1,
@@ -43236,128 +43195,11 @@ const ITEMS_1583: &[Particle] = &[
     },
 ];
 
-const PARTICLES_1132: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1583,
-        kind: CompositeKind::Choice,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1584: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3453,
-}];
-
-const PARTICLES_1133: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1584,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1585: &[Particle] = &[
-    Particle::Element {
-        max: 0,
-        min: 1,
-        type_id: 3455,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3587,
-    },
-];
-
-const PARTICLES_1134: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1585,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1586: &[Particle] = &[
+const ITEMS_1582: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3736,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3587,
-    },
-];
-
-const PARTICLES_1135: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1586,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1587: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3458,
-}];
-
-const PARTICLES_1136: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1587,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1588: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3462,
-}];
-
-const PARTICLES_1137: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1588,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 0,
-    }),
-)];
-
-const ITEMS_1589: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3253,
-    },
-    Particle::Any {
-        max: 1,
-        min: 0,
-        namespace: AnyNamespace::Any,
-    },
-];
-
-const ITEMS_1590: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3253,
+        type_id: 3255,
     },
     Particle::Element {
         max: 1,
@@ -43371,11 +43213,11 @@ const ITEMS_1590: &[Particle] = &[
     },
 ];
 
-const PARTICLES_1138: &[(Versions, Option<Particle>)] = &[
+const PARTICLES_1131: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_1589,
+            items: ITEMS_1581,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -43384,7 +43226,7 @@ const PARTICLES_1138: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b11_1110),
         Some(Particle::Composite {
-            items: ITEMS_1590,
+            items: ITEMS_1582,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -43392,60 +43234,224 @@ const PARTICLES_1138: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1591: &[Particle] = &[Particle::Element {
+const ITEMS_1583: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
+    type_id: 3453,
+}];
+
+const PARTICLES_1132: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1583,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1584: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3897,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3529,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3457,
+    },
+];
+
+const PARTICLES_1133: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1584,
+        kind: CompositeKind::Choice,
+        max: 1,
+        min: 0,
+    }),
+)];
+
+const ITEMS_1585: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3330,
+    },
+    Particle::Any {
+        max: 1,
+        min: 0,
+        namespace: AnyNamespace::Any,
+    },
+];
+
+const PARTICLES_1134: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1585,
+        kind: CompositeKind::Choice,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1586: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3456,
+}];
+
+const PARTICLES_1135: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1586,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1587: &[Particle] = &[
+    Particle::Element {
+        max: 0,
+        min: 1,
+        type_id: 3458,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3590,
+    },
+];
+
+const PARTICLES_1136: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1587,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1588: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3739,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3590,
+    },
+];
+
+const PARTICLES_1137: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1588,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1589: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
     type_id: 3461,
+}];
+
+const PARTICLES_1138: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1589,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1590: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 3465,
 }];
 
 const PARTICLES_1139: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_1591,
+        items: ITEMS_1590,
         kind: CompositeKind::Sequence,
         max: 1,
-        min: 1,
+        min: 0,
     }),
 )];
 
-const ITEMS_1592: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3460,
-}];
-
-const PARTICLES_1140: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1592,
-        kind: CompositeKind::Sequence,
+const ITEMS_1591: &[Particle] = &[
+    Particle::Element {
         max: 1,
         min: 1,
-    }),
-)];
-
-const ITEMS_1593: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3469,
+        type_id: 3256,
     },
-    Particle::Element {
+    Particle::Any {
         max: 1,
         min: 0,
-        type_id: 3917,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3806,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3587,
+        namespace: AnyNamespace::Any,
     },
 ];
+
+const ITEMS_1592: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3256,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3351,
+    },
+    Particle::Any {
+        max: 1,
+        min: 0,
+        namespace: AnyNamespace::Any,
+    },
+];
+
+const PARTICLES_1140: &[(Versions, Option<Particle>)] = &[
+    (
+        Versions(0b00_0001),
+        Some(Particle::Composite {
+            items: ITEMS_1591,
+            kind: CompositeKind::Choice,
+            max: 1,
+            min: 1,
+        }),
+    ),
+    (
+        Versions(0b11_1110),
+        Some(Particle::Composite {
+            items: ITEMS_1592,
+            kind: CompositeKind::Choice,
+            max: 1,
+            min: 1,
+        }),
+    ),
+];
+
+const ITEMS_1593: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3464,
+}];
 
 const PARTICLES_1141: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -43458,9 +43464,9 @@ const PARTICLES_1141: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1594: &[Particle] = &[Particle::Element {
-    max: 65430,
+    max: 0,
     min: 1,
-    type_id: 3899,
+    type_id: 3463,
 }];
 
 const PARTICLES_1142: &[(Versions, Option<Particle>)] = &[(
@@ -43473,11 +43479,28 @@ const PARTICLES_1142: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1595: &[Particle] = &[Particle::Element {
-    max: 65430,
-    min: 1,
-    type_id: 3471,
-}];
+const ITEMS_1595: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3472,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3920,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3809,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3590,
+    },
+];
 
 const PARTICLES_1143: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -43490,9 +43513,9 @@ const PARTICLES_1143: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1596: &[Particle] = &[Particle::Element {
-    max: 0,
+    max: 65430,
     min: 1,
-    type_id: 3474,
+    type_id: 3902,
 }];
 
 const PARTICLES_1144: &[(Versions, Option<Particle>)] = &[(
@@ -43505,33 +43528,11 @@ const PARTICLES_1144: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1597: &[Particle] = &[
-    Particle::Element {
-        max: 3,
-        min: 0,
-        type_id: 3909,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3511,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3541,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3654,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3479,
-    },
-];
+const ITEMS_1597: &[Particle] = &[Particle::Element {
+    max: 65430,
+    min: 1,
+    type_id: 3474,
+}];
 
 const PARTICLES_1145: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -43543,34 +43544,49 @@ const PARTICLES_1145: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1598: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3928,
-    },
-    Particle::Any {
-        max: 1,
-        min: 0,
-        namespace: AnyNamespace::Any,
-    },
-];
+const ITEMS_1598: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3477,
+}];
 
 const PARTICLES_1146: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1598,
-        kind: CompositeKind::Choice,
+        kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1599: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3478,
-}];
+const ITEMS_1599: &[Particle] = &[
+    Particle::Element {
+        max: 3,
+        min: 0,
+        type_id: 3912,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3514,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3544,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3657,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3482,
+    },
+];
 
 const PARTICLES_1147: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -43582,94 +43598,34 @@ const PARTICLES_1147: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1600: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3481,
-}];
+const ITEMS_1600: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3931,
+    },
+    Particle::Any {
+        max: 1,
+        min: 0,
+        namespace: AnyNamespace::Any,
+    },
+];
 
 const PARTICLES_1148: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1600,
-        kind: CompositeKind::Sequence,
+        kind: CompositeKind::Choice,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1601: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3484,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3487,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3485,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3532,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3725,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3530,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3645,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3568,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3666,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3667,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3569,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3822,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3882,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3587,
-    },
-];
+const ITEMS_1601: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3481,
+}];
 
 const PARTICLES_1149: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -43682,9 +43638,9 @@ const PARTICLES_1149: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1602: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3509,
+    max: 0,
+    min: 1,
+    type_id: 3484,
 }];
 
 const PARTICLES_1150: &[(Versions, Option<Particle>)] = &[(
@@ -43699,14 +43655,74 @@ const PARTICLES_1150: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1603: &[Particle] = &[
     Particle::Element {
-        max: 0,
+        max: 1,
+        min: 0,
+        type_id: 3487,
+    },
+    Particle::Element {
+        max: 1,
         min: 1,
-        type_id: 3486,
+        type_id: 3490,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3587,
+        type_id: 3488,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3535,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3728,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3533,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3648,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3571,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3669,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3670,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3572,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3825,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3885,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3590,
     },
 ];
 
@@ -43721,9 +43737,9 @@ const PARTICLES_1151: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1604: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3611,
+    max: 1,
+    min: 0,
+    type_id: 3512,
 }];
 
 const PARTICLES_1152: &[(Versions, Option<Particle>)] = &[(
@@ -43736,11 +43752,18 @@ const PARTICLES_1152: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1605: &[Particle] = &[Particle::Element {
-    max: 0x4000,
-    min: 1,
-    type_id: 3647,
-}];
+const ITEMS_1605: &[Particle] = &[
+    Particle::Element {
+        max: 0,
+        min: 1,
+        type_id: 3489,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3590,
+    },
+];
 
 const PARTICLES_1153: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -43752,18 +43775,11 @@ const PARTICLES_1153: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1606: &[Particle] = &[
-    Particle::Element {
-        max: 3,
-        min: 2,
-        type_id: 3480,
-    },
-    Particle::Element {
-        max: 3,
-        min: 2,
-        type_id: 3507,
-    },
-];
+const ITEMS_1606: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3614,
+}];
 
 const PARTICLES_1154: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -43775,18 +43791,11 @@ const PARTICLES_1154: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1607: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3658,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3670,
-    },
-];
+const ITEMS_1607: &[Particle] = &[Particle::Element {
+    max: 0x4000,
+    min: 1,
+    type_id: 3650,
+}];
 
 const PARTICLES_1155: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -43798,11 +43807,18 @@ const PARTICLES_1155: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1608: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3488,
-}];
+const ITEMS_1608: &[Particle] = &[
+    Particle::Element {
+        max: 3,
+        min: 2,
+        type_id: 3483,
+    },
+    Particle::Element {
+        max: 3,
+        min: 2,
+        type_id: 3510,
+    },
+];
 
 const PARTICLES_1156: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -43817,13 +43833,13 @@ const PARTICLES_1156: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1609: &[Particle] = &[
     Particle::Element {
         max: 1,
-        min: 1,
-        type_id: 3808,
+        min: 0,
+        type_id: 3661,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3516,
+        type_id: 3673,
     },
 ];
 
@@ -43839,8 +43855,8 @@ const PARTICLES_1157: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1610: &[Particle] = &[Particle::Element {
     max: 0,
-    min: 0,
-    type_id: 3514,
+    min: 1,
+    type_id: 3491,
 }];
 
 const PARTICLES_1158: &[(Versions, Option<Particle>)] = &[(
@@ -43853,11 +43869,18 @@ const PARTICLES_1158: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1611: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 1,
-    type_id: 3705,
-}];
+const ITEMS_1611: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3811,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3519,
+    },
+];
 
 const PARTICLES_1159: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -43869,23 +43892,11 @@ const PARTICLES_1159: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1612: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3414,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3515,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3587,
-    },
-];
+const ITEMS_1612: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3517,
+}];
 
 const PARTICLES_1160: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -43897,18 +43908,11 @@ const PARTICLES_1160: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1613: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3740,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3587,
-    },
-];
+const ITEMS_1613: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 1,
+    type_id: 3708,
+}];
 
 const PARTICLES_1161: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -43920,11 +43924,23 @@ const PARTICLES_1161: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1614: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3519,
-}];
+const ITEMS_1614: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3417,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3518,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3590,
+    },
+];
 
 const PARTICLES_1162: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -43938,14 +43954,14 @@ const PARTICLES_1162: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1615: &[Particle] = &[
     Particle::Element {
-        max: 0,
+        max: 1,
         min: 1,
-        type_id: 3477,
+        type_id: 3743,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3587,
+        type_id: 3590,
     },
 ];
 
@@ -43959,38 +43975,11 @@ const PARTICLES_1163: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1616: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3555,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3707,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3880,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3864,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3731,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3524,
-    },
-];
+const ITEMS_1616: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3522,
+}];
 
 const PARTICLES_1164: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -44004,27 +43993,75 @@ const PARTICLES_1164: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1617: &[Particle] = &[
     Particle::Element {
-        max: 1,
+        max: 0,
         min: 1,
-        type_id: 3262,
+        type_id: 3480,
     },
-    Particle::Any {
+    Particle::Element {
         max: 1,
         min: 0,
-        namespace: AnyNamespace::Any,
+        type_id: 3590,
     },
 ];
+
+const PARTICLES_1165: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1617,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
 
 const ITEMS_1618: &[Particle] = &[
     Particle::Element {
         max: 1,
-        min: 1,
-        type_id: 3262,
+        min: 0,
+        type_id: 3558,
     },
     Particle::Element {
         max: 1,
+        min: 0,
+        type_id: 3710,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3883,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3867,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3734,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3527,
+    },
+];
+
+const PARTICLES_1166: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1618,
+        kind: CompositeKind::Sequence,
+        max: 1,
         min: 1,
-        type_id: 3349,
+    }),
+)];
+
+const ITEMS_1619: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3265,
     },
     Particle::Any {
         max: 1,
@@ -44033,11 +44070,29 @@ const ITEMS_1618: &[Particle] = &[
     },
 ];
 
-const PARTICLES_1165: &[(Versions, Option<Particle>)] = &[
+const ITEMS_1620: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3265,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3352,
+    },
+    Particle::Any {
+        max: 1,
+        min: 0,
+        namespace: AnyNamespace::Any,
+    },
+];
+
+const PARTICLES_1167: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_1617,
+            items: ITEMS_1619,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -44046,7 +44101,7 @@ const PARTICLES_1165: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b11_1110),
         Some(Particle::Composite {
-            items: ITEMS_1618,
+            items: ITEMS_1620,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -44054,50 +44109,11 @@ const PARTICLES_1165: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1619: &[Particle] = &[Particle::Element {
+const ITEMS_1621: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
-    type_id: 3523,
+    type_id: 3526,
 }];
-
-const PARTICLES_1166: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1619,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1620: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3522,
-}];
-
-const PARTICLES_1167: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1620,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1621: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3728,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3782,
-    },
-];
 
 const PARTICLES_1168: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -44110,9 +44126,9 @@ const PARTICLES_1168: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1622: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3528,
+    max: 0,
+    min: 1,
+    type_id: 3525,
 }];
 
 const PARTICLES_1169: &[(Versions, Option<Particle>)] = &[(
@@ -44125,11 +44141,18 @@ const PARTICLES_1169: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1623: &[Particle] = &[Particle::Element {
-    max: 0xFFFF,
-    min: 1,
-    type_id: 3527,
-}];
+const ITEMS_1623: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3731,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3785,
+    },
+];
 
 const PARTICLES_1170: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -44141,23 +44164,11 @@ const PARTICLES_1170: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1624: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3725,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3530,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3645,
-    },
-];
+const ITEMS_1624: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 3531,
+}];
 
 const PARTICLES_1171: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -44170,9 +44181,9 @@ const PARTICLES_1171: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1625: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3531,
+    max: 0xFFFF,
+    min: 1,
+    type_id: 3530,
 }];
 
 const PARTICLES_1172: &[(Versions, Option<Particle>)] = &[(
@@ -44185,11 +44196,23 @@ const PARTICLES_1172: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1626: &[Particle] = &[Particle::Element {
-    max: 2,
-    min: 1,
-    type_id: 3533,
-}];
+const ITEMS_1626: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3728,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3533,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3648,
+    },
+];
 
 const PARTICLES_1173: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -44203,8 +44226,8 @@ const PARTICLES_1173: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1627: &[Particle] = &[Particle::Element {
     max: 0,
-    min: 1,
-    type_id: 3536,
+    min: 0,
+    type_id: 3534,
 }];
 
 const PARTICLES_1174: &[(Versions, Option<Particle>)] = &[(
@@ -44217,58 +44240,11 @@ const PARTICLES_1174: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1628: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3729,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3813,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3721,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3720,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3725,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3766,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3727,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3645,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3416,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3587,
-    },
-];
+const ITEMS_1628: &[Particle] = &[Particle::Element {
+    max: 2,
+    min: 1,
+    type_id: 3536,
+}];
 
 const PARTICLES_1175: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -44283,7 +44259,7 @@ const PARTICLES_1175: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1629: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3537,
+    type_id: 3539,
 }];
 
 const PARTICLES_1176: &[(Versions, Option<Particle>)] = &[(
@@ -44296,11 +44272,58 @@ const PARTICLES_1176: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1630: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3539,
-}];
+const ITEMS_1630: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3732,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3816,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3724,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3723,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3728,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3769,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3730,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3648,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3419,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3590,
+    },
+];
 
 const PARTICLES_1177: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -44312,18 +44335,11 @@ const PARTICLES_1177: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1631: &[Particle] = &[
-    Particle::Element {
-        max: 2,
-        min: 2,
-        type_id: 3480,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3507,
-    },
-];
+const ITEMS_1631: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3540,
+}];
 
 const PARTICLES_1178: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -44336,9 +44352,9 @@ const PARTICLES_1178: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1632: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3549,
+    max: 0,
+    min: 1,
+    type_id: 3542,
 }];
 
 const PARTICLES_1179: &[(Versions, Option<Particle>)] = &[(
@@ -44351,11 +44367,18 @@ const PARTICLES_1179: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1633: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3546,
-}];
+const ITEMS_1633: &[Particle] = &[
+    Particle::Element {
+        max: 2,
+        min: 2,
+        type_id: 3483,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3510,
+    },
+];
 
 const PARTICLES_1180: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -44367,11 +44390,43 @@ const PARTICLES_1180: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1634: &[Particle] = &[
+const ITEMS_1634: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 3552,
+}];
+
+const PARTICLES_1181: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1634,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1635: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 3549,
+}];
+
+const PARTICLES_1182: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1635,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1636: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3266,
+        type_id: 3269,
     },
     Particle::Any {
         max: 1,
@@ -44380,16 +44435,16 @@ const ITEMS_1634: &[Particle] = &[
     },
 ];
 
-const ITEMS_1635: &[Particle] = &[
+const ITEMS_1637: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3266,
+        type_id: 3269,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3351,
+        type_id: 3354,
     },
     Particle::Any {
         max: 1,
@@ -44398,11 +44453,11 @@ const ITEMS_1635: &[Particle] = &[
     },
 ];
 
-const PARTICLES_1181: &[(Versions, Option<Particle>)] = &[
+const PARTICLES_1183: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_1634,
+            items: ITEMS_1636,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -44411,45 +44466,13 @@ const PARTICLES_1181: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b11_1110),
         Some(Particle::Composite {
-            items: ITEMS_1635,
+            items: ITEMS_1637,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
         }),
     ),
 ];
-
-const ITEMS_1636: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3545,
-}];
-
-const PARTICLES_1182: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1636,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1637: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3544,
-}];
-
-const PARTICLES_1183: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1637,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
 
 const ITEMS_1638: &[Particle] = &[Particle::Element {
     max: 0,
@@ -44467,42 +44490,74 @@ const PARTICLES_1184: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1639: &[Particle] = &[
+const ITEMS_1639: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3547,
+}];
+
+const PARTICLES_1185: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1639,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1640: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3551,
+}];
+
+const PARTICLES_1186: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1640,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1641: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3910,
+        type_id: 3913,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3911,
+        type_id: 3914,
     },
 ];
 
-const ITEMS_1640: &[Particle] = &[
+const ITEMS_1642: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3929,
+        type_id: 3932,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3910,
+        type_id: 3913,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3911,
+        type_id: 3914,
     },
 ];
 
-const PARTICLES_1185: &[(Versions, Option<Particle>)] = &[
+const PARTICLES_1187: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_1639,
+            items: ITEMS_1641,
             kind: CompositeKind::Sequence,
             max: 1,
             min: 1,
@@ -44511,7 +44566,7 @@ const PARTICLES_1185: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b11_1110),
         Some(Particle::Composite {
-            items: ITEMS_1640,
+            items: ITEMS_1642,
             kind: CompositeKind::Sequence,
             max: 1,
             min: 1,
@@ -44519,42 +44574,10 @@ const PARTICLES_1185: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1641: &[Particle] = &[Particle::Element {
+const ITEMS_1643: &[Particle] = &[Particle::Element {
     max: 0xFFFE,
     min: 1,
-    type_id: 3550,
-}];
-
-const PARTICLES_1186: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1641,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1642: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3561,
-}];
-
-const PARTICLES_1187: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1642,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1643: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3556,
+    type_id: 3553,
 }];
 
 const PARTICLES_1188: &[(Versions, Option<Particle>)] = &[(
@@ -44570,7 +44593,7 @@ const PARTICLES_1188: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1644: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 3557,
+    type_id: 3564,
 }];
 
 const PARTICLES_1189: &[(Versions, Option<Particle>)] = &[(
@@ -44584,9 +44607,9 @@ const PARTICLES_1189: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1645: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 1,
-    type_id: 3918,
+    max: 0,
+    min: 0,
+    type_id: 3559,
 }];
 
 const PARTICLES_1190: &[(Versions, Option<Particle>)] = &[(
@@ -44600,9 +44623,9 @@ const PARTICLES_1190: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1646: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3559,
+    max: 1,
+    min: 0,
+    type_id: 3560,
 }];
 
 const PARTICLES_1191: &[(Versions, Option<Particle>)] = &[(
@@ -44616,9 +44639,9 @@ const PARTICLES_1191: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1647: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3562,
+    max: 1,
+    min: 1,
+    type_id: 3921,
 }];
 
 const PARTICLES_1192: &[(Versions, Option<Particle>)] = &[(
@@ -44631,88 +44654,11 @@ const PARTICLES_1192: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1648: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3829,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3832,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3826,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3830,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3538,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3766,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3725,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3727,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3645,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3568,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3666,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3667,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3569,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3712,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3529,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3587,
-    },
-];
+const ITEMS_1648: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3562,
+}];
 
 const PARTICLES_1193: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -44727,7 +44673,7 @@ const PARTICLES_1193: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1649: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
-    type_id: 3751,
+    type_id: 3565,
 }];
 
 const PARTICLES_1194: &[(Versions, Option<Particle>)] = &[(
@@ -44740,11 +44686,88 @@ const PARTICLES_1194: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1650: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3657,
-}];
+const ITEMS_1650: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3832,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3835,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3829,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3833,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3541,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3769,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3728,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3730,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3648,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3571,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3669,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3670,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3572,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3715,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3532,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3590,
+    },
+];
 
 const PARTICLES_1195: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -44756,43 +44779,11 @@ const PARTICLES_1195: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1651: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3624,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3702,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3618,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3468,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3430,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3470,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3587,
-    },
-];
+const ITEMS_1651: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3754,
+}];
 
 const PARTICLES_1196: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -44806,8 +44797,8 @@ const PARTICLES_1196: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1652: &[Particle] = &[Particle::Element {
     max: 0,
-    min: 0,
-    type_id: 3572,
+    min: 1,
+    type_id: 3660,
 }];
 
 const PARTICLES_1197: &[(Versions, Option<Particle>)] = &[(
@@ -44824,12 +44815,37 @@ const ITEMS_1653: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3870,
+        type_id: 3627,
     },
     Particle::Element {
-        max: 0,
+        max: 1,
         min: 0,
-        type_id: 3897,
+        type_id: 3705,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3621,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3471,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3433,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3473,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3590,
     },
 ];
 
@@ -44846,79 +44862,118 @@ const PARTICLES_1198: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1654: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
-    type_id: 3584,
-}];
-
-const ITEMS_1655: &[Particle] = &[Particle::Composite {
-    items: ITEMS_1654,
-    kind: CompositeKind::Sequence,
-    max: 1,
-    min: 1,
-}];
-
-const ITEMS_1656: &[Particle] = &[Particle::Composite {
-    items: ITEMS_1655,
-    kind: CompositeKind::Group,
-    max: 1,
-    min: 0,
+    type_id: 3575,
 }];
 
 const PARTICLES_1199: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_1656,
+        items: ITEMS_1654,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1657: &[Particle] = &[
+const ITEMS_1655: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3610,
+        type_id: 3873,
     },
     Particle::Element {
-        max: 1,
+        max: 0,
         min: 0,
-        type_id: 3602,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3608,
+        type_id: 3900,
     },
 ];
 
-const ITEMS_1658: &[Particle] = &[
+const PARTICLES_1200: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1655,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1656: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3587,
+}];
+
+const ITEMS_1657: &[Particle] = &[Particle::Composite {
+    items: ITEMS_1656,
+    kind: CompositeKind::Sequence,
+    max: 1,
+    min: 1,
+}];
+
+const ITEMS_1658: &[Particle] = &[Particle::Composite {
+    items: ITEMS_1657,
+    kind: CompositeKind::Group,
+    max: 1,
+    min: 0,
+}];
+
+const PARTICLES_1201: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1658,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1659: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4309,
+        type_id: 3613,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3610,
+        type_id: 3605,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3602,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3608,
+        type_id: 3611,
     },
 ];
 
-const PARTICLES_1200: &[(Versions, Option<Particle>)] = &[
+const ITEMS_1660: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 4312,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3613,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3605,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3611,
+    },
+];
+
+const PARTICLES_1202: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b01_1111),
         Some(Particle::Composite {
-            items: ITEMS_1657,
+            items: ITEMS_1659,
             kind: CompositeKind::Sequence,
             max: 1,
             min: 1,
@@ -44927,7 +44982,7 @@ const PARTICLES_1200: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b10_0000),
         Some(Particle::Composite {
-            items: ITEMS_1658,
+            items: ITEMS_1660,
             kind: CompositeKind::Sequence,
             max: 1,
             min: 1,
@@ -44935,71 +44990,29 @@ const PARTICLES_1200: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1659: &[Particle] = &[Particle::Element {
+const ITEMS_1661: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 3932,
+    type_id: 3935,
 }];
-
-const PARTICLES_1201: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1659,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1660: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3601,
-}];
-
-const PARTICLES_1202: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1660,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1661: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3599,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3558,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3710,
-    },
-];
-
-const ITEMS_1662: &[Particle] = &[
-    Particle::Composite {
-        items: ITEMS_1661,
-        kind: CompositeKind::Choice,
-        max: 1,
-        min: 1,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3587,
-    },
-];
 
 const PARTICLES_1203: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1661,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1662: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3604,
+}];
+
+const PARTICLES_1204: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1662,
@@ -45009,27 +45022,37 @@ const PARTICLES_1203: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1663: &[Particle] = &[Particle::Element {
-    max: 0xFFFE,
-    min: 1,
-    type_id: 3604,
-}];
-
-const PARTICLES_1204: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1663,
-        kind: CompositeKind::Sequence,
+const ITEMS_1663: &[Particle] = &[
+    Particle::Element {
         max: 1,
         min: 1,
-    }),
-)];
+        type_id: 3602,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3561,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3713,
+    },
+];
 
-const ITEMS_1664: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3600,
-}];
+const ITEMS_1664: &[Particle] = &[
+    Particle::Composite {
+        items: ITEMS_1663,
+        kind: CompositeKind::Choice,
+        max: 1,
+        min: 1,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3590,
+    },
+];
 
 const PARTICLES_1205: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -45042,9 +45065,9 @@ const PARTICLES_1205: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1665: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3606,
+    max: 0xFFFE,
+    min: 1,
+    type_id: 3607,
 }];
 
 const PARTICLES_1206: &[(Versions, Option<Particle>)] = &[(
@@ -45059,8 +45082,8 @@ const PARTICLES_1206: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1666: &[Particle] = &[Particle::Element {
     max: 0,
-    min: 1,
-    type_id: 3607,
+    min: 0,
+    type_id: 3603,
 }];
 
 const PARTICLES_1207: &[(Versions, Option<Particle>)] = &[(
@@ -45074,8 +45097,8 @@ const PARTICLES_1207: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1667: &[Particle] = &[Particle::Element {
-    max: 0xFFFE,
-    min: 1,
+    max: 0,
+    min: 0,
     type_id: 3609,
 }];
 
@@ -45089,34 +45112,29 @@ const PARTICLES_1208: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1668: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3780,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3567,
-    },
-];
-
-const ITEMS_1669: &[Particle] = &[
-    Particle::Composite {
-        items: ITEMS_1668,
-        kind: CompositeKind::Choice,
-        max: 1,
-        min: 1,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3639,
-    },
-];
+const ITEMS_1668: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3610,
+}];
 
 const PARTICLES_1209: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1668,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1669: &[Particle] = &[Particle::Element {
+    max: 0xFFFE,
+    min: 1,
+    type_id: 3612,
+}];
+
+const PARTICLES_1210: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1669,
@@ -45126,32 +45144,30 @@ const PARTICLES_1209: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1670: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3613,
-}];
-
-const PARTICLES_1210: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1670,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1671: &[Particle] = &[
+const ITEMS_1670: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3732,
+        type_id: 3783,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3637,
+        type_id: 3570,
+    },
+];
+
+const ITEMS_1671: &[Particle] = &[
+    Particle::Composite {
+        items: ITEMS_1670,
+        kind: CompositeKind::Choice,
+        max: 1,
+        min: 1,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3642,
     },
 ];
 
@@ -45159,16 +45175,16 @@ const PARTICLES_1211: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1671,
-        kind: CompositeKind::Choice,
+        kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
 const ITEMS_1672: &[Particle] = &[Particle::Element {
-    max: 65430,
-    min: 1,
-    type_id: 3618,
+    max: 0,
+    min: 0,
+    type_id: 3616,
 }];
 
 const PARTICLES_1212: &[(Versions, Option<Particle>)] = &[(
@@ -45185,47 +45201,12 @@ const ITEMS_1673: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3623,
+        type_id: 3735,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3865,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3264,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3534,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3582,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3510,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3279,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3653,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3587,
+        type_id: 3640,
     },
 ];
 
@@ -45235,33 +45216,21 @@ const PARTICLES_1213: &[(Versions, Option<Particle>)] = &[(
         items: ITEMS_1673,
         kind: CompositeKind::Choice,
         max: 1,
-        min: 0,
+        min: 1,
     }),
 )];
 
-const ITEMS_1674: &[Particle] = &[
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3277,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3620,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3553,
-    },
-];
+const ITEMS_1674: &[Particle] = &[Particle::Element {
+    max: 65430,
+    min: 1,
+    type_id: 3621,
+}];
 
 const PARTICLES_1214: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1674,
-        kind: CompositeKind::Choice,
+        kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
@@ -45271,8 +45240,89 @@ const ITEMS_1675: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3423,
+        type_id: 3626,
     },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3868,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3267,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3537,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3585,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3513,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3282,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3656,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3590,
+    },
+];
+
+const PARTICLES_1215: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1675,
+        kind: CompositeKind::Choice,
+        max: 1,
+        min: 0,
+    }),
+)];
+
+const ITEMS_1676: &[Particle] = &[
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3280,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3623,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3556,
+    },
+];
+
+const PARTICLES_1216: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1676,
+        kind: CompositeKind::Choice,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1677: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
@@ -45286,12 +45336,7 @@ const ITEMS_1675: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3424,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3425,
+        type_id: 3432,
     },
     Particle::Element {
         max: 1,
@@ -45306,7 +45351,12 @@ const ITEMS_1675: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3871,
+        type_id: 3430,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3431,
     },
     Particle::Element {
         max: 1,
@@ -45316,66 +45366,39 @@ const ITEMS_1675: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3629,
+        type_id: 3877,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3507,
+        type_id: 3632,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3627,
+        type_id: 3510,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3625,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3443,
+        type_id: 3630,
     },
     Particle::Element {
         max: 1,
         min: 0,
         type_id: 3628,
     },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3446,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3631,
+    },
 ];
-
-const PARTICLES_1215: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1675,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1676: &[Particle] = &[Particle::Element {
-    max: 65491,
-    min: 0,
-    type_id: 3624,
-}];
-
-const PARTICLES_1216: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1676,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1677: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3631,
-}];
 
 const PARTICLES_1217: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -45388,9 +45411,9 @@ const PARTICLES_1217: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1678: &[Particle] = &[Particle::Element {
-    max: 255,
+    max: 65491,
     min: 0,
-    type_id: 3633,
+    type_id: 3627,
 }];
 
 const PARTICLES_1218: &[(Versions, Option<Particle>)] = &[(
@@ -45398,23 +45421,16 @@ const PARTICLES_1218: &[(Versions, Option<Particle>)] = &[(
     Some(Particle::Composite {
         items: ITEMS_1678,
         kind: CompositeKind::Sequence,
-        max: 0,
+        max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1679: &[Particle] = &[
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3636,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3587,
-    },
-];
+const ITEMS_1679: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3634,
+}];
 
 const PARTICLES_1219: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -45427,9 +45443,9 @@ const PARTICLES_1219: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1680: &[Particle] = &[Particle::Element {
-    max: 0,
+    max: 255,
     min: 0,
-    type_id: 3638,
+    type_id: 3636,
 }];
 
 const PARTICLES_1220: &[(Versions, Option<Particle>)] = &[(
@@ -45437,16 +45453,23 @@ const PARTICLES_1220: &[(Versions, Option<Particle>)] = &[(
     Some(Particle::Composite {
         items: ITEMS_1680,
         kind: CompositeKind::Sequence,
-        max: 1,
+        max: 0,
         min: 1,
     }),
 )];
 
-const ITEMS_1681: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 1,
-    type_id: 3507,
-}];
+const ITEMS_1681: &[Particle] = &[
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3639,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3590,
+    },
+];
 
 const PARTICLES_1221: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -45458,61 +45481,27 @@ const PARTICLES_1221: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1682: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3700,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3704,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3421,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3583,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3841,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3554,
-    },
-];
+const ITEMS_1682: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3641,
+}];
 
 const PARTICLES_1222: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1682,
-        kind: CompositeKind::Choice,
-        max: 0,
+        kind: CompositeKind::Sequence,
+        max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1683: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3644,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3587,
-    },
-];
+const ITEMS_1683: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 1,
+    type_id: 3510,
+}];
 
 const PARTICLES_1223: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -45524,27 +45513,61 @@ const PARTICLES_1223: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1684: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3640,
-}];
+const ITEMS_1684: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3703,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3707,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3424,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3586,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3844,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3557,
+    },
+];
 
 const PARTICLES_1224: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1684,
-        kind: CompositeKind::Sequence,
-        max: 1,
+        kind: CompositeKind::Choice,
+        max: 0,
         min: 1,
     }),
 )];
 
-const ITEMS_1685: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3642,
-}];
+const ITEMS_1685: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3647,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3590,
+    },
+];
 
 const PARTICLES_1225: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -45559,7 +45582,7 @@ const PARTICLES_1225: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1686: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3668,
+    type_id: 3643,
 }];
 
 const PARTICLES_1226: &[(Versions, Option<Particle>)] = &[(
@@ -45572,38 +45595,11 @@ const PARTICLES_1226: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1687: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3913,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3912,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3906,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3905,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3908,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3907,
-    },
-];
+const ITEMS_1687: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3645,
+}];
 
 const PARTICLES_1227: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -45618,7 +45614,7 @@ const PARTICLES_1227: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1688: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3649,
+    type_id: 3671,
 }];
 
 const PARTICLES_1228: &[(Versions, Option<Particle>)] = &[(
@@ -45631,11 +45627,38 @@ const PARTICLES_1228: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1689: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 2,
-    type_id: 3480,
-}];
+const ITEMS_1689: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3916,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3915,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3909,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3908,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3911,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3910,
+    },
+];
 
 const PARTICLES_1229: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -45647,18 +45670,11 @@ const PARTICLES_1229: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1690: &[Particle] = &[
-    Particle::Element {
-        max: 9,
-        min: 1,
-        type_id: 3655,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3587,
-    },
-];
+const ITEMS_1690: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3652,
+}];
 
 const PARTICLES_1230: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -45671,9 +45687,9 @@ const PARTICLES_1230: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1691: &[Particle] = &[Particle::Element {
-    max: 64,
-    min: 1,
-    type_id: 3801,
+    max: 0,
+    min: 2,
+    type_id: 3483,
 }];
 
 const PARTICLES_1231: &[(Versions, Option<Particle>)] = &[(
@@ -45686,11 +45702,18 @@ const PARTICLES_1231: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1692: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3663,
-}];
+const ITEMS_1692: &[Particle] = &[
+    Particle::Element {
+        max: 9,
+        min: 1,
+        type_id: 3658,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3590,
+    },
+];
 
 const PARTICLES_1232: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -45703,9 +45726,9 @@ const PARTICLES_1232: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1693: &[Particle] = &[Particle::Element {
-    max: 1,
+    max: 64,
     min: 1,
-    type_id: 3643,
+    type_id: 3804,
 }];
 
 const PARTICLES_1233: &[(Versions, Option<Particle>)] = &[(
@@ -45719,9 +45742,9 @@ const PARTICLES_1233: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1694: &[Particle] = &[Particle::Element {
-    max: 10,
+    max: 0,
     min: 1,
-    type_id: 3507,
+    type_id: 3666,
 }];
 
 const PARTICLES_1234: &[(Versions, Option<Particle>)] = &[(
@@ -45734,143 +45757,11 @@ const PARTICLES_1234: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1695: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3829,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3825,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3832,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3826,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3513,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3824,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3830,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3416,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3839,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3543,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3538,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3733,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3521,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3766,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3725,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3727,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3645,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3721,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3720,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3535,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3568,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3666,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3667,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3822,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3712,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3569,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3587,
-    },
-];
+const ITEMS_1695: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 1,
+    type_id: 3646,
+}];
 
 const PARTICLES_1235: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -45883,9 +45774,9 @@ const PARTICLES_1235: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1696: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3542,
+    max: 10,
+    min: 1,
+    type_id: 3510,
 }];
 
 const PARTICLES_1236: &[(Versions, Option<Particle>)] = &[(
@@ -45900,14 +45791,139 @@ const PARTICLES_1236: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1697: &[Particle] = &[
     Particle::Element {
-        max: 0,
-        min: 1,
-        type_id: 3812,
+        max: 1,
+        min: 0,
+        type_id: 3832,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3828,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3835,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3829,
     },
     Particle::Element {
         max: 0,
+        min: 0,
+        type_id: 3516,
+    },
+    Particle::Element {
+        max: 1,
         min: 1,
-        type_id: 3672,
+        type_id: 3827,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3833,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3419,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3842,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3546,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3541,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3736,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3524,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3769,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3728,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3730,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3648,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3724,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3723,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3538,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3571,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3669,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3670,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3825,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3715,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3572,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3590,
     },
 ];
 
@@ -45921,44 +45937,34 @@ const PARTICLES_1237: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1698: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3679,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3678,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3676,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3675,
-    },
-];
+const ITEMS_1698: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 3545,
+}];
 
 const PARTICLES_1238: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1698,
-        kind: CompositeKind::Choice,
+        kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1699: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3674,
-}];
+const ITEMS_1699: &[Particle] = &[
+    Particle::Element {
+        max: 0,
+        min: 1,
+        type_id: 3815,
+    },
+    Particle::Element {
+        max: 0,
+        min: 1,
+        type_id: 3675,
+    },
+];
 
 const PARTICLES_1239: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -45970,17 +45976,34 @@ const PARTICLES_1239: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1700: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3696,
-}];
+const ITEMS_1700: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3682,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3681,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3679,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3678,
+    },
+];
 
 const PARTICLES_1240: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1700,
-        kind: CompositeKind::Sequence,
+        kind: CompositeKind::Choice,
         max: 1,
         min: 1,
     }),
@@ -45988,8 +46011,8 @@ const PARTICLES_1240: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1701: &[Particle] = &[Particle::Element {
     max: 0,
-    min: 0,
-    type_id: 3680,
+    min: 1,
+    type_id: 3677,
 }];
 
 const PARTICLES_1241: &[(Versions, Option<Particle>)] = &[(
@@ -46005,7 +46028,7 @@ const PARTICLES_1241: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1702: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
-    type_id: 3682,
+    type_id: 3699,
 }];
 
 const PARTICLES_1242: &[(Versions, Option<Particle>)] = &[(
@@ -46020,8 +46043,8 @@ const PARTICLES_1242: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1703: &[Particle] = &[Particle::Element {
     max: 0,
-    min: 1,
-    type_id: 3686,
+    min: 0,
+    type_id: 3683,
 }];
 
 const PARTICLES_1243: &[(Versions, Option<Particle>)] = &[(
@@ -46036,8 +46059,8 @@ const PARTICLES_1243: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1704: &[Particle] = &[Particle::Element {
     max: 0,
-    min: 1,
-    type_id: 3684,
+    min: 0,
+    type_id: 3685,
 }];
 
 const PARTICLES_1244: &[(Versions, Option<Particle>)] = &[(
@@ -46053,7 +46076,7 @@ const PARTICLES_1244: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1705: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3688,
+    type_id: 3689,
 }];
 
 const PARTICLES_1245: &[(Versions, Option<Particle>)] = &[(
@@ -46066,43 +46089,11 @@ const PARTICLES_1245: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1706: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3699,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3697,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3677,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3635,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3693,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3694,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3587,
-    },
-];
+const ITEMS_1706: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3687,
+}];
 
 const PARTICLES_1246: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -46117,7 +46108,7 @@ const PARTICLES_1246: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1707: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3695,
+    type_id: 3691,
 }];
 
 const PARTICLES_1247: &[(Versions, Option<Particle>)] = &[(
@@ -46130,11 +46121,43 @@ const PARTICLES_1247: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1708: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3691,
-}];
+const ITEMS_1708: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3702,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3700,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3680,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3638,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3696,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3697,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3590,
+    },
+];
 
 const PARTICLES_1248: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -46149,7 +46172,7 @@ const PARTICLES_1248: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1709: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3898,
+    type_id: 3698,
 }];
 
 const PARTICLES_1249: &[(Versions, Option<Particle>)] = &[(
@@ -46165,7 +46188,7 @@ const PARTICLES_1249: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1710: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3698,
+    type_id: 3694,
 }];
 
 const PARTICLES_1250: &[(Versions, Option<Particle>)] = &[(
@@ -46178,18 +46201,11 @@ const PARTICLES_1250: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1711: &[Particle] = &[
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3870,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3897,
-    },
-];
+const ITEMS_1711: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3901,
+}];
 
 const PARTICLES_1251: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -46203,8 +46219,8 @@ const PARTICLES_1251: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1712: &[Particle] = &[Particle::Element {
     max: 0,
-    min: 0,
-    type_id: 3702,
+    min: 1,
+    type_id: 3701,
 }];
 
 const PARTICLES_1252: &[(Versions, Option<Particle>)] = &[(
@@ -46219,14 +46235,14 @@ const PARTICLES_1252: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1713: &[Particle] = &[
     Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3953,
+        max: 0,
+        min: 0,
+        type_id: 3873,
     },
     Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3954,
+        max: 0,
+        min: 0,
+        type_id: 3900,
     },
 ];
 
@@ -46240,34 +46256,34 @@ const PARTICLES_1253: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1714: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3708,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3294,
-    },
-];
+const ITEMS_1714: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3705,
+}];
 
 const PARTICLES_1254: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1714,
-        kind: CompositeKind::Choice,
-        max: 0,
-        min: 0,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
     }),
 )];
 
-const ITEMS_1715: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3709,
-}];
+const ITEMS_1715: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3956,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3957,
+    },
+];
 
 const PARTICLES_1255: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -46279,26 +46295,33 @@ const PARTICLES_1255: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1716: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3706,
-}];
+const ITEMS_1716: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3711,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3297,
+    },
+];
 
 const PARTICLES_1256: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1716,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
+        kind: CompositeKind::Choice,
+        max: 0,
+        min: 0,
     }),
 )];
 
 const ITEMS_1717: &[Particle] = &[Particle::Element {
-    max: 0xFFFF,
-    min: 1,
-    type_id: 3711,
+    max: 1,
+    min: 0,
+    type_id: 3712,
 }];
 
 const PARTICLES_1257: &[(Versions, Option<Particle>)] = &[(
@@ -46312,9 +46335,9 @@ const PARTICLES_1257: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1718: &[Particle] = &[Particle::Element {
-    max: 0,
+    max: 1,
     min: 0,
-    type_id: 3715,
+    type_id: 3709,
 }];
 
 const PARTICLES_1258: &[(Versions, Option<Particle>)] = &[(
@@ -46328,9 +46351,9 @@ const PARTICLES_1258: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1719: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3724,
+    max: 0xFFFF,
+    min: 1,
+    type_id: 3714,
 }];
 
 const PARTICLES_1259: &[(Versions, Option<Particle>)] = &[(
@@ -46343,35 +46366,18 @@ const PARTICLES_1259: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1720: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3700,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3704,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3583,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3841,
-    },
-];
+const ITEMS_1720: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3718,
+}];
 
 const PARTICLES_1260: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1720,
-        kind: CompositeKind::Choice,
-        max: 0,
+        kind: CompositeKind::Sequence,
+        max: 1,
         min: 1,
     }),
 )];
@@ -46379,7 +46385,7 @@ const PARTICLES_1260: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1721: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
-    type_id: 3442,
+    type_id: 3727,
 }];
 
 const PARTICLES_1261: &[(Versions, Option<Particle>)] = &[(
@@ -46392,39 +46398,46 @@ const PARTICLES_1261: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
+const ITEMS_1722: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3703,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3707,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3586,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3844,
+    },
+];
+
 const PARTICLES_1262: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_1566,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 0,
-    }),
-)];
-
-const ITEMS_1722: &[Particle] = &[Particle::Element {
-    max: 256,
-    min: 1,
-    type_id: 3722,
-}];
-
-const PARTICLES_1263: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
         items: ITEMS_1722,
-        kind: CompositeKind::Sequence,
-        max: 1,
+        kind: CompositeKind::Choice,
+        max: 0,
         min: 1,
     }),
 )];
 
 const ITEMS_1723: &[Particle] = &[Particle::Element {
-    max: 4,
-    min: 1,
-    type_id: 3717,
+    max: 0,
+    min: 0,
+    type_id: 3445,
 }];
 
-const PARTICLES_1264: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_1263: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1723,
@@ -46434,10 +46447,20 @@ const PARTICLES_1264: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
+const PARTICLES_1264: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1568,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 0,
+    }),
+)];
+
 const ITEMS_1724: &[Particle] = &[Particle::Element {
-    max: 0,
+    max: 256,
     min: 1,
-    type_id: 3730,
+    type_id: 3725,
 }];
 
 const PARTICLES_1265: &[(Versions, Option<Particle>)] = &[(
@@ -46450,18 +46473,11 @@ const PARTICLES_1265: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1725: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3508,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3506,
-    },
-];
+const ITEMS_1725: &[Particle] = &[Particle::Element {
+    max: 4,
+    min: 1,
+    type_id: 3720,
+}];
 
 const PARTICLES_1266: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -46474,9 +46490,9 @@ const PARTICLES_1266: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1726: &[Particle] = &[Particle::Element {
-    max: 1,
+    max: 0,
     min: 1,
-    type_id: 3916,
+    type_id: 3733,
 }];
 
 const PARTICLES_1267: &[(Versions, Option<Particle>)] = &[(
@@ -46493,12 +46509,12 @@ const ITEMS_1727: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3738,
+        type_id: 3511,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3587,
+        type_id: 3509,
     },
 ];
 
@@ -46512,18 +46528,11 @@ const PARTICLES_1268: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1728: &[Particle] = &[
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3657,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3587,
-    },
-];
+const ITEMS_1728: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 1,
+    type_id: 3919,
+}];
 
 const PARTICLES_1269: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -46535,11 +46544,18 @@ const PARTICLES_1269: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1729: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3737,
-}];
+const ITEMS_1729: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3741,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3590,
+    },
+];
 
 const PARTICLES_1270: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -46551,11 +46567,18 @@ const PARTICLES_1270: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1730: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3736,
-}];
+const ITEMS_1730: &[Particle] = &[
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3660,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3590,
+    },
+];
 
 const PARTICLES_1271: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -46567,63 +46590,11 @@ const PARTICLES_1271: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1731: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3452,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3447,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3448,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3716,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3867,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3459,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3464,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3566,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3683,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3681,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3744,
-    },
-];
+const ITEMS_1731: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3740,
+}];
 
 const PARTICLES_1272: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -46635,72 +46606,95 @@ const PARTICLES_1272: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1732: &[Particle] = &[
-    Particle::Element {
+const ITEMS_1732: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3739,
+}];
+
+const PARTICLES_1273: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1732,
+        kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
-        type_id: 3295,
-    },
-    Particle::Any {
-        max: 1,
-        min: 0,
-        namespace: AnyNamespace::Any,
-    },
-];
+    }),
+)];
 
 const ITEMS_1733: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3295,
+        type_id: 3455,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3364,
+        type_id: 3450,
     },
     Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3395,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3365,
-    },
-    Particle::Any {
         max: 1,
         min: 0,
-        namespace: AnyNamespace::Any,
+        type_id: 3451,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3719,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3870,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3462,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3467,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3569,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3686,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3684,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3747,
     },
 ];
+
+const PARTICLES_1274: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1733,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
 
 const ITEMS_1734: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3295,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3364,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3395,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3365,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4138,
+        type_id: 3298,
     },
     Particle::Any {
         max: 1,
@@ -46713,47 +46707,22 @@ const ITEMS_1735: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3295,
+        type_id: 3298,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3364,
+        type_id: 3367,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3395,
+        type_id: 3398,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3365,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4138,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4081,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4313,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4137,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4003,
+        type_id: 3368,
     },
     Particle::Any {
         max: 1,
@@ -46762,27 +46731,95 @@ const ITEMS_1735: &[Particle] = &[
     },
 ];
 
-const PARTICLES_1273: &[(Versions, Option<Particle>)] = &[
+const ITEMS_1736: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3298,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3367,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3398,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3368,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4141,
+    },
+    Particle::Any {
+        max: 1,
+        min: 0,
+        namespace: AnyNamespace::Any,
+    },
+];
+
+const ITEMS_1737: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3298,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3367,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3398,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3368,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4141,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4084,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4316,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4140,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4006,
+    },
+    Particle::Any {
+        max: 1,
+        min: 0,
+        namespace: AnyNamespace::Any,
+    },
+];
+
+const PARTICLES_1275: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
-        Some(Particle::Composite {
-            items: ITEMS_1732,
-            kind: CompositeKind::Choice,
-            max: 1,
-            min: 1,
-        }),
-    ),
-    (
-        Versions(0b00_1110),
-        Some(Particle::Composite {
-            items: ITEMS_1733,
-            kind: CompositeKind::Choice,
-            max: 1,
-            min: 1,
-        }),
-    ),
-    (
-        Versions(0b01_0000),
         Some(Particle::Composite {
             items: ITEMS_1734,
             kind: CompositeKind::Choice,
@@ -46791,7 +46828,7 @@ const PARTICLES_1273: &[(Versions, Option<Particle>)] = &[
         }),
     ),
     (
-        Versions(0b10_0000),
+        Versions(0b00_1110),
         Some(Particle::Composite {
             items: ITEMS_1735,
             kind: CompositeKind::Choice,
@@ -46799,51 +46836,30 @@ const PARTICLES_1273: &[(Versions, Option<Particle>)] = &[
             min: 1,
         }),
     ),
+    (
+        Versions(0b01_0000),
+        Some(Particle::Composite {
+            items: ITEMS_1736,
+            kind: CompositeKind::Choice,
+            max: 1,
+            min: 1,
+        }),
+    ),
+    (
+        Versions(0b10_0000),
+        Some(Particle::Composite {
+            items: ITEMS_1737,
+            kind: CompositeKind::Choice,
+            max: 1,
+            min: 1,
+        }),
+    ),
 ];
-
-const ITEMS_1736: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3743,
-}];
-
-const PARTICLES_1274: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1736,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1737: &[Particle] = &[
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3783,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3587,
-    },
-];
-
-const PARTICLES_1275: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1737,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
 
 const ITEMS_1738: &[Particle] = &[Particle::Element {
     max: 0,
-    min: 1,
-    type_id: 3741,
+    min: 0,
+    type_id: 3746,
 }];
 
 const PARTICLES_1276: &[(Versions, Option<Particle>)] = &[(
@@ -46858,19 +46874,14 @@ const PARTICLES_1276: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1739: &[Particle] = &[
     Particle::Element {
-        max: 1,
+        max: 0,
         min: 0,
-        type_id: 3664,
+        type_id: 3786,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3418,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3754,
+        type_id: 3590,
     },
 ];
 
@@ -46884,34 +46895,39 @@ const PARTICLES_1277: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1740: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3301,
-    },
-    Particle::Any {
-        max: 1,
-        min: 0,
-        namespace: AnyNamespace::Any,
-    },
-];
+const ITEMS_1740: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3744,
+}];
 
 const PARTICLES_1278: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1740,
-        kind: CompositeKind::Choice,
+        kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1741: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3753,
-}];
+const ITEMS_1741: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3667,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3421,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3757,
+    },
+];
 
 const PARTICLES_1279: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -46923,34 +46939,34 @@ const PARTICLES_1279: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1742: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3752,
-}];
+const ITEMS_1742: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3304,
+    },
+    Particle::Any {
+        max: 1,
+        min: 0,
+        namespace: AnyNamespace::Any,
+    },
+];
 
 const PARTICLES_1280: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1742,
-        kind: CompositeKind::Sequence,
+        kind: CompositeKind::Choice,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1743: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3416,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3758,
-    },
-];
+const ITEMS_1743: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3756,
+}];
 
 const PARTICLES_1281: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -46962,16 +46978,55 @@ const PARTICLES_1281: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1744: &[Particle] = &[
+const ITEMS_1744: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3755,
+}];
+
+const PARTICLES_1282: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1744,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1745: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3366,
+        type_id: 3419,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3761,
+    },
+];
+
+const PARTICLES_1283: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1745,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1746: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3369,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3362,
+        type_id: 3365,
     },
     Particle::Any {
         max: 1,
@@ -46980,7 +47035,7 @@ const ITEMS_1744: &[Particle] = &[
     },
 ];
 
-const PARTICLES_1282: &[(Versions, Option<Particle>)] = &[
+const PARTICLES_1284: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
@@ -46993,7 +47048,7 @@ const PARTICLES_1282: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b11_1110),
         Some(Particle::Composite {
-            items: ITEMS_1744,
+            items: ITEMS_1746,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -47001,42 +47056,10 @@ const PARTICLES_1282: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1745: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3757,
-}];
-
-const PARTICLES_1283: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1745,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1746: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3756,
-}];
-
-const PARTICLES_1284: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1746,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
 const ITEMS_1747: &[Particle] = &[Particle::Element {
     max: 0,
-    min: 1,
-    type_id: 3761,
+    min: 0,
+    type_id: 3760,
 }];
 
 const PARTICLES_1285: &[(Versions, Option<Particle>)] = &[(
@@ -47049,23 +47072,11 @@ const PARTICLES_1285: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1748: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3685,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3687,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3763,
-    },
-];
+const ITEMS_1748: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3759,
+}];
 
 const PARTICLES_1286: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -47077,34 +47088,39 @@ const PARTICLES_1286: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1749: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3302,
-    },
-    Particle::Any {
-        max: 1,
-        min: 0,
-        namespace: AnyNamespace::Any,
-    },
-];
+const ITEMS_1749: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3764,
+}];
 
 const PARTICLES_1287: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1749,
-        kind: CompositeKind::Choice,
+        kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1750: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3762,
-}];
+const ITEMS_1750: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3688,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3690,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3766,
+    },
+];
 
 const PARTICLES_1288: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -47116,26 +47132,33 @@ const PARTICLES_1288: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1751: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3767,
-}];
+const ITEMS_1751: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3305,
+    },
+    Particle::Any {
+        max: 1,
+        min: 0,
+        namespace: AnyNamespace::Any,
+    },
+];
 
 const PARTICLES_1289: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1751,
-        kind: CompositeKind::Sequence,
+        kind: CompositeKind::Choice,
         max: 1,
         min: 1,
     }),
 )];
 
 const ITEMS_1752: &[Particle] = &[Particle::Element {
-    max: 1,
+    max: 0,
     min: 0,
-    type_id: 3870,
+    type_id: 3765,
 }];
 
 const PARTICLES_1290: &[(Versions, Option<Particle>)] = &[(
@@ -47151,7 +47174,7 @@ const PARTICLES_1290: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1753: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3769,
+    type_id: 3770,
 }];
 
 const PARTICLES_1291: &[(Versions, Option<Particle>)] = &[(
@@ -47164,18 +47187,11 @@ const PARTICLES_1291: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1754: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3777,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3774,
-    },
-];
+const ITEMS_1754: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 3873,
+}];
 
 const PARTICLES_1292: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -47190,7 +47206,7 @@ const PARTICLES_1292: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1755: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3564,
+    type_id: 3772,
 }];
 
 const PARTICLES_1293: &[(Versions, Option<Particle>)] = &[(
@@ -47206,41 +47222,30 @@ const PARTICLES_1293: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1756: &[Particle] = &[
     Particle::Element {
         max: 1,
-        min: 1,
-        type_id: 3375,
+        min: 0,
+        type_id: 3780,
     },
-    Particle::Any {
+    Particle::Element {
         max: 1,
         min: 0,
-        namespace: AnyNamespace::Any,
+        type_id: 3777,
     },
 ];
 
-const PARTICLES_1294: &[(Versions, Option<Particle>)] = &[
-    (
-        Versions(0b00_0001),
-        Some(Particle::Composite {
-            items: ITEMS_103,
-            kind: CompositeKind::Choice,
-            max: 1,
-            min: 1,
-        }),
-    ),
-    (
-        Versions(0b11_1110),
-        Some(Particle::Composite {
-            items: ITEMS_1756,
-            kind: CompositeKind::Choice,
-            max: 1,
-            min: 1,
-        }),
-    ),
-];
+const PARTICLES_1294: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1756,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
 
 const ITEMS_1757: &[Particle] = &[Particle::Element {
     max: 0,
-    min: 0,
-    type_id: 3773,
+    min: 1,
+    type_id: 3567,
 }];
 
 const PARTICLES_1295: &[(Versions, Option<Particle>)] = &[(
@@ -47253,44 +47258,45 @@ const PARTICLES_1295: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1758: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3775,
-}];
-
-const PARTICLES_1296: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1758,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1759: &[Particle] = &[
+const ITEMS_1758: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3776,
+        type_id: 3378,
     },
-    Particle::Element {
+    Particle::Any {
         max: 1,
         min: 0,
-        type_id: 3772,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3839,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3587,
+        namespace: AnyNamespace::Any,
     },
 ];
+
+const PARTICLES_1296: &[(Versions, Option<Particle>)] = &[
+    (
+        Versions(0b00_0001),
+        Some(Particle::Composite {
+            items: ITEMS_103,
+            kind: CompositeKind::Choice,
+            max: 1,
+            min: 1,
+        }),
+    ),
+    (
+        Versions(0b11_1110),
+        Some(Particle::Composite {
+            items: ITEMS_1758,
+            kind: CompositeKind::Choice,
+            max: 1,
+            min: 1,
+        }),
+    ),
+];
+
+const ITEMS_1759: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3776,
+}];
 
 const PARTICLES_1297: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -47302,18 +47308,11 @@ const PARTICLES_1297: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1760: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3779,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3916,
-    },
-];
+const ITEMS_1760: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3778,
+}];
 
 const PARTICLES_1298: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -47328,78 +47327,23 @@ const PARTICLES_1298: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1761: &[Particle] = &[
     Particle::Element {
         max: 1,
-        min: 0,
-        type_id: 3423,
+        min: 1,
+        type_id: 3779,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3426,
+        type_id: 3775,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3429,
+        type_id: 3842,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3424,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3425,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3427,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3428,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3871,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3874,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3629,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3507,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3626,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3662,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3661,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3628,
+        type_id: 3590,
     },
 ];
 
@@ -47408,16 +47352,23 @@ const PARTICLES_1299: &[(Versions, Option<Particle>)] = &[(
     Some(Particle::Composite {
         items: ITEMS_1761,
         kind: CompositeKind::Sequence,
-        max: 0,
+        max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1762: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3781,
-}];
+const ITEMS_1762: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3782,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3919,
+    },
+];
 
 const PARTICLES_1300: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -47432,38 +47383,78 @@ const PARTICLES_1300: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1763: &[Particle] = &[
     Particle::Element {
         max: 1,
-        min: 1,
-        type_id: 3700,
+        min: 0,
+        type_id: 3426,
     },
     Particle::Element {
         max: 1,
-        min: 1,
-        type_id: 3704,
+        min: 0,
+        type_id: 3429,
     },
     Particle::Element {
         max: 1,
-        min: 1,
-        type_id: 3421,
+        min: 0,
+        type_id: 3432,
     },
     Particle::Element {
         max: 1,
-        min: 1,
-        type_id: 3583,
+        min: 0,
+        type_id: 3427,
     },
     Particle::Element {
         max: 1,
-        min: 1,
-        type_id: 3841,
+        min: 0,
+        type_id: 3428,
     },
     Particle::Element {
         max: 1,
-        min: 1,
-        type_id: 3554,
+        min: 0,
+        type_id: 3430,
     },
     Particle::Element {
         max: 1,
-        min: 1,
-        type_id: 3657,
+        min: 0,
+        type_id: 3431,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3874,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3877,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3632,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3510,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3629,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3665,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3664,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3631,
     },
 ];
 
@@ -47471,7 +47462,7 @@ const PARTICLES_1301: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1763,
-        kind: CompositeKind::Choice,
+        kind: CompositeKind::Sequence,
         max: 0,
         min: 1,
     }),
@@ -47496,28 +47487,38 @@ const PARTICLES_1302: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1765: &[Particle] = &[
     Particle::Element {
         max: 1,
-        min: 0,
-        type_id: 3467,
+        min: 1,
+        type_id: 3703,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3701,
+        type_id: 3707,
     },
     Particle::Element {
         max: 1,
-        min: 0,
-        type_id: 3574,
+        min: 1,
+        type_id: 3424,
     },
     Particle::Element {
         max: 1,
-        min: 0,
-        type_id: 3573,
+        min: 1,
+        type_id: 3586,
     },
     Particle::Element {
         max: 1,
-        min: 0,
-        type_id: 3587,
+        min: 1,
+        type_id: 3844,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3557,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3660,
     },
 ];
 
@@ -47525,29 +47526,17 @@ const PARTICLES_1303: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1765,
-        kind: CompositeKind::Sequence,
-        max: 1,
+        kind: CompositeKind::Choice,
+        max: 0,
         min: 1,
     }),
 )];
 
-const ITEMS_1766: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3909,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3914,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3587,
-    },
-];
+const ITEMS_1766: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3787,
+}];
 
 const PARTICLES_1304: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -47563,12 +47552,27 @@ const ITEMS_1767: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3572,
+        type_id: 3470,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3704,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3587,
+        type_id: 3577,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3576,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3590,
     },
 ];
 
@@ -47585,18 +47589,18 @@ const PARTICLES_1305: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1768: &[Particle] = &[
     Particle::Element {
         max: 1,
-        min: 1,
-        type_id: 3828,
+        min: 0,
+        type_id: 3912,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3785,
+        type_id: 3917,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3587,
+        type_id: 3590,
     },
 ];
 
@@ -47610,11 +47614,18 @@ const PARTICLES_1306: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1769: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3793,
-}];
+const ITEMS_1769: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3575,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3590,
+    },
+];
 
 const PARTICLES_1307: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -47628,19 +47639,19 @@ const PARTICLES_1307: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1770: &[Particle] = &[
     Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3872,
+        max: 1,
+        min: 1,
+        type_id: 3831,
     },
     Particle::Element {
-        max: 0,
+        max: 1,
         min: 0,
-        type_id: 3787,
+        type_id: 3788,
     },
     Particle::Element {
-        max: 0,
+        max: 1,
         min: 0,
-        type_id: 3792,
+        type_id: 3590,
     },
 ];
 
@@ -47648,22 +47659,33 @@ const PARTICLES_1308: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1770,
-        kind: CompositeKind::Choice,
-        max: 0,
-        min: 0,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
     }),
 )];
 
-const ITEMS_1771: &[Particle] = &[
+const ITEMS_1771: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3796,
+}];
+
+const PARTICLES_1309: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1771,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1772: &[Particle] = &[
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 3798,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3796,
+        type_id: 3875,
     },
     Particle::Element {
         max: 0,
@@ -47673,7 +47695,50 @@ const ITEMS_1771: &[Particle] = &[
     Particle::Element {
         max: 0,
         min: 0,
+        type_id: 3795,
+    },
+];
+
+const PARTICLES_1310: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1772,
+        kind: CompositeKind::Choice,
+        max: 0,
+        min: 0,
+    }),
+)];
+
+const ITEMS_1773: &[Particle] = &[
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3801,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
         type_id: 3799,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3793,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3802,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3798,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3790,
     },
     Particle::Element {
         max: 0,
@@ -47683,17 +47748,12 @@ const ITEMS_1771: &[Particle] = &[
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 3787,
+        type_id: 3789,
     },
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 3792,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3786,
+        type_id: 3794,
     },
     Particle::Element {
         max: 0,
@@ -47703,89 +47763,35 @@ const ITEMS_1771: &[Particle] = &[
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 3788,
+        type_id: 3800,
     },
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 3797,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3789,
+        type_id: 3792,
     },
 ];
 
-const PARTICLES_1309: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_1311: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_1771,
+        items: ITEMS_1773,
         kind: CompositeKind::Choice,
         max: 0,
         min: 1,
     }),
 )];
 
-const ITEMS_1772: &[Particle] = &[
+const ITEMS_1774: &[Particle] = &[
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 3466,
+        type_id: 3469,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3587,
-    },
-];
-
-const PARTICLES_1310: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1772,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1773: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3648,
-}];
-
-const PARTICLES_1311: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1773,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1774: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3916,
-    },
-    Particle::Element {
-        max: 0x7FFF,
-        min: 0,
-        type_id: 3778,
-    },
-    Particle::Element {
-        max: 0x7FFF,
-        min: 0,
-        type_id: 3734,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3733,
+        type_id: 3590,
     },
 ];
 
@@ -47800,9 +47806,9 @@ const PARTICLES_1312: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1775: &[Particle] = &[Particle::Element {
-    max: 32,
+    max: 0,
     min: 1,
-    type_id: 3659,
+    type_id: 3651,
 }];
 
 const PARTICLES_1313: &[(Versions, Option<Particle>)] = &[(
@@ -47815,11 +47821,28 @@ const PARTICLES_1313: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1776: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3810,
-}];
+const ITEMS_1776: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3919,
+    },
+    Particle::Element {
+        max: 0x7FFF,
+        min: 0,
+        type_id: 3781,
+    },
+    Particle::Element {
+        max: 0x7FFF,
+        min: 0,
+        type_id: 3737,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3736,
+    },
+];
 
 const PARTICLES_1314: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -47832,9 +47855,9 @@ const PARTICLES_1314: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1777: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3815,
+    max: 32,
+    min: 1,
+    type_id: 3662,
 }];
 
 const PARTICLES_1315: &[(Versions, Option<Particle>)] = &[(
@@ -47847,18 +47870,11 @@ const PARTICLES_1315: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1778: &[Particle] = &[
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3870,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3869,
-    },
-];
+const ITEMS_1778: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3813,
+}];
 
 const PARTICLES_1316: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -47872,8 +47888,8 @@ const PARTICLES_1316: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1779: &[Particle] = &[Particle::Element {
     max: 0,
-    min: 1,
-    type_id: 3817,
+    min: 0,
+    type_id: 3818,
 }];
 
 const PARTICLES_1317: &[(Versions, Option<Particle>)] = &[(
@@ -47886,23 +47902,20 @@ const PARTICLES_1317: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const PARTICLES_1318: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1682,
-        kind: CompositeKind::Choice,
+const ITEMS_1780: &[Particle] = &[
+    Particle::Element {
         max: 0,
         min: 0,
-    }),
-)];
+        type_id: 3873,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3872,
+    },
+];
 
-const ITEMS_1780: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3802,
-}];
-
-const PARTICLES_1319: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_1318: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1780,
@@ -47913,12 +47926,12 @@ const PARTICLES_1319: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1781: &[Particle] = &[Particle::Element {
-    max: 0xFFFF,
+    max: 0,
     min: 1,
-    type_id: 3827,
+    type_id: 3820,
 }];
 
-const PARTICLES_1320: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_1319: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1781,
@@ -47928,23 +47941,21 @@ const PARTICLES_1320: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1782: &[Particle] = &[
-    Particle::Element {
-        max: 1,
+const PARTICLES_1320: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1684,
+        kind: CompositeKind::Choice,
+        max: 0,
         min: 0,
-        type_id: 3509,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3714,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3726,
-    },
-];
+    }),
+)];
+
+const ITEMS_1782: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3805,
+}];
 
 const PARTICLES_1321: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -47956,28 +47967,11 @@ const PARTICLES_1321: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1783: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3729,
-    },
-    Particle::Element {
-        max: 4,
-        min: 0,
-        type_id: 3813,
-    },
-    Particle::Element {
-        max: 4,
-        min: 0,
-        type_id: 3764,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3587,
-    },
-];
+const ITEMS_1783: &[Particle] = &[Particle::Element {
+    max: 0xFFFF,
+    min: 1,
+    type_id: 3830,
+}];
 
 const PARTICLES_1322: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -47991,14 +47985,19 @@ const PARTICLES_1322: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1784: &[Particle] = &[
     Particle::Element {
-        max: 0,
-        min: 1,
-        type_id: 3831,
+        max: 1,
+        min: 0,
+        type_id: 3512,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3587,
+        type_id: 3717,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3729,
     },
 ];
 
@@ -48012,11 +48011,28 @@ const PARTICLES_1323: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1785: &[Particle] = &[Particle::Element {
-    max: 0x7FFF,
-    min: 1,
-    type_id: 3821,
-}];
+const ITEMS_1785: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3732,
+    },
+    Particle::Element {
+        max: 4,
+        min: 0,
+        type_id: 3816,
+    },
+    Particle::Element {
+        max: 4,
+        min: 0,
+        type_id: 3767,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3590,
+    },
+];
 
 const PARTICLES_1324: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -48030,14 +48046,14 @@ const PARTICLES_1324: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1786: &[Particle] = &[
     Particle::Element {
-        max: 1,
+        max: 0,
         min: 1,
-        type_id: 3900,
+        type_id: 3834,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3587,
+        type_id: 3590,
     },
 ];
 
@@ -48052,9 +48068,9 @@ const PARTICLES_1325: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1787: &[Particle] = &[Particle::Element {
-    max: 0,
+    max: 0x7FFF,
     min: 1,
-    type_id: 3834,
+    type_id: 3824,
 }];
 
 const PARTICLES_1326: &[(Versions, Option<Particle>)] = &[(
@@ -48071,50 +48087,29 @@ const ITEMS_1788: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3315,
+        type_id: 3903,
     },
     Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3388,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3377,
-    },
-    Particle::Any {
         max: 1,
         min: 0,
-        namespace: AnyNamespace::Any,
+        type_id: 3590,
     },
 ];
 
-const PARTICLES_1327: &[(Versions, Option<Particle>)] = &[
-    (
-        Versions(0b00_0001),
-        Some(Particle::Composite {
-            items: ITEMS_103,
-            kind: CompositeKind::Choice,
-            max: 1,
-            min: 1,
-        }),
-    ),
-    (
-        Versions(0b11_1110),
-        Some(Particle::Composite {
-            items: ITEMS_1788,
-            kind: CompositeKind::Choice,
-            max: 1,
-            min: 1,
-        }),
-    ),
-];
+const PARTICLES_1327: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1788,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
 
 const ITEMS_1789: &[Particle] = &[Particle::Element {
     max: 0,
-    min: 0,
-    type_id: 3836,
+    min: 1,
+    type_id: 3837,
 }];
 
 const PARTICLES_1328: &[(Versions, Option<Particle>)] = &[(
@@ -48129,32 +48124,55 @@ const PARTICLES_1328: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1790: &[Particle] = &[
     Particle::Element {
-        max: 64,
-        min: 0,
-        type_id: 3325,
-    },
-    Particle::Element {
-        max: 64,
-        min: 0,
-        type_id: 3838,
-    },
-];
-
-const ITEMS_1791: &[Particle] = &[
-    Particle::Composite {
-        items: ITEMS_1790,
-        kind: CompositeKind::Choice,
         max: 1,
         min: 1,
+        type_id: 3318,
     },
     Particle::Element {
         max: 1,
+        min: 1,
+        type_id: 3391,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3380,
+    },
+    Particle::Any {
+        max: 1,
         min: 0,
-        type_id: 3587,
+        namespace: AnyNamespace::Any,
     },
 ];
 
-const PARTICLES_1329: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_1329: &[(Versions, Option<Particle>)] = &[
+    (
+        Versions(0b00_0001),
+        Some(Particle::Composite {
+            items: ITEMS_103,
+            kind: CompositeKind::Choice,
+            max: 1,
+            min: 1,
+        }),
+    ),
+    (
+        Versions(0b11_1110),
+        Some(Particle::Composite {
+            items: ITEMS_1790,
+            kind: CompositeKind::Choice,
+            max: 1,
+            min: 1,
+        }),
+    ),
+];
+
+const ITEMS_1791: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3839,
+}];
+
+const PARTICLES_1330: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1791,
@@ -48166,82 +48184,28 @@ const PARTICLES_1329: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1792: &[Particle] = &[
     Particle::Element {
-        max: 0,
+        max: 64,
         min: 0,
-        type_id: 3807,
+        type_id: 3328,
     },
     Particle::Element {
-        max: 1,
+        max: 64,
         min: 0,
-        type_id: 3587,
+        type_id: 3841,
     },
 ];
 
-const PARTICLES_1330: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
+const ITEMS_1793: &[Particle] = &[
+    Particle::Composite {
         items: ITEMS_1792,
-        kind: CompositeKind::Sequence,
+        kind: CompositeKind::Choice,
         max: 1,
         min: 1,
-    }),
-)];
-
-const ITEMS_1793: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3703,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3630,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3619,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3441,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3472,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3476,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3473,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3580,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3859,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3512,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3844,
+        type_id: 3590,
     },
 ];
 
@@ -48257,58 +48221,84 @@ const PARTICLES_1331: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1794: &[Particle] = &[
     Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3578,
+        max: 0,
+        min: 0,
+        type_id: 3810,
     },
     Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3323,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3579,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3405,
-    },
-    Particle::Any {
         max: 1,
         min: 0,
-        namespace: AnyNamespace::Any,
+        type_id: 3590,
     },
 ];
 
-const PARTICLES_1332: &[(Versions, Option<Particle>)] = &[
-    (
-        Versions(0b00_0001),
-        Some(Particle::Composite {
-            items: ITEMS_103,
-            kind: CompositeKind::Choice,
-            max: 1,
-            min: 1,
-        }),
-    ),
-    (
-        Versions(0b11_1110),
-        Some(Particle::Composite {
-            items: ITEMS_1794,
-            kind: CompositeKind::Choice,
-            max: 1,
-            min: 1,
-        }),
-    ),
-];
+const PARTICLES_1332: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1794,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
 
-const ITEMS_1795: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3843,
-}];
+const ITEMS_1795: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3706,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3633,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3622,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3444,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3475,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3479,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3476,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3583,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3862,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3515,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3847,
+    },
+];
 
 const PARTICLES_1333: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -48323,63 +48313,57 @@ const PARTICLES_1333: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1796: &[Particle] = &[
     Particle::Element {
         max: 1,
-        min: 0,
-        type_id: 3416,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3839,
+        min: 1,
+        type_id: 3581,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3847,
+        type_id: 3326,
     },
     Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3858,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3849,
-    },
-];
-
-const PARTICLES_1334: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1796,
-        kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
-    }),
-)];
-
-const ITEMS_1797: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3851,
+        type_id: 3582,
     },
     Particle::Element {
         max: 1,
-        min: 0,
-        type_id: 3852,
+        min: 1,
+        type_id: 3408,
     },
-    Particle::Element {
+    Particle::Any {
         max: 1,
         min: 0,
-        type_id: 3901,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3587,
+        namespace: AnyNamespace::Any,
     },
 ];
+
+const PARTICLES_1334: &[(Versions, Option<Particle>)] = &[
+    (
+        Versions(0b00_0001),
+        Some(Particle::Composite {
+            items: ITEMS_103,
+            kind: CompositeKind::Choice,
+            max: 1,
+            min: 1,
+        }),
+    ),
+    (
+        Versions(0b11_1110),
+        Some(Particle::Composite {
+            items: ITEMS_1796,
+            kind: CompositeKind::Choice,
+            max: 1,
+            min: 1,
+        }),
+    ),
+];
+
+const ITEMS_1797: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3846,
+}];
 
 const PARTICLES_1335: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -48391,11 +48375,33 @@ const PARTICLES_1335: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1798: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3846,
-}];
+const ITEMS_1798: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3419,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3842,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3850,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3861,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3852,
+    },
+];
 
 const PARTICLES_1336: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -48410,8 +48416,57 @@ const PARTICLES_1336: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1799: &[Particle] = &[
     Particle::Element {
         max: 1,
+        min: 0,
+        type_id: 3854,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3855,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3904,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3590,
+    },
+];
+
+const PARTICLES_1337: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1799,
+        kind: CompositeKind::Sequence,
+        max: 1,
         min: 1,
-        type_id: 3333,
+    }),
+)];
+
+const ITEMS_1800: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3849,
+}];
+
+const PARTICLES_1338: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1800,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1801: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3336,
     },
     Particle::Any {
         max: 1,
@@ -48420,16 +48475,16 @@ const ITEMS_1799: &[Particle] = &[
     },
 ];
 
-const ITEMS_1800: &[Particle] = &[
+const ITEMS_1802: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3333,
+        type_id: 3336,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3992,
+        type_id: 3995,
     },
     Particle::Any {
         max: 1,
@@ -48438,11 +48493,11 @@ const ITEMS_1800: &[Particle] = &[
     },
 ];
 
-const PARTICLES_1337: &[(Versions, Option<Particle>)] = &[
+const PARTICLES_1339: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b01_1111),
         Some(Particle::Composite {
-            items: ITEMS_1799,
+            items: ITEMS_1801,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -48451,7 +48506,7 @@ const PARTICLES_1337: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b10_0000),
         Some(Particle::Composite {
-            items: ITEMS_1800,
+            items: ITEMS_1802,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -48459,42 +48514,10 @@ const PARTICLES_1337: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1801: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3848,
-}];
-
-const PARTICLES_1338: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1801,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1802: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3854,
-}];
-
-const PARTICLES_1339: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1802,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
 const ITEMS_1803: &[Particle] = &[Particle::Element {
-    max: 28,
+    max: 0,
     min: 0,
-    type_id: 3857,
+    type_id: 3851,
 }];
 
 const PARTICLES_1340: &[(Versions, Option<Particle>)] = &[(
@@ -48510,7 +48533,7 @@ const PARTICLES_1340: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1804: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
-    type_id: 3856,
+    type_id: 3857,
 }];
 
 const PARTICLES_1341: &[(Versions, Option<Particle>)] = &[(
@@ -48523,38 +48546,26 @@ const PARTICLES_1341: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1805: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3853,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3898,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3657,
-    },
-];
+const ITEMS_1805: &[Particle] = &[Particle::Element {
+    max: 28,
+    min: 0,
+    type_id: 3860,
+}];
 
 const PARTICLES_1342: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1805,
-        kind: CompositeKind::Choice,
-        max: 0,
+        kind: CompositeKind::Sequence,
+        max: 1,
         min: 1,
     }),
 )];
 
 const ITEMS_1806: &[Particle] = &[Particle::Element {
-    max: 2001,
-    min: 1,
-    type_id: 3861,
+    max: 0,
+    min: 0,
+    type_id: 3859,
 }];
 
 const PARTICLES_1343: &[(Versions, Option<Particle>)] = &[(
@@ -48567,49 +48578,39 @@ const PARTICLES_1343: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1807: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3862,
-}];
+const ITEMS_1807: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3856,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3901,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3660,
+    },
+];
 
 const PARTICLES_1344: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1807,
-        kind: CompositeKind::Sequence,
-        max: 1,
+        kind: CompositeKind::Choice,
+        max: 0,
         min: 1,
     }),
 )];
 
-const ITEMS_1808: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3718,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3818,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3770,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3816,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3587,
-    },
-];
+const ITEMS_1808: &[Particle] = &[Particle::Element {
+    max: 2001,
+    min: 1,
+    type_id: 3864,
+}];
 
 const PARTICLES_1345: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -48622,9 +48623,9 @@ const PARTICLES_1345: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1809: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3866,
+    max: 1,
+    min: 0,
+    type_id: 3865,
 }];
 
 const PARTICLES_1346: &[(Versions, Option<Particle>)] = &[(
@@ -48637,11 +48638,33 @@ const PARTICLES_1346: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1810: &[Particle] = &[Particle::Element {
-    max: 256,
-    min: 0,
-    type_id: 3820,
-}];
+const ITEMS_1810: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3721,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3821,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3773,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3819,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3590,
+    },
+];
 
 const PARTICLES_1347: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -48656,7 +48679,7 @@ const PARTICLES_1347: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1811: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3876,
+    type_id: 3869,
 }];
 
 const PARTICLES_1348: &[(Versions, Option<Particle>)] = &[(
@@ -48669,23 +48692,11 @@ const PARTICLES_1348: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1812: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3932,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3915,
-    },
-    Particle::Element {
-        max: 0,
-        min: 1,
-        type_id: 3877,
-    },
-];
+const ITEMS_1812: &[Particle] = &[Particle::Element {
+    max: 256,
+    min: 0,
+    type_id: 3823,
+}];
 
 const PARTICLES_1349: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -48700,7 +48711,7 @@ const PARTICLES_1349: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1813: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3875,
+    type_id: 3879,
 }];
 
 const PARTICLES_1350: &[(Versions, Option<Particle>)] = &[(
@@ -48715,14 +48726,19 @@ const PARTICLES_1350: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_1814: &[Particle] = &[
     Particle::Element {
-        max: 0,
+        max: 1,
         min: 1,
-        type_id: 3878,
+        type_id: 3935,
     },
     Particle::Element {
-        max: 1,
+        max: 0,
         min: 0,
-        type_id: 3587,
+        type_id: 3918,
+    },
+    Particle::Element {
+        max: 0,
+        min: 1,
+        type_id: 3880,
     },
 ];
 
@@ -48737,9 +48753,9 @@ const PARTICLES_1351: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1815: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3860,
+    max: 0,
+    min: 1,
+    type_id: 3878,
 }];
 
 const PARTICLES_1352: &[(Versions, Option<Particle>)] = &[(
@@ -48752,11 +48768,18 @@ const PARTICLES_1352: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1816: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3881,
-}];
+const ITEMS_1816: &[Particle] = &[
+    Particle::Element {
+        max: 0,
+        min: 1,
+        type_id: 3881,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3590,
+    },
+];
 
 const PARTICLES_1353: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -48769,9 +48792,9 @@ const PARTICLES_1353: &[(Versions, Option<Particle>)] = &[(
 )];
 
 const ITEMS_1817: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3883,
+    max: 1,
+    min: 0,
+    type_id: 3863,
 }];
 
 const PARTICLES_1354: &[(Versions, Option<Particle>)] = &[(
@@ -48784,483 +48807,93 @@ const PARTICLES_1354: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1818: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3617,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3616,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3889,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3890,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3420,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3833,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3634,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3605,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3563,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3457,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3713,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3540,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3750,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3885,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3615,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3884,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3888,
-    },
-];
-
-const ITEMS_1819: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3617,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3616,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3889,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3410,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3890,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3420,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3833,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3634,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3605,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3563,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3457,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3713,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3540,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3750,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3885,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3615,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3884,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3888,
-    },
-];
-
-const PARTICLES_1355: &[(Versions, Option<Particle>)] = &[
-    (
-        Versions(0b00_0001),
-        Some(Particle::Composite {
-            items: ITEMS_1818,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
-    (
-        Versions(0b11_1110),
-        Some(Particle::Composite {
-            items: ITEMS_1819,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
-];
-
-const ITEMS_1820: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3276,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3747,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3316,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3344,
-    },
-    Particle::Any {
-        max: 1,
-        min: 0,
-        namespace: AnyNamespace::Any,
-    },
-];
-
-const ITEMS_1821: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3276,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3747,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3316,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3317,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3344,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3748,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3370,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3749,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3394,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3409,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3352,
-    },
-    Particle::Any {
-        max: 1,
-        min: 0,
-        namespace: AnyNamespace::Any,
-    },
-];
-
-const ITEMS_1822: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3276,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3747,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3316,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3317,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3344,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3748,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3370,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3749,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3394,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3409,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3352,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3991,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4066,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3990,
-    },
-    Particle::Any {
-        max: 1,
-        min: 0,
-        namespace: AnyNamespace::Any,
-    },
-];
-
-const PARTICLES_1356: &[(Versions, Option<Particle>)] = &[
-    (
-        Versions(0b00_0001),
-        Some(Particle::Composite {
-            items: ITEMS_1820,
-            kind: CompositeKind::Choice,
-            max: 1,
-            min: 1,
-        }),
-    ),
-    (
-        Versions(0b01_1110),
-        Some(Particle::Composite {
-            items: ITEMS_1821,
-            kind: CompositeKind::Choice,
-            max: 1,
-            min: 1,
-        }),
-    ),
-    (
-        Versions(0b10_0000),
-        Some(Particle::Composite {
-            items: ITEMS_1822,
-            kind: CompositeKind::Choice,
-            max: 1,
-            min: 1,
-        }),
-    ),
-];
-
-const ITEMS_1823: &[Particle] = &[Particle::Element {
+const ITEMS_1818: &[Particle] = &[Particle::Element {
     max: 0,
-    min: 0,
-    type_id: 3887,
+    min: 1,
+    type_id: 3884,
 }];
 
-const PARTICLES_1357: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_1355: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_1823,
+        items: ITEMS_1818,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1824: &[Particle] = &[
+const ITEMS_1819: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3886,
+}];
+
+const PARTICLES_1356: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1819,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1820: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3829,
+        type_id: 3620,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3825,
+        type_id: 3619,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3832,
+        type_id: 3892,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3826,
+        type_id: 3893,
     },
     Particle::Element {
-        max: 0,
+        max: 1,
         min: 0,
-        type_id: 3513,
+        type_id: 3423,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3824,
+        type_id: 3836,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3823,
+        type_id: 3637,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3830,
+        type_id: 3608,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3768,
+        type_id: 3566,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3811,
+        type_id: 3460,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3416,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3839,
+        type_id: 3716,
     },
     Particle::Element {
         max: 1,
@@ -49270,218 +48903,592 @@ const ITEMS_1824: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3538,
+        type_id: 3753,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3689,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3733,
+        type_id: 3888,
     },
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 3521,
+        type_id: 3618,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3552,
+        type_id: 3887,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3651,
+        type_id: 3891,
+    },
+];
+
+const ITEMS_1821: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3620,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3766,
+        type_id: 3619,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3725,
+        type_id: 3892,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3727,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3645,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3721,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3720,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3535,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3475,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3656,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3568,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3666,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3667,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3569,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3822,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3712,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3529,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3882,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3855,
+        type_id: 3413,
     },
     Particle::Element {
         max: 1,
         min: 0,
         type_id: 3893,
     },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3423,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3836,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3637,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3608,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3566,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3460,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3716,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3543,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3753,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3888,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3618,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3887,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3891,
+    },
 ];
 
-const PARTICLES_1358: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_1357: &[(Versions, Option<Particle>)] = &[
+    (
+        Versions(0b00_0001),
+        Some(Particle::Composite {
+            items: ITEMS_1820,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+    (
+        Versions(0b11_1110),
+        Some(Particle::Composite {
+            items: ITEMS_1821,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+];
+
+const ITEMS_1822: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3279,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3750,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3319,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3347,
+    },
+    Particle::Any {
+        max: 1,
+        min: 0,
+        namespace: AnyNamespace::Any,
+    },
+];
+
+const ITEMS_1823: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3279,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3750,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3319,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3320,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3347,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3751,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3373,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3752,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3397,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3412,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3355,
+    },
+    Particle::Any {
+        max: 1,
+        min: 0,
+        namespace: AnyNamespace::Any,
+    },
+];
+
+const ITEMS_1824: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3279,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3750,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3319,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3320,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3347,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3751,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3373,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3752,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3397,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3412,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3355,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3994,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4069,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3993,
+    },
+    Particle::Any {
+        max: 1,
+        min: 0,
+        namespace: AnyNamespace::Any,
+    },
+];
+
+const PARTICLES_1358: &[(Versions, Option<Particle>)] = &[
+    (
+        Versions(0b00_0001),
+        Some(Particle::Composite {
+            items: ITEMS_1822,
+            kind: CompositeKind::Choice,
+            max: 1,
+            min: 1,
+        }),
+    ),
+    (
+        Versions(0b01_1110),
+        Some(Particle::Composite {
+            items: ITEMS_1823,
+            kind: CompositeKind::Choice,
+            max: 1,
+            min: 1,
+        }),
+    ),
+    (
+        Versions(0b10_0000),
+        Some(Particle::Composite {
+            items: ITEMS_1824,
+            kind: CompositeKind::Choice,
+            max: 1,
+            min: 1,
+        }),
+    ),
+];
+
+const ITEMS_1825: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 3890,
+}];
+
+const PARTICLES_1359: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_1824,
+        items: ITEMS_1825,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1825: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3261,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3271,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3331,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3319,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3306,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3282,
-    },
-    Particle::Any {
-        max: 1,
-        min: 0,
-        namespace: AnyNamespace::Any,
-    },
-];
-
 const ITEMS_1826: &[Particle] = &[
     Particle::Element {
         max: 1,
-        min: 1,
-        type_id: 3261,
+        min: 0,
+        type_id: 3832,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3828,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3835,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3829,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3516,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3271,
+        type_id: 3827,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3826,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3833,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3771,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3814,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3419,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3842,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3546,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3541,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3692,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3736,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3524,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3555,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3654,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3769,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3728,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3730,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3648,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3724,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3723,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3538,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3478,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3659,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3571,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3669,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3670,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3572,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3825,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3715,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3532,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3885,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3858,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3896,
+    },
+];
+
+const PARTICLES_1360: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1826,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1827: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3264,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3331,
+        type_id: 3274,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3319,
+        type_id: 3334,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3306,
+        type_id: 3322,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3282,
+        type_id: 3309,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3408,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3400,
+        type_id: 3285,
     },
     Particle::Any {
         max: 1,
@@ -49490,11 +49497,59 @@ const ITEMS_1826: &[Particle] = &[
     },
 ];
 
-const PARTICLES_1359: &[(Versions, Option<Particle>)] = &[
+const ITEMS_1828: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3264,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3274,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3334,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3322,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3309,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3285,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3411,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3403,
+    },
+    Particle::Any {
+        max: 1,
+        min: 0,
+        namespace: AnyNamespace::Any,
+    },
+];
+
+const PARTICLES_1361: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_1825,
+            items: ITEMS_1827,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -49503,7 +49558,7 @@ const PARTICLES_1359: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b11_1110),
         Some(Particle::Composite {
-            items: ITEMS_1826,
+            items: ITEMS_1828,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -49511,62 +49566,11 @@ const PARTICLES_1359: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1827: &[Particle] = &[Particle::Element {
+const ITEMS_1829: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
-    type_id: 3892,
+    type_id: 3895,
 }];
-
-const PARTICLES_1360: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1827,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1828: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3468,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3470,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3587,
-    },
-];
-
-const PARTICLES_1361: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1828,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1829: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3902,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3587,
-    },
-];
 
 const PARTICLES_1362: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -49578,11 +49582,23 @@ const PARTICLES_1362: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1830: &[Particle] = &[Particle::Element {
-    max: 0x10_0000,
-    min: 1,
-    type_id: 3652,
-}];
+const ITEMS_1830: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3471,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3473,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3590,
+    },
+];
 
 const PARTICLES_1363: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -49598,87 +49614,12 @@ const ITEMS_1831: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3669,
+        type_id: 3905,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3755,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3803,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3924,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3489,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3919,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3723,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3547,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3632,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3520,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3482,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3760,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3765,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3759,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3804,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3490,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3923,
+        type_id: 3590,
     },
 ];
 
@@ -49692,62 +49633,125 @@ const PARTICLES_1364: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1832: &[Particle] = &[
-    Particle::Element {
+const ITEMS_1832: &[Particle] = &[Particle::Element {
+    max: 0x10_0000,
+    min: 1,
+    type_id: 3655,
+}];
+
+const PARTICLES_1365: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1832,
+        kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
-        type_id: 3303,
-    },
-    Particle::Any {
-        max: 1,
-        min: 0,
-        namespace: AnyNamespace::Any,
-    },
-];
+    }),
+)];
 
 const ITEMS_1833: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3303,
+        type_id: 3672,
     },
     Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3368,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3372,
-    },
-    Particle::Any {
         max: 1,
         min: 0,
-        namespace: AnyNamespace::Any,
+        type_id: 3758,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3806,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3927,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3492,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3922,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3726,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3550,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3635,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3523,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3485,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3763,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3768,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3762,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3807,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3493,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3926,
     },
 ];
+
+const PARTICLES_1366: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1833,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
 
 const ITEMS_1834: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3303,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3368,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3372,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4314,
+        type_id: 3306,
     },
     Particle::Any {
         max: 1,
@@ -49756,11 +49760,62 @@ const ITEMS_1834: &[Particle] = &[
     },
 ];
 
-const PARTICLES_1365: &[(Versions, Option<Particle>)] = &[
+const ITEMS_1835: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3306,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3371,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3375,
+    },
+    Particle::Any {
+        max: 1,
+        min: 0,
+        namespace: AnyNamespace::Any,
+    },
+];
+
+const ITEMS_1836: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3306,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3371,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3375,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4317,
+    },
+    Particle::Any {
+        max: 1,
+        min: 0,
+        namespace: AnyNamespace::Any,
+    },
+];
+
+const PARTICLES_1367: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_1832,
+            items: ITEMS_1834,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -49769,7 +49824,7 @@ const PARTICLES_1365: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b01_1110),
         Some(Particle::Composite {
-            items: ITEMS_1833,
+            items: ITEMS_1835,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -49778,7 +49833,7 @@ const PARTICLES_1365: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b10_0000),
         Some(Particle::Composite {
-            items: ITEMS_1834,
+            items: ITEMS_1836,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -49786,72 +49841,45 @@ const PARTICLES_1365: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1835: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 3922,
-}];
-
-const PARTICLES_1366: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1835,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1836: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 3652,
-}];
-
-const PARTICLES_1367: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1836,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
 const ITEMS_1837: &[Particle] = &[Particle::Element {
     max: 0,
-    min: 1,
-    type_id: 3936,
+    min: 0,
+    type_id: 3925,
 }];
 
-const PARTICLES_1368: &[(Versions, Option<Particle>)] = &[
-    (
-        Versions(0b00_0111),
-        Some(Particle::Composite {
-            items: ITEMS_9,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
-    (
-        Versions(0b11_1000),
-        Some(Particle::Composite {
-            items: ITEMS_1837,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
-];
+const PARTICLES_1368: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1837,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
 
 const ITEMS_1838: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3588,
+    max: 0,
+    min: 1,
+    type_id: 3655,
 }];
 
-const PARTICLES_1369: &[(Versions, Option<Particle>)] = &[
+const PARTICLES_1369: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1838,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1839: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 3939,
+}];
+
+const PARTICLES_1370: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0111),
         Some(Particle::Composite {
@@ -49864,7 +49892,7 @@ const PARTICLES_1369: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b11_1000),
         Some(Particle::Composite {
-            items: ITEMS_1838,
+            items: ITEMS_1839,
             kind: CompositeKind::Sequence,
             max: 1,
             min: 1,
@@ -49872,16 +49900,43 @@ const PARTICLES_1369: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1839: &[Particle] = &[
+const ITEMS_1840: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 3591,
+}];
+
+const PARTICLES_1371: &[(Versions, Option<Particle>)] = &[
+    (
+        Versions(0b00_0111),
+        Some(Particle::Composite {
+            items: ITEMS_9,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+    (
+        Versions(0b11_1000),
+        Some(Particle::Composite {
+            items: ITEMS_1840,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+];
+
+const ITEMS_1841: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3942,
+        type_id: 3945,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3939,
+        type_id: 3942,
     },
     Particle::Element {
         max: 1,
@@ -49895,17 +49950,17 @@ const ITEMS_1839: &[Particle] = &[
     },
 ];
 
-const PARTICLES_1370: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_1372: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_1839,
+        items: ITEMS_1841,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1840: &[Particle] = &[
+const ITEMS_1842: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -49918,26 +49973,31 @@ const ITEMS_1840: &[Particle] = &[
     },
 ];
 
-const PARTICLES_1371: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_1373: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_1840,
+        items: ITEMS_1842,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1841: &[Particle] = &[
+const ITEMS_1843: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3960,
+        type_id: 3963,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3950,
+        type_id: 3953,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3951,
     },
     Particle::Element {
         max: 1,
@@ -49947,35 +50007,30 @@ const ITEMS_1841: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3945,
+        type_id: 3961,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3958,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3941,
+        type_id: 3944,
     },
 ];
 
-const ITEMS_1842: &[Particle] = &[Particle::Composite {
-    items: ITEMS_1841,
+const ITEMS_1844: &[Particle] = &[Particle::Composite {
+    items: ITEMS_1843,
     kind: CompositeKind::Choice,
     max: 1,
     min: 1,
 }];
 
-const ITEMS_1843: &[Particle] = &[Particle::Composite {
-    items: ITEMS_1842,
+const ITEMS_1845: &[Particle] = &[Particle::Composite {
+    items: ITEMS_1844,
     kind: CompositeKind::Sequence,
     max: 1,
     min: 1,
 }];
 
-const ITEMS_1844: &[Particle] = &[
+const ITEMS_1846: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -49987,7 +50042,7 @@ const ITEMS_1844: &[Particle] = &[
         type_id: 423,
     },
     Particle::Composite {
-        items: ITEMS_1843,
+        items: ITEMS_1845,
         kind: CompositeKind::Group,
         max: 1,
         min: 1,
@@ -49995,58 +50050,7 @@ const ITEMS_1844: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3944,
-    },
-];
-
-const PARTICLES_1372: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1844,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1845: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3946,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 473,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 483,
-    },
-];
-
-const PARTICLES_1373: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1845,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1846: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 491,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 289,
+        type_id: 3947,
     },
 ];
 
@@ -50064,73 +50068,31 @@ const ITEMS_1847: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3962,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3957,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3943,
-    },
-];
-
-const ITEMS_1848: &[Particle] = &[Particle::Composite {
-    items: ITEMS_1847,
-    kind: CompositeKind::Choice,
-    max: 1,
-    min: 1,
-}];
-
-const ITEMS_1849: &[Particle] = &[Particle::Composite {
-    items: ITEMS_1848,
-    kind: CompositeKind::Group,
-    max: 0,
-    min: 0,
-}];
-
-const PARTICLES_1375: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1849,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1850: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
         type_id: 3949,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 630,
+        type_id: 473,
     },
     Particle::Element {
         max: 1,
-        min: 1,
-        type_id: 220,
+        min: 0,
+        type_id: 483,
     },
 ];
 
-const PARTICLES_1376: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_1375: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_1850,
+        items: ITEMS_1847,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_1851: &[Particle] = &[
+const ITEMS_1848: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -50139,9 +50101,51 @@ const ITEMS_1851: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 318,
+        type_id: 289,
     },
 ];
+
+const PARTICLES_1376: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1848,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1849: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3965,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3960,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3946,
+    },
+];
+
+const ITEMS_1850: &[Particle] = &[Particle::Composite {
+    items: ITEMS_1849,
+    kind: CompositeKind::Choice,
+    max: 1,
+    min: 1,
+}];
+
+const ITEMS_1851: &[Particle] = &[Particle::Composite {
+    items: ITEMS_1850,
+    kind: CompositeKind::Group,
+    max: 0,
+    min: 0,
+}];
 
 const PARTICLES_1377: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -50157,55 +50161,44 @@ const ITEMS_1852: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3960,
+        type_id: 3952,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3950,
+        type_id: 630,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3948,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3945,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3958,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3940,
+        type_id: 220,
     },
 ];
+
+const PARTICLES_1378: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1852,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
 
 const ITEMS_1853: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3951,
+        type_id: 491,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 233,
-    },
-    Particle::Composite {
-        items: ITEMS_1852,
-        kind: CompositeKind::Choice,
-        max: 0,
-        min: 0,
+        type_id: 318,
     },
 ];
 
-const PARTICLES_1378: &[(Versions, Option<Particle>)] = &[(
+const PARTICLES_1379: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_1853,
@@ -50219,45 +50212,51 @@ const ITEMS_1854: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 491,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 325,
-    },
-];
-
-const PARTICLES_1379: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1854,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1855: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
         type_id: 3963,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 642,
+        type_id: 3953,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3964,
+        type_id: 3951,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 643,
+        type_id: 3948,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3961,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3943,
+    },
+];
+
+const ITEMS_1855: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3954,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 233,
+    },
+    Particle::Composite {
+        items: ITEMS_1854,
+        kind: CompositeKind::Choice,
+        max: 0,
+        min: 0,
     },
 ];
 
@@ -50275,23 +50274,12 @@ const ITEMS_1856: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3955,
+        type_id: 491,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 423,
-    },
-    Particle::Composite {
-        items: ITEMS_1843,
-        kind: CompositeKind::Group,
-        max: 1,
-        min: 1,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3944,
+        type_id: 325,
     },
 ];
 
@@ -50309,22 +50297,22 @@ const ITEMS_1857: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3959,
+        type_id: 3966,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 106,
+        type_id: 642,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 473,
+        type_id: 3967,
     },
     Particle::Element {
         max: 1,
-        min: 0,
-        type_id: 483,
+        min: 1,
+        type_id: 643,
     },
 ];
 
@@ -50342,12 +50330,23 @@ const ITEMS_1858: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 491,
+        type_id: 3958,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 332,
+        type_id: 423,
+    },
+    Particle::Composite {
+        items: ITEMS_1845,
+        kind: CompositeKind::Group,
+        max: 1,
+        min: 1,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3947,
     },
 ];
 
@@ -50365,7 +50364,12 @@ const ITEMS_1859: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3961,
+        type_id: 3962,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 106,
     },
     Particle::Element {
         max: 1,
@@ -50376,11 +50380,6 @@ const ITEMS_1859: &[Particle] = &[
         max: 1,
         min: 0,
         type_id: 483,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 546,
     },
 ];
 
@@ -50403,7 +50402,7 @@ const ITEMS_1860: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 312,
+        type_id: 332,
     },
 ];
 
@@ -50421,23 +50420,22 @@ const ITEMS_1861: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3955,
+        type_id: 3964,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3956,
-    },
-    Particle::Composite {
-        items: ITEMS_1843,
-        kind: CompositeKind::Group,
-        max: 1,
-        min: 1,
+        type_id: 473,
     },
     Particle::Element {
         max: 1,
-        min: 1,
-        type_id: 3944,
+        min: 0,
+        type_id: 483,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 546,
     },
 ];
 
@@ -50455,118 +50453,89 @@ const ITEMS_1862: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4265,
+        type_id: 491,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 4162,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4235,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4136,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4146,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4234,
+        type_id: 312,
     },
 ];
 
-const PARTICLES_1387: &[(Versions, Option<Particle>)] = &[
-    (
-        Versions(0b01_1111),
-        Some(Particle::Composite {
-            items: ITEMS_9,
-            kind: CompositeKind::Choice,
-            max: 0,
-            min: 0,
-        }),
-    ),
-    (
-        Versions(0b10_0000),
-        Some(Particle::Composite {
-            items: ITEMS_1862,
-            kind: CompositeKind::Choice,
-            max: 0,
-            min: 0,
-        }),
-    ),
+const PARTICLES_1387: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1862,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1863: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3958,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3959,
+    },
+    Particle::Composite {
+        items: ITEMS_1845,
+        kind: CompositeKind::Group,
+        max: 1,
+        min: 1,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3947,
+    },
 ];
 
-const ITEMS_1863: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3589,
-}];
-
-const PARTICLES_1388: &[(Versions, Option<Particle>)] = &[
-    (
-        Versions(0b01_1111),
-        Some(Particle::Composite {
-            items: ITEMS_9,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
-    (
-        Versions(0b10_0000),
-        Some(Particle::Composite {
-            items: ITEMS_1863,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
-];
+const PARTICLES_1388: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1863,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
 
 const ITEMS_1864: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3965,
+        type_id: 4268,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3967,
+        type_id: 4165,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3975,
+        type_id: 4238,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3978,
+        type_id: 4139,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3968,
+        type_id: 4149,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3970,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3976,
+        type_id: 4237,
     },
 ];
 
@@ -50591,23 +50560,11 @@ const PARTICLES_1389: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1865: &[Particle] = &[
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3966,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3971,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3589,
-    },
-];
+const ITEMS_1865: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 3592,
+}];
 
 const PARTICLES_1390: &[(Versions, Option<Particle>)] = &[
     (
@@ -50634,12 +50591,37 @@ const ITEMS_1866: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3974,
+        type_id: 3968,
     },
     Particle::Element {
         max: 1,
-        min: 0,
-        type_id: 3575,
+        min: 1,
+        type_id: 3970,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3978,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3981,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3971,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3973,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3979,
     },
 ];
 
@@ -50648,18 +50630,18 @@ const PARTICLES_1391: &[(Versions, Option<Particle>)] = &[
         Versions(0b01_1111),
         Some(Particle::Composite {
             items: ITEMS_9,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
+            kind: CompositeKind::Choice,
+            max: 0,
+            min: 0,
         }),
     ),
     (
         Versions(0b10_0000),
         Some(Particle::Composite {
             items: ITEMS_1866,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
+            kind: CompositeKind::Choice,
+            max: 0,
+            min: 0,
         }),
     ),
 ];
@@ -50668,12 +50650,17 @@ const ITEMS_1867: &[Particle] = &[
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 3933,
+        type_id: 3969,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3974,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3590,
+        type_id: 3592,
     },
 ];
 
@@ -50698,11 +50685,18 @@ const PARTICLES_1392: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1868: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3590,
-}];
+const ITEMS_1868: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3977,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3578,
+    },
+];
 
 const PARTICLES_1393: &[(Versions, Option<Particle>)] = &[
     (
@@ -50725,11 +50719,18 @@ const PARTICLES_1393: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1869: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 4001,
-}];
+const ITEMS_1869: &[Particle] = &[
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 3936,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3593,
+    },
+];
 
 const PARTICLES_1394: &[(Versions, Option<Particle>)] = &[
     (
@@ -50753,9 +50754,9 @@ const PARTICLES_1394: &[(Versions, Option<Particle>)] = &[
 ];
 
 const ITEMS_1870: &[Particle] = &[Particle::Element {
-    max: 0,
+    max: 1,
     min: 0,
-    type_id: 3999,
+    type_id: 3593,
 }];
 
 const PARTICLES_1395: &[(Versions, Option<Particle>)] = &[
@@ -50782,7 +50783,7 @@ const PARTICLES_1395: &[(Versions, Option<Particle>)] = &[
 const ITEMS_1871: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 4000,
+    type_id: 4004,
 }];
 
 const PARTICLES_1396: &[(Versions, Option<Particle>)] = &[
@@ -50807,30 +50808,14 @@ const PARTICLES_1396: &[(Versions, Option<Particle>)] = &[
 ];
 
 const ITEMS_1872: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3925,
-}];
-
-const PARTICLES_1397: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1872,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1873: &[Particle] = &[Particle::Element {
     max: 0,
-    min: 1,
-    type_id: 4007,
+    min: 0,
+    type_id: 4002,
 }];
 
-const PARTICLES_1398: &[(Versions, Option<Particle>)] = &[
+const PARTICLES_1397: &[(Versions, Option<Particle>)] = &[
     (
-        Versions(0b00_0111),
+        Versions(0b01_1111),
         Some(Particle::Composite {
             items: ITEMS_9,
             kind: CompositeKind::Sequence,
@@ -50839,7 +50824,34 @@ const PARTICLES_1398: &[(Versions, Option<Particle>)] = &[
         }),
     ),
     (
-        Versions(0b11_1000),
+        Versions(0b10_0000),
+        Some(Particle::Composite {
+            items: ITEMS_1872,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+];
+
+const ITEMS_1873: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 4003,
+}];
+
+const PARTICLES_1398: &[(Versions, Option<Particle>)] = &[
+    (
+        Versions(0b01_1111),
+        Some(Particle::Composite {
+            items: ITEMS_9,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+    (
+        Versions(0b10_0000),
         Some(Particle::Composite {
             items: ITEMS_1873,
             kind: CompositeKind::Sequence,
@@ -50849,20 +50861,29 @@ const PARTICLES_1398: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1874: &[Particle] = &[
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4005,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3591,
-    },
-];
+const ITEMS_1874: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 3928,
+}];
 
-const PARTICLES_1399: &[(Versions, Option<Particle>)] = &[
+const PARTICLES_1399: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1874,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_1875: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 4010,
+}];
+
+const PARTICLES_1400: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0111),
         Some(Particle::Composite {
@@ -50875,87 +50896,24 @@ const PARTICLES_1399: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b11_1000),
         Some(Particle::Composite {
-            items: ITEMS_1874,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
-];
-
-const ITEMS_1875: &[Particle] = &[Particle::Composite {
-    items: ITEMS_9,
-    kind: CompositeKind::Choice,
-    max: 2,
-    min: 1,
-}];
-
-const ITEMS_1876: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 4008,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3591,
-    },
-];
-
-const ITEMS_1877: &[Particle] = &[Particle::Composite {
-    items: ITEMS_1876,
-    kind: CompositeKind::Choice,
-    max: 2,
-    min: 1,
-}];
-
-const PARTICLES_1400: &[(Versions, Option<Particle>)] = &[
-    (
-        Versions(0b00_0111),
-        Some(Particle::Composite {
             items: ITEMS_1875,
             kind: CompositeKind::Sequence,
             max: 1,
             min: 1,
         }),
     ),
-    (
-        Versions(0b11_1000),
-        Some(Particle::Composite {
-            items: ITEMS_1877,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
 ];
 
-const ITEMS_1878: &[Particle] = &[
+const ITEMS_1876: &[Particle] = &[
     Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4014,
+        max: 0,
+        min: 0,
+        type_id: 4008,
     },
     Particle::Element {
         max: 1,
-        min: 1,
-        type_id: 4023,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4009,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4010,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3591,
+        min: 0,
+        type_id: 3594,
     },
 ];
 
@@ -50964,45 +50922,54 @@ const PARTICLES_1401: &[(Versions, Option<Particle>)] = &[
         Versions(0b00_0111),
         Some(Particle::Composite {
             items: ITEMS_9,
-            kind: CompositeKind::Choice,
+            kind: CompositeKind::Sequence,
             max: 1,
-            min: 0,
+            min: 1,
         }),
     ),
     (
         Versions(0b11_1000),
         Some(Particle::Composite {
-            items: ITEMS_1878,
-            kind: CompositeKind::Choice,
+            items: ITEMS_1876,
+            kind: CompositeKind::Sequence,
             max: 1,
-            min: 0,
+            min: 1,
         }),
     ),
 ];
 
-const ITEMS_1879: &[Particle] = &[
+const ITEMS_1877: &[Particle] = &[Particle::Composite {
+    items: ITEMS_9,
+    kind: CompositeKind::Choice,
+    max: 2,
+    min: 1,
+}];
+
+const ITEMS_1878: &[Particle] = &[
     Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4012,
-    },
-    Particle::Element {
-        max: 0,
+        max: 1,
         min: 0,
         type_id: 4011,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3591,
+        type_id: 3594,
     },
 ];
+
+const ITEMS_1879: &[Particle] = &[Particle::Composite {
+    items: ITEMS_1878,
+    kind: CompositeKind::Choice,
+    max: 2,
+    min: 1,
+}];
 
 const PARTICLES_1402: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0111),
         Some(Particle::Composite {
-            items: ITEMS_9,
+            items: ITEMS_1877,
             kind: CompositeKind::Sequence,
             max: 1,
             min: 1,
@@ -51019,38 +50986,72 @@ const PARTICLES_1402: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1880: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 4016,
-}];
+const ITEMS_1880: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4017,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4026,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4012,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4013,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3594,
+    },
+];
 
 const PARTICLES_1403: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0111),
         Some(Particle::Composite {
             items: ITEMS_9,
-            kind: CompositeKind::Sequence,
+            kind: CompositeKind::Choice,
             max: 1,
-            min: 1,
+            min: 0,
         }),
     ),
     (
         Versions(0b11_1000),
         Some(Particle::Composite {
             items: ITEMS_1880,
-            kind: CompositeKind::Sequence,
+            kind: CompositeKind::Choice,
             max: 1,
-            min: 1,
+            min: 0,
         }),
     ),
 ];
 
-const ITEMS_1881: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 4020,
-}];
+const ITEMS_1881: &[Particle] = &[
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4015,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4014,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3594,
+    },
+];
 
 const PARTICLES_1404: &[(Versions, Option<Particle>)] = &[
     (
@@ -51100,28 +51101,11 @@ const PARTICLES_1405: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1883: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3581,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 4015,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 4021,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3591,
-    },
-];
+const ITEMS_1883: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 4023,
+}];
 
 const PARTICLES_1406: &[(Versions, Option<Particle>)] = &[
     (
@@ -51144,18 +51128,11 @@ const PARTICLES_1406: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1884: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 4026,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3591,
-    },
-];
+const ITEMS_1884: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 4022,
+}];
 
 const PARTICLES_1407: &[(Versions, Option<Particle>)] = &[
     (
@@ -51178,11 +51155,28 @@ const PARTICLES_1407: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1885: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 4027,
-}];
+const ITEMS_1885: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3584,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 4018,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 4024,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3594,
+    },
+];
 
 const PARTICLES_1408: &[(Versions, Option<Particle>)] = &[
     (
@@ -51205,11 +51199,18 @@ const PARTICLES_1408: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1886: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 4028,
-}];
+const ITEMS_1886: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 4029,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3594,
+    },
+];
 
 const PARTICLES_1409: &[(Versions, Option<Particle>)] = &[
     (
@@ -51234,8 +51235,8 @@ const PARTICLES_1409: &[(Versions, Option<Particle>)] = &[
 
 const ITEMS_1887: &[Particle] = &[Particle::Element {
     max: 0,
-    min: 0,
-    type_id: 4025,
+    min: 1,
+    type_id: 4030,
 }];
 
 const PARTICLES_1410: &[(Versions, Option<Particle>)] = &[
@@ -51259,23 +51260,11 @@ const PARTICLES_1410: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1888: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 4024,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 4029,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3591,
-    },
-];
+const ITEMS_1888: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 4031,
+}];
 
 const PARTICLES_1411: &[(Versions, Option<Particle>)] = &[
     (
@@ -51300,8 +51289,8 @@ const PARTICLES_1411: &[(Versions, Option<Particle>)] = &[
 
 const ITEMS_1889: &[Particle] = &[Particle::Element {
     max: 0,
-    min: 1,
-    type_id: 4039,
+    min: 0,
+    type_id: 4028,
 }];
 
 const PARTICLES_1412: &[(Versions, Option<Particle>)] = &[
@@ -51325,11 +51314,23 @@ const PARTICLES_1412: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1890: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 4034,
-}];
+const ITEMS_1890: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 4027,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 4032,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3594,
+    },
+];
 
 const PARTICLES_1413: &[(Versions, Option<Particle>)] = &[
     (
@@ -51352,18 +51353,11 @@ const PARTICLES_1413: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1891: &[Particle] = &[
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4032,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3591,
-    },
-];
+const ITEMS_1891: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 4042,
+}];
 
 const PARTICLES_1414: &[(Versions, Option<Particle>)] = &[
     (
@@ -51386,18 +51380,11 @@ const PARTICLES_1414: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1892: &[Particle] = &[
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4031,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3591,
-    },
-];
+const ITEMS_1892: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 4037,
+}];
 
 const PARTICLES_1415: &[(Versions, Option<Particle>)] = &[
     (
@@ -51420,11 +51407,18 @@ const PARTICLES_1415: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1893: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 4036,
-}];
+const ITEMS_1893: &[Particle] = &[
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4035,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3594,
+    },
+];
 
 const PARTICLES_1416: &[(Versions, Option<Particle>)] = &[
     (
@@ -51451,12 +51445,12 @@ const ITEMS_1894: &[Particle] = &[
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 4037,
+        type_id: 4034,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3591,
+        type_id: 3594,
     },
 ];
 
@@ -51481,18 +51475,11 @@ const PARTICLES_1417: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1895: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 4033,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4035,
-    },
-];
+const ITEMS_1895: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 4039,
+}];
 
 const PARTICLES_1418: &[(Versions, Option<Particle>)] = &[
     (
@@ -51517,14 +51504,14 @@ const PARTICLES_1418: &[(Versions, Option<Particle>)] = &[
 
 const ITEMS_1896: &[Particle] = &[
     Particle::Element {
-        max: 1,
+        max: 0,
         min: 0,
-        type_id: 4045,
+        type_id: 4040,
     },
     Particle::Element {
-        max: 0,
-        min: 1,
-        type_id: 4048,
+        max: 1,
+        min: 0,
+        type_id: 3594,
     },
 ];
 
@@ -51551,14 +51538,14 @@ const PARTICLES_1419: &[(Versions, Option<Particle>)] = &[
 
 const ITEMS_1897: &[Particle] = &[
     Particle::Element {
-        max: 0,
+        max: 1,
         min: 0,
-        type_id: 4042,
+        type_id: 4036,
     },
     Particle::Element {
         max: 1,
-        min: 0,
-        type_id: 3592,
+        min: 1,
+        type_id: 4038,
     },
 ];
 
@@ -51583,11 +51570,18 @@ const PARTICLES_1420: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1898: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 4041,
-}];
+const ITEMS_1898: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 4048,
+    },
+    Particle::Element {
+        max: 0,
+        min: 1,
+        type_id: 4051,
+    },
+];
 
 const PARTICLES_1421: &[(Versions, Option<Particle>)] = &[
     (
@@ -51614,12 +51608,12 @@ const ITEMS_1899: &[Particle] = &[
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 4046,
+        type_id: 4045,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3592,
+        type_id: 3595,
     },
 ];
 
@@ -51644,27 +51638,15 @@ const PARTICLES_1422: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1900: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4051,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 4053,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 4052,
-    },
-];
+const ITEMS_1900: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 4044,
+}];
 
 const PARTICLES_1423: &[(Versions, Option<Particle>)] = &[
     (
-        Versions(0b00_1111),
+        Versions(0b00_0111),
         Some(Particle::Composite {
             items: ITEMS_9,
             kind: CompositeKind::Sequence,
@@ -51673,7 +51655,7 @@ const PARTICLES_1423: &[(Versions, Option<Particle>)] = &[
         }),
     ),
     (
-        Versions(0b11_0000),
+        Versions(0b11_1000),
         Some(Particle::Composite {
             items: ITEMS_1900,
             kind: CompositeKind::Sequence,
@@ -51692,13 +51674,13 @@ const ITEMS_1901: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3593,
+        type_id: 3595,
     },
 ];
 
 const PARTICLES_1424: &[(Versions, Option<Particle>)] = &[
     (
-        Versions(0b00_1111),
+        Versions(0b00_0111),
         Some(Particle::Composite {
             items: ITEMS_9,
             kind: CompositeKind::Sequence,
@@ -51707,7 +51689,7 @@ const PARTICLES_1424: &[(Versions, Option<Particle>)] = &[
         }),
     ),
     (
-        Versions(0b11_0000),
+        Versions(0b11_1000),
         Some(Particle::Composite {
             items: ITEMS_1901,
             kind: CompositeKind::Sequence,
@@ -51717,11 +51699,23 @@ const PARTICLES_1424: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1902: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 4055,
-}];
+const ITEMS_1902: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4054,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 4056,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 4055,
+    },
+];
 
 const PARTICLES_1425: &[(Versions, Option<Particle>)] = &[
     (
@@ -51748,18 +51742,18 @@ const ITEMS_1903: &[Particle] = &[
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 4057,
+        type_id: 4052,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3594,
+        type_id: 3596,
     },
 ];
 
 const PARTICLES_1426: &[(Versions, Option<Particle>)] = &[
     (
-        Versions(0b01_1111),
+        Versions(0b00_1111),
         Some(Particle::Composite {
             items: ITEMS_9,
             kind: CompositeKind::Sequence,
@@ -51768,7 +51762,7 @@ const PARTICLES_1426: &[(Versions, Option<Particle>)] = &[
         }),
     ),
     (
-        Versions(0b10_0000),
+        Versions(0b11_0000),
         Some(Particle::Composite {
             items: ITEMS_1903,
             kind: CompositeKind::Sequence,
@@ -51779,9 +51773,9 @@ const PARTICLES_1426: &[(Versions, Option<Particle>)] = &[
 ];
 
 const ITEMS_1904: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3595,
+    max: 0,
+    min: 1,
+    type_id: 4058,
 }];
 
 const PARTICLES_1427: &[(Versions, Option<Particle>)] = &[
@@ -51805,15 +51799,22 @@ const PARTICLES_1427: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1905: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 3596,
-}];
+const ITEMS_1905: &[Particle] = &[
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4060,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3597,
+    },
+];
 
 const PARTICLES_1428: &[(Versions, Option<Particle>)] = &[
     (
-        Versions(0b00_0111),
+        Versions(0b01_1111),
         Some(Particle::Composite {
             items: ITEMS_9,
             kind: CompositeKind::Sequence,
@@ -51822,7 +51823,7 @@ const PARTICLES_1428: &[(Versions, Option<Particle>)] = &[
         }),
     ),
     (
-        Versions(0b11_1000),
+        Versions(0b10_0000),
         Some(Particle::Composite {
             items: ITEMS_1905,
             kind: CompositeKind::Sequence,
@@ -51832,22 +51833,15 @@ const PARTICLES_1428: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1906: &[Particle] = &[
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4061,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3596,
-    },
-];
+const ITEMS_1906: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 3598,
+}];
 
 const PARTICLES_1429: &[(Versions, Option<Particle>)] = &[
     (
-        Versions(0b00_0111),
+        Versions(0b00_1111),
         Some(Particle::Composite {
             items: ITEMS_9,
             kind: CompositeKind::Sequence,
@@ -51856,7 +51850,7 @@ const PARTICLES_1429: &[(Versions, Option<Particle>)] = &[
         }),
     ),
     (
-        Versions(0b11_1000),
+        Versions(0b11_0000),
         Some(Particle::Composite {
             items: ITEMS_1906,
             kind: CompositeKind::Sequence,
@@ -51866,23 +51860,11 @@ const PARTICLES_1429: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1907: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3934,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 4064,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3596,
-    },
-];
+const ITEMS_1907: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 3599,
+}];
 
 const PARTICLES_1430: &[(Versions, Option<Particle>)] = &[
     (
@@ -51905,11 +51887,18 @@ const PARTICLES_1430: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1908: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 4060,
-}];
+const ITEMS_1908: &[Particle] = &[
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4064,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3599,
+    },
+];
 
 const PARTICLES_1431: &[(Versions, Option<Particle>)] = &[
     (
@@ -51934,14 +51923,19 @@ const PARTICLES_1431: &[(Versions, Option<Particle>)] = &[
 
 const ITEMS_1909: &[Particle] = &[
     Particle::Element {
-        max: 0,
+        max: 1,
         min: 0,
-        type_id: 4063,
+        type_id: 3937,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3596,
+        type_id: 4067,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3599,
     },
 ];
 
@@ -51967,49 +51961,71 @@ const PARTICLES_1432: &[(Versions, Option<Particle>)] = &[
 ];
 
 const ITEMS_1910: &[Particle] = &[Particle::Element {
-    max: 0x1FFF_FFFE,
-    min: 1,
-    type_id: 4070,
+    max: 0,
+    min: 0,
+    type_id: 4063,
 }];
 
-const PARTICLES_1433: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1910,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
+const PARTICLES_1433: &[(Versions, Option<Particle>)] = &[
+    (
+        Versions(0b00_0111),
+        Some(Particle::Composite {
+            items: ITEMS_9,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+    (
+        Versions(0b11_1000),
+        Some(Particle::Composite {
+            items: ITEMS_1910,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+];
 
-const ITEMS_1911: &[Particle] = &[Particle::Element {
-    max: 0x1FFF_FFFE,
-    min: 1,
-    type_id: 4071,
-}];
-
-const PARTICLES_1434: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1911,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_1912: &[Particle] = &[
+const ITEMS_1911: &[Particle] = &[
     Particle::Element {
-        max: 1,
+        max: 0,
         min: 0,
-        type_id: 4068,
+        type_id: 4066,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4067,
+        type_id: 3599,
     },
 ];
+
+const PARTICLES_1434: &[(Versions, Option<Particle>)] = &[
+    (
+        Versions(0b00_0111),
+        Some(Particle::Composite {
+            items: ITEMS_9,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+    (
+        Versions(0b11_1000),
+        Some(Particle::Composite {
+            items: ITEMS_1911,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+];
+
+const ITEMS_1912: &[Particle] = &[Particle::Element {
+    max: 0x1FFF_FFFE,
+    min: 1,
+    type_id: 4073,
+}];
 
 const PARTICLES_1435: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
@@ -52021,89 +52037,60 @@ const PARTICLES_1435: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_1913: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3576,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 3622,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3597,
-    },
-];
+const ITEMS_1913: &[Particle] = &[Particle::Element {
+    max: 0x1FFF_FFFE,
+    min: 1,
+    type_id: 4074,
+}];
 
-const PARTICLES_1436: &[(Versions, Option<Particle>)] = &[
-    (
-        Versions(0b00_1111),
-        Some(Particle::Composite {
-            items: ITEMS_9,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
-    (
-        Versions(0b11_0000),
-        Some(Particle::Composite {
-            items: ITEMS_1913,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
-];
+const PARTICLES_1436: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1913,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
 
 const ITEMS_1914: &[Particle] = &[
     Particle::Element {
-        max: 0,
+        max: 1,
         min: 0,
-        type_id: 4077,
+        type_id: 4071,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3597,
+        type_id: 4070,
     },
 ];
 
-const PARTICLES_1437: &[(Versions, Option<Particle>)] = &[
-    (
-        Versions(0b00_1111),
-        Some(Particle::Composite {
-            items: ITEMS_9,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
-    (
-        Versions(0b11_0000),
-        Some(Particle::Composite {
-            items: ITEMS_1914,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
-];
+const PARTICLES_1437: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1914,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
 
 const ITEMS_1915: &[Particle] = &[
     Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3579,
+    },
+    Particle::Element {
         max: 0,
         min: 0,
-        type_id: 4075,
+        type_id: 3625,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3597,
+        type_id: 3600,
     },
 ];
 
@@ -52132,17 +52119,12 @@ const ITEMS_1916: &[Particle] = &[
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 4074,
+        type_id: 4080,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4079,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3597,
+        type_id: 3600,
     },
 ];
 
@@ -52169,28 +52151,14 @@ const PARTICLES_1439: &[(Versions, Option<Particle>)] = &[
 
 const ITEMS_1917: &[Particle] = &[
     Particle::Element {
-        max: 1,
+        max: 0,
         min: 0,
-        type_id: 3326,
+        type_id: 4078,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 4018,
-    },
-];
-
-const ITEMS_1918: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3576,
-    },
-    Particle::Composite {
-        items: ITEMS_1917,
-        kind: CompositeKind::Choice,
-        max: 1,
-        min: 0,
+        type_id: 3600,
     },
 ];
 
@@ -52198,7 +52166,46 @@ const PARTICLES_1440: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_1111),
         Some(Particle::Composite {
-            items: ITEMS_540,
+            items: ITEMS_9,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+    (
+        Versions(0b11_0000),
+        Some(Particle::Composite {
+            items: ITEMS_1917,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+];
+
+const ITEMS_1918: &[Particle] = &[
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4077,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 4082,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3600,
+    },
+];
+
+const PARTICLES_1441: &[(Versions, Option<Particle>)] = &[
+    (
+        Versions(0b00_1111),
+        Some(Particle::Composite {
+            items: ITEMS_9,
             kind: CompositeKind::Sequence,
             max: 1,
             min: 1,
@@ -52217,18 +52224,66 @@ const PARTICLES_1440: &[(Versions, Option<Particle>)] = &[
 
 const ITEMS_1919: &[Particle] = &[
     Particle::Element {
-        max: 64,
+        max: 1,
         min: 0,
-        type_id: 4078,
+        type_id: 3329,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3597,
+        type_id: 4021,
     },
 ];
 
-const PARTICLES_1441: &[(Versions, Option<Particle>)] = &[
+const ITEMS_1920: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3579,
+    },
+    Particle::Composite {
+        items: ITEMS_1919,
+        kind: CompositeKind::Choice,
+        max: 1,
+        min: 0,
+    },
+];
+
+const PARTICLES_1442: &[(Versions, Option<Particle>)] = &[
+    (
+        Versions(0b00_1111),
+        Some(Particle::Composite {
+            items: ITEMS_540,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+    (
+        Versions(0b11_0000),
+        Some(Particle::Composite {
+            items: ITEMS_1920,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+];
+
+const ITEMS_1921: &[Particle] = &[
+    Particle::Element {
+        max: 64,
+        min: 0,
+        type_id: 4081,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3600,
+    },
+];
+
+const PARTICLES_1443: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_1111),
         Some(Particle::Composite {
@@ -52241,60 +52296,6 @@ const PARTICLES_1441: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b11_0000),
         Some(Particle::Composite {
-            items: ITEMS_1919,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
-];
-
-const ITEMS_1920: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 1,
-    type_id: 4092,
-}];
-
-const PARTICLES_1442: &[(Versions, Option<Particle>)] = &[
-    (
-        Versions(0b00_0011),
-        Some(Particle::Composite {
-            items: ITEMS_9,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
-    (
-        Versions(0b11_1100),
-        Some(Particle::Composite {
-            items: ITEMS_1920,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
-];
-
-const ITEMS_1921: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 4085,
-}];
-
-const PARTICLES_1443: &[(Versions, Option<Particle>)] = &[
-    (
-        Versions(0b00_0011),
-        Some(Particle::Composite {
-            items: ITEMS_9,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
-    (
-        Versions(0b11_1100),
-        Some(Particle::Composite {
             items: ITEMS_1921,
             kind: CompositeKind::Sequence,
             max: 1,
@@ -52303,41 +52304,19 @@ const PARTICLES_1443: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1922: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4087,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4115,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4090,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4088,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4091,
-    },
-];
+const ITEMS_1922: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 1,
+    type_id: 4095,
+}];
 
 const PARTICLES_1444: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0011),
         Some(Particle::Composite {
             items: ITEMS_9,
-            kind: CompositeKind::Choice,
-            max: 0,
+            kind: CompositeKind::Sequence,
+            max: 1,
             min: 1,
         }),
     ),
@@ -52345,30 +52324,18 @@ const PARTICLES_1444: &[(Versions, Option<Particle>)] = &[
         Versions(0b11_1100),
         Some(Particle::Composite {
             items: ITEMS_1922,
-            kind: CompositeKind::Choice,
-            max: 0,
+            kind: CompositeKind::Sequence,
+            max: 1,
             min: 1,
         }),
     ),
 ];
 
-const ITEMS_1923: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3926,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3935,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3809,
-    },
-];
+const ITEMS_1923: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 4088,
+}];
 
 const PARTICLES_1445: &[(Versions, Option<Particle>)] = &[
     (
@@ -52393,18 +52360,72 @@ const PARTICLES_1445: &[(Versions, Option<Particle>)] = &[
 
 const ITEMS_1924: &[Particle] = &[
     Particle::Element {
-        max: 0,
+        max: 1,
         min: 1,
-        type_id: 4092,
+        type_id: 4090,
     },
     Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4082,
+        max: 1,
+        min: 1,
+        type_id: 4118,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4093,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4091,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4094,
     },
 ];
 
 const PARTICLES_1446: &[(Versions, Option<Particle>)] = &[
+    (
+        Versions(0b00_0011),
+        Some(Particle::Composite {
+            items: ITEMS_9,
+            kind: CompositeKind::Choice,
+            max: 0,
+            min: 1,
+        }),
+    ),
+    (
+        Versions(0b11_1100),
+        Some(Particle::Composite {
+            items: ITEMS_1924,
+            kind: CompositeKind::Choice,
+            max: 0,
+            min: 1,
+        }),
+    ),
+];
+
+const ITEMS_1925: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3929,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3938,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3812,
+    },
+];
+
+const PARTICLES_1447: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0011),
         Some(Particle::Composite {
@@ -52417,7 +52438,7 @@ const PARTICLES_1446: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b11_1100),
         Some(Particle::Composite {
-            items: ITEMS_1924,
+            items: ITEMS_1925,
             kind: CompositeKind::Sequence,
             max: 1,
             min: 1,
@@ -52425,38 +52446,24 @@ const PARTICLES_1446: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1925: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 4113,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 4112,
-    },
-];
-
 const ITEMS_1926: &[Particle] = &[
     Particle::Element {
-        max: 1,
+        max: 0,
         min: 1,
-        type_id: 4117,
+        type_id: 4095,
     },
-    Particle::Composite {
-        items: ITEMS_1925,
-        kind: CompositeKind::Choice,
-        max: 1,
-        min: 1,
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4085,
     },
 ];
 
-const PARTICLES_1447: &[(Versions, Option<Particle>)] = &[
+const PARTICLES_1448: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0011),
         Some(Particle::Composite {
-            items: ITEMS_227,
+            items: ITEMS_9,
             kind: CompositeKind::Sequence,
             max: 1,
             min: 1,
@@ -52477,47 +52484,34 @@ const ITEMS_1927: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3927,
+        type_id: 4116,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3598,
+        type_id: 4115,
     },
 ];
 
-const PARTICLES_1448: &[(Versions, Option<Particle>)] = &[
-    (
-        Versions(0b00_0011),
-        Some(Particle::Composite {
-            items: ITEMS_9,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
-    (
-        Versions(0b11_1100),
-        Some(Particle::Composite {
-            items: ITEMS_1927,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
+const ITEMS_1928: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4120,
+    },
+    Particle::Composite {
+        items: ITEMS_1927,
+        kind: CompositeKind::Choice,
+        max: 1,
+        min: 1,
+    },
 ];
-
-const ITEMS_1928: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 1,
-    type_id: 4117,
-}];
 
 const PARTICLES_1449: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0011),
         Some(Particle::Composite {
-            items: ITEMS_9,
+            items: ITEMS_227,
             kind: CompositeKind::Sequence,
             max: 1,
             min: 1,
@@ -52538,12 +52532,12 @@ const ITEMS_1929: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3577,
+        type_id: 3930,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3598,
+        type_id: 3601,
     },
 ];
 
@@ -52569,9 +52563,9 @@ const PARTICLES_1450: &[(Versions, Option<Particle>)] = &[
 ];
 
 const ITEMS_1930: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 4105,
+    max: 1,
+    min: 1,
+    type_id: 4120,
 }];
 
 const PARTICLES_1451: &[(Versions, Option<Particle>)] = &[
@@ -52579,27 +52573,34 @@ const PARTICLES_1451: &[(Versions, Option<Particle>)] = &[
         Versions(0b00_0011),
         Some(Particle::Composite {
             items: ITEMS_9,
-            kind: CompositeKind::Choice,
+            kind: CompositeKind::Sequence,
             max: 1,
-            min: 0,
+            min: 1,
         }),
     ),
     (
         Versions(0b11_1100),
         Some(Particle::Composite {
             items: ITEMS_1930,
-            kind: CompositeKind::Choice,
+            kind: CompositeKind::Sequence,
             max: 1,
-            min: 0,
+            min: 1,
         }),
     ),
 ];
 
-const ITEMS_1931: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 4099,
-}];
+const ITEMS_1931: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3580,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3601,
+    },
+];
 
 const PARTICLES_1452: &[(Versions, Option<Particle>)] = &[
     (
@@ -52622,78 +52623,11 @@ const PARTICLES_1452: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1932: &[Particle] = &[
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4098,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4107,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4106,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4102,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4101,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4093,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4097,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4095,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4096,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4094,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4103,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4110,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4109,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4108,
-    },
-];
+const ITEMS_1932: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 4108,
+}];
 
 const PARTICLES_1453: &[(Versions, Option<Particle>)] = &[
     (
@@ -52701,8 +52635,8 @@ const PARTICLES_1453: &[(Versions, Option<Particle>)] = &[
         Some(Particle::Composite {
             items: ITEMS_9,
             kind: CompositeKind::Choice,
-            max: 0,
-            min: 1,
+            max: 1,
+            min: 0,
         }),
     ),
     (
@@ -52710,67 +52644,44 @@ const PARTICLES_1453: &[(Versions, Option<Particle>)] = &[
         Some(Particle::Composite {
             items: ITEMS_1932,
             kind: CompositeKind::Choice,
-            max: 0,
+            max: 1,
+            min: 0,
+        }),
+    ),
+];
+
+const ITEMS_1933: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 4102,
+}];
+
+const PARTICLES_1454: &[(Versions, Option<Particle>)] = &[
+    (
+        Versions(0b00_0011),
+        Some(Particle::Composite {
+            items: ITEMS_9,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+    (
+        Versions(0b11_1100),
+        Some(Particle::Composite {
+            items: ITEMS_1933,
+            kind: CompositeKind::Sequence,
+            max: 1,
             min: 1,
         }),
     ),
 ];
 
-const ITEMS_1933: &[Particle] = &[
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4098,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4107,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4106,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4102,
-    },
+const ITEMS_1934: &[Particle] = &[
     Particle::Element {
         max: 0,
         min: 0,
         type_id: 4101,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4093,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4097,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4095,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4096,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4094,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4103,
     },
     Particle::Element {
         max: 0,
@@ -52782,54 +52693,60 @@ const ITEMS_1933: &[Particle] = &[
         min: 0,
         type_id: 4109,
     },
-];
-
-const PARTICLES_1454: &[(Versions, Option<Particle>)] = &[
-    (
-        Versions(0b00_0011),
-        Some(Particle::Composite {
-            items: ITEMS_9,
-            kind: CompositeKind::Choice,
-            max: 0,
-            min: 1,
-        }),
-    ),
-    (
-        Versions(0b11_1100),
-        Some(Particle::Composite {
-            items: ITEMS_1933,
-            kind: CompositeKind::Choice,
-            max: 0,
-            min: 1,
-        }),
-    ),
-];
-
-const ITEMS_1934: &[Particle] = &[
     Particle::Element {
-        max: 1,
+        max: 0,
         min: 0,
-        type_id: 4114,
+        type_id: 4105,
     },
     Particle::Element {
-        max: 1,
+        max: 0,
         min: 0,
-        type_id: 4084,
+        type_id: 4104,
     },
     Particle::Element {
-        max: 1,
+        max: 0,
         min: 0,
-        type_id: 4116,
+        type_id: 4096,
     },
     Particle::Element {
-        max: 1,
+        max: 0,
         min: 0,
-        type_id: 4083,
+        type_id: 4100,
     },
     Particle::Element {
-        max: 1,
+        max: 0,
         min: 0,
-        type_id: 4086,
+        type_id: 4098,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4099,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4097,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4106,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4113,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4112,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4111,
     },
 ];
 
@@ -52839,7 +52756,7 @@ const PARTICLES_1455: &[(Versions, Option<Particle>)] = &[
         Some(Particle::Composite {
             items: ITEMS_9,
             kind: CompositeKind::Choice,
-            max: 1,
+            max: 0,
             min: 1,
         }),
     ),
@@ -52848,25 +52765,87 @@ const PARTICLES_1455: &[(Versions, Option<Particle>)] = &[
         Some(Particle::Composite {
             items: ITEMS_1934,
             kind: CompositeKind::Choice,
-            max: 1,
+            max: 0,
             min: 1,
         }),
     ),
 ];
 
-const ITEMS_1935: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 4089,
-}];
+const ITEMS_1935: &[Particle] = &[
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4101,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4110,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4109,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4105,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4104,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4096,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4100,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4098,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4099,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4097,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4106,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4113,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4112,
+    },
+];
 
 const PARTICLES_1456: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0011),
         Some(Particle::Composite {
             items: ITEMS_9,
-            kind: CompositeKind::Sequence,
-            max: 1,
+            kind: CompositeKind::Choice,
+            max: 0,
             min: 1,
         }),
     ),
@@ -52874,8 +52853,8 @@ const PARTICLES_1456: &[(Versions, Option<Particle>)] = &[
         Versions(0b11_1100),
         Some(Particle::Composite {
             items: ITEMS_1935,
-            kind: CompositeKind::Sequence,
-            max: 1,
+            kind: CompositeKind::Choice,
+            max: 0,
             min: 1,
         }),
     ),
@@ -52884,33 +52863,28 @@ const PARTICLES_1456: &[(Versions, Option<Particle>)] = &[
 const ITEMS_1936: &[Particle] = &[
     Particle::Element {
         max: 1,
-        min: 1,
-        type_id: 3551,
+        min: 0,
+        type_id: 4117,
     },
     Particle::Element {
         max: 1,
-        min: 1,
-        type_id: 3650,
+        min: 0,
+        type_id: 4087,
     },
     Particle::Element {
         max: 1,
-        min: 1,
-        type_id: 3330,
+        min: 0,
+        type_id: 4119,
     },
     Particle::Element {
         max: 1,
-        min: 1,
-        type_id: 3518,
+        min: 0,
+        type_id: 4086,
     },
     Particle::Element {
         max: 1,
-        min: 1,
-        type_id: 3417,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3921,
+        min: 0,
+        type_id: 4089,
     },
 ];
 
@@ -52935,375 +52909,15 @@ const PARTICLES_1457: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_1937: &[Particle] = &[
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4292,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4300,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4236,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4290,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4282,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4296,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4283,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4272,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4273,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4274,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4271,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4249,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4250,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4289,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4288,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4299,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4281,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4286,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4277,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4284,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4258,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4259,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4171,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4164,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4304,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4298,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4278,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4173,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4293,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4302,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4303,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4241,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4175,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4172,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4295,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4248,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4245,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4243,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4244,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4237,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4279,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4165,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4163,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4239,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4240,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4294,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4285,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4238,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4174,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4169,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4168,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4167,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4170,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4287,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4166,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4291,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4270,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4276,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4297,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4275,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4280,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4301,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4247,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4246,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4177,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4178,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 4242,
-    },
-];
+const ITEMS_1937: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 4092,
+}];
 
-const PARTICLES_1458: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_1937,
-        kind: CompositeKind::Choice,
-        max: 0,
-        min: 0,
-    }),
-)];
-
-const ITEMS_1938: &[Particle] = &[
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4253,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4252,
-    },
-    Particle::Element {
-        max: 0,
-        min: 0,
-        type_id: 4251,
-    },
-];
-
-const PARTICLES_1459: &[(Versions, Option<Particle>)] = &[
+const PARTICLES_1458: &[(Versions, Option<Particle>)] = &[
     (
-        Versions(0b01_1111),
+        Versions(0b00_0011),
         Some(Particle::Composite {
             items: ITEMS_9,
             kind: CompositeKind::Sequence,
@@ -53312,10 +52926,64 @@ const PARTICLES_1459: &[(Versions, Option<Particle>)] = &[
         }),
     ),
     (
-        Versions(0b10_0000),
+        Versions(0b11_1100),
+        Some(Particle::Composite {
+            items: ITEMS_1937,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+];
+
+const ITEMS_1938: &[Particle] = &[
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3554,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3653,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3333,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3521,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3420,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3924,
+    },
+];
+
+const PARTICLES_1459: &[(Versions, Option<Particle>)] = &[
+    (
+        Versions(0b00_0011),
+        Some(Particle::Composite {
+            items: ITEMS_9,
+            kind: CompositeKind::Choice,
+            max: 1,
+            min: 1,
+        }),
+    ),
+    (
+        Versions(0b11_1100),
         Some(Particle::Composite {
             items: ITEMS_1938,
-            kind: CompositeKind::Sequence,
+            kind: CompositeKind::Choice,
             max: 1,
             min: 1,
         }),
@@ -53325,42 +52993,361 @@ const PARTICLES_1459: &[(Versions, Option<Particle>)] = &[
 const ITEMS_1939: &[Particle] = &[
     Particle::Element {
         max: 1,
-        min: 0,
+        min: 1,
+        type_id: 4295,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4303,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4239,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4293,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4285,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4299,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4286,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4275,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4276,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4277,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4274,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4252,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4253,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4292,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4291,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4302,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4284,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4289,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4280,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4287,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4261,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4262,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4174,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4167,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
         type_id: 4307,
     },
     Particle::Element {
         max: 1,
-        min: 0,
-        type_id: 4308,
+        min: 1,
+        type_id: 4301,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4281,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4176,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4296,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4305,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4306,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4244,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4178,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4175,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4298,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4251,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4248,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4246,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4247,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4240,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4282,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4168,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4166,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4242,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4243,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4297,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4288,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4241,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4177,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4172,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4171,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4170,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4173,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4290,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4169,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4294,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4273,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4279,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4300,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4278,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4283,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4304,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4250,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4249,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4180,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4181,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 4245,
     },
 ];
 
-const PARTICLES_1460: &[(Versions, Option<Particle>)] = &[
-    (
-        Versions(0b01_1111),
-        Some(Particle::Composite {
-            items: ITEMS_9,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
-    (
-        Versions(0b10_0000),
-        Some(Particle::Composite {
-            items: ITEMS_1939,
-            kind: CompositeKind::Sequence,
-            max: 1,
-            min: 1,
-        }),
-    ),
-];
+const PARTICLES_1460: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_1939,
+        kind: CompositeKind::Choice,
+        max: 0,
+        min: 0,
+    }),
+)];
 
 const ITEMS_1940: &[Particle] = &[
     Particle::Element {
         max: 0,
         min: 0,
         type_id: 4256,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4255,
     },
     Particle::Element {
         max: 0,
@@ -53392,14 +53379,14 @@ const PARTICLES_1461: &[(Versions, Option<Particle>)] = &[
 
 const ITEMS_1941: &[Particle] = &[
     Particle::Element {
-        max: 0,
+        max: 1,
         min: 0,
-        type_id: 4256,
+        type_id: 4310,
     },
     Particle::Element {
-        max: 0,
+        max: 1,
         min: 0,
-        type_id: 4255,
+        type_id: 4311,
     },
 ];
 
@@ -53417,6 +53404,74 @@ const PARTICLES_1462: &[(Versions, Option<Particle>)] = &[
         Versions(0b10_0000),
         Some(Particle::Composite {
             items: ITEMS_1941,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+];
+
+const ITEMS_1942: &[Particle] = &[
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4259,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4257,
+    },
+];
+
+const PARTICLES_1463: &[(Versions, Option<Particle>)] = &[
+    (
+        Versions(0b01_1111),
+        Some(Particle::Composite {
+            items: ITEMS_9,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+    (
+        Versions(0b10_0000),
+        Some(Particle::Composite {
+            items: ITEMS_1942,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+];
+
+const ITEMS_1943: &[Particle] = &[
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4259,
+    },
+    Particle::Element {
+        max: 0,
+        min: 0,
+        type_id: 4258,
+    },
+];
+
+const PARTICLES_1464: &[(Versions, Option<Particle>)] = &[
+    (
+        Versions(0b01_1111),
+        Some(Particle::Composite {
+            items: ITEMS_9,
+            kind: CompositeKind::Sequence,
+            max: 1,
+            min: 1,
+        }),
+    ),
+    (
+        Versions(0b10_0000),
+        Some(Particle::Composite {
+            items: ITEMS_1943,
             kind: CompositeKind::Sequence,
             max: 1,
             min: 1,

@@ -20,3 +20,58 @@ children = ["c16r3:CT_DataDisplayOptions16/c16r3:dataDisplayOptions16"]
 type = "c16r3:CT_BooleanFalse/c16r3:dispNaAsBlank"
 replaces = "c16r3:val"
 qname = ":val"
+
+# 1. ECMA-376 types lvlJc as CT_Jc (wml.xsd, CT_Lvl), whose val is ST_Jc: the
+# twelve values from start to thaiDistribute. The data gives it its own type
+# of left, center and right, w:ST_LevelJustification.
+[[attribute_type]]
+type = "w:CT_LevelJustification/w:lvlJc"
+attribute = "w:val"
+enumeration = "w:ST_Jc"
+
+# 2. A table's jc is CT_JcTable in ECMA-376, whose val is ST_JcTable: center,
+# end, left, right and start. The data's w:ST_TblJc has the first, third and
+# fourth.
+[[enumeration_values]]
+enumeration = "w:ST_TblJc"
+add = ["start", "end"]
+
+# 3. bidiVisual is CT_OnOff in ECMA-376 (CT_TblPrBase), whose val is ST_OnOff.
+# The data derives it from CT_OnOffOnly, whose val is only on or off; every
+# w:CT_OnOff element, w:b among them, reads its val as ST_OnOff.
+[[base_type]]
+type = "w:CT_OnOffOnly/w:bidiVisual"
+like = "w:CT_OnOff/w:b"
+
+# 4. ECMA-376 names the attribute `filled` (vml-main.xsd, AG_Fill). The data
+# spells it `fill`, which no schema declares.
+[[attribute]]
+type = "v:CT_Background/v:background"
+replaces = ":fill"
+qname = ":filled"
+
+# 5. The data leaves smart tags out. ECMA-376 declares smartTag in
+# EG_ContentRunContent and EG_ContentRunContentBase (wml.xsd), where the data
+# inlines the second as a choice that starts with the run-level sdt, and
+# smartTagType in CT_Settings. The types are built from CT_SmartTagRun,
+# CT_SmartTagPr and CT_SmartTagType; w:attr is the data's CT_XmlAttr, which
+# ECMA-376 calls CT_Attr. The content of a smart tag is EG_PContent, which the
+# data inlines as the last item of the customXml run's content model.
+[[from_standard]]
+types = [
+  "w:CT_SmartTagRun/w:smartTag",
+  "w:CT_SmartTagPr/w:smartTagPr",
+  "w:CT_SmartTagType/w:smartTagType",
+]
+member = "w:CT_SmartTagRun/w:smartTag"
+before = "w:CT_SdtRun/w:sdt"
+content_of = "w:CT_CustomXmlRun/w:customXml"
+parents = ["w:CT_Settings/w:settings"]
+
+# 6. ECMA-376 types compatSetting's name as ST_String (CT_CompatSetting). The
+# data gives it the closed list w:ST_CompatSettingName, whose newer values
+# carry Office versions its own validator does not enforce.
+[[attribute_type]]
+type = "w:CT_CompatSetting/w:compatSetting"
+attribute = "w:name"
+string = true

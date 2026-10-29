@@ -346,7 +346,7 @@
 //   bf519385b6d23eb8b28cd78f23c63a7fa7d6dd7f48bb7de09b8e36ad6e22588e  inputs/open-xml-sdk/data/parts/WorksheetThreadedCommentsPart.json
 //   ee0ae0ea09db0cdfae1bc11eef04ea2ff123c8dbdd548e7feec91b14689565f5  inputs/open-xml-sdk/data/parts/XmlSignaturePart.json
 //   e26c4528f8340924ff27391d34681ecde1f597fc5ce3dbf2d354edc9c6071a52  crates/xtask/data/part_roots.toml
-//   7dcd57a73f549fdc4866426c307e864fa8bc15d0957b675ad141cdb077e5ad80  crates/xtask/data/sdk_corrections.toml
+//   d21a1b16172e3389c832d1f0b15a6900c55e600ed67cd1648b13d11eff8dda35  crates/xtask/data/sdk_corrections.toml
 //   dff6adee70b19bb1f9b56e50e9cc20316298c14255ec7e2d6cb0efe795318af0  crates/xtask/data/simple_types.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
@@ -16651,21 +16651,6 @@ const CHECKS_622: &[ValueCheck] = &[
 
 const CHECKS_623: &[ValueCheck] = &[
     ValueCheck {
-        check: Check::Required,
-        union: None,
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::Enum {
-            class: ValueClass::Enum("w:ST_CompatSettingName"),
-        },
-        union: None,
-        versions: Versions(0b11_1111),
-    },
-];
-
-const CHECKS_624: &[ValueCheck] = &[
-    ValueCheck {
         check: Check::String {
             class: None,
             kind: StringKind::Plain,
@@ -16691,7 +16676,7 @@ const CHECKS_624: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_625: &[ValueCheck] = &[
+const CHECKS_624: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -16743,7 +16728,7 @@ const CHECKS_625: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_626: &[ValueCheck] = &[ValueCheck {
+const CHECKS_625: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_DocGrid"),
     },
@@ -16751,7 +16736,7 @@ const CHECKS_626: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_627: &[ValueCheck] = &[
+const CHECKS_626: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -16766,7 +16751,7 @@ const CHECKS_627: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_628: &[ValueCheck] = &[
+const CHECKS_627: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -16781,7 +16766,7 @@ const CHECKS_628: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_629: &[ValueCheck] = &[
+const CHECKS_628: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -16796,7 +16781,7 @@ const CHECKS_629: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_630: &[ValueCheck] = &[ValueCheck {
+const CHECKS_629: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_DocProtect"),
     },
@@ -16804,7 +16789,7 @@ const CHECKS_630: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_631: &[ValueCheck] = &[ValueCheck {
+const CHECKS_630: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_CryptProv"),
     },
@@ -16812,7 +16797,7 @@ const CHECKS_631: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_632: &[ValueCheck] = &[ValueCheck {
+const CHECKS_631: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_AlgClass"),
     },
@@ -16820,7 +16805,7 @@ const CHECKS_632: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_633: &[ValueCheck] = &[ValueCheck {
+const CHECKS_632: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_AlgType"),
     },
@@ -16828,7 +16813,7 @@ const CHECKS_633: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_634: &[ValueCheck] = &[
+const CHECKS_633: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Number {
             bounds: Bounds {
@@ -16863,7 +16848,7 @@ const CHECKS_634: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_635: &[ValueCheck] = &[
+const CHECKS_634: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
             class: None,
@@ -16894,7 +16879,7 @@ const CHECKS_635: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_636: &[ValueCheck] = &[
+const CHECKS_635: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -16909,7 +16894,7 @@ const CHECKS_636: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_637: &[ValueCheck] = &[
+const CHECKS_636: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -16941,7 +16926,7 @@ const CHECKS_637: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_638: &[ValueCheck] = &[
+const CHECKS_637: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -16973,7 +16958,7 @@ const CHECKS_638: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_639: &[ValueCheck] = &[ValueCheck {
+const CHECKS_638: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_DocumentConformance"),
     },
@@ -16981,7 +16966,7 @@ const CHECKS_639: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_640: &[ValueCheck] = &[ValueCheck {
+const CHECKS_639: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_CombineBrackets"),
     },
@@ -16989,7 +16974,7 @@ const CHECKS_640: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_641: &[ValueCheck] = &[
+const CHECKS_640: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -17004,7 +16989,7 @@ const CHECKS_641: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_642: &[ValueCheck] = &[
+const CHECKS_641: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -17019,7 +17004,7 @@ const CHECKS_642: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_643: &[ValueCheck] = &[ValueCheck {
+const CHECKS_642: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_InfoTextType"),
     },
@@ -17027,7 +17012,7 @@ const CHECKS_643: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_644: &[ValueCheck] = &[
+const CHECKS_643: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
             class: None,
@@ -17054,7 +17039,7 @@ const CHECKS_644: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_645: &[ValueCheck] = &[
+const CHECKS_644: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
             class: None,
@@ -17081,7 +17066,7 @@ const CHECKS_645: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_646: &[ValueCheck] = &[
+const CHECKS_645: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
             class: None,
@@ -17120,7 +17105,7 @@ const CHECKS_646: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_647: &[ValueCheck] = &[
+const CHECKS_646: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -17135,7 +17120,7 @@ const CHECKS_647: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_648: &[ValueCheck] = &[
+const CHECKS_647: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -17150,7 +17135,7 @@ const CHECKS_648: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_649: &[ValueCheck] = &[
+const CHECKS_648: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -17165,7 +17150,7 @@ const CHECKS_649: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_650: &[ValueCheck] = &[
+const CHECKS_649: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -17201,7 +17186,7 @@ const CHECKS_650: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_651: &[ValueCheck] = &[ValueCheck {
+const CHECKS_650: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_Hint"),
     },
@@ -17209,7 +17194,7 @@ const CHECKS_651: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_652: &[ValueCheck] = &[
+const CHECKS_651: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
             class: None,
@@ -17236,7 +17221,7 @@ const CHECKS_652: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_653: &[ValueCheck] = &[ValueCheck {
+const CHECKS_652: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_Theme"),
     },
@@ -17244,7 +17229,7 @@ const CHECKS_653: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_654: &[ValueCheck] = &[
+const CHECKS_653: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -17259,7 +17244,7 @@ const CHECKS_654: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_655: &[ValueCheck] = &[ValueCheck {
+const CHECKS_654: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_DropCap"),
     },
@@ -17267,7 +17252,7 @@ const CHECKS_655: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_656: &[ValueCheck] = &[
+const CHECKS_655: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Number {
             bounds: Bounds {
@@ -17302,7 +17287,7 @@ const CHECKS_656: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_657: &[ValueCheck] = &[
+const CHECKS_656: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Number {
             bounds: Bounds {
@@ -17337,7 +17322,7 @@ const CHECKS_657: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_658: &[ValueCheck] = &[ValueCheck {
+const CHECKS_657: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_Wrap"),
     },
@@ -17345,7 +17330,7 @@ const CHECKS_658: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_659: &[ValueCheck] = &[ValueCheck {
+const CHECKS_658: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_HAnchor"),
     },
@@ -17353,7 +17338,7 @@ const CHECKS_659: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_660: &[ValueCheck] = &[ValueCheck {
+const CHECKS_659: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_VAnchor"),
     },
@@ -17361,7 +17346,7 @@ const CHECKS_660: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_661: &[ValueCheck] = &[
+const CHECKS_660: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Number {
             bounds: Bounds {
@@ -17420,7 +17405,7 @@ const CHECKS_661: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_662: &[ValueCheck] = &[ValueCheck {
+const CHECKS_661: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_XAlign"),
     },
@@ -17428,7 +17413,7 @@ const CHECKS_662: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_663: &[ValueCheck] = &[ValueCheck {
+const CHECKS_662: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_YAlign"),
     },
@@ -17436,7 +17421,7 @@ const CHECKS_663: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_664: &[ValueCheck] = &[ValueCheck {
+const CHECKS_663: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_HeightRule"),
     },
@@ -17444,7 +17429,7 @@ const CHECKS_664: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_665: &[ValueCheck] = &[
+const CHECKS_664: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -17459,7 +17444,7 @@ const CHECKS_665: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_666: &[ValueCheck] = &[ValueCheck {
+const CHECKS_665: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_FtnEdn"),
     },
@@ -17467,7 +17452,7 @@ const CHECKS_666: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_667: &[ValueCheck] = &[
+const CHECKS_666: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -17507,7 +17492,7 @@ const CHECKS_667: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_668: &[ValueCheck] = &[
+const CHECKS_667: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -17522,7 +17507,7 @@ const CHECKS_668: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_669: &[ValueCheck] = &[ValueCheck {
+const CHECKS_668: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_Merge"),
     },
@@ -17530,7 +17515,7 @@ const CHECKS_669: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_670: &[ValueCheck] = &[
+const CHECKS_669: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -17545,7 +17530,7 @@ const CHECKS_670: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_671: &[ValueCheck] = &[
+const CHECKS_670: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -17560,7 +17545,7 @@ const CHECKS_671: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_672: &[ValueCheck] = &[
+const CHECKS_671: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -17600,7 +17585,7 @@ const CHECKS_672: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_673: &[ValueCheck] = &[
+const CHECKS_672: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -17664,7 +17649,7 @@ const CHECKS_673: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_674: &[ValueCheck] = &[
+const CHECKS_673: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -17688,7 +17673,7 @@ const CHECKS_674: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_675: &[ValueCheck] = &[
+const CHECKS_674: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
             class: None,
@@ -17715,7 +17700,7 @@ const CHECKS_675: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_676: &[ValueCheck] = &[
+const CHECKS_675: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -17779,7 +17764,7 @@ const CHECKS_676: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_677: &[ValueCheck] = &[
+const CHECKS_676: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -17794,7 +17779,7 @@ const CHECKS_677: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_678: &[ValueCheck] = &[
+const CHECKS_677: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -17826,7 +17811,7 @@ const CHECKS_678: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_679: &[ValueCheck] = &[
+const CHECKS_678: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -17858,7 +17843,7 @@ const CHECKS_679: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_680: &[ValueCheck] = &[
+const CHECKS_679: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -17890,7 +17875,7 @@ const CHECKS_680: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_681: &[ValueCheck] = &[
+const CHECKS_680: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
             class: None,
@@ -17917,7 +17902,7 @@ const CHECKS_681: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_682: &[ValueCheck] = &[
+const CHECKS_681: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Number {
             bounds: Bounds {
@@ -17952,22 +17937,7 @@ const CHECKS_682: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_683: &[ValueCheck] = &[
-    ValueCheck {
-        check: Check::Required,
-        union: None,
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::Enum {
-            class: ValueClass::Enum("w:ST_LevelJustification"),
-        },
-        union: None,
-        versions: Versions(0b11_1111),
-    },
-];
-
-const CHECKS_684: &[ValueCheck] = &[
+const CHECKS_682: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -17982,7 +17952,7 @@ const CHECKS_684: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_685: &[ValueCheck] = &[
+const CHECKS_683: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Number {
             bounds: Bounds {
@@ -18017,7 +17987,7 @@ const CHECKS_685: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_686: &[ValueCheck] = &[
+const CHECKS_684: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Number {
             bounds: Bounds {
@@ -18052,7 +18022,7 @@ const CHECKS_686: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_687: &[ValueCheck] = &[ValueCheck {
+const CHECKS_685: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_LineNumberRestart"),
     },
@@ -18060,7 +18030,7 @@ const CHECKS_687: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_688: &[ValueCheck] = &[ValueCheck {
+const CHECKS_686: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_Lock"),
     },
@@ -18068,7 +18038,7 @@ const CHECKS_688: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_689: &[ValueCheck] = &[
+const CHECKS_687: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18100,7 +18070,7 @@ const CHECKS_689: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_690: &[ValueCheck] = &[
+const CHECKS_688: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18115,7 +18085,7 @@ const CHECKS_690: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_691: &[ValueCheck] = &[
+const CHECKS_689: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18130,7 +18100,7 @@ const CHECKS_691: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_692: &[ValueCheck] = &[
+const CHECKS_690: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18145,7 +18115,7 @@ const CHECKS_692: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_693: &[ValueCheck] = &[
+const CHECKS_691: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18160,7 +18130,7 @@ const CHECKS_693: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_694: &[ValueCheck] = &[
+const CHECKS_692: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18175,7 +18145,7 @@ const CHECKS_694: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_695: &[ValueCheck] = &[
+const CHECKS_693: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18190,7 +18160,7 @@ const CHECKS_695: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_696: &[ValueCheck] = &[
+const CHECKS_694: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18230,7 +18200,7 @@ const CHECKS_696: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_697: &[ValueCheck] = &[
+const CHECKS_695: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18270,7 +18240,7 @@ const CHECKS_697: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_698: &[ValueCheck] = &[
+const CHECKS_696: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18285,7 +18255,7 @@ const CHECKS_698: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_699: &[ValueCheck] = &[
+const CHECKS_697: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18300,7 +18270,7 @@ const CHECKS_699: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_700: &[ValueCheck] = &[
+const CHECKS_698: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -18336,7 +18306,7 @@ const CHECKS_700: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_701: &[ValueCheck] = &[ValueCheck {
+const CHECKS_699: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_ObjectDrawAspect"),
     },
@@ -18344,7 +18314,7 @@ const CHECKS_701: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_702: &[ValueCheck] = &[
+const CHECKS_700: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18359,7 +18329,7 @@ const CHECKS_702: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_703: &[ValueCheck] = &[ValueCheck {
+const CHECKS_701: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_OnOffOnly"),
     },
@@ -18367,7 +18337,7 @@ const CHECKS_703: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_704: &[ValueCheck] = &[
+const CHECKS_702: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18382,7 +18352,7 @@ const CHECKS_704: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_705: &[ValueCheck] = &[
+const CHECKS_703: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18397,7 +18367,7 @@ const CHECKS_705: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_706: &[ValueCheck] = &[
+const CHECKS_704: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18412,7 +18382,7 @@ const CHECKS_706: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_707: &[ValueCheck] = &[ValueCheck {
+const CHECKS_705: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_PageBorderZOrder"),
     },
@@ -18420,7 +18390,7 @@ const CHECKS_707: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_708: &[ValueCheck] = &[ValueCheck {
+const CHECKS_706: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_PageBorderDisplay"),
     },
@@ -18428,7 +18398,7 @@ const CHECKS_708: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_709: &[ValueCheck] = &[ValueCheck {
+const CHECKS_707: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_PageBorderOffset"),
     },
@@ -18436,7 +18406,7 @@ const CHECKS_709: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_710: &[ValueCheck] = &[
+const CHECKS_708: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Number {
             bounds: Bounds {
@@ -18471,7 +18441,7 @@ const CHECKS_710: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_711: &[ValueCheck] = &[ValueCheck {
+const CHECKS_709: &[ValueCheck] = &[ValueCheck {
     check: Check::Number {
         bounds: Bounds {
             max_exclusive: None,
@@ -18488,7 +18458,7 @@ const CHECKS_711: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_712: &[ValueCheck] = &[ValueCheck {
+const CHECKS_710: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_PageOrientation"),
     },
@@ -18496,7 +18466,7 @@ const CHECKS_712: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_713: &[ValueCheck] = &[ValueCheck {
+const CHECKS_711: &[ValueCheck] = &[ValueCheck {
     check: Check::Number {
         bounds: Bounds {
             max_exclusive: None,
@@ -18513,7 +18483,7 @@ const CHECKS_713: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_714: &[ValueCheck] = &[
+const CHECKS_712: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18549,7 +18519,7 @@ const CHECKS_714: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_715: &[ValueCheck] = &[ValueCheck {
+const CHECKS_713: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_EdGrp"),
     },
@@ -18557,7 +18527,7 @@ const CHECKS_715: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_716: &[ValueCheck] = &[
+const CHECKS_714: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18572,7 +18542,7 @@ const CHECKS_716: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_717: &[ValueCheck] = &[
+const CHECKS_715: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18612,7 +18582,7 @@ const CHECKS_717: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_718: &[ValueCheck] = &[ValueCheck {
+const CHECKS_716: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_Proof"),
     },
@@ -18620,7 +18590,7 @@ const CHECKS_718: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_719: &[ValueCheck] = &[
+const CHECKS_717: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18635,7 +18605,7 @@ const CHECKS_719: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_720: &[ValueCheck] = &[
+const CHECKS_718: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18727,7 +18697,7 @@ const CHECKS_720: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_721: &[ValueCheck] = &[
+const CHECKS_719: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18742,7 +18712,7 @@ const CHECKS_721: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_722: &[ValueCheck] = &[ValueCheck {
+const CHECKS_720: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_SdtDateMappingType"),
     },
@@ -18750,7 +18720,7 @@ const CHECKS_722: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_723: &[ValueCheck] = &[
+const CHECKS_721: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18765,7 +18735,7 @@ const CHECKS_723: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_724: &[ValueCheck] = &[
+const CHECKS_722: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18780,7 +18750,7 @@ const CHECKS_724: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_725: &[ValueCheck] = &[
+const CHECKS_723: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18820,7 +18790,7 @@ const CHECKS_725: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_726: &[ValueCheck] = &[
+const CHECKS_724: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18884,7 +18854,7 @@ const CHECKS_726: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_727: &[ValueCheck] = &[ValueCheck {
+const CHECKS_725: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_LineSpacingRule"),
     },
@@ -18892,7 +18862,7 @@ const CHECKS_727: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_728: &[ValueCheck] = &[
+const CHECKS_726: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18924,7 +18894,7 @@ const CHECKS_728: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_729: &[ValueCheck] = &[
+const CHECKS_727: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -18956,7 +18926,7 @@ const CHECKS_729: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_730: &[ValueCheck] = &[ValueCheck {
+const CHECKS_728: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_StyleType"),
     },
@@ -18964,7 +18934,7 @@ const CHECKS_730: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_731: &[ValueCheck] = &[
+const CHECKS_729: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
             class: None,
@@ -18991,7 +18961,7 @@ const CHECKS_731: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_732: &[ValueCheck] = &[
+const CHECKS_730: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19023,7 +18993,7 @@ const CHECKS_732: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_733: &[ValueCheck] = &[
+const CHECKS_731: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
             class: None,
@@ -19054,7 +19024,7 @@ const CHECKS_733: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_734: &[ValueCheck] = &[
+const CHECKS_732: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19093,7 +19063,7 @@ const CHECKS_734: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_735: &[ValueCheck] = &[
+const CHECKS_733: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19108,7 +19078,7 @@ const CHECKS_735: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_736: &[ValueCheck] = &[ValueCheck {
+const CHECKS_734: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_TabTlc"),
     },
@@ -19116,7 +19086,7 @@ const CHECKS_736: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_737: &[ValueCheck] = &[
+const CHECKS_735: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19131,7 +19101,7 @@ const CHECKS_737: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_738: &[ValueCheck] = &[
+const CHECKS_736: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19146,7 +19116,7 @@ const CHECKS_738: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_739: &[ValueCheck] = &[ValueCheck {
+const CHECKS_737: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_TblLayoutType"),
     },
@@ -19154,7 +19124,7 @@ const CHECKS_739: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_740: &[ValueCheck] = &[
+const CHECKS_738: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19169,7 +19139,7 @@ const CHECKS_740: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_741: &[ValueCheck] = &[
+const CHECKS_739: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19184,7 +19154,7 @@ const CHECKS_741: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_742: &[ValueCheck] = &[
+const CHECKS_740: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Number {
             bounds: Bounds {
@@ -19271,7 +19241,7 @@ const CHECKS_742: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_743: &[ValueCheck] = &[ValueCheck {
+const CHECKS_741: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_TblWidth"),
     },
@@ -19279,7 +19249,7 @@ const CHECKS_743: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_744: &[ValueCheck] = &[
+const CHECKS_742: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19294,7 +19264,7 @@ const CHECKS_744: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_745: &[ValueCheck] = &[
+const CHECKS_743: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19309,7 +19279,7 @@ const CHECKS_745: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_746: &[ValueCheck] = &[
+const CHECKS_744: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19324,7 +19294,7 @@ const CHECKS_746: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_747: &[ValueCheck] = &[
+const CHECKS_745: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19339,7 +19309,7 @@ const CHECKS_747: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_748: &[ValueCheck] = &[
+const CHECKS_746: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Number {
             bounds: Bounds {
@@ -19374,7 +19344,7 @@ const CHECKS_748: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_749: &[ValueCheck] = &[
+const CHECKS_747: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19389,7 +19359,7 @@ const CHECKS_749: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_750: &[ValueCheck] = &[
+const CHECKS_748: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19453,7 +19423,7 @@ const CHECKS_750: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_751: &[ValueCheck] = &[
+const CHECKS_749: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19493,7 +19463,7 @@ const CHECKS_751: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_752: &[ValueCheck] = &[ValueCheck {
+const CHECKS_750: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_Underline"),
     },
@@ -19501,7 +19471,7 @@ const CHECKS_752: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_753: &[ValueCheck] = &[
+const CHECKS_751: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19541,7 +19511,7 @@ const CHECKS_753: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_754: &[ValueCheck] = &[
+const CHECKS_752: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19581,7 +19551,7 @@ const CHECKS_754: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_755: &[ValueCheck] = &[
+const CHECKS_753: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19621,7 +19591,7 @@ const CHECKS_755: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_756: &[ValueCheck] = &[
+const CHECKS_754: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19661,7 +19631,7 @@ const CHECKS_756: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_757: &[ValueCheck] = &[
+const CHECKS_755: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19676,7 +19646,7 @@ const CHECKS_757: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_758: &[ValueCheck] = &[
+const CHECKS_756: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19691,7 +19661,7 @@ const CHECKS_758: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_759: &[ValueCheck] = &[
+const CHECKS_757: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19706,7 +19676,7 @@ const CHECKS_759: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_760: &[ValueCheck] = &[
+const CHECKS_758: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19721,7 +19691,7 @@ const CHECKS_760: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_761: &[ValueCheck] = &[
+const CHECKS_759: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19736,7 +19706,7 @@ const CHECKS_761: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_762: &[ValueCheck] = &[
+const CHECKS_760: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19768,7 +19738,7 @@ const CHECKS_762: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_763: &[ValueCheck] = &[ValueCheck {
+const CHECKS_761: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("w:ST_Zoom"),
     },
@@ -19776,7 +19746,7 @@ const CHECKS_763: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_764: &[ValueCheck] = &[
+const CHECKS_762: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -19805,7 +19775,7 @@ const CHECKS_764: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_765: &[ValueCheck] = &[
+const CHECKS_763: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19829,7 +19799,7 @@ const CHECKS_765: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_766: &[ValueCheck] = &[
+const CHECKS_764: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
             class: None,
@@ -19860,7 +19830,7 @@ const CHECKS_766: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_767: &[ValueCheck] = &[
+const CHECKS_765: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -19892,7 +19862,7 @@ const CHECKS_767: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_768: &[ValueCheck] = &[
+const CHECKS_766: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -19924,7 +19894,7 @@ const CHECKS_768: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_769: &[ValueCheck] = &[
+const CHECKS_767: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19951,7 +19921,7 @@ const CHECKS_769: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_770: &[ValueCheck] = &[
+const CHECKS_768: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -19978,7 +19948,7 @@ const CHECKS_770: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_771: &[ValueCheck] = &[
+const CHECKS_769: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -20005,7 +19975,7 @@ const CHECKS_771: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_772: &[ValueCheck] = &[
+const CHECKS_770: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
             class: None,
@@ -20027,7 +19997,7 @@ const CHECKS_772: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_773: &[ValueCheck] = &[
+const CHECKS_771: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
             class: None,
@@ -20049,7 +20019,7 @@ const CHECKS_773: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_774: &[ValueCheck] = &[
+const CHECKS_772: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20078,7 +20048,7 @@ const CHECKS_774: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_775: &[ValueCheck] = &[
+const CHECKS_773: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20102,7 +20072,7 @@ const CHECKS_775: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_776: &[ValueCheck] = &[
+const CHECKS_774: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20122,7 +20092,7 @@ const CHECKS_776: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_777: &[ValueCheck] = &[
+const CHECKS_775: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20137,7 +20107,7 @@ const CHECKS_777: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_778: &[ValueCheck] = &[
+const CHECKS_776: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20152,7 +20122,7 @@ const CHECKS_778: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_779: &[ValueCheck] = &[
+const CHECKS_777: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20167,7 +20137,7 @@ const CHECKS_779: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_780: &[ValueCheck] = &[
+const CHECKS_778: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20187,7 +20157,7 @@ const CHECKS_780: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_781: &[ValueCheck] = &[
+const CHECKS_779: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20202,7 +20172,7 @@ const CHECKS_781: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_782: &[ValueCheck] = &[
+const CHECKS_780: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20217,7 +20187,7 @@ const CHECKS_782: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_783: &[ValueCheck] = &[
+const CHECKS_781: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20254,7 +20224,7 @@ const CHECKS_783: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_784: &[ValueCheck] = &[
+const CHECKS_782: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20269,7 +20239,7 @@ const CHECKS_784: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_785: &[ValueCheck] = &[
+const CHECKS_783: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20284,7 +20254,7 @@ const CHECKS_785: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_786: &[ValueCheck] = &[
+const CHECKS_784: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20299,7 +20269,7 @@ const CHECKS_786: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_787: &[ValueCheck] = &[
+const CHECKS_785: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20314,7 +20284,7 @@ const CHECKS_787: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_788: &[ValueCheck] = &[
+const CHECKS_786: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20329,7 +20299,7 @@ const CHECKS_788: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_789: &[ValueCheck] = &[
+const CHECKS_787: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20344,7 +20314,7 @@ const CHECKS_789: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_790: &[ValueCheck] = &[
+const CHECKS_788: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20359,7 +20329,7 @@ const CHECKS_790: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_791: &[ValueCheck] = &[
+const CHECKS_789: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20374,7 +20344,7 @@ const CHECKS_791: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_792: &[ValueCheck] = &[
+const CHECKS_790: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20401,7 +20371,7 @@ const CHECKS_792: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_793: &[ValueCheck] = &[
+const CHECKS_791: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20428,7 +20398,7 @@ const CHECKS_793: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_794: &[ValueCheck] = &[
+const CHECKS_792: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20455,7 +20425,7 @@ const CHECKS_794: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_795: &[ValueCheck] = &[
+const CHECKS_793: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20482,7 +20452,7 @@ const CHECKS_795: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_796: &[ValueCheck] = &[
+const CHECKS_794: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20497,7 +20467,7 @@ const CHECKS_796: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_797: &[ValueCheck] = &[
+const CHECKS_795: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20512,7 +20482,7 @@ const CHECKS_797: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_798: &[ValueCheck] = &[
+const CHECKS_796: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20539,7 +20509,7 @@ const CHECKS_798: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_799: &[ValueCheck] = &[
+const CHECKS_797: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20554,7 +20524,7 @@ const CHECKS_799: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_800: &[ValueCheck] = &[
+const CHECKS_798: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20569,7 +20539,7 @@ const CHECKS_800: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_801: &[ValueCheck] = &[
+const CHECKS_799: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20584,7 +20554,7 @@ const CHECKS_801: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_802: &[ValueCheck] = &[
+const CHECKS_800: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20599,7 +20569,7 @@ const CHECKS_802: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_803: &[ValueCheck] = &[
+const CHECKS_801: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20619,7 +20589,7 @@ const CHECKS_803: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_804: &[ValueCheck] = &[
+const CHECKS_802: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20648,7 +20618,7 @@ const CHECKS_804: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_805: &[ValueCheck] = &[
+const CHECKS_803: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20668,7 +20638,7 @@ const CHECKS_805: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_806: &[ValueCheck] = &[
+const CHECKS_804: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20683,7 +20653,7 @@ const CHECKS_806: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_807: &[ValueCheck] = &[
+const CHECKS_805: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20707,7 +20677,7 @@ const CHECKS_807: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_808: &[ValueCheck] = &[
+const CHECKS_806: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20722,7 +20692,7 @@ const CHECKS_808: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_809: &[ValueCheck] = &[
+const CHECKS_807: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20737,7 +20707,7 @@ const CHECKS_809: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_810: &[ValueCheck] = &[
+const CHECKS_808: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20752,7 +20722,7 @@ const CHECKS_810: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_811: &[ValueCheck] = &[
+const CHECKS_809: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20767,7 +20737,7 @@ const CHECKS_811: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_812: &[ValueCheck] = &[
+const CHECKS_810: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20796,7 +20766,7 @@ const CHECKS_812: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_813: &[ValueCheck] = &[
+const CHECKS_811: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20811,7 +20781,7 @@ const CHECKS_813: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_814: &[ValueCheck] = &[
+const CHECKS_812: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20829,6 +20799,55 @@ const CHECKS_814: &[ValueCheck] = &[
             },
             class: ValueClass::Byte,
             list: false,
+        },
+        union: None,
+        versions: Versions(0b11_1111),
+    },
+];
+
+const CHECKS_813: &[ValueCheck] = &[
+    ValueCheck {
+        check: Check::OfficeVersion,
+        union: None,
+        versions: Versions(0b11_1110),
+    },
+    ValueCheck {
+        check: Check::Required,
+        union: None,
+        versions: Versions(0b11_1111),
+    },
+    ValueCheck {
+        check: Check::Number {
+            bounds: Bounds {
+                max_exclusive: None,
+                max_inclusive: None,
+                min_exclusive: None,
+                min_inclusive: None,
+                non_negative: false,
+                positive: false,
+            },
+            class: ValueClass::DateTime,
+            list: false,
+        },
+        union: None,
+        versions: Versions(0b11_1111),
+    },
+];
+
+const CHECKS_814: &[ValueCheck] = &[
+    ValueCheck {
+        check: Check::OfficeVersion,
+        union: None,
+        versions: Versions(0b11_1110),
+    },
+    ValueCheck {
+        check: Check::Required,
+        union: None,
+        versions: Versions(0b11_1111),
+    },
+    ValueCheck {
+        check: Check::Enum {
+            class: ValueClass::Enum("x15:ST_MovingPeriodStep"),
         },
         union: None,
         versions: Versions(0b11_1111),
@@ -20856,7 +20875,7 @@ const CHECKS_815: &[ValueCheck] = &[
                 non_negative: false,
                 positive: false,
             },
-            class: ValueClass::DateTime,
+            class: ValueClass::Byte,
             list: false,
         },
         union: None,
@@ -20871,55 +20890,6 @@ const CHECKS_816: &[ValueCheck] = &[
         versions: Versions(0b11_1110),
     },
     ValueCheck {
-        check: Check::Required,
-        union: None,
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::Enum {
-            class: ValueClass::Enum("x15:ST_MovingPeriodStep"),
-        },
-        union: None,
-        versions: Versions(0b11_1111),
-    },
-];
-
-const CHECKS_817: &[ValueCheck] = &[
-    ValueCheck {
-        check: Check::OfficeVersion,
-        union: None,
-        versions: Versions(0b11_1110),
-    },
-    ValueCheck {
-        check: Check::Required,
-        union: None,
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::Number {
-            bounds: Bounds {
-                max_exclusive: None,
-                max_inclusive: None,
-                min_exclusive: None,
-                min_inclusive: None,
-                non_negative: false,
-                positive: false,
-            },
-            class: ValueClass::Byte,
-            list: false,
-        },
-        union: None,
-        versions: Versions(0b11_1111),
-    },
-];
-
-const CHECKS_818: &[ValueCheck] = &[
-    ValueCheck {
-        check: Check::OfficeVersion,
-        union: None,
-        versions: Versions(0b11_1110),
-    },
-    ValueCheck {
         check: Check::Enum {
             class: ValueClass::Enum("x15:ST_SXVCellType"),
         },
@@ -20928,7 +20898,7 @@ const CHECKS_818: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_819: &[ValueCheck] = &[
+const CHECKS_817: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20943,7 +20913,7 @@ const CHECKS_819: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_820: &[ValueCheck] = &[
+const CHECKS_818: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20958,7 +20928,7 @@ const CHECKS_820: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_821: &[ValueCheck] = &[
+const CHECKS_819: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20973,7 +20943,7 @@ const CHECKS_821: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_822: &[ValueCheck] = &[
+const CHECKS_820: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -20997,7 +20967,7 @@ const CHECKS_822: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_823: &[ValueCheck] = &[
+const CHECKS_821: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -21017,7 +20987,7 @@ const CHECKS_823: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_824: &[ValueCheck] = &[
+const CHECKS_822: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -21037,7 +21007,7 @@ const CHECKS_824: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_825: &[ValueCheck] = &[
+const CHECKS_823: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -21057,7 +21027,7 @@ const CHECKS_825: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_826: &[ValueCheck] = &[ValueCheck {
+const CHECKS_824: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_Visibility"),
     },
@@ -21065,7 +21035,7 @@ const CHECKS_826: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_827: &[ValueCheck] = &[ValueCheck {
+const CHECKS_825: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_BorderStyle"),
     },
@@ -21073,7 +21043,7 @@ const CHECKS_827: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_828: &[ValueCheck] = &[
+const CHECKS_826: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -21088,7 +21058,7 @@ const CHECKS_828: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_829: &[ValueCheck] = &[ValueCheck {
+const CHECKS_827: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_CalcMode"),
     },
@@ -21096,7 +21066,7 @@ const CHECKS_829: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_830: &[ValueCheck] = &[ValueCheck {
+const CHECKS_828: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_RefMode"),
     },
@@ -21104,7 +21074,7 @@ const CHECKS_830: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_831: &[ValueCheck] = &[ValueCheck {
+const CHECKS_829: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_CellType"),
     },
@@ -21112,7 +21082,7 @@ const CHECKS_831: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_832: &[ValueCheck] = &[ValueCheck {
+const CHECKS_830: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_HorizontalAlignment"),
     },
@@ -21120,7 +21090,7 @@ const CHECKS_832: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_833: &[ValueCheck] = &[ValueCheck {
+const CHECKS_831: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_VerticalAlignment"),
     },
@@ -21128,7 +21098,7 @@ const CHECKS_833: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_834: &[ValueCheck] = &[ValueCheck {
+const CHECKS_832: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_CellFormulaType"),
     },
@@ -21136,7 +21106,7 @@ const CHECKS_834: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_835: &[ValueCheck] = &[
+const CHECKS_833: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -21151,7 +21121,7 @@ const CHECKS_835: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_836: &[ValueCheck] = &[ValueCheck {
+const CHECKS_834: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_ConditionalFormattingOperator"),
     },
@@ -21159,7 +21129,7 @@ const CHECKS_836: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_837: &[ValueCheck] = &[ValueCheck {
+const CHECKS_835: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_TimePeriod"),
     },
@@ -21167,7 +21137,7 @@ const CHECKS_837: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_838: &[ValueCheck] = &[
+const CHECKS_836: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -21182,7 +21152,7 @@ const CHECKS_838: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_839: &[ValueCheck] = &[ValueCheck {
+const CHECKS_837: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_TextHAlign"),
     },
@@ -21190,7 +21160,7 @@ const CHECKS_839: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_840: &[ValueCheck] = &[ValueCheck {
+const CHECKS_838: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_TextVAlign"),
     },
@@ -21198,7 +21168,7 @@ const CHECKS_840: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_841: &[ValueCheck] = &[ValueCheck {
+const CHECKS_839: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_Scope"),
     },
@@ -21206,7 +21176,7 @@ const CHECKS_841: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_842: &[ValueCheck] = &[ValueCheck {
+const CHECKS_840: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_Type"),
     },
@@ -21214,7 +21184,7 @@ const CHECKS_842: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_843: &[ValueCheck] = &[ValueCheck {
+const CHECKS_841: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_CredMethod"),
     },
@@ -21222,7 +21192,7 @@ const CHECKS_843: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_844: &[ValueCheck] = &[ValueCheck {
+const CHECKS_842: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_Orientation"),
     },
@@ -21230,7 +21200,7 @@ const CHECKS_844: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_845: &[ValueCheck] = &[ValueCheck {
+const CHECKS_843: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_SheetState"),
     },
@@ -21238,7 +21208,7 @@ const CHECKS_845: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_846: &[ValueCheck] = &[ValueCheck {
+const CHECKS_844: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_FilterOperator"),
     },
@@ -21246,7 +21216,7 @@ const CHECKS_846: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_847: &[ValueCheck] = &[ValueCheck {
+const CHECKS_845: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_SheetViewType"),
     },
@@ -21254,7 +21224,7 @@ const CHECKS_847: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_848: &[ValueCheck] = &[ValueCheck {
+const CHECKS_846: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_Comments"),
     },
@@ -21262,7 +21232,7 @@ const CHECKS_848: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_849: &[ValueCheck] = &[ValueCheck {
+const CHECKS_847: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_Objects"),
     },
@@ -21270,7 +21240,7 @@ const CHECKS_849: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_850: &[ValueCheck] = &[ValueCheck {
+const CHECKS_848: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_DataConsolidateFunction"),
     },
@@ -21278,7 +21248,7 @@ const CHECKS_850: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_851: &[ValueCheck] = &[ValueCheck {
+const CHECKS_849: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_ShowDataAs"),
     },
@@ -21286,7 +21256,7 @@ const CHECKS_851: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_852: &[ValueCheck] = &[ValueCheck {
+const CHECKS_850: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_DataValidationType"),
     },
@@ -21294,7 +21264,7 @@ const CHECKS_852: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_853: &[ValueCheck] = &[ValueCheck {
+const CHECKS_851: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_DataValidationErrorStyle"),
     },
@@ -21302,7 +21272,7 @@ const CHECKS_853: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_854: &[ValueCheck] = &[ValueCheck {
+const CHECKS_852: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_DataValidationImeMode"),
     },
@@ -21310,7 +21280,7 @@ const CHECKS_854: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_855: &[ValueCheck] = &[ValueCheck {
+const CHECKS_853: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_DataValidationOperator"),
     },
@@ -21318,7 +21288,7 @@ const CHECKS_855: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_856: &[ValueCheck] = &[
+const CHECKS_854: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -21340,7 +21310,7 @@ const CHECKS_856: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_857: &[ValueCheck] = &[
+const CHECKS_855: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -21355,7 +21325,7 @@ const CHECKS_857: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_858: &[ValueCheck] = &[ValueCheck {
+const CHECKS_856: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_DdeValueType"),
     },
@@ -21363,7 +21333,7 @@ const CHECKS_858: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_859: &[ValueCheck] = &[
+const CHECKS_857: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -21378,7 +21348,7 @@ const CHECKS_859: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_860: &[ValueCheck] = &[
+const CHECKS_858: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -21402,7 +21372,7 @@ const CHECKS_860: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_861: &[ValueCheck] = &[ValueCheck {
+const CHECKS_859: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_CalendarType"),
     },
@@ -21410,7 +21380,7 @@ const CHECKS_861: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_862: &[ValueCheck] = &[
+const CHECKS_860: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -21450,7 +21420,7 @@ const CHECKS_862: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_863: &[ValueCheck] = &[
+const CHECKS_861: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -21482,7 +21452,7 @@ const CHECKS_863: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_864: &[ValueCheck] = &[
+const CHECKS_862: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -21497,7 +21467,7 @@ const CHECKS_864: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_865: &[ValueCheck] = &[ValueCheck {
+const CHECKS_863: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_FormatAction"),
     },
@@ -21505,7 +21475,7 @@ const CHECKS_865: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_866: &[ValueCheck] = &[ValueCheck {
+const CHECKS_864: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_GradientType"),
     },
@@ -21513,7 +21483,7 @@ const CHECKS_866: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_867: &[ValueCheck] = &[ValueCheck {
+const CHECKS_865: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_ItemType"),
     },
@@ -21521,7 +21491,7 @@ const CHECKS_867: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_868: &[ValueCheck] = &[
+const CHECKS_866: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -21536,7 +21506,7 @@ const CHECKS_868: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_869: &[ValueCheck] = &[ValueCheck {
+const CHECKS_867: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_IconSetType"),
     },
@@ -21544,7 +21514,7 @@ const CHECKS_869: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_870: &[ValueCheck] = &[
+const CHECKS_868: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -21559,7 +21529,7 @@ const CHECKS_870: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_871: &[ValueCheck] = &[
+const CHECKS_869: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -21574,7 +21544,7 @@ const CHECKS_871: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_872: &[ValueCheck] = &[ValueCheck {
+const CHECKS_870: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_MdxSetOrder"),
     },
@@ -21582,7 +21552,7 @@ const CHECKS_872: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_873: &[ValueCheck] = &[ValueCheck {
+const CHECKS_871: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_DvAspect"),
     },
@@ -21590,7 +21560,7 @@ const CHECKS_873: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_874: &[ValueCheck] = &[ValueCheck {
+const CHECKS_872: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_OleUpdate"),
     },
@@ -21598,7 +21568,7 @@ const CHECKS_874: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_875: &[ValueCheck] = &[ValueCheck {
+const CHECKS_873: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_PageOrder"),
     },
@@ -21606,7 +21576,7 @@ const CHECKS_875: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_876: &[ValueCheck] = &[ValueCheck {
+const CHECKS_874: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_CellComments"),
     },
@@ -21614,7 +21584,7 @@ const CHECKS_876: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_877: &[ValueCheck] = &[ValueCheck {
+const CHECKS_875: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_PrintError"),
     },
@@ -21622,7 +21592,7 @@ const CHECKS_877: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_878: &[ValueCheck] = &[ValueCheck {
+const CHECKS_876: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_Pane"),
     },
@@ -21630,7 +21600,7 @@ const CHECKS_878: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_879: &[ValueCheck] = &[ValueCheck {
+const CHECKS_877: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_PaneState"),
     },
@@ -21638,7 +21608,7 @@ const CHECKS_879: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_880: &[ValueCheck] = &[ValueCheck {
+const CHECKS_878: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_ParameterType"),
     },
@@ -21646,7 +21616,7 @@ const CHECKS_880: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_881: &[ValueCheck] = &[ValueCheck {
+const CHECKS_879: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_PatternType"),
     },
@@ -21654,7 +21624,7 @@ const CHECKS_881: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_882: &[ValueCheck] = &[ValueCheck {
+const CHECKS_880: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_PhoneticType"),
     },
@@ -21662,7 +21632,7 @@ const CHECKS_882: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_883: &[ValueCheck] = &[ValueCheck {
+const CHECKS_881: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_PhoneticAlignment"),
     },
@@ -21670,7 +21640,7 @@ const CHECKS_883: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_884: &[ValueCheck] = &[ValueCheck {
+const CHECKS_882: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_PivotAreaType"),
     },
@@ -21678,7 +21648,7 @@ const CHECKS_884: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_885: &[ValueCheck] = &[ValueCheck {
+const CHECKS_883: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_Axis"),
     },
@@ -21686,7 +21656,7 @@ const CHECKS_885: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_886: &[ValueCheck] = &[ValueCheck {
+const CHECKS_884: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_FieldSortType"),
     },
@@ -21694,7 +21664,7 @@ const CHECKS_886: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_887: &[ValueCheck] = &[
+const CHECKS_885: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -21709,7 +21679,7 @@ const CHECKS_887: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_888: &[ValueCheck] = &[ValueCheck {
+const CHECKS_886: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_GrowShrinkType"),
     },
@@ -21717,7 +21687,7 @@ const CHECKS_888: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_889: &[ValueCheck] = &[ValueCheck {
+const CHECKS_887: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_GroupBy"),
     },
@@ -21725,7 +21695,7 @@ const CHECKS_889: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_890: &[ValueCheck] = &[ValueCheck {
+const CHECKS_888: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_RevisionAction"),
     },
@@ -21733,7 +21703,7 @@ const CHECKS_890: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_891: &[ValueCheck] = &[
+const CHECKS_889: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -21748,7 +21718,7 @@ const CHECKS_891: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_892: &[ValueCheck] = &[
+const CHECKS_890: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -21763,7 +21733,7 @@ const CHECKS_892: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_893: &[ValueCheck] = &[ValueCheck {
+const CHECKS_891: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_SortType"),
     },
@@ -21771,7 +21741,7 @@ const CHECKS_893: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_894: &[ValueCheck] = &[ValueCheck {
+const CHECKS_892: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_SortBy"),
     },
@@ -21779,7 +21749,7 @@ const CHECKS_894: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_895: &[ValueCheck] = &[ValueCheck {
+const CHECKS_893: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_SortMethod"),
     },
@@ -21787,7 +21757,7 @@ const CHECKS_895: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_896: &[ValueCheck] = &[ValueCheck {
+const CHECKS_894: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_TableType"),
     },
@@ -21795,7 +21765,7 @@ const CHECKS_896: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_897: &[ValueCheck] = &[ValueCheck {
+const CHECKS_895: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_TotalsRowFunction"),
     },
@@ -21803,7 +21773,7 @@ const CHECKS_897: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_898: &[ValueCheck] = &[
+const CHECKS_896: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -21818,7 +21788,7 @@ const CHECKS_898: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_899: &[ValueCheck] = &[ValueCheck {
+const CHECKS_897: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_ExternalConnectionType"),
     },
@@ -21826,7 +21796,7 @@ const CHECKS_899: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_900: &[ValueCheck] = &[ValueCheck {
+const CHECKS_898: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_FileType"),
     },
@@ -21834,7 +21804,7 @@ const CHECKS_900: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_901: &[ValueCheck] = &[ValueCheck {
+const CHECKS_899: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_Qualifier"),
     },
@@ -21842,7 +21812,7 @@ const CHECKS_901: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_902: &[ValueCheck] = &[ValueCheck {
+const CHECKS_900: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_UnderlineValues"),
     },
@@ -21850,7 +21820,7 @@ const CHECKS_902: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_903: &[ValueCheck] = &[
+const CHECKS_901: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -21865,7 +21835,7 @@ const CHECKS_903: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_904: &[ValueCheck] = &[
+const CHECKS_902: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -21880,7 +21850,7 @@ const CHECKS_904: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_905: &[ValueCheck] = &[ValueCheck {
+const CHECKS_903: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_VolValueType"),
     },
@@ -21888,7 +21858,7 @@ const CHECKS_905: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_906: &[ValueCheck] = &[
+const CHECKS_904: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -21903,7 +21873,7 @@ const CHECKS_906: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_907: &[ValueCheck] = &[ValueCheck {
+const CHECKS_905: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_HtmlFmt"),
     },
@@ -21911,7 +21881,7 @@ const CHECKS_907: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_908: &[ValueCheck] = &[
+const CHECKS_906: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -21926,7 +21896,7 @@ const CHECKS_908: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_909: &[ValueCheck] = &[ValueCheck {
+const CHECKS_907: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_TargetScreenSize"),
     },
@@ -21934,7 +21904,7 @@ const CHECKS_909: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_910: &[ValueCheck] = &[ValueCheck {
+const CHECKS_908: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_ConformanceClass"),
     },
@@ -21942,7 +21912,7 @@ const CHECKS_910: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_911: &[ValueCheck] = &[ValueCheck {
+const CHECKS_909: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("x:ST_UpdateLinks"),
     },
@@ -21950,7 +21920,7 @@ const CHECKS_911: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_912: &[ValueCheck] = &[
+const CHECKS_910: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -21965,7 +21935,7 @@ const CHECKS_912: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_913: &[ValueCheck] = &[
+const CHECKS_911: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
             class: None,
@@ -21987,7 +21957,7 @@ const CHECKS_913: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_914: &[ValueCheck] = &[
+const CHECKS_912: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22016,7 +21986,7 @@ const CHECKS_914: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_915: &[ValueCheck] = &[
+const CHECKS_913: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22040,7 +22010,7 @@ const CHECKS_915: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_916: &[ValueCheck] = &[
+const CHECKS_914: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22064,7 +22034,7 @@ const CHECKS_916: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_917: &[ValueCheck] = &[
+const CHECKS_915: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22084,7 +22054,7 @@ const CHECKS_917: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_918: &[ValueCheck] = &[
+const CHECKS_916: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22108,7 +22078,7 @@ const CHECKS_918: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_919: &[ValueCheck] = &[
+const CHECKS_917: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22123,7 +22093,7 @@ const CHECKS_919: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_920: &[ValueCheck] = &[
+const CHECKS_918: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22143,7 +22113,7 @@ const CHECKS_920: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_921: &[ValueCheck] = &[
+const CHECKS_919: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22158,7 +22128,7 @@ const CHECKS_921: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_922: &[ValueCheck] = &[
+const CHECKS_920: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22173,7 +22143,7 @@ const CHECKS_922: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_923: &[ValueCheck] = &[
+const CHECKS_921: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22188,7 +22158,7 @@ const CHECKS_923: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_924: &[ValueCheck] = &[
+const CHECKS_922: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22203,7 +22173,7 @@ const CHECKS_924: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_925: &[ValueCheck] = &[
+const CHECKS_923: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22227,7 +22197,7 @@ const CHECKS_925: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_926: &[ValueCheck] = &[
+const CHECKS_924: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22256,7 +22226,7 @@ const CHECKS_926: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_927: &[ValueCheck] = &[
+const CHECKS_925: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22285,7 +22255,7 @@ const CHECKS_927: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_928: &[ValueCheck] = &[
+const CHECKS_926: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22309,7 +22279,7 @@ const CHECKS_928: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_929: &[ValueCheck] = &[
+const CHECKS_927: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22341,7 +22311,7 @@ const CHECKS_929: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_930: &[ValueCheck] = &[
+const CHECKS_928: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Number {
             bounds: Bounds {
@@ -22376,7 +22346,7 @@ const CHECKS_930: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_931: &[ValueCheck] = &[ValueCheck {
+const CHECKS_929: &[ValueCheck] = &[ValueCheck {
     check: Check::Number {
         bounds: Bounds {
             max_exclusive: None,
@@ -22393,7 +22363,7 @@ const CHECKS_931: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_932: &[ValueCheck] = &[
+const CHECKS_930: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22425,7 +22395,7 @@ const CHECKS_932: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_933: &[ValueCheck] = &[
+const CHECKS_931: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22440,7 +22410,7 @@ const CHECKS_933: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_934: &[ValueCheck] = &[
+const CHECKS_932: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22455,7 +22425,7 @@ const CHECKS_934: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_935: &[ValueCheck] = &[
+const CHECKS_933: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22470,7 +22440,7 @@ const CHECKS_935: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_936: &[ValueCheck] = &[
+const CHECKS_934: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22499,7 +22469,7 @@ const CHECKS_936: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_937: &[ValueCheck] = &[
+const CHECKS_935: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22519,7 +22489,7 @@ const CHECKS_937: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_938: &[ValueCheck] = &[
+const CHECKS_936: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22534,7 +22504,7 @@ const CHECKS_938: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_939: &[ValueCheck] = &[
+const CHECKS_937: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22561,7 +22531,7 @@ const CHECKS_939: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_940: &[ValueCheck] = &[
+const CHECKS_938: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22581,7 +22551,7 @@ const CHECKS_940: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_941: &[ValueCheck] = &[
+const CHECKS_939: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22596,7 +22566,7 @@ const CHECKS_941: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_942: &[ValueCheck] = &[
+const CHECKS_940: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22625,7 +22595,7 @@ const CHECKS_942: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_943: &[ValueCheck] = &[
+const CHECKS_941: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22662,7 +22632,7 @@ const CHECKS_943: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_944: &[ValueCheck] = &[
+const CHECKS_942: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22677,7 +22647,7 @@ const CHECKS_944: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_945: &[ValueCheck] = &[
+const CHECKS_943: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22701,7 +22671,7 @@ const CHECKS_945: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_946: &[ValueCheck] = &[
+const CHECKS_944: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22725,7 +22695,7 @@ const CHECKS_946: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_947: &[ValueCheck] = &[
+const CHECKS_945: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22754,7 +22724,7 @@ const CHECKS_947: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_948: &[ValueCheck] = &[
+const CHECKS_946: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22774,7 +22744,7 @@ const CHECKS_948: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_949: &[ValueCheck] = &[
+const CHECKS_947: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22794,7 +22764,7 @@ const CHECKS_949: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_950: &[ValueCheck] = &[
+const CHECKS_948: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22814,7 +22784,7 @@ const CHECKS_950: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_951: &[ValueCheck] = &[
+const CHECKS_949: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22834,7 +22804,7 @@ const CHECKS_951: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_952: &[ValueCheck] = &[
+const CHECKS_950: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22849,7 +22819,7 @@ const CHECKS_952: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_953: &[ValueCheck] = &[
+const CHECKS_951: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22864,7 +22834,7 @@ const CHECKS_953: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_954: &[ValueCheck] = &[
+const CHECKS_952: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -22879,7 +22849,7 @@ const CHECKS_954: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_955: &[ValueCheck] = &[ValueCheck {
+const CHECKS_953: &[ValueCheck] = &[ValueCheck {
     check: Check::String {
         class: None,
         kind: StringKind::Uri,
@@ -22892,7 +22862,7 @@ const CHECKS_955: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_956: &[ValueCheck] = &[ValueCheck {
+const CHECKS_954: &[ValueCheck] = &[ValueCheck {
     check: Check::Number {
         bounds: Bounds {
             max_exclusive: None,
@@ -22909,7 +22879,7 @@ const CHECKS_956: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_957: &[ValueCheck] = &[ValueCheck {
+const CHECKS_955: &[ValueCheck] = &[ValueCheck {
     check: Check::Number {
         bounds: Bounds {
             max_exclusive: None,
@@ -22926,7 +22896,7 @@ const CHECKS_957: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_958: &[ValueCheck] = &[ValueCheck {
+const CHECKS_956: &[ValueCheck] = &[ValueCheck {
     check: Check::Number {
         bounds: Bounds {
             max_exclusive: None,
@@ -22943,7 +22913,7 @@ const CHECKS_958: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_959: &[ValueCheck] = &[
+const CHECKS_957: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
@@ -22958,7 +22928,7 @@ const CHECKS_959: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_960: &[ValueCheck] = &[ValueCheck {
+const CHECKS_958: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("xvml:ST_CF"),
     },
@@ -22966,7 +22936,7 @@ const CHECKS_960: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_961: &[ValueCheck] = &[ValueCheck {
+const CHECKS_959: &[ValueCheck] = &[ValueCheck {
     check: Check::String {
         class: None,
         kind: StringKind::Plain,
@@ -22979,7 +22949,7 @@ const CHECKS_961: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_962: &[ValueCheck] = &[ValueCheck {
+const CHECKS_960: &[ValueCheck] = &[ValueCheck {
     check: Check::Enum {
         class: ValueClass::Enum("xvml:ST_TrueFalseBlank"),
     },
@@ -22987,7 +22957,7 @@ const CHECKS_962: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const CHECKS_963: &[ValueCheck] = &[
+const CHECKS_961: &[ValueCheck] = &[
     ValueCheck {
         check: Check::OfficeVersion,
         union: None,
@@ -56489,7 +56459,7 @@ const ATTRIBUTES_699: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_392,
         class: ValueClass::TrueFalse,
-        name: "fill",
+        name: "filled",
         namespace: None,
         strict_checks: None,
         transitional_only: false,
@@ -62884,8 +62854,8 @@ const ATTRIBUTES_779: &[AttributeConstraint] = &[
 
 const ATTRIBUTES_780: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_623,
-        class: ValueClass::Enum("w:ST_CompatSettingName"),
+        checks: CHECKS_39,
+        class: ValueClass::String,
         name: "name",
         namespace: Some(97),
         strict_checks: None,
@@ -62919,7 +62889,7 @@ const ATTRIBUTES_781: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_624,
+        checks: CHECKS_623,
         class: ValueClass::String,
         name: "shapeid",
         namespace: Some(97),
@@ -62973,7 +62943,7 @@ const ATTRIBUTES_783: &[AttributeConstraint] = &[AttributeConstraint {
 }];
 
 const ATTRIBUTES_784: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_625,
+    checks: CHECKS_624,
     class: ValueClass::String,
     name: "id",
     namespace: Some(97),
@@ -62983,7 +62953,7 @@ const ATTRIBUTES_784: &[AttributeConstraint] = &[AttributeConstraint {
 
 const ATTRIBUTES_785: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_626,
+        checks: CHECKS_625,
         class: ValueClass::Enum("w:ST_DocGrid"),
         name: "type",
         namespace: Some(97),
@@ -63009,7 +62979,7 @@ const ATTRIBUTES_785: &[AttributeConstraint] = &[
 ];
 
 const ATTRIBUTES_786: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_627,
+    checks: CHECKS_626,
     class: ValueClass::Enum("w:ST_DocPartBehavior"),
     name: "val",
     namespace: Some(97),
@@ -63018,7 +62988,7 @@ const ATTRIBUTES_786: &[AttributeConstraint] = &[AttributeConstraint {
 }];
 
 const ATTRIBUTES_787: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_628,
+    checks: CHECKS_627,
     class: ValueClass::Enum("w:ST_DocPartGallery"),
     name: "val",
     namespace: Some(97),
@@ -63046,7 +63016,7 @@ const ATTRIBUTES_788: &[AttributeConstraint] = &[
 ];
 
 const ATTRIBUTES_789: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_629,
+    checks: CHECKS_628,
     class: ValueClass::Enum("w:ST_DocPartType"),
     name: "val",
     namespace: Some(97),
@@ -63065,7 +63035,7 @@ const ATTRIBUTES_790: &[AttributeConstraint] = &[AttributeConstraint {
 
 const ATTRIBUTES_791: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_630,
+        checks: CHECKS_629,
         class: ValueClass::Enum("w:ST_DocProtect"),
         name: "edit",
         namespace: Some(97),
@@ -63089,7 +63059,7 @@ const ATTRIBUTES_791: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_631,
+        checks: CHECKS_630,
         class: ValueClass::Enum("w:ST_CryptProv"),
         name: "cryptProviderType",
         namespace: Some(97),
@@ -63097,7 +63067,7 @@ const ATTRIBUTES_791: &[AttributeConstraint] = &[
         transitional_only: true,
     },
     AttributeConstraint {
-        checks: CHECKS_632,
+        checks: CHECKS_631,
         class: ValueClass::Enum("w:ST_AlgClass"),
         name: "cryptAlgorithmClass",
         namespace: Some(97),
@@ -63105,7 +63075,7 @@ const ATTRIBUTES_791: &[AttributeConstraint] = &[
         transitional_only: true,
     },
     AttributeConstraint {
-        checks: CHECKS_633,
+        checks: CHECKS_632,
         class: ValueClass::Enum("w:ST_AlgType"),
         name: "cryptAlgorithmType",
         namespace: Some(97),
@@ -63121,7 +63091,7 @@ const ATTRIBUTES_791: &[AttributeConstraint] = &[
         transitional_only: true,
     },
     AttributeConstraint {
-        checks: CHECKS_634,
+        checks: CHECKS_633,
         class: ValueClass::UInt32,
         name: "cryptSpinCount",
         namespace: Some(97),
@@ -63137,7 +63107,7 @@ const ATTRIBUTES_791: &[AttributeConstraint] = &[
         transitional_only: true,
     },
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "algIdExt",
         namespace: Some(97),
@@ -63153,7 +63123,7 @@ const ATTRIBUTES_791: &[AttributeConstraint] = &[
         transitional_only: true,
     },
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "cryptProviderTypeExt",
         namespace: Some(97),
@@ -63219,7 +63189,7 @@ const ATTRIBUTES_791: &[AttributeConstraint] = &[
 ];
 
 const ATTRIBUTES_792: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_636,
+    checks: CHECKS_635,
     class: ValueClass::Enum("w:ST_DocType"),
     name: "val",
     namespace: Some(97),
@@ -63229,7 +63199,7 @@ const ATTRIBUTES_792: &[AttributeConstraint] = &[AttributeConstraint {
 
 const ATTRIBUTES_793: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_637,
+        checks: CHECKS_636,
         class: ValueClass::String,
         name: "name",
         namespace: Some(97),
@@ -63237,7 +63207,7 @@ const ATTRIBUTES_793: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_638,
+        checks: CHECKS_637,
         class: ValueClass::String,
         name: "val",
         namespace: Some(97),
@@ -63247,7 +63217,7 @@ const ATTRIBUTES_793: &[AttributeConstraint] = &[
 ];
 
 const ATTRIBUTES_794: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_639,
+    checks: CHECKS_638,
     class: ValueClass::Enum("w:ST_DocumentConformance"),
     name: "conformance",
     namespace: Some(97),
@@ -63273,7 +63243,7 @@ const ATTRIBUTES_795: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_640,
+        checks: CHECKS_639,
         class: ValueClass::Enum("w:ST_CombineBrackets"),
         name: "combineBrackets",
         namespace: Some(97),
@@ -63299,7 +63269,7 @@ const ATTRIBUTES_795: &[AttributeConstraint] = &[
 ];
 
 const ATTRIBUTES_796: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_641,
+    checks: CHECKS_640,
     class: ValueClass::Enum("w:ST_EdnPos"),
     name: "val",
     namespace: Some(97),
@@ -63308,7 +63278,7 @@ const ATTRIBUTES_796: &[AttributeConstraint] = &[AttributeConstraint {
 }];
 
 const ATTRIBUTES_797: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_642,
+    checks: CHECKS_641,
     class: ValueClass::Enum("w:ST_Em"),
     name: "val",
     namespace: Some(97),
@@ -63318,7 +63288,7 @@ const ATTRIBUTES_797: &[AttributeConstraint] = &[AttributeConstraint {
 
 const ATTRIBUTES_798: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_643,
+        checks: CHECKS_642,
         class: ValueClass::Enum("w:ST_InfoTextType"),
         name: "type",
         namespace: Some(97),
@@ -63326,7 +63296,7 @@ const ATTRIBUTES_798: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_644,
+        checks: CHECKS_643,
         class: ValueClass::String,
         name: "val",
         namespace: Some(97),
@@ -63336,7 +63306,7 @@ const ATTRIBUTES_798: &[AttributeConstraint] = &[
 ];
 
 const ATTRIBUTES_799: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_645,
+    checks: CHECKS_644,
     class: ValueClass::String,
     name: "val",
     namespace: Some(97),
@@ -63346,7 +63316,7 @@ const ATTRIBUTES_799: &[AttributeConstraint] = &[AttributeConstraint {
 
 const ATTRIBUTES_800: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_643,
+        checks: CHECKS_642,
         class: ValueClass::Enum("w:ST_InfoTextType"),
         name: "type",
         namespace: Some(97),
@@ -63354,7 +63324,7 @@ const ATTRIBUTES_800: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_646,
+        checks: CHECKS_645,
         class: ValueClass::String,
         name: "val",
         namespace: Some(97),
@@ -63364,7 +63334,7 @@ const ATTRIBUTES_800: &[AttributeConstraint] = &[
 ];
 
 const ATTRIBUTES_801: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_647,
+    checks: CHECKS_646,
     class: ValueClass::Enum("w:ST_FFTextType"),
     name: "val",
     namespace: Some(97),
@@ -63393,7 +63363,7 @@ const ATTRIBUTES_802: &[AttributeConstraint] = &[
 
 const ATTRIBUTES_803: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_648,
+        checks: CHECKS_647,
         class: ValueClass::Enum("w:ST_FldCharType"),
         name: "fldCharType",
         namespace: Some(97),
@@ -63428,7 +63398,7 @@ const ATTRIBUTES_804: &[AttributeConstraint] = &[AttributeConstraint {
 }];
 
 const ATTRIBUTES_805: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_649,
+    checks: CHECKS_648,
     class: ValueClass::Enum("w:ST_FontFamily"),
     name: "val",
     namespace: Some(97),
@@ -63465,7 +63435,7 @@ const ATTRIBUTES_806: &[AttributeConstraint] = &[
 
 const ATTRIBUTES_807: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_650,
+        checks: CHECKS_649,
         class: ValueClass::HexBinary,
         name: "usb0",
         namespace: Some(97),
@@ -63473,7 +63443,7 @@ const ATTRIBUTES_807: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_650,
+        checks: CHECKS_649,
         class: ValueClass::HexBinary,
         name: "usb1",
         namespace: Some(97),
@@ -63481,7 +63451,7 @@ const ATTRIBUTES_807: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_650,
+        checks: CHECKS_649,
         class: ValueClass::HexBinary,
         name: "usb2",
         namespace: Some(97),
@@ -63489,7 +63459,7 @@ const ATTRIBUTES_807: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_650,
+        checks: CHECKS_649,
         class: ValueClass::HexBinary,
         name: "usb3",
         namespace: Some(97),
@@ -63497,7 +63467,7 @@ const ATTRIBUTES_807: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_650,
+        checks: CHECKS_649,
         class: ValueClass::HexBinary,
         name: "csb0",
         namespace: Some(97),
@@ -63505,7 +63475,7 @@ const ATTRIBUTES_807: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_650,
+        checks: CHECKS_649,
         class: ValueClass::HexBinary,
         name: "csb1",
         namespace: Some(97),
@@ -63516,7 +63486,7 @@ const ATTRIBUTES_807: &[AttributeConstraint] = &[
 
 const ATTRIBUTES_808: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_651,
+        checks: CHECKS_650,
         class: ValueClass::Enum("w:ST_Hint"),
         name: "hint",
         namespace: Some(97),
@@ -63524,7 +63494,7 @@ const ATTRIBUTES_808: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_652,
+        checks: CHECKS_651,
         class: ValueClass::String,
         name: "ascii",
         namespace: Some(97),
@@ -63532,7 +63502,7 @@ const ATTRIBUTES_808: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_652,
+        checks: CHECKS_651,
         class: ValueClass::String,
         name: "hAnsi",
         namespace: Some(97),
@@ -63540,7 +63510,7 @@ const ATTRIBUTES_808: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_652,
+        checks: CHECKS_651,
         class: ValueClass::String,
         name: "eastAsia",
         namespace: Some(97),
@@ -63548,7 +63518,7 @@ const ATTRIBUTES_808: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_652,
+        checks: CHECKS_651,
         class: ValueClass::String,
         name: "cs",
         namespace: Some(97),
@@ -63556,7 +63526,7 @@ const ATTRIBUTES_808: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_653,
+        checks: CHECKS_652,
         class: ValueClass::Enum("w:ST_Theme"),
         name: "asciiTheme",
         namespace: Some(97),
@@ -63564,7 +63534,7 @@ const ATTRIBUTES_808: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_653,
+        checks: CHECKS_652,
         class: ValueClass::Enum("w:ST_Theme"),
         name: "hAnsiTheme",
         namespace: Some(97),
@@ -63572,7 +63542,7 @@ const ATTRIBUTES_808: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_653,
+        checks: CHECKS_652,
         class: ValueClass::Enum("w:ST_Theme"),
         name: "eastAsiaTheme",
         namespace: Some(97),
@@ -63580,7 +63550,7 @@ const ATTRIBUTES_808: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_653,
+        checks: CHECKS_652,
         class: ValueClass::Enum("w:ST_Theme"),
         name: "cstheme",
         namespace: Some(97),
@@ -63590,7 +63560,7 @@ const ATTRIBUTES_808: &[AttributeConstraint] = &[
 ];
 
 const ATTRIBUTES_809: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_654,
+    checks: CHECKS_653,
     class: ValueClass::Enum("w:ST_FrameLayout"),
     name: "val",
     namespace: Some(97),
@@ -63600,7 +63570,7 @@ const ATTRIBUTES_809: &[AttributeConstraint] = &[AttributeConstraint {
 
 const ATTRIBUTES_810: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_655,
+        checks: CHECKS_654,
         class: ValueClass::Enum("w:ST_DropCap"),
         name: "dropCap",
         namespace: Some(97),
@@ -63608,7 +63578,7 @@ const ATTRIBUTES_810: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_656,
+        checks: CHECKS_655,
         class: ValueClass::Int32,
         name: "lines",
         namespace: Some(97),
@@ -63624,7 +63594,7 @@ const ATTRIBUTES_810: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_657,
+        checks: CHECKS_656,
         class: ValueClass::UInt32,
         name: "h",
         namespace: Some(97),
@@ -63648,7 +63618,7 @@ const ATTRIBUTES_810: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_658,
+        checks: CHECKS_657,
         class: ValueClass::Enum("w:ST_Wrap"),
         name: "wrap",
         namespace: Some(97),
@@ -63656,7 +63626,7 @@ const ATTRIBUTES_810: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_659,
+        checks: CHECKS_658,
         class: ValueClass::Enum("w:ST_HAnchor"),
         name: "hAnchor",
         namespace: Some(97),
@@ -63664,7 +63634,7 @@ const ATTRIBUTES_810: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_660,
+        checks: CHECKS_659,
         class: ValueClass::Enum("w:ST_VAnchor"),
         name: "vAnchor",
         namespace: Some(97),
@@ -63672,7 +63642,7 @@ const ATTRIBUTES_810: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_661,
+        checks: CHECKS_660,
         class: ValueClass::String,
         name: "x",
         namespace: Some(97),
@@ -63680,7 +63650,7 @@ const ATTRIBUTES_810: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_662,
+        checks: CHECKS_661,
         class: ValueClass::Enum("w:ST_XAlign"),
         name: "xAlign",
         namespace: Some(97),
@@ -63688,7 +63658,7 @@ const ATTRIBUTES_810: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_661,
+        checks: CHECKS_660,
         class: ValueClass::String,
         name: "y",
         namespace: Some(97),
@@ -63696,7 +63666,7 @@ const ATTRIBUTES_810: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_663,
+        checks: CHECKS_662,
         class: ValueClass::Enum("w:ST_YAlign"),
         name: "yAlign",
         namespace: Some(97),
@@ -63704,7 +63674,7 @@ const ATTRIBUTES_810: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_664,
+        checks: CHECKS_663,
         class: ValueClass::Enum("w:ST_HeightRule"),
         name: "hRule",
         namespace: Some(97),
@@ -63722,7 +63692,7 @@ const ATTRIBUTES_810: &[AttributeConstraint] = &[
 ];
 
 const ATTRIBUTES_811: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_665,
+    checks: CHECKS_664,
     class: ValueClass::Enum("w:ST_FrameScrollbar"),
     name: "val",
     namespace: Some(97),
@@ -63732,7 +63702,7 @@ const ATTRIBUTES_811: &[AttributeConstraint] = &[AttributeConstraint {
 
 const ATTRIBUTES_812: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_666,
+        checks: CHECKS_665,
         class: ValueClass::Enum("w:ST_FtnEdn"),
         name: "type",
         namespace: Some(97),
@@ -63740,7 +63710,7 @@ const ATTRIBUTES_812: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_667,
+        checks: CHECKS_666,
         class: ValueClass::Integer,
         name: "id",
         namespace: Some(97),
@@ -63768,7 +63738,7 @@ const ATTRIBUTES_814: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_667,
+        checks: CHECKS_666,
         class: ValueClass::Integer,
         name: "id",
         namespace: Some(97),
@@ -63778,7 +63748,7 @@ const ATTRIBUTES_814: &[AttributeConstraint] = &[
 ];
 
 const ATTRIBUTES_815: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_667,
+    checks: CHECKS_666,
     class: ValueClass::Integer,
     name: "id",
     namespace: Some(97),
@@ -63787,7 +63757,7 @@ const ATTRIBUTES_815: &[AttributeConstraint] = &[AttributeConstraint {
 }];
 
 const ATTRIBUTES_816: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_668,
+    checks: CHECKS_667,
     class: ValueClass::Enum("w:ST_FtnPos"),
     name: "val",
     namespace: Some(97),
@@ -63805,7 +63775,7 @@ const ATTRIBUTES_817: &[AttributeConstraint] = &[AttributeConstraint {
 }];
 
 const ATTRIBUTES_818: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_669,
+    checks: CHECKS_668,
     class: ValueClass::Enum("w:ST_Merge"),
     name: "val",
     namespace: Some(97),
@@ -63815,7 +63785,7 @@ const ATTRIBUTES_818: &[AttributeConstraint] = &[AttributeConstraint {
 
 const ATTRIBUTES_819: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_670,
+        checks: CHECKS_669,
         class: ValueClass::Enum("w:ST_HdrFtr"),
         name: "type",
         namespace: Some(97),
@@ -63834,7 +63804,7 @@ const ATTRIBUTES_819: &[AttributeConstraint] = &[
 
 const ATTRIBUTES_820: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_657,
+        checks: CHECKS_656,
         class: ValueClass::UInt32,
         name: "val",
         namespace: Some(97),
@@ -63842,7 +63812,7 @@ const ATTRIBUTES_820: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_664,
+        checks: CHECKS_663,
         class: ValueClass::Enum("w:ST_HeightRule"),
         name: "hRule",
         namespace: Some(97),
@@ -63852,7 +63822,7 @@ const ATTRIBUTES_820: &[AttributeConstraint] = &[
 ];
 
 const ATTRIBUTES_821: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_671,
+    checks: CHECKS_670,
     class: ValueClass::Enum("w:ST_HighlightColor"),
     name: "val",
     namespace: Some(97),
@@ -63861,7 +63831,7 @@ const ATTRIBUTES_821: &[AttributeConstraint] = &[AttributeConstraint {
 }];
 
 const ATTRIBUTES_822: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_672,
+    checks: CHECKS_671,
     class: ValueClass::UInt32,
     name: "val",
     namespace: Some(97),
@@ -63870,7 +63840,7 @@ const ATTRIBUTES_822: &[AttributeConstraint] = &[AttributeConstraint {
 }];
 
 const ATTRIBUTES_823: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_673,
+    checks: CHECKS_672,
     class: ValueClass::String,
     name: "val",
     namespace: Some(97),
@@ -63879,7 +63849,7 @@ const ATTRIBUTES_823: &[AttributeConstraint] = &[AttributeConstraint {
 }];
 
 const ATTRIBUTES_824: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_674,
+    checks: CHECKS_673,
     class: ValueClass::Int16,
     name: "val",
     namespace: Some(97),
@@ -63889,7 +63859,7 @@ const ATTRIBUTES_824: &[AttributeConstraint] = &[AttributeConstraint {
 
 const ATTRIBUTES_825: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_644,
+        checks: CHECKS_643,
         class: ValueClass::String,
         name: "tgtFrame",
         namespace: Some(97),
@@ -63897,7 +63867,7 @@ const ATTRIBUTES_825: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_675,
+        checks: CHECKS_674,
         class: ValueClass::String,
         name: "tooltip",
         namespace: Some(97),
@@ -63905,7 +63875,7 @@ const ATTRIBUTES_825: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_644,
+        checks: CHECKS_643,
         class: ValueClass::String,
         name: "docLocation",
         namespace: Some(97),
@@ -63921,7 +63891,7 @@ const ATTRIBUTES_825: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_644,
+        checks: CHECKS_643,
         class: ValueClass::String,
         name: "anchor",
         namespace: Some(97),
@@ -63940,7 +63910,7 @@ const ATTRIBUTES_825: &[AttributeConstraint] = &[
 
 const ATTRIBUTES_826: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_644,
+        checks: CHECKS_643,
         class: ValueClass::String,
         name: "tgtFrame",
         namespace: Some(97),
@@ -63948,7 +63918,7 @@ const ATTRIBUTES_826: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_675,
+        checks: CHECKS_674,
         class: ValueClass::String,
         name: "tooltip",
         namespace: Some(97),
@@ -63956,7 +63926,7 @@ const ATTRIBUTES_826: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_644,
+        checks: CHECKS_643,
         class: ValueClass::String,
         name: "docLocation",
         namespace: Some(97),
@@ -63972,7 +63942,7 @@ const ATTRIBUTES_826: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_644,
+        checks: CHECKS_643,
         class: ValueClass::String,
         name: "anchor",
         namespace: Some(97),
@@ -63991,7 +63961,7 @@ const ATTRIBUTES_826: &[AttributeConstraint] = &[
 
 const ATTRIBUTES_827: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_661,
+        checks: CHECKS_660,
         class: ValueClass::String,
         name: "left",
         namespace: Some(97),
@@ -63999,7 +63969,7 @@ const ATTRIBUTES_827: &[AttributeConstraint] = &[
         transitional_only: true,
     },
     AttributeConstraint {
-        checks: CHECKS_676,
+        checks: CHECKS_675,
         class: ValueClass::String,
         name: "start",
         namespace: Some(97),
@@ -64023,7 +63993,7 @@ const ATTRIBUTES_827: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_661,
+        checks: CHECKS_660,
         class: ValueClass::String,
         name: "right",
         namespace: Some(97),
@@ -64031,7 +64001,7 @@ const ATTRIBUTES_827: &[AttributeConstraint] = &[
         transitional_only: true,
     },
     AttributeConstraint {
-        checks: CHECKS_676,
+        checks: CHECKS_675,
         class: ValueClass::String,
         name: "end",
         namespace: Some(97),
@@ -64089,7 +64059,7 @@ const ATTRIBUTES_827: &[AttributeConstraint] = &[
 ];
 
 const ATTRIBUTES_828: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_677,
+    checks: CHECKS_676,
     class: ValueClass::Enum("w:ST_Jc"),
     name: "val",
     namespace: Some(97),
@@ -64099,7 +64069,26 @@ const ATTRIBUTES_828: &[AttributeConstraint] = &[AttributeConstraint {
 
 const ATTRIBUTES_829: &[AttributeConstraint] = &[
     AttributeConstraint {
+        checks: CHECKS_677,
+        class: ValueClass::String,
+        name: "lang",
+        namespace: Some(97),
+        strict_checks: None,
+        transitional_only: false,
+    },
+    AttributeConstraint {
         checks: CHECKS_678,
+        class: ValueClass::String,
+        name: "val",
+        namespace: Some(97),
+        strict_checks: None,
+        transitional_only: false,
+    },
+];
+
+const ATTRIBUTES_830: &[AttributeConstraint] = &[
+    AttributeConstraint {
+        checks: CHECKS_677,
         class: ValueClass::String,
         name: "lang",
         namespace: Some(97),
@@ -64116,27 +64105,8 @@ const ATTRIBUTES_829: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_830: &[AttributeConstraint] = &[
-    AttributeConstraint {
-        checks: CHECKS_678,
-        class: ValueClass::String,
-        name: "lang",
-        namespace: Some(97),
-        strict_checks: None,
-        transitional_only: false,
-    },
-    AttributeConstraint {
-        checks: CHECKS_680,
-        class: ValueClass::String,
-        name: "val",
-        namespace: Some(97),
-        strict_checks: None,
-        transitional_only: false,
-    },
-];
-
 const ATTRIBUTES_831: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_678,
+    checks: CHECKS_677,
     class: ValueClass::String,
     name: "val",
     namespace: Some(97),
@@ -64146,7 +64116,7 @@ const ATTRIBUTES_831: &[AttributeConstraint] = &[AttributeConstraint {
 
 const ATTRIBUTES_832: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_681,
+        checks: CHECKS_680,
         class: ValueClass::String,
         name: "val",
         namespace: Some(97),
@@ -64154,7 +64124,7 @@ const ATTRIBUTES_832: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_681,
+        checks: CHECKS_680,
         class: ValueClass::String,
         name: "eastAsia",
         namespace: Some(97),
@@ -64162,7 +64132,7 @@ const ATTRIBUTES_832: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_681,
+        checks: CHECKS_680,
         class: ValueClass::String,
         name: "bidi",
         namespace: Some(97),
@@ -64181,7 +64151,7 @@ const ATTRIBUTES_833: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_682,
+        checks: CHECKS_681,
         class: ValueClass::Int32,
         name: "defUIPriority",
         namespace: Some(97),
@@ -64223,16 +64193,7 @@ const ATTRIBUTES_833: &[AttributeConstraint] = &[
 ];
 
 const ATTRIBUTES_834: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_683,
-    class: ValueClass::Enum("w:ST_LevelJustification"),
-    name: "val",
-    namespace: Some(97),
-    strict_checks: Some(STRICT_CHECKS_16),
-    transitional_only: false,
-}];
-
-const ATTRIBUTES_835: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_684,
+    checks: CHECKS_682,
     class: ValueClass::Enum("w:ST_LevelSuffix"),
     name: "val",
     namespace: Some(97),
@@ -64240,7 +64201,7 @@ const ATTRIBUTES_835: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_836: &[AttributeConstraint] = &[
+const ATTRIBUTES_835: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_43,
         class: ValueClass::String,
@@ -64259,9 +64220,9 @@ const ATTRIBUTES_836: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_837: &[AttributeConstraint] = &[
+const ATTRIBUTES_836: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_685,
+        checks: CHECKS_683,
         class: ValueClass::Int16,
         name: "countBy",
         namespace: Some(97),
@@ -64269,7 +64230,7 @@ const ATTRIBUTES_837: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_686,
+        checks: CHECKS_684,
         class: ValueClass::Int16,
         name: "start",
         namespace: Some(97),
@@ -64285,7 +64246,7 @@ const ATTRIBUTES_837: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_687,
+        checks: CHECKS_685,
         class: ValueClass::Enum("w:ST_LineNumberRestart"),
         name: "restart",
         namespace: Some(97),
@@ -64294,8 +64255,8 @@ const ATTRIBUTES_837: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_838: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_688,
+const ATTRIBUTES_837: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_686,
     class: ValueClass::Enum("w:ST_Lock"),
     name: "val",
     namespace: Some(97),
@@ -64303,8 +64264,8 @@ const ATTRIBUTES_838: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_839: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_650,
+const ATTRIBUTES_838: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_649,
     class: ValueClass::HexBinary,
     name: "val",
     namespace: Some(97),
@@ -64312,7 +64273,7 @@ const ATTRIBUTES_839: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_840: &[AttributeConstraint] = &[
+const ATTRIBUTES_839: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -64330,7 +64291,7 @@ const ATTRIBUTES_840: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_682,
+        checks: CHECKS_681,
         class: ValueClass::Int32,
         name: "uiPriority",
         namespace: Some(97),
@@ -64363,7 +64324,7 @@ const ATTRIBUTES_840: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_841: &[AttributeConstraint] = &[
+const ATTRIBUTES_840: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_30,
         class: ValueClass::Int32,
@@ -64373,7 +64334,7 @@ const ATTRIBUTES_841: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "tplc",
         namespace: Some(97),
@@ -64390,7 +64351,7 @@ const ATTRIBUTES_841: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_842: &[AttributeConstraint] = &[
+const ATTRIBUTES_841: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_606,
         class: ValueClass::OnOff,
@@ -64408,7 +64369,7 @@ const ATTRIBUTES_842: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_661,
+        checks: CHECKS_660,
         class: ValueClass::String,
         name: "legacyIndent",
         namespace: Some(97),
@@ -64417,8 +64378,8 @@ const ATTRIBUTES_842: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_843: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_689,
+const ATTRIBUTES_842: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_687,
     class: ValueClass::String,
     name: "val",
     namespace: Some(97),
@@ -64426,8 +64387,8 @@ const ATTRIBUTES_843: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_844: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_690,
+const ATTRIBUTES_843: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_688,
     class: ValueClass::Enum("w:ST_MailMergeDataType"),
     name: "val",
     namespace: Some(97),
@@ -64435,8 +64396,8 @@ const ATTRIBUTES_844: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_845: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_691,
+const ATTRIBUTES_844: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_689,
     class: ValueClass::Enum("w:ST_MailMergeDest"),
     name: "val",
     namespace: Some(97),
@@ -64444,8 +64405,8 @@ const ATTRIBUTES_845: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_846: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_692,
+const ATTRIBUTES_845: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_690,
     class: ValueClass::Enum("w:ST_MailMergeDocType"),
     name: "val",
     namespace: Some(97),
@@ -64453,8 +64414,8 @@ const ATTRIBUTES_846: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_847: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_693,
+const ATTRIBUTES_846: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_691,
     class: ValueClass::Enum("w:ST_MailMergeOdsoFMDFieldType"),
     name: "val",
     namespace: Some(97),
@@ -64462,8 +64423,8 @@ const ATTRIBUTES_847: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_848: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_694,
+const ATTRIBUTES_847: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_692,
     class: ValueClass::Enum("w:ST_MailMergeSourceType"),
     name: "val",
     namespace: Some(97),
@@ -64471,7 +64432,7 @@ const ATTRIBUTES_848: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_849: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_848: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_603,
     class: ValueClass::String,
     name: "id",
@@ -64480,7 +64441,7 @@ const ATTRIBUTES_849: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_850: &[AttributeConstraint] = &[
+const ATTRIBUTES_849: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_602,
         class: ValueClass::Enum("w:ST_DisplacedByCustomXml"),
@@ -64499,7 +64460,7 @@ const ATTRIBUTES_850: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_851: &[AttributeConstraint] = &[
+const ATTRIBUTES_850: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_595,
         class: ValueClass::String,
@@ -64534,7 +64495,7 @@ const ATTRIBUTES_851: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_852: &[AttributeConstraint] = &[
+const ATTRIBUTES_851: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -64593,8 +64554,8 @@ const ATTRIBUTES_852: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_853: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_695,
+const ATTRIBUTES_852: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_693,
     class: ValueClass::Enum("w:ST_MultiLevelType"),
     name: "val",
     namespace: Some(97),
@@ -64602,7 +64563,7 @@ const ATTRIBUTES_853: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_854: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_853: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_54,
     class: ValueClass::Int32,
     name: "val",
@@ -64611,8 +64572,8 @@ const ATTRIBUTES_854: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_855: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_696,
+const ATTRIBUTES_854: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_694,
     class: ValueClass::Int32,
     name: "val",
     namespace: Some(97),
@@ -64620,8 +64581,8 @@ const ATTRIBUTES_855: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_856: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_697,
+const ATTRIBUTES_855: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_695,
     class: ValueClass::Int16,
     name: "val",
     namespace: Some(97),
@@ -64629,8 +64590,8 @@ const ATTRIBUTES_856: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_857: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_625,
+const ATTRIBUTES_856: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_624,
     class: ValueClass::String,
     name: "val",
     namespace: Some(97),
@@ -64638,7 +64599,7 @@ const ATTRIBUTES_857: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_858: &[AttributeConstraint] = &[
+const ATTRIBUTES_857: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_30,
         class: ValueClass::Int32,
@@ -64657,9 +64618,9 @@ const ATTRIBUTES_858: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_859: &[AttributeConstraint] = &[
+const ATTRIBUTES_858: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_698,
+        checks: CHECKS_696,
         class: ValueClass::Enum("w:ST_NumberFormat"),
         name: "val",
         namespace: Some(97),
@@ -64676,7 +64637,7 @@ const ATTRIBUTES_859: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_860: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_859: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_30,
     class: ValueClass::Int32,
     name: "ilvl",
@@ -64685,7 +64646,7 @@ const ATTRIBUTES_860: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_861: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_860: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_30,
     class: ValueClass::Int32,
     name: "numPicBulletId",
@@ -64694,8 +64655,8 @@ const ATTRIBUTES_861: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_862: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_699,
+const ATTRIBUTES_861: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_697,
     class: ValueClass::Enum("w:ST_RestartNumber"),
     name: "val",
     namespace: Some(97),
@@ -64703,7 +64664,7 @@ const ATTRIBUTES_862: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_863: &[AttributeConstraint] = &[
+const ATTRIBUTES_862: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_43,
         class: ValueClass::String,
@@ -64721,7 +64682,7 @@ const ATTRIBUTES_863: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_700,
+        checks: CHECKS_698,
         class: ValueClass::HexBinary,
         name: "anchorId",
         namespace: Some(99),
@@ -64730,9 +64691,9 @@ const ATTRIBUTES_863: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_864: &[AttributeConstraint] = &[
+const ATTRIBUTES_863: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_701,
+        checks: CHECKS_699,
         class: ValueClass::Enum("w:ST_ObjectDrawAspect"),
         name: "drawAspect",
         namespace: Some(97),
@@ -64773,9 +64734,9 @@ const ATTRIBUTES_864: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_865: &[AttributeConstraint] = &[
+const ATTRIBUTES_864: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_702,
+        checks: CHECKS_700,
         class: ValueClass::Enum("w:ST_ObjectUpdateMode"),
         name: "updateMode",
         namespace: Some(97),
@@ -64791,7 +64752,7 @@ const ATTRIBUTES_865: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_701,
+        checks: CHECKS_699,
         class: ValueClass::Enum("w:ST_ObjectDrawAspect"),
         name: "drawAspect",
         namespace: Some(97),
@@ -64832,7 +64793,7 @@ const ATTRIBUTES_865: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_866: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_865: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_606,
     class: ValueClass::OnOff,
     name: "val",
@@ -64841,8 +64802,8 @@ const ATTRIBUTES_866: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_867: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_703,
+const ATTRIBUTES_866: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_701,
     class: ValueClass::Enum("w:ST_OnOffOnly"),
     name: "val",
     namespace: Some(97),
@@ -64850,9 +64811,9 @@ const ATTRIBUTES_867: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_868: &[AttributeConstraint] = &[
+const ATTRIBUTES_867: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "rsidRPr",
         namespace: Some(97),
@@ -64860,7 +64821,7 @@ const ATTRIBUTES_868: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "rsidR",
         namespace: Some(97),
@@ -64868,7 +64829,7 @@ const ATTRIBUTES_868: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "rsidDel",
         namespace: Some(97),
@@ -64876,7 +64837,7 @@ const ATTRIBUTES_868: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "rsidP",
         namespace: Some(97),
@@ -64884,7 +64845,7 @@ const ATTRIBUTES_868: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "rsidRDefault",
         namespace: Some(97),
@@ -64892,7 +64853,7 @@ const ATTRIBUTES_868: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_700,
+        checks: CHECKS_698,
         class: ValueClass::HexBinary,
         name: "paraId",
         namespace: Some(99),
@@ -64900,7 +64861,7 @@ const ATTRIBUTES_868: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_700,
+        checks: CHECKS_698,
         class: ValueClass::HexBinary,
         name: "textId",
         namespace: Some(99),
@@ -64917,9 +64878,9 @@ const ATTRIBUTES_868: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_869: &[AttributeConstraint] = &[
+const ATTRIBUTES_868: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_704,
+        checks: CHECKS_702,
         class: ValueClass::Enum("w:ST_PTabAlignment"),
         name: "alignment",
         namespace: Some(97),
@@ -64927,7 +64888,7 @@ const ATTRIBUTES_869: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_705,
+        checks: CHECKS_703,
         class: ValueClass::Enum("w:ST_PTabRelativeTo"),
         name: "relativeTo",
         namespace: Some(97),
@@ -64935,7 +64896,7 @@ const ATTRIBUTES_869: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_706,
+        checks: CHECKS_704,
         class: ValueClass::Enum("w:ST_PTabLeader"),
         name: "leader",
         namespace: Some(97),
@@ -64944,9 +64905,9 @@ const ATTRIBUTES_869: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_870: &[AttributeConstraint] = &[
+const ATTRIBUTES_869: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_707,
+        checks: CHECKS_705,
         class: ValueClass::Enum("w:ST_PageBorderZOrder"),
         name: "zOrder",
         namespace: Some(97),
@@ -64954,7 +64915,7 @@ const ATTRIBUTES_870: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_708,
+        checks: CHECKS_706,
         class: ValueClass::Enum("w:ST_PageBorderDisplay"),
         name: "display",
         namespace: Some(97),
@@ -64962,7 +64923,7 @@ const ATTRIBUTES_870: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_709,
+        checks: CHECKS_707,
         class: ValueClass::Enum("w:ST_PageBorderOffset"),
         name: "offsetFrom",
         namespace: Some(97),
@@ -64971,9 +64932,9 @@ const ATTRIBUTES_870: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_871: &[AttributeConstraint] = &[
+const ATTRIBUTES_870: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_710,
+        checks: CHECKS_708,
         class: ValueClass::Int32,
         name: "top",
         namespace: Some(97),
@@ -64981,7 +64942,7 @@ const ATTRIBUTES_871: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_657,
+        checks: CHECKS_656,
         class: ValueClass::UInt32,
         name: "right",
         namespace: Some(97),
@@ -64989,7 +64950,7 @@ const ATTRIBUTES_871: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_710,
+        checks: CHECKS_708,
         class: ValueClass::Int32,
         name: "bottom",
         namespace: Some(97),
@@ -64997,7 +64958,7 @@ const ATTRIBUTES_871: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_657,
+        checks: CHECKS_656,
         class: ValueClass::UInt32,
         name: "left",
         namespace: Some(97),
@@ -65005,7 +64966,7 @@ const ATTRIBUTES_871: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_657,
+        checks: CHECKS_656,
         class: ValueClass::UInt32,
         name: "header",
         namespace: Some(97),
@@ -65013,7 +64974,7 @@ const ATTRIBUTES_871: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_657,
+        checks: CHECKS_656,
         class: ValueClass::UInt32,
         name: "footer",
         namespace: Some(97),
@@ -65021,7 +64982,7 @@ const ATTRIBUTES_871: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_657,
+        checks: CHECKS_656,
         class: ValueClass::UInt32,
         name: "gutter",
         namespace: Some(97),
@@ -65030,7 +64991,7 @@ const ATTRIBUTES_871: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_872: &[AttributeConstraint] = &[
+const ATTRIBUTES_871: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_611,
         class: ValueClass::Enum("w:ST_NumberFormat"),
@@ -65048,7 +65009,7 @@ const ATTRIBUTES_872: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_711,
+        checks: CHECKS_709,
         class: ValueClass::Byte,
         name: "chapStyle",
         namespace: Some(97),
@@ -65065,9 +65026,9 @@ const ATTRIBUTES_872: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_873: &[AttributeConstraint] = &[
+const ATTRIBUTES_872: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_657,
+        checks: CHECKS_656,
         class: ValueClass::UInt32,
         name: "w",
         namespace: Some(97),
@@ -65075,7 +65036,7 @@ const ATTRIBUTES_873: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_657,
+        checks: CHECKS_656,
         class: ValueClass::UInt32,
         name: "h",
         namespace: Some(97),
@@ -65083,7 +65044,7 @@ const ATTRIBUTES_873: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_712,
+        checks: CHECKS_710,
         class: ValueClass::Enum("w:ST_PageOrientation"),
         name: "orient",
         namespace: Some(97),
@@ -65091,7 +65052,7 @@ const ATTRIBUTES_873: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_713,
+        checks: CHECKS_711,
         class: ValueClass::UInt16,
         name: "code",
         namespace: Some(97),
@@ -65100,8 +65061,8 @@ const ATTRIBUTES_873: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_874: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_714,
+const ATTRIBUTES_873: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_712,
     class: ValueClass::HexBinary,
     name: "val",
     namespace: Some(97),
@@ -65109,9 +65070,9 @@ const ATTRIBUTES_874: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_875: &[AttributeConstraint] = &[
+const ATTRIBUTES_874: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_713,
+        checks: CHECKS_711,
         class: ValueClass::UInt16,
         name: "first",
         namespace: Some(97),
@@ -65119,7 +65080,7 @@ const ATTRIBUTES_875: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_713,
+        checks: CHECKS_711,
         class: ValueClass::UInt16,
         name: "other",
         namespace: Some(97),
@@ -65128,7 +65089,7 @@ const ATTRIBUTES_875: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_876: &[AttributeConstraint] = &[
+const ATTRIBUTES_875: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_30,
         class: ValueClass::Int32,
@@ -65147,9 +65108,9 @@ const ATTRIBUTES_876: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_877: &[AttributeConstraint] = &[
+const ATTRIBUTES_876: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_715,
+        checks: CHECKS_713,
         class: ValueClass::Enum("w:ST_EdGrp"),
         name: "edGrp",
         namespace: Some(97),
@@ -65198,8 +65159,8 @@ const ATTRIBUTES_877: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_878: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_700,
+const ATTRIBUTES_877: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_698,
     class: ValueClass::HexBinary,
     name: "anchorId",
     namespace: Some(99),
@@ -65207,8 +65168,8 @@ const ATTRIBUTES_878: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_879: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_716,
+const ATTRIBUTES_878: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_714,
     class: ValueClass::Enum("w:ST_Pitch"),
     name: "val",
     namespace: Some(97),
@@ -65216,7 +65177,7 @@ const ATTRIBUTES_879: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_880: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_879: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_52,
     class: ValueClass::UInt32,
     name: "val",
@@ -65225,8 +65186,8 @@ const ATTRIBUTES_880: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_881: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_717,
+const ATTRIBUTES_880: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_715,
     class: ValueClass::Int16,
     name: "val",
     namespace: Some(97),
@@ -65234,9 +65195,9 @@ const ATTRIBUTES_881: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_882: &[AttributeConstraint] = &[
+const ATTRIBUTES_881: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_718,
+        checks: CHECKS_716,
         class: ValueClass::Enum("w:ST_Proof"),
         name: "spelling",
         namespace: Some(97),
@@ -65244,7 +65205,7 @@ const ATTRIBUTES_882: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_718,
+        checks: CHECKS_716,
         class: ValueClass::Enum("w:ST_Proof"),
         name: "grammar",
         namespace: Some(97),
@@ -65253,8 +65214,8 @@ const ATTRIBUTES_882: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_883: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_719,
+const ATTRIBUTES_882: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_717,
     class: ValueClass::Enum("w:ST_ProofErr"),
     name: "type",
     namespace: Some(97),
@@ -65262,9 +65223,9 @@ const ATTRIBUTES_883: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_884: &[AttributeConstraint] = &[
+const ATTRIBUTES_883: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "rsidRPr",
         namespace: Some(97),
@@ -65272,7 +65233,7 @@ const ATTRIBUTES_884: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "rsidDel",
         namespace: Some(97),
@@ -65280,7 +65241,7 @@ const ATTRIBUTES_884: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "rsidR",
         namespace: Some(97),
@@ -65289,7 +65250,7 @@ const ATTRIBUTES_884: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_885: &[AttributeConstraint] = &[
+const ATTRIBUTES_884: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_606,
         class: ValueClass::OnOff,
@@ -65315,7 +65276,7 @@ const ATTRIBUTES_885: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_720,
+        checks: CHECKS_718,
         class: ValueClass::String,
         name: "fontSz",
         namespace: Some(97),
@@ -65324,9 +65285,9 @@ const ATTRIBUTES_885: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_886: &[AttributeConstraint] = &[
+const ATTRIBUTES_885: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "rsidRPr",
         namespace: Some(97),
@@ -65334,7 +65295,7 @@ const ATTRIBUTES_886: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "rsidR",
         namespace: Some(97),
@@ -65342,7 +65303,7 @@ const ATTRIBUTES_886: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "rsidDel",
         namespace: Some(97),
@@ -65350,7 +65311,7 @@ const ATTRIBUTES_886: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "rsidTr",
         namespace: Some(97),
@@ -65358,7 +65319,7 @@ const ATTRIBUTES_886: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_700,
+        checks: CHECKS_698,
         class: ValueClass::HexBinary,
         name: "paraId",
         namespace: Some(99),
@@ -65366,7 +65327,7 @@ const ATTRIBUTES_886: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_700,
+        checks: CHECKS_698,
         class: ValueClass::HexBinary,
         name: "textId",
         namespace: Some(99),
@@ -65375,8 +65336,8 @@ const ATTRIBUTES_886: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_887: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_721,
+const ATTRIBUTES_886: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_719,
     class: ValueClass::Enum("w:ST_RubyAlign"),
     name: "val",
     namespace: Some(97),
@@ -65384,7 +65345,7 @@ const ATTRIBUTES_887: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_888: &[AttributeConstraint] = &[
+const ATTRIBUTES_887: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_43,
         class: ValueClass::String,
@@ -65403,7 +65364,7 @@ const ATTRIBUTES_888: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_889: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_888: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_43,
     class: ValueClass::String,
     name: "lastValue",
@@ -65412,7 +65373,7 @@ const ATTRIBUTES_889: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_890: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_889: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_324,
     class: ValueClass::DateTime,
     name: "fullDate",
@@ -65421,8 +65382,8 @@ const ATTRIBUTES_890: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_891: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_722,
+const ATTRIBUTES_890: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_720,
     class: ValueClass::Enum("w:ST_SdtDateMappingType"),
     name: "val",
     namespace: Some(97),
@@ -65430,7 +65391,7 @@ const ATTRIBUTES_891: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_892: &[AttributeConstraint] = &[
+const ATTRIBUTES_891: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_43,
         class: ValueClass::String,
@@ -65449,7 +65410,7 @@ const ATTRIBUTES_892: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_893: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_892: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_606,
     class: ValueClass::OnOff,
     name: "multiLine",
@@ -65458,9 +65419,9 @@ const ATTRIBUTES_893: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_894: &[AttributeConstraint] = &[
+const ATTRIBUTES_893: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "rsidRPr",
         namespace: Some(97),
@@ -65468,7 +65429,7 @@ const ATTRIBUTES_894: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "rsidDel",
         namespace: Some(97),
@@ -65476,7 +65437,7 @@ const ATTRIBUTES_894: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "rsidR",
         namespace: Some(97),
@@ -65484,7 +65445,7 @@ const ATTRIBUTES_894: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "rsidSect",
         namespace: Some(97),
@@ -65493,8 +65454,8 @@ const ATTRIBUTES_894: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_895: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_723,
+const ATTRIBUTES_894: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_721,
     class: ValueClass::Enum("w:ST_SectionMark"),
     name: "val",
     namespace: Some(97),
@@ -65502,9 +65463,9 @@ const ATTRIBUTES_895: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_896: &[AttributeConstraint] = &[
+const ATTRIBUTES_895: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_724,
+        checks: CHECKS_722,
         class: ValueClass::Enum("w:ST_Shd"),
         name: "val",
         namespace: Some(97),
@@ -65577,8 +65538,8 @@ const ATTRIBUTES_896: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_897: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_725,
+const ATTRIBUTES_896: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_723,
     class: ValueClass::Int32,
     name: "val",
     namespace: Some(97),
@@ -65586,14 +65547,41 @@ const ATTRIBUTES_897: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_898: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_726,
+const ATTRIBUTES_897: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_724,
     class: ValueClass::String,
     name: "val",
     namespace: Some(97),
     strict_checks: None,
     transitional_only: false,
 }];
+
+const ATTRIBUTES_898: &[AttributeConstraint] = &[
+    AttributeConstraint {
+        checks: CHECKS_39,
+        class: ValueClass::String,
+        name: "instr",
+        namespace: Some(97),
+        strict_checks: None,
+        transitional_only: false,
+    },
+    AttributeConstraint {
+        checks: CHECKS_606,
+        class: ValueClass::OnOff,
+        name: "fldLock",
+        namespace: Some(97),
+        strict_checks: Some(STRICT_CHECKS_3),
+        transitional_only: false,
+    },
+    AttributeConstraint {
+        checks: CHECKS_606,
+        class: ValueClass::OnOff,
+        name: "dirty",
+        namespace: Some(97),
+        strict_checks: Some(STRICT_CHECKS_3),
+        transitional_only: false,
+    },
+];
 
 const ATTRIBUTES_899: &[AttributeConstraint] = &[
     AttributeConstraint {
@@ -65609,7 +65597,7 @@ const ATTRIBUTES_899: &[AttributeConstraint] = &[
         class: ValueClass::OnOff,
         name: "fldLock",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_3),
+        strict_checks: None,
         transitional_only: false,
     },
     AttributeConstraint {
@@ -65617,32 +65605,24 @@ const ATTRIBUTES_899: &[AttributeConstraint] = &[
         class: ValueClass::OnOff,
         name: "dirty",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_3),
+        strict_checks: None,
         transitional_only: false,
     },
 ];
 
 const ATTRIBUTES_900: &[AttributeConstraint] = &[
     AttributeConstraint {
+        checks: CHECKS_43,
+        class: ValueClass::String,
+        name: "uri",
+        namespace: Some(97),
+        strict_checks: None,
+        transitional_only: false,
+    },
+    AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
-        name: "instr",
-        namespace: Some(97),
-        strict_checks: None,
-        transitional_only: false,
-    },
-    AttributeConstraint {
-        checks: CHECKS_606,
-        class: ValueClass::OnOff,
-        name: "fldLock",
-        namespace: Some(97),
-        strict_checks: None,
-        transitional_only: false,
-    },
-    AttributeConstraint {
-        checks: CHECKS_606,
-        class: ValueClass::OnOff,
-        name: "dirty",
+        name: "element",
         namespace: Some(97),
         strict_checks: None,
         transitional_only: false,
@@ -65650,6 +65630,33 @@ const ATTRIBUTES_900: &[AttributeConstraint] = &[
 ];
 
 const ATTRIBUTES_901: &[AttributeConstraint] = &[
+    AttributeConstraint {
+        checks: CHECKS_43,
+        class: ValueClass::String,
+        name: "namespaceuri",
+        namespace: Some(97),
+        strict_checks: None,
+        transitional_only: false,
+    },
+    AttributeConstraint {
+        checks: CHECKS_43,
+        class: ValueClass::String,
+        name: "name",
+        namespace: Some(97),
+        strict_checks: None,
+        transitional_only: false,
+    },
+    AttributeConstraint {
+        checks: CHECKS_43,
+        class: ValueClass::String,
+        name: "url",
+        namespace: Some(97),
+        strict_checks: None,
+        transitional_only: false,
+    },
+];
+
+const ATTRIBUTES_902: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_620,
         class: ValueClass::String,
@@ -65699,7 +65706,7 @@ const ATTRIBUTES_901: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_661,
+        checks: CHECKS_660,
         class: ValueClass::String,
         name: "line",
         namespace: Some(97),
@@ -65707,7 +65714,7 @@ const ATTRIBUTES_901: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_727,
+        checks: CHECKS_725,
         class: ValueClass::Enum("w:ST_LineSpacingRule"),
         name: "lineRule",
         namespace: Some(97),
@@ -65716,7 +65723,7 @@ const ATTRIBUTES_901: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_902: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_903: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_39,
     class: ValueClass::String,
     name: "val",
@@ -65725,17 +65732,8 @@ const ATTRIBUTES_902: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_903: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_728,
-    class: ValueClass::String,
-    name: "val",
-    namespace: Some(97),
-    strict_checks: None,
-    transitional_only: false,
-}];
-
 const ATTRIBUTES_904: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_595,
+    checks: CHECKS_726,
     class: ValueClass::String,
     name: "val",
     namespace: Some(97),
@@ -65744,7 +65742,7 @@ const ATTRIBUTES_904: &[AttributeConstraint] = &[AttributeConstraint {
 }];
 
 const ATTRIBUTES_905: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_729,
+    checks: CHECKS_595,
     class: ValueClass::String,
     name: "val",
     namespace: Some(97),
@@ -65752,9 +65750,18 @@ const ATTRIBUTES_905: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_906: &[AttributeConstraint] = &[
+const ATTRIBUTES_906: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_727,
+    class: ValueClass::String,
+    name: "val",
+    namespace: Some(97),
+    strict_checks: None,
+    transitional_only: false,
+}];
+
+const ATTRIBUTES_907: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_730,
+        checks: CHECKS_728,
         class: ValueClass::Enum("w:ST_StyleType"),
         name: "type",
         namespace: Some(97),
@@ -65762,7 +65769,7 @@ const ATTRIBUTES_906: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_731,
+        checks: CHECKS_729,
         class: ValueClass::String,
         name: "styleId",
         namespace: Some(97),
@@ -65787,8 +65794,8 @@ const ATTRIBUTES_906: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_907: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_732,
+const ATTRIBUTES_908: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_730,
     class: ValueClass::String,
     name: "val",
     namespace: Some(97),
@@ -65796,9 +65803,9 @@ const ATTRIBUTES_907: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_908: &[AttributeConstraint] = &[
+const ATTRIBUTES_909: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_733,
+        checks: CHECKS_731,
         class: ValueClass::HexBinary,
         name: "val",
         namespace: Some(97),
@@ -65927,8 +65934,8 @@ const ATTRIBUTES_908: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_909: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_734,
+const ATTRIBUTES_910: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_732,
     class: ValueClass::String,
     name: "val",
     namespace: Some(97),
@@ -65936,9 +65943,9 @@ const ATTRIBUTES_909: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_910: &[AttributeConstraint] = &[
+const ATTRIBUTES_911: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_652,
+        checks: CHECKS_651,
         class: ValueClass::String,
         name: "font",
         namespace: Some(97),
@@ -65946,7 +65953,7 @@ const ATTRIBUTES_910: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_733,
+        checks: CHECKS_731,
         class: ValueClass::HexBinary,
         name: "char",
         namespace: Some(97),
@@ -65955,9 +65962,9 @@ const ATTRIBUTES_910: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_911: &[AttributeConstraint] = &[
+const ATTRIBUTES_912: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_735,
+        checks: CHECKS_733,
         class: ValueClass::Enum("w:ST_TabJc"),
         name: "val",
         namespace: Some(97),
@@ -65965,7 +65972,7 @@ const ATTRIBUTES_911: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_736,
+        checks: CHECKS_734,
         class: ValueClass::Enum("w:ST_TabTlc"),
         name: "leader",
         namespace: Some(97),
@@ -65973,7 +65980,7 @@ const ATTRIBUTES_911: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_725,
+        checks: CHECKS_723,
         class: ValueClass::Int32,
         name: "pos",
         namespace: Some(97),
@@ -65982,8 +65989,8 @@ const ATTRIBUTES_911: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_912: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_737,
+const ATTRIBUTES_913: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_735,
     class: ValueClass::Enum("w:ST_TargetScreenSz"),
     name: "val",
     namespace: Some(97),
@@ -65991,7 +65998,7 @@ const ATTRIBUTES_912: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_913: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_914: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_620,
     class: ValueClass::String,
     name: "w",
@@ -66000,8 +66007,8 @@ const ATTRIBUTES_913: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_914: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_738,
+const ATTRIBUTES_915: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_736,
     class: ValueClass::Enum("w:ST_TblJc"),
     name: "val",
     namespace: Some(97),
@@ -66009,8 +66016,8 @@ const ATTRIBUTES_914: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_915: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_739,
+const ATTRIBUTES_916: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_737,
     class: ValueClass::Enum("w:ST_TblLayoutType"),
     name: "type",
     namespace: Some(97),
@@ -66018,9 +66025,9 @@ const ATTRIBUTES_915: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_916: &[AttributeConstraint] = &[
+const ATTRIBUTES_917: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_733,
+        checks: CHECKS_731,
         class: ValueClass::HexBinary,
         name: "val",
         namespace: Some(97),
@@ -66077,8 +66084,8 @@ const ATTRIBUTES_916: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_917: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_740,
+const ATTRIBUTES_918: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_738,
     class: ValueClass::Enum("w:ST_TblOverlap"),
     name: "val",
     namespace: Some(97),
@@ -66086,9 +66093,9 @@ const ATTRIBUTES_917: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_918: &[AttributeConstraint] = &[
+const ATTRIBUTES_919: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_686,
+        checks: CHECKS_684,
         class: ValueClass::Int16,
         name: "leftFromText",
         namespace: Some(97),
@@ -66096,7 +66103,7 @@ const ATTRIBUTES_918: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_686,
+        checks: CHECKS_684,
         class: ValueClass::Int16,
         name: "rightFromText",
         namespace: Some(97),
@@ -66104,7 +66111,7 @@ const ATTRIBUTES_918: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_686,
+        checks: CHECKS_684,
         class: ValueClass::Int16,
         name: "topFromText",
         namespace: Some(97),
@@ -66112,7 +66119,7 @@ const ATTRIBUTES_918: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_686,
+        checks: CHECKS_684,
         class: ValueClass::Int16,
         name: "bottomFromText",
         namespace: Some(97),
@@ -66120,7 +66127,7 @@ const ATTRIBUTES_918: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_660,
+        checks: CHECKS_659,
         class: ValueClass::Enum("w:ST_VAnchor"),
         name: "vertAnchor",
         namespace: Some(97),
@@ -66128,7 +66135,7 @@ const ATTRIBUTES_918: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_659,
+        checks: CHECKS_658,
         class: ValueClass::Enum("w:ST_HAnchor"),
         name: "horzAnchor",
         namespace: Some(97),
@@ -66136,7 +66143,7 @@ const ATTRIBUTES_918: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_662,
+        checks: CHECKS_661,
         class: ValueClass::Enum("w:ST_XAlign"),
         name: "tblpXSpec",
         namespace: Some(97),
@@ -66144,7 +66151,7 @@ const ATTRIBUTES_918: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_710,
+        checks: CHECKS_708,
         class: ValueClass::Int32,
         name: "tblpX",
         namespace: Some(97),
@@ -66152,7 +66159,7 @@ const ATTRIBUTES_918: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_663,
+        checks: CHECKS_662,
         class: ValueClass::Enum("w:ST_YAlign"),
         name: "tblpYSpec",
         namespace: Some(97),
@@ -66160,7 +66167,7 @@ const ATTRIBUTES_918: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_710,
+        checks: CHECKS_708,
         class: ValueClass::Int32,
         name: "tblpY",
         namespace: Some(97),
@@ -66169,8 +66176,8 @@ const ATTRIBUTES_918: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_919: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_741,
+const ATTRIBUTES_920: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_739,
     class: ValueClass::Enum("w:ST_TblStyleOverrideType"),
     name: "type",
     namespace: Some(97),
@@ -66178,9 +66185,9 @@ const ATTRIBUTES_919: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_920: &[AttributeConstraint] = &[
+const ATTRIBUTES_921: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_742,
+        checks: CHECKS_740,
         class: ValueClass::String,
         name: "w",
         namespace: Some(97),
@@ -66188,27 +66195,8 @@ const ATTRIBUTES_920: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_743,
+        checks: CHECKS_741,
         class: ValueClass::Enum("w:ST_TblWidth"),
-        name: "type",
-        namespace: Some(97),
-        strict_checks: None,
-        transitional_only: false,
-    },
-];
-
-const ATTRIBUTES_921: &[AttributeConstraint] = &[
-    AttributeConstraint {
-        checks: CHECKS_697,
-        class: ValueClass::Int16,
-        name: "w",
-        namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_20),
-        transitional_only: false,
-    },
-    AttributeConstraint {
-        checks: CHECKS_744,
-        class: ValueClass::Enum("w:ST_TblWidthDxaNil"),
         name: "type",
         namespace: Some(97),
         strict_checks: None,
@@ -66218,6 +66206,25 @@ const ATTRIBUTES_921: &[AttributeConstraint] = &[
 
 const ATTRIBUTES_922: &[AttributeConstraint] = &[
     AttributeConstraint {
+        checks: CHECKS_695,
+        class: ValueClass::Int16,
+        name: "w",
+        namespace: Some(97),
+        strict_checks: Some(STRICT_CHECKS_20),
+        transitional_only: false,
+    },
+    AttributeConstraint {
+        checks: CHECKS_742,
+        class: ValueClass::Enum("w:ST_TblWidthDxaNil"),
+        name: "type",
+        namespace: Some(97),
+        strict_checks: None,
+        transitional_only: false,
+    },
+];
+
+const ATTRIBUTES_923: &[AttributeConstraint] = &[
+    AttributeConstraint {
         checks: CHECKS_32,
         class: ValueClass::Int32,
         name: "w",
@@ -66226,7 +66233,7 @@ const ATTRIBUTES_922: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_743,
+        checks: CHECKS_741,
         class: ValueClass::Enum("w:ST_TblWidth"),
         name: "type",
         namespace: Some(97),
@@ -66235,8 +66242,8 @@ const ATTRIBUTES_922: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_923: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_745,
+const ATTRIBUTES_924: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_743,
     class: ValueClass::Enum("w:ST_TextAlignment"),
     name: "val",
     namespace: Some(97),
@@ -66244,8 +66251,8 @@ const ATTRIBUTES_923: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_924: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_746,
+const ATTRIBUTES_925: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_744,
     class: ValueClass::Enum("w:ST_TextDirection"),
     name: "val",
     namespace: Some(97),
@@ -66253,8 +66260,8 @@ const ATTRIBUTES_924: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_925: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_747,
+const ATTRIBUTES_926: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_745,
     class: ValueClass::Enum("w:ST_TextEffect"),
     name: "val",
     namespace: Some(97),
@@ -66262,8 +66269,8 @@ const ATTRIBUTES_925: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_926: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_748,
+const ATTRIBUTES_927: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_746,
     class: ValueClass::Integer,
     name: "val",
     namespace: Some(97),
@@ -66271,8 +66278,8 @@ const ATTRIBUTES_926: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_927: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_749,
+const ATTRIBUTES_928: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_747,
     class: ValueClass::Enum("w:ST_TextboxTightWrap"),
     name: "val",
     namespace: Some(97),
@@ -66280,7 +66287,7 @@ const ATTRIBUTES_927: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_928: &[AttributeConstraint] = &[
+const ATTRIBUTES_929: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_43,
         class: ValueClass::String,
@@ -66323,7 +66330,7 @@ const ATTRIBUTES_928: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_929: &[AttributeConstraint] = &[
+const ATTRIBUTES_930: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_606,
         class: ValueClass::OnOff,
@@ -66366,8 +66373,8 @@ const ATTRIBUTES_929: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_930: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_750,
+const ATTRIBUTES_931: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_748,
     class: ValueClass::String,
     name: "val",
     namespace: Some(97),
@@ -66375,8 +66382,8 @@ const ATTRIBUTES_930: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_931: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_751,
+const ATTRIBUTES_932: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_749,
     class: ValueClass::Int32,
     name: "val",
     namespace: Some(97),
@@ -66384,9 +66391,9 @@ const ATTRIBUTES_931: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_932: &[AttributeConstraint] = &[
+const ATTRIBUTES_933: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_752,
+        checks: CHECKS_750,
         class: ValueClass::Enum("w:ST_Underline"),
         name: "val",
         namespace: Some(97),
@@ -66427,17 +66434,8 @@ const ATTRIBUTES_932: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_933: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_753,
-    class: ValueClass::Int32,
-    name: "val",
-    namespace: Some(97),
-    strict_checks: None,
-    transitional_only: false,
-}];
-
 const ATTRIBUTES_934: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_754,
+    checks: CHECKS_751,
     class: ValueClass::Int32,
     name: "val",
     namespace: Some(97),
@@ -66446,7 +66444,16 @@ const ATTRIBUTES_934: &[AttributeConstraint] = &[AttributeConstraint {
 }];
 
 const ATTRIBUTES_935: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_755,
+    checks: CHECKS_752,
+    class: ValueClass::Int32,
+    name: "val",
+    namespace: Some(97),
+    strict_checks: None,
+    transitional_only: false,
+}];
+
+const ATTRIBUTES_936: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_753,
     class: ValueClass::Int32,
     name: "val",
     namespace: Some(97),
@@ -66454,8 +66461,8 @@ const ATTRIBUTES_935: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_936: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_756,
+const ATTRIBUTES_937: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_754,
     class: ValueClass::Int32,
     name: "val",
     namespace: Some(97),
@@ -66463,8 +66470,8 @@ const ATTRIBUTES_936: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_937: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_757,
+const ATTRIBUTES_938: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_755,
     class: ValueClass::Enum("w:ST_VerticalAlignRun"),
     name: "val",
     namespace: Some(97),
@@ -66472,8 +66479,8 @@ const ATTRIBUTES_937: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_938: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_758,
+const ATTRIBUTES_939: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_756,
     class: ValueClass::Enum("w:ST_VerticalJc"),
     name: "val",
     namespace: Some(97),
@@ -66481,8 +66488,8 @@ const ATTRIBUTES_938: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_939: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_759,
+const ATTRIBUTES_940: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_757,
     class: ValueClass::Enum("w:ST_VerticalTblJc"),
     name: "val",
     namespace: Some(97),
@@ -66490,8 +66497,8 @@ const ATTRIBUTES_939: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_940: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_760,
+const ATTRIBUTES_941: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_758,
     class: ValueClass::Enum("w:ST_View"),
     name: "val",
     namespace: Some(97),
@@ -66499,7 +66506,7 @@ const ATTRIBUTES_940: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_941: &[AttributeConstraint] = &[
+const ATTRIBUTES_942: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_606,
         class: ValueClass::OnOff,
@@ -66509,7 +66516,7 @@ const ATTRIBUTES_941: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_631,
+        checks: CHECKS_630,
         class: ValueClass::Enum("w:ST_CryptProv"),
         name: "cryptProviderType",
         namespace: Some(97),
@@ -66517,7 +66524,7 @@ const ATTRIBUTES_941: &[AttributeConstraint] = &[
         transitional_only: true,
     },
     AttributeConstraint {
-        checks: CHECKS_632,
+        checks: CHECKS_631,
         class: ValueClass::Enum("w:ST_AlgClass"),
         name: "cryptAlgorithmClass",
         namespace: Some(97),
@@ -66525,7 +66532,7 @@ const ATTRIBUTES_941: &[AttributeConstraint] = &[
         transitional_only: true,
     },
     AttributeConstraint {
-        checks: CHECKS_633,
+        checks: CHECKS_632,
         class: ValueClass::Enum("w:ST_AlgType"),
         name: "cryptAlgorithmType",
         namespace: Some(97),
@@ -66541,7 +66548,7 @@ const ATTRIBUTES_941: &[AttributeConstraint] = &[
         transitional_only: true,
     },
     AttributeConstraint {
-        checks: CHECKS_634,
+        checks: CHECKS_633,
         class: ValueClass::UInt32,
         name: "cryptSpinCount",
         namespace: Some(97),
@@ -66557,7 +66564,7 @@ const ATTRIBUTES_941: &[AttributeConstraint] = &[
         transitional_only: true,
     },
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "algIdExt",
         namespace: Some(97),
@@ -66573,7 +66580,7 @@ const ATTRIBUTES_941: &[AttributeConstraint] = &[
         transitional_only: true,
     },
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "cryptProviderTypeExt",
         namespace: Some(97),
@@ -66638,9 +66645,9 @@ const ATTRIBUTES_941: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_942: &[AttributeConstraint] = &[
+const ATTRIBUTES_943: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_678,
+        checks: CHECKS_677,
         class: ValueClass::String,
         name: "lang",
         namespace: Some(97),
@@ -66672,7 +66679,7 @@ const ATTRIBUTES_942: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_761,
+        checks: CHECKS_759,
         class: ValueClass::OnOff,
         name: "checkStyle",
         namespace: Some(97),
@@ -66689,7 +66696,7 @@ const ATTRIBUTES_942: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_943: &[AttributeConstraint] = &[
+const ATTRIBUTES_944: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_43,
         class: ValueClass::String,
@@ -66699,7 +66706,7 @@ const ATTRIBUTES_943: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_762,
+        checks: CHECKS_760,
         class: ValueClass::String,
         name: "name",
         namespace: Some(97),
@@ -66716,9 +66723,9 @@ const ATTRIBUTES_943: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_944: &[AttributeConstraint] = &[
+const ATTRIBUTES_945: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_763,
+        checks: CHECKS_761,
         class: ValueClass::Enum("w:ST_Zoom"),
         name: "val",
         namespace: Some(97),
@@ -66726,7 +66733,7 @@ const ATTRIBUTES_944: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_742,
+        checks: CHECKS_740,
         class: ValueClass::String,
         name: "percent",
         namespace: Some(97),
@@ -66735,7 +66742,7 @@ const ATTRIBUTES_944: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_945: &[AttributeConstraint] = &[
+const ATTRIBUTES_946: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_439,
         class: ValueClass::String,
@@ -66754,7 +66761,7 @@ const ATTRIBUTES_945: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_946: &[AttributeConstraint] = &[
+const ATTRIBUTES_947: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_439,
         class: ValueClass::String,
@@ -66781,7 +66788,7 @@ const ATTRIBUTES_946: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_947: &[AttributeConstraint] = &[
+const ATTRIBUTES_948: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_439,
         class: ValueClass::String,
@@ -66800,7 +66807,7 @@ const ATTRIBUTES_947: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_948: &[AttributeConstraint] = &[
+const ATTRIBUTES_949: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_439,
         class: ValueClass::String,
@@ -66835,7 +66842,7 @@ const ATTRIBUTES_948: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_949: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_950: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_439,
     class: ValueClass::String,
     name: "id",
@@ -66844,7 +66851,7 @@ const ATTRIBUTES_949: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_950: &[AttributeConstraint] = &[
+const ATTRIBUTES_951: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_439,
         class: ValueClass::String,
@@ -66862,7 +66869,7 @@ const ATTRIBUTES_950: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_764,
+        checks: CHECKS_762,
         class: ValueClass::Double,
         name: "width",
         namespace: None,
@@ -66887,7 +66894,7 @@ const ATTRIBUTES_950: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_951: &[AttributeConstraint] = &[
+const ATTRIBUTES_952: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_43,
         class: ValueClass::String,
@@ -66905,7 +66912,7 @@ const ATTRIBUTES_951: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_733,
+        checks: CHECKS_731,
         class: ValueClass::HexBinary,
         name: "fciIndexBasedOn",
         namespace: Some(110),
@@ -66922,7 +66929,7 @@ const ATTRIBUTES_951: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_952: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_953: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_43,
     class: ValueClass::String,
     name: "acdName",
@@ -66931,8 +66938,8 @@ const ATTRIBUTES_952: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_953: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_765,
+const ATTRIBUTES_954: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_763,
     class: ValueClass::Integer,
     name: "val",
     namespace: Some(110),
@@ -66940,7 +66947,7 @@ const ATTRIBUTES_953: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_954: &[AttributeConstraint] = &[
+const ATTRIBUTES_955: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_43,
         class: ValueClass::String,
@@ -66950,7 +66957,7 @@ const ATTRIBUTES_954: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_733,
+        checks: CHECKS_731,
         class: ValueClass::HexBinary,
         name: "fciIndex",
         namespace: Some(110),
@@ -66958,7 +66965,7 @@ const ATTRIBUTES_954: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_733,
+        checks: CHECKS_731,
         class: ValueClass::HexBinary,
         name: "swArg",
         namespace: Some(110),
@@ -66967,9 +66974,9 @@ const ATTRIBUTES_954: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_955: &[AttributeConstraint] = &[
+const ATTRIBUTES_956: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_733,
+        checks: CHECKS_731,
         class: ValueClass::HexBinary,
         name: "chmPrimary",
         namespace: Some(110),
@@ -66977,7 +66984,7 @@ const ATTRIBUTES_955: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_733,
+        checks: CHECKS_731,
         class: ValueClass::HexBinary,
         name: "chmSecondary",
         namespace: Some(110),
@@ -66985,7 +66992,7 @@ const ATTRIBUTES_955: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_733,
+        checks: CHECKS_731,
         class: ValueClass::HexBinary,
         name: "kcmPrimary",
         namespace: Some(110),
@@ -66993,7 +67000,7 @@ const ATTRIBUTES_955: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_733,
+        checks: CHECKS_731,
         class: ValueClass::HexBinary,
         name: "kcmSecondary",
         namespace: Some(110),
@@ -67010,8 +67017,8 @@ const ATTRIBUTES_955: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_956: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_650,
+const ATTRIBUTES_957: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_649,
     class: ValueClass::HexBinary,
     name: "val",
     namespace: Some(110),
@@ -67019,7 +67026,7 @@ const ATTRIBUTES_956: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_957: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_958: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_43,
     class: ValueClass::String,
     name: "macroName",
@@ -67028,7 +67035,7 @@ const ATTRIBUTES_957: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_958: &[AttributeConstraint] = &[
+const ATTRIBUTES_959: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_43,
         class: ValueClass::String,
@@ -67054,7 +67061,7 @@ const ATTRIBUTES_958: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_766,
+        checks: CHECKS_764,
         class: ValueClass::HexBinary,
         name: "bEncrypt",
         namespace: Some(110),
@@ -67062,7 +67069,7 @@ const ATTRIBUTES_958: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_766,
+        checks: CHECKS_764,
         class: ValueClass::HexBinary,
         name: "cmg",
         namespace: Some(110),
@@ -67071,7 +67078,7 @@ const ATTRIBUTES_958: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_959: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_960: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_606,
     class: ValueClass::OnOff,
     name: "val",
@@ -67080,7 +67087,7 @@ const ATTRIBUTES_959: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_960: &[AttributeConstraint] = &[
+const ATTRIBUTES_961: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_139,
         class: ValueClass::String,
@@ -67107,8 +67114,8 @@ const ATTRIBUTES_960: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_961: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_767,
+const ATTRIBUTES_962: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_765,
     class: ValueClass::Enum("wp14:ST_SizeRelFromH"),
     name: "relativeFrom",
     namespace: None,
@@ -67116,8 +67123,8 @@ const ATTRIBUTES_961: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_962: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_768,
+const ATTRIBUTES_963: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_766,
     class: ValueClass::Enum("wp14:ST_SizeRelFromV"),
     name: "relativeFrom",
     namespace: None,
@@ -67125,7 +67132,7 @@ const ATTRIBUTES_962: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_963: &[AttributeConstraint] = &[
+const ATTRIBUTES_964: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_19,
         class: ValueClass::String,
@@ -67152,7 +67159,7 @@ const ATTRIBUTES_963: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_964: &[AttributeConstraint] = &[
+const ATTRIBUTES_965: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_38,
         class: ValueClass::UInt32,
@@ -67242,7 +67249,7 @@ const ATTRIBUTES_964: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_700,
+        checks: CHECKS_698,
         class: ValueClass::HexBinary,
         name: "editId",
         namespace: Some(113),
@@ -67250,7 +67257,7 @@ const ATTRIBUTES_964: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_700,
+        checks: CHECKS_698,
         class: ValueClass::HexBinary,
         name: "anchorId",
         namespace: Some(113),
@@ -67259,7 +67266,7 @@ const ATTRIBUTES_964: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_965: &[AttributeConstraint] = &[
+const ATTRIBUTES_966: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_38,
         class: ValueClass::UInt32,
@@ -67293,7 +67300,7 @@ const ATTRIBUTES_965: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_700,
+        checks: CHECKS_698,
         class: ValueClass::HexBinary,
         name: "anchorId",
         namespace: Some(113),
@@ -67301,7 +67308,7 @@ const ATTRIBUTES_965: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_700,
+        checks: CHECKS_698,
         class: ValueClass::HexBinary,
         name: "editId",
         namespace: Some(113),
@@ -67310,8 +67317,8 @@ const ATTRIBUTES_965: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_966: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_769,
+const ATTRIBUTES_967: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_767,
     class: ValueClass::Enum("wp:ST_RelFromH"),
     name: "relativeFrom",
     namespace: None,
@@ -67319,8 +67326,8 @@ const ATTRIBUTES_966: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_967: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_770,
+const ATTRIBUTES_968: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_768,
     class: ValueClass::Enum("wp:ST_RelFromV"),
     name: "relativeFrom",
     namespace: None,
@@ -67328,7 +67335,7 @@ const ATTRIBUTES_967: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_968: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_969: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_2,
     class: ValueClass::Boolean,
     name: "edited",
@@ -67337,9 +67344,9 @@ const ATTRIBUTES_968: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_969: &[AttributeConstraint] = &[
+const ATTRIBUTES_970: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_771,
+        checks: CHECKS_769,
         class: ValueClass::Enum("wp:ST_WrapText"),
         name: "wrapText",
         namespace: None,
@@ -67358,33 +67365,6 @@ const ATTRIBUTES_969: &[AttributeConstraint] = &[
         checks: CHECKS_38,
         class: ValueClass::UInt32,
         name: "distB",
-        namespace: None,
-        strict_checks: None,
-        transitional_only: false,
-    },
-    AttributeConstraint {
-        checks: CHECKS_38,
-        class: ValueClass::UInt32,
-        name: "distL",
-        namespace: None,
-        strict_checks: None,
-        transitional_only: false,
-    },
-    AttributeConstraint {
-        checks: CHECKS_38,
-        class: ValueClass::UInt32,
-        name: "distR",
-        namespace: None,
-        strict_checks: None,
-        transitional_only: false,
-    },
-];
-
-const ATTRIBUTES_970: &[AttributeConstraint] = &[
-    AttributeConstraint {
-        checks: CHECKS_771,
-        class: ValueClass::Enum("wp:ST_WrapText"),
-        name: "wrapText",
         namespace: None,
         strict_checks: None,
         transitional_only: false,
@@ -67409,6 +67389,33 @@ const ATTRIBUTES_970: &[AttributeConstraint] = &[
 
 const ATTRIBUTES_971: &[AttributeConstraint] = &[
     AttributeConstraint {
+        checks: CHECKS_769,
+        class: ValueClass::Enum("wp:ST_WrapText"),
+        name: "wrapText",
+        namespace: None,
+        strict_checks: None,
+        transitional_only: false,
+    },
+    AttributeConstraint {
+        checks: CHECKS_38,
+        class: ValueClass::UInt32,
+        name: "distL",
+        namespace: None,
+        strict_checks: None,
+        transitional_only: false,
+    },
+    AttributeConstraint {
+        checks: CHECKS_38,
+        class: ValueClass::UInt32,
+        name: "distR",
+        namespace: None,
+        strict_checks: None,
+        transitional_only: false,
+    },
+];
+
+const ATTRIBUTES_972: &[AttributeConstraint] = &[
+    AttributeConstraint {
         checks: CHECKS_38,
         class: ValueClass::UInt32,
         name: "distT",
@@ -67426,9 +67433,9 @@ const ATTRIBUTES_971: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_972: &[AttributeConstraint] = &[
+const ATTRIBUTES_973: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_774,
+        checks: CHECKS_772,
         class: ValueClass::UInt16,
         name: "id",
         namespace: None,
@@ -67436,7 +67443,7 @@ const ATTRIBUTES_972: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_774,
+        checks: CHECKS_772,
         class: ValueClass::UInt16,
         name: "seq",
         namespace: None,
@@ -67445,19 +67452,10 @@ const ATTRIBUTES_972: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_973: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_775,
+const ATTRIBUTES_974: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_773,
     class: ValueClass::UInt16,
     name: "id",
-    namespace: None,
-    strict_checks: None,
-    transitional_only: false,
-}];
-
-const ATTRIBUTES_974: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_6,
-    class: ValueClass::Boolean,
-    name: "normalEastAsianFlow",
     namespace: None,
     strict_checks: None,
     transitional_only: false,
@@ -67466,13 +67464,22 @@ const ATTRIBUTES_974: &[AttributeConstraint] = &[AttributeConstraint {
 const ATTRIBUTES_975: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_6,
     class: ValueClass::Boolean,
+    name: "normalEastAsianFlow",
+    namespace: None,
+    strict_checks: None,
+    transitional_only: false,
+}];
+
+const ATTRIBUTES_976: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_6,
+    class: ValueClass::Boolean,
     name: "ignore",
     namespace: None,
     strict_checks: None,
     transitional_only: false,
 }];
 
-const ATTRIBUTES_976: &[AttributeConstraint] = &[
+const ATTRIBUTES_977: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_6,
         class: ValueClass::Boolean,
@@ -67507,7 +67514,7 @@ const ATTRIBUTES_976: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_977: &[AttributeConstraint] = &[
+const ATTRIBUTES_978: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_1,
         class: ValueClass::String,
@@ -67550,9 +67557,9 @@ const ATTRIBUTES_977: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_978: &[AttributeConstraint] = &[
+const ATTRIBUTES_979: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_776,
+        checks: CHECKS_774,
         class: ValueClass::Enum("x14:ST_IconSetType"),
         name: "iconSet",
         namespace: None,
@@ -67569,9 +67576,9 @@ const ATTRIBUTES_978: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_979: &[AttributeConstraint] = &[
+const ATTRIBUTES_980: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_777,
+        checks: CHECKS_775,
         class: ValueClass::Enum("x:ST_CfType"),
         name: "type",
         namespace: None,
@@ -67619,7 +67626,7 @@ const ATTRIBUTES_979: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_778,
+        checks: CHECKS_776,
         class: ValueClass::Enum("x:ST_ConditionalFormattingOperator"),
         name: "operator",
         namespace: None,
@@ -67635,7 +67642,7 @@ const ATTRIBUTES_979: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_779,
+        checks: CHECKS_777,
         class: ValueClass::Enum("x:ST_TimePeriod"),
         name: "timePeriod",
         namespace: None,
@@ -67684,9 +67691,9 @@ const ATTRIBUTES_979: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_980: &[AttributeConstraint] = &[
+const ATTRIBUTES_981: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_780,
+        checks: CHECKS_778,
         class: ValueClass::Enum("x14:ST_CfvoType"),
         name: "type",
         namespace: None,
@@ -67703,9 +67710,9 @@ const ATTRIBUTES_980: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_981: &[AttributeConstraint] = &[
+const ATTRIBUTES_982: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_781,
+        checks: CHECKS_779,
         class: ValueClass::Enum("x:ST_Scope"),
         name: "scope",
         namespace: None,
@@ -67713,7 +67720,7 @@ const ATTRIBUTES_981: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_782,
+        checks: CHECKS_780,
         class: ValueClass::Enum("x:ST_Type"),
         name: "type",
         namespace: None,
@@ -67729,7 +67736,7 @@ const ATTRIBUTES_981: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_783,
+        checks: CHECKS_781,
         class: ValueClass::String,
         name: "id",
         namespace: None,
@@ -67738,7 +67745,7 @@ const ATTRIBUTES_981: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_982: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_983: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_473,
     class: ValueClass::UInt32,
     name: "count",
@@ -67747,7 +67754,7 @@ const ATTRIBUTES_982: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_983: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_984: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_6,
     class: ValueClass::Boolean,
     name: "pivot",
@@ -67756,7 +67763,7 @@ const ATTRIBUTES_983: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_984: &[AttributeConstraint] = &[
+const ATTRIBUTES_985: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_1,
         class: ValueClass::String,
@@ -67775,9 +67782,9 @@ const ATTRIBUTES_984: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_985: &[AttributeConstraint] = &[
+const ATTRIBUTES_986: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_784,
+        checks: CHECKS_782,
         class: ValueClass::Enum("x:ST_FilterOperator"),
         name: "operator",
         namespace: None,
@@ -67794,7 +67801,7 @@ const ATTRIBUTES_985: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_986: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_987: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_6,
     class: ValueClass::Boolean,
     name: "and",
@@ -67803,7 +67810,7 @@ const ATTRIBUTES_986: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_987: &[AttributeConstraint] = &[
+const ATTRIBUTES_988: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_473,
         class: ValueClass::UInt32,
@@ -67845,7 +67852,7 @@ const ATTRIBUTES_987: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_785,
+        checks: CHECKS_783,
         class: ValueClass::Enum("x14:ST_DataBarDirection"),
         name: "direction",
         namespace: None,
@@ -67869,7 +67876,7 @@ const ATTRIBUTES_987: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_786,
+        checks: CHECKS_784,
         class: ValueClass::Enum("x14:ST_DataBarAxisPosition"),
         name: "axisPosition",
         namespace: None,
@@ -67878,9 +67885,9 @@ const ATTRIBUTES_987: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_988: &[AttributeConstraint] = &[
+const ATTRIBUTES_989: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_787,
+        checks: CHECKS_785,
         class: ValueClass::Enum("x14:ST_PivotShowAs"),
         name: "pivotShowAs",
         namespace: None,
@@ -67905,9 +67912,9 @@ const ATTRIBUTES_988: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_989: &[AttributeConstraint] = &[
+const ATTRIBUTES_990: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_788,
+        checks: CHECKS_786,
         class: ValueClass::Enum("x:ST_DataValidationType"),
         name: "type",
         namespace: None,
@@ -67915,7 +67922,7 @@ const ATTRIBUTES_989: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_789,
+        checks: CHECKS_787,
         class: ValueClass::Enum("x:ST_DataValidationErrorStyle"),
         name: "errorStyle",
         namespace: None,
@@ -67923,7 +67930,7 @@ const ATTRIBUTES_989: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_790,
+        checks: CHECKS_788,
         class: ValueClass::Enum("x:ST_DataValidationImeMode"),
         name: "imeMode",
         namespace: None,
@@ -67931,7 +67938,7 @@ const ATTRIBUTES_989: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_791,
+        checks: CHECKS_789,
         class: ValueClass::Enum("x:ST_DataValidationOperator"),
         name: "operator",
         namespace: None,
@@ -68004,7 +68011,7 @@ const ATTRIBUTES_989: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_990: &[AttributeConstraint] = &[
+const ATTRIBUTES_991: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_6,
         class: ValueClass::Boolean,
@@ -68039,7 +68046,7 @@ const ATTRIBUTES_990: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_991: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_992: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_4,
     class: ValueClass::String,
     name: "id",
@@ -68048,7 +68055,7 @@ const ATTRIBUTES_991: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_992: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_993: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_424,
     class: ValueClass::UInt32,
     name: "index",
@@ -68057,7 +68064,7 @@ const ATTRIBUTES_992: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_993: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_994: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_1,
     class: ValueClass::String,
     name: "val",
@@ -68066,9 +68073,9 @@ const ATTRIBUTES_993: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_994: &[AttributeConstraint] = &[
+const ATTRIBUTES_995: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_792,
+        checks: CHECKS_790,
         class: ValueClass::Enum("x14:ST_ObjectType"),
         name: "objectType",
         namespace: None,
@@ -68076,7 +68083,7 @@ const ATTRIBUTES_994: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_793,
+        checks: CHECKS_791,
         class: ValueClass::Enum("x14:ST_Checked"),
         name: "checked",
         namespace: None,
@@ -68100,7 +68107,7 @@ const ATTRIBUTES_994: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_794,
+        checks: CHECKS_792,
         class: ValueClass::Enum("x14:ST_DropStyle"),
         name: "dropStyle",
         namespace: None,
@@ -68244,7 +68251,7 @@ const ATTRIBUTES_994: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_795,
+        checks: CHECKS_793,
         class: ValueClass::Enum("x14:ST_SelType"),
         name: "seltype",
         namespace: None,
@@ -68252,7 +68259,7 @@ const ATTRIBUTES_994: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_796,
+        checks: CHECKS_794,
         class: ValueClass::Enum("x14:ST_TextHAlign"),
         name: "textHAlign",
         namespace: None,
@@ -68260,7 +68267,7 @@ const ATTRIBUTES_994: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_797,
+        checks: CHECKS_795,
         class: ValueClass::Enum("x14:ST_TextVAlign"),
         name: "textVAlign",
         namespace: None,
@@ -68284,7 +68291,7 @@ const ATTRIBUTES_994: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_798,
+        checks: CHECKS_796,
         class: ValueClass::Enum("x14:ST_EditValidation"),
         name: "editVal",
         namespace: None,
@@ -68317,9 +68324,9 @@ const ATTRIBUTES_994: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_995: &[AttributeConstraint] = &[
+const ATTRIBUTES_996: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_799,
+        checks: CHECKS_797,
         class: ValueClass::Enum("x14:ST_IconSetType"),
         name: "iconSet",
         namespace: None,
@@ -68360,7 +68367,7 @@ const ATTRIBUTES_995: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_996: &[AttributeConstraint] = &[
+const ATTRIBUTES_997: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_6,
         class: ValueClass::Boolean,
@@ -68435,7 +68442,7 @@ const ATTRIBUTES_996: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_997: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_998: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_4,
     class: ValueClass::String,
     name: "val",
@@ -68444,7 +68451,7 @@ const ATTRIBUTES_997: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_998: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_999: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_424,
     class: ValueClass::UInt32,
     name: "pivotCacheId",
@@ -68453,7 +68460,7 @@ const ATTRIBUTES_998: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_999: &[AttributeConstraint] = &[
+const ATTRIBUTES_1000: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_4,
         class: ValueClass::String,
@@ -68480,7 +68487,7 @@ const ATTRIBUTES_999: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1000: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1001: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_4,
     class: ValueClass::String,
     name: "n",
@@ -68489,7 +68496,7 @@ const ATTRIBUTES_1000: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1001: &[AttributeConstraint] = &[
+const ATTRIBUTES_1002: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_4,
         class: ValueClass::String,
@@ -68515,7 +68522,7 @@ const ATTRIBUTES_1001: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_800,
+        checks: CHECKS_798,
         class: ValueClass::Enum("x14:ST_OlapSlicerCacheSortOrder"),
         name: "sortOrder",
         namespace: None,
@@ -68523,7 +68530,7 @@ const ATTRIBUTES_1001: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_801,
+        checks: CHECKS_799,
         class: ValueClass::Enum("x14:ST_SlicerCacheCrossFilter"),
         name: "crossFilter",
         namespace: None,
@@ -68532,7 +68539,7 @@ const ATTRIBUTES_1001: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1002: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1003: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_424,
     class: ValueClass::UInt32,
     name: "startItem",
@@ -68541,7 +68548,7 @@ const ATTRIBUTES_1002: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1003: &[AttributeConstraint] = &[
+const ATTRIBUTES_1004: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_4,
         class: ValueClass::String,
@@ -68576,7 +68583,7 @@ const ATTRIBUTES_1003: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1004: &[AttributeConstraint] = &[
+const ATTRIBUTES_1005: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_6,
         class: ValueClass::Boolean,
@@ -68619,9 +68626,9 @@ const ATTRIBUTES_1004: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1005: &[AttributeConstraint] = &[
+const ATTRIBUTES_1006: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_802,
+        checks: CHECKS_800,
         class: ValueClass::Enum("x14:ST_AllocationMethod"),
         name: "allocationMethod",
         namespace: None,
@@ -68638,8 +68645,8 @@ const ATTRIBUTES_1005: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1006: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_803,
+const ATTRIBUTES_1007: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_801,
     class: ValueClass::Enum("x14:ST_PivotEditValueType"),
     name: "valueType",
     namespace: None,
@@ -68647,7 +68654,7 @@ const ATTRIBUTES_1006: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1007: &[AttributeConstraint] = &[
+const ATTRIBUTES_1008: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_6,
         class: ValueClass::Boolean,
@@ -68666,7 +68673,7 @@ const ATTRIBUTES_1007: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1008: &[AttributeConstraint] = &[
+const ATTRIBUTES_1009: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_6,
         class: ValueClass::Boolean,
@@ -68724,7 +68731,7 @@ const ATTRIBUTES_1008: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_802,
+        checks: CHECKS_800,
         class: ValueClass::Enum("x14:ST_AllocationMethod"),
         name: "allocationMethod",
         namespace: None,
@@ -68749,7 +68756,7 @@ const ATTRIBUTES_1008: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1009: &[AttributeConstraint] = &[
+const ATTRIBUTES_1010: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_579,
         class: ValueClass::HexBinary,
@@ -68808,8 +68815,8 @@ const ATTRIBUTES_1009: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1010: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_804,
+const ATTRIBUTES_1011: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_802,
     class: ValueClass::Int32,
     name: "hierarchy",
     namespace: None,
@@ -68817,7 +68824,7 @@ const ATTRIBUTES_1010: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1011: &[AttributeConstraint] = &[
+const ATTRIBUTES_1012: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_4,
         class: ValueClass::String,
@@ -68900,7 +68907,7 @@ const ATTRIBUTES_1011: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1012: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1013: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_4,
     class: ValueClass::String,
     name: "id",
@@ -68909,7 +68916,7 @@ const ATTRIBUTES_1012: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1013: &[AttributeConstraint] = &[
+const ATTRIBUTES_1014: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_4,
         class: ValueClass::String,
@@ -68928,7 +68935,7 @@ const ATTRIBUTES_1013: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1014: &[AttributeConstraint] = &[
+const ATTRIBUTES_1015: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_424,
         class: ValueClass::UInt32,
@@ -68947,9 +68954,9 @@ const ATTRIBUTES_1014: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1015: &[AttributeConstraint] = &[
+const ATTRIBUTES_1016: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_805,
+        checks: CHECKS_803,
         class: ValueClass::Enum("x14:ST_SlicerStyleType"),
         name: "type",
         namespace: None,
@@ -68966,7 +68973,7 @@ const ATTRIBUTES_1015: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1016: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1017: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_4,
     class: ValueClass::String,
     name: "defaultSlicerStyle",
@@ -68975,7 +68982,7 @@ const ATTRIBUTES_1016: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1017: &[AttributeConstraint] = &[
+const ATTRIBUTES_1018: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_6,
         class: ValueClass::Boolean,
@@ -68985,7 +68992,7 @@ const ATTRIBUTES_1017: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_806,
+        checks: CHECKS_804,
         class: ValueClass::Enum("x:ST_SortBy"),
         name: "sortBy",
         namespace: None,
@@ -69017,7 +69024,7 @@ const ATTRIBUTES_1017: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_799,
+        checks: CHECKS_797,
         class: ValueClass::Enum("x14:ST_IconSetType"),
         name: "iconSet",
         namespace: None,
@@ -69034,9 +69041,9 @@ const ATTRIBUTES_1017: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1018: &[AttributeConstraint] = &[
+const ATTRIBUTES_1019: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_807,
+        checks: CHECKS_805,
         class: ValueClass::Double,
         name: "manualMax",
         namespace: None,
@@ -69044,7 +69051,7 @@ const ATTRIBUTES_1018: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_807,
+        checks: CHECKS_805,
         class: ValueClass::Double,
         name: "manualMin",
         namespace: None,
@@ -69052,7 +69059,7 @@ const ATTRIBUTES_1018: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_807,
+        checks: CHECKS_805,
         class: ValueClass::Double,
         name: "lineWeight",
         namespace: None,
@@ -69060,7 +69067,7 @@ const ATTRIBUTES_1018: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_808,
+        checks: CHECKS_806,
         class: ValueClass::Enum("x14:ST_SparklineType"),
         name: "type",
         namespace: None,
@@ -69076,7 +69083,7 @@ const ATTRIBUTES_1018: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_809,
+        checks: CHECKS_807,
         class: ValueClass::Enum("x14:ST_DispBlanksAs"),
         name: "displayEmptyCellsAs",
         namespace: None,
@@ -69148,7 +69155,7 @@ const ATTRIBUTES_1018: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_810,
+        checks: CHECKS_808,
         class: ValueClass::Enum("x14:ST_SparklineAxisMinMax"),
         name: "minAxisType",
         namespace: None,
@@ -69156,7 +69163,7 @@ const ATTRIBUTES_1018: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_810,
+        checks: CHECKS_808,
         class: ValueClass::Enum("x14:ST_SparklineAxisMinMax"),
         name: "maxAxisType",
         namespace: None,
@@ -69173,7 +69180,7 @@ const ATTRIBUTES_1018: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1019: &[AttributeConstraint] = &[
+const ATTRIBUTES_1020: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_1,
         class: ValueClass::String,
@@ -69192,7 +69199,7 @@ const ATTRIBUTES_1019: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1020: &[AttributeConstraint] = &[
+const ATTRIBUTES_1021: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_424,
         class: ValueClass::UInt32,
@@ -69202,7 +69209,7 @@ const ATTRIBUTES_1020: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_811,
+        checks: CHECKS_809,
         class: ValueClass::Enum("x14:ST_TabularSlicerCacheSortOrder"),
         name: "sortOrder",
         namespace: None,
@@ -69226,7 +69233,7 @@ const ATTRIBUTES_1020: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_801,
+        checks: CHECKS_799,
         class: ValueClass::Enum("x14:ST_SlicerCacheCrossFilter"),
         name: "crossFilter",
         namespace: None,
@@ -69235,7 +69242,7 @@ const ATTRIBUTES_1020: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1021: &[AttributeConstraint] = &[
+const ATTRIBUTES_1022: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_424,
         class: ValueClass::UInt32,
@@ -69262,7 +69269,7 @@ const ATTRIBUTES_1021: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1022: &[AttributeConstraint] = &[
+const ATTRIBUTES_1023: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_473,
         class: ValueClass::UInt32,
@@ -69281,7 +69288,7 @@ const ATTRIBUTES_1022: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1023: &[AttributeConstraint] = &[
+const ATTRIBUTES_1024: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_1,
         class: ValueClass::String,
@@ -69300,7 +69307,7 @@ const ATTRIBUTES_1023: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1024: &[AttributeConstraint] = &[
+const ATTRIBUTES_1025: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_1,
         class: ValueClass::String,
@@ -69319,7 +69326,7 @@ const ATTRIBUTES_1024: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1025: &[AttributeConstraint] = &[
+const ATTRIBUTES_1026: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_473,
         class: ValueClass::UInt32,
@@ -69346,8 +69353,8 @@ const ATTRIBUTES_1025: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1026: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_812,
+const ATTRIBUTES_1027: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_810,
     class: ValueClass::Int32,
     name: "aggregatedColumn",
     namespace: None,
@@ -69355,7 +69362,7 @@ const ATTRIBUTES_1026: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1027: &[AttributeConstraint] = &[
+const ATTRIBUTES_1028: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_223,
         class: ValueClass::UInt32,
@@ -69374,7 +69381,7 @@ const ATTRIBUTES_1027: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1028: &[AttributeConstraint] = &[
+const ATTRIBUTES_1029: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_19,
         class: ValueClass::String,
@@ -69384,7 +69391,7 @@ const ATTRIBUTES_1028: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_813,
+        checks: CHECKS_811,
         class: ValueClass::Enum("x15:ST_CalcMemNumberFormat"),
         name: "numberFormat",
         namespace: None,
@@ -69401,7 +69408,7 @@ const ATTRIBUTES_1028: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1029: &[AttributeConstraint] = &[
+const ATTRIBUTES_1030: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_439,
         class: ValueClass::String,
@@ -69444,7 +69451,7 @@ const ATTRIBUTES_1029: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1030: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1031: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_439,
     class: ValueClass::String,
     name: "connection",
@@ -69453,7 +69460,7 @@ const ATTRIBUTES_1030: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1031: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1032: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_18,
     class: ValueClass::Boolean,
     name: "isCountDistinct",
@@ -69462,8 +69469,8 @@ const ATTRIBUTES_1031: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1032: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_814,
+const ATTRIBUTES_1033: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_812,
     class: ValueClass::Byte,
     name: "minVersionLoad",
     namespace: None,
@@ -69471,7 +69478,7 @@ const ATTRIBUTES_1032: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1033: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1034: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_439,
     class: ValueClass::String,
     name: "text",
@@ -69480,7 +69487,7 @@ const ATTRIBUTES_1033: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1034: &[AttributeConstraint] = &[
+const ATTRIBUTES_1035: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_439,
         class: ValueClass::String,
@@ -69499,7 +69506,7 @@ const ATTRIBUTES_1034: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1035: &[AttributeConstraint] = &[
+const ATTRIBUTES_1036: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_439,
         class: ValueClass::String,
@@ -69534,7 +69541,7 @@ const ATTRIBUTES_1035: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1036: &[AttributeConstraint] = &[
+const ATTRIBUTES_1037: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_439,
         class: ValueClass::String,
@@ -69561,7 +69568,7 @@ const ATTRIBUTES_1036: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1037: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1038: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_18,
     class: ValueClass::Boolean,
     name: "headers",
@@ -69570,9 +69577,9 @@ const ATTRIBUTES_1037: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1038: &[AttributeConstraint] = &[
+const ATTRIBUTES_1039: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_815,
+        checks: CHECKS_813,
         class: ValueClass::DateTime,
         name: "referenceDateBegin",
         namespace: None,
@@ -69580,7 +69587,7 @@ const ATTRIBUTES_1038: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_816,
+        checks: CHECKS_814,
         class: ValueClass::Enum("x15:ST_MovingPeriodStep"),
         name: "referencePeriod",
         namespace: None,
@@ -69596,7 +69603,7 @@ const ATTRIBUTES_1038: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_816,
+        checks: CHECKS_814,
         class: ValueClass::Enum("x15:ST_MovingPeriodStep"),
         name: "movingPeriod",
         namespace: None,
@@ -69613,7 +69620,7 @@ const ATTRIBUTES_1038: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1039: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1040: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_19,
     class: ValueClass::String,
     name: "connection",
@@ -69622,7 +69629,7 @@ const ATTRIBUTES_1039: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1040: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1041: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_18,
     class: ValueClass::Boolean,
     name: "decoupled",
@@ -69631,9 +69638,9 @@ const ATTRIBUTES_1040: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1041: &[AttributeConstraint] = &[
+const ATTRIBUTES_1042: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_817,
+        checks: CHECKS_815,
         class: ValueClass::Byte,
         name: "cacheIdSupportedVersion",
         namespace: None,
@@ -69641,7 +69648,7 @@ const ATTRIBUTES_1041: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_817,
+        checks: CHECKS_815,
         class: ValueClass::Byte,
         name: "cacheIdCreatedVersion",
         namespace: None,
@@ -69650,7 +69657,7 @@ const ATTRIBUTES_1041: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1042: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1043: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_436,
     class: ValueClass::Boolean,
     name: "useWholeDay",
@@ -69659,7 +69666,7 @@ const ATTRIBUTES_1042: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1043: &[AttributeConstraint] = &[
+const ATTRIBUTES_1044: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_211,
         class: ValueClass::UInt32,
@@ -69678,7 +69685,7 @@ const ATTRIBUTES_1043: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1044: &[AttributeConstraint] = &[
+const ATTRIBUTES_1045: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_211,
         class: ValueClass::UInt32,
@@ -69705,7 +69712,7 @@ const ATTRIBUTES_1044: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1045: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1046: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_223,
     class: ValueClass::UInt32,
     name: "count",
@@ -69714,7 +69721,7 @@ const ATTRIBUTES_1045: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1046: &[AttributeConstraint] = &[
+const ATTRIBUTES_1047: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_19,
         class: ValueClass::String,
@@ -69733,7 +69740,7 @@ const ATTRIBUTES_1046: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1047: &[AttributeConstraint] = &[
+const ATTRIBUTES_1048: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_211,
         class: ValueClass::UInt32,
@@ -69743,7 +69750,7 @@ const ATTRIBUTES_1047: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_818,
+        checks: CHECKS_816,
         class: ValueClass::Enum("x15:ST_SXVCellType"),
         name: "t",
         namespace: None,
@@ -69752,7 +69759,7 @@ const ATTRIBUTES_1047: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1048: &[AttributeConstraint] = &[
+const ATTRIBUTES_1049: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_211,
         class: ValueClass::UInt32,
@@ -69811,7 +69818,7 @@ const ATTRIBUTES_1048: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1049: &[AttributeConstraint] = &[
+const ATTRIBUTES_1050: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_18,
         class: ValueClass::Boolean,
@@ -69838,7 +69845,7 @@ const ATTRIBUTES_1049: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1050: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1051: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_439,
     class: ValueClass::String,
     name: "sourceName",
@@ -69847,7 +69854,7 @@ const ATTRIBUTES_1050: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1051: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1052: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_211,
     class: ValueClass::UInt32,
     name: "count",
@@ -69856,7 +69863,7 @@ const ATTRIBUTES_1051: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1052: &[AttributeConstraint] = &[
+const ATTRIBUTES_1053: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_439,
         class: ValueClass::String,
@@ -69875,7 +69882,7 @@ const ATTRIBUTES_1052: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1053: &[AttributeConstraint] = &[
+const ATTRIBUTES_1054: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_223,
         class: ValueClass::UInt32,
@@ -69910,7 +69917,7 @@ const ATTRIBUTES_1053: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1054: &[AttributeConstraint] = &[
+const ATTRIBUTES_1055: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_19,
         class: ValueClass::String,
@@ -69968,7 +69975,7 @@ const ATTRIBUTES_1054: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_819,
+        checks: CHECKS_817,
         class: ValueClass::Enum("x15:ST_SurveyPosition"),
         name: "position",
         namespace: None,
@@ -69977,7 +69984,7 @@ const ATTRIBUTES_1054: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1055: &[AttributeConstraint] = &[
+const ATTRIBUTES_1056: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_223,
         class: ValueClass::UInt32,
@@ -69995,7 +70002,7 @@ const ATTRIBUTES_1055: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_820,
+        checks: CHECKS_818,
         class: ValueClass::Enum("x15:ST_QuestionType"),
         name: "type",
         namespace: None,
@@ -70003,7 +70010,7 @@ const ATTRIBUTES_1055: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_821,
+        checks: CHECKS_819,
         class: ValueClass::Enum("x15:ST_QuestionFormat"),
         name: "format",
         namespace: None,
@@ -70052,7 +70059,7 @@ const ATTRIBUTES_1055: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1056: &[AttributeConstraint] = &[
+const ATTRIBUTES_1057: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_223,
         class: ValueClass::UInt32,
@@ -70070,7 +70077,7 @@ const ATTRIBUTES_1056: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_811,
+        checks: CHECKS_809,
         class: ValueClass::Enum("x14:ST_TabularSlicerCacheSortOrder"),
         name: "sortOrder",
         namespace: None,
@@ -70086,7 +70093,7 @@ const ATTRIBUTES_1056: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_801,
+        checks: CHECKS_799,
         class: ValueClass::Enum("x14:ST_SlicerCacheCrossFilter"),
         name: "crossFilter",
         namespace: None,
@@ -70095,7 +70102,7 @@ const ATTRIBUTES_1056: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1057: &[AttributeConstraint] = &[
+const ATTRIBUTES_1058: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_439,
         class: ValueClass::String,
@@ -70169,7 +70176,7 @@ const ATTRIBUTES_1057: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_822,
+        checks: CHECKS_820,
         class: ValueClass::DateTime,
         name: "scrollPosition",
         namespace: None,
@@ -70186,7 +70193,7 @@ const ATTRIBUTES_1057: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1058: &[AttributeConstraint] = &[
+const ATTRIBUTES_1059: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_439,
         class: ValueClass::String,
@@ -70205,7 +70212,7 @@ const ATTRIBUTES_1058: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1059: &[AttributeConstraint] = &[
+const ATTRIBUTES_1060: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_223,
         class: ValueClass::UInt32,
@@ -70224,7 +70231,7 @@ const ATTRIBUTES_1059: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1060: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1061: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_18,
     class: ValueClass::Boolean,
     name: "timelineData",
@@ -70233,9 +70240,9 @@ const ATTRIBUTES_1060: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1061: &[AttributeConstraint] = &[
+const ATTRIBUTES_1062: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_815,
+        checks: CHECKS_813,
         class: ValueClass::DateTime,
         name: "startDate",
         namespace: None,
@@ -70243,7 +70250,7 @@ const ATTRIBUTES_1061: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_815,
+        checks: CHECKS_813,
         class: ValueClass::DateTime,
         name: "endDate",
         namespace: None,
@@ -70252,7 +70259,7 @@ const ATTRIBUTES_1061: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1062: &[AttributeConstraint] = &[
+const ATTRIBUTES_1063: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_18,
         class: ValueClass::Boolean,
@@ -70286,7 +70293,7 @@ const ATTRIBUTES_1062: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_823,
+        checks: CHECKS_821,
         class: ValueClass::Enum("x:ST_PivotFilterType"),
         name: "filterType",
         namespace: None,
@@ -70319,9 +70326,9 @@ const ATTRIBUTES_1062: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1063: &[AttributeConstraint] = &[
+const ATTRIBUTES_1064: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_824,
+        checks: CHECKS_822,
         class: ValueClass::Enum("x15:ST_TimelineStyleType"),
         name: "type",
         namespace: None,
@@ -70338,7 +70345,7 @@ const ATTRIBUTES_1063: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1064: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1065: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_439,
     class: ValueClass::String,
     name: "defaultTimelineStyle",
@@ -70347,7 +70354,7 @@ const ATTRIBUTES_1064: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1065: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1066: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_439,
     class: ValueClass::String,
     name: "appRef",
@@ -70356,7 +70363,7 @@ const ATTRIBUTES_1065: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1066: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1067: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_18,
     class: ValueClass::Boolean,
     name: "chartTrackingRefBase",
@@ -70365,7 +70372,7 @@ const ATTRIBUTES_1066: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1067: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1068: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_439,
     class: ValueClass::String,
     name: "url",
@@ -70374,7 +70381,7 @@ const ATTRIBUTES_1067: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1068: &[AttributeConstraint] = &[
+const ATTRIBUTES_1069: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_148,
         class: ValueClass::String,
@@ -70392,7 +70399,7 @@ const ATTRIBUTES_1068: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_825,
+        checks: CHECKS_823,
         class: ValueClass::Enum("x16:ST_ModelTimeGroupingContentType"),
         name: "contentType",
         namespace: None,
@@ -70409,7 +70416,7 @@ const ATTRIBUTES_1068: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1069: &[AttributeConstraint] = &[
+const ATTRIBUTES_1070: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_148,
         class: ValueClass::String,
@@ -70436,7 +70443,7 @@ const ATTRIBUTES_1069: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1070: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1071: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_43,
     class: ValueClass::String,
     name: "ref",
@@ -70445,9 +70452,9 @@ const ATTRIBUTES_1070: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1071: &[AttributeConstraint] = &[
+const ATTRIBUTES_1072: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_826,
+        checks: CHECKS_824,
         class: ValueClass::Enum("x:ST_Visibility"),
         name: "visibility",
         namespace: None,
@@ -70552,7 +70559,7 @@ const ATTRIBUTES_1071: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1072: &[AttributeConstraint] = &[
+const ATTRIBUTES_1073: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_493,
         class: ValueClass::Boolean,
@@ -70595,7 +70602,7 @@ const ATTRIBUTES_1072: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1073: &[AttributeConstraint] = &[
+const ATTRIBUTES_1074: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -70622,8 +70629,8 @@ const ATTRIBUTES_1073: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1074: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_827,
+const ATTRIBUTES_1075: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_825,
     class: ValueClass::Enum("x:ST_BorderStyle"),
     name: "style",
     namespace: None,
@@ -70631,7 +70638,7 @@ const ATTRIBUTES_1074: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1075: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1076: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_38,
     class: ValueClass::UInt32,
     name: "count",
@@ -70640,7 +70647,7 @@ const ATTRIBUTES_1075: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1076: &[AttributeConstraint] = &[
+const ATTRIBUTES_1077: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_38,
         class: ValueClass::UInt32,
@@ -70683,8 +70690,8 @@ const ATTRIBUTES_1076: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1077: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_696,
+const ATTRIBUTES_1078: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_694,
     class: ValueClass::Int32,
     name: "val",
     namespace: None,
@@ -70692,7 +70699,7 @@ const ATTRIBUTES_1077: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1078: &[AttributeConstraint] = &[
+const ATTRIBUTES_1079: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -70799,7 +70806,7 @@ const ATTRIBUTES_1078: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1079: &[AttributeConstraint] = &[
+const ATTRIBUTES_1080: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -70945,7 +70952,7 @@ const ATTRIBUTES_1079: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_713,
+        checks: CHECKS_711,
         class: ValueClass::UInt16,
         name: "memberValueDatatype",
         namespace: None,
@@ -70978,9 +70985,9 @@ const ATTRIBUTES_1079: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1080: &[AttributeConstraint] = &[
+const ATTRIBUTES_1081: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_828,
+        checks: CHECKS_826,
         class: ValueClass::Enum("x:ST_SourceType"),
         name: "type",
         namespace: None,
@@ -70997,7 +71004,7 @@ const ATTRIBUTES_1080: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1081: &[AttributeConstraint] = &[
+const ATTRIBUTES_1082: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -71048,7 +71055,7 @@ const ATTRIBUTES_1081: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1082: &[AttributeConstraint] = &[
+const ATTRIBUTES_1083: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_38,
         class: ValueClass::UInt32,
@@ -71058,7 +71065,7 @@ const ATTRIBUTES_1082: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_829,
+        checks: CHECKS_827,
         class: ValueClass::Enum("x:ST_CalcMode"),
         name: "calcMode",
         namespace: None,
@@ -71074,7 +71081,7 @@ const ATTRIBUTES_1082: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_830,
+        checks: CHECKS_828,
         class: ValueClass::Enum("x:ST_RefMode"),
         name: "refMode",
         namespace: None,
@@ -71155,7 +71162,7 @@ const ATTRIBUTES_1082: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1083: &[AttributeConstraint] = &[
+const ATTRIBUTES_1084: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_38,
         class: ValueClass::UInt32,
@@ -71174,7 +71181,7 @@ const ATTRIBUTES_1083: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1084: &[AttributeConstraint] = &[
+const ATTRIBUTES_1085: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -71233,7 +71240,7 @@ const ATTRIBUTES_1084: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1085: &[AttributeConstraint] = &[
+const ATTRIBUTES_1086: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_43,
         class: ValueClass::String,
@@ -71251,7 +71258,7 @@ const ATTRIBUTES_1085: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_831,
+        checks: CHECKS_829,
         class: ValueClass::Enum("x:ST_CellType"),
         name: "t",
         namespace: None,
@@ -71284,9 +71291,9 @@ const ATTRIBUTES_1085: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1086: &[AttributeConstraint] = &[
+const ATTRIBUTES_1087: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_832,
+        checks: CHECKS_830,
         class: ValueClass::Enum("x:ST_HorizontalAlignment"),
         name: "horizontal",
         namespace: None,
@@ -71294,7 +71301,7 @@ const ATTRIBUTES_1086: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_833,
+        checks: CHECKS_831,
         class: ValueClass::Enum("x:ST_VerticalAlignment"),
         name: "vertical",
         namespace: None,
@@ -71367,9 +71374,9 @@ const ATTRIBUTES_1086: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1087: &[AttributeConstraint] = &[
+const ATTRIBUTES_1088: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_834,
+        checks: CHECKS_832,
         class: ValueClass::Enum("x:ST_CellFormulaType"),
         name: "t",
         namespace: None,
@@ -71474,7 +71481,7 @@ const ATTRIBUTES_1087: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1088: &[AttributeConstraint] = &[
+const ATTRIBUTES_1089: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -71493,7 +71500,7 @@ const ATTRIBUTES_1088: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1089: &[AttributeConstraint] = &[
+const ATTRIBUTES_1090: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_43,
         class: ValueClass::String,
@@ -71544,7 +71551,7 @@ const ATTRIBUTES_1089: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1090: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1091: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_39,
     class: ValueClass::String,
     name: "r",
@@ -71553,9 +71560,9 @@ const ATTRIBUTES_1090: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1091: &[AttributeConstraint] = &[
+const ATTRIBUTES_1092: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_835,
+        checks: CHECKS_833,
         class: ValueClass::Enum("x:ST_CfType"),
         name: "type",
         namespace: None,
@@ -71611,7 +71618,7 @@ const ATTRIBUTES_1091: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_836,
+        checks: CHECKS_834,
         class: ValueClass::Enum("x:ST_ConditionalFormattingOperator"),
         name: "operator",
         namespace: None,
@@ -71627,7 +71634,7 @@ const ATTRIBUTES_1091: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_837,
+        checks: CHECKS_835,
         class: ValueClass::Enum("x:ST_TimePeriod"),
         name: "timePeriod",
         namespace: None,
@@ -71660,9 +71667,9 @@ const ATTRIBUTES_1091: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1092: &[AttributeConstraint] = &[
+const ATTRIBUTES_1093: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_838,
+        checks: CHECKS_836,
         class: ValueClass::Enum("x:ST_CfvoType"),
         name: "type",
         namespace: None,
@@ -71687,7 +71694,7 @@ const ATTRIBUTES_1092: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1093: &[AttributeConstraint] = &[
+const ATTRIBUTES_1094: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -71714,7 +71721,7 @@ const ATTRIBUTES_1093: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1094: &[AttributeConstraint] = &[
+const ATTRIBUTES_1095: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -71733,9 +71740,9 @@ const ATTRIBUTES_1094: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1095: &[AttributeConstraint] = &[
+const ATTRIBUTES_1096: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_733,
+        checks: CHECKS_731,
         class: ValueClass::HexBinary,
         name: "password",
         namespace: None,
@@ -71792,7 +71799,7 @@ const ATTRIBUTES_1095: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1096: &[AttributeConstraint] = &[
+const ATTRIBUTES_1097: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -71827,7 +71834,7 @@ const ATTRIBUTES_1096: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1097: &[AttributeConstraint] = &[
+const ATTRIBUTES_1098: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -71893,7 +71900,7 @@ const ATTRIBUTES_1097: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_711,
+        checks: CHECKS_709,
         class: ValueClass::Byte,
         name: "outlineLevel",
         namespace: None,
@@ -71910,7 +71917,7 @@ const ATTRIBUTES_1097: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1098: &[AttributeConstraint] = &[
+const ATTRIBUTES_1099: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -71928,7 +71935,7 @@ const ATTRIBUTES_1098: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "rgb",
         namespace: None,
@@ -71953,7 +71960,7 @@ const ATTRIBUTES_1098: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1099: &[AttributeConstraint] = &[
+const ATTRIBUTES_1100: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -71972,7 +71979,7 @@ const ATTRIBUTES_1099: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1100: &[AttributeConstraint] = &[
+const ATTRIBUTES_1101: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -72007,7 +72014,7 @@ const ATTRIBUTES_1100: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1101: &[AttributeConstraint] = &[
+const ATTRIBUTES_1102: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -72073,7 +72080,7 @@ const ATTRIBUTES_1101: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_839,
+        checks: CHECKS_837,
         class: ValueClass::Enum("x:ST_TextHAlign"),
         name: "textHAlign",
         namespace: None,
@@ -72081,7 +72088,7 @@ const ATTRIBUTES_1101: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_840,
+        checks: CHECKS_838,
         class: ValueClass::Enum("x:ST_TextVAlign"),
         name: "textVAlign",
         namespace: None,
@@ -72130,9 +72137,9 @@ const ATTRIBUTES_1101: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1102: &[AttributeConstraint] = &[
+const ATTRIBUTES_1103: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_841,
+        checks: CHECKS_839,
         class: ValueClass::Enum("x:ST_Scope"),
         name: "scope",
         namespace: None,
@@ -72140,7 +72147,7 @@ const ATTRIBUTES_1102: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_842,
+        checks: CHECKS_840,
         class: ValueClass::Enum("x:ST_Type"),
         name: "type",
         namespace: None,
@@ -72157,7 +72164,7 @@ const ATTRIBUTES_1102: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1103: &[AttributeConstraint] = &[
+const ATTRIBUTES_1104: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -72176,7 +72183,7 @@ const ATTRIBUTES_1103: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1104: &[AttributeConstraint] = &[
+const ATTRIBUTES_1105: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -72258,7 +72265,7 @@ const ATTRIBUTES_1104: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_711,
+        checks: CHECKS_709,
         class: ValueClass::Byte,
         name: "minRefreshableVersion",
         namespace: None,
@@ -72322,7 +72329,7 @@ const ATTRIBUTES_1104: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_843,
+        checks: CHECKS_841,
         class: ValueClass::Enum("x:ST_CredMethod"),
         name: "credentials",
         namespace: None,
@@ -72339,7 +72346,7 @@ const ATTRIBUTES_1104: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1105: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1106: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_2,
     class: ValueClass::Boolean,
     name: "autoPage",
@@ -72348,7 +72355,7 @@ const ATTRIBUTES_1105: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1106: &[AttributeConstraint] = &[
+const ATTRIBUTES_1107: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -72375,7 +72382,7 @@ const ATTRIBUTES_1106: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1107: &[AttributeConstraint] = &[
+const ATTRIBUTES_1108: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -72498,7 +72505,7 @@ const ATTRIBUTES_1107: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1108: &[AttributeConstraint] = &[
+const ATTRIBUTES_1109: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_38,
         class: ValueClass::UInt32,
@@ -72516,7 +72523,7 @@ const ATTRIBUTES_1108: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_844,
+        checks: CHECKS_842,
         class: ValueClass::Enum("x:ST_Orientation"),
         name: "orientation",
         namespace: None,
@@ -72589,7 +72596,7 @@ const ATTRIBUTES_1108: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1109: &[AttributeConstraint] = &[
+const ATTRIBUTES_1110: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_95,
         class: ValueClass::String,
@@ -72607,7 +72614,7 @@ const ATTRIBUTES_1109: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_845,
+        checks: CHECKS_843,
         class: ValueClass::Enum("x:ST_SheetState"),
         name: "state",
         namespace: None,
@@ -72624,9 +72631,9 @@ const ATTRIBUTES_1109: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1110: &[AttributeConstraint] = &[
+const ATTRIBUTES_1111: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_846,
+        checks: CHECKS_844,
         class: ValueClass::Enum("x:ST_FilterOperator"),
         name: "operator",
         namespace: None,
@@ -72643,7 +72650,7 @@ const ATTRIBUTES_1110: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1111: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1112: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_2,
     class: ValueClass::Boolean,
     name: "and",
@@ -72652,7 +72659,7 @@ const ATTRIBUTES_1111: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1112: &[AttributeConstraint] = &[
+const ATTRIBUTES_1113: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -72671,7 +72678,7 @@ const ATTRIBUTES_1112: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1113: &[AttributeConstraint] = &[
+const ATTRIBUTES_1114: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_95,
         class: ValueClass::String,
@@ -72793,7 +72800,7 @@ const ATTRIBUTES_1113: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_845,
+        checks: CHECKS_843,
         class: ValueClass::Enum("x:ST_SheetState"),
         name: "state",
         namespace: None,
@@ -72809,7 +72816,7 @@ const ATTRIBUTES_1113: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_847,
+        checks: CHECKS_845,
         class: ValueClass::Enum("x:ST_SheetViewType"),
         name: "view",
         namespace: None,
@@ -72834,7 +72841,7 @@ const ATTRIBUTES_1113: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1114: &[AttributeConstraint] = &[
+const ATTRIBUTES_1115: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -73012,7 +73019,7 @@ const ATTRIBUTES_1114: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_848,
+        checks: CHECKS_846,
         class: ValueClass::Enum("x:ST_Comments"),
         name: "showComments",
         namespace: None,
@@ -73020,7 +73027,7 @@ const ATTRIBUTES_1114: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_849,
+        checks: CHECKS_847,
         class: ValueClass::Enum("x:ST_Objects"),
         name: "showObjects",
         namespace: None,
@@ -73029,7 +73036,7 @@ const ATTRIBUTES_1114: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1115: &[AttributeConstraint] = &[
+const ATTRIBUTES_1116: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_38,
         class: ValueClass::UInt32,
@@ -73056,7 +73063,7 @@ const ATTRIBUTES_1115: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1116: &[AttributeConstraint] = &[
+const ATTRIBUTES_1117: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_43,
         class: ValueClass::String,
@@ -73099,9 +73106,9 @@ const ATTRIBUTES_1116: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1117: &[AttributeConstraint] = &[
+const ATTRIBUTES_1118: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_850,
+        checks: CHECKS_848,
         class: ValueClass::Enum("x:ST_DataConsolidateFunction"),
         name: "function",
         namespace: None,
@@ -73142,7 +73149,7 @@ const ATTRIBUTES_1117: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1118: &[AttributeConstraint] = &[
+const ATTRIBUTES_1119: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_43,
         class: ValueClass::String,
@@ -73160,7 +73167,7 @@ const ATTRIBUTES_1118: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_850,
+        checks: CHECKS_848,
         class: ValueClass::Enum("x:ST_DataConsolidateFunction"),
         name: "subtotal",
         namespace: None,
@@ -73168,7 +73175,7 @@ const ATTRIBUTES_1118: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_851,
+        checks: CHECKS_849,
         class: ValueClass::Enum("x:ST_ShowDataAs"),
         name: "showDataAs",
         namespace: None,
@@ -73201,7 +73208,7 @@ const ATTRIBUTES_1118: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1119: &[AttributeConstraint] = &[
+const ATTRIBUTES_1120: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_43,
         class: ValueClass::String,
@@ -73236,9 +73243,9 @@ const ATTRIBUTES_1119: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1120: &[AttributeConstraint] = &[
+const ATTRIBUTES_1121: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_852,
+        checks: CHECKS_850,
         class: ValueClass::Enum("x:ST_DataValidationType"),
         name: "type",
         namespace: None,
@@ -73246,7 +73253,7 @@ const ATTRIBUTES_1120: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_853,
+        checks: CHECKS_851,
         class: ValueClass::Enum("x:ST_DataValidationErrorStyle"),
         name: "errorStyle",
         namespace: None,
@@ -73254,7 +73261,7 @@ const ATTRIBUTES_1120: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_854,
+        checks: CHECKS_852,
         class: ValueClass::Enum("x:ST_DataValidationImeMode"),
         name: "imeMode",
         namespace: None,
@@ -73262,7 +73269,7 @@ const ATTRIBUTES_1120: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_855,
+        checks: CHECKS_853,
         class: ValueClass::Enum("x:ST_DataValidationOperator"),
         name: "operator",
         namespace: None,
@@ -73334,7 +73341,7 @@ const ATTRIBUTES_1120: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_856,
+        checks: CHECKS_854,
         class: ValueClass::List(&ValueClass::String),
         name: "sqref",
         namespace: None,
@@ -73343,7 +73350,7 @@ const ATTRIBUTES_1120: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1121: &[AttributeConstraint] = &[
+const ATTRIBUTES_1122: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -73378,7 +73385,7 @@ const ATTRIBUTES_1121: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1122: &[AttributeConstraint] = &[
+const ATTRIBUTES_1123: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_345,
         class: ValueClass::UInt16,
@@ -73388,7 +73395,7 @@ const ATTRIBUTES_1122: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_713,
+        checks: CHECKS_711,
         class: ValueClass::UInt16,
         name: "month",
         namespace: None,
@@ -73396,7 +73403,7 @@ const ATTRIBUTES_1122: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_713,
+        checks: CHECKS_711,
         class: ValueClass::UInt16,
         name: "day",
         namespace: None,
@@ -73404,7 +73411,7 @@ const ATTRIBUTES_1122: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_713,
+        checks: CHECKS_711,
         class: ValueClass::UInt16,
         name: "hour",
         namespace: None,
@@ -73412,7 +73419,7 @@ const ATTRIBUTES_1122: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_713,
+        checks: CHECKS_711,
         class: ValueClass::UInt16,
         name: "minute",
         namespace: None,
@@ -73420,7 +73427,7 @@ const ATTRIBUTES_1122: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_713,
+        checks: CHECKS_711,
         class: ValueClass::UInt16,
         name: "second",
         namespace: None,
@@ -73428,7 +73435,7 @@ const ATTRIBUTES_1122: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_857,
+        checks: CHECKS_855,
         class: ValueClass::Enum("x:ST_DateTimeGrouping"),
         name: "dateTimeGrouping",
         namespace: None,
@@ -73437,7 +73444,7 @@ const ATTRIBUTES_1122: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1123: &[AttributeConstraint] = &[
+const ATTRIBUTES_1124: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_490,
         class: ValueClass::DateTime,
@@ -73480,7 +73487,7 @@ const ATTRIBUTES_1123: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1124: &[AttributeConstraint] = &[
+const ATTRIBUTES_1125: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -73515,7 +73522,7 @@ const ATTRIBUTES_1124: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1125: &[AttributeConstraint] = &[
+const ATTRIBUTES_1126: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_43,
         class: ValueClass::String,
@@ -73550,7 +73557,7 @@ const ATTRIBUTES_1125: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1126: &[AttributeConstraint] = &[
+const ATTRIBUTES_1127: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -73569,8 +73576,8 @@ const ATTRIBUTES_1126: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1127: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_858,
+const ATTRIBUTES_1128: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_856,
     class: ValueClass::Enum("x:ST_DdeValueType"),
     name: "t",
     namespace: None,
@@ -73578,7 +73585,7 @@ const ATTRIBUTES_1127: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1128: &[AttributeConstraint] = &[
+const ATTRIBUTES_1129: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_38,
         class: ValueClass::UInt32,
@@ -73597,7 +73604,7 @@ const ATTRIBUTES_1128: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1129: &[AttributeConstraint] = &[
+const ATTRIBUTES_1130: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -73720,7 +73727,7 @@ const ATTRIBUTES_1129: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1130: &[AttributeConstraint] = &[
+const ATTRIBUTES_1131: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -73875,9 +73882,9 @@ const ATTRIBUTES_1130: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1131: &[AttributeConstraint] = &[
+const ATTRIBUTES_1132: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_859,
+        checks: CHECKS_857,
         class: ValueClass::Enum("x:ST_DynamicFilterType"),
         name: "type",
         namespace: None,
@@ -73901,7 +73908,7 @@ const ATTRIBUTES_1131: &[AttributeConstraint] = &[
         transitional_only: true,
     },
     AttributeConstraint {
-        checks: CHECKS_860,
+        checks: CHECKS_858,
         class: ValueClass::DateTime,
         name: "valIso",
         namespace: None,
@@ -73909,7 +73916,7 @@ const ATTRIBUTES_1131: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_860,
+        checks: CHECKS_858,
         class: ValueClass::DateTime,
         name: "maxValIso",
         namespace: None,
@@ -73918,7 +73925,7 @@ const ATTRIBUTES_1131: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1132: &[AttributeConstraint] = &[
+const ATTRIBUTES_1133: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -73968,7 +73975,7 @@ const ATTRIBUTES_1132: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "bc",
         namespace: None,
@@ -73976,7 +73983,7 @@ const ATTRIBUTES_1132: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "fc",
         namespace: None,
@@ -74017,7 +74024,7 @@ const ATTRIBUTES_1132: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1133: &[AttributeConstraint] = &[
+const ATTRIBUTES_1134: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -74027,7 +74034,7 @@ const ATTRIBUTES_1133: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_831,
+        checks: CHECKS_829,
         class: ValueClass::Enum("x:ST_CellType"),
         name: "t",
         namespace: None,
@@ -74044,7 +74051,7 @@ const ATTRIBUTES_1133: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1134: &[AttributeConstraint] = &[
+const ATTRIBUTES_1135: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -74071,7 +74078,7 @@ const ATTRIBUTES_1134: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1135: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1136: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_52,
     class: ValueClass::UInt32,
     name: "r",
@@ -74080,7 +74087,7 @@ const ATTRIBUTES_1135: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1136: &[AttributeConstraint] = &[
+const ATTRIBUTES_1137: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -74099,7 +74106,7 @@ const ATTRIBUTES_1136: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1137: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1138: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_43,
     class: ValueClass::String,
     name: "val",
@@ -74108,7 +74115,7 @@ const ATTRIBUTES_1137: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1138: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1139: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_30,
     class: ValueClass::Int32,
     name: "x",
@@ -74117,7 +74124,7 @@ const ATTRIBUTES_1138: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1139: &[AttributeConstraint] = &[
+const ATTRIBUTES_1140: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_38,
         class: ValueClass::UInt32,
@@ -74136,7 +74143,7 @@ const ATTRIBUTES_1139: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1140: &[AttributeConstraint] = &[
+const ATTRIBUTES_1141: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -74171,7 +74178,7 @@ const ATTRIBUTES_1140: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1141: &[AttributeConstraint] = &[
+const ATTRIBUTES_1142: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -74189,7 +74196,7 @@ const ATTRIBUTES_1141: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_733,
+        checks: CHECKS_731,
         class: ValueClass::HexBinary,
         name: "reservationPassword",
         namespace: None,
@@ -74230,7 +74237,7 @@ const ATTRIBUTES_1141: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1142: &[AttributeConstraint] = &[
+const ATTRIBUTES_1143: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_43,
         class: ValueClass::String,
@@ -74273,7 +74280,7 @@ const ATTRIBUTES_1142: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1143: &[AttributeConstraint] = &[
+const ATTRIBUTES_1144: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -74300,7 +74307,7 @@ const ATTRIBUTES_1143: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1144: &[AttributeConstraint] = &[
+const ATTRIBUTES_1145: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -74310,7 +74317,7 @@ const ATTRIBUTES_1144: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_861,
+        checks: CHECKS_859,
         class: ValueClass::Enum("x:ST_CalendarType"),
         name: "calendarType",
         namespace: None,
@@ -74319,8 +74326,8 @@ const ATTRIBUTES_1144: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1145: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_862,
+const ATTRIBUTES_1146: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_860,
     class: ValueClass::Int32,
     name: "val",
     namespace: None,
@@ -74328,8 +74335,8 @@ const ATTRIBUTES_1145: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1146: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_863,
+const ATTRIBUTES_1147: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_861,
     class: ValueClass::String,
     name: "val",
     namespace: None,
@@ -74337,8 +74344,8 @@ const ATTRIBUTES_1146: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1147: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_864,
+const ATTRIBUTES_1148: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_862,
     class: ValueClass::Enum("x:ST_FontScheme"),
     name: "val",
     namespace: None,
@@ -74346,7 +74353,7 @@ const ATTRIBUTES_1147: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1148: &[AttributeConstraint] = &[
+const ATTRIBUTES_1149: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_38,
         class: ValueClass::UInt32,
@@ -74365,9 +74372,9 @@ const ATTRIBUTES_1148: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1149: &[AttributeConstraint] = &[
+const ATTRIBUTES_1150: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_865,
+        checks: CHECKS_863,
         class: ValueClass::Enum("x:ST_FormatAction"),
         name: "action",
         namespace: None,
@@ -74384,7 +74391,7 @@ const ATTRIBUTES_1149: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1150: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1151: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_38,
     class: ValueClass::UInt32,
     name: "builtInGroupCount",
@@ -74393,7 +74400,7 @@ const ATTRIBUTES_1150: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1151: &[AttributeConstraint] = &[
+const ATTRIBUTES_1152: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -74412,9 +74419,9 @@ const ATTRIBUTES_1151: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1152: &[AttributeConstraint] = &[
+const ATTRIBUTES_1153: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_866,
+        checks: CHECKS_864,
         class: ValueClass::Enum("x:ST_GradientType"),
         name: "type",
         namespace: None,
@@ -74463,7 +74470,7 @@ const ATTRIBUTES_1152: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1153: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1154: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_161,
     class: ValueClass::Double,
     name: "position",
@@ -74472,7 +74479,7 @@ const ATTRIBUTES_1153: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1154: &[AttributeConstraint] = &[
+const ATTRIBUTES_1155: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -74507,7 +74514,7 @@ const ATTRIBUTES_1154: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1155: &[AttributeConstraint] = &[
+const ATTRIBUTES_1156: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -74526,7 +74533,7 @@ const ATTRIBUTES_1155: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1156: &[AttributeConstraint] = &[
+const ATTRIBUTES_1157: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -74561,7 +74568,7 @@ const ATTRIBUTES_1156: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1157: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1158: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_30,
     class: ValueClass::Int32,
     name: "hierarchyUsage",
@@ -74570,7 +74577,7 @@ const ATTRIBUTES_1157: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1158: &[AttributeConstraint] = &[
+const ATTRIBUTES_1159: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -74613,9 +74620,9 @@ const ATTRIBUTES_1158: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1159: &[AttributeConstraint] = &[
+const ATTRIBUTES_1160: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_867,
+        checks: CHECKS_865,
         class: ValueClass::Enum("x:ST_ItemType"),
         name: "t",
         namespace: None,
@@ -74640,9 +74647,9 @@ const ATTRIBUTES_1159: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1160: &[AttributeConstraint] = &[
+const ATTRIBUTES_1161: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_868,
+        checks: CHECKS_866,
         class: ValueClass::Enum("x:ST_IconSetType"),
         name: "iconSet",
         namespace: None,
@@ -74659,9 +74666,9 @@ const ATTRIBUTES_1160: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1161: &[AttributeConstraint] = &[
+const ATTRIBUTES_1162: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_869,
+        checks: CHECKS_867,
         class: ValueClass::Enum("x:ST_IconSetType"),
         name: "iconSet",
         namespace: None,
@@ -74694,9 +74701,9 @@ const ATTRIBUTES_1161: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1162: &[AttributeConstraint] = &[
+const ATTRIBUTES_1163: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_856,
+        checks: CHECKS_854,
         class: ValueClass::List(&ValueClass::String),
         name: "sqref",
         namespace: None,
@@ -74777,7 +74784,7 @@ const ATTRIBUTES_1162: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1163: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1164: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_52,
     class: ValueClass::UInt32,
     name: "v",
@@ -74786,7 +74793,7 @@ const ATTRIBUTES_1163: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1164: &[AttributeConstraint] = &[
+const ATTRIBUTES_1165: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -74829,7 +74836,7 @@ const ATTRIBUTES_1164: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1165: &[AttributeConstraint] = &[
+const ATTRIBUTES_1166: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_43,
         class: ValueClass::String,
@@ -74839,7 +74846,7 @@ const ATTRIBUTES_1165: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_867,
+        checks: CHECKS_865,
         class: ValueClass::Enum("x:ST_ItemType"),
         name: "t",
         namespace: None,
@@ -74920,7 +74927,7 @@ const ATTRIBUTES_1165: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1166: &[AttributeConstraint] = &[
+const ATTRIBUTES_1167: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -74963,7 +74970,7 @@ const ATTRIBUTES_1166: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1167: &[AttributeConstraint] = &[
+const ATTRIBUTES_1168: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -75014,7 +75021,7 @@ const ATTRIBUTES_1167: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1168: &[AttributeConstraint] = &[
+const ATTRIBUTES_1169: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -75089,7 +75096,7 @@ const ATTRIBUTES_1168: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1169: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1170: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_39,
     class: ValueClass::String,
     name: "SelectionNamespaces",
@@ -75097,25 +75104,6 @@ const ATTRIBUTES_1169: &[AttributeConstraint] = &[AttributeConstraint {
     strict_checks: None,
     transitional_only: false,
 }];
-
-const ATTRIBUTES_1170: &[AttributeConstraint] = &[
-    AttributeConstraint {
-        checks: CHECKS_52,
-        class: ValueClass::UInt32,
-        name: "n",
-        namespace: None,
-        strict_checks: None,
-        transitional_only: false,
-    },
-    AttributeConstraint {
-        checks: CHECKS_870,
-        class: ValueClass::Enum("x:ST_MdxFunctionType"),
-        name: "f",
-        namespace: None,
-        strict_checks: None,
-        transitional_only: false,
-    },
-];
 
 const ATTRIBUTES_1171: &[AttributeConstraint] = &[
     AttributeConstraint {
@@ -75127,17 +75115,9 @@ const ATTRIBUTES_1171: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_52,
-        class: ValueClass::UInt32,
-        name: "np",
-        namespace: None,
-        strict_checks: None,
-        transitional_only: false,
-    },
-    AttributeConstraint {
-        checks: CHECKS_871,
-        class: ValueClass::Enum("x:ST_MdxKPIProperty"),
-        name: "p",
+        checks: CHECKS_868,
+        class: ValueClass::Enum("x:ST_MdxFunctionType"),
+        name: "f",
         namespace: None,
         strict_checks: None,
         transitional_only: false,
@@ -75161,9 +75141,36 @@ const ATTRIBUTES_1172: &[AttributeConstraint] = &[
         strict_checks: None,
         transitional_only: false,
     },
+    AttributeConstraint {
+        checks: CHECKS_869,
+        class: ValueClass::Enum("x:ST_MdxKPIProperty"),
+        name: "p",
+        namespace: None,
+        strict_checks: None,
+        transitional_only: false,
+    },
 ];
 
 const ATTRIBUTES_1173: &[AttributeConstraint] = &[
+    AttributeConstraint {
+        checks: CHECKS_52,
+        class: ValueClass::UInt32,
+        name: "n",
+        namespace: None,
+        strict_checks: None,
+        transitional_only: false,
+    },
+    AttributeConstraint {
+        checks: CHECKS_52,
+        class: ValueClass::UInt32,
+        name: "np",
+        namespace: None,
+        strict_checks: None,
+        transitional_only: false,
+    },
+];
+
+const ATTRIBUTES_1174: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -75181,7 +75188,7 @@ const ATTRIBUTES_1173: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_872,
+        checks: CHECKS_870,
         class: ValueClass::Enum("x:ST_MdxSetOrder"),
         name: "o",
         namespace: None,
@@ -75190,7 +75197,7 @@ const ATTRIBUTES_1173: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1174: &[AttributeConstraint] = &[
+const ATTRIBUTES_1175: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_38,
         class: ValueClass::UInt32,
@@ -75224,7 +75231,7 @@ const ATTRIBUTES_1174: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "bc",
         namespace: None,
@@ -75232,7 +75239,7 @@ const ATTRIBUTES_1174: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "fc",
         namespace: None,
@@ -75273,7 +75280,7 @@ const ATTRIBUTES_1174: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1175: &[AttributeConstraint] = &[
+const ATTRIBUTES_1176: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -75292,7 +75299,7 @@ const ATTRIBUTES_1175: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1176: &[AttributeConstraint] = &[
+const ATTRIBUTES_1177: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -75311,7 +75318,7 @@ const ATTRIBUTES_1176: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1177: &[AttributeConstraint] = &[
+const ATTRIBUTES_1178: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_43,
         class: ValueClass::String,
@@ -75386,7 +75393,7 @@ const ATTRIBUTES_1177: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1178: &[AttributeConstraint] = &[
+const ATTRIBUTES_1179: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_38,
         class: ValueClass::UInt32,
@@ -75405,7 +75412,7 @@ const ATTRIBUTES_1178: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1179: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1180: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_39,
     class: ValueClass::String,
     name: "ref",
@@ -75414,7 +75421,7 @@ const ATTRIBUTES_1179: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1180: &[AttributeConstraint] = &[
+const ATTRIBUTES_1181: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -75433,7 +75440,7 @@ const ATTRIBUTES_1180: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1181: &[AttributeConstraint] = &[
+const ATTRIBUTES_1182: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -75452,7 +75459,7 @@ const ATTRIBUTES_1181: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1182: &[AttributeConstraint] = &[
+const ATTRIBUTES_1183: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -75679,7 +75686,7 @@ const ATTRIBUTES_1182: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1183: &[AttributeConstraint] = &[
+const ATTRIBUTES_1184: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -75721,7 +75728,7 @@ const ATTRIBUTES_1183: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "bc",
         namespace: None,
@@ -75729,7 +75736,7 @@ const ATTRIBUTES_1183: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "fc",
         namespace: None,
@@ -75770,7 +75777,7 @@ const ATTRIBUTES_1183: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1184: &[AttributeConstraint] = &[
+const ATTRIBUTES_1185: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -75788,7 +75795,7 @@ const ATTRIBUTES_1184: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_831,
+        checks: CHECKS_829,
         class: ValueClass::Enum("x:ST_CellType"),
         name: "t",
         namespace: None,
@@ -75821,7 +75828,7 @@ const ATTRIBUTES_1184: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1185: &[AttributeConstraint] = &[
+const ATTRIBUTES_1186: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -75840,7 +75847,7 @@ const ATTRIBUTES_1185: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1186: &[AttributeConstraint] = &[
+const ATTRIBUTES_1187: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_161,
         class: ValueClass::Double,
@@ -75890,7 +75897,7 @@ const ATTRIBUTES_1186: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "bc",
         namespace: None,
@@ -75898,7 +75905,7 @@ const ATTRIBUTES_1186: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_635,
+        checks: CHECKS_634,
         class: ValueClass::HexBinary,
         name: "fc",
         namespace: None,
@@ -75939,7 +75946,7 @@ const ATTRIBUTES_1186: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1187: &[AttributeConstraint] = &[
+const ATTRIBUTES_1188: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -75966,7 +75973,7 @@ const ATTRIBUTES_1187: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1188: &[AttributeConstraint] = &[
+const ATTRIBUTES_1189: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -76065,7 +76072,7 @@ const ATTRIBUTES_1188: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1189: &[AttributeConstraint] = &[
+const ATTRIBUTES_1190: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -76140,7 +76147,7 @@ const ATTRIBUTES_1189: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1190: &[AttributeConstraint] = &[
+const ATTRIBUTES_1191: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -76175,7 +76182,7 @@ const ATTRIBUTES_1190: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1191: &[AttributeConstraint] = &[
+const ATTRIBUTES_1192: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -76194,7 +76201,7 @@ const ATTRIBUTES_1191: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1192: &[AttributeConstraint] = &[
+const ATTRIBUTES_1193: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_43,
         class: ValueClass::String,
@@ -76204,7 +76211,7 @@ const ATTRIBUTES_1192: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_873,
+        checks: CHECKS_871,
         class: ValueClass::Enum("x:ST_DvAspect"),
         name: "dvAspect",
         namespace: None,
@@ -76220,7 +76227,7 @@ const ATTRIBUTES_1192: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_874,
+        checks: CHECKS_872,
         class: ValueClass::Enum("x:ST_OleUpdate"),
         name: "oleUpdate",
         namespace: None,
@@ -76253,7 +76260,7 @@ const ATTRIBUTES_1192: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1193: &[AttributeConstraint] = &[
+const ATTRIBUTES_1194: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -76288,7 +76295,7 @@ const ATTRIBUTES_1193: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1194: &[AttributeConstraint] = &[
+const ATTRIBUTES_1195: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -76371,7 +76378,7 @@ const ATTRIBUTES_1194: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1195: &[AttributeConstraint] = &[
+const ATTRIBUTES_1196: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_38,
         class: ValueClass::UInt32,
@@ -76390,7 +76397,7 @@ const ATTRIBUTES_1195: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1196: &[AttributeConstraint] = &[
+const ATTRIBUTES_1197: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_30,
         class: ValueClass::Int32,
@@ -76433,7 +76440,7 @@ const ATTRIBUTES_1196: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1197: &[AttributeConstraint] = &[
+const ATTRIBUTES_1198: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_161,
         class: ValueClass::Double,
@@ -76484,7 +76491,7 @@ const ATTRIBUTES_1197: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1198: &[AttributeConstraint] = &[
+const ATTRIBUTES_1199: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -76503,7 +76510,7 @@ const ATTRIBUTES_1198: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1199: &[AttributeConstraint] = &[
+const ATTRIBUTES_1200: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_38,
         class: ValueClass::UInt32,
@@ -76545,7 +76552,7 @@ const ATTRIBUTES_1199: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_875,
+        checks: CHECKS_873,
         class: ValueClass::Enum("x:ST_PageOrder"),
         name: "pageOrder",
         namespace: None,
@@ -76553,7 +76560,7 @@ const ATTRIBUTES_1199: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_844,
+        checks: CHECKS_842,
         class: ValueClass::Enum("x:ST_Orientation"),
         name: "orientation",
         namespace: None,
@@ -76585,7 +76592,7 @@ const ATTRIBUTES_1199: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_876,
+        checks: CHECKS_874,
         class: ValueClass::Enum("x:ST_CellComments"),
         name: "cellComments",
         namespace: None,
@@ -76601,7 +76608,7 @@ const ATTRIBUTES_1199: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_877,
+        checks: CHECKS_875,
         class: ValueClass::Enum("x:ST_PrintError"),
         name: "errors",
         namespace: None,
@@ -76642,7 +76649,7 @@ const ATTRIBUTES_1199: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1200: &[AttributeConstraint] = &[
+const ATTRIBUTES_1201: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_275,
         class: ValueClass::Double,
@@ -76668,7 +76675,7 @@ const ATTRIBUTES_1200: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_878,
+        checks: CHECKS_876,
         class: ValueClass::Enum("x:ST_Pane"),
         name: "activePane",
         namespace: None,
@@ -76676,7 +76683,7 @@ const ATTRIBUTES_1200: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_879,
+        checks: CHECKS_877,
         class: ValueClass::Enum("x:ST_PaneState"),
         name: "state",
         namespace: None,
@@ -76685,7 +76692,7 @@ const ATTRIBUTES_1200: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1201: &[AttributeConstraint] = &[
+const ATTRIBUTES_1202: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_43,
         class: ValueClass::String,
@@ -76703,7 +76710,7 @@ const ATTRIBUTES_1201: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_880,
+        checks: CHECKS_878,
         class: ValueClass::Enum("x:ST_ParameterType"),
         name: "parameterType",
         namespace: None,
@@ -76768,8 +76775,8 @@ const ATTRIBUTES_1201: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1202: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_881,
+const ATTRIBUTES_1203: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_879,
     class: ValueClass::Enum("x:ST_PatternType"),
     name: "patternType",
     namespace: None,
@@ -76777,7 +76784,7 @@ const ATTRIBUTES_1202: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1203: &[AttributeConstraint] = &[
+const ATTRIBUTES_1204: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -76787,7 +76794,7 @@ const ATTRIBUTES_1203: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_882,
+        checks: CHECKS_880,
         class: ValueClass::Enum("x:ST_PhoneticType"),
         name: "type",
         namespace: None,
@@ -76795,7 +76802,7 @@ const ATTRIBUTES_1203: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_883,
+        checks: CHECKS_881,
         class: ValueClass::Enum("x:ST_PhoneticAlignment"),
         name: "alignment",
         namespace: None,
@@ -76804,7 +76811,7 @@ const ATTRIBUTES_1203: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1204: &[AttributeConstraint] = &[
+const ATTRIBUTES_1205: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -76823,7 +76830,7 @@ const ATTRIBUTES_1204: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1205: &[AttributeConstraint] = &[
+const ATTRIBUTES_1206: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_32,
         class: ValueClass::Int32,
@@ -76833,7 +76840,7 @@ const ATTRIBUTES_1205: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_884,
+        checks: CHECKS_882,
         class: ValueClass::Enum("x:ST_PivotAreaType"),
         name: "type",
         namespace: None,
@@ -76905,7 +76912,7 @@ const ATTRIBUTES_1205: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_885,
+        checks: CHECKS_883,
         class: ValueClass::Enum("x:ST_Axis"),
         name: "axis",
         namespace: None,
@@ -76922,7 +76929,7 @@ const ATTRIBUTES_1205: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1206: &[AttributeConstraint] = &[
+const ATTRIBUTES_1207: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_38,
         class: ValueClass::UInt32,
@@ -77061,7 +77068,7 @@ const ATTRIBUTES_1206: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1207: &[AttributeConstraint] = &[
+const ATTRIBUTES_1208: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -77080,7 +77087,7 @@ const ATTRIBUTES_1207: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1208: &[AttributeConstraint] = &[
+const ATTRIBUTES_1209: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_43,
         class: ValueClass::String,
@@ -77170,7 +77177,7 @@ const ATTRIBUTES_1208: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_711,
+        checks: CHECKS_709,
         class: ValueClass::Byte,
         name: "createdVersion",
         namespace: None,
@@ -77178,7 +77185,7 @@ const ATTRIBUTES_1208: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_711,
+        checks: CHECKS_709,
         class: ValueClass::Byte,
         name: "refreshedVersion",
         namespace: None,
@@ -77186,7 +77193,7 @@ const ATTRIBUTES_1208: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_711,
+        checks: CHECKS_709,
         class: ValueClass::Byte,
         name: "minRefreshableVersion",
         namespace: None,
@@ -77235,7 +77242,7 @@ const ATTRIBUTES_1208: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1209: &[AttributeConstraint] = &[
+const ATTRIBUTES_1210: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -77270,7 +77277,7 @@ const ATTRIBUTES_1209: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1210: &[AttributeConstraint] = &[
+const ATTRIBUTES_1211: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_43,
         class: ValueClass::String,
@@ -77280,7 +77287,7 @@ const ATTRIBUTES_1210: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_885,
+        checks: CHECKS_883,
         class: ValueClass::Enum("x:ST_Axis"),
         name: "axis",
         namespace: None,
@@ -77496,7 +77503,7 @@ const ATTRIBUTES_1210: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_886,
+        checks: CHECKS_884,
         class: ValueClass::Enum("x:ST_FieldSortType"),
         name: "sortType",
         namespace: None,
@@ -77657,7 +77664,7 @@ const ATTRIBUTES_1210: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1211: &[AttributeConstraint] = &[
+const ATTRIBUTES_1212: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -77675,7 +77682,7 @@ const ATTRIBUTES_1211: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_887,
+        checks: CHECKS_885,
         class: ValueClass::Enum("x:ST_PivotFilterType"),
         name: "type",
         namespace: None,
@@ -77748,7 +77755,7 @@ const ATTRIBUTES_1211: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1212: &[AttributeConstraint] = &[
+const ATTRIBUTES_1213: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -77839,9 +77846,9 @@ const ATTRIBUTES_1212: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1213: &[AttributeConstraint] = &[
+const ATTRIBUTES_1214: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_878,
+        checks: CHECKS_876,
         class: ValueClass::Enum("x:ST_Pane"),
         name: "pane",
         namespace: None,
@@ -77889,7 +77896,7 @@ const ATTRIBUTES_1213: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_885,
+        checks: CHECKS_883,
         class: ValueClass::Enum("x:ST_Axis"),
         name: "axis",
         namespace: None,
@@ -77978,7 +77985,7 @@ const ATTRIBUTES_1213: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1214: &[AttributeConstraint] = &[
+const ATTRIBUTES_1215: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_43,
         class: ValueClass::String,
@@ -78029,7 +78036,7 @@ const ATTRIBUTES_1214: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1215: &[AttributeConstraint] = &[
+const ATTRIBUTES_1216: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -78072,9 +78079,9 @@ const ATTRIBUTES_1215: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1216: &[AttributeConstraint] = &[
+const ATTRIBUTES_1217: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_733,
+        checks: CHECKS_731,
         class: ValueClass::HexBinary,
         name: "password",
         namespace: None,
@@ -78114,7 +78121,7 @@ const ATTRIBUTES_1216: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_856,
+        checks: CHECKS_854,
         class: ValueClass::List(&ValueClass::String),
         name: "sqref",
         namespace: None,
@@ -78139,7 +78146,7 @@ const ATTRIBUTES_1216: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1217: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1218: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_39,
     class: ValueClass::String,
     name: "mdx",
@@ -78148,7 +78155,7 @@ const ATTRIBUTES_1217: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1218: &[AttributeConstraint] = &[
+const ATTRIBUTES_1219: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -78206,7 +78213,7 @@ const ATTRIBUTES_1218: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_888,
+        checks: CHECKS_886,
         class: ValueClass::Enum("x:ST_GrowShrinkType"),
         name: "growShrinkType",
         namespace: None,
@@ -78327,7 +78334,7 @@ const ATTRIBUTES_1218: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1219: &[AttributeConstraint] = &[
+const ATTRIBUTES_1220: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -78386,7 +78393,7 @@ const ATTRIBUTES_1219: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1220: &[AttributeConstraint] = &[
+const ATTRIBUTES_1221: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -78412,7 +78419,7 @@ const ATTRIBUTES_1220: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_711,
+        checks: CHECKS_709,
         class: ValueClass::Byte,
         name: "minimumVersion",
         namespace: None,
@@ -78445,7 +78452,7 @@ const ATTRIBUTES_1220: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1221: &[AttributeConstraint] = &[
+const ATTRIBUTES_1222: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -78463,7 +78470,7 @@ const ATTRIBUTES_1221: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_889,
+        checks: CHECKS_887,
         class: ValueClass::Enum("x:ST_GroupBy"),
         name: "groupBy",
         namespace: None,
@@ -78512,7 +78519,7 @@ const ATTRIBUTES_1221: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1222: &[AttributeConstraint] = &[
+const ATTRIBUTES_1223: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_38,
         class: ValueClass::UInt32,
@@ -78579,7 +78586,7 @@ const ATTRIBUTES_1222: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1223: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1224: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_52,
     class: ValueClass::UInt32,
     name: "rId",
@@ -78588,7 +78595,7 @@ const ATTRIBUTES_1223: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1224: &[AttributeConstraint] = &[
+const ATTRIBUTES_1225: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -78663,7 +78670,7 @@ const ATTRIBUTES_1224: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1225: &[AttributeConstraint] = &[
+const ATTRIBUTES_1226: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -78778,7 +78785,7 @@ const ATTRIBUTES_1225: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1226: &[AttributeConstraint] = &[
+const ATTRIBUTES_1227: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -78804,7 +78811,7 @@ const ATTRIBUTES_1226: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_890,
+        checks: CHECKS_888,
         class: ValueClass::Enum("x:ST_RevisionAction"),
         name: "action",
         namespace: None,
@@ -78869,7 +78876,7 @@ const ATTRIBUTES_1226: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1227: &[AttributeConstraint] = &[
+const ATTRIBUTES_1228: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -78904,7 +78911,7 @@ const ATTRIBUTES_1227: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1228: &[AttributeConstraint] = &[
+const ATTRIBUTES_1229: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_95,
         class: ValueClass::String,
@@ -78914,7 +78921,7 @@ const ATTRIBUTES_1228: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_891,
+        checks: CHECKS_889,
         class: ValueClass::Enum("x:ST_RevisionAction"),
         name: "action",
         namespace: None,
@@ -78923,7 +78930,7 @@ const ATTRIBUTES_1228: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1229: &[AttributeConstraint] = &[
+const ATTRIBUTES_1230: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -78989,7 +78996,7 @@ const ATTRIBUTES_1229: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_711,
+        checks: CHECKS_709,
         class: ValueClass::Byte,
         name: "functionGroupId",
         namespace: None,
@@ -78997,7 +79004,7 @@ const ATTRIBUTES_1229: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_711,
+        checks: CHECKS_709,
         class: ValueClass::Byte,
         name: "oldFunctionGroupId",
         namespace: None,
@@ -79005,7 +79012,7 @@ const ATTRIBUTES_1229: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_711,
+        checks: CHECKS_709,
         class: ValueClass::Byte,
         name: "shortcutKey",
         namespace: None,
@@ -79013,7 +79020,7 @@ const ATTRIBUTES_1229: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_711,
+        checks: CHECKS_709,
         class: ValueClass::Byte,
         name: "oldShortcutKey",
         namespace: None,
@@ -79118,7 +79125,7 @@ const ATTRIBUTES_1229: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1230: &[AttributeConstraint] = &[
+const ATTRIBUTES_1231: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -79144,7 +79151,7 @@ const ATTRIBUTES_1230: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_856,
+        checks: CHECKS_854,
         class: ValueClass::List(&ValueClass::String),
         name: "sqref",
         namespace: None,
@@ -79169,7 +79176,7 @@ const ATTRIBUTES_1230: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1231: &[AttributeConstraint] = &[
+const ATTRIBUTES_1232: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_95,
         class: ValueClass::String,
@@ -79228,7 +79235,7 @@ const ATTRIBUTES_1231: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1232: &[AttributeConstraint] = &[
+const ATTRIBUTES_1233: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_95,
         class: ValueClass::String,
@@ -79327,7 +79334,7 @@ const ATTRIBUTES_1232: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1233: &[AttributeConstraint] = &[
+const ATTRIBUTES_1234: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -79378,7 +79385,7 @@ const ATTRIBUTES_1233: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1234: &[AttributeConstraint] = &[
+const ATTRIBUTES_1235: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -79437,7 +79444,7 @@ const ATTRIBUTES_1234: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1235: &[AttributeConstraint] = &[
+const ATTRIBUTES_1236: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -79464,7 +79471,7 @@ const ATTRIBUTES_1235: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1236: &[AttributeConstraint] = &[
+const ATTRIBUTES_1237: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -79514,7 +79521,7 @@ const ATTRIBUTES_1236: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_892,
+        checks: CHECKS_890,
         class: ValueClass::Enum("x:ST_rwColActionType"),
         name: "action",
         namespace: None,
@@ -79531,7 +79538,7 @@ const ATTRIBUTES_1236: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1237: &[AttributeConstraint] = &[
+const ATTRIBUTES_1238: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -79582,8 +79589,8 @@ const ATTRIBUTES_1237: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1238: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_635,
+const ATTRIBUTES_1239: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_634,
     class: ValueClass::HexBinary,
     name: "rgb",
     namespace: None,
@@ -79591,7 +79598,7 @@ const ATTRIBUTES_1238: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1239: &[AttributeConstraint] = &[
+const ATTRIBUTES_1240: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_38,
         class: ValueClass::UInt32,
@@ -79649,7 +79656,7 @@ const ATTRIBUTES_1239: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_711,
+        checks: CHECKS_709,
         class: ValueClass::Byte,
         name: "outlineLevel",
         namespace: None,
@@ -79689,7 +79696,7 @@ const ATTRIBUTES_1239: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_807,
+        checks: CHECKS_805,
         class: ValueClass::Double,
         name: "dyDescent",
         namespace: Some(121),
@@ -79698,7 +79705,7 @@ const ATTRIBUTES_1239: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1240: &[AttributeConstraint] = &[
+const ATTRIBUTES_1241: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -79749,7 +79756,7 @@ const ATTRIBUTES_1240: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1241: &[AttributeConstraint] = &[
+const ATTRIBUTES_1242: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_38,
         class: ValueClass::UInt32,
@@ -79776,7 +79783,7 @@ const ATTRIBUTES_1241: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1242: &[AttributeConstraint] = &[
+const ATTRIBUTES_1243: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -79803,9 +79810,9 @@ const ATTRIBUTES_1242: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1243: &[AttributeConstraint] = &[
+const ATTRIBUTES_1244: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_878,
+        checks: CHECKS_876,
         class: ValueClass::Enum("x:ST_Pane"),
         name: "pane",
         namespace: None,
@@ -79838,7 +79845,7 @@ const ATTRIBUTES_1243: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1244: &[AttributeConstraint] = &[
+const ATTRIBUTES_1245: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_43,
         class: ValueClass::String,
@@ -79857,7 +79864,7 @@ const ATTRIBUTES_1244: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1245: &[AttributeConstraint] = &[
+const ATTRIBUTES_1246: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_38,
         class: ValueClass::UInt32,
@@ -79883,7 +79890,7 @@ const ATTRIBUTES_1245: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_893,
+        checks: CHECKS_891,
         class: ValueClass::Enum("x:ST_SortType"),
         name: "sortType",
         namespace: None,
@@ -79900,7 +79907,7 @@ const ATTRIBUTES_1245: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1246: &[AttributeConstraint] = &[
+const ATTRIBUTES_1247: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -80015,7 +80022,7 @@ const ATTRIBUTES_1246: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1247: &[AttributeConstraint] = &[
+const ATTRIBUTES_1248: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_95,
         class: ValueClass::String,
@@ -80050,7 +80057,7 @@ const ATTRIBUTES_1247: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1248: &[AttributeConstraint] = &[
+const ATTRIBUTES_1249: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -80068,7 +80075,7 @@ const ATTRIBUTES_1248: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_845,
+        checks: CHECKS_843,
         class: ValueClass::Enum("x:ST_SheetState"),
         name: "state",
         namespace: None,
@@ -80085,7 +80092,7 @@ const ATTRIBUTES_1248: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1249: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1250: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_2,
     class: ValueClass::Boolean,
     name: "fullCalcOnLoad",
@@ -80094,7 +80101,7 @@ const ATTRIBUTES_1249: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1250: &[AttributeConstraint] = &[
+const ATTRIBUTES_1251: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_38,
         class: ValueClass::UInt32,
@@ -80152,7 +80159,7 @@ const ATTRIBUTES_1250: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_711,
+        checks: CHECKS_709,
         class: ValueClass::Byte,
         name: "outlineLevelRow",
         namespace: None,
@@ -80160,7 +80167,7 @@ const ATTRIBUTES_1250: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_711,
+        checks: CHECKS_709,
         class: ValueClass::Byte,
         name: "outlineLevelCol",
         namespace: None,
@@ -80168,7 +80175,7 @@ const ATTRIBUTES_1250: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_807,
+        checks: CHECKS_805,
         class: ValueClass::Double,
         name: "dyDescent",
         namespace: Some(121),
@@ -80177,7 +80184,7 @@ const ATTRIBUTES_1250: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1251: &[AttributeConstraint] = &[
+const ATTRIBUTES_1252: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -80252,9 +80259,9 @@ const ATTRIBUTES_1251: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1252: &[AttributeConstraint] = &[
+const ATTRIBUTES_1253: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_733,
+        checks: CHECKS_731,
         class: ValueClass::HexBinary,
         name: "password",
         namespace: None,
@@ -80423,7 +80430,7 @@ const ATTRIBUTES_1252: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1253: &[AttributeConstraint] = &[
+const ATTRIBUTES_1254: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -80513,7 +80520,7 @@ const ATTRIBUTES_1253: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_847,
+        checks: CHECKS_845,
         class: ValueClass::Enum("x:ST_SheetViewType"),
         name: "view",
         namespace: None,
@@ -80578,7 +80585,7 @@ const ATTRIBUTES_1253: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1254: &[AttributeConstraint] = &[
+const ATTRIBUTES_1255: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -80605,7 +80612,7 @@ const ATTRIBUTES_1254: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1255: &[AttributeConstraint] = &[
+const ATTRIBUTES_1256: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -80615,7 +80622,7 @@ const ATTRIBUTES_1255: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_894,
+        checks: CHECKS_892,
         class: ValueClass::Enum("x:ST_SortBy"),
         name: "sortBy",
         namespace: None,
@@ -80647,7 +80654,7 @@ const ATTRIBUTES_1255: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_869,
+        checks: CHECKS_867,
         class: ValueClass::Enum("x:ST_IconSetType"),
         name: "iconSet",
         namespace: None,
@@ -80664,7 +80671,7 @@ const ATTRIBUTES_1255: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1256: &[AttributeConstraint] = &[
+const ATTRIBUTES_1257: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -80682,7 +80689,7 @@ const ATTRIBUTES_1256: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_895,
+        checks: CHECKS_893,
         class: ValueClass::Enum("x:ST_SortMethod"),
         name: "sortMethod",
         namespace: None,
@@ -80699,7 +80706,7 @@ const ATTRIBUTES_1256: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1257: &[AttributeConstraint] = &[
+const ATTRIBUTES_1258: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_38,
         class: ValueClass::UInt32,
@@ -80718,7 +80725,7 @@ const ATTRIBUTES_1257: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1258: &[AttributeConstraint] = &[
+const ATTRIBUTES_1259: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -80760,7 +80767,7 @@ const ATTRIBUTES_1258: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_896,
+        checks: CHECKS_894,
         class: ValueClass::Enum("x:ST_TableType"),
         name: "tableType",
         namespace: None,
@@ -80897,7 +80904,7 @@ const ATTRIBUTES_1258: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1259: &[AttributeConstraint] = &[
+const ATTRIBUTES_1260: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -80923,7 +80930,7 @@ const ATTRIBUTES_1259: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_897,
+        checks: CHECKS_895,
         class: ValueClass::Enum("x:ST_TotalsRowFunction"),
         name: "totalsRowFunction",
         namespace: None,
@@ -80996,7 +81003,7 @@ const ATTRIBUTES_1259: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1260: &[AttributeConstraint] = &[
+const ATTRIBUTES_1261: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -81015,7 +81022,7 @@ const ATTRIBUTES_1260: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1261: &[AttributeConstraint] = &[
+const ATTRIBUTES_1262: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -81050,9 +81057,9 @@ const ATTRIBUTES_1261: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1262: &[AttributeConstraint] = &[
+const ATTRIBUTES_1263: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_898,
+        checks: CHECKS_896,
         class: ValueClass::Enum("x:ST_TableStyleType"),
         name: "type",
         namespace: None,
@@ -81077,7 +81084,7 @@ const ATTRIBUTES_1262: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1263: &[AttributeConstraint] = &[
+const ATTRIBUTES_1264: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_43,
         class: ValueClass::String,
@@ -81120,7 +81127,7 @@ const ATTRIBUTES_1263: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1264: &[AttributeConstraint] = &[
+const ATTRIBUTES_1265: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_38,
         class: ValueClass::UInt32,
@@ -81147,9 +81154,9 @@ const ATTRIBUTES_1264: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1265: &[AttributeConstraint] = &[
+const ATTRIBUTES_1266: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_899,
+        checks: CHECKS_897,
         class: ValueClass::Enum("x:ST_ExternalConnectionType"),
         name: "type",
         namespace: None,
@@ -81166,7 +81173,7 @@ const ATTRIBUTES_1265: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1266: &[AttributeConstraint] = &[
+const ATTRIBUTES_1267: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -81176,7 +81183,7 @@ const ATTRIBUTES_1266: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_900,
+        checks: CHECKS_898,
         class: ValueClass::Enum("x:ST_FileType"),
         name: "fileType",
         namespace: None,
@@ -81280,7 +81287,7 @@ const ATTRIBUTES_1266: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_901,
+        checks: CHECKS_899,
         class: ValueClass::Enum("x:ST_Qualifier"),
         name: "qualifier",
         namespace: None,
@@ -81297,7 +81304,7 @@ const ATTRIBUTES_1266: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1267: &[AttributeConstraint] = &[
+const ATTRIBUTES_1268: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -81332,7 +81339,7 @@ const ATTRIBUTES_1267: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1268: &[AttributeConstraint] = &[
+const ATTRIBUTES_1269: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_38,
         class: ValueClass::UInt32,
@@ -81359,7 +81366,7 @@ const ATTRIBUTES_1268: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1269: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1270: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_38,
     class: ValueClass::UInt32,
     name: "c",
@@ -81368,8 +81375,8 @@ const ATTRIBUTES_1269: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1270: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_902,
+const ATTRIBUTES_1271: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_900,
     class: ValueClass::Enum("x:ST_UnderlineValues"),
     name: "val",
     namespace: None,
@@ -81377,7 +81384,7 @@ const ATTRIBUTES_1270: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1271: &[AttributeConstraint] = &[
+const ATTRIBUTES_1272: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -81387,7 +81394,7 @@ const ATTRIBUTES_1271: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_903,
+        checks: CHECKS_901,
         class: ValueClass::Enum("x:ST_FormulaExpression"),
         name: "exp",
         namespace: None,
@@ -81468,8 +81475,8 @@ const ATTRIBUTES_1271: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1272: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_904,
+const ATTRIBUTES_1273: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_902,
     class: ValueClass::Enum("x:ST_VerticalAlignRun"),
     name: "val",
     namespace: None,
@@ -81477,7 +81484,7 @@ const ATTRIBUTES_1272: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1273: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1274: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_39,
     class: ValueClass::String,
     name: "first",
@@ -81486,8 +81493,8 @@ const ATTRIBUTES_1273: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1274: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_905,
+const ATTRIBUTES_1275: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_903,
     class: ValueClass::Enum("x:ST_VolValueType"),
     name: "t",
     namespace: None,
@@ -81495,7 +81502,7 @@ const ATTRIBUTES_1274: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1275: &[AttributeConstraint] = &[
+const ATTRIBUTES_1276: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -81514,8 +81521,8 @@ const ATTRIBUTES_1275: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1276: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_906,
+const ATTRIBUTES_1277: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_904,
     class: ValueClass::Enum("x:ST_VolDepType"),
     name: "type",
     namespace: None,
@@ -81523,7 +81530,7 @@ const ATTRIBUTES_1276: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1277: &[AttributeConstraint] = &[
+const ATTRIBUTES_1278: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -81613,7 +81620,7 @@ const ATTRIBUTES_1277: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_907,
+        checks: CHECKS_905,
         class: ValueClass::Enum("x:ST_HtmlFmt"),
         name: "htmlFormat",
         namespace: None,
@@ -81630,7 +81637,7 @@ const ATTRIBUTES_1277: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1278: &[AttributeConstraint] = &[
+const ATTRIBUTES_1279: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -81648,7 +81655,7 @@ const ATTRIBUTES_1278: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_908,
+        checks: CHECKS_906,
         class: ValueClass::Enum("x:ST_WebSourceType"),
         name: "sourceType",
         namespace: None,
@@ -81697,7 +81704,7 @@ const ATTRIBUTES_1278: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1279: &[AttributeConstraint] = &[
+const ATTRIBUTES_1280: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -81748,7 +81755,7 @@ const ATTRIBUTES_1279: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1280: &[AttributeConstraint] = &[
+const ATTRIBUTES_1281: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -81790,7 +81797,7 @@ const ATTRIBUTES_1280: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_909,
+        checks: CHECKS_907,
         class: ValueClass::Enum("x:ST_TargetScreenSize"),
         name: "targetScreenSize",
         namespace: None,
@@ -81823,8 +81830,8 @@ const ATTRIBUTES_1280: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1281: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_910,
+const ATTRIBUTES_1282: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_908,
     class: ValueClass::Enum("x:ST_ConformanceClass"),
     name: "conformance",
     namespace: None,
@@ -81832,7 +81839,7 @@ const ATTRIBUTES_1281: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1282: &[AttributeConstraint] = &[
+const ATTRIBUTES_1283: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -81850,7 +81857,7 @@ const ATTRIBUTES_1282: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_849,
+        checks: CHECKS_847,
         class: ValueClass::Enum("x:ST_Objects"),
         name: "showObjects",
         namespace: None,
@@ -81906,7 +81913,7 @@ const ATTRIBUTES_1282: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_911,
+        checks: CHECKS_909,
         class: ValueClass::Enum("x:ST_UpdateLinks"),
         name: "updateLinks",
         namespace: None,
@@ -81987,9 +81994,9 @@ const ATTRIBUTES_1282: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1283: &[AttributeConstraint] = &[
+const ATTRIBUTES_1284: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_733,
+        checks: CHECKS_731,
         class: ValueClass::HexBinary,
         name: "workbookPassword",
         namespace: None,
@@ -81997,7 +82004,7 @@ const ATTRIBUTES_1283: &[AttributeConstraint] = &[
         transitional_only: true,
     },
     AttributeConstraint {
-        checks: CHECKS_733,
+        checks: CHECKS_731,
         class: ValueClass::HexBinary,
         name: "revisionsPassword",
         namespace: None,
@@ -82094,7 +82101,7 @@ const ATTRIBUTES_1283: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1284: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1285: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_32,
     class: ValueClass::Int32,
     name: "v",
@@ -82103,7 +82110,7 @@ const ATTRIBUTES_1284: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1285: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1286: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_39,
     class: ValueClass::String,
     name: "v",
@@ -82112,7 +82119,7 @@ const ATTRIBUTES_1285: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1286: &[AttributeConstraint] = &[
+const ATTRIBUTES_1287: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_38,
         class: ValueClass::UInt32,
@@ -82219,7 +82226,7 @@ const ATTRIBUTES_1286: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1287: &[AttributeConstraint] = &[
+const ATTRIBUTES_1288: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -82238,7 +82245,7 @@ const ATTRIBUTES_1287: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1288: &[AttributeConstraint] = &[
+const ATTRIBUTES_1289: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -82264,7 +82271,7 @@ const ATTRIBUTES_1288: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_912,
+        checks: CHECKS_910,
         class: ValueClass::Enum("x:ST_XmlDataType"),
         name: "xmlDataType",
         namespace: None,
@@ -82273,7 +82280,7 @@ const ATTRIBUTES_1288: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1289: &[AttributeConstraint] = &[
+const ATTRIBUTES_1290: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -82291,7 +82298,7 @@ const ATTRIBUTES_1289: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_912,
+        checks: CHECKS_910,
         class: ValueClass::Enum("x:ST_XmlDataType"),
         name: "xmlDataType",
         namespace: None,
@@ -82300,7 +82307,7 @@ const ATTRIBUTES_1289: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1290: &[AttributeConstraint] = &[
+const ATTRIBUTES_1291: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -82470,7 +82477,7 @@ const ATTRIBUTES_1290: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_711,
+        checks: CHECKS_709,
         class: ValueClass::Byte,
         name: "updatedVersion",
         namespace: None,
@@ -82478,7 +82485,7 @@ const ATTRIBUTES_1290: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_711,
+        checks: CHECKS_709,
         class: ValueClass::Byte,
         name: "minRefreshableVersion",
         namespace: None,
@@ -82694,7 +82701,7 @@ const ATTRIBUTES_1290: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_711,
+        checks: CHECKS_709,
         class: ValueClass::Byte,
         name: "createdVersion",
         namespace: None,
@@ -82847,7 +82854,7 @@ const ATTRIBUTES_1290: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1291: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1292: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_21,
     class: ValueClass::String,
     name: "name",
@@ -82856,7 +82863,7 @@ const ATTRIBUTES_1291: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1292: &[AttributeConstraint] = &[
+const ATTRIBUTES_1293: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_127,
         class: ValueClass::Boolean,
@@ -82875,7 +82882,7 @@ const ATTRIBUTES_1292: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1293: &[AttributeConstraint] = &[
+const ATTRIBUTES_1294: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_2,
         class: ValueClass::Boolean,
@@ -82894,8 +82901,8 @@ const ATTRIBUTES_1293: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1294: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_913,
+const ATTRIBUTES_1295: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_911,
     class: ValueClass::Enum("xdr:ST_EditAs"),
     name: "editAs",
     namespace: None,
@@ -82903,7 +82910,7 @@ const ATTRIBUTES_1294: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1295: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1296: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_139,
     class: ValueClass::String,
     name: "k",
@@ -82912,8 +82919,8 @@ const ATTRIBUTES_1295: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1296: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_914,
+const ATTRIBUTES_1297: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_912,
     class: ValueClass::UInt32,
     name: "i",
     namespace: None,
@@ -82921,7 +82928,7 @@ const ATTRIBUTES_1296: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1297: &[AttributeConstraint] = &[
+const ATTRIBUTES_1298: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_139,
         class: ValueClass::String,
@@ -82939,7 +82946,7 @@ const ATTRIBUTES_1297: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_915,
+        checks: CHECKS_913,
         class: ValueClass::UInt32,
         name: "bagExtId",
         namespace: None,
@@ -82956,8 +82963,8 @@ const ATTRIBUTES_1297: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1298: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_915,
+const ATTRIBUTES_1299: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_913,
     class: ValueClass::UInt32,
     name: "count",
     namespace: None,
@@ -82965,9 +82972,9 @@ const ATTRIBUTES_1298: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1299: &[AttributeConstraint] = &[
+const ATTRIBUTES_1300: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_915,
+        checks: CHECKS_913,
         class: ValueClass::UInt32,
         name: "maxWidth",
         namespace: None,
@@ -82975,7 +82982,7 @@ const ATTRIBUTES_1299: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_915,
+        checks: CHECKS_913,
         class: ValueClass::UInt32,
         name: "maxHeight",
         namespace: None,
@@ -82984,9 +82991,9 @@ const ATTRIBUTES_1299: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1300: &[AttributeConstraint] = &[
+const ATTRIBUTES_1301: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_915,
+        checks: CHECKS_913,
         class: ValueClass::UInt32,
         name: "autoShow",
         namespace: None,
@@ -82994,7 +83001,7 @@ const ATTRIBUTES_1300: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_915,
+        checks: CHECKS_913,
         class: ValueClass::UInt32,
         name: "timeout",
         namespace: None,
@@ -83003,7 +83010,7 @@ const ATTRIBUTES_1300: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1301: &[AttributeConstraint] = &[
+const ATTRIBUTES_1302: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_139,
         class: ValueClass::String,
@@ -83021,7 +83028,7 @@ const ATTRIBUTES_1301: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_916,
+        checks: CHECKS_914,
         class: ValueClass::Int32,
         name: "maxResponseId",
         namespace: None,
@@ -83038,7 +83045,7 @@ const ATTRIBUTES_1301: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1302: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1303: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_139,
     class: ValueClass::String,
     name: "id",
@@ -83047,9 +83054,9 @@ const ATTRIBUTES_1302: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1303: &[AttributeConstraint] = &[
+const ATTRIBUTES_1304: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_917,
+        checks: CHECKS_915,
         class: ValueClass::Enum("xlpcalc:ST_AggregationType"),
         name: "aggregationType",
         namespace: None,
@@ -83057,7 +83064,7 @@ const ATTRIBUTES_1303: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_914,
+        checks: CHECKS_912,
         class: ValueClass::UInt32,
         name: "sourceField",
         namespace: None,
@@ -83066,7 +83073,7 @@ const ATTRIBUTES_1303: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1304: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1305: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_139,
     class: ValueClass::String,
     name: "featureName",
@@ -83075,9 +83082,9 @@ const ATTRIBUTES_1304: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1305: &[AttributeConstraint] = &[
+const ATTRIBUTES_1306: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_917,
+        checks: CHECKS_915,
         class: ValueClass::Enum("xlpcalc:ST_AggregationType"),
         name: "subtotalType",
         namespace: None,
@@ -83085,7 +83092,7 @@ const ATTRIBUTES_1305: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_914,
+        checks: CHECKS_912,
         class: ValueClass::UInt32,
         name: "itemLocation",
         namespace: None,
@@ -83094,8 +83101,8 @@ const ATTRIBUTES_1305: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1306: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_917,
+const ATTRIBUTES_1307: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_915,
     class: ValueClass::Enum("xlpcalc:ST_AggregationType"),
     name: "subtotalType",
     namespace: None,
@@ -83103,7 +83110,7 @@ const ATTRIBUTES_1306: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1307: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1308: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_139,
     class: ValueClass::String,
     name: "ref",
@@ -83112,7 +83119,7 @@ const ATTRIBUTES_1307: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1308: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1309: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_132,
     class: ValueClass::String,
     name: "ref",
@@ -83121,7 +83128,7 @@ const ATTRIBUTES_1308: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1309: &[AttributeConstraint] = &[
+const ATTRIBUTES_1310: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_24,
         class: ValueClass::UInt32,
@@ -83131,7 +83138,7 @@ const ATTRIBUTES_1309: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_918,
+        checks: CHECKS_916,
         class: ValueClass::UInt32,
         name: "c",
         namespace: None,
@@ -83140,7 +83147,7 @@ const ATTRIBUTES_1309: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1310: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1311: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_24,
     class: ValueClass::UInt32,
     name: "count",
@@ -83149,8 +83156,8 @@ const ATTRIBUTES_1310: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1311: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_919,
+const ATTRIBUTES_1312: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_917,
     class: ValueClass::Enum("xlrd2:ST_ArrayValueType"),
     name: "t",
     namespace: None,
@@ -83158,7 +83165,7 @@ const ATTRIBUTES_1311: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1312: &[AttributeConstraint] = &[
+const ATTRIBUTES_1313: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_125,
         class: ValueClass::String,
@@ -83168,7 +83175,7 @@ const ATTRIBUTES_1312: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_846,
+        checks: CHECKS_844,
         class: ValueClass::Enum("x:ST_FilterOperator"),
         name: "operator",
         namespace: None,
@@ -83185,7 +83192,7 @@ const ATTRIBUTES_1312: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1313: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1314: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_127,
     class: ValueClass::Boolean,
     name: "and",
@@ -83194,7 +83201,7 @@ const ATTRIBUTES_1313: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1314: &[AttributeConstraint] = &[
+const ATTRIBUTES_1315: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_125,
         class: ValueClass::String,
@@ -83204,7 +83211,7 @@ const ATTRIBUTES_1314: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_859,
+        checks: CHECKS_857,
         class: ValueClass::Enum("x:ST_DynamicFilterType"),
         name: "type",
         namespace: None,
@@ -83228,7 +83235,7 @@ const ATTRIBUTES_1314: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_860,
+        checks: CHECKS_858,
         class: ValueClass::DateTime,
         name: "valIso",
         namespace: None,
@@ -83236,7 +83243,7 @@ const ATTRIBUTES_1314: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_860,
+        checks: CHECKS_858,
         class: ValueClass::DateTime,
         name: "maxValIso",
         namespace: None,
@@ -83245,7 +83252,7 @@ const ATTRIBUTES_1314: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1315: &[AttributeConstraint] = &[
+const ATTRIBUTES_1316: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_125,
         class: ValueClass::String,
@@ -83263,7 +83270,7 @@ const ATTRIBUTES_1315: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_713,
+        checks: CHECKS_711,
         class: ValueClass::UInt16,
         name: "month",
         namespace: None,
@@ -83271,7 +83278,7 @@ const ATTRIBUTES_1315: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_713,
+        checks: CHECKS_711,
         class: ValueClass::UInt16,
         name: "day",
         namespace: None,
@@ -83279,7 +83286,7 @@ const ATTRIBUTES_1315: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_713,
+        checks: CHECKS_711,
         class: ValueClass::UInt16,
         name: "hour",
         namespace: None,
@@ -83287,7 +83294,7 @@ const ATTRIBUTES_1315: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_713,
+        checks: CHECKS_711,
         class: ValueClass::UInt16,
         name: "minute",
         namespace: None,
@@ -83295,7 +83302,7 @@ const ATTRIBUTES_1315: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_713,
+        checks: CHECKS_711,
         class: ValueClass::UInt16,
         name: "second",
         namespace: None,
@@ -83303,7 +83310,7 @@ const ATTRIBUTES_1315: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_857,
+        checks: CHECKS_855,
         class: ValueClass::Enum("x:ST_DateTimeGrouping"),
         name: "dateTimeGrouping",
         namespace: None,
@@ -83312,7 +83319,7 @@ const ATTRIBUTES_1315: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1316: &[AttributeConstraint] = &[
+const ATTRIBUTES_1317: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_125,
         class: ValueClass::String,
@@ -83347,7 +83354,7 @@ const ATTRIBUTES_1316: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1317: &[AttributeConstraint] = &[
+const ATTRIBUTES_1318: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_21,
         class: ValueClass::String,
@@ -83357,7 +83364,7 @@ const ATTRIBUTES_1317: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_920,
+        checks: CHECKS_918,
         class: ValueClass::Enum("xlrd2:ST_RichFormatPropertyType"),
         name: "t",
         namespace: None,
@@ -83366,7 +83373,7 @@ const ATTRIBUTES_1317: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1318: &[AttributeConstraint] = &[
+const ATTRIBUTES_1319: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_125,
         class: ValueClass::String,
@@ -83384,7 +83391,7 @@ const ATTRIBUTES_1318: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_806,
+        checks: CHECKS_804,
         class: ValueClass::Enum("x:ST_SortBy"),
         name: "sortBy",
         namespace: None,
@@ -83416,7 +83423,7 @@ const ATTRIBUTES_1318: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_799,
+        checks: CHECKS_797,
         class: ValueClass::Enum("x14:ST_IconSetType"),
         name: "iconSet",
         namespace: None,
@@ -83433,8 +83440,8 @@ const ATTRIBUTES_1318: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1319: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_918,
+const ATTRIBUTES_1320: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_916,
     class: ValueClass::UInt32,
     name: "dxfid",
     namespace: None,
@@ -83442,7 +83449,7 @@ const ATTRIBUTES_1319: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1320: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1321: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_24,
     class: ValueClass::UInt32,
     name: "i",
@@ -83451,7 +83458,7 @@ const ATTRIBUTES_1320: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1321: &[AttributeConstraint] = &[
+const ATTRIBUTES_1322: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_125,
         class: ValueClass::String,
@@ -83494,7 +83501,7 @@ const ATTRIBUTES_1321: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1322: &[AttributeConstraint] = &[
+const ATTRIBUTES_1323: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_21,
         class: ValueClass::String,
@@ -83513,7 +83520,7 @@ const ATTRIBUTES_1322: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1323: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1324: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_24,
     class: ValueClass::UInt32,
     name: "s",
@@ -83522,33 +83529,14 @@ const ATTRIBUTES_1323: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1324: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_921,
+const ATTRIBUTES_1325: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_919,
     class: ValueClass::Enum("xlrd2:ST_SupportingPropertyBagArrayValueType"),
     name: "t",
     namespace: None,
     strict_checks: None,
     transitional_only: false,
 }];
-
-const ATTRIBUTES_1325: &[AttributeConstraint] = &[
-    AttributeConstraint {
-        checks: CHECKS_21,
-        class: ValueClass::String,
-        name: "n",
-        namespace: None,
-        strict_checks: None,
-        transitional_only: false,
-    },
-    AttributeConstraint {
-        checks: CHECKS_922,
-        class: ValueClass::Enum("xlrd2:ST_SupportingPropertyBagValueType"),
-        name: "t",
-        namespace: None,
-        strict_checks: None,
-        transitional_only: false,
-    },
-];
 
 const ATTRIBUTES_1326: &[AttributeConstraint] = &[
     AttributeConstraint {
@@ -83560,7 +83548,26 @@ const ATTRIBUTES_1326: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_923,
+        checks: CHECKS_920,
+        class: ValueClass::Enum("xlrd2:ST_SupportingPropertyBagValueType"),
+        name: "t",
+        namespace: None,
+        strict_checks: None,
+        transitional_only: false,
+    },
+];
+
+const ATTRIBUTES_1327: &[AttributeConstraint] = &[
+    AttributeConstraint {
+        checks: CHECKS_21,
+        class: ValueClass::String,
+        name: "n",
+        namespace: None,
+        strict_checks: None,
+        transitional_only: false,
+    },
+    AttributeConstraint {
+        checks: CHECKS_921,
         class: ValueClass::Enum("xlrd:ST_RichValueValueType"),
         name: "t",
         namespace: None,
@@ -83569,8 +83576,8 @@ const ATTRIBUTES_1326: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1327: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_924,
+const ATTRIBUTES_1328: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_922,
     class: ValueClass::Enum("xlrd:ST_RichValueFallbackType"),
     name: "t",
     namespace: None,
@@ -83578,7 +83585,7 @@ const ATTRIBUTES_1327: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1328: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1329: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_21,
     class: ValueClass::String,
     name: "t",
@@ -83587,9 +83594,9 @@ const ATTRIBUTES_1328: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1329: &[AttributeConstraint] = &[
+const ATTRIBUTES_1330: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_925,
+        checks: CHECKS_923,
         class: ValueClass::Int32,
         name: "resourceIdInt",
         namespace: None,
@@ -83605,7 +83612,7 @@ const ATTRIBUTES_1329: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_926,
+        checks: CHECKS_924,
         class: ValueClass::Int32,
         name: "interval",
         namespace: None,
@@ -83614,7 +83621,7 @@ const ATTRIBUTES_1329: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1330: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1331: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_139,
     class: ValueClass::String,
     name: "id",
@@ -83623,9 +83630,9 @@ const ATTRIBUTES_1330: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1331: &[AttributeConstraint] = &[
+const ATTRIBUTES_1332: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_927,
+        checks: CHECKS_925,
         class: ValueClass::UInt32,
         name: "startIndex",
         namespace: None,
@@ -83633,7 +83640,7 @@ const ATTRIBUTES_1331: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_927,
+        checks: CHECKS_925,
         class: ValueClass::UInt32,
         name: "length",
         namespace: None,
@@ -83650,7 +83657,7 @@ const ATTRIBUTES_1331: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1332: &[AttributeConstraint] = &[
+const ATTRIBUTES_1333: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_441,
         class: ValueClass::String,
@@ -83685,7 +83692,7 @@ const ATTRIBUTES_1332: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1333: &[AttributeConstraint] = &[
+const ATTRIBUTES_1334: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_21,
         class: ValueClass::String,
@@ -83720,7 +83727,7 @@ const ATTRIBUTES_1333: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1334: &[AttributeConstraint] = &[
+const ATTRIBUTES_1335: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_125,
         class: ValueClass::String,
@@ -83730,7 +83737,7 @@ const ATTRIBUTES_1334: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_928,
+        checks: CHECKS_926,
         class: ValueClass::DateTime,
         name: "dT",
         namespace: None,
@@ -83754,7 +83761,7 @@ const ATTRIBUTES_1334: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_929,
+        checks: CHECKS_927,
         class: ValueClass::String,
         name: "parentId",
         namespace: None,
@@ -83771,9 +83778,9 @@ const ATTRIBUTES_1334: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1335: &[AttributeConstraint] = &[
+const ATTRIBUTES_1336: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_915,
+        checks: CHECKS_913,
         class: ValueClass::UInt32,
         name: "warnBelowVersion",
         namespace: None,
@@ -83781,7 +83788,7 @@ const ATTRIBUTES_1335: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_915,
+        checks: CHECKS_913,
         class: ValueClass::UInt32,
         name: "setVersion",
         namespace: None,
@@ -83790,7 +83797,7 @@ const ATTRIBUTES_1335: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1336: &[AttributeConstraint] = &[
+const ATTRIBUTES_1337: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_39,
         class: ValueClass::String,
@@ -83800,7 +83807,7 @@ const ATTRIBUTES_1336: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_930,
+        checks: CHECKS_928,
         class: ValueClass::UInt32,
         name: "count",
         namespace: None,
@@ -83809,7 +83816,7 @@ const ATTRIBUTES_1336: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1337: &[AttributeConstraint] = &[
+const ATTRIBUTES_1338: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_52,
         class: ValueClass::UInt32,
@@ -83828,9 +83835,9 @@ const ATTRIBUTES_1337: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1338: &[AttributeConstraint] = &[
+const ATTRIBUTES_1339: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_927,
+        checks: CHECKS_925,
         class: ValueClass::UInt32,
         name: "colId",
         namespace: None,
@@ -83838,7 +83845,7 @@ const ATTRIBUTES_1338: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_932,
+        checks: CHECKS_930,
         class: ValueClass::String,
         name: "id",
         namespace: None,
@@ -83847,7 +83854,7 @@ const ATTRIBUTES_1338: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1339: &[AttributeConstraint] = &[
+const ATTRIBUTES_1340: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_203,
         class: ValueClass::String,
@@ -83866,7 +83873,7 @@ const ATTRIBUTES_1339: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1340: &[AttributeConstraint] = &[
+const ATTRIBUTES_1341: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_450,
         class: ValueClass::String,
@@ -83893,9 +83900,9 @@ const ATTRIBUTES_1340: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1341: &[AttributeConstraint] = &[
+const ATTRIBUTES_1342: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_933,
+        checks: CHECKS_931,
         class: ValueClass::Enum("x:ST_SortMethod"),
         name: "sortMethod",
         namespace: None,
@@ -83912,7 +83919,7 @@ const ATTRIBUTES_1341: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1342: &[AttributeConstraint] = &[
+const ATTRIBUTES_1343: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_127,
         class: ValueClass::Boolean,
@@ -83939,7 +83946,7 @@ const ATTRIBUTES_1342: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1343: &[AttributeConstraint] = &[
+const ATTRIBUTES_1344: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_454,
         class: ValueClass::String,
@@ -83966,7 +83973,7 @@ const ATTRIBUTES_1343: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1344: &[AttributeConstraint] = &[
+const ATTRIBUTES_1345: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_148,
         class: ValueClass::String,
@@ -83976,7 +83983,7 @@ const ATTRIBUTES_1344: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_934,
+        checks: CHECKS_932,
         class: ValueClass::Enum("xr:ST_FillType"),
         name: "t",
         namespace: None,
@@ -83984,7 +83991,7 @@ const ATTRIBUTES_1344: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_935,
+        checks: CHECKS_933,
         class: ValueClass::Enum("xr:ST_FillTypeExt"),
         name: "x",
         namespace: None,
@@ -84001,7 +84008,7 @@ const ATTRIBUTES_1344: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1345: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1346: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_22,
     class: ValueClass::String,
     name: "sheetViewUid",
@@ -84010,7 +84017,7 @@ const ATTRIBUTES_1345: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1346: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1347: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_149,
     class: ValueClass::Boolean,
     name: "hide",
@@ -84019,7 +84026,7 @@ const ATTRIBUTES_1346: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1347: &[AttributeConstraint] = &[
+const ATTRIBUTES_1348: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_149,
         class: ValueClass::Boolean,
@@ -84029,7 +84036,7 @@ const ATTRIBUTES_1347: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_936,
+        checks: CHECKS_934,
         class: ValueClass::Byte,
         name: "level",
         namespace: None,
@@ -84038,7 +84045,7 @@ const ATTRIBUTES_1347: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1348: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1349: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_149,
     class: ValueClass::Boolean,
     name: "isRow",
@@ -84047,7 +84054,7 @@ const ATTRIBUTES_1348: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1349: &[AttributeConstraint] = &[
+const ATTRIBUTES_1350: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_148,
         class: ValueClass::String,
@@ -84057,7 +84064,7 @@ const ATTRIBUTES_1349: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_937,
+        checks: CHECKS_935,
         class: ValueClass::Enum("xr:ST_AdjustType"),
         name: "ajt",
         namespace: None,
@@ -84065,7 +84072,7 @@ const ATTRIBUTES_1349: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_938,
+        checks: CHECKS_936,
         class: ValueClass::Enum("xr:ST_AdjustTypeExt"),
         name: "ajtx",
         namespace: None,
@@ -84081,7 +84088,7 @@ const ATTRIBUTES_1349: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_939,
+        checks: CHECKS_937,
         class: ValueClass::List(&ValueClass::String),
         name: "r",
         namespace: None,
@@ -84106,7 +84113,7 @@ const ATTRIBUTES_1349: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1350: &[AttributeConstraint] = &[
+const ATTRIBUTES_1351: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_148,
         class: ValueClass::String,
@@ -84116,7 +84123,7 @@ const ATTRIBUTES_1350: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_937,
+        checks: CHECKS_935,
         class: ValueClass::Enum("xr:ST_AdjustType"),
         name: "ajt",
         namespace: None,
@@ -84124,7 +84131,7 @@ const ATTRIBUTES_1350: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_938,
+        checks: CHECKS_936,
         class: ValueClass::Enum("xr:ST_AdjustTypeExt"),
         name: "ajtx",
         namespace: None,
@@ -84212,7 +84219,7 @@ const ATTRIBUTES_1350: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_940,
+        checks: CHECKS_938,
         class: ValueClass::Enum("xr:ST_OartAnchorType"),
         name: "oat",
         namespace: None,
@@ -84221,7 +84228,7 @@ const ATTRIBUTES_1350: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1351: &[AttributeConstraint] = &[
+const ATTRIBUTES_1352: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_148,
         class: ValueClass::String,
@@ -84231,7 +84238,7 @@ const ATTRIBUTES_1351: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_937,
+        checks: CHECKS_935,
         class: ValueClass::Enum("xr:ST_AdjustType"),
         name: "ajt",
         namespace: None,
@@ -84239,7 +84246,7 @@ const ATTRIBUTES_1351: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_938,
+        checks: CHECKS_936,
         class: ValueClass::Enum("xr:ST_AdjustTypeExt"),
         name: "ajtx",
         namespace: None,
@@ -84256,9 +84263,9 @@ const ATTRIBUTES_1351: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1352: &[AttributeConstraint] = &[
+const ATTRIBUTES_1353: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_941,
+        checks: CHECKS_939,
         class: ValueClass::Enum("x:ST_CellType"),
         name: "t",
         namespace: None,
@@ -84291,7 +84298,7 @@ const ATTRIBUTES_1352: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1353: &[AttributeConstraint] = &[
+const ATTRIBUTES_1354: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_22,
         class: ValueClass::String,
@@ -84301,7 +84308,7 @@ const ATTRIBUTES_1353: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_942,
+        checks: CHECKS_940,
         class: ValueClass::UInt64,
         name: "rev",
         namespace: None,
@@ -84309,7 +84316,7 @@ const ATTRIBUTES_1353: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_943,
+        checks: CHECKS_941,
         class: ValueClass::String,
         name: "uid",
         namespace: None,
@@ -84317,7 +84324,7 @@ const ATTRIBUTES_1353: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_943,
+        checks: CHECKS_941,
         class: ValueClass::String,
         name: "sh",
         namespace: None,
@@ -84333,7 +84340,7 @@ const ATTRIBUTES_1353: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_944,
+        checks: CHECKS_942,
         class: ValueClass::Enum("xr:ST_RevisionContext"),
         name: "ctx",
         namespace: None,
@@ -84349,7 +84356,7 @@ const ATTRIBUTES_1353: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_934,
+        checks: CHECKS_932,
         class: ValueClass::Enum("xr:ST_FillType"),
         name: "t",
         namespace: None,
@@ -84357,7 +84364,7 @@ const ATTRIBUTES_1353: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_935,
+        checks: CHECKS_933,
         class: ValueClass::Enum("xr:ST_FillTypeExt"),
         name: "x",
         namespace: None,
@@ -84374,9 +84381,9 @@ const ATTRIBUTES_1353: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1354: &[AttributeConstraint] = &[
+const ATTRIBUTES_1355: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_942,
+        checks: CHECKS_940,
         class: ValueClass::UInt64,
         name: "rev",
         namespace: None,
@@ -84384,7 +84391,7 @@ const ATTRIBUTES_1354: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_943,
+        checks: CHECKS_941,
         class: ValueClass::String,
         name: "uid",
         namespace: None,
@@ -84392,7 +84399,7 @@ const ATTRIBUTES_1354: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_943,
+        checks: CHECKS_941,
         class: ValueClass::String,
         name: "sh",
         namespace: None,
@@ -84408,7 +84415,7 @@ const ATTRIBUTES_1354: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_944,
+        checks: CHECKS_942,
         class: ValueClass::Enum("xr:ST_RevisionContext"),
         name: "ctx",
         namespace: None,
@@ -84417,9 +84424,9 @@ const ATTRIBUTES_1354: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1355: &[AttributeConstraint] = &[
+const ATTRIBUTES_1356: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_942,
+        checks: CHECKS_940,
         class: ValueClass::UInt64,
         name: "rev",
         namespace: None,
@@ -84427,7 +84434,7 @@ const ATTRIBUTES_1355: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_943,
+        checks: CHECKS_941,
         class: ValueClass::String,
         name: "uid",
         namespace: None,
@@ -84435,7 +84442,7 @@ const ATTRIBUTES_1355: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_943,
+        checks: CHECKS_941,
         class: ValueClass::String,
         name: "sh",
         namespace: None,
@@ -84451,7 +84458,7 @@ const ATTRIBUTES_1355: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_944,
+        checks: CHECKS_942,
         class: ValueClass::Enum("xr:ST_RevisionContext"),
         name: "ctx",
         namespace: None,
@@ -84483,7 +84490,7 @@ const ATTRIBUTES_1355: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_945,
+        checks: CHECKS_943,
         class: ValueClass::Byte,
         name: "functionGroupId",
         namespace: None,
@@ -84491,7 +84498,7 @@ const ATTRIBUTES_1355: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_945,
+        checks: CHECKS_943,
         class: ValueClass::Byte,
         name: "shortcutKey",
         namespace: None,
@@ -84548,9 +84555,9 @@ const ATTRIBUTES_1355: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1356: &[AttributeConstraint] = &[
+const ATTRIBUTES_1357: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_942,
+        checks: CHECKS_940,
         class: ValueClass::UInt64,
         name: "rev",
         namespace: None,
@@ -84558,7 +84565,7 @@ const ATTRIBUTES_1356: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_943,
+        checks: CHECKS_941,
         class: ValueClass::String,
         name: "uid",
         namespace: None,
@@ -84566,7 +84573,7 @@ const ATTRIBUTES_1356: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_943,
+        checks: CHECKS_941,
         class: ValueClass::String,
         name: "sh",
         namespace: None,
@@ -84582,7 +84589,7 @@ const ATTRIBUTES_1356: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_944,
+        checks: CHECKS_942,
         class: ValueClass::Enum("xr:ST_RevisionContext"),
         name: "ctx",
         namespace: None,
@@ -84614,7 +84621,7 @@ const ATTRIBUTES_1356: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_939,
+        checks: CHECKS_937,
         class: ValueClass::List(&ValueClass::String),
         name: "sqref",
         namespace: None,
@@ -84703,9 +84710,9 @@ const ATTRIBUTES_1356: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1357: &[AttributeConstraint] = &[
+const ATTRIBUTES_1358: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_942,
+        checks: CHECKS_940,
         class: ValueClass::UInt64,
         name: "rev",
         namespace: None,
@@ -84713,7 +84720,7 @@ const ATTRIBUTES_1357: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_943,
+        checks: CHECKS_941,
         class: ValueClass::String,
         name: "uid",
         namespace: None,
@@ -84721,7 +84728,7 @@ const ATTRIBUTES_1357: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_943,
+        checks: CHECKS_941,
         class: ValueClass::String,
         name: "sh",
         namespace: None,
@@ -84737,7 +84744,7 @@ const ATTRIBUTES_1357: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_944,
+        checks: CHECKS_942,
         class: ValueClass::Enum("xr:ST_RevisionContext"),
         name: "ctx",
         namespace: None,
@@ -84754,7 +84761,7 @@ const ATTRIBUTES_1357: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1358: &[AttributeConstraint] = &[
+const ATTRIBUTES_1359: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_148,
         class: ValueClass::String,
@@ -84764,7 +84771,7 @@ const ATTRIBUTES_1358: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_946,
+        checks: CHECKS_944,
         class: ValueClass::UInt64,
         name: "minRev",
         namespace: None,
@@ -84772,7 +84779,7 @@ const ATTRIBUTES_1358: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_946,
+        checks: CHECKS_944,
         class: ValueClass::UInt64,
         name: "maxRev",
         namespace: None,
@@ -84780,7 +84787,7 @@ const ATTRIBUTES_1358: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_947,
+        checks: CHECKS_945,
         class: ValueClass::DateTime,
         name: "time",
         namespace: None,
@@ -84789,9 +84796,9 @@ const ATTRIBUTES_1358: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1359: &[AttributeConstraint] = &[
+const ATTRIBUTES_1360: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_942,
+        checks: CHECKS_940,
         class: ValueClass::UInt64,
         name: "minRev",
         namespace: None,
@@ -84799,7 +84806,7 @@ const ATTRIBUTES_1359: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_942,
+        checks: CHECKS_940,
         class: ValueClass::UInt64,
         name: "maxRev",
         namespace: None,
@@ -84824,9 +84831,9 @@ const ATTRIBUTES_1359: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1360: &[AttributeConstraint] = &[
+const ATTRIBUTES_1361: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_942,
+        checks: CHECKS_940,
         class: ValueClass::UInt64,
         name: "rev",
         namespace: None,
@@ -84834,7 +84841,7 @@ const ATTRIBUTES_1360: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_943,
+        checks: CHECKS_941,
         class: ValueClass::String,
         name: "uid",
         namespace: None,
@@ -84842,7 +84849,7 @@ const ATTRIBUTES_1360: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_943,
+        checks: CHECKS_941,
         class: ValueClass::String,
         name: "sh",
         namespace: None,
@@ -84858,7 +84865,7 @@ const ATTRIBUTES_1360: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_944,
+        checks: CHECKS_942,
         class: ValueClass::Enum("xr:ST_RevisionContext"),
         name: "ctx",
         namespace: None,
@@ -84891,9 +84898,9 @@ const ATTRIBUTES_1360: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1361: &[AttributeConstraint] = &[
+const ATTRIBUTES_1362: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_942,
+        checks: CHECKS_940,
         class: ValueClass::UInt64,
         name: "rev",
         namespace: None,
@@ -84901,7 +84908,7 @@ const ATTRIBUTES_1361: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_943,
+        checks: CHECKS_941,
         class: ValueClass::String,
         name: "uid",
         namespace: None,
@@ -84909,7 +84916,7 @@ const ATTRIBUTES_1361: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_943,
+        checks: CHECKS_941,
         class: ValueClass::String,
         name: "sh",
         namespace: None,
@@ -84925,7 +84932,7 @@ const ATTRIBUTES_1361: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_944,
+        checks: CHECKS_942,
         class: ValueClass::Enum("xr:ST_RevisionContext"),
         name: "ctx",
         namespace: None,
@@ -84949,7 +84956,7 @@ const ATTRIBUTES_1361: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_948,
+        checks: CHECKS_946,
         class: ValueClass::Enum("xr:ST_RwColAction"),
         name: "action",
         namespace: None,
@@ -84958,9 +84965,9 @@ const ATTRIBUTES_1361: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1362: &[AttributeConstraint] = &[
+const ATTRIBUTES_1363: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_942,
+        checks: CHECKS_940,
         class: ValueClass::UInt64,
         name: "rev",
         namespace: None,
@@ -84968,7 +84975,7 @@ const ATTRIBUTES_1362: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_943,
+        checks: CHECKS_941,
         class: ValueClass::String,
         name: "uid",
         namespace: None,
@@ -84976,7 +84983,7 @@ const ATTRIBUTES_1362: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_943,
+        checks: CHECKS_941,
         class: ValueClass::String,
         name: "sh",
         namespace: None,
@@ -84992,7 +84999,7 @@ const ATTRIBUTES_1362: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_944,
+        checks: CHECKS_942,
         class: ValueClass::Enum("xr:ST_RevisionContext"),
         name: "ctx",
         namespace: None,
@@ -85000,7 +85007,7 @@ const ATTRIBUTES_1362: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_949,
+        checks: CHECKS_947,
         class: ValueClass::Enum("xr:ST_SheetOp"),
         name: "op",
         namespace: None,
@@ -85033,9 +85040,9 @@ const ATTRIBUTES_1362: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1363: &[AttributeConstraint] = &[
+const ATTRIBUTES_1364: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_942,
+        checks: CHECKS_940,
         class: ValueClass::UInt64,
         name: "rev",
         namespace: None,
@@ -85043,7 +85050,7 @@ const ATTRIBUTES_1363: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_943,
+        checks: CHECKS_941,
         class: ValueClass::String,
         name: "uid",
         namespace: None,
@@ -85051,7 +85058,7 @@ const ATTRIBUTES_1363: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_943,
+        checks: CHECKS_941,
         class: ValueClass::String,
         name: "sh",
         namespace: None,
@@ -85067,7 +85074,7 @@ const ATTRIBUTES_1363: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_944,
+        checks: CHECKS_942,
         class: ValueClass::Enum("xr:ST_RevisionContext"),
         name: "ctx",
         namespace: None,
@@ -85083,7 +85090,7 @@ const ATTRIBUTES_1363: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_943,
+        checks: CHECKS_941,
         class: ValueClass::String,
         name: "listGuid",
         namespace: None,
@@ -85092,9 +85099,9 @@ const ATTRIBUTES_1363: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1364: &[AttributeConstraint] = &[
+const ATTRIBUTES_1365: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_942,
+        checks: CHECKS_940,
         class: ValueClass::UInt64,
         name: "rev",
         namespace: None,
@@ -85102,7 +85109,7 @@ const ATTRIBUTES_1364: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_943,
+        checks: CHECKS_941,
         class: ValueClass::String,
         name: "uid",
         namespace: None,
@@ -85110,7 +85117,7 @@ const ATTRIBUTES_1364: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_943,
+        checks: CHECKS_941,
         class: ValueClass::String,
         name: "sh",
         namespace: None,
@@ -85126,7 +85133,7 @@ const ATTRIBUTES_1364: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_944,
+        checks: CHECKS_942,
         class: ValueClass::Enum("xr:ST_RevisionContext"),
         name: "ctx",
         namespace: None,
@@ -85199,9 +85206,9 @@ const ATTRIBUTES_1364: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1365: &[AttributeConstraint] = &[
+const ATTRIBUTES_1366: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_942,
+        checks: CHECKS_940,
         class: ValueClass::UInt64,
         name: "revIDLastSave",
         namespace: None,
@@ -85218,9 +85225,9 @@ const ATTRIBUTES_1365: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1366: &[AttributeConstraint] = &[
+const ATTRIBUTES_1367: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_950,
+        checks: CHECKS_948,
         class: ValueClass::Enum("xr:ST_RowColVisualOp"),
         name: "action",
         namespace: None,
@@ -85253,7 +85260,7 @@ const ATTRIBUTES_1366: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1367: &[AttributeConstraint] = &[
+const ATTRIBUTES_1368: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_148,
         class: ValueClass::String,
@@ -85263,7 +85270,7 @@ const ATTRIBUTES_1367: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_937,
+        checks: CHECKS_935,
         class: ValueClass::Enum("xr:ST_AdjustType"),
         name: "ajt",
         namespace: None,
@@ -85271,7 +85278,7 @@ const ATTRIBUTES_1367: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_938,
+        checks: CHECKS_936,
         class: ValueClass::Enum("xr:ST_AdjustTypeExt"),
         name: "ajtx",
         namespace: None,
@@ -85287,7 +85294,7 @@ const ATTRIBUTES_1367: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_943,
+        checks: CHECKS_941,
         class: ValueClass::String,
         name: "uid",
         namespace: None,
@@ -85296,7 +85303,7 @@ const ATTRIBUTES_1367: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1368: &[AttributeConstraint] = &[
+const ATTRIBUTES_1369: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_149,
         class: ValueClass::Boolean,
@@ -85315,9 +85322,9 @@ const ATTRIBUTES_1368: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1369: &[AttributeConstraint] = &[
+const ATTRIBUTES_1370: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_943,
+        checks: CHECKS_941,
         class: ValueClass::String,
         name: "uid",
         namespace: None,
@@ -85325,7 +85332,7 @@ const ATTRIBUTES_1369: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_951,
+        checks: CHECKS_949,
         class: ValueClass::Enum("xr:ST_FeatureType"),
         name: "eft",
         namespace: None,
@@ -85333,7 +85340,7 @@ const ATTRIBUTES_1369: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_952,
+        checks: CHECKS_950,
         class: ValueClass::Enum("xr:ST_ExtFeatureType"),
         name: "eftx",
         namespace: None,
@@ -85341,7 +85348,7 @@ const ATTRIBUTES_1369: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_953,
+        checks: CHECKS_951,
         class: ValueClass::Enum("xr:ST_SubFeatureType"),
         name: "seft",
         namespace: None,
@@ -85349,7 +85356,7 @@ const ATTRIBUTES_1369: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_954,
+        checks: CHECKS_952,
         class: ValueClass::Enum("xr:ST_ExtSubFeatureType"),
         name: "seftx",
         namespace: None,
@@ -85358,8 +85365,8 @@ const ATTRIBUTES_1369: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1370: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_959,
+const ATTRIBUTES_1371: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_957,
     class: ValueClass::Enum("xvml:ST_ObjectType"),
     name: "ObjectType",
     namespace: None,
@@ -85367,7 +85374,7 @@ const ATTRIBUTES_1370: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1371: &[AttributeConstraint] = &[
+const ATTRIBUTES_1372: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_132,
         class: ValueClass::String,
@@ -85386,7 +85393,7 @@ const ATTRIBUTES_1371: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1372: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_1373: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_453,
     class: ValueClass::Boolean,
     name: "autoRefresh",
@@ -85395,9 +85402,9 @@ const ATTRIBUTES_1372: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_1373: &[AttributeConstraint] = &[
+const ATTRIBUTES_1374: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_963,
+        checks: CHECKS_961,
         class: ValueClass::Byte,
         name: "version",
         namespace: None,
@@ -85405,7 +85412,7 @@ const ATTRIBUTES_1373: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_927,
+        checks: CHECKS_925,
         class: ValueClass::UInt32,
         name: "sourceField",
         namespace: None,
@@ -85414,8 +85421,8 @@ const ATTRIBUTES_1373: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_1374: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_963,
+const ATTRIBUTES_1375: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_961,
     class: ValueClass::Byte,
     name: "version",
     namespace: None,

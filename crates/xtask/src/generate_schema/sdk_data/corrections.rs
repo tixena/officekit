@@ -1,12 +1,42 @@
 //! The hand-maintained table of corrections to SDK 3.5.1's data, applied to
 //! the types read before anything is emitted.
 
+mod standard;
+
 use anyhow::{Context as _, Result, bail};
 
-use super::{DataParticle, DataType, SdkData};
+use self::standard::FromStandard;
+use super::{DataParticle, DataType, Facet, SdkData};
+use crate::generate_schema::model::SchemaSet;
 
 #[cfg(test)]
 mod tests;
+
+/// One attribute whose value class the data gets wrong.
+struct AttributeType {
+    attribute: String,
+    class: Class,
+    type_name: String,
+}
+
+/// What an attribute's value is read as instead.
+enum Class {
+    Enumeration(String),
+    String,
+}
+
+/// One type the data derives from the wrong base, given the attributes of
+/// another type's base.
+struct BaseType {
+    like: String,
+    type_name: String,
+}
+
+/// Values an enumeration of the data lacks.
+struct EnumerationValues {
+    add: Vec<String>,
+    enumeration: String,
+}
 
 /// One attribute the data qualifies and Office writes unprefixed.
 struct Attribute {
@@ -24,11 +54,27 @@ struct Extension {
     type_name: String,
 }
 
-/// Apply every row of the table of corrections to `data`.
-pub(super) fn apply(data: &mut SdkData, text: &str) -> Result<()> {
+/// Apply every row of the table of corrections to `data`; `standard` is the
+/// Transitional schemas the rows that build types read.
+pub(super) fn apply(data: &mut SdkData, text: &str, standard: &SchemaSet) -> Result<()> {
     let table: toml::Table = text
         .parse()
         .context("the table of corrections is not TOML")?;
+    for row in attribute_types(&table)? {
+        retype_attribute(data, &row).with_context(|| {
+            format!(
+                "in the correction of `{}` of `{}`",
+                row.attribute, row.type_name
+            )
+        })?;
+    }
+    for row in enumeration_values(&table)? {
+        add_values(data, &row)
+            .with_context(|| format!("in the correction of `{}`", row.enumeration))?;
+    }
+    for row in base_types(&table)? {
+        rebase(data, &row).with_context(|| format!("in the correction of `{}`", row.type_name))?;
+    }
     for row in extensions(&table)? {
         replace_extension(data, &row)
             .with_context(|| format!("in the correction of `{}`", row.replaces))?;
@@ -41,6 +87,10 @@ pub(super) fn apply(data: &mut SdkData, text: &str) -> Result<()> {
             )
         })?;
     }
+    for row in FromStandard::rows(rows(&table, "from_standard")?)? {
+        row.apply(data, standard)
+            .with_context(|| format!("in the correction building `{}`", row.describe()))?;
+    }
     Ok(())
 }
 
@@ -48,6 +98,73 @@ fn known<'data>(data: &'data SdkData, name: &str) -> Result<&'data DataType> {
     data.types
         .get(name)
         .with_context(|| format!("the data has no `{name}`"))
+}
+
+fn retype_attribute(data: &mut SdkData, row: &AttributeType) -> Result<()> {
+    let type_name = match &row.class {
+        Class::Enumeration(name) => {
+            let (prefix, _) = name
+                .split_once(':')
+                .with_context(|| format!("`{name}` has no `:`"))?;
+            let enumeration = data
+                .enumerations
+                .get(name)
+                .with_context(|| format!("the data has no enumeration `{name}`"))?;
+            let namespace = data
+                .typed_namespaces
+                .get(prefix)
+                .with_context(|| format!("the data has no typed namespace `{prefix}`"))?;
+            format!("EnumValue<{namespace}.{}>", enumeration.name)
+        }
+        Class::String => "StringValue".to_owned(),
+    };
+    let data_type = data
+        .types
+        .get_mut(&row.type_name)
+        .with_context(|| format!("the data has no `{}`", row.type_name))?;
+    let attribute = data_type
+        .attributes
+        .iter_mut()
+        .find(|attribute| attribute.qname == row.attribute)
+        .with_context(|| format!("the type has no attribute `{}`", row.attribute))?;
+    attribute.type_name = type_name;
+    Ok(())
+}
+
+fn add_values(data: &mut SdkData, row: &EnumerationValues) -> Result<()> {
+    let enumeration = data
+        .enumerations
+        .get_mut(&row.enumeration)
+        .with_context(|| format!("the data has no enumeration `{}`", row.enumeration))?;
+    for value in &row.add {
+        if enumeration.facets.iter().any(|facet| facet.value == *value) {
+            bail!("`{}` already has the value `{value}`", row.enumeration);
+        }
+        enumeration.facets.push(Facet {
+            value: value.clone(),
+            version: None,
+        });
+    }
+    Ok(())
+}
+
+fn rebase(data: &mut SdkData, row: &BaseType) -> Result<()> {
+    let like = known(data, &row.like)?;
+    let mut attributes = Vec::new();
+    if like.is_derived
+        && let Some((schema_type, _)) = row.like.split_once('/')
+        && let Some(base) = data.types.get(&format!("{schema_type}/"))
+    {
+        attributes.extend(base.attributes.iter().cloned());
+    }
+    attributes.extend(like.attributes.iter().cloned());
+    let data_type = data
+        .types
+        .get_mut(&row.type_name)
+        .with_context(|| format!("the data has no `{}`", row.type_name))?;
+    data_type.attributes = attributes;
+    data_type.is_derived = false;
+    Ok(())
 }
 
 fn replace_attribute(data: &mut SdkData, row: &Attribute) -> Result<()> {
@@ -116,6 +233,61 @@ fn replace_extension(data: &mut SdkData, row: &Extension) -> Result<()> {
         },
     );
     Ok(())
+}
+
+fn attribute_types(table: &toml::Table) -> Result<Vec<AttributeType>> {
+    rows(table, "attribute_type")?
+        .into_iter()
+        .map(|row| {
+            let class = match (row.get("enumeration"), row.get("string")) {
+                (Some(_), None) => Class::Enumeration(text_field(row, "enumeration")?),
+                (None, Some(toml::Value::Boolean(true))) => Class::String,
+                _ => bail!("an `attribute_type` row has not exactly one of `enumeration` and `string = true`"),
+            };
+            Ok(AttributeType {
+                attribute: text_field(row, "attribute")?,
+                class,
+                type_name: text_field(row, "type")?,
+            })
+        })
+        .collect()
+}
+
+fn base_types(table: &toml::Table) -> Result<Vec<BaseType>> {
+    rows(table, "base_type")?
+        .into_iter()
+        .map(|row| {
+            Ok(BaseType {
+                like: text_field(row, "like")?,
+                type_name: text_field(row, "type")?,
+            })
+        })
+        .collect()
+}
+
+fn enumeration_values(table: &toml::Table) -> Result<Vec<EnumerationValues>> {
+    rows(table, "enumeration_values")?
+        .into_iter()
+        .map(|row| {
+            Ok(EnumerationValues {
+                add: texts(row, "add")?,
+                enumeration: text_field(row, "enumeration")?,
+            })
+        })
+        .collect()
+}
+
+fn texts(row: &toml::Table, name: &str) -> Result<Vec<String>> {
+    row.get(name)
+        .and_then(toml::Value::as_array)
+        .with_context(|| format!("a row has no list `{name}`"))?
+        .iter()
+        .map(|item| {
+            item.as_str()
+                .map(str::to_owned)
+                .with_context(|| format!("an item of `{name}` is not text"))
+        })
+        .collect()
 }
 
 fn attributes(table: &toml::Table) -> Result<Vec<Attribute>> {

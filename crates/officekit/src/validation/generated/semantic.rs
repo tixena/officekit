@@ -362,7 +362,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
     Registration {
         applications: Applications(0b111),
         constraint: Constraint::RelationshipExists { attribute: None },
-        type_id: 923,
+        type_id: 922,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3380,7 +3380,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             attribute: Some(0),
             pattern: "^.{1}$",
         },
-        type_id: 3032,
+        type_id: 3035,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3389,7 +3389,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             attribute: Some(0),
             pattern: "^.{1}$",
         },
-        type_id: 3038,
+        type_id: 3041,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3398,7 +3398,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             attribute: Some(0),
             pattern: "^[^,]*$",
         },
-        type_id: 3041,
+        type_id: 3044,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3408,7 +3408,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 253,
             min: 0,
         },
-        type_id: 3042,
+        type_id: 3045,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3418,7 +3418,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3045,
+        type_id: 3048,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3427,7 +3427,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             attribute: Some(0),
             pattern: "^[^,]*$",
         },
-        type_id: 3058,
+        type_id: 3061,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3437,26 +3437,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 253,
             min: 0,
         },
-        type_id: 3061,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b001),
-        constraint: Constraint::ValuePattern {
-            attribute: Some(0),
-            pattern: "^[^,]*$",
-        },
-        type_id: 3068,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::UniqueValue {
-            attribute: Some(1),
-            case_sensitive: true,
-            parent: None,
-        },
-        type_id: 3070,
+        type_id: 3064,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3469,13 +3450,32 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
         versions: Versions(0b11_1111),
     },
     Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::UniqueValue {
+            attribute: Some(1),
+            case_sensitive: true,
+            parent: None,
+        },
+        type_id: 3073,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b001),
+        constraint: Constraint::ValuePattern {
+            attribute: Some(0),
+            pattern: "^[^,]*$",
+        },
+        type_id: 3074,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
         applications: Applications(0b001),
         constraint: Constraint::ValueSet {
             attribute: Some(0),
             valid: false,
             values: &["0x0040", "0x0080", "0x0800"],
         },
-        type_id: 3072,
+        type_id: 3075,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3485,17 +3485,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3084,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::UniqueValue {
-            attribute: Some(3),
-            case_sensitive: true,
-            parent: None,
-        },
-        type_id: 3093,
+        type_id: 3087,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3509,15 +3499,25 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
         versions: Versions(0b11_1111),
     },
     Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::UniqueValue {
+            attribute: Some(3),
+            case_sensitive: true,
+            parent: None,
+        },
+        type_id: 3099,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
         applications: Applications(0b001),
         constraint: Constraint::CannotBeOmitted { attribute: Some(1) },
-        type_id: 3101,
+        type_id: 3104,
         versions: Versions(0b11_1111),
     },
     Registration {
         applications: Applications(0b001),
         constraint: Constraint::CannotBeOmitted { attribute: Some(0) },
-        type_id: 3101,
+        type_id: 3104,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3527,7 +3527,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3120,
+        type_id: 3123,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3537,37 +3537,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3137,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::UniqueValue {
-            attribute: Some(3),
-            case_sensitive: true,
-            parent: None,
-        },
-        type_id: 3143,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::UniqueValue {
-            attribute: Some(3),
-            case_sensitive: true,
-            parent: None,
-        },
-        type_id: 3144,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::UniqueValue {
-            attribute: Some(3),
-            case_sensitive: false,
-            parent: None,
-        },
-        type_id: 3145,
+        type_id: 3140,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3594,7 +3564,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
         applications: Applications(0b111),
         constraint: Constraint::UniqueValue {
             attribute: Some(3),
-            case_sensitive: true,
+            case_sensitive: false,
             parent: None,
         },
         type_id: 3148,
@@ -3643,11 +3613,41 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
     Registration {
         applications: Applications(0b111),
         constraint: Constraint::UniqueValue {
-            attribute: Some(4),
+            attribute: Some(3),
             case_sensitive: true,
             parent: None,
         },
         type_id: 3153,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::UniqueValue {
+            attribute: Some(3),
+            case_sensitive: true,
+            parent: None,
+        },
+        type_id: 3154,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::UniqueValue {
+            attribute: Some(3),
+            case_sensitive: true,
+            parent: None,
+        },
+        type_id: 3155,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::UniqueValue {
+            attribute: Some(4),
+            case_sensitive: true,
+            parent: None,
+        },
+        type_id: 3156,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3657,7 +3657,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 15,
             min: 0,
         },
-        type_id: 3153,
+        type_id: 3156,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3667,7 +3667,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 1000,
             min: 1,
         },
-        type_id: 3187,
+        type_id: 3190,
         versions: Versions(0b11_1110),
     },
     Registration {
@@ -3677,13 +3677,13 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 1000,
             min: 1,
         },
-        type_id: 3192,
+        type_id: 3195,
         versions: Versions(0b11_1110),
     },
     Registration {
         applications: Applications(0b011),
         constraint: Constraint::RelationshipExists { attribute: Some(0) },
-        type_id: 3195,
+        type_id: 3198,
         versions: Versions(0b11_1110),
     },
     Registration {
@@ -3693,7 +3693,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3217,
+        type_id: 3220,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3703,7 +3703,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: true,
             values: &["0"],
         },
-        type_id: 3217,
+        type_id: 3220,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3713,7 +3713,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: true,
             values: &["56"],
         },
-        type_id: 3217,
+        type_id: 3220,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3724,7 +3724,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other_values: &["true"],
             values: &["false"],
         },
-        type_id: 3252,
+        type_id: 3255,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3735,7 +3735,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other_values: &["true"],
             values: &["false"],
         },
-        type_id: 3252,
+        type_id: 3255,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3746,7 +3746,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other_values: &["true"],
             values: &["false"],
         },
-        type_id: 3252,
+        type_id: 3255,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3756,7 +3756,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3253,
+        type_id: 3256,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3766,7 +3766,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0x3FFF_FFFE,
             min: 0x7FFE,
         },
-        type_id: 3253,
+        type_id: 3256,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3778,7 +3778,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: false,
         },
-        type_id: 3255,
+        type_id: 3258,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3788,7 +3788,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3255,
+        type_id: 3258,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3798,7 +3798,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(0),
             values: &["aboveAverage"],
         },
-        type_id: 3255,
+        type_id: 3258,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3808,7 +3808,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(0),
             values: &["top10"],
         },
-        type_id: 3255,
+        type_id: 3258,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3818,7 +3818,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(0),
             values: &["top10"],
         },
-        type_id: 3255,
+        type_id: 3258,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3828,7 +3828,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(0),
             values: &["beginsWith", "containsText", "endsWith", "notContainsText"],
         },
-        type_id: 3255,
+        type_id: 3258,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3838,7 +3838,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(0),
             values: &["timePeriod"],
         },
-        type_id: 3255,
+        type_id: 3258,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3848,7 +3848,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(0),
             values: &["aboveAverage"],
         },
-        type_id: 3255,
+        type_id: 3258,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3858,7 +3858,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(0),
             values: &["aboveAverage"],
         },
-        type_id: 3255,
+        type_id: 3258,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3868,7 +3868,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: true,
             values: &["none"],
         },
-        type_id: 3258,
+        type_id: 3261,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3880,7 +3880,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3258,
+        type_id: 3261,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3897,7 +3897,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             },
             part: "..",
         },
-        type_id: 3258,
+        type_id: 3261,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3907,7 +3907,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 84,
             min: 0,
         },
-        type_id: 3262,
+        type_id: 3265,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3917,7 +3917,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3262,
+        type_id: 3265,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3927,7 +3927,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             can_equal: true,
             other: Some(1),
         },
-        type_id: 3265,
+        type_id: 3268,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3939,7 +3939,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3265,
+        type_id: 3268,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3949,7 +3949,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3266,
+        type_id: 3269,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3959,7 +3959,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3266,
+        type_id: 3269,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3969,7 +3969,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 225,
             min: 0,
         },
-        type_id: 3267,
+        type_id: 3270,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3979,7 +3979,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 32,
             min: 0,
         },
-        type_id: 3267,
+        type_id: 3270,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3989,7 +3989,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 225,
             min: 0,
         },
-        type_id: 3267,
+        type_id: 3270,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4001,7 +4001,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3271,
+        type_id: 3274,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4013,7 +4013,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3271,
+        type_id: 3274,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4023,7 +4023,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3272,
+        type_id: 3275,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4036,7 +4036,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
                 namespace: 120,
             }),
         },
-        type_id: 3273,
+        type_id: 3276,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4049,7 +4049,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
                 namespace: 120,
             }),
         },
-        type_id: 3274,
+        type_id: 3277,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4061,7 +4061,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3278,
+        type_id: 3281,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4073,7 +4073,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3278,
+        type_id: 3281,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4085,7 +4085,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3278,
+        type_id: 3281,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4097,7 +4097,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3278,
+        type_id: 3281,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4109,7 +4109,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3278,
+        type_id: 3281,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4122,7 +4122,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
                 namespace: 120,
             }),
         },
-        type_id: 3286,
+        type_id: 3289,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4132,7 +4132,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0x7FFF,
             min: 1,
         },
-        type_id: 3288,
+        type_id: 3291,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4141,7 +4141,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             attribute: Some(0),
             pattern: "^(0|[1-9][0-9]*000)$",
         },
-        type_id: 3290,
+        type_id: 3293,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4151,7 +4151,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 1,
         },
-        type_id: 3296,
+        type_id: 3299,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4161,7 +4161,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0x7FFF,
             min: 1,
         },
-        type_id: 3299,
+        type_id: 3302,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4171,7 +4171,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 2000,
             min: 0,
         },
-        type_id: 3303,
+        type_id: 3306,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4181,7 +4181,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 2000,
             min: 0,
         },
-        type_id: 3303,
+        type_id: 3306,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4191,7 +4191,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3303,
+        type_id: 3306,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4199,7 +4199,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
         constraint: Constraint::MutuallyExclusive {
             attributes: &[0, 1],
         },
-        type_id: 3305,
+        type_id: 3308,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4211,7 +4211,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3305,
+        type_id: 3308,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4221,7 +4221,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3305,
+        type_id: 3308,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4233,7 +4233,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: -2.0_f64,
             min_inclusive: true,
         },
-        type_id: 3307,
+        type_id: 3310,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4243,7 +4243,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: false,
             parent: None,
         },
-        type_id: 3309,
+        type_id: 3312,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4253,7 +4253,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0x7FFF,
             min: 1,
         },
-        type_id: 3309,
+        type_id: 3312,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4263,7 +4263,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0x7FFF_FFFF,
             min: 1,
         },
-        type_id: 3309,
+        type_id: 3312,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4275,19 +4275,19 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3309,
+        type_id: 3312,
         versions: Versions(0b11_1111),
     },
     Registration {
         applications: Applications(0b111),
         constraint: Constraint::RelationshipExists { attribute: None },
-        type_id: 3309,
+        type_id: 3312,
         versions: Versions(0b11_1111),
     },
     Registration {
         applications: Applications(0b111),
         constraint: Constraint::RelationshipExists { attribute: Some(0) },
-        type_id: 3310,
+        type_id: 3313,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4304,7 +4304,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             },
             part: "/WorkbookPart",
         },
-        type_id: 3313,
+        type_id: 3316,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4314,7 +4314,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: false,
             parent: None,
         },
-        type_id: 3318,
+        type_id: 3321,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4324,7 +4324,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0x7FFF,
             min: 1,
         },
-        type_id: 3318,
+        type_id: 3321,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4334,7 +4334,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0x7FFF_FFFF,
             min: 1,
         },
-        type_id: 3318,
+        type_id: 3321,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4346,13 +4346,13 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3318,
+        type_id: 3321,
         versions: Versions(0b11_1111),
     },
     Registration {
         applications: Applications(0b111),
         constraint: Constraint::RelationshipExists { attribute: Some(0) },
-        type_id: 3318,
+        type_id: 3321,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4362,7 +4362,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3320,
+        type_id: 3323,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4379,7 +4379,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             },
             part: ".",
         },
-        type_id: 3320,
+        type_id: 3323,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4392,7 +4392,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
                 namespace: 120,
             }),
         },
-        type_id: 3320,
+        type_id: 3323,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4405,7 +4405,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
                 namespace: 120,
             }),
         },
-        type_id: 3321,
+        type_id: 3324,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4420,7 +4420,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: ".",
         },
-        type_id: 3321,
+        type_id: 3324,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4430,7 +4430,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3323,
+        type_id: 3326,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4440,7 +4440,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(1),
             values: &["icon", "value"],
         },
-        type_id: 3325,
+        type_id: 3328,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4450,7 +4450,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(1),
             values: &["icon"],
         },
-        type_id: 3325,
+        type_id: 3328,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4460,7 +4460,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(1),
             values: &["icon"],
         },
-        type_id: 3325,
+        type_id: 3328,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4471,7 +4471,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other_values: &["individual", "group"],
             values: &["0"],
         },
-        type_id: 3329,
+        type_id: 3332,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4483,7 +4483,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3329,
+        type_id: 3332,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4493,7 +4493,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 25000,
             min: 0,
         },
-        type_id: 3333,
+        type_id: 3336,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4503,7 +4503,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 50000,
             min: 0,
         },
-        type_id: 3333,
+        type_id: 3336,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4516,27 +4516,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
                 namespace: 120,
             }),
         },
-        type_id: 3335,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::ValueLength {
-            attribute: Some(0),
-            max: 0xFFFF,
-            min: 0,
-        },
-        type_id: 3339,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::ValueLength {
-            attribute: Some(1),
-            max: 0xFFFF,
-            min: 0,
-        },
-        type_id: 3339,
+        type_id: 3338,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4557,6 +4537,26 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0,
         },
         type_id: 3342,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::ValueLength {
+            attribute: Some(0),
+            max: 0xFFFF,
+            min: 0,
+        },
+        type_id: 3345,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::ValueLength {
+            attribute: Some(1),
+            max: 0xFFFF,
+            min: 0,
+        },
+        type_id: 3345,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4566,7 +4566,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: true,
             values: &["96", "150", "220"],
         },
-        type_id: 3344,
+        type_id: 3347,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4576,7 +4576,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 1000,
             min: 1,
         },
-        type_id: 3389,
+        type_id: 3392,
         versions: Versions(0b11_1110),
     },
     Registration {
@@ -4586,7 +4586,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 1000,
             min: 1,
         },
-        type_id: 3410,
+        type_id: 3413,
         versions: Versions(0b11_1110),
     },
     Registration {
@@ -4598,7 +4598,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3419,
+        type_id: 3422,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4610,7 +4610,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3419,
+        type_id: 3422,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4622,7 +4622,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3419,
+        type_id: 3422,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4634,7 +4634,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3419,
+        type_id: 3422,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4644,7 +4644,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3421,
+        type_id: 3424,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4654,7 +4654,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3423,
+        type_id: 3426,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4669,7 +4669,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: ".",
         },
-        type_id: 3426,
+        type_id: 3429,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4681,7 +4681,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3442,
+        type_id: 3445,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4693,7 +4693,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3442,
+        type_id: 3445,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4705,7 +4705,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3442,
+        type_id: 3445,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4717,7 +4717,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3443,
+        type_id: 3446,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4727,7 +4727,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3444,
+        type_id: 3447,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4737,7 +4737,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3449,
+        type_id: 3452,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4747,7 +4747,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3449,
+        type_id: 3452,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4757,7 +4757,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3449,
+        type_id: 3452,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4767,7 +4767,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3449,
+        type_id: 3452,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4777,7 +4777,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3449,
+        type_id: 3452,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4789,7 +4789,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3449,
+        type_id: 3452,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4806,7 +4806,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             },
             part: "/WorkbookPart/ConnectionsPart",
         },
-        type_id: 3452,
+        type_id: 3455,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4816,7 +4816,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3452,
+        type_id: 3455,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4828,7 +4828,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3455,
+        type_id: 3458,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4846,7 +4846,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             }),
             part: "/WorkbookPart/CellMetadataPart",
         },
-        type_id: 3455,
+        type_id: 3458,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4858,7 +4858,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3455,
+        type_id: 3458,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4876,7 +4876,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             }),
             part: "/WorkbookPart/CellMetadataPart",
         },
-        type_id: 3455,
+        type_id: 3458,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4888,7 +4888,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3455,
+        type_id: 3458,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4906,7 +4906,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             }),
             part: "/WorkbookPart/WorkbookStylesPart",
         },
-        type_id: 3455,
+        type_id: 3458,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4914,7 +4914,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
         constraint: Constraint::MutuallyExclusive {
             attributes: &[3, 2],
         },
-        type_id: 3455,
+        type_id: 3458,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4931,7 +4931,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             },
             part: "/WorkbookPart",
         },
-        type_id: 3455,
+        type_id: 3458,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4943,7 +4943,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3455,
+        type_id: 3458,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4953,7 +4953,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 63999,
             min: 1,
         },
-        type_id: 3460,
+        type_id: 3463,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4963,7 +4963,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(6),
             values: &["1"],
         },
-        type_id: 3460,
+        type_id: 3463,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4973,7 +4973,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(6),
             value: "0",
         },
-        type_id: 3460,
+        type_id: 3463,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4983,7 +4983,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(6),
             values: &["1"],
         },
-        type_id: 3460,
+        type_id: 3463,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -4993,7 +4993,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(6),
             values: &["1"],
         },
-        type_id: 3460,
+        type_id: 3463,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5003,7 +5003,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(6),
             value: "0",
         },
-        type_id: 3460,
+        type_id: 3463,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5013,7 +5013,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 1,
         },
-        type_id: 3460,
+        type_id: 3463,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5023,7 +5023,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 1,
         },
-        type_id: 3460,
+        type_id: 3463,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5033,7 +5033,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 1,
         },
-        type_id: 3460,
+        type_id: 3463,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5045,7 +5045,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3466,
+        type_id: 3469,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5063,7 +5063,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             }),
             part: "/WorkbookPart/CellMetadataPart",
         },
-        type_id: 3466,
+        type_id: 3469,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5075,7 +5075,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3466,
+        type_id: 3469,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5093,7 +5093,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             }),
             part: "/WorkbookPart/CellMetadataPart",
         },
-        type_id: 3466,
+        type_id: 3469,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5105,7 +5105,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3466,
+        type_id: 3469,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5123,13 +5123,13 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             }),
             part: "/WorkbookPart/WorkbookStylesPart",
         },
-        type_id: 3466,
+        type_id: 3469,
         versions: Versions(0b11_1111),
     },
     Registration {
         applications: Applications(0b111),
         constraint: Constraint::MutuallyExclusive { attributes: &[1] },
-        type_id: 3466,
+        type_id: 3469,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5146,7 +5146,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             },
             part: "/WorkbookPart",
         },
-        type_id: 3466,
+        type_id: 3469,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5158,7 +5158,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3466,
+        type_id: 3469,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5173,7 +5173,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: "/WorkbookPart/CellMetadataPart",
         },
-        type_id: 3467,
+        type_id: 3470,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5188,7 +5188,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: "/WorkbookPart/WorkbookStylesPart",
         },
-        type_id: 3467,
+        type_id: 3470,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5203,7 +5203,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: "/WorkbookPart/CellMetadataPart",
         },
-        type_id: 3467,
+        type_id: 3470,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5215,7 +5215,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3468,
+        type_id: 3471,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5227,7 +5227,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3468,
+        type_id: 3471,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5237,7 +5237,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: true,
             values: &["0", "1", "2"],
         },
-        type_id: 3468,
+        type_id: 3471,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5247,7 +5247,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: true,
             values: &["false"],
         },
-        type_id: 3469,
+        type_id: 3472,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5257,7 +5257,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(0),
             value: "shared",
         },
-        type_id: 3469,
+        type_id: 3472,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5267,7 +5267,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3471,
+        type_id: 3474,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5279,7 +5279,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3471,
+        type_id: 3474,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5291,7 +5291,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3471,
+        type_id: 3474,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5304,7 +5304,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
                 namespace: 118,
             }),
         },
-        type_id: 3471,
+        type_id: 3474,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5319,7 +5319,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: "/WorkbookPart/WorkbookStylesPart",
         },
-        type_id: 3471,
+        type_id: 3474,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5332,7 +5332,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
                 namespace: 118,
             }),
         },
-        type_id: 3474,
+        type_id: 3477,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5342,7 +5342,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(0),
             value: "cells",
         },
-        type_id: 3477,
+        type_id: 3480,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5352,7 +5352,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(0),
             value: "timePeriod",
         },
-        type_id: 3477,
+        type_id: 3480,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5367,7 +5367,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: "/WorkbookPart/WorkbookStylesPart",
         },
-        type_id: 3477,
+        type_id: 3480,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5376,7 +5376,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             attribute: Some(1),
             pattern: "^[\\p{L}\\x{80}-\\x{10FFFF}][_\\d\\p{L}\\x{80}-\\x{10FFFF}]*$",
         },
-        type_id: 3484,
+        type_id: 3487,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5386,7 +5386,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 32,
             min: 0,
         },
-        type_id: 3484,
+        type_id: 3487,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5398,7 +5398,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3486,
+        type_id: 3489,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5410,7 +5410,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 10.0_f64,
             min_inclusive: true,
         },
-        type_id: 3486,
+        type_id: 3489,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5422,7 +5422,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 10.0_f64,
             min_inclusive: true,
         },
-        type_id: 3486,
+        type_id: 3489,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5434,7 +5434,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 10.0_f64,
             min_inclusive: true,
         },
-        type_id: 3486,
+        type_id: 3489,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5446,7 +5446,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 10.0_f64,
             min_inclusive: true,
         },
-        type_id: 3486,
+        type_id: 3489,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5461,7 +5461,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: "/WorkbookPart",
         },
-        type_id: 3486,
+        type_id: 3489,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5473,7 +5473,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3488,
+        type_id: 3491,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5485,7 +5485,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3488,
+        type_id: 3491,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5497,7 +5497,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3488,
+        type_id: 3491,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5509,7 +5509,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3488,
+        type_id: 3491,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5521,7 +5521,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3488,
+        type_id: 3491,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5536,7 +5536,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: "/WorkbookPart/WorkbookStylesPart",
         },
-        type_id: 3488,
+        type_id: 3491,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5546,37 +5546,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             can_equal: true,
             other: Some(1),
         },
-        type_id: 3488,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::ValueSet {
-            attribute: Some(0),
-            valid: true,
-            values: &["false"],
-        },
-        type_id: 3495,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::ValueSet {
-            attribute: Some(0),
-            valid: true,
-            values: &["false"],
-        },
-        type_id: 3496,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::ValueSet {
-            attribute: Some(0),
-            valid: true,
-            values: &["false"],
-        },
-        type_id: 3497,
+        type_id: 3491,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5587,6 +5557,16 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             values: &["false"],
         },
         type_id: 3498,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::ValueSet {
+            attribute: Some(0),
+            valid: true,
+            values: &["false"],
+        },
+        type_id: 3499,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5616,7 +5596,27 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: true,
             values: &["false"],
         },
-        type_id: 3502,
+        type_id: 3503,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::ValueSet {
+            attribute: Some(0),
+            valid: true,
+            values: &["false"],
+        },
+        type_id: 3504,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::ValueSet {
+            attribute: Some(0),
+            valid: true,
+            values: &["false"],
+        },
+        type_id: 3505,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5628,7 +5628,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: -1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3506,
+        type_id: 3509,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5640,7 +5640,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: -1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3507,
+        type_id: 3510,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5652,7 +5652,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3507,
+        type_id: 3510,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5664,7 +5664,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3507,
+        type_id: 3510,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5676,7 +5676,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: -1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3508,
+        type_id: 3511,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5684,7 +5684,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
         constraint: Constraint::MutuallyExclusive {
             attributes: &[0, 1, 2, 3],
         },
-        type_id: 3509,
+        type_id: 3512,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5696,7 +5696,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: -1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3509,
+        type_id: 3512,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5711,7 +5711,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: "/WorkbookPart/WorkbookStylesPart",
         },
-        type_id: 3510,
+        type_id: 3513,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5726,7 +5726,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: ".",
         },
-        type_id: 3514,
+        type_id: 3517,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5736,7 +5736,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: false,
             parent: None,
         },
-        type_id: 3514,
+        type_id: 3517,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5747,7 +5747,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other_values: &["data", "selection"],
             values: &["none", "all"],
         },
-        type_id: 3519,
+        type_id: 3522,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5757,7 +5757,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0x7FFF_FFFF,
             min: 1,
         },
-        type_id: 3521,
+        type_id: 3524,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5767,7 +5767,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3522,
+        type_id: 3525,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5779,7 +5779,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3522,
+        type_id: 3525,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5789,7 +5789,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3522,
+        type_id: 3525,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5801,7 +5801,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3522,
+        type_id: 3525,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5811,7 +5811,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3522,
+        type_id: 3525,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5821,7 +5821,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3522,
+        type_id: 3525,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5831,7 +5831,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3522,
+        type_id: 3525,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5841,7 +5841,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3522,
+        type_id: 3525,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5851,7 +5851,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3522,
+        type_id: 3525,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5863,7 +5863,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3527,
+        type_id: 3530,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5873,7 +5873,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3527,
+        type_id: 3530,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5883,18 +5883,6 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 32,
             min: 0,
         },
-        type_id: 3527,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b010),
-        constraint: Constraint::ValueRange {
-            attribute: None,
-            max: 32767.0_f64,
-            max_inclusive: true,
-            min: f64::NEG_INFINITY,
-            min_inclusive: true,
-        },
         type_id: 3530,
         versions: Versions(0b11_1111),
     },
@@ -5907,7 +5895,19 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3530,
+        type_id: 3533,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b010),
+        constraint: Constraint::ValueRange {
+            attribute: None,
+            max: 32767.0_f64,
+            max_inclusive: true,
+            min: f64::NEG_INFINITY,
+            min_inclusive: true,
+        },
+        type_id: 3533,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5919,7 +5919,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3530,
+        type_id: 3533,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5931,7 +5931,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3530,
+        type_id: 3533,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5943,7 +5943,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3530,
+        type_id: 3533,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5955,7 +5955,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 10.0_f64,
             min_inclusive: true,
         },
-        type_id: 3531,
+        type_id: 3534,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5967,7 +5967,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3531,
+        type_id: 3534,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5977,7 +5977,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: false,
             values: &["00000000-0000-0000-0000-000000000000"],
         },
-        type_id: 3531,
+        type_id: 3534,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5987,7 +5987,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: false,
             parent: None,
         },
-        type_id: 3536,
+        type_id: 3539,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -5999,7 +5999,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 10.0_f64,
             min_inclusive: true,
         },
-        type_id: 3537,
+        type_id: 3540,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6011,7 +6011,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3537,
+        type_id: 3540,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6021,7 +6021,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: false,
             values: &["00000000-0000-0000-0000-000000000000"],
         },
-        type_id: 3537,
+        type_id: 3540,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6033,7 +6033,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3539,
+        type_id: 3542,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6045,7 +6045,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3539,
+        type_id: 3542,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6057,7 +6057,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3539,
+        type_id: 3542,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6067,7 +6067,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: false,
             values: &["00000000-0000-0000-0000-000000000000"],
         },
-        type_id: 3539,
+        type_id: 3542,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6079,7 +6079,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3539,
+        type_id: 3542,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6091,7 +6091,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3541,
+        type_id: 3544,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6103,7 +6103,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3541,
+        type_id: 3544,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6113,7 +6113,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3542,
+        type_id: 3545,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6123,7 +6123,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3542,
+        type_id: 3545,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6135,7 +6135,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3542,
+        type_id: 3545,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6145,7 +6145,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(1),
             values: &["false"],
         },
-        type_id: 3542,
+        type_id: 3545,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6155,7 +6155,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(1),
             value: "true",
         },
-        type_id: 3542,
+        type_id: 3545,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6165,7 +6165,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3542,
+        type_id: 3545,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6175,7 +6175,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3542,
+        type_id: 3545,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6187,7 +6187,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3542,
+        type_id: 3545,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6197,7 +6197,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(1),
             values: &["false"],
         },
-        type_id: 3542,
+        type_id: 3545,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6212,7 +6212,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: ".",
         },
-        type_id: 3544,
+        type_id: 3547,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6224,7 +6224,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3550,
+        type_id: 3553,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6234,7 +6234,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 32,
             min: 0,
         },
-        type_id: 3550,
+        type_id: 3553,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6244,7 +6244,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 32,
             min: 0,
         },
-        type_id: 3550,
+        type_id: 3553,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6256,7 +6256,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3552,
+        type_id: 3555,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6268,7 +6268,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3552,
+        type_id: 3555,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6280,7 +6280,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3552,
+        type_id: 3555,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6292,7 +6292,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3553,
+        type_id: 3556,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6304,7 +6304,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3553,
+        type_id: 3556,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6316,7 +6316,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3553,
+        type_id: 3556,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6328,7 +6328,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3553,
+        type_id: 3556,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6340,7 +6340,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3553,
+        type_id: 3556,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6352,7 +6352,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1000.0_f64,
             min_inclusive: true,
         },
-        type_id: 3553,
+        type_id: 3556,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6362,7 +6362,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3554,
+        type_id: 3557,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6374,7 +6374,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3555,
+        type_id: 3558,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6384,7 +6384,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3555,
+        type_id: 3558,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6394,7 +6394,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3556,
+        type_id: 3559,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6405,7 +6405,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other_values: &["true"],
             values: &["StdDocumentName"],
         },
-        type_id: 3556,
+        type_id: 3559,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6415,7 +6415,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3558,
+        type_id: 3561,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6425,7 +6425,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3558,
+        type_id: 3561,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6437,7 +6437,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3561,
+        type_id: 3564,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6449,7 +6449,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3561,
+        type_id: 3564,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6461,7 +6461,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3562,
+        type_id: 3565,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6471,7 +6471,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3562,
+        type_id: 3565,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6481,7 +6481,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3562,
+        type_id: 3565,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6493,7 +6493,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3562,
+        type_id: 3565,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6503,13 +6503,13 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3564,
+        type_id: 3567,
         versions: Versions(0b11_1111),
     },
     Registration {
         applications: Applications(0b111),
         constraint: Constraint::RelationshipExists { attribute: Some(0) },
-        type_id: 3568,
+        type_id: 3571,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6524,7 +6524,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: ".",
         },
-        type_id: 3583,
+        type_id: 3586,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6534,7 +6534,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3583,
+        type_id: 3586,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6544,7 +6544,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: false,
             values: &["s"],
         },
-        type_id: 3600,
+        type_id: 3603,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6559,7 +6559,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: "/WorkbookPart/CellMetadataPart",
         },
-        type_id: 3600,
+        type_id: 3603,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6571,7 +6571,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3601,
+        type_id: 3604,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6581,7 +6581,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3601,
+        type_id: 3604,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6591,7 +6591,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3601,
+        type_id: 3604,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6603,7 +6603,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3601,
+        type_id: 3604,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6615,7 +6615,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3606,
+        type_id: 3609,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6627,7 +6627,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3606,
+        type_id: 3609,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6639,7 +6639,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3606,
+        type_id: 3609,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6651,7 +6651,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3606,
+        type_id: 3609,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6663,7 +6663,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3607,
+        type_id: 3610,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6673,7 +6673,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 31,
             min: 0,
         },
-        type_id: 3609,
+        type_id: 3612,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6686,7 +6686,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
                 namespace: 118,
             }),
         },
-        type_id: 3611,
+        type_id: 3614,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6701,7 +6701,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: ".",
         },
-        type_id: 3613,
+        type_id: 3616,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6713,7 +6713,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: -1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3613,
+        type_id: 3616,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6723,7 +6723,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 54,
             min: 1,
         },
-        type_id: 3616,
+        type_id: 3619,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6733,7 +6733,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3617,
+        type_id: 3620,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6743,7 +6743,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3617,
+        type_id: 3620,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6753,7 +6753,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3617,
+        type_id: 3620,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6763,7 +6763,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3617,
+        type_id: 3620,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6778,7 +6778,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: ".",
         },
-        type_id: 3620,
+        type_id: 3623,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6788,7 +6788,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: false,
             parent: None,
         },
-        type_id: 3620,
+        type_id: 3623,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6803,7 +6803,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: ".",
         },
-        type_id: 3620,
+        type_id: 3623,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6818,7 +6818,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: ".",
         },
-        type_id: 3620,
+        type_id: 3623,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6830,7 +6830,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3625,
+        type_id: 3628,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6840,7 +6840,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 31,
             min: 0,
         },
-        type_id: 3626,
+        type_id: 3629,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6850,7 +6850,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 31,
             min: 1,
         },
-        type_id: 3627,
+        type_id: 3630,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6862,7 +6862,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3629,
+        type_id: 3632,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6877,7 +6877,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: "/WorkbookPart/WorkbookStylesPart",
         },
-        type_id: 3631,
+        type_id: 3634,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6887,7 +6887,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 32,
             min: 0,
         },
-        type_id: 3633,
+        type_id: 3636,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6899,7 +6899,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3634,
+        type_id: 3637,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6911,7 +6911,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3635,
+        type_id: 3638,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6924,7 +6924,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
                 namespace: 118,
             }),
         },
-        type_id: 3635,
+        type_id: 3638,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6934,7 +6934,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: false,
             values: &["XLMDX"],
         },
-        type_id: 3635,
+        type_id: 3638,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6944,7 +6944,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 1,
         },
-        type_id: 3635,
+        type_id: 3638,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6956,7 +6956,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3637,
+        type_id: 3640,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6968,7 +6968,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3637,
+        type_id: 3640,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6980,7 +6980,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3637,
+        type_id: 3640,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -6992,7 +6992,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3637,
+        type_id: 3640,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7004,7 +7004,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: -1.7e308_f64,
             min_inclusive: true,
         },
-        type_id: 3637,
+        type_id: 3640,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7016,7 +7016,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3638,
+        type_id: 3641,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7026,7 +7026,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3640,
+        type_id: 3643,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7036,7 +7036,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3642,
+        type_id: 3645,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7046,7 +7046,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 1,
         },
-        type_id: 3642,
+        type_id: 3645,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7056,7 +7056,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 2084,
             min: 0,
         },
-        type_id: 3649,
+        type_id: 3652,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7066,7 +7066,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 2084,
             min: 0,
         },
-        type_id: 3649,
+        type_id: 3652,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7076,13 +7076,13 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3649,
+        type_id: 3652,
         versions: Versions(0b11_1111),
     },
     Registration {
         applications: Applications(0b111),
         constraint: Constraint::RelationshipExists { attribute: Some(1) },
-        type_id: 3649,
+        type_id: 3652,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7097,7 +7097,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: ".",
         },
-        type_id: 3652,
+        type_id: 3655,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7109,7 +7109,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3655,
+        type_id: 3658,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7119,7 +7119,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3659,
+        type_id: 3662,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7131,7 +7131,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3661,
+        type_id: 3664,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7143,7 +7143,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3662,
+        type_id: 3665,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7156,7 +7156,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
                 namespace: 118,
             }),
         },
-        type_id: 3663,
+        type_id: 3666,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7166,7 +7166,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: false,
             values: &["blank", "grand"],
         },
-        type_id: 3663,
+        type_id: 3666,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7176,13 +7176,13 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(1),
             value: "data",
         },
-        type_id: 3663,
+        type_id: 3666,
         versions: Versions(0b11_1111),
     },
     Registration {
         applications: Applications(0b111),
         constraint: Constraint::RelationshipExists { attribute: Some(0) },
-        type_id: 3666,
+        type_id: 3669,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7195,7 +7195,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
                 namespace: 118,
             }),
         },
-        type_id: 3668,
+        type_id: 3671,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7207,7 +7207,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3668,
+        type_id: 3671,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7217,7 +7217,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3668,
+        type_id: 3671,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7227,7 +7227,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3668,
+        type_id: 3671,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7237,7 +7237,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3672,
+        type_id: 3675,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7247,7 +7247,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3672,
+        type_id: 3675,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7257,7 +7257,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3672,
+        type_id: 3675,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7269,96 +7269,6 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3672,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::IndexReference {
-            attribute: Some(0),
-            element: ElementName {
-                local: "s",
-                namespace: 118,
-            },
-            index_base: 0,
-            parent: Some(ElementName {
-                local: "metadataStrings",
-                namespace: 118,
-            }),
-            part: "/WorkbookPart/CellMetadataPart",
-        },
-        type_id: 3674,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::ValueRange {
-            attribute: Some(0),
-            max: 2_147_483_647.0_f64,
-            max_inclusive: true,
-            min: f64::NEG_INFINITY,
-            min_inclusive: true,
-        },
-        type_id: 3674,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::IndexReference {
-            attribute: Some(0),
-            element: ElementName {
-                local: "s",
-                namespace: 118,
-            },
-            index_base: 0,
-            parent: Some(ElementName {
-                local: "metadataStrings",
-                namespace: 118,
-            }),
-            part: ".",
-        },
-        type_id: 3675,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::ValueRange {
-            attribute: Some(0),
-            max: 2_147_483_647.0_f64,
-            max_inclusive: true,
-            min: f64::NEG_INFINITY,
-            min_inclusive: true,
-        },
-        type_id: 3675,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::IndexReference {
-            attribute: Some(1),
-            element: ElementName {
-                local: "s",
-                namespace: 118,
-            },
-            index_base: 0,
-            parent: Some(ElementName {
-                local: "metadataStrings",
-                namespace: 118,
-            }),
-            part: "/WorkbookPart/CellMetadataPart",
-        },
-        type_id: 3675,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::ValueRange {
-            attribute: Some(1),
-            max: 2_147_483_647.0_f64,
-            max_inclusive: true,
-            min: f64::NEG_INFINITY,
-            min_inclusive: true,
-        },
         type_id: 3675,
         versions: Versions(0b11_1111),
     },
@@ -7377,49 +7287,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             }),
             part: "/WorkbookPart/CellMetadataPart",
         },
-        type_id: 3676,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::ValueRange {
-            attribute: Some(0),
-            max: 2_147_483_647.0_f64,
-            max_inclusive: true,
-            min: f64::NEG_INFINITY,
-            min_inclusive: true,
-        },
-        type_id: 3676,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::IndexReference {
-            attribute: Some(1),
-            element: ElementName {
-                local: "s",
-                namespace: 118,
-            },
-            index_base: 0,
-            parent: Some(ElementName {
-                local: "metadataStrings",
-                namespace: 118,
-            }),
-            part: "/WorkbookPart/CellMetadataPart",
-        },
-        type_id: 3676,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::ValueRange {
-            attribute: Some(1),
-            max: 2_147_483_647.0_f64,
-            max_inclusive: true,
-            min: f64::NEG_INFINITY,
-            min_inclusive: true,
-        },
-        type_id: 3676,
+        type_id: 3677,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7447,7 +7315,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
                 local: "metadataStrings",
                 namespace: 118,
             }),
-            part: "/WorkbookPart/CellMetadataPart",
+            part: ".",
         },
         type_id: 3678,
         versions: Versions(0b11_1111),
@@ -7458,8 +7326,26 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             attribute: Some(0),
             max: 2_147_483_647.0_f64,
             max_inclusive: true,
-            min: 0.0_f64,
+            min: f64::NEG_INFINITY,
             min_inclusive: true,
+        },
+        type_id: 3678,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::IndexReference {
+            attribute: Some(1),
+            element: ElementName {
+                local: "s",
+                namespace: 118,
+            },
+            index_base: 0,
+            parent: Some(ElementName {
+                local: "metadataStrings",
+                namespace: 118,
+            }),
+            part: "/WorkbookPart/CellMetadataPart",
         },
         type_id: 3678,
         versions: Versions(0b11_1111),
@@ -7470,7 +7356,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             attribute: Some(1),
             max: 2_147_483_647.0_f64,
             max_inclusive: true,
-            min: 0.0_f64,
+            min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
         type_id: 3678,
@@ -7478,20 +7364,8 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
     },
     Registration {
         applications: Applications(0b111),
-        constraint: Constraint::ValueRange {
-            attribute: Some(2),
-            max: 2_147_483_647.0_f64,
-            max_inclusive: true,
-            min: f64::NEG_INFINITY,
-            min_inclusive: true,
-        },
-        type_id: 3679,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
         constraint: Constraint::IndexReference {
-            attribute: Some(2),
+            attribute: Some(0),
             element: ElementName {
                 local: "s",
                 namespace: 118,
@@ -7520,6 +7394,132 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
     },
     Registration {
         applications: Applications(0b111),
+        constraint: Constraint::IndexReference {
+            attribute: Some(1),
+            element: ElementName {
+                local: "s",
+                namespace: 118,
+            },
+            index_base: 0,
+            parent: Some(ElementName {
+                local: "metadataStrings",
+                namespace: 118,
+            }),
+            part: "/WorkbookPart/CellMetadataPart",
+        },
+        type_id: 3679,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::ValueRange {
+            attribute: Some(1),
+            max: 2_147_483_647.0_f64,
+            max_inclusive: true,
+            min: f64::NEG_INFINITY,
+            min_inclusive: true,
+        },
+        type_id: 3679,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::ValueRange {
+            attribute: Some(0),
+            max: 2_147_483_647.0_f64,
+            max_inclusive: true,
+            min: f64::NEG_INFINITY,
+            min_inclusive: true,
+        },
+        type_id: 3680,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::IndexReference {
+            attribute: Some(0),
+            element: ElementName {
+                local: "s",
+                namespace: 118,
+            },
+            index_base: 0,
+            parent: Some(ElementName {
+                local: "metadataStrings",
+                namespace: 118,
+            }),
+            part: "/WorkbookPart/CellMetadataPart",
+        },
+        type_id: 3681,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::ValueRange {
+            attribute: Some(0),
+            max: 2_147_483_647.0_f64,
+            max_inclusive: true,
+            min: 0.0_f64,
+            min_inclusive: true,
+        },
+        type_id: 3681,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::ValueRange {
+            attribute: Some(1),
+            max: 2_147_483_647.0_f64,
+            max_inclusive: true,
+            min: 0.0_f64,
+            min_inclusive: true,
+        },
+        type_id: 3681,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::ValueRange {
+            attribute: Some(2),
+            max: 2_147_483_647.0_f64,
+            max_inclusive: true,
+            min: f64::NEG_INFINITY,
+            min_inclusive: true,
+        },
+        type_id: 3682,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::IndexReference {
+            attribute: Some(2),
+            element: ElementName {
+                local: "s",
+                namespace: 118,
+            },
+            index_base: 0,
+            parent: Some(ElementName {
+                local: "metadataStrings",
+                namespace: 118,
+            }),
+            part: "/WorkbookPart/CellMetadataPart",
+        },
+        type_id: 3682,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::ValueRange {
+            attribute: Some(0),
+            max: 2_147_483_647.0_f64,
+            max_inclusive: true,
+            min: f64::NEG_INFINITY,
+            min_inclusive: true,
+        },
+        type_id: 3682,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
         constraint: Constraint::ValueRange {
             attribute: Some(3),
             max: 58.0_f64,
@@ -7527,7 +7527,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3679,
+        type_id: 3682,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7537,7 +7537,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 1,
         },
-        type_id: 3682,
+        type_id: 3685,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7547,7 +7547,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 1,
         },
-        type_id: 3682,
+        type_id: 3685,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7562,7 +7562,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: "PivotTableCacheDefinitionPart",
         },
-        type_id: 3686,
+        type_id: 3689,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7573,104 +7573,6 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max_inclusive: true,
             min: f64::NEG_INFINITY,
             min_inclusive: true,
-        },
-        type_id: 3693,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::ValueRange {
-            attribute: Some(0),
-            max: 2_147_483_647.0_f64,
-            max_inclusive: true,
-            min: f64::NEG_INFINITY,
-            min_inclusive: true,
-        },
-        type_id: 3694,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::IndexReference {
-            attribute: Some(0),
-            element: ElementName {
-                local: "metadataType",
-                namespace: 118,
-            },
-            index_base: 1,
-            parent: None,
-            part: ".",
-        },
-        type_id: 3695,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::ValueRange {
-            attribute: Some(0),
-            max: 2_147_483_647.0_f64,
-            max_inclusive: true,
-            min: f64::NEG_INFINITY,
-            min_inclusive: true,
-        },
-        type_id: 3695,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::ValueRange {
-            attribute: Some(0),
-            max: f64::INFINITY,
-            max_inclusive: true,
-            min: 0.0_f64,
-            min_inclusive: true,
-        },
-        type_id: 3696,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::ValueRange {
-            attribute: Some(0),
-            max: 2_147_483_647.0_f64,
-            max_inclusive: true,
-            min: f64::NEG_INFINITY,
-            min_inclusive: true,
-        },
-        type_id: 3696,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::IndexReference {
-            attribute: None,
-            element: ElementName {
-                local: "serverFormat",
-                namespace: 118,
-            },
-            index_base: 0,
-            parent: None,
-            part: ".",
-        },
-        type_id: 3696,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b010),
-        constraint: Constraint::ValueLength {
-            attribute: None,
-            max: 0xFFFF,
-            min: 0,
-        },
-        type_id: 3696,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b010),
-        constraint: Constraint::ValueSet {
-            attribute: None,
-            valid: false,
-            values: &["INF", "-INF", "NaN"],
         },
         type_id: 3696,
         versions: Versions(0b11_1111),
@@ -7689,25 +7591,41 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
     },
     Registration {
         applications: Applications(0b111),
-        constraint: Constraint::UniqueValue {
+        constraint: Constraint::IndexReference {
             attribute: Some(0),
-            case_sensitive: true,
-            parent: Some(ElementName {
-                local: "metadataTypes",
+            element: ElementName {
+                local: "metadataType",
                 namespace: 118,
-            }),
+            },
+            index_base: 1,
+            parent: None,
+            part: ".",
         },
         type_id: 3698,
         versions: Versions(0b11_1111),
     },
     Registration {
         applications: Applications(0b111),
-        constraint: Constraint::ValueLength {
+        constraint: Constraint::ValueRange {
             attribute: Some(0),
-            max: 0xFFFF,
-            min: 1,
+            max: 2_147_483_647.0_f64,
+            max_inclusive: true,
+            min: f64::NEG_INFINITY,
+            min_inclusive: true,
         },
         type_id: 3698,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::ValueRange {
+            attribute: Some(0),
+            max: f64::INFINITY,
+            max_inclusive: true,
+            min: 0.0_f64,
+            min_inclusive: true,
+        },
+        type_id: 3699,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7725,6 +7643,88 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
     Registration {
         applications: Applications(0b111),
         constraint: Constraint::IndexReference {
+            attribute: None,
+            element: ElementName {
+                local: "serverFormat",
+                namespace: 118,
+            },
+            index_base: 0,
+            parent: None,
+            part: ".",
+        },
+        type_id: 3699,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b010),
+        constraint: Constraint::ValueLength {
+            attribute: None,
+            max: 0xFFFF,
+            min: 0,
+        },
+        type_id: 3699,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b010),
+        constraint: Constraint::ValueSet {
+            attribute: None,
+            valid: false,
+            values: &["INF", "-INF", "NaN"],
+        },
+        type_id: 3699,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::ValueRange {
+            attribute: Some(0),
+            max: 2_147_483_647.0_f64,
+            max_inclusive: true,
+            min: f64::NEG_INFINITY,
+            min_inclusive: true,
+        },
+        type_id: 3700,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::UniqueValue {
+            attribute: Some(0),
+            case_sensitive: true,
+            parent: Some(ElementName {
+                local: "metadataTypes",
+                namespace: 118,
+            }),
+        },
+        type_id: 3701,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::ValueLength {
+            attribute: Some(0),
+            max: 0xFFFF,
+            min: 1,
+        },
+        type_id: 3701,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::ValueRange {
+            attribute: Some(0),
+            max: 2_147_483_647.0_f64,
+            max_inclusive: true,
+            min: f64::NEG_INFINITY,
+            min_inclusive: true,
+        },
+        type_id: 3702,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::IndexReference {
             attribute: Some(4),
             element: ElementName {
                 local: "serverFormat",
@@ -7734,7 +7734,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: ".",
         },
-        type_id: 3700,
+        type_id: 3703,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7744,7 +7744,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3700,
+        type_id: 3703,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7754,7 +7754,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: true,
             values: &["0"],
         },
-        type_id: 3701,
+        type_id: 3704,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7764,7 +7764,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: true,
             values: &["0"],
         },
-        type_id: 3701,
+        type_id: 3704,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7774,7 +7774,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: true,
             values: &["0"],
         },
-        type_id: 3701,
+        type_id: 3704,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7784,7 +7784,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3702,
+        type_id: 3705,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7796,7 +7796,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3704,
+        type_id: 3707,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7808,7 +7808,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3704,
+        type_id: 3707,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7823,7 +7823,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: ".",
         },
-        type_id: 3704,
+        type_id: 3707,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7833,7 +7833,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3704,
+        type_id: 3707,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7843,7 +7843,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: false,
             values: &["INF", "-INF", "NaN"],
         },
-        type_id: 3704,
+        type_id: 3707,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7855,7 +7855,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3707,
+        type_id: 3710,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7865,7 +7865,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3708,
+        type_id: 3711,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7875,7 +7875,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0x7FFF_FFFF,
             min: 1,
         },
-        type_id: 3708,
+        type_id: 3711,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7885,7 +7885,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3710,
+        type_id: 3713,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7894,7 +7894,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             attribute: Some(0),
             pattern: "^[^\\d].*$",
         },
-        type_id: 3711,
+        type_id: 3714,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7904,7 +7904,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 39,
             min: 0,
         },
-        type_id: 3711,
+        type_id: 3714,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7916,7 +7916,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3711,
+        type_id: 3714,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7926,7 +7926,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3715,
+        type_id: 3718,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7936,7 +7936,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3715,
+        type_id: 3718,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7946,7 +7946,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3715,
+        type_id: 3718,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7956,7 +7956,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3715,
+        type_id: 3718,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7966,7 +7966,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3715,
+        type_id: 3718,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7976,7 +7976,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3715,
+        type_id: 3718,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7986,7 +7986,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0x7FFF,
             min: 1,
         },
-        type_id: 3715,
+        type_id: 3718,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -7996,7 +7996,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3715,
+        type_id: 3718,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8006,7 +8006,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3715,
+        type_id: 3718,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8016,7 +8016,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0x7FFF,
             min: 0,
         },
-        type_id: 3715,
+        type_id: 3718,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8028,7 +8028,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3720,
+        type_id: 3723,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8040,7 +8040,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3720,
+        type_id: 3723,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8052,7 +8052,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3721,
+        type_id: 3724,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8064,7 +8064,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3721,
+        type_id: 3724,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8079,7 +8079,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: "PivotTableCacheDefinitionPart",
         },
-        type_id: 3722,
+        type_id: 3725,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8089,7 +8089,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3722,
+        type_id: 3725,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8101,7 +8101,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3725,
+        type_id: 3728,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8113,7 +8113,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3725,
+        type_id: 3728,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8125,7 +8125,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3725,
+        type_id: 3728,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8137,7 +8137,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3725,
+        type_id: 3728,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8149,7 +8149,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3725,
+        type_id: 3728,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8161,7 +8161,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3725,
+        type_id: 3728,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8173,7 +8173,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3727,
+        type_id: 3730,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8185,7 +8185,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3727,
+        type_id: 3730,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8197,7 +8197,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3727,
+        type_id: 3730,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8209,7 +8209,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3727,
+        type_id: 3730,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8221,7 +8221,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3727,
+        type_id: 3730,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8231,7 +8231,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3730,
+        type_id: 3733,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8245,7 +8245,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
                 "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113",
             ],
         },
-        type_id: 3730,
+        type_id: 3733,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8255,7 +8255,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3730,
+        type_id: 3733,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8265,7 +8265,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(2),
             value: "cell",
         },
-        type_id: 3730,
+        type_id: 3733,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8275,7 +8275,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3730,
+        type_id: 3733,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8290,7 +8290,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: "/WorkbookPart/WorkbookStylesPart",
         },
-        type_id: 3733,
+        type_id: 3736,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8300,7 +8300,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             can_equal: false,
             other: Some(1),
         },
-        type_id: 3734,
+        type_id: 3737,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8312,7 +8312,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3736,
+        type_id: 3739,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8325,13 +8325,13 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
                 namespace: 118,
             }),
         },
-        type_id: 3741,
+        type_id: 3744,
         versions: Versions(0b11_1111),
     },
     Registration {
         applications: Applications(0b111),
         constraint: Constraint::RelationshipExists { attribute: Some(1) },
-        type_id: 3741,
+        type_id: 3744,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8341,7 +8341,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3742,
+        type_id: 3745,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8351,7 +8351,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3751,
+        type_id: 3754,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8361,7 +8361,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 1,
         },
-        type_id: 3751,
+        type_id: 3754,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8371,7 +8371,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 1,
         },
-        type_id: 3751,
+        type_id: 3754,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8381,7 +8381,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0x7FFF,
             min: 1,
         },
-        type_id: 3751,
+        type_id: 3754,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8391,7 +8391,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: false,
             values: &["axisValues"],
         },
-        type_id: 3752,
+        type_id: 3755,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8406,7 +8406,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: ".",
         },
-        type_id: 3756,
+        type_id: 3759,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8416,7 +8416,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: false,
             parent: None,
         },
-        type_id: 3756,
+        type_id: 3759,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8431,7 +8431,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: ".",
         },
-        type_id: 3756,
+        type_id: 3759,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8446,7 +8446,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: ".",
         },
-        type_id: 3756,
+        type_id: 3759,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8456,7 +8456,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3761,
+        type_id: 3764,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8466,7 +8466,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: false,
             values: &["axisValues"],
         },
-        type_id: 3764,
+        type_id: 3767,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8478,7 +8478,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3764,
+        type_id: 3767,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8490,7 +8490,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3764,
+        type_id: 3767,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8500,7 +8500,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3765,
+        type_id: 3768,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8513,7 +8513,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
                 namespace: 118,
             }),
         },
-        type_id: 3767,
+        type_id: 3770,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8523,7 +8523,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3767,
+        type_id: 3770,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8535,7 +8535,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3767,
+        type_id: 3770,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8545,7 +8545,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3769,
+        type_id: 3772,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8556,7 +8556,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other_values: &["true"],
             values: &["true"],
         },
-        type_id: 3771,
+        type_id: 3774,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8568,7 +8568,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3771,
+        type_id: 3774,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8585,7 +8585,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             },
             part: "/WorkbookPart/ConnectionsPart",
         },
-        type_id: 3771,
+        type_id: 3774,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8595,7 +8595,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3771,
+        type_id: 3774,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8605,7 +8605,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3775,
+        type_id: 3778,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8615,7 +8615,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3775,
+        type_id: 3778,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8625,7 +8625,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3775,
+        type_id: 3778,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8636,7 +8636,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other_values: &["true"],
             values: &["true"],
         },
-        type_id: 3775,
+        type_id: 3778,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8647,7 +8647,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other_values: &["true"],
             values: &["false"],
         },
-        type_id: 3775,
+        type_id: 3778,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8658,7 +8658,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other_values: &["true"],
             values: &["true"],
         },
-        type_id: 3775,
+        type_id: 3778,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8670,7 +8670,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3777,
+        type_id: 3780,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8682,7 +8682,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3777,
+        type_id: 3780,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8694,7 +8694,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3777,
+        type_id: 3780,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8706,7 +8706,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3777,
+        type_id: 3780,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8716,7 +8716,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             can_equal: false,
             other: Some(4),
         },
-        type_id: 3780,
+        type_id: 3783,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8724,7 +8724,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
         constraint: Constraint::MutuallyExclusive {
             attributes: &[5, 4],
         },
-        type_id: 3781,
+        type_id: 3784,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8734,7 +8734,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 31,
             min: 1,
         },
-        type_id: 3781,
+        type_id: 3784,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8746,7 +8746,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3784,
+        type_id: 3787,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8758,7 +8758,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3786,
+        type_id: 3789,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8770,7 +8770,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3786,
+        type_id: 3789,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8782,7 +8782,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3787,
+        type_id: 3790,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8792,7 +8792,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 52,
             min: 1,
         },
-        type_id: 3788,
+        type_id: 3791,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8804,7 +8804,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3789,
+        type_id: 3792,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8816,7 +8816,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3791,
+        type_id: 3794,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8828,7 +8828,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3791,
+        type_id: 3794,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8838,7 +8838,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0x7FFF,
             min: 0,
         },
-        type_id: 3791,
+        type_id: 3794,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8848,7 +8848,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0x7FFF,
             min: 0,
         },
-        type_id: 3791,
+        type_id: 3794,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8858,7 +8858,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0x7FFF,
             min: 0,
         },
-        type_id: 3791,
+        type_id: 3794,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8868,7 +8868,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0x7FFF,
             min: 0,
         },
-        type_id: 3791,
+        type_id: 3794,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8878,7 +8878,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0x7FFF,
             min: 0,
         },
-        type_id: 3791,
+        type_id: 3794,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8888,7 +8888,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0x7FFF,
             min: 0,
         },
-        type_id: 3791,
+        type_id: 3794,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8898,7 +8898,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0x7FFF,
             min: 0,
         },
-        type_id: 3791,
+        type_id: 3794,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8908,7 +8908,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0x7FFF,
             min: 0,
         },
-        type_id: 3791,
+        type_id: 3794,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8921,7 +8921,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
                 namespace: 118,
             }),
         },
-        type_id: 3791,
+        type_id: 3794,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8930,7 +8930,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             attribute: Some(5),
             pattern: "^[a-zA-Z_\\\\][a-zA-Z0-9_.]*$",
         },
-        type_id: 3791,
+        type_id: 3794,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8940,7 +8940,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3791,
+        type_id: 3794,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8950,7 +8950,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3791,
+        type_id: 3794,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8962,7 +8962,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3791,
+        type_id: 3794,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8974,7 +8974,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3792,
+        type_id: 3795,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8986,7 +8986,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3793,
+        type_id: 3796,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -8996,7 +8996,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 54,
             min: 1,
         },
-        type_id: 3793,
+        type_id: 3796,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9008,7 +9008,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3793,
+        type_id: 3796,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9020,7 +9020,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3794,
+        type_id: 3797,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9032,7 +9032,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3794,
+        type_id: 3797,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9044,7 +9044,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3794,
+        type_id: 3797,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9054,7 +9054,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: false,
             values: &["00000000-0000-0000-0000-000000000000"],
         },
-        type_id: 3794,
+        type_id: 3797,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9066,7 +9066,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3795,
+        type_id: 3798,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9078,7 +9078,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3795,
+        type_id: 3798,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9090,7 +9090,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3796,
+        type_id: 3799,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9102,27 +9102,27 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3796,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::ValueLength {
-            attribute: Some(3),
-            max: 0x7FFF,
-            min: 0,
-        },
-        type_id: 3798,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::ValueLength {
-            attribute: Some(3),
-            max: 0x7FFF,
-            min: 0,
-        },
         type_id: 3799,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::ValueLength {
+            attribute: Some(3),
+            max: 0x7FFF,
+            min: 0,
+        },
+        type_id: 3801,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::ValueLength {
+            attribute: Some(3),
+            max: 0x7FFF,
+            min: 0,
+        },
+        type_id: 3802,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9134,7 +9134,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3802,
+        type_id: 3805,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9146,7 +9146,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3802,
+        type_id: 3805,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9158,7 +9158,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3802,
+        type_id: 3805,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9170,7 +9170,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3802,
+        type_id: 3805,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9183,7 +9183,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
                 namespace: 118,
             }),
         },
-        type_id: 3810,
+        type_id: 3813,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9195,7 +9195,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3810,
+        type_id: 3813,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9205,7 +9205,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3810,
+        type_id: 3813,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9215,7 +9215,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 54,
             min: 1,
         },
-        type_id: 3810,
+        type_id: 3813,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9225,7 +9225,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3810,
+        type_id: 3813,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9235,7 +9235,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3812,
+        type_id: 3815,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9245,7 +9245,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3812,
+        type_id: 3815,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9255,7 +9255,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3812,
+        type_id: 3815,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9265,7 +9265,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3812,
+        type_id: 3815,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9277,7 +9277,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3813,
+        type_id: 3816,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9285,7 +9285,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
         constraint: Constraint::MutuallyExclusive {
             attributes: &[0, 1],
         },
-        type_id: 3815,
+        type_id: 3818,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9295,7 +9295,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 31,
             min: 0,
         },
-        type_id: 3815,
+        type_id: 3818,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9305,7 +9305,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3815,
+        type_id: 3818,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9315,7 +9315,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3817,
+        type_id: 3820,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9327,7 +9327,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3817,
+        type_id: 3820,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9337,7 +9337,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: false,
             values: &["NaN", "INF", "-INF"],
         },
-        type_id: 3819,
+        type_id: 3822,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9347,7 +9347,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: false,
             values: &["NaN", "INF", "-INF"],
         },
-        type_id: 3819,
+        type_id: 3822,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9357,7 +9357,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             can_equal: true,
             other: Some(9),
         },
-        type_id: 3819,
+        type_id: 3822,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9366,7 +9366,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             attribute: Some(0),
             pattern: "^[^'*\\[\\]/\\\\:?]{1}[^*\\[\\]/\\\\:?]*$",
         },
-        type_id: 3821,
+        type_id: 3824,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9376,7 +9376,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 31,
             min: 1,
         },
-        type_id: 3821,
+        type_id: 3824,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9386,7 +9386,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: false,
             parent: None,
         },
-        type_id: 3821,
+        type_id: 3824,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9396,7 +9396,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3821,
+        type_id: 3824,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9408,7 +9408,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3821,
+        type_id: 3824,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9418,13 +9418,13 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3821,
+        type_id: 3824,
         versions: Versions(0b11_1111),
     },
     Registration {
         applications: Applications(0b111),
         constraint: Constraint::RelationshipExists { attribute: Some(3) },
-        type_id: 3821,
+        type_id: 3824,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9436,7 +9436,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3824,
+        type_id: 3827,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9446,7 +9446,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3825,
+        type_id: 3828,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9456,7 +9456,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 1,
         },
-        type_id: 3825,
+        type_id: 3828,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9466,7 +9466,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 1,
         },
-        type_id: 3825,
+        type_id: 3828,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9476,7 +9476,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0x7FFF,
             min: 1,
         },
-        type_id: 3825,
+        type_id: 3828,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9488,7 +9488,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3826,
+        type_id: 3829,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9500,7 +9500,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3826,
+        type_id: 3829,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9512,7 +9512,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3826,
+        type_id: 3829,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9524,7 +9524,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3826,
+        type_id: 3829,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9536,7 +9536,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3827,
+        type_id: 3830,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9545,7 +9545,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             attribute: Some(6),
             pattern: "^[\\p{L}\\x{80}-\\x{10FFFF}][_\\d\\p{L}\\x{80}-\\x{10FFFF}]*$",
         },
-        type_id: 3829,
+        type_id: 3832,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9555,7 +9555,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 32,
             min: 0,
         },
-        type_id: 3829,
+        type_id: 3832,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9567,7 +9567,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3831,
+        type_id: 3834,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9579,7 +9579,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 10.0_f64,
             min_inclusive: true,
         },
-        type_id: 3831,
+        type_id: 3834,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9591,7 +9591,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 10.0_f64,
             min_inclusive: true,
         },
-        type_id: 3831,
+        type_id: 3834,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9603,7 +9603,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 10.0_f64,
             min_inclusive: true,
         },
-        type_id: 3831,
+        type_id: 3834,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9615,7 +9615,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 10.0_f64,
             min_inclusive: true,
         },
-        type_id: 3831,
+        type_id: 3834,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9630,7 +9630,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: "/WorkbookPart",
         },
-        type_id: 3831,
+        type_id: 3834,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9642,7 +9642,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3834,
+        type_id: 3837,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9654,7 +9654,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3834,
+        type_id: 3837,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9664,7 +9664,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3834,
+        type_id: 3837,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9676,7 +9676,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3840,
+        type_id: 3843,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9688,7 +9688,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3840,
+        type_id: 3843,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9703,7 +9703,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: ".",
         },
-        type_id: 3841,
+        type_id: 3844,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9713,7 +9713,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3841,
+        type_id: 3844,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9728,7 +9728,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: "/WorkbookPart/WorkbookStylesPart",
         },
-        type_id: 3845,
+        type_id: 3848,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9743,7 +9743,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: "/WorkbookPart/WorkbookStylesPart",
         },
-        type_id: 3845,
+        type_id: 3848,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9758,7 +9758,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: "/WorkbookPart/WorkbookStylesPart",
         },
-        type_id: 3845,
+        type_id: 3848,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9773,7 +9773,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: "/WorkbookPart/WorkbookStylesPart",
         },
-        type_id: 3845,
+        type_id: 3848,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9788,7 +9788,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: "/WorkbookPart/WorkbookStylesPart",
         },
-        type_id: 3845,
+        type_id: 3848,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9803,7 +9803,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: "/WorkbookPart/WorkbookStylesPart",
         },
-        type_id: 3845,
+        type_id: 3848,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9820,7 +9820,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             },
             part: "/WorkbookPart/ConnectionsPart",
         },
-        type_id: 3845,
+        type_id: 3848,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9830,7 +9830,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: false,
             values: &["0", ""],
         },
-        type_id: 3845,
+        type_id: 3848,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9842,7 +9842,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3845,
+        type_id: 3848,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9852,7 +9852,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3845,
+        type_id: 3848,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9862,7 +9862,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3845,
+        type_id: 3848,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9872,7 +9872,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3845,
+        type_id: 3848,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9882,7 +9882,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3845,
+        type_id: 3848,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9892,7 +9892,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3845,
+        type_id: 3848,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9904,7 +9904,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3845,
+        type_id: 3848,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9914,7 +9914,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3846,
+        type_id: 3849,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9924,7 +9924,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(3),
             values: &["custom"],
         },
-        type_id: 3846,
+        type_id: 3849,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9934,7 +9934,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3846,
+        type_id: 3849,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9944,7 +9944,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3846,
+        type_id: 3849,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9956,7 +9956,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3846,
+        type_id: 3849,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9968,7 +9968,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3846,
+        type_id: 3849,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9978,7 +9978,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0x7FFF,
             min: 0,
         },
-        type_id: 3846,
+        type_id: 3849,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -9988,7 +9988,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3846,
+        type_id: 3849,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10006,7 +10006,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             }),
             part: "/WorkbookPart/WorkbookStylesPart",
         },
-        type_id: 3846,
+        type_id: 3849,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10021,7 +10021,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: "/WorkbookPart/WorkbookStylesPart",
         },
-        type_id: 3846,
+        type_id: 3849,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10034,7 +10034,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
                 namespace: 118,
             }),
         },
-        type_id: 3846,
+        type_id: 3849,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10047,7 +10047,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
                 namespace: 118,
             }),
         },
-        type_id: 3846,
+        type_id: 3849,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10062,7 +10062,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: "/WorkbookPart/WorkbookStylesPart",
         },
-        type_id: 3846,
+        type_id: 3849,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10072,7 +10072,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3846,
+        type_id: 3849,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10087,7 +10087,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: ".",
         },
-        type_id: 3853,
+        type_id: 3856,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10097,7 +10097,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3853,
+        type_id: 3856,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10107,7 +10107,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3856,
+        type_id: 3859,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10119,7 +10119,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3857,
+        type_id: 3860,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10134,7 +10134,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: "/WorkbookPart/WorkbookStylesPart",
         },
-        type_id: 3857,
+        type_id: 3860,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10144,7 +10144,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3858,
+        type_id: 3861,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10154,7 +10154,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3859,
+        type_id: 3862,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10166,7 +10166,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3861,
+        type_id: 3864,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10176,7 +10176,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3864,
+        type_id: 3867,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10186,7 +10186,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3864,
+        type_id: 3867,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10198,7 +10198,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3864,
+        type_id: 3867,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10208,7 +10208,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 218,
             min: 1,
         },
-        type_id: 3864,
+        type_id: 3867,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10218,7 +10218,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(0),
             value: "false",
         },
-        type_id: 3864,
+        type_id: 3867,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10233,7 +10233,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: ".",
         },
-        type_id: 3866,
+        type_id: 3869,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10248,7 +10248,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: ".",
         },
-        type_id: 3866,
+        type_id: 3869,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10256,7 +10256,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
         constraint: Constraint::MutuallyExclusive {
             attributes: &[0, 1],
         },
-        type_id: 3866,
+        type_id: 3869,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10268,7 +10268,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3872,
+        type_id: 3875,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10279,7 +10279,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other_values: &["true"],
             values: &["false"],
         },
-        type_id: 3872,
+        type_id: 3875,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10287,7 +10287,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
         constraint: Constraint::MutuallyExclusive {
             attributes: &[8, 9],
         },
-        type_id: 3872,
+        type_id: 3875,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10295,7 +10295,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
         constraint: Constraint::MutuallyExclusive {
             attributes: &[8, 10],
         },
-        type_id: 3872,
+        type_id: 3875,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10307,7 +10307,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3873,
+        type_id: 3876,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10317,7 +10317,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3875,
+        type_id: 3878,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10329,7 +10329,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3877,
+        type_id: 3880,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10339,7 +10339,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0x7FFF_FFFF,
             min: 1,
         },
-        type_id: 3880,
+        type_id: 3883,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10349,7 +10349,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3881,
+        type_id: 3884,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10359,7 +10359,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3881,
+        type_id: 3884,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10369,7 +10369,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3881,
+        type_id: 3884,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10381,7 +10381,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3881,
+        type_id: 3884,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10391,7 +10391,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3881,
+        type_id: 3884,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10401,7 +10401,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(2),
             value: "range",
         },
-        type_id: 3881,
+        type_id: 3884,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10411,7 +10411,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             other: Some(2),
             values: &["range"],
         },
-        type_id: 3881,
+        type_id: 3884,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10421,7 +10421,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3883,
+        type_id: 3886,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10431,7 +10431,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3883,
+        type_id: 3886,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10441,7 +10441,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3883,
+        type_id: 3886,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10451,7 +10451,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3883,
+        type_id: 3886,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10463,7 +10463,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3883,
+        type_id: 3886,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10473,7 +10473,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3894,
+        type_id: 3897,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10483,13 +10483,13 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 31,
             min: 0,
         },
-        type_id: 3894,
+        type_id: 3897,
         versions: Versions(0b11_1111),
     },
     Registration {
         applications: Applications(0b111),
         constraint: Constraint::RelationshipExists { attribute: Some(3) },
-        type_id: 3894,
+        type_id: 3897,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10504,7 +10504,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: ".",
         },
-        type_id: 3896,
+        type_id: 3899,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10519,7 +10519,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: ".",
         },
-        type_id: 3898,
+        type_id: 3901,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10529,7 +10529,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 0xFFFF,
             min: 0,
         },
-        type_id: 3898,
+        type_id: 3901,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10544,7 +10544,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: "/WorkbookPart/WorkbookStylesPart",
         },
-        type_id: 3899,
+        type_id: 3902,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10556,7 +10556,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3899,
+        type_id: 3902,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10571,7 +10571,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: "/WorkbookPart/WorkbookStylesPart",
         },
-        type_id: 3899,
+        type_id: 3902,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10586,7 +10586,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             parent: None,
             part: "/WorkbookPart/WorkbookStylesPart",
         },
-        type_id: 3899,
+        type_id: 3902,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10604,7 +10604,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             }),
             part: "/WorkbookPart/WorkbookStylesPart",
         },
-        type_id: 3899,
+        type_id: 3902,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10614,7 +10614,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: true,
             values: &["1"],
         },
-        type_id: 3900,
+        type_id: 3903,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10624,7 +10624,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3900,
+        type_id: 3903,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10634,7 +10634,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 1,
         },
-        type_id: 3900,
+        type_id: 3903,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10644,7 +10644,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 32000,
             min: 0,
         },
-        type_id: 3901,
+        type_id: 3904,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10661,7 +10661,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             },
             part: "CustomXmlMappingsPart",
         },
-        type_id: 3901,
+        type_id: 3904,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10673,7 +10673,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3901,
+        type_id: 3904,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10683,7 +10683,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 32000,
             min: 0,
         },
-        type_id: 3902,
+        type_id: 3905,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10695,7 +10695,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 1.0_f64,
             min_inclusive: true,
         },
-        type_id: 3902,
+        type_id: 3905,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10707,7 +10707,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3916,
+        type_id: 3919,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10725,7 +10725,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             }),
             part: "/WorkbookPart/CellMetadataPart",
         },
-        type_id: 3916,
+        type_id: 3919,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10737,7 +10737,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3916,
+        type_id: 3919,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10749,7 +10749,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3916,
+        type_id: 3919,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10761,7 +10761,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: true,
         },
-        type_id: 3920,
+        type_id: 3923,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10778,7 +10778,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             },
             part: "/WorkbookPart",
         },
-        type_id: 3920,
+        type_id: 3923,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10790,7 +10790,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3920,
+        type_id: 3923,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10802,7 +10802,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: f64::NEG_INFINITY,
             min_inclusive: true,
         },
-        type_id: 3920,
+        type_id: 3923,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10812,7 +10812,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3920,
+        type_id: 3923,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10822,7 +10822,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3920,
+        type_id: 3923,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10832,7 +10832,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3920,
+        type_id: 3923,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10842,7 +10842,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3920,
+        type_id: 3923,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10852,7 +10852,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3920,
+        type_id: 3923,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10862,7 +10862,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3920,
+        type_id: 3923,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10872,7 +10872,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3920,
+        type_id: 3923,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10882,7 +10882,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3920,
+        type_id: 3923,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10892,17 +10892,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 255,
             min: 0,
         },
-        type_id: 3920,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::ValueLength {
-            attribute: Some(0),
-            max: 256,
-            min: 0,
-        },
-        type_id: 3945,
+        type_id: 3923,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10922,7 +10912,17 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 256,
             min: 0,
         },
-        type_id: 3960,
+        type_id: 3951,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::ValueLength {
+            attribute: Some(0),
+            max: 256,
+            min: 0,
+        },
+        type_id: 3963,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10932,7 +10932,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: false,
             values: &["Movie"],
         },
-        type_id: 4269,
+        type_id: 4272,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -10942,7 +10942,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: false,
             values: &["LineA", "RectA"],
         },
-        type_id: 4269,
+        type_id: 4272,
         versions: Versions(0b11_1111),
     },
 ];

@@ -239,6 +239,9 @@ pub enum StringKind {
 #[derive(Clone, Debug)]
 #[non_exhaustive]
 pub struct Emitted {
+    /// The data the validation tables were converted from: `data` with the
+    /// table of corrections applied.
+    pub corrected: SdkData,
     pub data: SdkData,
     /// The namespace table's rows; a row's index is its namespace id.
     pub namespaces: Vec<namespaces::Row>,
@@ -1634,9 +1637,9 @@ where
     let sdk_corrections_text = system
         .read_to_string(sdk_corrections_path)
         .with_context(|| format!("cannot read {}", sdk_corrections_path.display()))?;
-    let mut corrected = data.clone();
-    corrected.correct(&sdk_corrections_text)?;
     let transitional = SchemaSet::read(system, &inputs.transitional_schemas)?;
+    let mut corrected = data.clone();
+    corrected.correct(&sdk_corrections_text, &transitional)?;
     let strict = SchemaSet::read(system, &inputs.strict_schemas)?;
     let open_specifications: Vec<&PathBuf> = inputs
         .open_specifications
@@ -1697,6 +1700,7 @@ where
             .with_context(|| format!("cannot write {}", path.display()))?;
     }
     Ok(Emitted {
+        corrected,
         data,
         namespaces: namespace_rows,
         summary: tables.summary(&marks),

@@ -207,14 +207,40 @@ fn chart_extension_error(id: &str, target: &str, locals: &[&str]) -> Value {
 }
 
 #[test]
-fn the_sdk_errors_on_the_chart_extension_are_intended_divergences() {
+fn the_sdk_errors_the_corrections_remove_are_intended_divergences() {
     for row in DIVERGENCES {
         for target in row.targets {
-            let locals: Vec<&str> = row.path[1..].iter().map(|(_, local)| *local).collect();
-            let record = chart_extension_error(row.id, target, &locals);
+            let path: Vec<Value> = row
+                .path
+                .iter()
+                .map(|(namespace, local)| json!({ "namespace": namespace, "local": local, "index": 1_u32 }))
+                .collect();
+            let record = json!({
+                "file": "document.docx",
+                "target": target,
+                "kind": "schema",
+                "id": row.id,
+                "part": "/word/document.xml",
+                "path": path,
+                "message": row.mentioning.unwrap_or_default(),
+            });
             assert_eq!(divergence(&record), Some(row.reason), "{} {target}", row.id);
         }
     }
+}
+
+#[test]
+fn an_error_that_does_not_mention_the_element_is_no_divergence() {
+    let record = json!({
+        "file": "document.docx",
+        "target": "Microsoft365",
+        "kind": "schema",
+        "id": "Sch_InvalidElementContentExpectingComplex",
+        "part": "/word/document.xml",
+        "path": [{ "namespace": W, "local": "p", "index": 1_u32 }],
+        "message": "The element has invalid child element 'http://schemas.openxmlformats.org/wordprocessingml/2006/main:r'.",
+    });
+    assert_eq!(divergence(&record), None);
 }
 
 #[test]

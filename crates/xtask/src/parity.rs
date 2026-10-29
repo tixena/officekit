@@ -172,29 +172,109 @@ pub const SDK_KEYS: &[(ErrorCode, &str)] = &[
 pub const DIVERGENCES: &[Divergence] = &[
     Divergence {
         id: "Sch_UnexpectedElementContentExpectingComplex",
+        mentioning: None,
         path: &[(CHART, "chart"), (CHART, "extLst")],
         reason: CHART_EXTENSION_LIST,
         targets: &["Office2010", "Office2013", "Office2016"],
     },
     Divergence {
         id: "Sch_UndeclaredAttribute",
+        mentioning: None,
         path: &[(CHART, "chart"), (CHART, "extLst"), (CHART, "ext")],
         reason: CHART_EXTENSION_LIST,
         targets: &["Office2019", "Office2021", "Microsoft365"],
     },
     Divergence {
         id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: None,
         path: &[(CHART, "chart"), (CHART, "extLst"), (CHART, "ext")],
         reason: CHART_EXTENSION_LIST,
         targets: &["Office2019", "Office2021", "Microsoft365"],
     },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "lvlJc")],
+        reason: LEVEL_JUSTIFICATION,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "tblPr"), (WORD, "jc")],
+        reason: TABLE_JUSTIFICATION,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "tblPrEx"), (WORD, "jc")],
+        reason: TABLE_JUSTIFICATION,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "bidiVisual")],
+        reason: BIDI_VISUAL,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_UndeclaredAttribute",
+        mentioning: Some("'filled'"),
+        path: &[(WORD, "background"), (VML, "background")],
+        reason: BACKGROUND_FILLED,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:smartTag'"),
+        path: &[],
+        reason: SMART_TAG,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:smartTagType'"),
+        path: &[(WORD, "settings")],
+        reason: SMART_TAG,
+        targets: ALL_TARGETS,
+    },
 ];
+
+const ALL_TARGETS: &[&str] = &[
+    "Office2010",
+    "Office2013",
+    "Office2016",
+    "Office2019",
+    "Office2021",
+    "Microsoft365",
+];
+
+const BACKGROUND_FILLED: &str = "SDK 3.5.1 spells the attribute of v:background `fill`; ECMA-376 \
+    names it `filled` (vml-main.xsd, AG_Fill)";
+
+const BIDI_VISUAL: &str = "SDK 3.5.1 types w:bidiVisual as CT_OnOffOnly, which takes only on and \
+    off; ECMA-376 types it CT_OnOff (CT_TblPrBase), which takes every ST_OnOff value";
 
 const CHART: &str = "http://schemas.openxmlformats.org/drawingml/2006/chart";
 
 const CHART_EXTENSION_LIST: &str = "SDK 3.5.1 types the c:ext of c:chart's extension list as the \
     content of c16r3:dataDisplayOptions16, with no uri, and from Office 2019; ECMA-376 types it \
     CT_Extension, and Word writes the extension at every version";
+
+const LEVEL_JUSTIFICATION: &str = "SDK 3.5.1 gives w:lvlJc the values left, center and right; \
+    ECMA-376 types it CT_Jc (CT_Lvl), whose val is ST_Jc, with start and end";
+
+const SMART_TAG: &str = "SDK 3.5.1 leaves out w:smartTag and w:smartTagType; ECMA-376 declares \
+    them in EG_ContentRunContent, EG_ContentRunContentBase and CT_Settings, and Word 16 writes them";
+
+const TABLE_JUSTIFICATION: &str = "SDK 3.5.1 gives the w:jc of a table's properties the values \
+    left, center and right; ECMA-376 types it CT_JcTable, whose val is ST_JcTable, with start and end";
+
+const VML: &str = "urn:schemas-microsoft-com:vml";
+
+const WORD: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 
 /// An SDK 3.5.1 error officekit deliberately does not report, because the
 /// markup it flags is valid in ECMA-376 and written by Office.
@@ -203,6 +283,8 @@ const CHART_EXTENSION_LIST: &str = "SDK 3.5.1 types the c:ext of c:chart's exten
 pub struct Divergence {
     /// SDK 3.5.1's error id.
     pub id: &'static str,
+    /// Text the error's message must hold, when the id and path alone would cover errors that stay.
+    pub mentioning: Option<&'static str>,
     /// The end of the error's path: namespace URI and local name of each step.
     pub path: &'static [(&'static str, &'static str)],
     pub reason: &'static str,
@@ -306,6 +388,12 @@ pub fn divergence(record: &Value) -> Option<&'static str> {
         .find(|row| {
             row.id == key.id
                 && row.targets.contains(&key.target.as_str())
+                && row.mentioning.is_none_or(|text| {
+                    record
+                        .get("message")
+                        .and_then(Value::as_str)
+                        .is_some_and(|message| message.contains(text))
+                })
                 && key.path.len() >= row.path.len()
                 && key.path[key.path.len() - row.path.len()..]
                     .iter()

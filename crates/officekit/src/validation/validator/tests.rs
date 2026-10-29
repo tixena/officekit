@@ -19,11 +19,29 @@ const MAIN: &str =
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml";
 const OFFICE_DOCUMENT: &str =
     "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument";
+const SMART_TAG: &str = r#"<w:smartTag w:uri="urn:schemas-microsoft-com:office:smarttags" w:element="PersonName"><w:smartTagPr><w:attr w:name="ProductID" w:val="LA VIVIENDA"/></w:smartTagPr><w:r><w:t>LA VIVIENDA</w:t></w:r></w:smartTag>"#;
 const STRICT_OFFICE_DOCUMENT: &str =
     "http://purl.oclc.org/ooxml/officeDocument/relationships/officeDocument";
 const STYLES: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles";
 const STYLES_CONTENT: &str =
     "application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml";
+const NUMBERING: &str =
+    "http://schemas.openxmlformats.org/officeDocument/2006/relationships/numbering";
+const NUMBERING_CONTENT: &str =
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml";
+const SETTINGS: &str =
+    "http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings";
+const SETTINGS_CONTENT: &str =
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml";
+const VERSIONS: [OfficeVersion; 6] = [
+    OfficeVersion::Office2010,
+    OfficeVersion::Office2013,
+    OfficeVersion::Office2016,
+    OfficeVersion::Office2019,
+    OfficeVersion::Office2021,
+    OfficeVersion::Microsoft365,
+];
+const WORD_NAMESPACES: &str = r#"xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:v="urn:schemas-microsoft-com:vml""#;
 const UNKNOWN: &str = "http://example.com/relationships/unknown";
 
 /// A Word document related by `office_document` whose main part relates to
@@ -61,6 +79,90 @@ fn chart_document(chart: &[u8]) -> Package {
     package.set_part_bytes(&part, CHART_CONTENT, chart).unwrap();
     package.relate(Some(&main), &part, CHART).unwrap();
     package
+}
+
+fn word_document(before_body: &str, body: &str) -> Package {
+    let mut package = Package::new();
+    let main = PartName::new("/word/document.xml").unwrap();
+    let document =
+        format!("<w:document {WORD_NAMESPACES}>{before_body}<w:body>{body}</w:body></w:document>");
+    package
+        .set_part_bytes(&main, MAIN, document.as_bytes())
+        .unwrap();
+    package.relate(None, &main, OFFICE_DOCUMENT).unwrap();
+    package
+}
+
+fn with_part(
+    mut package: Package,
+    name: &str,
+    relationship: &str,
+    content_type: &str,
+    xml: &str,
+) -> Package {
+    let main = PartName::new("/word/document.xml").unwrap();
+    let part = PartName::new(name).unwrap();
+    package
+        .set_part_bytes(&part, content_type, xml.as_bytes())
+        .unwrap();
+    package.relate(Some(&main), &part, relationship).unwrap();
+    package
+}
+
+fn numbering_document(level_justification: &str) -> Package {
+    let numbering = format!(
+        "<w:numbering {WORD_NAMESPACES}><w:abstractNum w:abstractNumId=\"0\"><w:lvl w:ilvl=\"0\">{level_justification}</w:lvl></w:abstractNum></w:numbering>"
+    );
+    with_part(
+        word_document("", ""),
+        "/word/numbering.xml",
+        NUMBERING,
+        NUMBERING_CONTENT,
+        &numbering,
+    )
+}
+
+fn settings_document(settings: &str) -> Package {
+    let part = format!("<w:settings {WORD_NAMESPACES}>{settings}</w:settings>");
+    with_part(
+        word_document("", ""),
+        "/word/settings.xml",
+        SETTINGS,
+        SETTINGS_CONTENT,
+        &part,
+    )
+}
+
+fn table_document(table_properties: &str) -> Package {
+    word_document(
+        "",
+        &format!("<w:tbl><w:tblPr>{table_properties}</w:tblPr><w:tblGrid/></w:tbl>"),
+    )
+}
+
+fn errors_at(package: &Package, version: OfficeVersion, element: &str) -> Vec<String> {
+    Validator::new(version)
+        .validate(package)
+        .iter()
+        .map(ValidationError::line)
+        .filter(|line| line.contains(element))
+        .collect()
+}
+
+fn accepted_at_every_version(package: &Package, element: &str) {
+    for version in VERSIONS {
+        assert_eq!(
+            errors_at(package, version, element),
+            Vec::<String>::new(),
+            "{version:?}"
+        );
+    }
+}
+
+fn refused_with(package: &Package, element: &str, error: &str) {
+    let errors = errors_at(package, OfficeVersion::Microsoft365, element);
+    assert_eq!(errors.len(), 1, "{errors:?}");
+    assert!(errors[0].contains(error), "{errors:?}");
 }
 
 fn errors_in_the_extension_list(package: &Package, version: OfficeVersion) -> Vec<String> {
@@ -260,4 +362,88 @@ fn a_chart_extension_without_its_content_element_is_refused() {
         errors_in_the_extension_list(&chart_document(misnested), OfficeVersion::Microsoft365);
     assert_eq!(errors.len(), 1, "{errors:?}");
     assert!(errors[0].contains("InvalidChild"), "{errors:?}");
+}
+
+#[test]
+fn a_numbering_level_accepts_start_and_end() {
+    for value in ["start", "end"] {
+        let package = numbering_document(&format!(r#"<w:lvlJc w:val="{value}"/>"#));
+        accepted_at_every_version(&package, "w:lvlJc");
+    }
+}
+
+#[test]
+fn a_numbering_level_refuses_a_value_outside_st_jc() {
+    let package = numbering_document(r#"<w:lvlJc w:val="middle"/>"#);
+    refused_with(&package, "w:lvlJc", "InvalidAttributeValue");
+}
+
+#[test]
+fn a_table_accepts_start_and_end_as_its_alignment() {
+    for value in ["start", "end"] {
+        let package = table_document(&format!(r#"<w:jc w:val="{value}"/>"#));
+        accepted_at_every_version(&package, "w:jc");
+    }
+}
+
+#[test]
+fn a_table_refuses_an_alignment_outside_st_jc_table() {
+    let package = table_document(r#"<w:jc w:val="both"/>"#);
+    refused_with(&package, "w:jc", "InvalidAttributeValue");
+}
+
+#[test]
+fn a_table_accepts_every_on_off_value_for_bidi_visual() {
+    for value in ["0", "1", "true", "false", "on", "off"] {
+        let package = table_document(&format!(r#"<w:bidiVisual w:val="{value}"/>"#));
+        accepted_at_every_version(&package, "w:bidiVisual");
+    }
+}
+
+#[test]
+fn a_table_refuses_a_value_outside_st_on_off_for_bidi_visual() {
+    let package = table_document(r#"<w:bidiVisual w:val="maybe"/>"#);
+    refused_with(&package, "w:bidiVisual", "InvalidAttributeValue");
+}
+
+#[test]
+fn a_document_background_accepts_filled() {
+    let package = word_document(
+        r#"<w:background><v:background filled="t"/></w:background>"#,
+        "",
+    );
+    accepted_at_every_version(&package, "v:background");
+}
+
+#[test]
+fn a_document_background_refuses_fill() {
+    let package = word_document(
+        r#"<w:background><v:background fill="t"/></w:background>"#,
+        "",
+    );
+    refused_with(&package, "v:background", "UndeclaredAttribute");
+}
+
+#[test]
+fn a_paragraph_and_the_settings_accept_smart_tags() {
+    let paragraph = word_document("", &format!("<w:p>{SMART_TAG}</w:p>"));
+    accepted_at_every_version(&paragraph, "w:smartTag");
+    let settings = settings_document(
+        r#"<w:smartTagType w:namespaceuri="urn:schemas-microsoft-com:office:smarttags" w:name="PersonName" w:url="http://example.com/"/>"#,
+    );
+    accepted_at_every_version(&settings, "w:smartTagType");
+}
+
+#[test]
+fn the_body_refuses_a_smart_tag() {
+    let package = word_document("", SMART_TAG);
+    refused_with(&package, "w:smartTag", "InvalidChild");
+}
+
+#[test]
+fn a_compatibility_setting_accepts_a_name_newer_than_the_target() {
+    let package = settings_document(
+        r#"<w:compat><w:compatSetting w:name="useWord2013TrackBottomHyphenation" w:uri="http://schemas.microsoft.com/office/word" w:val="1"/></w:compat>"#,
+    );
+    accepted_at_every_version(&package, "w:compatSetting");
 }

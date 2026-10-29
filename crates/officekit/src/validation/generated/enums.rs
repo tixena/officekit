@@ -346,7 +346,7 @@
 //   bf519385b6d23eb8b28cd78f23c63a7fa7d6dd7f48bb7de09b8e36ad6e22588e  inputs/open-xml-sdk/data/parts/WorksheetThreadedCommentsPart.json
 //   ee0ae0ea09db0cdfae1bc11eef04ea2ff123c8dbdd548e7feec91b14689565f5  inputs/open-xml-sdk/data/parts/XmlSignaturePart.json
 //   e26c4528f8340924ff27391d34681ecde1f597fc5ce3dbf2d354edc9c6071a52  crates/xtask/data/part_roots.toml
-//   7dcd57a73f549fdc4866426c307e864fa8bc15d0957b675ad141cdb077e5ad80  crates/xtask/data/sdk_corrections.toml
+//   d21a1b16172e3389c832d1f0b15a6900c55e600ed67cd1648b13d11eff8dda35  crates/xtask/data/sdk_corrections.toml
 //   dff6adee70b19bb1f9b56e50e9cc20316298c14255ec7e2d6cb0efe795318af0  crates/xtask/data/simple_types.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
@@ -5234,9 +5234,9 @@ pub static ENUMERATIONS: &[Enumeration] = &[
     },
     Enumeration {
         members: &[
-            ("left", Versions(0b11_1111), true),
+            ("left", Versions(0b11_1111), false),
             ("center", Versions(0b11_1111), false),
-            ("right", Versions(0b11_1111), true),
+            ("right", Versions(0b11_1111), false),
         ],
         simple_type: "w:ST_LevelJustification",
     },
@@ -5659,6 +5659,8 @@ pub static ENUMERATIONS: &[Enumeration] = &[
             ("left", Versions(0b11_1111), true),
             ("center", Versions(0b11_1111), false),
             ("right", Versions(0b11_1111), true),
+            ("start", Versions(0b11_1111), false),
+            ("end", Versions(0b11_1111), false),
         ],
         simple_type: "w:ST_TblJc",
     },
