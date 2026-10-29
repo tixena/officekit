@@ -7,8 +7,9 @@ use officekit_xml::packaging::part_name::PartName;
 use os_shim::mock::MemorySystem;
 use serde_json::{Value, json};
 
-use super::{SDK_KEYS, missing, run, sdk_key};
+use super::{DIVERGENCES, SDK_KEYS, divergence, missing, run, sdk_key};
 
+const C: &str = "http://schemas.openxmlformats.org/drawingml/2006/chart";
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 
 /// The left margin of the third-party sample's table style, as officekit
@@ -187,4 +188,65 @@ fn a_run_refuses_a_result_that_is_no_array() {
         format!("{error:#}"),
         "parity/oracle.json holds no JSON array"
     );
+}
+
+fn chart_extension_error(id: &str, target: &str, locals: &[&str]) -> Value {
+    let path: Vec<Value> = ["chartSpace", "chart"]
+        .iter()
+        .chain(locals)
+        .map(|local| json!({ "namespace": C, "local": local, "index": 1_u32 }))
+        .collect();
+    json!({
+        "file": "chart.docx",
+        "target": target,
+        "kind": "schema",
+        "id": id,
+        "part": "/word/charts/chart1.xml",
+        "path": path,
+    })
+}
+
+#[test]
+fn the_sdk_errors_on_the_chart_extension_are_intended_divergences() {
+    for row in DIVERGENCES {
+        for target in row.targets {
+            let locals: Vec<&str> = row.path[1..].iter().map(|(_, local)| *local).collect();
+            let record = chart_extension_error(row.id, target, &locals);
+            assert_eq!(divergence(&record), Some(row.reason), "{} {target}", row.id);
+        }
+    }
+}
+
+#[test]
+fn another_error_or_target_or_path_is_no_divergence() {
+    let unexpected = "Sch_UnexpectedElementContentExpectingComplex";
+    let outside = chart_extension_error(unexpected, "Office2019", &["extLst"]);
+    assert_eq!(divergence(&outside), None);
+    let other_path = chart_extension_error(unexpected, "Office2016", &["layout"]);
+    assert_eq!(divergence(&other_path), None);
+    let other_id = chart_extension_error("Sch_MissRequiredAttribute", "Office2016", &["extLst"]);
+    assert_eq!(divergence(&other_id), None);
+}
+
+#[test]
+fn a_run_counts_a_divergence_apart_from_the_missing_errors() {
+    let record = chart_extension_error(
+        "Sch_UnexpectedElementContentExpectingComplex",
+        "Office2016",
+        &["extLst"],
+    );
+    let system = MemorySystem::new()
+        .with_file("oracle.json", json!([record]).to_string().as_bytes())
+        .unwrap()
+        .with_file("ours/chart.json", b"[]")
+        .unwrap();
+    let report = run(
+        &system,
+        Path::new("oracle.json"),
+        Path::new("ours"),
+        &["schema".to_owned()],
+    )
+    .unwrap();
+    assert!(report.complete());
+    assert_eq!(report.divergent.len(), 1);
 }

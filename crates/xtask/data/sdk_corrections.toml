@@ -1,0 +1,22 @@
+# Types and attributes of SDK 3.5.1's data that contradict ECMA-376 and the
+# files Office writes, each replaced by what ECMA-376 and Office give. The
+# generator stops when a row names a type, a child or an attribute the data
+# does not have.
+
+# The data types the `c:ext` of a chart's extension list as the content of the
+# one extension it knows, c16r3:dataDisplayOptions16, with no `uri` and only
+# from Office 2019. ECMA-376 types it CT_Extension (dml-chart.xsd, CT_Chart).
+[[extension]]
+list = "c:CT_ChartExtensionList/c:extLst"
+replaces = "c16r3:CT_DataDisplayOptions16/c:ext"
+type = "c:CT_ChartExtension/c:ext"
+attributes_of = "c:CT_ChartSpaceExtension/c:ext"
+children = ["c16r3:CT_DataDisplayOptions16/c16r3:dataDisplayOptions16"]
+
+# The data qualifies the `val` of c16r3:dispNaAsBlank with its namespace;
+# Word writes it unprefixed, as every other boolean element of the chart
+# extensions does.
+[[attribute]]
+type = "c16r3:CT_BooleanFalse/c16r3:dispNaAsBlank"
+replaces = "c16r3:val"
+qname = ":val"

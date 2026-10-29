@@ -175,6 +175,7 @@ fn main() -> Result<ExitCode> {
                 &inputs,
                 Path::new(validation::SIMPLE_TYPES_PATH),
                 Path::new(validation::PART_ROOTS_PATH),
+                Path::new(validation::SDK_CORRECTIONS_PATH),
                 Path::new(validation::GENERATED_PATH),
             )?;
             validation_summary(&mut out, &emitted.summary)?;
@@ -202,6 +203,9 @@ fn main() -> Result<ExitCode> {
             let mut out = stdout().lock();
             for record in &report.missing {
                 writeln!(out, "missing: {record}")?;
+            }
+            for (record, reason) in &report.divergent {
+                writeln!(out, "divergent: {record}: {reason}")?;
             }
             writeln!(out, "{}", report.summary())?;
             Ok(if report.complete() {

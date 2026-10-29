@@ -1,6 +1,8 @@
 //! SDK 3.5.1's schema data, the `data/` folder of the Open XML SDK at `v3.5.1`,
 //! read into a model in the data's own vocabulary.
 
+mod corrections;
+
 use alloc::collections::{BTreeMap, BTreeSet, btree_map::Entry};
 use std::path::{Path, PathBuf};
 
@@ -207,6 +209,17 @@ pub struct Validator {
 }
 
 impl SdkData {
+    /// Replace each type and attribute the table of corrections names with
+    /// what it gives.
+    ///
+    /// # Errors
+    ///
+    /// Text that is not TOML, a row missing a field, or a row naming a type,
+    /// a child or an attribute the data does not have.
+    pub fn correct(&mut self, text: &str) -> Result<()> {
+        corrections::apply(self, text)
+    }
+
     /// The namespaces dated Office 2010 to Microsoft 365: those with types or
     /// attributes in the data, then those without.
     #[must_use]

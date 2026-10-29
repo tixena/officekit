@@ -40,6 +40,10 @@ pub const SIMPLE_TYPES_PATH: &str = "crates/xtask/data/simple_types.toml";
 /// The hand-maintained table of part roots, from the workspace root.
 pub const PART_ROOTS_PATH: &str = "crates/xtask/data/part_roots.toml";
 
+/// The hand-maintained table of corrections to SDK 3.5.1's data, from the
+/// workspace root.
+pub const SDK_CORRECTIONS_PATH: &str = "crates/xtask/data/sdk_corrections.toml";
+
 /// The parts SDK 3.5.1 gives a root element and no typed root.
 const NO_TYPED_ROOT: [&str; 2] = ["CoreFilePropertiesPart", "XmlSignaturePart"];
 
@@ -1620,12 +1624,18 @@ pub fn emit<S>(
     inputs: &Inputs,
     simple_types_path: &Path,
     part_roots_path: &Path,
+    sdk_corrections_path: &Path,
     out: &Path,
 ) -> Result<Emitted>
 where
     S: System + ?Sized,
 {
     let data = SdkData::read(system, &inputs.sdk_data)?;
+    let sdk_corrections_text = system
+        .read_to_string(sdk_corrections_path)
+        .with_context(|| format!("cannot read {}", sdk_corrections_path.display()))?;
+    let mut corrected = data.clone();
+    corrected.correct(&sdk_corrections_text)?;
     let transitional = SchemaSet::read(system, &inputs.transitional_schemas)?;
     let strict = SchemaSet::read(system, &inputs.strict_schemas)?;
     let open_specifications: Vec<&PathBuf> = inputs
@@ -1648,7 +1658,7 @@ where
         .with_context(|| format!("cannot read {}", part_roots_path.display()))?;
     let simple_types = simple_types(&simple_types_text)?;
     let part_roots = part_roots(&part_roots_text)?;
-    let tables = convert(&data, &simple_types, &part_roots, &marks)?;
+    let tables = convert(&corrected, &simple_types, &part_roots, &marks)?;
 
     let mut read: Vec<PathBuf> = inputs.strict_schemas.clone();
     read.extend(inputs.transitional_schemas.iter().cloned());
@@ -1663,6 +1673,7 @@ where
         &read,
         &[
             (part_roots_path, part_roots_text.as_bytes()),
+            (sdk_corrections_path, sdk_corrections_text.as_bytes()),
             (simple_types_path, simple_types_text.as_bytes()),
         ],
     )?;

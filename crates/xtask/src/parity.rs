@@ -168,6 +168,48 @@ pub const SDK_KEYS: &[(ErrorCode, &str)] = &[
     (ErrorCode::MissingRequiredPart, "Pkg_RequiredPartDoNotExist"),
 ];
 
+/// Every divergence from SDK 3.5.1 officekit intends.
+pub const DIVERGENCES: &[Divergence] = &[
+    Divergence {
+        id: "Sch_UnexpectedElementContentExpectingComplex",
+        path: &[(CHART, "chart"), (CHART, "extLst")],
+        reason: CHART_EXTENSION_LIST,
+        targets: &["Office2010", "Office2013", "Office2016"],
+    },
+    Divergence {
+        id: "Sch_UndeclaredAttribute",
+        path: &[(CHART, "chart"), (CHART, "extLst"), (CHART, "ext")],
+        reason: CHART_EXTENSION_LIST,
+        targets: &["Office2019", "Office2021", "Microsoft365"],
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        path: &[(CHART, "chart"), (CHART, "extLst"), (CHART, "ext")],
+        reason: CHART_EXTENSION_LIST,
+        targets: &["Office2019", "Office2021", "Microsoft365"],
+    },
+];
+
+const CHART: &str = "http://schemas.openxmlformats.org/drawingml/2006/chart";
+
+const CHART_EXTENSION_LIST: &str = "SDK 3.5.1 types the c:ext of c:chart's extension list as the \
+    content of c16r3:dataDisplayOptions16, with no uri, and from Office 2019; ECMA-376 types it \
+    CT_Extension, and Word writes the extension at every version";
+
+/// An SDK 3.5.1 error officekit deliberately does not report, because the
+/// markup it flags is valid in ECMA-376 and written by Office.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[non_exhaustive]
+pub struct Divergence {
+    /// SDK 3.5.1's error id.
+    pub id: &'static str,
+    /// The end of the error's path: namespace URI and local name of each step.
+    pub path: &'static [(&'static str, &'static str)],
+    pub reason: &'static str,
+    /// The targets the divergence holds at, as the records name them.
+    pub targets: &'static [&'static str],
+}
+
 /// What two errors must share to be the same.
 ///
 /// File, target, kind, SDK 3.5.1's id, part (folded to ASCII lower case, as
@@ -190,7 +232,9 @@ pub struct Key {
 pub struct Report {
     /// The number of missing errors of each kind asked for, in the order asked.
     pub counts: Vec<(String, usize)>,
-    /// Every oracle error of those kinds officekit's result lacks.
+    /// The oracle errors officekit lacks on purpose, each with its reason.
+    pub divergent: Vec<(Value, &'static str)>,
+    /// Every oracle error of those kinds officekit's result lacks, the intended divergences apart.
     pub missing: Vec<Value>,
 }
 
@@ -251,6 +295,26 @@ fn key(record: &Value, id: &str) -> Key {
         path,
         target: text("target"),
     }
+}
+
+/// The reason officekit lacks an oracle error on purpose, when it does.
+#[must_use]
+pub fn divergence(record: &Value) -> Option<&'static str> {
+    let key = oracle_key(record);
+    DIVERGENCES
+        .iter()
+        .find(|row| {
+            row.id == key.id
+                && row.targets.contains(&key.target.as_str())
+                && key.path.len() >= row.path.len()
+                && key.path[key.path.len() - row.path.len()..]
+                    .iter()
+                    .zip(row.path)
+                    .all(|((namespace, local, _), (row_namespace, row_local))| {
+                        namespace == row_namespace && local == row_local
+                    })
+        })
+        .map(|row| row.reason)
 }
 
 /// Every oracle error officekit's result lacks.
@@ -344,7 +408,14 @@ where
             found.extend(records(system, &file)?);
         }
     }
-    let lacking: Vec<Value> = missing(&expected, &found).into_iter().cloned().collect();
+    let (intended, lacking): (Vec<Value>, Vec<Value>) = missing(&expected, &found)
+        .into_iter()
+        .cloned()
+        .partition(|record| divergence(record).is_some());
+    let divergent = intended
+        .into_iter()
+        .filter_map(|record| divergence(&record).map(|reason| (record, reason)))
+        .collect();
     let counts = kinds
         .iter()
         .map(|kind| {
@@ -357,6 +428,7 @@ where
         .collect();
     Ok(Report {
         counts,
+        divergent,
         missing: lacking,
     })
 }

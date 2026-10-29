@@ -8,10 +8,13 @@ use officekit_xml::packaging::relationship::RelationshipType;
 use super::{Validator, document_parts, reachable_parts, rule};
 use crate::validation::error::{ErrorCode, ValidationError};
 
+const CHART: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart";
+const CHART_CONTENT: &str = "application/vnd.openxmlformats-officedocument.drawingml.chart+xml";
 const COMMENTS_EXTENDED: &str =
     "http://schemas.microsoft.com/office/2011/relationships/commentsExtended";
 const COMMENTS_EXTENDED_CONTENT: &str =
     "application/vnd.openxmlformats-officedocument.wordprocessingml.commentsExtended+xml";
+const NA_AS_BLANK_CHART: &[u8] = br#"<c:chartSpace xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart"><c:chart><c:plotArea><c:layout/></c:plotArea><c:extLst><c:ext xmlns:c16r3="http://schemas.microsoft.com/office/drawing/2017/03/chart" uri="{56B9EC1D-385E-4148-901F-78D8002777C0}"><c16r3:dataDisplayOptions16><c16r3:dispNaAsBlank val="1"/></c16r3:dataDisplayOptions16></c:ext></c:extLst></c:chart></c:chartSpace>"#;
 const MAIN: &str =
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml";
 const OFFICE_DOCUMENT: &str =
@@ -41,6 +44,32 @@ fn word(office_document: &str, related: &[(&str, &str, &str)]) -> Package {
             .unwrap();
     }
     package
+}
+
+fn chart_document(chart: &[u8]) -> Package {
+    let mut package = Package::new();
+    let main = PartName::new("/word/document.xml").unwrap();
+    package
+        .set_part_bytes(
+            &main,
+            MAIN,
+            br#"<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body/></w:document>"#,
+        )
+        .unwrap();
+    package.relate(None, &main, OFFICE_DOCUMENT).unwrap();
+    let part = PartName::new("/word/charts/chart1.xml").unwrap();
+    package.set_part_bytes(&part, CHART_CONTENT, chart).unwrap();
+    package.relate(Some(&main), &part, CHART).unwrap();
+    package
+}
+
+fn errors_in_the_extension_list(package: &Package, version: OfficeVersion) -> Vec<String> {
+    Validator::new(version)
+        .validate(package)
+        .iter()
+        .filter(|error| error.path_text().contains("c:extLst"))
+        .map(ValidationError::line)
+        .collect()
 }
 
 fn reached(package: &Package, target: OfficeVersion) -> Vec<(String, &'static str)> {
@@ -203,4 +232,32 @@ fn a_target_that_names_no_part_does_not_hide_the_other_parts_of_its_source() {
             ("/word/styles.xml".to_owned(), "StyleDefinitionsPart"),
         ]
     );
+}
+
+#[test]
+fn a_chart_extension_list_accepts_the_extension_word_writes() {
+    let package = chart_document(NA_AS_BLANK_CHART);
+    for version in [
+        OfficeVersion::Office2010,
+        OfficeVersion::Office2013,
+        OfficeVersion::Office2016,
+        OfficeVersion::Office2019,
+        OfficeVersion::Office2021,
+        OfficeVersion::Microsoft365,
+    ] {
+        assert_eq!(
+            errors_in_the_extension_list(&package, version),
+            Vec::<String>::new(),
+            "{version:?}"
+        );
+    }
+}
+
+#[test]
+fn a_chart_extension_without_its_content_element_is_refused() {
+    let misnested = br#"<c:chartSpace xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart"><c:chart><c:plotArea><c:layout/></c:plotArea><c:extLst><c:ext xmlns:c16r3="http://schemas.microsoft.com/office/drawing/2017/03/chart" uri="{56B9EC1D-385E-4148-901F-78D8002777C0}"><c16r3:dispNaAsBlank val="1"/></c:ext></c:extLst></c:chart></c:chartSpace>"#;
+    let errors =
+        errors_in_the_extension_list(&chart_document(misnested), OfficeVersion::Microsoft365);
+    assert_eq!(errors.len(), 1, "{errors:?}");
+    assert!(errors[0].contains("InvalidChild"), "{errors:?}");
 }
