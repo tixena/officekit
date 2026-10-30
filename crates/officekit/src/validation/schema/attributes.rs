@@ -92,30 +92,26 @@ where
         });
         let text = value.unwrap_or_default();
         let ignorable_here = ignorable(&namespace);
-        let strict_checks = constraint
-            .strict_checks
-            .filter(|_| strict && value.is_some());
-        let mut failures = run(
-            strict_checks.unwrap_or(constraint.checks),
+        let transitional = run(
+            constraint.checks,
             &constraint.class,
             value,
             target,
             ignorable_here,
         );
         let mut transitional_spelling = false;
-        if strict_checks.is_some() && !failures.is_empty() {
-            let transitional = run(
-                constraint.checks,
-                &constraint.class,
-                value,
-                target,
-                ignorable_here,
-            );
-            if transitional.is_empty() {
-                transitional_spelling = true;
-                failures.clear();
+        let failures = match constraint.strict_checks {
+            Some(checks) if strict && value.is_some() && transitional != [Failure::Undeclared] => {
+                let found = run(checks, &constraint.class, value, target, ignorable_here);
+                if !found.is_empty() && transitional.is_empty() {
+                    transitional_spelling = true;
+                    Vec::new()
+                } else {
+                    found
+                }
             }
-        }
+            _ => transitional,
+        };
         for failure in failures {
             problems.push(match failure {
                 Failure::Invalid(detail) => Problem {

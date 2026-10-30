@@ -42,6 +42,43 @@ const WHOLE: Check = Check::Number {
     list: false,
 };
 
+const FROM_2013: [ValueCheck; 2] = [
+    ValueCheck {
+        check: Check::OfficeVersion,
+        union: None,
+        versions: Versions(0b11_1110),
+    },
+    ValueCheck {
+        check: WHOLE,
+        union: None,
+        versions: Versions(0b11_1111),
+    },
+];
+
+const PERCENT: [ValueCheck; 1] = [ValueCheck {
+    check: PATTERN,
+    union: None,
+    versions: Versions(0b11_1111),
+}];
+
+const NEWER: [AttributeConstraint; 1] = [AttributeConstraint {
+    checks: &FROM_2013,
+    class: ValueClass::String,
+    name: "val",
+    namespace: None,
+    strict_checks: Some(&PERCENT),
+    transitional_only: false,
+}];
+
+const NEWER_TYPE: SchemaType = SchemaType {
+    attributes: &NEWER,
+    children: &[],
+    name: "w:CT_Newer/w:newer",
+    particles: &[],
+    text_checks: &[],
+    versions: Versions(0b11_1111),
+};
+
 /// The `w:w` attribute of a type.
 fn width(type_name: &str) -> &'static AttributeConstraint {
     schema_type(type_name)
@@ -232,6 +269,43 @@ fn a_strict_file_reports_a_value_only_transitional_allows() {
     assert_eq!(codes(&left, "w:CT_Jc/w:jc", false).len(), 0);
     let start = element(&format!("<w:jc xmlns:w=\"{W}\" w:val=\"start\"/>"));
     assert_eq!(codes(&start, "w:CT_Jc/w:jc", true).len(), 0);
+}
+
+#[test]
+fn a_strict_file_reports_an_attribute_undeclared_at_the_target() {
+    let at = |value: &str, target: OfficeVersion, strict: bool| -> Vec<ErrorCode> {
+        check(
+            &element(&format!(r#"<newer val="{value}"/>"#)),
+            &NEWER_TYPE,
+            target,
+            strict,
+            |_| false,
+        )
+        .into_iter()
+        .map(|problem| problem.code)
+        .collect()
+    };
+    assert_eq!(
+        at("50%", OfficeVersion::Office2010, true),
+        [ErrorCode::UndeclaredAttribute]
+    );
+    assert_eq!(
+        at("50", OfficeVersion::Office2010, true),
+        [ErrorCode::UndeclaredAttribute]
+    );
+    assert_eq!(
+        at("50", OfficeVersion::Office2010, false),
+        [ErrorCode::UndeclaredAttribute]
+    );
+    assert_eq!(at("50%", OfficeVersion::Office2013, true).len(), 0);
+    assert_eq!(
+        at("50", OfficeVersion::Office2013, true),
+        [ErrorCode::TransitionalOnlyValue]
+    );
+    assert_eq!(
+        at("x", OfficeVersion::Office2013, true),
+        [ErrorCode::InvalidAttributeValue]
+    );
 }
 
 #[test]
