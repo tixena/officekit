@@ -3,8 +3,9 @@
 //! Each declared attribute's checks run in order; then come the attributes
 //! the type does not declare and, when the file declares Strict, what only
 //! Transitional allows: a marked attribute or one in a namespace only
-//! Transitional has, a marked enumeration member, and a value its own checks
-//! accept and its Strict checks refuse.
+//! Transitional has, a marked enumeration member, and a value its
+//! Transitional checks accept and its Strict checks refuse. A value with Strict
+//! checks meets them in a Strict file.
 
 use alloc::borrow::ToOwned as _;
 use alloc::string::String;
@@ -90,14 +91,31 @@ where
             attribute.name.namespace.clone()
         });
         let text = value.unwrap_or_default();
-        let failures = run(
-            constraint.checks,
+        let ignorable_here = ignorable(&namespace);
+        let strict_checks = constraint
+            .strict_checks
+            .filter(|_| strict && value.is_some());
+        let mut failures = run(
+            strict_checks.unwrap_or(constraint.checks),
             &constraint.class,
             value,
             target,
-            ignorable(&namespace),
+            ignorable_here,
         );
-        let own_checks_pass = failures.is_empty();
+        let mut transitional_spelling = false;
+        if strict_checks.is_some() && !failures.is_empty() {
+            let transitional = run(
+                constraint.checks,
+                &constraint.class,
+                value,
+                target,
+                ignorable_here,
+            );
+            if transitional.is_empty() {
+                transitional_spelling = true;
+                failures.clear();
+            }
+        }
         for failure in failures {
             problems.push(match failure {
                 Failure::Invalid(detail) => Problem {
@@ -129,14 +147,7 @@ where
                     code: ErrorCode::TransitionalOnlyAttribute,
                 });
             }
-            let strict_refuses = || {
-                constraint.strict_checks.is_some_and(|checks| {
-                    !run(checks, &constraint.class, Some(found), target, false).is_empty()
-                })
-            };
-            if transitional_only_value(constraint, found, target)
-                || (own_checks_pass && strict_refuses())
-            {
+            if transitional_spelling || transitional_only_value(constraint, found, target) {
                 problems.push(Problem {
                     arguments: vec![("attribute", name), ("value", found.to_owned())],
                     code: ErrorCode::TransitionalOnlyValue,

@@ -235,7 +235,7 @@ fn a_strict_file_reports_a_value_only_transitional_allows() {
 }
 
 #[test]
-fn a_strict_file_reports_a_value_its_own_checks_accept_and_its_strict_checks_refuse() {
+fn a_strict_file_checks_a_value_against_its_strict_type() {
     let alpha = |value: &str| {
         element(&format!(
             "<a:alpha xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" val=\"{value}\"/>"
@@ -248,14 +248,59 @@ fn a_strict_file_reports_a_value_its_own_checks_accept_and_its_strict_checks_ref
     );
     assert_eq!(codes(&alpha("50000"), opacity, false).len(), 0);
     assert_eq!(
-        codes(&alpha("50%"), opacity, true),
+        codes(&alpha("50%"), opacity, true).len(),
+        0,
+        "Strict's form, in a Strict file"
+    );
+    assert_eq!(
+        codes(&alpha("50%"), opacity, false),
         [ErrorCode::InvalidAttributeValue],
-        "Strict's form, which the attribute's own checks refuse"
+        "Strict's form, in a Transitional file"
     );
     assert_eq!(
         codes(&alpha("x"), opacity, true),
         [ErrorCode::InvalidAttributeValue],
         "a value both refuse"
+    );
+    let luminance = |value: &str| {
+        element(&format!(
+            "<a:lumMod xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" val=\"{value}\"/>"
+        ))
+    };
+    let modulation = "a:CT_Percentage/a:lumMod";
+    assert_eq!(codes(&luminance("110%"), modulation, true).len(), 0);
+    assert_eq!(
+        codes(&luminance("110%"), modulation, false),
+        [ErrorCode::InvalidAttributeValue]
+    );
+    assert_eq!(
+        codes(&luminance("110000"), modulation, true),
+        [ErrorCode::TransitionalOnlyValue]
+    );
+    assert_eq!(codes(&luminance("110000"), modulation, false).len(), 0);
+    assert_eq!(
+        codes(&luminance("x"), modulation, true),
+        [ErrorCode::InvalidAttributeValue]
+    );
+    let indent = |value: &str| {
+        element(&format!(
+            "<w:tblInd xmlns:w=\"{W}\" w:w=\"{value}\" w:type=\"dxa\"/>"
+        ))
+    };
+    let table_indent = "w:CT_TblWidthShort/w:tblInd";
+    assert_eq!(codes(&indent("0pt"), table_indent, true).len(), 0);
+    assert_eq!(
+        codes(&indent("0pt"), table_indent, false),
+        [ErrorCode::InvalidAttributeValue]
+    );
+    assert_eq!(
+        codes(&indent("0"), table_indent, true),
+        [ErrorCode::TransitionalOnlyValue]
+    );
+    assert_eq!(codes(&indent("0"), table_indent, false).len(), 0);
+    assert_eq!(
+        codes(&indent("x"), table_indent, true),
+        [ErrorCode::ValueNotInUnion]
     );
     let bold = |value: &str| element(&format!("<w:b xmlns:w=\"{W}\" w:val=\"{value}\"/>"));
     assert_eq!(

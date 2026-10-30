@@ -469,9 +469,10 @@ fn a_strict_file_gets_an_error_for_each_thing_only_transitional_allows() {
          a:solidFill[1]/a:srgbClr[1]/a:alpha[1]"
     ));
     assert!(
-        found(&transitional_content(true), OfficeVersion::Microsoft365)
-            .contains(&(ErrorCode::InvalidAttributeValue, opacity_of_strict_form)),
-        "the own checks' error of 50% stays"
+        !found(&transitional_content(true), OfficeVersion::Microsoft365)
+            .iter()
+            .any(|(_, path)| *path == opacity_of_strict_form),
+        "50%, Strict's form, gives no error in a Strict file"
     );
 }
 

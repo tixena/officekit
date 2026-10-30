@@ -387,6 +387,90 @@ pub const DIVERGENCES: &[Divergence] = &[
         reason: STRICT_TEXT_BOX,
         targets: ALL_TARGETS,
     },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(DRAWING, "alpha")],
+        reason: STRICT_VALUES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(DRAWING, "gs")],
+        reason: STRICT_VALUES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(DRAWING, "lumMod")],
+        reason: STRICT_VALUES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(DRAWING, "miter")],
+        reason: STRICT_VALUES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(DRAWING, "satMod")],
+        reason: STRICT_VALUES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(DRAWING, "shade")],
+        reason: STRICT_VALUES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(DRAWING, "tint")],
+        reason: STRICT_VALUES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "tblInd")],
+        reason: STRICT_VALUES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeUnionFailedEx",
+        mentioning: None,
+        path: &[(WORD, "top")],
+        reason: STRICT_VALUES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeUnionFailedEx",
+        mentioning: None,
+        path: &[(WORD, "start")],
+        reason: STRICT_VALUES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeUnionFailedEx",
+        mentioning: None,
+        path: &[(WORD, "bottom")],
+        reason: STRICT_VALUES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeUnionFailedEx",
+        mentioning: None,
+        path: &[(WORD, "end")],
+        reason: STRICT_VALUES,
+        targets: ALL_TARGETS,
+    },
 ];
 
 const ALL_TARGETS: &[&str] = &[
@@ -411,6 +495,8 @@ const CHART_EXTENSION_LIST: &str = "SDK 3.5.1 types the c:ext of c:chart's exten
     content of c16r3:dataDisplayOptions16, with no uri, and from Office 2019; ECMA-376 types it \
     CT_Extension, and Word writes the extension at every version";
 
+const DRAWING: &str = "http://schemas.openxmlformats.org/drawingml/2006/main";
+
 const LEVEL_JUSTIFICATION: &str = "SDK 3.5.1 gives w:lvlJc the values left, center and right; \
     ECMA-376 types it CT_Jc (CT_Lvl), whose val is ST_Jc, with start and end";
 
@@ -422,6 +508,9 @@ const SMART_TAG_SETTINGS: &str = "SDK 3.5.1 leaves out w:doNotEmbedSmartTags and
 
 const STRICT_TEXT_BOX: &str = "SDK 3.5.1 gives wps:txbx only w:txbxContent; Microsoft documents \
     wne:txbxContent in its place in Strict ([MS-ODRAWXML] 2.13.3.2, CT_TextboxInfo)";
+
+const STRICT_VALUES: &str = "SDK 3.5.1 checks a Strict file's values against their Transitional \
+    types; ECMA-376 Strict types them differently";
 
 const TABLE_JUSTIFICATION: &str = "SDK 3.5.1 gives the w:jc of a table's properties the values \
     left, center and right; ECMA-376 types it CT_JcTable, whose val is ST_JcTable, with start and end";
