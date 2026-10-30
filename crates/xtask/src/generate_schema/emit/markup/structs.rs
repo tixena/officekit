@@ -1608,8 +1608,7 @@ impl<'data> Builder<'data> {
             .catalog
             .simples
             .get(index)
-            .map(Simple::references)
-            .unwrap_or_default();
+            .map_or_default(Simple::references);
         for other in referenced {
             self.simple(&other)?;
         }

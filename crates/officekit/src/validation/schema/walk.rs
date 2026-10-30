@@ -536,7 +536,7 @@ impl<'tree> Walker<'tree, '_> {
                 return;
             };
             let child = mismatch.child.and_then(|index| children.get(index));
-            let child_name = child.map(|found| qualified(found.name)).unwrap_or_default();
+            let child_name = child.map_or_default(|found| qualified(found.name));
             let child_type = child
                 .and_then(|found| found.type_id)
                 .and_then(|id| SCHEMA_TYPES.get(usize::from(id)))

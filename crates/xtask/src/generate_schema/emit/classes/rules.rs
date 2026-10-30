@@ -742,13 +742,12 @@ impl<'set> Builder<'set> {
             .position(|name| *name == target)
             .zip(from)
             .filter(|(start, end)| start < end)
-            .map(|(start, end)| {
+            .map_or_default(|(start, end)| {
                 ordered[start + 1..end]
                     .iter()
                     .map(|name| name.local.clone())
                     .collect()
-            })
-            .unwrap_or_default();
+            });
         ChildRule::Rename { before, to }
     }
 

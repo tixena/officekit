@@ -963,8 +963,7 @@ fn rename_collisions(parts: &[PartType], found: &mut [RelationshipConstant]) -> 
             constant.name = constant
                 .modules
                 .first()
-                .map(|module| module.to_ascii_uppercase())
-                .unwrap_or_default();
+                .map_or_default(|module| module.to_ascii_uppercase());
         }
     }
     Ok(())
