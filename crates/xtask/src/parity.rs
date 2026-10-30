@@ -562,6 +562,104 @@ pub const DIVERGENCES: &[Divergence] = &[
         reason: STRICT_VALUES,
         targets: ALL_TARGETS,
     },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:pStyle'"),
+        path: &[(WORD, "pPr")],
+        reason: STYLE_PROPERTIES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:pPrChange'"),
+        path: &[(WORD, "pPr")],
+        reason: STYLE_PROPERTIES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:tblStyle'"),
+        path: &[(WORD, "tblPr")],
+        reason: STYLE_PROPERTIES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:tblpPr'"),
+        path: &[(WORD, "tblPr")],
+        reason: STYLE_PROPERTIES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:tblOverlap'"),
+        path: &[(WORD, "tblPr")],
+        reason: STYLE_PROPERTIES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:bidiVisual'"),
+        path: &[(WORD, "tblPr")],
+        reason: STYLE_PROPERTIES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:tblW'"),
+        path: &[(WORD, "tblPr")],
+        reason: STYLE_PROPERTIES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:tblLayout'"),
+        path: &[(WORD, "tblPr")],
+        reason: STYLE_PROPERTIES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:tblLook'"),
+        path: &[(WORD, "tblPr")],
+        reason: STYLE_PROPERTIES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:tblCaption'"),
+        path: &[(WORD, "tblPr")],
+        reason: STYLE_PROPERTIES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:tblDescription'"),
+        path: &[(WORD, "tblPr")],
+        reason: STYLE_PROPERTIES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeUnionFailedEx",
+        mentioning: None,
+        path: &[(WORD, "divId")],
+        reason: STYLE_PROPERTIES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: Some("less than or equal to 3"),
+        path: &[(WORD, "tblStyleRowBandSize")],
+        reason: STYLE_PROPERTIES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: Some("less than or equal to 3"),
+        path: &[(WORD, "tblStyleColBandSize")],
+        reason: STYLE_PROPERTIES,
+        targets: ALL_TARGETS,
+    },
 ];
 
 const ALL_TARGETS: &[&str] = &[
@@ -606,6 +704,10 @@ const STRICT_TEXT_BOX: &str = "SDK 3.5.1 gives wps:txbx only w:txbxContent; Micr
 
 const STRICT_VALUES: &str = "SDK 3.5.1 checks a Strict file's values against their Transitional \
     types; ECMA-376 Strict types them differently";
+
+const STYLE_PROPERTIES: &str = "SDK 3.5.1 narrows the properties of styles, table style \
+    conditions, the document defaults and numbering levels, and the ranges of divId and the band \
+    sizes; ECMA-376 types them CT_PPrGeneral, CT_TblPrBase and CT_DecimalNumber";
 
 const TABLE_JUSTIFICATION: &str = "SDK 3.5.1 gives the w:jc of a table's properties the values \
     left, center and right; ECMA-376 types it CT_JcTable, whose val is ST_JcTable, with start and end";

@@ -72,6 +72,9 @@ const UNKNOWN: &str = "http://example.com/relationships/unknown";
 const PARAGRAPH_STYLE: &str = r#"<w:style w:type="paragraph" w:styleId="S1"><w:name w:val="S1"/><w:pPr>PPR</w:pPr></w:style>"#;
 const RELATIONSHIPS: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
 const BAND_SIZES: &str = r#"<w:tblStyleRowBandSize w:val="1"/><w:tblStyleColBandSize w:val="1"/>"#;
+const TABLE_STYLE_PROPERTIES: &str = r#"<w:tblPr><w:tblStyle w:val="T1"/><w:tblpPr w:tblpX="1"/><w:tblOverlap w:val="never"/><w:bidiVisual/><w:tblStyleRowBandSize w:val="4"/><w:tblStyleColBandSize w:val="4"/><w:tblW w:w="0" w:type="auto"/><w:jc w:val="center"/><w:tblLayout w:type="fixed"/><w:tblLook w:val="04A0"/><w:tblCaption w:val="c"/><w:tblDescription w:val="d"/></w:tblPr>"#;
+const PARAGRAPH_PROPERTIES_CHANGE: &str =
+    r#"<w:pPrChange w:id="1" w:author="a"><w:pPr/></w:pPrChange>"#;
 
 /// A Word document related by `office_document` whose main part relates to
 /// one part by each of `related`: its name, relationship type, and content
@@ -787,6 +790,98 @@ fn a_frameset_refuses_a_title_after_a_frame() {
         web_settings_document(r#"<w:frameset><w:frame/><w:title w:val="t"/></w:frameset>"#);
     let errors = errors_at(&package, OfficeVersion::Microsoft365, "/w:frameset[1]:");
     assert_eq!(errors.len(), 1, "{errors:?}");
+}
+
+#[test]
+fn a_table_style_and_its_conditions_accept_every_child_of_ct_tbl_pr_base() {
+    let style = format!(
+        r#"<w:style w:type="table" w:styleId="T1"><w:name w:val="T1"/>{TABLE_STYLE_PROPERTIES}<w:tblStylePr w:type="firstRow">{TABLE_STYLE_PROPERTIES}</w:tblStylePr></w:style>"#
+    );
+    let package = styles_document(&style);
+    for version in VERSIONS {
+        assert_eq!(
+            errors_at(&package, version, "/w:tblPr[1]"),
+            Vec::<String>::new(),
+            "{version:?}"
+        );
+    }
+}
+
+#[test]
+fn a_style_and_a_table_style_condition_accept_p_style_before_the_other_properties() {
+    let style = paragraph_style(r#"<w:pStyle w:val="S2"/><w:keepNext/>"#);
+    accepted_at_every_version(&style, "holds w:pStyle");
+    let condition = styles_document(
+        r#"<w:style w:type="table" w:styleId="T1"><w:name w:val="T1"/><w:tblStylePr w:type="firstRow"><w:pPr><w:pStyle w:val="S2"/><w:keepNext/></w:pPr></w:tblStylePr></w:style>"#,
+    );
+    accepted_at_every_version(&condition, "holds w:pStyle");
+}
+
+#[test]
+fn the_document_defaults_accept_p_style_and_a_properties_change() {
+    let package = styles_document(&format!(
+        r#"<w:docDefaults><w:pPrDefault><w:pPr><w:pStyle w:val="S1"/><w:keepNext/>{PARAGRAPH_PROPERTIES_CHANGE}</w:pPr></w:pPrDefault></w:docDefaults>"#
+    ));
+    accepted_at_every_version(&package, "holds w:pStyle");
+    accepted_at_every_version(&package, "holds w:pPrChange");
+}
+
+#[test]
+fn a_numbering_level_accepts_a_properties_change_after_the_other_properties() {
+    let package = numbering_document(&format!(
+        "<w:pPr><w:keepNext/>{PARAGRAPH_PROPERTIES_CHANGE}</w:pPr>"
+    ));
+    accepted_at_every_version(&package, "holds w:pPrChange");
+}
+
+#[test]
+fn a_paragraph_accepts_a_negative_div_id_and_refuses_zero_by_words_rule() {
+    let div_id = |value: &str| {
+        word_document(
+            "",
+            &format!(r#"<w:p><w:pPr><w:divId w:val="{value}"/></w:pPr></w:p>"#),
+        )
+    };
+    accepted_at_every_version(&div_id("-5"), "w:divId");
+    refused_with(&div_id("0"), "w:divId", "AttributeValueOutsideConstraint");
+}
+
+#[test]
+fn a_table_style_refuses_the_table_width_before_the_table_style() {
+    let package = styles_document(
+        r#"<w:style w:type="table" w:styleId="T1"><w:name w:val="T1"/><w:tblPr><w:tblW w:w="0" w:type="auto"/><w:tblStyle w:val="T1"/></w:tblPr></w:style>"#,
+    );
+    let errors = errors_at(
+        &package,
+        OfficeVersion::Microsoft365,
+        "/w:style[1]/w:tblPr[1]:",
+    );
+    assert_eq!(errors.len(), 1, "{errors:?}");
+}
+
+#[test]
+fn a_style_refuses_p_style_after_keep_next() {
+    let package = paragraph_style(r#"<w:keepNext/><w:pStyle w:val="S2"/>"#);
+    let errors = errors_at(
+        &package,
+        OfficeVersion::Microsoft365,
+        "/w:style[1]/w:pPr[1]:",
+    );
+    assert_eq!(errors.len(), 1, "{errors:?}");
+}
+
+#[test]
+fn a_band_size_that_is_not_an_integer_is_refused() {
+    let package = styles_document(
+        r#"<w:style w:type="table" w:styleId="T1"><w:name w:val="T1"/><w:tblPr><w:tblStyleRowBandSize w:val="x"/></w:tblPr></w:style>"#,
+    );
+    refused_with(&package, "w:tblStyleRowBandSize", "InvalidAttributeValue");
+}
+
+#[test]
+fn a_div_id_that_is_not_an_integer_is_refused() {
+    let package = word_document("", r#"<w:p><w:pPr><w:divId w:val="x"/></w:pPr></w:p>"#);
+    refused_with(&package, "w:divId", "w:val");
 }
 
 #[test]

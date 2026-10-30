@@ -235,3 +235,82 @@ parents = ["w:CT_Frame/w:frame", "w:CT_Frameset/w:frameset"]
 type = "w:CT_Rel/w:longDesc"
 like = "w:CT_Rel/w:sourceFileName"
 parents = ["w:CT_Frame/w:frame"]
+
+# 14. ECMA-376 types the value of divId and of the two band sizes
+# CT_DecimalNumber, whose val is any integer (CT_PPrBase, CT_TblPrBase). The
+# data gives divId a minimum of 1 and the band sizes the range 0 to 3.
+[[base_type]]
+type = "w:CT_NonZeroDecimalNumber/w:divId"
+like = "w:CT_DecimalNumber/w:outlineLvl"
+
+[[base_type]]
+type = "w:CT_UnsignedDecimalNumberMax3/w:tblStyleRowBandSize"
+like = "w:CT_DecimalNumber/w:outlineLvl"
+
+[[base_type]]
+type = "w:CT_UnsignedDecimalNumberMax3/w:tblStyleColBandSize"
+like = "w:CT_DecimalNumber/w:outlineLvl"
+
+# 15. ECMA-376 types the pPr of a style, a table style condition, the document
+# defaults and a numbering level CT_PPrGeneral: CT_PPrBase and pPrChange
+# (wml.xsd). The data leaves pStyle out of the first three and pPrChange out of
+# the last two.
+[[element]]
+type = "w:CT_String/w:pStyle"
+parents = ["w:CT_PPrStyle/w:pPr", "w:CT_PPrBaseStyleable/w:pPr"]
+standard = "w:CT_PPrBase"
+
+[[element]]
+type = "w:CT_PPrChange/w:pPrChange"
+parents = ["w:CT_PPrBase/w:pPr", "w:CT_PPrBaseStyleable/w:pPr"]
+standard = "w:CT_PPrGeneral"
+
+# 16. ECMA-376 types the tblPr of a table style and of a table style condition
+# CT_TblPrBase (wml.xsd, CT_Style and CT_TblStylePr). The data's types for them
+# hold only the band sizes, jc, tblCellSpacing, tblInd, tblBorders, shd and
+# tblCellMar. Each row takes the type the data gives the element in a table's
+# tblPr, in CT_TblPrBase's order.
+[[element]]
+type = "w:CT_String253/w:tblStyle"
+parents = ["w:CT_TblPrStyle/w:tblPr", "w:CT_TblPrStyleOverride/w:tblPr"]
+standard = "w:CT_TblPrBase"
+
+[[element]]
+type = "w:CT_TblPPr/w:tblpPr"
+parents = ["w:CT_TblPrStyle/w:tblPr", "w:CT_TblPrStyleOverride/w:tblPr"]
+standard = "w:CT_TblPrBase"
+
+[[element]]
+type = "w:CT_TblOverlap/w:tblOverlap"
+parents = ["w:CT_TblPrStyle/w:tblPr", "w:CT_TblPrStyleOverride/w:tblPr"]
+standard = "w:CT_TblPrBase"
+
+[[element]]
+type = "w:CT_OnOffOnly/w:bidiVisual"
+parents = ["w:CT_TblPrStyle/w:tblPr", "w:CT_TblPrStyleOverride/w:tblPr"]
+standard = "w:CT_TblPrBase"
+
+[[element]]
+type = "w:CT_TblWidth/w:tblW"
+parents = ["w:CT_TblPrStyle/w:tblPr", "w:CT_TblPrStyleOverride/w:tblPr"]
+standard = "w:CT_TblPrBase"
+
+[[element]]
+type = "w:CT_TblLayoutType/w:tblLayout"
+parents = ["w:CT_TblPrStyle/w:tblPr", "w:CT_TblPrStyleOverride/w:tblPr"]
+standard = "w:CT_TblPrBase"
+
+[[element]]
+type = "w:CT_TblLook/w:tblLook"
+parents = ["w:CT_TblPrStyle/w:tblPr", "w:CT_TblPrStyleOverride/w:tblPr"]
+standard = "w:CT_TblPrBase"
+
+[[element]]
+type = "w:CT_String/w:tblCaption"
+parents = ["w:CT_TblPrStyle/w:tblPr", "w:CT_TblPrStyleOverride/w:tblPr"]
+standard = "w:CT_TblPrBase"
+
+[[element]]
+type = "w:CT_String/w:tblDescription"
+parents = ["w:CT_TblPrStyle/w:tblPr", "w:CT_TblPrStyleOverride/w:tblPr"]
+standard = "w:CT_TblPrBase"
