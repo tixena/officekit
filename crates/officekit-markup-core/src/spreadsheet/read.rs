@@ -207,7 +207,7 @@
 //   1ccb90bdf037137918dfb7ed2e243c2377dec75cfcc65808a1b8904f084302e2  inputs/open-xml-sdk/data/schemas/www_w3_org_XML_1998_namespace.json
 //   faa0956ead6fa73f20a3ea60eec008389b059f72512d83029c27109a69a87e0f  crates/xtask/data/enum_names.toml
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
-//   61606e119147b2b1aeac979a7bd24768b649ba60df2ad2478ad9531fb84a4d8f  crates/xtask/data/sdk_corrections.toml
+//   f921f16430a7cd2a60c2c06bf1d69dfe4d6c1720ca33aaad52d9f4e192f9869e  crates/xtask/data/sdk_corrections.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 //! The readers of `crate::spreadsheet`: each struct read from its generic

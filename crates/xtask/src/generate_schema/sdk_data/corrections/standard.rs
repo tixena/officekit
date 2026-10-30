@@ -1,6 +1,8 @@
 //! The elements ECMA-376 declares and SDK 3.5.1's data leaves out, built from
 //! the Transitional schemas.
 
+use core::mem;
+
 use anyhow::{Context as _, Result, bail};
 
 use super::{known, text_field, texts};
@@ -38,7 +40,7 @@ impl FromStandard {
             data.types.insert(name.clone(), built);
         }
         for parent in &self.parents {
-            place(data, standard, parent, &self.types, (0, None))?;
+            place(data, standard, parent, None, &self.types, (0, None))?;
         }
         Ok(())
     }
@@ -90,42 +92,37 @@ impl FromStandard {
     }
 }
 
-/// Put each of `new` that the standard declares in `parent`'s sequence ahead of
-/// the first element the standard declares after it that the data's sequence
-/// holds, else at the end, occurring `occurs.0` to `occurs.1` times.
+/// Put each of `new` that the standard declares in `parent`'s content model,
+/// between the elements the standard orders it between, occurring `occurs.0`
+/// to `occurs.1` times. The standard's order is the declaration of
+/// `declared_by`, else of the parent's own type; the data's items are matched
+/// by element name at any depth.
 pub(super) fn place(
     data: &mut SdkData,
     standard: &SchemaSet,
     parent: &str,
+    declared_by: Option<&str>,
     new: &[String],
     occurs: (u32, Option<u32>),
 ) -> Result<()> {
-    let (schema_type, _) = parent
-        .split_once('/')
-        .with_context(|| format!("`{parent}` has no `/`"))?;
+    let schema_type = match declared_by {
+        Some(schema_type) => schema_type,
+        None => {
+            parent
+                .split_once('/')
+                .with_context(|| format!("`{parent}` has no `/`"))?
+                .0
+        }
+    };
     let declared = declaration(data, standard, schema_type)?;
     let Content::Particle(content) = &declared.content else {
         bail!("`{parent}` has no content model in the standard");
     };
-    let ParticleKind::Sequence(elements) = &content.kind else {
-        bail!("`{parent}` is not a sequence in the standard");
-    };
-    let mut names = Vec::new();
-    for element in elements {
-        let ParticleKind::Element {
-            name,
-            type_ref: _type_ref,
-        } = &element.kind
-        else {
-            bail!("`{parent}` holds an item other than an element in the standard");
-        };
-        names.push(resolve(data, name, new).ok());
-    }
-    let wanted: Vec<usize> = names
+    let mut order = Vec::new();
+    declared_order(data, content, parent, &mut order)?;
+    let wanted: Vec<&String> = new
         .iter()
-        .enumerate()
-        .filter(|(_, resolved)| resolved.as_ref().is_some_and(|found| new.contains(found)))
-        .map(|(index, _)| index)
+        .filter(|name| order.iter().any(|element| element == element_of(name)))
         .collect();
     if wanted.is_empty() {
         bail!("the standard places none of the new types in `{parent}`");
@@ -138,33 +135,149 @@ pub(super) fn place(
         .particle
         .as_mut()
         .with_context(|| format!("`{parent}` has no content model"))?;
-    for index in wanted {
-        let Some(Some(name)) = names.get(index) else {
-            continue;
-        };
-        let after = names
-            .get(index + 1..)
+    for name in wanted {
+        if holds(particle, name) {
+            bail!("`{parent}` already holds `{name}`");
+        }
+        let at = order
+            .iter()
+            .position(|element| element == element_of(name))
+            .context("the standard's order lost an element")?;
+        let preceding = order
+            .get(..at)
             .into_iter()
             .flatten()
+            .rev()
+            .find_map(|element| path_to(particle, element));
+        let following = order
+            .get(at.saturating_add(1)..)
+            .into_iter()
             .flatten()
-            .find(|following| {
-                particle
-                    .items
-                    .iter()
-                    .any(|item| item.name.as_deref() == Some(following.as_str()))
-            });
-        let position = after
-            .and_then(|following| {
-                particle
-                    .items
-                    .iter()
-                    .position(|item| item.name.as_deref() == Some(following.as_str()))
-            })
-            .unwrap_or(particle.items.len());
-        particle
-            .items
-            .insert(position, once(name, occurs.0, occurs.1));
+            .find_map(|element| path_to(particle, element));
+        insert(
+            particle,
+            preceding.as_deref(),
+            following.as_deref(),
+            once(name, occurs.0, occurs.1),
+        )
+        .with_context(|| format!("in the content of `{parent}`"))?;
     }
+    Ok(())
+}
+
+/// The elements `particle` declares, as `prefix:local`, in document order.
+fn declared_order(
+    data: &SdkData,
+    particle: &Particle,
+    parent: &str,
+    order: &mut Vec<String>,
+) -> Result<()> {
+    match &particle.kind {
+        ParticleKind::Element {
+            name,
+            type_ref: _type_ref,
+        } => order.push(format!(
+            "{}:{}",
+            prefix_of(data, &name.namespace)?,
+            name.local
+        )),
+        ParticleKind::Sequence(items) | ParticleKind::Choice(items) => {
+            for item in items {
+                declared_order(data, item, parent, order)?;
+            }
+        }
+        ParticleKind::Any {
+            namespace: _namespace,
+            process_contents: _process_contents,
+        } => {}
+        ParticleKind::GroupRef(_) | ParticleKind::All(_) => {
+            bail!("`{parent}` holds a group, which place cannot order")
+        }
+    }
+    Ok(())
+}
+
+/// The element of a type's name: `w:pPr` of `w:CT_PPr/w:pPr`.
+fn element_of(type_name: &str) -> &str {
+    type_name
+        .split_once('/')
+        .map_or(type_name, |(_, element)| element)
+}
+
+fn holds(particle: &DataParticle, type_name: &str) -> bool {
+    particle.name.as_deref() == Some(type_name)
+        || particle.items.iter().any(|item| holds(item, type_name))
+}
+
+/// The indexes, from `particle` down, of the first item whose element is
+/// `element`.
+fn path_to(particle: &DataParticle, element: &str) -> Option<Vec<usize>> {
+    for (index, item) in particle.items.iter().enumerate() {
+        if item.name.as_deref().map(element_of) == Some(element) {
+            return Some(vec![index]);
+        }
+        if let Some(mut rest) = path_to(item, element) {
+            rest.insert(0, index);
+            return Some(rest);
+        }
+    }
+    None
+}
+
+fn insert(
+    root: &mut DataParticle,
+    preceding: Option<&[usize]>,
+    following: Option<&[usize]>,
+    item: DataParticle,
+) -> Result<()> {
+    let spot = match (preceding, following) {
+        (Some(before), Some(after)) => {
+            let shared = before
+                .iter()
+                .zip(after)
+                .take_while(|(left, right)| left == right)
+                .count();
+            after
+                .get(..shared)
+                .zip(after.get(shared))
+                .map(|(holder, &index)| (holder, index))
+        }
+        (Some(only), None) => only
+            .split_last()
+            .map(|(&last, holder)| (holder, last.saturating_add(1))),
+        (None, Some(only)) => only.split_last().map(|(&last, holder)| (holder, last)),
+        (None, None) => {
+            if root.kind.as_deref() == Some("Sequence") {
+                root.items.push(item);
+            } else {
+                let old = mem::replace(
+                    root,
+                    DataParticle {
+                        initial_version: None,
+                        items: Vec::new(),
+                        kind: Some("Sequence".to_owned()),
+                        name: None,
+                        namespace: None,
+                        occurs: Vec::new(),
+                        require_filter: false,
+                    },
+                );
+                root.items = vec![old, item];
+            }
+            return Ok(());
+        }
+    };
+    let Some((path, position)) = spot else {
+        bail!("the neighbours' paths do not diverge");
+    };
+    let mut node = root;
+    for step in path {
+        node = node
+            .items
+            .get_mut(*step)
+            .context("a path leaves the content model")?;
+    }
+    node.items.insert(position, item);
     Ok(())
 }
 

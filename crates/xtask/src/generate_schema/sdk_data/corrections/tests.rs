@@ -58,6 +58,23 @@ const WORD: &str = r#"{
     {"Name": "w:CT_Para/w:para", "Particle": {"Kind": "Sequence", "Items": [
       {"Kind": "Group", "Occurs": [{}], "Items": [{"Kind": "Choice", "Items": [{"Name": "w:CT_Sdt/w:sdt"}, {"Kind": "Group", "Items": [{"Kind": "Choice", "Items": [{"Name": "w:CT_Custom/w:custom"}]}]}]}]}
     ]}},
+    {"Name": "w:CT_OnOff/w:extra", "IsDerived": true},
+    {"Name": "w:CT_Own/w:own", "Particle": {"Kind": "Sequence", "Items": [
+      {"Name": "w:CT_OnOff/w:bold"},
+      {"Name": "w:CT_Setting/w:setting"}
+    ]}},
+    {"Name": "w:CT_Nested/w:nested", "Particle": {"Kind": "Sequence", "Items": [
+      {"Kind": "Group", "Items": [
+        {"Kind": "Sequence", "Items": [{"Name": "w:CT_OnOff/w:bold"}]},
+        {"Kind": "Sequence", "Items": [{"Name": "w:CT_Setting/w:setting"}]}
+      ]}
+    ]}},
+    {"Name": "w:CT_First/w:first", "Particle": {"Kind": "Sequence", "Items": [{"Name": "w:CT_Setting/w:setting"}]}},
+    {"Name": "w:CT_Last/w:last", "Particle": {"Kind": "Sequence", "Items": [
+      {"Name": "w:CT_OnOff/w:bold"},
+      {"Name": "w:CT_Setting/w:setting"}
+    ]}},
+    {"Name": "w:CT_Pick/w:pick", "Particle": {"Kind": "Choice", "Items": [{"Name": "w:CT_Setting/w:setting"}]}},
     {"Name": "w:CT_Settings/w:settings", "Particle": {"Kind": "Sequence", "Items": [
       {"Name": "w:CT_OnOff/w:bold", "Occurs": [{"Max": 1}]},
       {"Name": "w:CT_Setting/w:setting", "Occurs": [{"Max": 1}]}
@@ -93,7 +110,34 @@ const STANDARD: &str = r#"<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchem
       <xsd:element name="bold" type="CT_Attr" minOccurs="0"/>
       <xsd:element name="tagType" type="CT_TagType" minOccurs="0" maxOccurs="unbounded"/>
       <xsd:element name="flag" type="CT_Attr" minOccurs="0"/>
+      <xsd:element name="extra" type="CT_Attr" minOccurs="0"/>
       <xsd:element name="setting" type="CT_Attr" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CT_Nested">
+    <xsd:sequence>
+      <xsd:element name="bold" type="CT_Attr"/>
+      <xsd:element name="flag" type="CT_Attr" minOccurs="0"/>
+      <xsd:element name="setting" type="CT_Attr"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CT_First">
+    <xsd:sequence>
+      <xsd:element name="flag" type="CT_Attr" minOccurs="0"/>
+      <xsd:element name="setting" type="CT_Attr"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CT_Last">
+    <xsd:sequence>
+      <xsd:element name="bold" type="CT_Attr"/>
+      <xsd:element name="flag" type="CT_Attr" minOccurs="0"/>
+      <xsd:element name="tagType" type="CT_Attr" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CT_Pick">
+    <xsd:sequence>
+      <xsd:element name="flag" type="CT_Attr" minOccurs="0"/>
+      <xsd:element name="tagType" type="CT_Attr" minOccurs="0"/>
     </xsd:sequence>
   </xsd:complexType>
 </xsd:schema>"#;
@@ -128,7 +172,14 @@ const ELEMENT_ROW: &str = r#"
 [[element]]
 type = "w:CT_OnOff/w:flag"
 like = "w:CT_OnOff/w:bold"
-parent = "w:CT_Settings/w:settings"
+parents = ["w:CT_Settings/w:settings"]
+"#;
+
+const EXISTING_ROW: &str = r#"
+[[element]]
+type = "w:CT_OnOff/w:extra"
+parents = ["w:CT_Settings/w:settings", "w:CT_Own/w:own"]
+standard = "w:CT_Settings"
 "#;
 
 const ALTERNATIVE_ROW: &str = r#"
@@ -493,14 +544,159 @@ fn an_element_row_that_names_what_the_data_or_the_standard_lacks_stops_the_gener
             "like = \"w:CT_Missing/w:bold\"",
         ),
         (
-            "parent = \"w:CT_Settings/w:settings\"",
-            "parent = \"w:CT_Missing/w:settings\"",
+            "parents = [\"w:CT_Settings/w:settings\"]",
+            "parents = [\"w:CT_Missing/w:settings\"]",
         ),
         ("w:CT_OnOff/w:flag", "w:CT_OnOff/w:other"),
+        ("parents = [\"w:CT_Settings/w:settings\"]", "parents = []"),
+        ("parents = [\"w:CT_Settings/w:settings\"]", ""),
+        (
+            "parents = [\"w:CT_Settings/w:settings\"]",
+            "parents = [\"w:CT_Settings/w:settings\"]\nstandard = \"w:CT_Missing\"",
+        ),
     ] {
         let mut data = read_word();
         assert!(
             data.correct(&ELEMENT_ROW.replace(from, to), &standard())
+                .is_err(),
+            "{to}"
+        );
+    }
+}
+
+fn item_names(data: &SdkData, parent: &str) -> Vec<String> {
+    data.types[parent]
+        .particle
+        .as_ref()
+        .unwrap()
+        .items
+        .iter()
+        .map(|item| item.name.clone().unwrap_or_default())
+        .collect()
+}
+
+#[test]
+fn an_element_row_with_no_like_places_the_type_the_data_has_in_each_parent_by_the_standards_order()
+{
+    let mut data = read_word();
+    data.correct(EXISTING_ROW, &standard()).unwrap();
+
+    for parent in ["w:CT_Settings/w:settings", "w:CT_Own/w:own"] {
+        assert_eq!(
+            item_names(&data, parent),
+            [
+                "w:CT_OnOff/w:bold",
+                "w:CT_OnOff/w:extra",
+                "w:CT_Setting/w:setting"
+            ],
+            "{parent}"
+        );
+    }
+    let extra = &data.types["w:CT_Own/w:own"]
+        .particle
+        .as_ref()
+        .unwrap()
+        .items[1];
+    assert_eq!(extra.occurs[0].min, 0);
+    assert_eq!(extra.occurs[0].max, 1);
+}
+
+fn placed_in(parent: &str) -> SdkData {
+    let row = ELEMENT_ROW.replace(
+        "parents = [\"w:CT_Settings/w:settings\"]",
+        &format!("parents = [\"{parent}\"]"),
+    );
+    let mut data = read_word();
+    data.correct(&row, &standard()).unwrap();
+    data
+}
+
+#[test]
+fn an_element_row_puts_the_item_between_neighbours_nested_in_groups_inside_the_deepest_particle() {
+    let data = placed_in("w:CT_Nested/w:nested");
+
+    let root = data.types["w:CT_Nested/w:nested"]
+        .particle
+        .as_ref()
+        .unwrap();
+    assert_eq!(root.items.len(), 1);
+    let group = &root.items[0];
+    let names: Vec<_> = group
+        .items
+        .iter()
+        .map(|item| item.name.as_deref())
+        .collect();
+    assert_eq!(names, [None, Some("w:CT_OnOff/w:flag"), None]);
+}
+
+#[test]
+fn an_element_row_with_only_a_following_neighbour_goes_before_it() {
+    let data = placed_in("w:CT_First/w:first");
+
+    assert_eq!(
+        item_names(&data, "w:CT_First/w:first"),
+        ["w:CT_OnOff/w:flag", "w:CT_Setting/w:setting"]
+    );
+}
+
+#[test]
+fn an_element_row_with_only_a_preceding_neighbour_goes_after_it() {
+    let data = placed_in("w:CT_Last/w:last");
+
+    assert_eq!(
+        item_names(&data, "w:CT_Last/w:last"),
+        [
+            "w:CT_OnOff/w:bold",
+            "w:CT_OnOff/w:flag",
+            "w:CT_Setting/w:setting"
+        ]
+    );
+}
+
+#[test]
+fn an_element_row_with_no_neighbour_ends_a_sequence_and_makes_a_sequence_of_a_choice() {
+    let picked = placed_in("w:CT_Pick/w:pick");
+
+    let root = picked.types["w:CT_Pick/w:pick"].particle.as_ref().unwrap();
+    assert_eq!(root.kind.as_deref(), Some("Sequence"));
+    assert_eq!(root.items[0].kind.as_deref(), Some("Choice"));
+    assert_eq!(root.items[1].name.as_deref(), Some("w:CT_OnOff/w:flag"));
+    assert_eq!(root.items.len(), 2);
+
+    let row = ELEMENT_ROW.replace(
+        "parents = [\"w:CT_Settings/w:settings\"]",
+        "parents = [\"w:CT_Own/w:own\"]\nstandard = \"w:CT_Pick\"",
+    );
+    let mut data = read_word();
+    data.correct(&row, &standard()).unwrap();
+    assert_eq!(
+        item_names(&data, "w:CT_Own/w:own"),
+        [
+            "w:CT_OnOff/w:bold",
+            "w:CT_Setting/w:setting",
+            "w:CT_OnOff/w:flag"
+        ]
+    );
+}
+
+#[test]
+fn an_element_row_with_no_like_that_names_what_the_data_lacks_or_a_parent_holds_stops_the_generator()
+ {
+    for (from, to) in [
+        ("w:CT_OnOff/w:extra", "w:CT_OnOff/w:absent"),
+        ("w:CT_OnOff/w:extra", "w:CT_OnOff/w:bold"),
+        (
+            "parents = [\"w:CT_Settings/w:settings\", \"w:CT_Own/w:own\"]",
+            "parents = []",
+        ),
+        (
+            "parents = [\"w:CT_Settings/w:settings\", \"w:CT_Own/w:own\"]",
+            "",
+        ),
+    ] {
+        let mut data = read_word();
+        assert!(
+            data.correct(&EXISTING_ROW.replace(from, to), &standard())
                 .is_err(),
             "{to}"
         );

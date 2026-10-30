@@ -382,6 +382,97 @@ pub const DIVERGENCES: &[Divergence] = &[
     },
     Divergence {
         id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:divId'"),
+        path: &[(WORD, "pPr")],
+        reason: ECMA_ELEMENTS,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:cnfStyle'"),
+        path: &[(WORD, "pPr")],
+        reason: ECMA_ELEMENTS,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:tblStyleRowBandSize'"),
+        path: &[(WORD, "tblPr")],
+        reason: ECMA_ELEMENTS,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:tblStyleColBandSize'"),
+        path: &[(WORD, "tblPr")],
+        reason: ECMA_ELEMENTS,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:drawing'"),
+        path: &[(WORD, "background")],
+        reason: ECMA_ELEMENTS,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:movie'"),
+        path: &[(WORD, "object")],
+        reason: ECMA_ELEMENTS,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:label'"),
+        path: &[(WORD, "ffData")],
+        reason: ECMA_ELEMENTS,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:label'"),
+        path: &[(WORD, "sdtPr")],
+        reason: ECMA_ELEMENTS,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:tabIndex'"),
+        path: &[(WORD, "ffData")],
+        reason: ECMA_ELEMENTS,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:tabIndex'"),
+        path: &[(WORD, "sdtPr")],
+        reason: ECMA_ELEMENTS,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:title'"),
+        path: &[(WORD, "frame")],
+        reason: ECMA_ELEMENTS,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:title'"),
+        path: &[(WORD, "frameset")],
+        reason: ECMA_ELEMENTS,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
+        mentioning: Some("main:longDesc'"),
+        path: &[(WORD, "frame")],
+        reason: ECMA_ELEMENTS,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_InvalidElementContentExpectingComplex",
         mentioning: Some("wordml:txbxContent'"),
         path: &[(WORDPROCESSING_SHAPE, "txbx")],
         reason: STRICT_TEXT_BOX,
@@ -502,6 +593,10 @@ const LEVEL_JUSTIFICATION: &str = "SDK 3.5.1 gives w:lvlJc the values left, cent
 
 const SMART_TAG: &str = "SDK 3.5.1 leaves out w:smartTag and w:smartTagType; ECMA-376 declares \
     them in EG_ContentRunContent, EG_ContentRunContentBase and CT_Settings, and Word 16 writes them";
+
+const ECMA_ELEMENTS: &str = "SDK 3.5.1 leaves out elements ECMA-376 declares: divId and cnfStyle \
+    in CT_PPrBase, the band sizes in CT_TblPrBase, drawing in CT_Background, movie in CT_Object, \
+    label and tabIndex in CT_FFData and CT_SdtPr, title and longDesc in CT_Frame and CT_Frameset";
 
 const SMART_TAG_SETTINGS: &str = "SDK 3.5.1 leaves out w:doNotEmbedSmartTags and \
     w:saveSmartTagsAsXml; ECMA-376 declares them in CT_Settings and CT_WebSettings";

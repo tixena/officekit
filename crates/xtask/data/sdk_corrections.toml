@@ -158,12 +158,12 @@ string = true
 [[element]]
 type = "w:CT_OnOff/w:doNotEmbedSmartTags"
 like = "w:CT_OnOff/w:b"
-parent = "w:CT_Settings/w:settings"
+parents = ["w:CT_Settings/w:settings"]
 
 [[element]]
 type = "w:CT_OnOff/w:saveSmartTagsAsXml"
 like = "w:CT_OnOff/w:b"
-parent = "w:CT_WebSettings/w:webSettings"
+parents = ["w:CT_WebSettings/w:webSettings"]
 
 # 8. Microsoft documents wne:txbxContent in place of w:txbxContent in Strict
 # ([MS-ODRAWXML] 2.13.3.2, CT_TextboxInfo; [MS-OI29500] 2.1.1779). The data
@@ -173,3 +173,65 @@ type = "wne:CT_TxbxContent/wne:txbxContent"
 like = "w:CT_TxbxContent/w:txbxContent"
 parent = "wps:CT_TextboxInfo/wps:txbx"
 beside = "w:CT_TxbxContent/w:txbxContent"
+
+# 9. ECMA-376 declares divId and cnfStyle in CT_PPrBase, which types a numbering
+# level's pPr and, through CT_PPrGeneral, a style's, a table style condition's
+# and the document defaults' pPr (wml.xsd). The data leaves both out of its
+# types for those four.
+[[element]]
+type = "w:CT_NonZeroDecimalNumber/w:divId"
+parents = ["w:CT_PPrBase/w:pPr", "w:CT_PPrStyle/w:pPr", "w:CT_PPrBaseStyleable/w:pPr"]
+standard = "w:CT_PPrBase"
+
+[[element]]
+type = "w:CT_Cnf/w:cnfStyle"
+parents = ["w:CT_PPrBase/w:pPr", "w:CT_PPrStyle/w:pPr", "w:CT_PPrBaseStyleable/w:pPr"]
+standard = "w:CT_PPrBase"
+
+# 10. ECMA-376 declares the two band sizes in CT_TblPrBase, which types a
+# table's, a table property change's and a table style condition's tblPr. The
+# data has them only in a table style's own tblPr.
+[[element]]
+type = "w:CT_UnsignedDecimalNumberMax3/w:tblStyleRowBandSize"
+parents = ["w:CT_TblPrBase/w:tblPr", "w:CT_TblPr/w:tblPr", "w:CT_TblPrStyleOverride/w:tblPr"]
+standard = "w:CT_TblPrBase"
+
+[[element]]
+type = "w:CT_UnsignedDecimalNumberMax3/w:tblStyleColBandSize"
+parents = ["w:CT_TblPrBase/w:tblPr", "w:CT_TblPr/w:tblPr", "w:CT_TblPrStyleOverride/w:tblPr"]
+standard = "w:CT_TblPrBase"
+
+# 11. ECMA-376 lets a background hold a drawing after its VML (CT_Background)
+# and an object hold a movie in place of a control (CT_Object).
+[[element]]
+type = "w:CT_Drawing/w:drawing"
+parents = ["w:CT_Background/w:background"]
+
+[[element]]
+type = "w:CT_Rel/w:movie"
+parents = ["w:CT_Object/w:object"]
+
+# 12. ECMA-376 declares label (CT_DecimalNumber) and tabIndex
+# (CT_UnsignedDecimalNumber) in a form field's data (CT_FFData) and in a
+# content control's properties (CT_SdtPr). The data has neither.
+[[element]]
+type = "w:CT_DecimalNumber/w:label"
+like = "w:CT_DecimalNumber/w:id"
+parents = ["w:CT_FFData/w:ffData", "w:CT_SdtPr/w:sdtPr"]
+
+[[element]]
+type = "w:CT_UnsignedDecimalNumber/w:tabIndex"
+like = "w:CT_UnsignedDecimalNumber/w:column"
+parents = ["w:CT_FFData/w:ffData", "w:CT_SdtPr/w:sdtPr"]
+
+# 13. ECMA-376 declares title (CT_String) in a frame and a frameset, and
+# longDesc (CT_Rel) in a frame (CT_Frame, CT_Frameset). The data has neither.
+[[element]]
+type = "w:CT_String/w:title"
+like = "w:CT_String/w:tag"
+parents = ["w:CT_Frame/w:frame", "w:CT_Frameset/w:frameset"]
+
+[[element]]
+type = "w:CT_Rel/w:longDesc"
+like = "w:CT_Rel/w:sourceFileName"
+parents = ["w:CT_Frame/w:frame"]

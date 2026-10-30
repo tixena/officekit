@@ -69,6 +69,9 @@ const WORD_NAMESPACES: &str = r#"xmlns:w="http://schemas.openxmlformats.org/word
 const WNE: &str = "http://schemas.microsoft.com/office/word/2006/wordml";
 const WPS: &str = "http://schemas.microsoft.com/office/word/2010/wordprocessingShape";
 const UNKNOWN: &str = "http://example.com/relationships/unknown";
+const PARAGRAPH_STYLE: &str = r#"<w:style w:type="paragraph" w:styleId="S1"><w:name w:val="S1"/><w:pPr>PPR</w:pPr></w:style>"#;
+const RELATIONSHIPS: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
+const BAND_SIZES: &str = r#"<w:tblStyleRowBandSize w:val="1"/><w:tblStyleColBandSize w:val="1"/>"#;
 
 /// A Word document related by `office_document` whose main part relates to
 /// one part by each of `related`: its name, relationship type, and content
@@ -582,6 +585,208 @@ fn the_settings_refuse_a_second_do_not_embed_smart_tags() {
 fn the_body_refuses_a_smart_tag() {
     let package = word_document("", SMART_TAG);
     refused_with(&package, "w:smartTag", "InvalidChild");
+}
+
+fn styles_document(styles: &str) -> Package {
+    let part = format!("<w:styles {WORD_NAMESPACES}>{styles}</w:styles>");
+    with_part(
+        word_document("", ""),
+        "/word/styles.xml",
+        STYLES,
+        STYLES_CONTENT,
+        &part,
+    )
+}
+
+fn paragraph_style(properties: &str) -> Package {
+    styles_document(&PARAGRAPH_STYLE.replace("PPR", properties))
+}
+
+fn table_with_band_sizes(sizes: &str) -> String {
+    format!(
+        r#"<w:tbl><w:tblPr><w:bidiVisual/>{sizes}<w:tblW w:w="0" w:type="auto"/></w:tblPr><w:tblGrid/></w:tbl>"#
+    )
+}
+
+fn content_control(shape: &str) -> Package {
+    let properties = r#"<w:sdtPr><w:tag w:val="a"/><w:label w:val="1"/><w:tabIndex w:val="1"/><w:text/></w:sdtPr>"#;
+    let sdt = |content: &str| {
+        format!("<w:sdt>{properties}<w:sdtContent>{content}</w:sdtContent></w:sdt>")
+    };
+    let body = match shape {
+        "block" => sdt("<w:p/>"),
+        "run" => format!("<w:p>{}</w:p>", sdt("<w:r><w:t>a</w:t></w:r>")),
+        "cell" => format!(
+            "<w:tbl><w:tblPr/><w:tblGrid/><w:tr>{}</w:tr></w:tbl>",
+            sdt("<w:tc><w:p/></w:tc>")
+        ),
+        _ => format!(
+            "<w:tbl><w:tblPr/><w:tblGrid/>{}</w:tbl>",
+            sdt("<w:tr><w:tc><w:p/></w:tc></w:tr>")
+        ),
+    };
+    word_document("", &body)
+}
+
+#[test]
+fn a_numbering_level_accepts_div_id_and_cnf_style_after_the_outline_level() {
+    let div_id =
+        numbering_document(r#"<w:pPr><w:outlineLvl w:val="1"/><w:divId w:val="1"/></w:pPr>"#);
+    accepted_at_every_version(&div_id, "holds w:divId");
+    let cnf_style = numbering_document(
+        r#"<w:pPr><w:divId w:val="1"/><w:cnfStyle w:val="000000000000"/></w:pPr>"#,
+    );
+    accepted_at_every_version(&cnf_style, "holds w:cnfStyle");
+}
+
+#[test]
+fn a_style_accepts_div_id_and_cnf_style_after_the_outline_level() {
+    let package = paragraph_style(
+        r#"<w:outlineLvl w:val="1"/><w:divId w:val="1"/><w:cnfStyle w:val="000000000000"/>"#,
+    );
+    accepted_at_every_version(&package, "holds w:divId");
+    accepted_at_every_version(&package, "holds w:cnfStyle");
+}
+
+#[test]
+fn the_document_defaults_and_a_table_style_condition_accept_div_id_and_cnf_style() {
+    let properties = r#"<w:divId w:val="1"/><w:cnfStyle w:val="000000000000"/>"#;
+    let defaults = styles_document(&format!(
+        "<w:docDefaults><w:pPrDefault><w:pPr>{properties}</w:pPr></w:pPrDefault></w:docDefaults>"
+    ));
+    let condition = styles_document(&format!(
+        r#"<w:style w:type="table" w:styleId="T1"><w:name w:val="T1"/><w:tblStylePr w:type="firstRow"><w:pPr>{properties}</w:pPr></w:tblStylePr></w:style>"#
+    ));
+    for package in [defaults, condition] {
+        accepted_at_every_version(&package, "holds w:divId");
+        accepted_at_every_version(&package, "holds w:cnfStyle");
+    }
+}
+
+#[test]
+fn a_table_and_its_property_change_accept_the_band_sizes_after_bidi_visual() {
+    let table = word_document("", &table_with_band_sizes(BAND_SIZES));
+    let change = word_document(
+        "",
+        &table_with_band_sizes("").replace(
+            "<w:bidiVisual/>",
+            &format!(
+                r#"<w:bidiVisual/><w:tblPrChange w:id="1" w:author="a"><w:tblPr><w:bidiVisual/>{BAND_SIZES}<w:tblW w:w="0" w:type="auto"/></w:tblPr></w:tblPrChange>"#
+            ),
+        ),
+    );
+    for package in [table, change] {
+        accepted_at_every_version(&package, "holds w:tblStyleRowBandSize");
+        accepted_at_every_version(&package, "holds w:tblStyleColBandSize");
+    }
+}
+
+#[test]
+fn a_table_style_condition_accepts_the_band_sizes_before_the_justification() {
+    let package = styles_document(&format!(
+        r#"<w:style w:type="table" w:styleId="T1"><w:name w:val="T1"/><w:tblStylePr w:type="firstRow"><w:tblPr>{BAND_SIZES}<w:jc w:val="center"/></w:tblPr></w:tblStylePr></w:style>"#
+    ));
+    accepted_at_every_version(&package, "holds w:tblStyleRowBandSize");
+    accepted_at_every_version(&package, "holds w:tblStyleColBandSize");
+}
+
+#[test]
+fn a_background_accepts_a_drawing() {
+    let package = word_document(
+        r#"<w:background w:color="FFFFFF"><w:drawing/></w:background>"#,
+        "",
+    );
+    accepted_at_every_version(&package, "holds w:drawing");
+}
+
+#[test]
+fn an_object_accepts_a_movie() {
+    let package = word_document(
+        "",
+        &format!(
+            r#"<w:p><w:r><w:object><w:movie xmlns:r="{RELATIONSHIPS}" r:id="rId9"/></w:object></w:r></w:p>"#
+        ),
+    );
+    accepted_at_every_version(&package, "holds w:movie");
+}
+
+#[test]
+fn a_form_field_accepts_a_label_and_a_tab_index() {
+    let package = word_document(
+        "",
+        r#"<w:p><w:r><w:fldChar w:fldCharType="begin"><w:ffData><w:name w:val="a"/><w:label w:val="1"/><w:tabIndex w:val="1"/><w:enabled/></w:ffData></w:fldChar></w:r></w:p>"#,
+    );
+    accepted_at_every_version(&package, "holds w:label");
+    accepted_at_every_version(&package, "holds w:tabIndex");
+}
+
+#[test]
+fn a_content_control_accepts_a_label_and_a_tab_index() {
+    for shape in ["block", "run", "cell", "row"] {
+        let package = content_control(shape);
+        accepted_at_every_version(&package, "holds w:label");
+        accepted_at_every_version(&package, "holds w:tabIndex");
+    }
+}
+
+#[test]
+fn a_frame_accepts_a_title_and_a_long_description_and_a_frameset_a_title() {
+    let frame = web_settings_document(&format!(
+        r#"<w:frameset><w:frame xmlns:r="{RELATIONSHIPS}"><w:sz w:val="x"/><w:name w:val="n"/><w:title w:val="t"/><w:longDesc r:id="rId9"/><w:marW w:val="1"/></w:frame></w:frameset>"#
+    ));
+    accepted_at_every_version(&frame, "holds w:title");
+    accepted_at_every_version(&frame, "holds w:longDesc");
+    let frameset = web_settings_document(
+        r#"<w:frameset><w:sz w:val="x"/><w:title w:val="t"/><w:frame/></w:frameset>"#,
+    );
+    accepted_at_every_version(&frameset, "holds w:title");
+}
+
+#[test]
+fn a_style_refuses_div_id_before_the_outline_level() {
+    let package = paragraph_style(r#"<w:divId w:val="1"/><w:outlineLvl w:val="1"/>"#);
+    let errors = errors_at(
+        &package,
+        OfficeVersion::Microsoft365,
+        "/w:style[1]/w:pPr[1]:",
+    );
+    assert_eq!(errors.len(), 1, "{errors:?}");
+}
+
+#[test]
+fn a_table_refuses_a_band_size_after_the_table_width() {
+    let package =
+        table_document(r#"<w:tblW w:w="0" w:type="auto"/><w:tblStyleRowBandSize w:val="1"/>"#);
+    let errors = errors_at(
+        &package,
+        OfficeVersion::Microsoft365,
+        "/w:tbl[1]/w:tblPr[1]:",
+    );
+    assert_eq!(errors.len(), 1, "{errors:?}");
+}
+
+#[test]
+fn a_paragraph_refuses_a_label() {
+    let package = word_document("", r#"<w:p><w:pPr><w:label w:val="1"/></w:pPr></w:p>"#);
+    let errors = errors_at(&package, OfficeVersion::Microsoft365, "/w:p[1]/w:pPr[1]:");
+    assert_eq!(errors.len(), 1, "{errors:?}");
+}
+
+#[test]
+fn a_frame_refuses_a_long_description_before_the_title() {
+    let package = web_settings_document(&format!(
+        r#"<w:frameset><w:frame xmlns:r="{RELATIONSHIPS}"><w:longDesc r:id="rId9"/><w:title w:val="t"/></w:frame></w:frameset>"#
+    ));
+    let errors = errors_at(&package, OfficeVersion::Microsoft365, "/w:frame[1]:");
+    assert_eq!(errors.len(), 1, "{errors:?}");
+}
+
+#[test]
+fn a_frameset_refuses_a_title_after_a_frame() {
+    let package =
+        web_settings_document(r#"<w:frameset><w:frame/><w:title w:val="t"/></w:frameset>"#);
+    let errors = errors_at(&package, OfficeVersion::Microsoft365, "/w:frameset[1]:");
+    assert_eq!(errors.len(), 1, "{errors:?}");
 }
 
 #[test]

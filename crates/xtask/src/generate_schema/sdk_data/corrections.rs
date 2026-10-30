@@ -57,11 +57,14 @@ struct Extension {
     type_name: String,
 }
 
-/// One element of a type the data has, which the data leaves out of the
-/// parent the standard declares it in.
+/// One element the data leaves out of the parents the standard declares it
+/// in: a new type built like `like`, or, with no `like`, a type the data has.
+/// `standard` is the Transitional type whose declaration orders the parents,
+/// when it is not the parents' own.
 struct Element {
-    like: String,
-    parent: String,
+    like: Option<String>,
+    parents: Vec<String>,
+    standard: Option<String>,
     type_name: String,
 }
 
@@ -273,20 +276,28 @@ fn replace_extension(data: &mut SdkData, row: &Extension) -> Result<()> {
 }
 
 fn add_element(data: &mut SdkData, standard: &SchemaSet, row: &Element) -> Result<()> {
-    if data.types.contains_key(&row.type_name) {
-        bail!("the data already has `{}`", row.type_name);
+    if let Some(like) = &row.like {
+        if data.types.contains_key(&row.type_name) {
+            bail!("the data already has `{}`", row.type_name);
+        }
+        let mut built = known(data, like)?.clone();
+        built.name.clone_from(&row.type_name);
+        data.types.insert(row.type_name.clone(), built);
+    } else {
+        known(data, &row.type_name)?;
     }
-    known(data, &row.parent)?;
-    let mut built = known(data, &row.like)?.clone();
-    built.name.clone_from(&row.type_name);
-    data.types.insert(row.type_name.clone(), built);
-    place(
-        data,
-        standard,
-        &row.parent,
-        slice::from_ref(&row.type_name),
-        (0, Some(1)),
-    )
+    for parent in &row.parents {
+        place(
+            data,
+            standard,
+            parent,
+            row.standard.as_deref(),
+            slice::from_ref(&row.type_name),
+            (0, Some(1)),
+        )
+        .with_context(|| format!("in `{parent}`"))?;
+    }
+    Ok(())
 }
 
 fn add_alternative(data: &mut SdkData, row: &Alternative) -> Result<()> {
@@ -366,9 +377,14 @@ fn elements(table: &toml::Table) -> Result<Vec<Element>> {
     rows(table, "element")?
         .into_iter()
         .map(|row| {
+            let parents = texts(row, "parents")?;
+            if parents.is_empty() {
+                bail!("an `element` row has no parents");
+            }
             Ok(Element {
-                like: text_field(row, "like")?,
-                parent: text_field(row, "parent")?,
+                like: optional_text_field(row, "like")?,
+                parents,
+                standard: optional_text_field(row, "standard")?,
                 type_name: text_field(row, "type")?,
             })
         })
@@ -462,6 +478,17 @@ fn text_field(row: &toml::Table, name: &str) -> Result<String> {
         .and_then(toml::Value::as_str)
         .map(str::to_owned)
         .with_context(|| format!("a row has no text `{name}`"))
+}
+
+fn optional_text_field(row: &toml::Table, name: &str) -> Result<Option<String>> {
+    row.get(name)
+        .map(|value| {
+            value
+                .as_str()
+                .map(str::to_owned)
+                .with_context(|| format!("`{name}` of a row is not text"))
+        })
+        .transpose()
 }
 
 fn extensions(table: &toml::Table) -> Result<Vec<Extension>> {
