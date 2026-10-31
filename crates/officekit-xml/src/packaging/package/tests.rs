@@ -14,7 +14,7 @@ use crate::write::Layout;
 use os_shim::bucket::{Bucket, Condition, Depth, Guarantees, MemoryBucket, RevisionToken};
 use os_shim::error::Result as StorageResult;
 use os_shim::mock::MemorySystem;
-use os_shim::{FileMetadata, System as _, WalkEntry};
+use os_shim::{BoxFuture, FileMetadata, System as _, WalkEntry};
 use zip::write::{SimpleFileOptions, StreamWriter, ZipWriter};
 
 use super::{OpenOptions, Package};
@@ -50,44 +50,47 @@ const TINY: [u8; 8] = [0, 0, 0, 1, 0, 0, 0, 1];
 struct WaitingBucket(MemoryBucket);
 
 impl Bucket for WaitingBucket {
-    fn delete(
-        &self,
-        path: &Path,
-        condition: &Condition,
-    ) -> impl Future<Output = StorageResult<()>> + Send {
-        after_a_wait(self.0.delete(path, condition))
+    fn delete<'call>(
+        &'call self,
+        path: &'call Path,
+        condition: &'call Condition,
+    ) -> BoxFuture<'call, StorageResult<()>> {
+        Box::pin(after_a_wait(self.0.delete(path, condition)))
     }
 
-    fn get(
-        &self,
-        path: &Path,
-    ) -> impl Future<Output = StorageResult<(Vec<u8>, RevisionToken)>> + Send {
-        after_a_wait(self.0.get(path))
+    fn get<'call>(
+        &'call self,
+        path: &'call Path,
+    ) -> BoxFuture<'call, StorageResult<(Vec<u8>, RevisionToken)>> {
+        Box::pin(after_a_wait(self.0.get(path)))
     }
 
     fn guarantees(&self) -> Guarantees {
         Guarantees::none()
     }
 
-    fn head(&self, path: &Path) -> impl Future<Output = StorageResult<FileMetadata>> + Send {
-        after_a_wait(self.0.head(path))
+    fn head<'call>(
+        &'call self,
+        path: &'call Path,
+    ) -> BoxFuture<'call, StorageResult<FileMetadata>> {
+        Box::pin(after_a_wait(self.0.head(path)))
     }
 
-    fn list(
-        &self,
-        folder: &Path,
+    fn list<'call>(
+        &'call self,
+        folder: &'call Path,
         depth: Depth,
-    ) -> impl Future<Output = StorageResult<Vec<WalkEntry>>> + Send {
-        after_a_wait(self.0.list(folder, depth))
+    ) -> BoxFuture<'call, StorageResult<Vec<WalkEntry>>> {
+        Box::pin(after_a_wait(self.0.list(folder, depth)))
     }
 
-    fn put(
-        &self,
-        path: &Path,
-        bytes: &[u8],
-        condition: &Condition,
-    ) -> impl Future<Output = StorageResult<RevisionToken>> + Send {
-        after_a_wait(self.0.put(path, bytes, condition))
+    fn put<'call>(
+        &'call self,
+        path: &'call Path,
+        bytes: &'call [u8],
+        condition: &'call Condition,
+    ) -> BoxFuture<'call, StorageResult<RevisionToken>> {
+        Box::pin(after_a_wait(self.0.put(path, bytes, condition)))
     }
 }
 

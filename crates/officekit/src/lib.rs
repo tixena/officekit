@@ -67,7 +67,7 @@
 //! ```toml
 //! [dependencies]
 //! officekit = "0.1"
-//! os-shim = "0.2"
+//! os-shim = "0.3"
 //! ```
 //!
 //! Types you build or pass come from the crate that owns them, and `officekit` re-exports none of
