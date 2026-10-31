@@ -2,6 +2,7 @@
 //! `crates/officekit-xml/src/name/table.rs`.
 
 use alloc::collections::{BTreeMap, BTreeSet};
+use core::fmt::{self, Write as _};
 use std::ffi::OsStr;
 use std::path::{Path, PathBuf};
 
@@ -120,14 +121,23 @@ pub fn header(
     sorted.sort_by_key(|(path, _)| *path);
     for (path, bytes) in sorted {
         lines.push(format!(
-            "//   {:x}  {}",
-            Sha256::digest(bytes),
+            "//   {}  {}",
+            hex(&Sha256::digest(bytes)),
             path.display()
         ));
     }
     lines.extend(tools.lines().map(|line| format!("// {line}")));
     lines.push(String::new());
     Ok(lines.join("\n"))
+}
+
+/// Bytes as lowercase hexadecimal.
+fn hex(bytes: &[u8]) -> String {
+    let mut text = String::new();
+    for byte in bytes {
+        let _: fmt::Result = write!(text, "{byte:02x}");
+    }
+    text
 }
 
 /// The Office version as the table spells it; Office 2007 is ECMA-376's own.
