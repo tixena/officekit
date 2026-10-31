@@ -3,6 +3,7 @@ use std::path::{Path, PathBuf};
 use std::process::Output;
 
 use assert_cmd::Command;
+use officekit_xml::ready::ready_now;
 use os_shim::System as _;
 use os_shim::real::RealSystem;
 use serde_json::Value;
@@ -29,7 +30,7 @@ fn write_sample(dir: &Path) -> PathBuf {
         )
         .unwrap();
     let path = dir.join("sample.docx");
-    package.save(&RealSystem::new(), &path).unwrap();
+    ready_now(package.save(&RealSystem::new(), &path)).unwrap();
     path
 }
 
@@ -66,7 +67,7 @@ fn json_output_carries_file_and_parts() {
 fn missing_file_exits_two_with_an_error_line() {
     let dir = TempDir::new().unwrap();
     let path = dir.path().join("absent.docx");
-    assert!(!RealSystem::new().exists(&path).unwrap());
+    assert!(!ready_now(RealSystem::new().exists(&path)).unwrap());
 
     let output = run(&["parts", path.to_str().unwrap()]);
     assert_eq!(output.status.code(), Some(2_i32), "got {output:?}");

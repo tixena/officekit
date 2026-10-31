@@ -14,7 +14,7 @@
 
 use core::error::Error;
 use core::fmt::{self, Write as _};
-use std::io::{Cursor, Read as _, Write, stdout};
+use std::io::{Cursor, Write, stdout};
 use std::path::{Path, PathBuf};
 
 use clap::Parser;
@@ -24,6 +24,7 @@ use officekit_xml::element::{Element, Node};
 use officekit_xml::name::table::NAMESPACES;
 use officekit_xml::name::{Namespace, QName};
 use officekit_xml::parse::parse;
+use officekit_xml::ready::ready_now;
 use os_shim::System;
 use os_shim::mock::MemorySystem;
 use os_shim::real::RealSystem;
@@ -199,8 +200,7 @@ where
     S: System + ?Sized,
 {
     let package = MemorySystem::from_zip_reader(Cursor::new(read_bytes(system, path)?))?;
-    let mut parts: Vec<PathBuf> = package
-        .walk_dir(Path::new("/"), false, true)?
+    let mut parts: Vec<PathBuf> = ready_now(package.walk_dir(Path::new("/"), false, true))?
         .into_iter()
         .filter(|entry| entry.is_file)
         .map(|entry| entry.path)
@@ -298,8 +298,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let arguments = Arguments::parse();
     let system = RealSystem::new();
     let mut out = stdout().lock();
-    let mut files: Vec<PathBuf> = system
-        .read_dir(&arguments.folder)?
+    let mut files: Vec<PathBuf> = ready_now(system.read_dir(&arguments.folder))?
         .into_iter()
         .filter(|path| is_office_file(path))
         .collect();
@@ -384,8 +383,7 @@ fn read_bytes<S>(system: &S, path: &Path) -> Result<Vec<u8>, Box<dyn Error>>
 where
     S: System + ?Sized,
 {
-    let mut bytes = Vec::new();
-    system.open(path)?.read_to_end(&mut bytes)?;
+    let (bytes, _revision) = ready_now(system.read(path))?;
     Ok(bytes)
 }
 

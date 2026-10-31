@@ -29,16 +29,17 @@ pub trait OfficeFileMarkdown: Sized {
     /// use officekit::office_file::OfficeFile;
     /// use officekit_markdown::{MarkdownOptions, OfficeFileMarkdown as _};
     /// use officekit_xml::packaging::package::OpenOptions;
+    /// use officekit_xml::ready::ready_now;
     /// use os_shim::mock::MemorySystem;
     ///
     /// # fn main() -> Result<(), Box<dyn core::error::Error>> {
-    /// let file = OfficeFile::from_input(
+    /// let file = ready_now(OfficeFile::from_input(
     ///     &MemorySystem::new(),
     ///     b"one\ntwo\n".to_vec(),
     ///     None,
     ///     OpenOptions::default(),
     ///     MarkdownOptions::default(),
-    /// )?;
+    /// ))?;
     /// assert!(matches!(file, OfficeFile::Word(_)));
     /// # Ok(())
     /// # }
@@ -55,7 +56,7 @@ pub trait OfficeFileMarkdown: Sized {
         folder: Option<&Path>,
         options: OpenOptions,
         markdown: MarkdownOptions,
-    ) -> Result<Self, MarkdownError>
+    ) -> impl Future<Output = Result<Self, MarkdownError>> + Send
     where
         S: System + ?Sized;
 }
@@ -67,17 +68,33 @@ impl OfficeFileMarkdown for OfficeFile {
         folder: Option<&Path>,
         options: OpenOptions,
         markdown: MarkdownOptions,
-    ) -> Result<Self, MarkdownError>
+    ) -> impl Future<Output = Result<Self, MarkdownError>> + Send
     where
         S: System + ?Sized,
     {
-        if bytes.starts_with(ZIP_SIGNATURE) {
-            return Ok(Self::from_bytes(bytes, options)?);
-        }
-        let text = String::from_utf8(bytes).map_err(|error| MarkdownError::Io {
-            error: io::Error::new(io::ErrorKind::InvalidData, error),
-            path: PathBuf::from(STANDARD_INPUT),
-        })?;
-        from_markdown_text(system, &text, folder, markdown).map(Self::Word)
+        from_input(system, bytes, folder, options, markdown)
     }
+}
+
+/// [`OfficeFileMarkdown::from_input`].
+async fn from_input<S>(
+    system: &S,
+    bytes: Vec<u8>,
+    folder: Option<&Path>,
+    options: OpenOptions,
+    markdown: MarkdownOptions,
+) -> Result<OfficeFile, MarkdownError>
+where
+    S: System + ?Sized,
+{
+    if bytes.starts_with(ZIP_SIGNATURE) {
+        return Ok(OfficeFile::from_bytes(bytes, options)?);
+    }
+    let text = String::from_utf8(bytes).map_err(|error| MarkdownError::Io {
+        error: io::Error::new(io::ErrorKind::InvalidData, error),
+        path: PathBuf::from(STANDARD_INPUT),
+    })?;
+    from_markdown_text(system, &text, folder, markdown)
+        .await
+        .map(OfficeFile::Word)
 }

@@ -1,5 +1,6 @@
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
+use officekit_xml::ready::ready_now;
 use os_shim::mock::MemorySystem;
 
 use super::Inputs;
@@ -8,43 +9,46 @@ const MISSING_PREFIX: &str = "missing input: ";
 
 fn layout() -> MemorySystem {
     let mut system = MemorySystem::new()
-        .with_file("inputs/ecma-376/part1.txt", b"part 1")
+        .with_file("/inputs/ecma-376/part1.txt", b"part 1")
         .unwrap()
-        .with_file("inputs/ecma-376/part4.txt", b"part 4")
+        .with_file("/inputs/ecma-376/part4.txt", b"part 4")
         .unwrap()
-        .with_dir("inputs/open-xml-sdk/data")
+        .with_dir("/inputs/open-xml-sdk/data")
         .unwrap()
-        .with_file("inputs/open-specifications/SOURCES", b"sources")
+        .with_file("/inputs/open-specifications/SOURCES", b"sources")
         .unwrap()
-        .with_file("inputs/open-specifications/aink.xsd", b"<xsd/>")
+        .with_file("/inputs/open-specifications/aink.xsd", b"<xsd/>")
         .unwrap()
-        .with_file("inputs/open-specifications/xr2.xsd", b"<xsd/>")
+        .with_file("/inputs/open-specifications/xr2.xsd", b"<xsd/>")
         .unwrap()
-        .with_file("inputs/sdk-3.5.1-semantic.json", b"[]")
+        .with_file("/inputs/sdk-3.5.1-semantic.json", b"[]")
         .unwrap()
-        .with_file("inputs/SHA256SUMS", b"abc  inputs/TOOLS\ndef  inputs/x\n")
+        .with_file("/inputs/SHA256SUMS", b"abc  inputs/TOOLS\ndef  inputs/x\n")
         .unwrap()
         .with_file(
-            "inputs/TOOLS",
+            "/inputs/TOOLS",
             b"pdftotext version 26.01.0\nopen-xml-sdk 3139\n",
         )
         .unwrap();
     for index in 0_u8..21_u8 {
         system = system
-            .with_file(format!("inputs/ecma-376/strict/s{index:02}.xsd"), b"<xsd/>")
+            .with_file(
+                format!("/inputs/ecma-376/strict/s{index:02}.xsd"),
+                b"<xsd/>",
+            )
             .unwrap();
     }
     for index in 0_u8..26_u8 {
         system = system
             .with_file(
-                format!("inputs/ecma-376/transitional/t{index:02}.xsd"),
+                format!("/inputs/ecma-376/transitional/t{index:02}.xsd"),
                 b"<xsd/>",
             )
             .unwrap();
     }
     for name in ["contentTypes", "coreProperties", "digSig", "relationships"] {
         system = system
-            .with_file(format!("inputs/ecma-376/opc/opc-{name}.xsd"), b"<xsd/>")
+            .with_file(format!("/inputs/ecma-376/opc/opc-{name}.xsd"), b"<xsd/>")
             .unwrap();
     }
     system
@@ -54,7 +58,7 @@ fn without(skipped: &str) -> MemorySystem {
     use os_shim::System as _;
 
     let system = layout();
-    system.remove_file(Path::new(skipped)).unwrap();
+    ready_now(system.remove_file(Path::new(skipped))).unwrap();
     system
 }
 
@@ -128,9 +132,7 @@ fn names_the_missing_sdk_data() {
     use os_shim::System as _;
 
     let system = layout();
-    system
-        .remove_dir_all(Path::new("inputs/open-xml-sdk/data"))
-        .unwrap();
+    ready_now(system.remove_dir_all(Path::new("inputs/open-xml-sdk/data"))).unwrap();
     let err = Inputs::open(&system, Path::new("inputs")).unwrap_err();
     assert_eq!(
         err.to_string(),
@@ -148,5 +150,18 @@ fn names_the_missing_semantic_dump() {
     assert_eq!(
         err.to_string(),
         format!("{MISSING_PREFIX}inputs/sdk-3.5.1-semantic.json")
+    );
+}
+
+#[test]
+fn listed_spells_each_entry_from_the_folder_as_given() {
+    let system = MemorySystem::new()
+        .with_current_dir("/repo")
+        .unwrap()
+        .with_file("/repo/inputs/a.xsd", b"")
+        .unwrap();
+    assert_eq!(
+        super::listed(&system, Path::new("inputs")).unwrap(),
+        [PathBuf::from("inputs/a.xsd")]
     );
 }

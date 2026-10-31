@@ -2,9 +2,10 @@ use std::io::{Cursor, Read as _, Write as _};
 use std::path::{Path, PathBuf};
 
 use officekit_xml::parse::parse;
+use officekit_xml::ready::ready_now;
 use officekit_xml::write::{Layout, WriteOptions};
 use os_shim::System as _;
-use os_shim::WriteMode;
+use os_shim::bucket::Condition;
 use os_shim::mock::MemorySystem;
 use zip::ZipArchive;
 use zip::write::{SimpleFileOptions, ZipWriter};
@@ -34,8 +35,8 @@ fn docx() -> Vec<u8> {
 fn system_with(path: &str) -> MemorySystem {
     let system = MemorySystem::new();
     let file = Path::new(path);
-    system.create_dir_all(file.parent().unwrap()).unwrap();
-    system.write(file, &docx(), WriteMode::Replace).unwrap();
+    ready_now(system.create_dir_all(file.parent().unwrap())).unwrap();
+    ready_now(system.write(file, &docx(), Condition::None)).unwrap();
     system
 }
 
@@ -54,13 +55,7 @@ const fn up_options(minify: bool) -> UpOptions<'static> {
 }
 
 fn bytes_of(system: &MemorySystem, path: &str) -> Vec<u8> {
-    let mut bytes = Vec::new();
-    system
-        .open(Path::new(path))
-        .unwrap()
-        .read_to_end(&mut bytes)
-        .unwrap();
-    bytes
+    ready_now(system.read(Path::new(path))).unwrap().0
 }
 
 fn entries(bytes: Vec<u8>) -> Vec<(String, Vec<u8>)> {
@@ -95,26 +90,30 @@ fn tree(bytes: &[u8], layout: Layout) -> Vec<u8> {
 fn down_writes_every_entry_and_info() {
     let system = system_with("/in/Solicitud Cr\u{e9}dito (1).DOCX");
 
-    let written = down(&system, Path::new("/in"), Path::new("/out"), options(false)).unwrap();
+    let written = ready_now(down(
+        &system,
+        Path::new("/in"),
+        Path::new("/out"),
+        options(false),
+    ))
+    .unwrap();
 
     let folder = PathBuf::from("/out/solicitud_cr\u{e9}dito_(1)_docx");
     assert_eq!(written, vec![folder.clone()]);
     assert_eq!(
-        system
-            .read_to_string(&folder.join("_rels/.rels"))
+        ready_now(system.read_to_string(&folder.join("_rels/.rels")))
             .unwrap()
             .as_bytes(),
         RELS
     );
     assert_eq!(
-        system
-            .read_to_string(&folder.join("word/document.xml"))
+        ready_now(system.read_to_string(&folder.join("word/document.xml")))
             .unwrap()
             .as_bytes(),
         DOCUMENT
     );
     assert_eq!(
-        system.read_to_string(&folder.join("info.json")).unwrap(),
+        ready_now(system.read_to_string(&folder.join("info.json"))).unwrap(),
         "{\n  \"name\": \"Solicitud Cr\u{e9}dito (1).DOCX\"\n}"
     );
 }
@@ -123,7 +122,13 @@ fn down_writes_every_entry_and_info() {
 fn folder_name_drops_punctuation_and_lowercases() {
     let system = system_with("/in/A&B, Ltd. #5.docx");
 
-    let written = down(&system, Path::new("/in"), Path::new("/out"), options(false)).unwrap();
+    let written = ready_now(down(
+        &system,
+        Path::new("/in"),
+        Path::new("/out"),
+        options(false),
+    ))
+    .unwrap();
 
     assert_eq!(written, vec![PathBuf::from("/out/ab_ltd._5_docx")]);
 }
@@ -132,15 +137,21 @@ fn folder_name_drops_punctuation_and_lowercases() {
 fn down_keeps_the_directory_of_a_nested_document() {
     let system = system_with("/in/a/b/Deep.docx");
 
-    let written = down(&system, Path::new("/in"), Path::new("/out"), options(false)).unwrap();
+    let written = ready_now(down(
+        &system,
+        Path::new("/in"),
+        Path::new("/out"),
+        options(false),
+    ))
+    .unwrap();
 
     assert_eq!(written, vec![PathBuf::from("/out/a/b/deep_docx")]);
-    let rebuilt = up(
+    let rebuilt = ready_now(up(
         &system,
         Path::new("/out"),
         Path::new("/back"),
         up_options(false),
-    )
+    ))
     .unwrap();
     assert_eq!(rebuilt, vec![PathBuf::from("/back/a/b/Deep.docx")]);
 }
@@ -148,25 +159,34 @@ fn down_keeps_the_directory_of_a_nested_document() {
 #[test]
 fn down_replaces_an_existing_folder() {
     let system = system_with("/in/d.docx");
-    system.create_dir_all(Path::new("/out/d_docx")).unwrap();
-    system
-        .write(Path::new("/out/d_docx/stale.txt"), b"x", WriteMode::Replace)
-        .unwrap();
+    ready_now(system.create_dir_all(Path::new("/out/d_docx"))).unwrap();
+    ready_now(system.write(Path::new("/out/d_docx/stale.txt"), b"x", Condition::None)).unwrap();
 
-    down(&system, Path::new("/in"), Path::new("/out"), options(false)).unwrap();
+    ready_now(down(
+        &system,
+        Path::new("/in"),
+        Path::new("/out"),
+        options(false),
+    ))
+    .unwrap();
 
-    assert!(!system.exists(Path::new("/out/d_docx/stale.txt")).unwrap());
+    assert!(!ready_now(system.exists(Path::new("/out/d_docx/stale.txt"))).unwrap());
 }
 
 #[test]
 fn pretty_indents_xml_and_keeps_preserved_space() {
     let system = system_with("/in/d.docx");
 
-    down(&system, Path::new("/in"), Path::new("/out"), options(true)).unwrap();
+    ready_now(down(
+        &system,
+        Path::new("/in"),
+        Path::new("/out"),
+        options(true),
+    ))
+    .unwrap();
 
-    let document = system
-        .read_to_string(Path::new("/out/d_docx/word/document.xml"))
-        .unwrap();
+    let document =
+        ready_now(system.read_to_string(Path::new("/out/d_docx/word/document.xml"))).unwrap();
     assert!(document.contains("\n  <w:body>"), "{document}");
     assert!(
         document.contains("<w:t xml:space=\"preserve\"> kept </w:t>"),
@@ -179,14 +199,20 @@ fn pretty_indents_xml_and_keeps_preserved_space() {
 #[test]
 fn up_zips_everything_but_info() {
     let system = system_with("/in/d.docx");
-    down(&system, Path::new("/in"), Path::new("/out"), options(false)).unwrap();
+    ready_now(down(
+        &system,
+        Path::new("/in"),
+        Path::new("/out"),
+        options(false),
+    ))
+    .unwrap();
 
-    let written = up(
+    let written = ready_now(up(
         &system,
         Path::new("/out"),
         Path::new("/back"),
         up_options(false),
-    )
+    ))
     .unwrap();
 
     assert_eq!(written, vec![PathBuf::from("/back/d.docx")]);
@@ -206,24 +232,21 @@ fn up_zips_everything_but_info() {
 #[test]
 fn up_appends_docx_to_a_name_without_it() {
     let system = MemorySystem::new();
-    system.create_dir_all(Path::new("/out/x_docx")).unwrap();
-    system
-        .write(
-            Path::new("/out/x_docx/info.json"),
-            br#"{"name":"plain"}"#,
-            WriteMode::Replace,
-        )
-        .unwrap();
-    system
-        .write(Path::new("/out/x_docx/a.txt"), b"a", WriteMode::Replace)
-        .unwrap();
+    ready_now(system.create_dir_all(Path::new("/out/x_docx"))).unwrap();
+    ready_now(system.write(
+        Path::new("/out/x_docx/info.json"),
+        br#"{"name":"plain"}"#,
+        Condition::None,
+    ))
+    .unwrap();
+    ready_now(system.write(Path::new("/out/x_docx/a.txt"), b"a", Condition::None)).unwrap();
 
-    let written = up(
+    let written = ready_now(up(
         &system,
         Path::new("/out"),
         Path::new("/back"),
         up_options(false),
-    )
+    ))
     .unwrap();
 
     assert_eq!(written, vec![PathBuf::from("/back/plain.docx")]);
@@ -232,17 +255,15 @@ fn up_appends_docx_to_a_name_without_it() {
 #[test]
 fn up_ignores_a_folder_without_info() {
     let system = MemorySystem::new();
-    system.create_dir_all(Path::new("/out/x_docx")).unwrap();
-    system
-        .write(Path::new("/out/x_docx/a.txt"), b"a", WriteMode::Replace)
-        .unwrap();
+    ready_now(system.create_dir_all(Path::new("/out/x_docx"))).unwrap();
+    ready_now(system.write(Path::new("/out/x_docx/a.txt"), b"a", Condition::None)).unwrap();
 
-    let written = up(
+    let written = ready_now(up(
         &system,
         Path::new("/out"),
         Path::new("/back"),
         up_options(false),
-    )
+    ))
     .unwrap();
 
     assert_eq!(written, Vec::<PathBuf>::new());
@@ -251,21 +272,20 @@ fn up_ignores_a_folder_without_info() {
 #[test]
 fn up_ignores_a_folder_without_the_suffix() {
     let system = MemorySystem::new();
-    system.create_dir_all(Path::new("/out/x")).unwrap();
-    system
-        .write(
-            Path::new("/out/x/info.json"),
-            br#"{"name":"p"}"#,
-            WriteMode::Replace,
-        )
-        .unwrap();
+    ready_now(system.create_dir_all(Path::new("/out/x"))).unwrap();
+    ready_now(system.write(
+        Path::new("/out/x/info.json"),
+        br#"{"name":"p"}"#,
+        Condition::None,
+    ))
+    .unwrap();
 
-    let written = up(
+    let written = ready_now(up(
         &system,
         Path::new("/out"),
         Path::new("/back"),
         up_options(false),
-    )
+    ))
     .unwrap();
 
     assert_eq!(written, Vec::<PathBuf>::new());
@@ -274,21 +294,20 @@ fn up_ignores_a_folder_without_the_suffix() {
 #[test]
 fn up_reports_a_malformed_info() {
     let system = MemorySystem::new();
-    system.create_dir_all(Path::new("/out/x_docx")).unwrap();
-    system
-        .write(
-            Path::new("/out/x_docx/info.json"),
-            b"{\"name\": 3}",
-            WriteMode::Replace,
-        )
-        .unwrap();
+    ready_now(system.create_dir_all(Path::new("/out/x_docx"))).unwrap();
+    ready_now(system.write(
+        Path::new("/out/x_docx/info.json"),
+        b"{\"name\": 3}",
+        Condition::None,
+    ))
+    .unwrap();
 
-    let error = up(
+    let error = ready_now(up(
         &system,
         Path::new("/out"),
         Path::new("/back"),
         up_options(false),
-    )
+    ))
     .unwrap_err();
 
     assert!(
@@ -300,14 +319,20 @@ fn up_reports_a_malformed_info() {
 #[test]
 fn round_trip_keeps_trees_and_other_bytes() {
     let system = system_with("/in/d.docx");
-    down(&system, Path::new("/in"), Path::new("/out"), options(true)).unwrap();
+    ready_now(down(
+        &system,
+        Path::new("/in"),
+        Path::new("/out"),
+        options(true),
+    ))
+    .unwrap();
 
-    up(
+    ready_now(up(
         &system,
         Path::new("/out"),
         Path::new("/back"),
         up_options(true),
-    )
+    ))
     .unwrap();
 
     let bytes = bytes_of(&system, "/back/d.docx");
@@ -331,16 +356,21 @@ fn round_trip_keeps_trees_and_other_bytes() {
 #[test]
 fn format_is_idempotent() {
     let system = system_with("/in/d.docx");
-    down(&system, Path::new("/in"), Path::new("/out"), options(false)).unwrap();
+    ready_now(down(
+        &system,
+        Path::new("/in"),
+        Path::new("/out"),
+        options(false),
+    ))
+    .unwrap();
 
-    let first = format(&system, Path::new("/out")).unwrap();
-    let second = format(&system, Path::new("/out")).unwrap();
+    let first = ready_now(format(&system, Path::new("/out"))).unwrap();
+    let second = ready_now(format(&system, Path::new("/out"))).unwrap();
 
     assert_eq!((first.inspected, first.rewritten), (3, 3));
     assert_eq!((second.inspected, second.rewritten), (3, 0));
-    let document = system
-        .read_to_string(Path::new("/out/d_docx/word/document.xml"))
-        .unwrap();
+    let document =
+        ready_now(system.read_to_string(Path::new("/out/d_docx/word/document.xml"))).unwrap();
     assert!(
         document.contains("<w:t xml:space=\"preserve\"> kept </w:t>"),
         "{document}"
@@ -350,12 +380,10 @@ fn format_is_idempotent() {
 #[test]
 fn format_reports_malformed_xml() {
     let system = MemorySystem::new();
-    system.create_dir_all(Path::new("/d")).unwrap();
-    system
-        .write(Path::new("/d/a.xml"), b"<a><b></a>", WriteMode::Replace)
-        .unwrap();
+    ready_now(system.create_dir_all(Path::new("/d"))).unwrap();
+    ready_now(system.write(Path::new("/d/a.xml"), b"<a><b></a>", Condition::None)).unwrap();
 
-    let error = format(&system, Path::new("/d")).unwrap_err();
+    let error = ready_now(format(&system, Path::new("/d"))).unwrap_err();
 
     assert!(
         matches!(&error, FolderError::Xml { error: _error, path } if path == Path::new("/d/a.xml")),
@@ -367,12 +395,12 @@ fn format_reports_malformed_xml() {
 fn down_rejects_a_missing_source() {
     let system = MemorySystem::new();
 
-    let error = down(
+    let error = ready_now(down(
         &system,
         Path::new("/nope"),
         Path::new("/out"),
         options(false),
-    )
+    ))
     .unwrap_err();
 
     assert!(
@@ -384,15 +412,56 @@ fn down_rejects_a_missing_source() {
 #[test]
 fn down_rejects_a_file_that_is_not_a_zip() {
     let system = MemorySystem::new();
-    system.create_dir_all(Path::new("/in")).unwrap();
-    system
-        .write(Path::new("/in/bad.docx"), b"not a zip", WriteMode::Replace)
-        .unwrap();
+    ready_now(system.create_dir_all(Path::new("/in"))).unwrap();
+    ready_now(system.write(Path::new("/in/bad.docx"), b"not a zip", Condition::None)).unwrap();
 
-    let error = down(&system, Path::new("/in"), Path::new("/out"), options(false)).unwrap_err();
+    let error = ready_now(down(
+        &system,
+        Path::new("/in"),
+        Path::new("/out"),
+        options(false),
+    ))
+    .unwrap_err();
 
     assert!(
         matches!(&error, FolderError::Io { error: _error, path } if path == Path::new("/in/bad.docx")),
         "{error}"
     );
+}
+
+#[test]
+fn a_relative_folder_gives_paths_spelled_from_it() {
+    let system = MemorySystem::new()
+        .with_current_dir("/work")
+        .unwrap()
+        .with_file("/work/in/a/Report.docx", &docx())
+        .unwrap();
+
+    let folders = ready_now(down(
+        &system,
+        Path::new("in"),
+        Path::new("out"),
+        options(false),
+    ));
+    assert_eq!(folders.unwrap(), [PathBuf::from("out/a/report_docx")]);
+    assert!(
+        ready_now(system.is_file(Path::new("/work/out/a/report_docx/word/document.xml"))).unwrap()
+    );
+
+    assert!(
+        ready_now(format(&system, Path::new("out")))
+            .unwrap()
+            .inspected
+            > 0
+    );
+
+    let files = ready_now(up(
+        &system,
+        Path::new("out"),
+        Path::new("back"),
+        up_options(false),
+    ));
+    assert_eq!(files.unwrap(), [PathBuf::from("back/a/Report.docx")]);
+    let rebuilt = entries(bytes_of(&system, "/work/back/a/Report.docx"));
+    assert!(rebuilt.iter().any(|(name, _)| name == "word/document.xml"));
 }

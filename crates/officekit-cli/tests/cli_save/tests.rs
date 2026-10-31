@@ -1,11 +1,11 @@
 use core::str;
-use std::io::Read as _;
 use std::path::Path;
 use std::process::Output;
 
 use assert_cmd::Command;
+use officekit_xml::ready::ready_now;
 use os_shim::System as _;
-use os_shim::WriteMode;
+use os_shim::bucket::Condition;
 use os_shim::real::RealSystem;
 use tempfile::TempDir;
 
@@ -29,9 +29,7 @@ fn path(dir: &Path, name: &str) -> String {
 }
 
 fn write(dir: &Path, name: &str, bytes: &[u8]) -> String {
-    RealSystem::new()
-        .write(&dir.join(name), bytes, WriteMode::Replace)
-        .unwrap();
+    ready_now(RealSystem::new().write(&dir.join(name), bytes, Condition::None)).unwrap();
     path(dir, name)
 }
 
@@ -67,17 +65,8 @@ fn the_long_form_of_a_markdown_file_writes_the_same_word_file() {
     assert_eq!(saved.status.code(), Some(0_i32), "got {saved:?}");
 
     let system = RealSystem::new();
-    let (mut a, mut b) = (Vec::new(), Vec::new());
-    system
-        .open(Path::new(&direct))
-        .unwrap()
-        .read_to_end(&mut a)
-        .unwrap();
-    system
-        .open(Path::new(&through))
-        .unwrap()
-        .read_to_end(&mut b)
-        .unwrap();
+    let (a, _) = ready_now(system.read(Path::new(&direct))).unwrap();
+    let (b, _) = ready_now(system.read(Path::new(&through))).unwrap();
     assert_eq!(a, b);
 }
 
@@ -95,7 +84,7 @@ fn an_excel_workbook_goes_through_the_binary_form() {
     assert_eq!(binary.status.code(), Some(0_i32), "got {binary:?}");
     let saved = run(&["save", "-f", "xlsx", "-o", &out], &binary.stdout);
     assert_eq!(saved.status.code(), Some(0_i32), "got {saved:?}");
-    Package::open(&RealSystem::new(), Path::new(&out)).unwrap();
+    ready_now(Package::open(&RealSystem::new(), Path::new(&out))).unwrap();
 }
 
 #[test]

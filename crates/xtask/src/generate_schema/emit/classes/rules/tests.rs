@@ -215,11 +215,11 @@ fn row(prefix: &str, uri: &str, strict: Option<&str>) -> Row {
 /// The fixture's rules: `v` is namespace 0, `w` 1, `x` 2.
 fn rules(table: &str) -> anyhow::Result<Rules> {
     let system = MemorySystem::new()
-        .with_file("transitional/sml.xsd", TRANSITIONAL_SML.as_bytes())?
-        .with_file("transitional/vml-main.xsd", VML.as_bytes())?
-        .with_file("transitional/wml.xsd", TRANSITIONAL_WML.as_bytes())?
-        .with_file("strict/sml.xsd", STRICT_SML.as_bytes())?
-        .with_file("strict/wml.xsd", STRICT_WML.as_bytes())?;
+        .with_file("/transitional/sml.xsd", TRANSITIONAL_SML.as_bytes())?
+        .with_file("/transitional/vml-main.xsd", VML.as_bytes())?
+        .with_file("/transitional/wml.xsd", TRANSITIONAL_WML.as_bytes())?
+        .with_file("/strict/sml.xsd", STRICT_SML.as_bytes())?
+        .with_file("/strict/wml.xsd", STRICT_WML.as_bytes())?;
     let transitional = SchemaSet::read(
         &system,
         &[

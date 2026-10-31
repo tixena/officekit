@@ -1,4 +1,3 @@
-use std::io::Read as _;
 use std::path::Path;
 
 use arky::parser::parse;
@@ -12,8 +11,9 @@ use officekit_xml::name::OfficeVersion;
 use officekit_xml::packaging::package::OpenOptions;
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::RelationshipType;
+use officekit_xml::ready::ready_now;
 use os_shim::System as _;
-use os_shim::WriteMode;
+use os_shim::bucket::Condition;
 use os_shim::mock::MemorySystem;
 use png::{BitDepth, ColorType, Encoder};
 
@@ -73,13 +73,7 @@ fn tiny_png() -> Vec<u8> {
 }
 
 fn read_bytes(system: &MemorySystem, path: &str) -> Vec<u8> {
-    let mut bytes = Vec::new();
-    system
-        .open(Path::new(path))
-        .unwrap()
-        .read_to_end(&mut bytes)
-        .unwrap();
-    bytes
+    ready_now(system.read(Path::new(path))).unwrap().0
 }
 
 fn assert_valid(docx: &Docx) {
@@ -90,29 +84,25 @@ fn assert_valid(docx: &Docx) {
 /// A folder `/n` holding `source` as `doc.md` and the picture `logo.png`.
 fn notes(source: &str) -> MemorySystem {
     let system = MemorySystem::new();
-    system.create_dir_all(Path::new("/n")).unwrap();
-    system
-        .write(
-            Path::new("/n/doc.md"),
-            source.as_bytes(),
-            WriteMode::Replace,
-        )
-        .unwrap();
-    system
-        .write(Path::new("/n/logo.png"), &tiny_png(), WriteMode::Replace)
-        .unwrap();
+    ready_now(system.create_dir_all(Path::new("/n"))).unwrap();
+    ready_now(system.write(Path::new("/n/doc.md"), source.as_bytes(), Condition::None)).unwrap();
+    ready_now(system.write(Path::new("/n/logo.png"), &tiny_png(), Condition::None)).unwrap();
     system
 }
 
 /// The Word file of `/n/doc.md`, validated, saved, reopened and written as markdown to `back`.
 fn through_word(system: &MemorySystem, back: &str, options: MarkdownOptions) -> String {
-    let docx = from_markdown(system, Path::new("/n/doc.md"), options).unwrap();
+    let docx = ready_now(from_markdown(system, Path::new("/n/doc.md"), options)).unwrap();
     assert_valid(&docx);
-    docx.save_transitional(system, Path::new("/n/doc.docx"))
-        .unwrap();
-    let reopened = Docx::open(system, Path::new("/n/doc.docx"), OpenOptions::default()).unwrap();
-    save_markdown(&reopened, system, Path::new(back), options).unwrap();
-    system.read_to_string(Path::new(back)).unwrap()
+    ready_now(docx.save_transitional(system, Path::new("/n/doc.docx"))).unwrap();
+    let reopened = ready_now(Docx::open(
+        system,
+        Path::new("/n/doc.docx"),
+        OpenOptions::default(),
+    ))
+    .unwrap();
+    ready_now(save_markdown(&reopened, system, Path::new(back), options)).unwrap();
+    ready_now(system.read_to_string(Path::new(back))).unwrap()
 }
 
 fn after_word(source: &str) -> String {
@@ -175,7 +165,7 @@ fn embedded_pictures_write_no_folder() {
     embed.embed_images = true;
     let back = through_word(&system, "/n/back.md", embed);
     assert!(back.starts_with("![Logo](data:image/png;base64,"), "{back}");
-    assert!(!system.exists(Path::new("/n/back_media")).unwrap());
+    assert!(!ready_now(system.exists(Path::new("/n/back_media"))).unwrap());
 }
 
 fn run(text: &str) -> String {
@@ -392,32 +382,42 @@ fn word_body(outer: &str, logo: &str, image: &str, chunk: &str) -> String {
 #[test]
 fn word_converted_to_markdown_and_back_gives_the_same_markdown_twice() {
     let system = MemorySystem::new();
-    system.create_dir_all(Path::new("/n/one")).unwrap();
-    system.create_dir_all(Path::new("/n/two")).unwrap();
+    ready_now(system.create_dir_all(Path::new("/n/one"))).unwrap();
+    ready_now(system.create_dir_all(Path::new("/n/two"))).unwrap();
     let original = word_file();
     assert_valid(&original);
-    original
-        .save_transitional(&system, Path::new("/n/one/doc.docx"))
-        .unwrap();
-    let opened = Docx::open(
+    ready_now(original.save_transitional(&system, Path::new("/n/one/doc.docx"))).unwrap();
+    let opened = ready_now(Docx::open(
         &system,
         Path::new("/n/one/doc.docx"),
         OpenOptions::default(),
-    )
+    ))
     .unwrap();
     let options = options();
-    save_markdown(&opened, &system, Path::new("/n/one/doc.md"), options).unwrap();
-    let first = system.read_to_string(Path::new("/n/one/doc.md")).unwrap();
+    ready_now(save_markdown(
+        &opened,
+        &system,
+        Path::new("/n/one/doc.md"),
+        options,
+    ))
+    .unwrap();
+    let first = ready_now(system.read_to_string(Path::new("/n/one/doc.md"))).unwrap();
     assert_eq!(
         first,
         "---\ntitle: Quarterly report\n---\n# Results\n\n## Notes\n\nPlain **bold** *italic* ***both*** `code`\ttabbed\\\nwrapped\n\n[the dashboard](https://example.com/q3 \"Tip\"), [below](#notes), [site](https://example.com/site), [Q3](#q3-results), [part](https://x.example#part_two)\n\n![Logo](doc_media/image1.png)\n\n![Chart](doc_media/image1.png)\n\n- North\n\n  - Inner\n\n- South\n\n  More about South\n\n3. three\n4. four\n\n```\nfirst\nsecond\n```\n\n> Quoted\n\n***\n\n+-----+-----+\n| a   | b   |\n+-----+-----+\n| c   | e   |\n|     |     |\n| d   |     |\n+-----+-----+\n\n| A   | B   |\n| --- | --- |\n| 1   | 2   |\n\n<div>Imported</div>\n\nBoxed\n"
     );
 
-    let again = from_markdown(&system, Path::new("/n/one/doc.md"), options).unwrap();
+    let again = ready_now(from_markdown(&system, Path::new("/n/one/doc.md"), options)).unwrap();
     assert_valid(&again);
-    save_markdown(&again, &system, Path::new("/n/two/doc.md"), options).unwrap();
+    ready_now(save_markdown(
+        &again,
+        &system,
+        Path::new("/n/two/doc.md"),
+        options,
+    ))
+    .unwrap();
     assert_eq!(
-        system.read_to_string(Path::new("/n/two/doc.md")).unwrap(),
+        ready_now(system.read_to_string(Path::new("/n/two/doc.md"))).unwrap(),
         first
     );
     for folder in ["one", "two"] {
@@ -426,8 +426,7 @@ fn word_converted_to_markdown_and_back_gives_the_same_markdown_twice() {
             tiny_png()
         );
         assert!(
-            !system
-                .exists(Path::new(&format!("/n/{folder}/doc_media/image2.png")))
+            !ready_now(system.exists(Path::new(&format!("/n/{folder}/doc_media/image2.png"))))
                 .unwrap()
         );
     }

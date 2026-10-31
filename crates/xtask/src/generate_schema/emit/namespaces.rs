@@ -6,7 +6,9 @@ use std::ffi::OsStr;
 use std::path::{Path, PathBuf};
 
 use anyhow::{Context as _, Result, bail};
-use os_shim::{System, WriteMode};
+use officekit_xml::ready::ready_now;
+use os_shim::System;
+use os_shim::bucket::Condition;
 use sha2::{Digest as _, Sha256};
 
 use crate::generate_schema::inputs::Inputs;
@@ -77,12 +79,10 @@ where
     );
 
     if let Some(parent) = out.parent() {
-        system
-            .create_dir_all(parent)
+        ready_now(system.create_dir_all(parent))
             .with_context(|| format!("cannot create {}", parent.display()))?;
     }
-    system
-        .write(out, text.as_bytes(), WriteMode::Replace)
+    ready_now(system.write(out, text.as_bytes(), Condition::None))
         .with_context(|| format!("cannot write {}", out.display()))?;
     Ok(Summary {
         introduced: rows.iter().filter(|row| row.introduced.is_some()).count(),

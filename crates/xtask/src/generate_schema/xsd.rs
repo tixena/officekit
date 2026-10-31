@@ -9,6 +9,7 @@ use alloc::rc::Rc;
 use std::path::{Path, PathBuf};
 
 use anyhow::{Context as _, Result, bail};
+use officekit_xml::ready::ready_now;
 use os_shim::System;
 use quick_xml::events::{BytesStart, Event};
 use quick_xml::{Reader, XmlVersion};
@@ -167,8 +168,7 @@ impl Schema {
     where
         S: System + ?Sized,
     {
-        let text = system
-            .read_to_string(path)
+        let text = ready_now(system.read_to_string(path))
             .with_context(|| format!("cannot read {}", path.display()))?;
         Self::parse(path, &text).with_context(|| format!("cannot read {}", path.display()))
     }

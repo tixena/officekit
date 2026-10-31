@@ -8,8 +8,9 @@ use officekit::xlsx::Xlsx;
 use officekit_xml::name::OfficeVersion;
 use officekit_xml::packaging::package::Package;
 use officekit_xml::packaging::part_name::PartName;
+use officekit_xml::ready::ready_now;
 use os_shim::System as _;
-use os_shim::WriteMode;
+use os_shim::bucket::Condition;
 use os_shim::mock::MemorySystem;
 use serde_json::{Value, json};
 
@@ -85,7 +86,7 @@ fn sample(system: &MemorySystem) -> PathBuf {
         )
         .unwrap();
     let path = PathBuf::from("/sample.docx");
-    package.save(system, &path).unwrap();
+    ready_now(package.save(system, &path)).unwrap();
     path
 }
 
@@ -148,7 +149,7 @@ fn a_package_validator_gives_the_reason_when_the_file_does_not_open() {
     let reason = validator
         .validate(Path::new("/absent.docx"), OfficeVersion::Microsoft365, 1000)
         .unwrap_err();
-    assert_eq!(reason, "File not found: /absent.docx");
+    assert_eq!(reason, "nothing is at the path");
 }
 
 #[test]
@@ -203,15 +204,11 @@ fn workbook(system: &MemorySystem) {
         .unwrap()
         .to_bytes_transitional()
         .unwrap();
-    system
-        .write(Path::new("/book.xlsx"), &bytes, WriteMode::Replace)
-        .unwrap();
+    ready_now(system.write(Path::new("/book.xlsx"), &bytes, Condition::None)).unwrap();
 }
 
 fn report_docx(system: &MemorySystem) -> Vec<u8> {
-    system
-        .write(Path::new("/it.md"), REPORT.as_bytes(), WriteMode::Replace)
-        .unwrap();
+    ready_now(system.write(Path::new("/it.md"), REPORT.as_bytes(), Condition::None)).unwrap();
     let args = get_args("/it.md", Form::Docx, None);
     let (result, bytes, _) = get(system, &args, b"");
     result.unwrap();
@@ -221,9 +218,7 @@ fn report_docx(system: &MemorySystem) -> Vec<u8> {
 #[test]
 fn get_writes_a_markdown_file_as_a_word_file_that_reads_back_as_the_same_markdown() {
     let system = MemorySystem::new();
-    system
-        .write(Path::new("/it.md"), REPORT.as_bytes(), WriteMode::Replace)
-        .unwrap();
+    ready_now(system.write(Path::new("/it.md"), REPORT.as_bytes(), Condition::None)).unwrap();
     let args = get_args("/it.md", Form::Docx, Some("/it.docx"));
     let (result, out, err) = get(&system, &args, b"");
     result.unwrap();
@@ -309,7 +304,7 @@ fn get_writes_a_workbook_as_a_workbook() {
     let (result, _, err) = get(&system, &args, b"");
     result.unwrap();
     assert_eq!(err, "");
-    Package::open(&system, Path::new("/copy.xlsx")).unwrap();
+    ready_now(Package::open(&system, Path::new("/copy.xlsx"))).unwrap();
 }
 
 #[test]
@@ -336,7 +331,7 @@ fn get_writes_a_picture_into_the_markdown_as_a_data_uri() {
         text.starts_with("![Dot](data:image/png;base64,"),
         "got {text}"
     );
-    assert_eq!(system.read_dir(Path::new("/")).unwrap().len(), 0);
+    assert_eq!(ready_now(system.read_dir(Path::new("/"))).unwrap().len(), 0);
 }
 
 fn save_args(input: Option<&str>, format: Form, output: Option<&str>) -> SaveArgs {
@@ -386,15 +381,13 @@ fn save_reads_the_binary_form_from_a_file() {
     let system = MemorySystem::new();
     let docx = report_docx(&system);
     let binary = binary_of(&system, &docx);
-    system
-        .write(Path::new("/it.bin"), &binary, WriteMode::Replace)
-        .unwrap();
+    ready_now(system.write(Path::new("/it.bin"), &binary, Condition::None)).unwrap();
 
     let args = save_args(Some("/it.bin"), Form::Docx, Some("/copy.docx"));
     let (result, out, _) = save(&system, &args, b"");
     result.unwrap();
     assert_eq!(out, b"");
-    Package::open(&system, Path::new("/copy.docx")).unwrap();
+    ready_now(Package::open(&system, Path::new("/copy.docx"))).unwrap();
 }
 
 #[cfg(feature = "binary-format")]

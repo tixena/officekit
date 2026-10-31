@@ -100,11 +100,14 @@ cargo build -p officekit-markdown                                        # markd
 - **Every byte in or out of the operating system passes through
   [`os-shim`](https://github.com/tixena/os-shim).** Library functions that
   touch files take a `&S where S: os_shim::System + ?Sized`. The CLI hands in
-  `RealSystem`; tests hand in `MemorySystem` and never touch disk.
+  `RealSystem`; tests hand in `MemorySystem` and never touch disk. Those
+  functions are async, because only the caller knows what its system's futures
+  wait on. Synchronous code with one of those two systems runs them with
+  `officekit_xml::ready::ready_now`.
 - **The zip container is parsed from an in-memory buffer**, not a stream.
   Office files in the wild use data descriptors (the archive's central
   directory holds the sizes, the local headers do not), and a streaming reader
-  fails on those. The bytes still arrive through `System::open`.
+  fails on those. The bytes still arrive through `System::read`.
 - **Part names are resolved without regard to ASCII case**, as ECMA-376 Part 2
   requires. `PartName` keeps the spelling it was given; `Package` files each
   part under the case-folded name.

@@ -61,11 +61,13 @@
 //! Add `officekit` and `os-shim` to `Cargo.toml`. Every function that opens, creates or saves a
 //! file takes an `os_shim::System`, so the same code runs against the real file system
 //! (`os_shim::real::RealSystem`) and against an in-memory one (`os_shim::mock::MemorySystem`).
+//! Those functions are async: await them in your runtime. Synchronous code with one of those two
+//! systems runs them with `officekit_xml::ready::ready_now`, which needs no runtime.
 //!
 //! ```toml
 //! [dependencies]
 //! officekit = "0.1"
-//! os-shim = "0.1"
+//! os-shim = "0.2"
 //! ```
 //!
 //! Types you build or pass come from the crate that owns them, and `officekit` re-exports none of
@@ -323,6 +325,7 @@ use std::path::{Path, PathBuf};
 use officekit::docx::Docx;
 use officekit::folder::{self, DEFAULT_SUFFIX, DownOptions, UpOptions};
 use officekit_xml::packaging::package::OpenOptions;
+use officekit_xml::ready::ready_now;
 use officekit::parts::kinds::WordprocessingKind;
 use os_shim::System as _;
 use os_shim::mock::MemorySystem;
@@ -330,25 +333,25 @@ use os_shim::mock::MemorySystem;
 # fn main() -> Result<(), Box<dyn core::error::Error>> {
 let system = MemorySystem::new().with_dir("/in")?;
 let source = Path::new("/in/Quarterly Report.docx");
-Docx::create(&system, source, WordprocessingKind::Document)?;
+ready_now(Docx::create(&system, source, WordprocessingKind::Document))?;
 
 let mut down = DownOptions::default();
 down.suffix = DEFAULT_SUFFIX;
-let folders = folder::down(&system, Path::new("/in"), Path::new("/parts"), down)?;
+let folders = ready_now(folder::down(&system, Path::new("/in"), Path::new("/parts"), down))?;
 assert_eq!(folders, [PathBuf::from("/parts/quarterly_report_docx")]);
 
-let info = system.read_to_string(Path::new("/parts/quarterly_report_docx/info.json"))?;
+let info = ready_now(system.read_to_string(Path::new("/parts/quarterly_report_docx/info.json")))?;
 assert!(info.contains("Quarterly Report.docx"));
 
-let summary = folder::format(&system, Path::new("/parts"))?;
+let summary = ready_now(folder::format(&system, Path::new("/parts")))?;
 assert!(summary.inspected > 0);
 
 let mut up = UpOptions::default();
 up.suffix = DEFAULT_SUFFIX;
-let files = folder::up(&system, Path::new("/parts"), Path::new("/out"), up)?;
+let files = ready_now(folder::up(&system, Path::new("/parts"), Path::new("/out"), up))?;
 assert_eq!(files, [PathBuf::from("/out/Quarterly Report.docx")]);
 
-let rebuilt = Docx::open(&system, &files[0], OpenOptions::default())?;
+let rebuilt = ready_now(Docx::open(&system, &files[0], OpenOptions::default()))?;
 assert_eq!(rebuilt.kind(), WordprocessingKind::Document);
 # Ok(())
 # }

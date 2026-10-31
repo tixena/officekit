@@ -16,17 +16,18 @@
 //! use std::path::Path;
 //!
 //! use officekit_markdown::{DocxMarkdown as _, MarkdownOptions, from_markdown_text};
+//! use officekit_xml::ready::ready_now;
 //! use os_shim::System as _;
 //! use os_shim::mock::MemorySystem;
 //!
 //! # fn main() -> Result<(), Box<dyn core::error::Error>> {
 //! let system = MemorySystem::new().with_dir("/notes")?;
 //! let options = MarkdownOptions::default();
-//! let docx = from_markdown_text(&system, "A | B\n--|--\n1 | 2\n", None, options)?;
+//! let docx = ready_now(from_markdown_text(&system, "A | B\n--|--\n1 | 2\n", None, options))?;
 //!
 //! let path = Path::new("/notes/table.md");
-//! docx.save_markdown(&system, path, options)?;
-//! let text = system.read_to_string(path)?;
+//! ready_now(docx.save_markdown(&system, path, options))?;
+//! let text = ready_now(system.read_to_string(path))?;
 //! assert_eq!(text, "| A   | B   |\n| --- | --- |\n| 1   | 2   |\n");
 //! # Ok(())
 //! # }
@@ -68,7 +69,8 @@ use officekit_xml::packaging::error::PackageError;
 use officekit_xml::packaging::package::{OpenOptions, Package};
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::Target;
-use os_shim::{System, WriteMode};
+use os_shim::System;
+use os_shim::bucket::Condition;
 
 use officekit::docx::Docx;
 
@@ -137,6 +139,12 @@ pub enum MarkdownError {
     Write(#[from] WriteError),
 }
 
+impl From<io::Error> for MarkdownError {
+    fn from(error: io::Error) -> Self {
+        Self::Package(error.into())
+    }
+}
+
 /// Store `mapping` as TOML in the part `/docProps/frontmatter.toml`, related from the package with
 /// [`FRONTMATTER_RELATIONSHIP`]: the lines arky writes between the `+++` lines.
 ///
@@ -170,7 +178,7 @@ fn add_frontmatter(package: &mut Package, mapping: &Mapping) -> Result<(), Markd
 /// read or is in no format it stores,
 /// [`MarkdownError::Write`] when `options.frontmatter` is on and the frontmatter holds a null, and
 /// [`MarkdownError::Package`] when the new package cannot be built or its parts stored.
-pub(crate) fn from_arky<S, E>(
+pub(crate) async fn from_arky<S, E>(
     system: &S,
     base: Option<&Path>,
     document: &Document<E>,
@@ -179,13 +187,15 @@ pub(crate) fn from_arky<S, E>(
 where
     S: System + ?Sized,
     E: Extension,
+    Document<E>: Sync,
 {
+    let mut files = picture::files(system, base, to_word::targets(&document.body)).await;
     let mut docx = Docx::new(WordprocessingKind::Document)?;
     let main = docx.main_document_part().clone();
     parts::add_styles(docx.package_mut(), &main)?;
     let mut root = docx.main_document()?;
     root.body.get_or_insert_with(Box::default).content =
-        to_word::blocks(system, base, &document.body, docx.package_mut(), &main)?;
+        to_word::blocks(&mut files, &document.body, docx.package_mut(), &main)?;
     docx.set_main_document(&root)?;
     if options.frontmatter
         && let Some(mapping) = &document.frontmatter
@@ -201,7 +211,7 @@ where
 /// # Errors
 ///
 /// [`MarkdownError::Io`] when the file cannot be read, and the errors of [`from_markdown_text`].
-pub fn from_markdown<S>(
+pub async fn from_markdown<S>(
     system: &S,
     path: &Path,
     options: MarkdownOptions,
@@ -211,8 +221,9 @@ where
 {
     let text = system
         .read_to_string(path)
+        .await
         .map_err(|error| MarkdownError::Io {
-            error,
+            error: error.into(),
             path: path.to_path_buf(),
         })?;
     from_markdown_text(
@@ -221,6 +232,7 @@ where
         Some(path.parent().unwrap_or_else(|| Path::new(""))),
         options,
     )
+    .await
 }
 
 /// The Word file of the markdown `text`. A relative picture path is found from `folder`; with no
@@ -228,12 +240,13 @@ where
 ///
 /// ```rust
 /// use officekit_markdown::{MarkdownOptions, from_markdown_text};
+/// use officekit_xml::ready::ready_now;
 /// use os_shim::mock::MemorySystem;
 ///
 /// # fn main() -> Result<(), Box<dyn core::error::Error>> {
 /// let system = MemorySystem::new();
 /// let options = MarkdownOptions::default();
-/// let docx = from_markdown_text(&system, "one\ntwo\n", None, options)?;
+/// let docx = ready_now(from_markdown_text(&system, "one\ntwo\n", None, options))?;
 /// let body = docx.main_document()?.body;
 /// assert!(body.is_some_and(|body| !body.content.is_empty()));
 /// # Ok(())
@@ -247,7 +260,7 @@ where
 ///
 /// [`MarkdownError::Frontmatter`] when the frontmatter does not read and `options.frontmatter` is
 /// on, and the errors of [`DocxMarkdown::from_arky`].
-pub fn from_markdown_text<S>(
+pub async fn from_markdown_text<S>(
     system: &S,
     text: &str,
     folder: Option<&Path>,
@@ -264,7 +277,7 @@ where
         RawDocument::Invalid(invalid) => Document::new(invalid.body, None),
         _ => Document::new(MarkdownBlock::new(Vec::new()), None),
     };
-    from_arky(system, folder, &document, options)
+    from_arky(system, folder, &document, options).await
 }
 
 /// `docx` written as markdown to `path`, its pictures in the folder beside it, or inside the
@@ -278,7 +291,7 @@ where
 /// The errors of [`DocxMarkdown::to_arky`], [`MarkdownError::Write`] when arky cannot write the
 /// document, and [`MarkdownError::Io`] when the markdown file, the folder, or a picture cannot be
 /// written.
-pub fn save_markdown<S>(
+pub async fn save_markdown<S>(
     docx: &Docx,
     system: &S,
     path: &Path,
@@ -297,9 +310,10 @@ where
         &WriteOptions::default(),
     )?;
     system
-        .write(path, text.as_bytes(), WriteMode::Replace)
+        .write(path, text.as_bytes(), Condition::None)
+        .await
         .map_err(|error| MarkdownError::Io {
-            error,
+            error: error.into(),
             path: path.to_path_buf(),
         })?;
     if exported.images.is_empty() {
@@ -308,16 +322,18 @@ where
     let folder = path.parent().unwrap_or_else(|| Path::new("")).join(&media);
     system
         .create_dir_all(&folder)
+        .await
         .map_err(|error| MarkdownError::Io {
-            error,
+            error: error.into(),
             path: folder.clone(),
         })?;
     for (name, bytes) in &exported.images {
         let target = folder.join(name);
         system
-            .write(&target, bytes, WriteMode::Replace)
+            .write(&target, bytes, Condition::None)
+            .await
             .map_err(|error| MarkdownError::Io {
-                error,
+                error: error.into(),
                 path: target.clone(),
             })?;
     }

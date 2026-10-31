@@ -44,23 +44,23 @@ fn data(namespaces: &[(&str, &str, Option<DataVersion>)]) -> SdkData {
 
 fn system() -> MemorySystem {
     MemorySystem::new()
-        .with_file("t/wml.xsd", xsd(W, "").as_bytes())
+        .with_file("/t/wml.xsd", xsd(W, "").as_bytes())
         .unwrap()
         .with_file(
-            "t/shared-commonSimpleTypes.xsd",
+            "/t/shared-commonSimpleTypes.xsd",
             xsd(S, &format!(r#"xmlns:s="{S}""#)).as_bytes(),
         )
         .unwrap()
-        .with_file("s/wml.xsd", xsd(W_STRICT, "").as_bytes())
+        .with_file("/s/wml.xsd", xsd(W_STRICT, "").as_bytes())
         .unwrap()
         .with_file(
-            "s/shared-commonSimpleTypes.xsd",
+            "/s/shared-commonSimpleTypes.xsd",
             xsd(S_STRICT, "").as_bytes(),
         )
         .unwrap()
-        .with_file("o/w14.xsd", xsd(W14, "").as_bytes())
+        .with_file("/o/w14.xsd", xsd(W14, "").as_bytes())
         .unwrap()
-        .with_file("o/other.xsd", xsd("urn:other", "").as_bytes())
+        .with_file("/o/other.xsd", xsd("urn:other", "").as_bytes())
         .unwrap()
 }
 
@@ -133,7 +133,7 @@ fn a_strict_file_without_a_transitional_twin_is_an_error() {
 #[test]
 fn a_transitional_namespace_with_no_declared_prefix_is_an_error() {
     let system = MemorySystem::new()
-        .with_file("t/shared-commonSimpleTypes.xsd", xsd(S, "").as_bytes())
+        .with_file("/t/shared-commonSimpleTypes.xsd", xsd(S, "").as_bytes())
         .unwrap();
     let error = rows(
         &data(&[]),

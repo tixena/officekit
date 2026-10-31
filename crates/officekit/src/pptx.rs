@@ -17,7 +17,7 @@ use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::write::WriteOptions;
 use os_shim::System;
 #[cfg(any(feature = "strict", feature = "transitional"))]
-use os_shim::WriteMode;
+use os_shim::bucket::Condition;
 
 use crate::compact::{self, Comments};
 use crate::file;
@@ -82,12 +82,16 @@ impl Pptx {
     ///
     /// The errors of [`new`](Self::new), and [`PackageError::Io`] when the file cannot be written.
     #[cfg(feature = "transitional")]
-    pub fn create<S>(system: &S, path: &Path, kind: PresentationKind) -> Result<Self, PackageError>
+    pub async fn create<S>(
+        system: &S,
+        path: &Path,
+        kind: PresentationKind,
+    ) -> Result<Self, PackageError>
     where
         S: System + ?Sized,
     {
         let pptx = Self::new(kind)?;
-        pptx.package.save(system, path)?;
+        pptx.package.save(system, path).await?;
         Ok(pptx)
     }
 
@@ -164,11 +168,15 @@ impl Pptx {
     /// # Errors
     ///
     /// The errors of [`Package::open`] and [`from_package`](Self::from_package).
-    pub fn open<S>(system: &S, path: &Path, options: OpenOptions) -> Result<Self, PackageError>
+    pub async fn open<S>(
+        system: &S,
+        path: &Path,
+        options: OpenOptions,
+    ) -> Result<Self, PackageError>
     where
         S: System + ?Sized,
     {
-        Self::from_package(Package::open(system, path)?, options)
+        Self::from_package(Package::open(system, path).await?, options)
     }
 
     /// The options every typed read of this file applies.
@@ -211,12 +219,12 @@ impl Pptx {
     /// The errors of [`to_bytes_strict`](Self::to_bytes_strict), and [`PackageError::Io`] when the
     /// file cannot be written.
     #[cfg(feature = "strict")]
-    pub fn save_strict<S>(&self, system: &S, path: &Path) -> Result<(), PackageError>
+    pub async fn save_strict<S>(&self, system: &S, path: &Path) -> Result<(), PackageError>
     where
         S: System + ?Sized,
     {
         let bytes = self.to_bytes_strict()?;
-        system.write(path, &bytes, WriteMode::Replace)?;
+        system.write(path, &bytes, Condition::None).await?;
         Ok(())
     }
 
@@ -229,7 +237,7 @@ impl Pptx {
     /// The errors of [`to_bytes_transitional`](Self::to_bytes_transitional), and
     /// [`PackageError::Io`] when the file cannot be written.
     #[cfg(feature = "transitional")]
-    pub fn save_transitional<S>(
+    pub async fn save_transitional<S>(
         &self,
         system: &S,
         path: &Path,
@@ -238,7 +246,7 @@ impl Pptx {
         S: System + ?Sized,
     {
         let (bytes, warnings) = self.to_bytes_transitional()?;
-        system.write(path, &bytes, WriteMode::Replace)?;
+        system.write(path, &bytes, Condition::None).await?;
         Ok(warnings)
     }
 

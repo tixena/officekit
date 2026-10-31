@@ -95,7 +95,7 @@ fn pattern(pattern: &str) -> Check {
 
 /// The checks of the Strict type `local` of `STRICT_TYPES`.
 fn strict_type(local: &str) -> anyhow::Result<Vec<ValueCheck>> {
-    let system = MemorySystem::new().with_file("s/wml.xsd", STRICT_TYPES.as_bytes())?;
+    let system = MemorySystem::new().with_file("/s/wml.xsd", STRICT_TYPES.as_bytes())?;
     let set = SchemaSet::read(&system, &["s/wml.xsd"])?;
     checks(
         &set,
@@ -263,9 +263,9 @@ fn a_type_of_a_built_in_with_no_check_stops_the_conversion_naming_it() {
 #[test]
 fn only_an_attribute_whose_strict_type_differs_gets_strict_checks() {
     let system = MemorySystem::new()
-        .with_file("t/wml.xsd", wml(W, true).as_bytes())
+        .with_file("/t/wml.xsd", wml(W, true).as_bytes())
         .unwrap()
-        .with_file("s/wml.xsd", wml(STRICT_W, false).as_bytes())
+        .with_file("/s/wml.xsd", wml(STRICT_W, false).as_bytes())
         .unwrap();
     let transitional = SchemaSet::read(&system, &["t/wml.xsd"]).unwrap();
     let strict = SchemaSet::read(&system, &["s/wml.xsd"]).unwrap();

@@ -9,6 +9,7 @@ use std::path::Path;
 
 use anyhow::{Context as _, Result, bail};
 use officekit::validation::error::ErrorCode;
+use officekit_xml::ready::ready_now;
 use os_shim::System;
 use serde_json::Value;
 
@@ -896,8 +897,7 @@ fn records<S>(system: &S, path: &Path) -> Result<Vec<Value>>
 where
     S: System + ?Sized,
 {
-    let text = system
-        .read_to_string(path)
+    let text = ready_now(system.read_to_string(path))
         .with_context(|| format!("reading {}", path.display()))?;
     let parsed: Value =
         serde_json::from_str(&text).with_context(|| format!("parsing {}", path.display()))?;
@@ -927,8 +927,7 @@ where
         })
         .collect();
     let mut found = Vec::new();
-    let mut files = system
-        .read_dir(officekit)
+    let mut files = ready_now(system.read_dir(officekit))
         .with_context(|| format!("listing {}", officekit.display()))?;
     files.sort();
     for file in files {

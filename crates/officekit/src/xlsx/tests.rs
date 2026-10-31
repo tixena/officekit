@@ -31,6 +31,8 @@ use officekit_xml::packaging::relationship::{RelationshipType, Target};
 #[cfg(feature = "strict")]
 use officekit_xml::parse::parse;
 #[cfg(feature = "transitional")]
+use officekit_xml::ready::ready_now;
+#[cfg(feature = "transitional")]
 use os_shim::mock::MemorySystem;
 
 use super::Xlsx;
@@ -191,8 +193,8 @@ fn options_are_those_the_file_was_opened_with() {
 fn create_writes_the_new_workbook_through_the_system() {
     let system = MemorySystem::new().with_dir("/out").unwrap();
     let path = Path::new("/out/new.xltx");
-    Xlsx::create(&system, path, SpreadsheetKind::Template).unwrap();
-    let opened = Xlsx::open(&system, path, OpenOptions::default()).unwrap();
+    ready_now(Xlsx::create(&system, path, SpreadsheetKind::Template)).unwrap();
+    let opened = ready_now(Xlsx::open(&system, path, OpenOptions::default())).unwrap();
     assert_eq!(opened.kind(), SpreadsheetKind::Template);
 }
 

@@ -29,11 +29,13 @@ use alloc::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
 
 use anyhow::{Context as _, Result};
-use os_shim::{System, WriteMode};
+use officekit_xml::ready::ready_now;
+use os_shim::System;
+use os_shim::bucket::Condition;
 
 use super::namespaces;
 use super::validation::{self, Emitted};
-use crate::generate_schema::inputs::Inputs;
+use crate::generate_schema::inputs::{Inputs, listed};
 use crate::generate_schema::model::{Name, SchemaSet, TypeRef};
 use crate::generate_schema::sdk_data::{DataVersion, SdkData};
 
@@ -330,22 +332,21 @@ where
             generated.push(folder.join(&module.name).join("write.rs"));
         }
         for path in generated {
-            if !written.contains(path.as_path()) && system.is_file(&path).unwrap_or(false) {
-                system
-                    .remove_file(&path)
+            if !written.contains(path.as_path())
+                && ready_now(system.is_file(&path)).unwrap_or(false)
+            {
+                ready_now(system.remove_file(&path))
                     .with_context(|| format!("cannot remove {}", path.display()))?;
             }
         }
         for module in &catalog.modules {
             let sub = folder.join(&module.name);
-            if system.is_dir(&sub).unwrap_or(false)
-                && system
-                    .read_dir(&sub)
+            if ready_now(system.is_dir(&sub)).unwrap_or(false)
+                && ready_now(system.read_dir(&sub))
                     .with_context(|| format!("cannot read {}", sub.display()))?
                     .is_empty()
             {
-                system
-                    .remove_dir_all(&sub)
+                ready_now(system.remove_dir_all(&sub))
                     .with_context(|| format!("cannot remove {}", sub.display()))?;
             }
         }
@@ -367,21 +368,17 @@ where
 {
     let transitional = SchemaSet::read(system, &inputs.transitional_schemas)?;
     let strict = SchemaSet::read(system, &inputs.strict_schemas)?;
-    let part_1 = system
-        .read_to_string(&inputs.part1_text)
+    let part_1 = ready_now(system.read_to_string(&inputs.part1_text))
         .with_context(|| format!("cannot read {}", inputs.part1_text.display()))?;
-    let part_4 = system
-        .read_to_string(&inputs.part4_text)
+    let part_4 = ready_now(system.read_to_string(&inputs.part4_text))
         .with_context(|| format!("cannot read {}", inputs.part4_text.display()))?;
-    let enum_names_text = system
-        .read_to_string(Path::new(ENUM_NAMES_PATH))
+    let enum_names_text = ready_now(system.read_to_string(Path::new(ENUM_NAMES_PATH)))
         .with_context(|| format!("cannot read {ENUM_NAMES_PATH}"))?;
-    let overrides_text = system
-        .read_to_string(Path::new(NAME_OVERRIDES_PATH))
+    let overrides_text = ready_now(system.read_to_string(Path::new(NAME_OVERRIDES_PATH)))
         .with_context(|| format!("cannot read {NAME_OVERRIDES_PATH}"))?;
-    let sdk_corrections_text = system
-        .read_to_string(Path::new(validation::SDK_CORRECTIONS_PATH))
-        .with_context(|| format!("cannot read {}", validation::SDK_CORRECTIONS_PATH))?;
+    let sdk_corrections_text =
+        ready_now(system.read_to_string(Path::new(validation::SDK_CORRECTIONS_PATH)))
+            .with_context(|| format!("cannot read {}", validation::SDK_CORRECTIONS_PATH))?;
     let data = Data::new(&emitted.data, &transitional);
     let mut catalog = structs::Catalog::build(
         &data,
@@ -398,9 +395,7 @@ where
     read.push(inputs.part1_text.clone());
     read.push(inputs.part4_text.clone());
     read.push(inputs.sdk_data.join("namespaces.json"));
-    let mut schemas: Vec<PathBuf> = system
-        .read_dir(&inputs.sdk_data.join("schemas"))
-        .with_context(|| format!("cannot read {}", inputs.sdk_data.display()))?
+    let mut schemas: Vec<PathBuf> = listed(system, &inputs.sdk_data.join("schemas"))?
         .into_iter()
         .filter(|path| path.extension().is_some_and(|ext| ext == "json"))
         .collect();
@@ -428,12 +423,10 @@ where
     )?);
     for (path, text) in files {
         if let Some(parent) = path.parent() {
-            system
-                .create_dir_all(parent)
+            ready_now(system.create_dir_all(parent))
                 .with_context(|| format!("cannot create {}", parent.display()))?;
         }
-        system
-            .write(&path, text.as_bytes(), WriteMode::Replace)
+        ready_now(system.write(&path, text.as_bytes(), Condition::None))
             .with_context(|| format!("cannot write {}", path.display()))?;
     }
     Ok(catalog)

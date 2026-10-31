@@ -7,9 +7,11 @@ use alloc::collections::{BTreeMap, BTreeSet, btree_map::Entry};
 use std::path::{Path, PathBuf};
 
 use anyhow::{Context as _, Result, bail};
+use officekit_xml::ready::ready_now;
 use os_shim::System;
 use serde_json::Value;
 
+use super::inputs::listed;
 use super::model::SchemaSet;
 
 #[cfg(test)]
@@ -509,8 +511,7 @@ fn json<S>(system: &S, path: &Path) -> Result<Value>
 where
     S: System + ?Sized,
 {
-    let text = system
-        .read_to_string(path)
+    let text = ready_now(system.read_to_string(path))
         .with_context(|| format!("cannot read {}", path.display()))?;
     serde_json::from_str(&text).with_context(|| format!("{} is not JSON", path.display()))
 }
@@ -519,9 +520,7 @@ fn json_files<S>(system: &S, folder: &Path) -> Result<Vec<PathBuf>>
 where
     S: System + ?Sized,
 {
-    let mut found: Vec<PathBuf> = system
-        .read_dir(folder)
-        .with_context(|| format!("cannot read {}", folder.display()))?
+    let mut found: Vec<PathBuf> = listed(system, folder)?
         .into_iter()
         .filter(|path| path.extension().is_some_and(|ext| ext == "json"))
         .collect();

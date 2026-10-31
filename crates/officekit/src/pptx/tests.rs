@@ -15,6 +15,8 @@ use officekit_xml::packaging::package::Package;
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::{RelationshipType, Target};
 #[cfg(feature = "transitional")]
+use officekit_xml::ready::ready_now;
+#[cfg(feature = "transitional")]
 use os_shim::mock::MemorySystem;
 
 use super::Pptx;
@@ -193,8 +195,13 @@ fn options_are_those_the_file_was_opened_with() {
 fn create_writes_the_new_presentation_through_the_system() {
     let system = MemorySystem::new().with_dir("/out").unwrap();
     let path = Path::new("/out/new.potm");
-    Pptx::create(&system, path, PresentationKind::MacroEnabledTemplate).unwrap();
-    let opened = Pptx::open(&system, path, OpenOptions::default()).unwrap();
+    ready_now(Pptx::create(
+        &system,
+        path,
+        PresentationKind::MacroEnabledTemplate,
+    ))
+    .unwrap();
+    let opened = ready_now(Pptx::open(&system, path, OpenOptions::default())).unwrap();
     assert_eq!(opened.kind(), PresentationKind::MacroEnabledTemplate);
 }
 

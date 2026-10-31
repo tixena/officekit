@@ -6,7 +6,6 @@ use alloc::collections::{BTreeMap, BTreeSet};
 use alloc::string::String;
 use alloc::vec::Vec;
 use core::{iter, mem};
-use std::path::Path;
 
 use arky::parser::ast::{
     Alignment, Block, Continues, Inline, Item, Line, Link, LinkInline, List, MarkdownBlock,
@@ -34,14 +33,13 @@ use officekit_xml::packaging::image::Image;
 use officekit_xml::packaging::package::Package;
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::RelationshipType;
-use os_shim::System;
 
 use super::MarkdownError;
 use super::parts::{
     self, CODE, DEEPEST_HEADING, DEEPEST_LEVEL, HYPERLINK, LIST_PARAGRAPH, PREFORMATTED, QUOTE,
     TABLE_GRID,
 };
-use super::picture::{self, Picture};
+use super::picture::{self, Files, Picture};
 
 /// The longest bookmark name Word takes.
 const BOOKMARK_LENGTH: usize = 40;
@@ -75,14 +73,11 @@ const WORDPROCESSING_DRAWING: &str =
     "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing";
 
 /// The Word blocks written so far, and what the walk keeps from one block to the next.
-struct Body<'package, S>
-where
-    S: ?Sized,
-{
-    /// The folder a relative picture path is found from.
-    base: Option<&'package Path>,
+struct Body<'package> {
     blocks: Vec<BlockContent>,
     bookmarks: Bookmarks,
+    /// The bytes of the files the pictures name.
+    files: &'package mut Files,
     /// The depth of the list item whose later blocks are being written.
     item: Option<usize>,
     main: &'package PartName,
@@ -92,13 +87,9 @@ where
     numbering: Option<Vec<(u64, usize)>>,
     package: &'package mut Package,
     pictures: Pictures,
-    system: &'package S,
 }
 
-impl<S> Body<'_, S>
-where
-    S: System + ?Sized,
-{
+impl Body<'_> {
     fn block<E>(&mut self, block: &Block<E>) -> Result<(), MarkdownError>
     where
         E: Extension,
@@ -284,16 +275,15 @@ where
     }
 
     /// An empty writer of runs, relating links and pictures from the main part.
-    const fn runs(&mut self) -> Runs<'_, S> {
+    const fn runs(&mut self) -> Runs<'_> {
         Runs {
-            base: self.base,
             content: Vec::new(),
+            files: &mut *self.files,
             image: None,
             link: None,
             main: self.main,
             package: &mut *self.package,
             pictures: &mut self.pictures,
-            system: self.system,
         }
     }
 
@@ -512,13 +502,10 @@ struct Stored {
 
 /// The runs of one paragraph, written so far, and the package its links and pictures are related
 /// in.
-struct Runs<'package, S>
-where
-    S: ?Sized,
-{
-    /// The folder a relative picture path is found from.
-    base: Option<&'package Path>,
+struct Runs<'package> {
     content: Vec<ParagraphContent>,
+    /// The bytes of the files the pictures name.
+    files: &'package mut Files,
     /// The alt text so far of an image that goes on into the next line.
     image: Option<String>,
     /// The hyperlink the runs go into while a link is written, kept open while the link goes on
@@ -527,13 +514,9 @@ where
     main: &'package PartName,
     package: &'package mut Package,
     pictures: &'package mut Pictures,
-    system: &'package S,
 }
 
-impl<S> Runs<'_, S>
-where
-    S: System + ?Sized,
-{
+impl Runs<'_> {
     /// An empty `w:hyperlink` for `link`, its title as the tooltip: to the bookmark its anchor
     /// names when its target starts with `#`, else to its target, as written, through an external
     /// relationship from the main part.
@@ -789,7 +772,7 @@ where
     }
 
     /// The `a:blip` of the picture `target` names and its frame size; a target stored before
-    /// reads no file and stores no part.
+    /// stores no part.
     fn stored_picture(
         &mut self,
         target: &str,
@@ -797,7 +780,7 @@ where
         if let Some(known) = self.pictures.stored.get(target).cloned() {
             return Ok((blip("embed", known.id, known.svg_id), known.size));
         }
-        Ok(match picture::read(self.system, self.base, target)? {
+        Ok(match picture::read(self.files, target)? {
             Picture::Linked(address) => {
                 let id = self.package.relate_external(
                     Some(self.main),
@@ -897,35 +880,32 @@ fn blip(reference: &str, id: String, svg: Option<String>) -> Element {
 }
 
 /// The Word blocks of `body`, its sections from depth 1. Its links, pictures and HTML blocks are
-/// related from `main` in `package`, local pictures read through `system`, a relative path from
-/// `base`, and the numbering part is added when it holds a list.
+/// related from `main` in `package`, local pictures taken from `files`, and the numbering part is
+/// added when it holds a list.
 ///
 /// # Errors
 ///
 /// The errors of [`picture::read`], [`Package::relate_external`], [`Package::add_part`] and
 /// [`parts::add_numbering`].
-pub fn blocks<S, E>(
-    system: &S,
-    base: Option<&Path>,
+pub fn blocks<E>(
+    files: &mut Files,
     body: &MarkdownBlock<E>,
     package: &mut Package,
     main: &PartName,
 ) -> Result<Vec<BlockContent>, MarkdownError>
 where
-    S: System + ?Sized,
     E: Extension,
 {
     let mut writer = Body {
-        base,
         blocks: Vec::new(),
         bookmarks: Bookmarks::default(),
+        files,
         item: None,
         main,
         number: None,
         numbering: None,
         package,
         pictures: Pictures::default(),
-        system,
     };
     writer.markdown_block(body)?;
     if let Some(starts) = &writer.numbering {
@@ -1224,4 +1204,94 @@ where
             Inline::Html(_) | Inline::Image(_) | Inline::LineBreak(_) | _ => {}
         }
     }
+}
+
+/// The target of each picture in `inlines`, added to `found`.
+fn inline_targets<E>(inlines: &[Inline<E>], found: &mut BTreeSet<String>)
+where
+    E: Extension,
+{
+    for inline in inlines {
+        match inline {
+            Inline::Emphasis(emphasis) => inline_targets(&emphasis.children, found),
+            Inline::Image(image) => {
+                found.insert(image.target.clone());
+            }
+            Inline::Link(link) => link_targets(&link.children, found),
+            Inline::Strong(strong) => inline_targets(&strong.children, found),
+            Inline::Code(_) | Inline::Html(_) | Inline::LineBreak(_) | Inline::Text(_) | _ => {}
+        }
+    }
+}
+
+/// The target of each picture in a link's `inlines`, added to `found`.
+fn link_targets<E>(inlines: &[LinkInline<E>], found: &mut BTreeSet<String>)
+where
+    E: Extension,
+{
+    for inline in inlines {
+        match inline {
+            LinkInline::Emphasis(emphasis) => link_targets(&emphasis.children, found),
+            LinkInline::Image(image) => {
+                found.insert(image.target.clone());
+            }
+            LinkInline::Strong(strong) => link_targets(&strong.children, found),
+            LinkInline::Code(_)
+            | LinkInline::Html(_)
+            | LinkInline::LineBreak(_)
+            | LinkInline::Text(_)
+            | _ => {}
+        }
+    }
+}
+
+/// The target of each picture in `section`, added to `found`.
+fn section_targets<E>(section: &Section<E>, found: &mut BTreeSet<String>)
+where
+    E: Extension,
+{
+    if let Some(heading) = &section.heading {
+        inline_targets(&heading.children, found);
+    }
+    for block in &section.blocks {
+        match block {
+            Block::List(list) => {
+                for item in &list.items {
+                    found.extend(targets(&item.body));
+                }
+            }
+            Block::Paragraph(paragraph) => {
+                for line in &paragraph.lines {
+                    inline_targets(&line.children, found);
+                }
+            }
+            Block::Table(table) => {
+                for row in table.head.iter().chain(&table.rows) {
+                    for cell in &row.cells {
+                        found.extend(targets(&cell.body));
+                    }
+                }
+            }
+            Block::BlockQuote(_)
+            | Block::CodeBlock(_)
+            | Block::Html(_)
+            | Block::ThematicBreak(_)
+            | _ => {}
+        }
+    }
+    for subsection in &section.subsections {
+        section_targets(subsection, found);
+    }
+}
+
+/// The target of each picture [`blocks`] writes for `body`, for [`picture::files`] to read first.
+pub fn targets<E>(body: &MarkdownBlock<E>) -> BTreeSet<String>
+where
+    E: Extension,
+{
+    let mut found = BTreeSet::new();
+    for section in &body.sections {
+        section_targets(section, &mut found);
+    }
+    found
 }

@@ -348,7 +348,7 @@ fn local_names(attributes: &[AttributeUse]) -> Vec<&str> {
 fn read(files: &[(&str, &str)]) -> anyhow::Result<SchemaSet> {
     let mut system = MemorySystem::new();
     for (path, text) in files {
-        system = system.with_file(path, text.as_bytes())?;
+        system = system.with_file(format!("/{path}"), text.as_bytes())?;
     }
     let paths: Vec<&str> = files.iter().map(|(path, _)| *path).collect();
     SchemaSet::read(&system, &paths)

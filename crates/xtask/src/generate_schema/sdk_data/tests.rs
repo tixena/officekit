@@ -114,7 +114,9 @@ fn system_with(extra: &[(&str, &str)]) -> MemorySystem {
         ("data/schematrons.json", SCHEMATRONS),
     ];
     for (path, text) in files.iter().chain(extra) {
-        system = system.with_file(*path, text.as_bytes()).unwrap();
+        system = system
+            .with_file(format!("/{path}"), text.as_bytes())
+            .unwrap();
     }
     system
 }

@@ -3,6 +3,7 @@ use std::path::Path;
 use std::process::Output;
 
 use assert_cmd::Command;
+use officekit_xml::ready::ready_now;
 use os_shim::System as _;
 use os_shim::real::RealSystem;
 use tempfile::TempDir;
@@ -28,12 +29,12 @@ fn write_sample(path: &Path) {
         )
         .unwrap();
     let system = RealSystem::new();
-    system.create_dir_all(path.parent().unwrap()).unwrap();
-    package.save(&system, path).unwrap();
+    ready_now(system.create_dir_all(path.parent().unwrap())).unwrap();
+    ready_now(package.save(&system, path)).unwrap();
 }
 
 fn text(path: &Path) -> String {
-    RealSystem::new().read_to_string(path).unwrap()
+    ready_now(RealSystem::new().read_to_string(path)).unwrap()
 }
 
 #[test]
@@ -84,7 +85,7 @@ fn down_format_up_round_trip() {
         str::from_utf8(&collapsing.stdout).unwrap(),
         format!("created: {}\n", file.display())
     );
-    let package = Package::open(&RealSystem::new(), &file).unwrap();
+    let package = ready_now(Package::open(&RealSystem::new(), &file)).unwrap();
     let part = package
         .part_bytes(&PartName::new("/word/document.xml").unwrap())
         .unwrap();
@@ -107,11 +108,7 @@ fn a_custom_suffix_names_the_folder() {
     ]);
 
     assert!(output.status.success(), "{output:?}");
-    assert!(
-        RealSystem::new()
-            .exists(&dir.path().join("out/a.x/info.json"))
-            .unwrap()
-    );
+    assert!(ready_now(RealSystem::new().exists(&dir.path().join("out/a.x/info.json"))).unwrap());
 }
 
 #[test]

@@ -65,6 +65,9 @@ regex = { workspace = true, features = ["std", "unicode-gencat"] }
 # The write-through tests and the timing example walk the typed tree
 officekit-strict.workspace = true
 
+# The examples that stream a package into a file write to os-shim's async stream
+futures-io.workspace = true
+
 # The round-trip example takes its folder from the command line
 clap = { workspace = true, features = ["std", "derive"] }
 

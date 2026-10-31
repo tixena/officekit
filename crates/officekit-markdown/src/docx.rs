@@ -18,14 +18,15 @@ use crate::{Exported, MarkdownError, MarkdownOptions};
 /// use officekit::docx::Docx;
 /// use officekit::parts::kinds::WordprocessingKind;
 /// use officekit_markdown::{DocxMarkdown as _, MarkdownOptions};
+/// use officekit_xml::ready::ready_now;
 /// use os_shim::System as _;
 /// use os_shim::mock::MemorySystem;
 ///
 /// # fn main() -> Result<(), Box<dyn core::error::Error>> {
 /// let system = MemorySystem::new().with_dir("/notes")?;
 /// let docx = Docx::new(WordprocessingKind::Document)?;
-/// docx.save_markdown(&system, Path::new("/notes/empty.md"), MarkdownOptions::default())?;
-/// assert!(system.is_file(Path::new("/notes/empty.md"))?);
+/// ready_now(docx.save_markdown(&system, Path::new("/notes/empty.md"), MarkdownOptions::default()))?;
+/// assert!(ready_now(system.is_file(Path::new("/notes/empty.md")))?);
 /// # Ok(())
 /// # }
 /// ```
@@ -43,10 +44,11 @@ pub trait DocxMarkdown: Sized {
         base: &Path,
         document: &Document<E>,
         options: MarkdownOptions,
-    ) -> Result<Self, MarkdownError>
+    ) -> impl Future<Output = Result<Self, MarkdownError>> + Send
     where
         S: System + ?Sized,
-        E: Extension;
+        E: Extension,
+        Document<E>: Sync;
 
     /// The document written as markdown to `path`, as [`save_markdown`](crate::save_markdown)
     /// writes it.
@@ -59,7 +61,7 @@ pub trait DocxMarkdown: Sized {
         system: &S,
         path: &Path,
         options: MarkdownOptions,
-    ) -> Result<(), MarkdownError>
+    ) -> impl Future<Output = Result<(), MarkdownError>> + Send
     where
         S: System + ?Sized;
 
@@ -80,10 +82,11 @@ impl DocxMarkdown for Docx {
         base: &Path,
         document: &Document<E>,
         options: MarkdownOptions,
-    ) -> Result<Self, MarkdownError>
+    ) -> impl Future<Output = Result<Self, MarkdownError>> + Send
     where
         S: System + ?Sized,
         E: Extension,
+        Document<E>: Sync,
     {
         crate::from_arky(system, Some(base), document, options)
     }
@@ -93,7 +96,7 @@ impl DocxMarkdown for Docx {
         system: &S,
         path: &Path,
         options: MarkdownOptions,
-    ) -> Result<(), MarkdownError>
+    ) -> impl Future<Output = Result<(), MarkdownError>> + Send
     where
         S: System + ?Sized,
     {

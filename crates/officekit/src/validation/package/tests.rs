@@ -3,6 +3,7 @@ use std::path::Path;
 use officekit_xml::name::OfficeVersion;
 use officekit_xml::packaging::package::Package;
 use officekit_xml::packaging::part_name::PartName;
+use officekit_xml::ready::ready_now;
 use os_shim::mock::MemorySystem;
 
 use super::check;
@@ -50,8 +51,8 @@ fn package_errors(package: &Package) -> Vec<ValidationError> {
 
 fn reopened(package: &Package) -> Package {
     let system = MemorySystem::new().with_dir("/out").unwrap();
-    package.save(&system, Path::new("/out/test.docx")).unwrap();
-    Package::open(&system, Path::new("/out/test.docx")).unwrap()
+    ready_now(package.save(&system, Path::new("/out/test.docx"))).unwrap();
+    ready_now(Package::open(&system, Path::new("/out/test.docx"))).unwrap()
 }
 
 /// `package` saved and read back with the relationship part of `source`

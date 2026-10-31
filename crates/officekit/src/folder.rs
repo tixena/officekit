@@ -4,7 +4,7 @@
 //! file per package entry plus an `info.json` that remembers the document's
 //! file name; [`up`] zips those folders into `.docx` files again; [`format()`]
 //! indents the XML parts of a folder in place. Everything the library does
-//! with the operating system goes through an [`os_shim::System`].
+//! with the operating system goes through an [`os_shim::System`], so each of the three is async.
 //!
 //! A folder is named after the file: the stem keeps its letters, digits, white
 //! space and `-_.()`, turns spaces into `_`, becomes lower case, and takes the
@@ -15,12 +15,14 @@
 use alloc::string::String;
 use alloc::vec::Vec;
 use std::ffi::OsStr;
-use std::io::{self, Cursor, Read as _};
+use std::io::{self, Cursor};
 use std::path::{Path, PathBuf};
 
+use os_shim::System;
 use os_shim::archive::load_zip_seekable;
+use os_shim::bucket::Condition;
+use os_shim::error::{ErrorKind, Result as StorageResult};
 use os_shim::mock::MemorySystem;
-use os_shim::{System, WriteMode};
 use regex::Regex;
 use serde_json::{Value, json};
 
@@ -123,6 +125,10 @@ pub enum FolderError {
         folder: PathBuf,
     },
 
+    /// A future run with `ready_now` waited, because its system's futures wait.
+    #[error(transparent)]
+    NotReady(#[from] io::Error),
+
     /// The pattern that normalizes file names did not compile.
     #[error("file name pattern: {0}")]
     Pattern(#[from] regex::Error),
@@ -137,9 +143,12 @@ pub enum FolderError {
     },
 }
 
-fn io_error(path: &Path) -> impl FnOnce(io::Error) -> FolderError {
+fn io_error<E>(path: &Path) -> impl FnOnce(E) -> FolderError
+where
+    E: Into<io::Error>,
+{
     move |error| FolderError::Io {
-        error,
+        error: error.into(),
         path: path.to_path_buf(),
     }
 }
@@ -152,7 +161,7 @@ fn io_error(path: &Path) -> impl FnOnce(io::Error) -> FolderError {
 /// [`FolderError::Io`] for a source that is not a directory, an unreadable
 /// `.docx`, or a file that cannot be written; [`FolderError::Xml`] for an XML
 /// part that cannot be re-indented.
-pub fn down<S>(
+pub async fn down<S>(
     system: &S,
     src: &Path,
     tgt: &Path,
@@ -161,10 +170,10 @@ pub fn down<S>(
 where
     S: System + ?Sized,
 {
-    require_dir(system, src)?;
-    system.create_dir_all(tgt).map_err(io_error(tgt))?;
+    require_dir(system, src).await?;
+    system.create_dir_all(tgt).await.map_err(io_error(tgt))?;
     let unwanted = Regex::new(r"[^\w\s\-_\.\(\)]")?;
-    let (_, files) = tree(system, src).map_err(io_error(src))?;
+    let (_, files) = tree(system, src).await.map_err(io_error(src))?;
     let mut written = Vec::new();
     for docx in files.iter().filter(|file| is_docx(file)) {
         let relative = docx
@@ -178,7 +187,7 @@ where
         let folder = tgt
             .join(relative.parent().unwrap_or_else(|| Path::new("")))
             .join(expanded_folder_name(&unwanted, stem, options.suffix));
-        expand(system, docx, &folder, name, options.pretty)?;
+        expand(system, docx, &folder, name, options.pretty).await?;
         written.push(folder);
     }
     Ok(written)
@@ -195,7 +204,7 @@ where
 /// cannot be read or written; [`FolderError::Json`] and
 /// [`FolderError::MissingInfo`] for a folder without a usable `info.json`;
 /// [`FolderError::Xml`] for an XML part that cannot be minified.
-pub fn up<S>(
+pub async fn up<S>(
     system: &S,
     src: &Path,
     tgt: &Path,
@@ -204,9 +213,9 @@ pub fn up<S>(
 where
     S: System + ?Sized,
 {
-    require_dir(system, src)?;
-    system.create_dir_all(tgt).map_err(io_error(tgt))?;
-    let (dirs, _) = tree(system, src).map_err(io_error(src))?;
+    require_dir(system, src).await?;
+    system.create_dir_all(tgt).await.map_err(io_error(tgt))?;
+    let (dirs, _) = tree(system, src).await.map_err(io_error(src))?;
     let mut written = Vec::new();
     for folder in &dirs {
         let named = folder
@@ -214,7 +223,7 @@ where
             .and_then(OsStr::to_str)
             .is_some_and(|name| name.ends_with(options.suffix));
         let info = folder.join(INFO_FILE);
-        if !named || !system.is_file(&info).map_err(io_error(&info))? {
+        if !named || !system.is_file(&info).await.map_err(io_error(&info))? {
             continue;
         }
         let relative = folder
@@ -223,15 +232,17 @@ where
                 error: io::Error::new(io::ErrorKind::InvalidInput, "not under the source folder"),
                 path: folder.clone(),
             })?;
-        let name = document_name(system, folder)?;
+        let name = document_name(system, folder).await?;
         let directory = tgt.join(relative.parent().unwrap_or_else(|| Path::new("")));
         system
             .create_dir_all(&directory)
+            .await
             .map_err(io_error(&directory))?;
         let output = directory.join(name);
-        let archive = collapse(system, folder, options.minify)?;
+        let archive = collapse(system, folder, options.minify).await?;
         system
-            .write(&output, &archive, WriteMode::Replace)
+            .write(&output, &archive, Condition::None)
+            .await
             .map_err(io_error(&output))?;
         written.push(output);
     }
@@ -249,20 +260,21 @@ where
 ///
 /// [`FolderError::Io`] for a directory or file that cannot be read or
 /// written; [`FolderError::Xml`] for an XML part that is not well-formed.
-pub fn format<S>(system: &S, dir: &Path) -> Result<FormatSummary, FolderError>
+pub async fn format<S>(system: &S, dir: &Path) -> Result<FormatSummary, FolderError>
 where
     S: System + ?Sized,
 {
-    require_dir(system, dir)?;
-    let (_, files) = tree(system, dir).map_err(io_error(dir))?;
+    require_dir(system, dir).await?;
+    let (_, files) = tree(system, dir).await.map_err(io_error(dir))?;
     let mut summary = FormatSummary::default();
     for file in files.iter().filter(|file| is_xml_part(file)) {
-        let bytes = read(system, file)?;
+        let bytes = read(system, file).await?;
         let pretty = relayout(&bytes, Layout::Pretty, file)?;
         summary.inspected += 1;
         if pretty != bytes {
             system
-                .write(file, &pretty, WriteMode::Replace)
+                .write(file, &pretty, Condition::None)
+                .await
                 .map_err(io_error(file))?;
             summary.rewritten += 1;
         }
@@ -270,11 +282,11 @@ where
     Ok(summary)
 }
 
-fn require_dir<S>(system: &S, dir: &Path) -> Result<(), FolderError>
+async fn require_dir<S>(system: &S, dir: &Path) -> Result<(), FolderError>
 where
     S: System + ?Sized,
 {
-    if system.is_dir(dir).map_err(io_error(dir))? {
+    if system.is_dir(dir).await.map_err(io_error(dir))? {
         Ok(())
     } else {
         Err(FolderError::Io {
@@ -284,8 +296,9 @@ where
     }
 }
 
-/// Every directory and every file under `root`, each sorted by path.
-fn tree<S>(system: &S, root: &Path) -> io::Result<(Vec<PathBuf>, Vec<PathBuf>)>
+/// Every directory and every file under `root`, each sorted by path and spelled from `root`:
+/// `read_dir` gives a path resolved against the current folder.
+async fn tree<S>(system: &S, root: &Path) -> StorageResult<(Vec<PathBuf>, Vec<PathBuf>)>
 where
     S: System + ?Sized,
 {
@@ -293,8 +306,12 @@ where
     let mut files = Vec::new();
     let mut pending = alloc::vec![root.to_path_buf()];
     while let Some(dir) = pending.pop() {
-        for entry in system.read_dir(&dir)? {
-            if system.is_dir(&entry)? {
+        for listed in system.read_dir(&dir).await? {
+            let Some(name) = listed.file_name() else {
+                continue;
+            };
+            let entry = dir.join(name);
+            if system.is_dir(&entry).await? {
                 dirs.push(entry.clone());
                 pending.push(entry);
             } else {
@@ -307,15 +324,11 @@ where
     Ok((dirs, files))
 }
 
-fn read<S>(system: &S, path: &Path) -> Result<Vec<u8>, FolderError>
+async fn read<S>(system: &S, path: &Path) -> Result<Vec<u8>, FolderError>
 where
     S: System + ?Sized,
 {
-    let mut bytes = Vec::new();
-    system
-        .open(path)
-        .and_then(|mut file| file.read_to_end(&mut bytes))
-        .map_err(io_error(path))?;
+    let (bytes, _revision) = system.read(path).await.map_err(io_error(path))?;
     Ok(bytes)
 }
 
@@ -372,7 +385,7 @@ fn transform(bytes: &[u8], layout: Option<Layout>, path: &Path) -> Result<Vec<u8
 }
 
 /// Write the `.docx` at `docx` into `folder`, with `info.json` after it.
-fn expand<S>(
+async fn expand<S>(
     system: &S,
     docx: &Path,
     folder: &Path,
@@ -384,22 +397,34 @@ where
 {
     let archive = MemorySystem::new();
     let root = Path::new("/");
-    load_zip_seekable(&archive, Cursor::new(read(system, docx)?), root).map_err(io_error(docx))?;
-    if system.exists(folder).map_err(io_error(folder))? {
-        system.remove_dir_all(folder).map_err(io_error(folder))?;
+    load_zip_seekable(&archive, Cursor::new(read(system, docx).await?), root)
+        .await
+        .map_err(io_error(docx))?;
+    if system.exists(folder).await.map_err(io_error(folder))? {
+        system
+            .remove_dir_all(folder)
+            .await
+            .map_err(io_error(folder))?;
     }
-    system.create_dir_all(folder).map_err(io_error(folder))?;
-    let (dirs, files) = tree(&archive, root).map_err(io_error(docx))?;
+    system
+        .create_dir_all(folder)
+        .await
+        .map_err(io_error(folder))?;
+    let (dirs, files) = tree(&archive, root).await.map_err(io_error(docx))?;
     for dir in &dirs {
         let target = folder.join(dir.strip_prefix(root).unwrap_or(dir));
-        system.create_dir_all(&target).map_err(io_error(&target))?;
+        system
+            .create_dir_all(&target)
+            .await
+            .map_err(io_error(&target))?;
     }
     for file in &files {
         let target = folder.join(file.strip_prefix(root).unwrap_or(file));
         let layout = (pretty && is_xml_part(file)).then_some(Layout::Pretty);
-        let bytes = transform(&read(&archive, file)?, layout, &target)?;
+        let bytes = transform(&read(&archive, file).await?, layout, &target)?;
         system
-            .write(&target, &bytes, WriteMode::Replace)
+            .write(&target, &bytes, Condition::None)
+            .await
             .map_err(io_error(&target))?;
     }
     let info = folder.join(INFO_FILE);
@@ -410,25 +435,27 @@ where
         }
     })?;
     system
-        .write(&info, text.as_bytes(), WriteMode::Replace)
-        .map_err(io_error(&info))
+        .write(&info, text.as_bytes(), Condition::None)
+        .await
+        .map_err(io_error(&info))?;
+    Ok(())
 }
 
 /// The file name a folder's `info.json` gives, with `.docx` appended when it
 /// lacks it.
-fn document_name<S>(system: &S, folder: &Path) -> Result<String, FolderError>
+async fn document_name<S>(system: &S, folder: &Path) -> Result<String, FolderError>
 where
     S: System + ?Sized,
 {
     let info = folder.join(INFO_FILE);
-    let text = system.read_to_string(&info).map_err(|error| {
-        if error.kind() == io::ErrorKind::NotFound {
+    let text = system.read_to_string(&info).await.map_err(|error| {
+        if error.kind() == ErrorKind::NotFound {
             FolderError::MissingInfo {
                 folder: folder.to_path_buf(),
             }
         } else {
             FolderError::Io {
-                error,
+                error: error.into(),
                 path: info.clone(),
             }
         }
@@ -446,26 +473,30 @@ where
 }
 
 /// The zip archive of `folder`, without its top-level `info.json`.
-fn collapse<S>(system: &S, folder: &Path, minify: bool) -> Result<Vec<u8>, FolderError>
+async fn collapse<S>(system: &S, folder: &Path, minify: bool) -> Result<Vec<u8>, FolderError>
 where
     S: System + ?Sized,
 {
     let archive = MemorySystem::new();
     let root = Path::new("/");
-    archive.create_dir_all(root).map_err(io_error(root))?;
-    let (dirs, files) = tree(system, folder).map_err(io_error(folder))?;
+    archive.create_dir_all(root).await.map_err(io_error(root))?;
+    let (dirs, files) = tree(system, folder).await.map_err(io_error(folder))?;
     for dir in &dirs {
         let target = root.join(dir.strip_prefix(folder).unwrap_or(dir));
-        archive.create_dir_all(&target).map_err(io_error(&target))?;
+        archive
+            .create_dir_all(&target)
+            .await
+            .map_err(io_error(&target))?;
     }
     let info = folder.join(INFO_FILE);
     for file in files.iter().filter(|file| **file != info) {
         let target = root.join(file.strip_prefix(folder).unwrap_or(file));
         let layout = (minify && is_xml_part(file)).then_some(Layout::Compact);
-        let bytes = transform(&read(system, file)?, layout, file)?;
+        let bytes = transform(&read(system, file).await?, layout, file)?;
         archive
-            .write(&target, &bytes, WriteMode::Replace)
+            .write(&target, &bytes, Condition::None)
+            .await
             .map_err(io_error(&target))?;
     }
-    archive.to_zip_vec(root).map_err(io_error(folder))
+    archive.to_zip_vec(root).await.map_err(io_error(folder))
 }

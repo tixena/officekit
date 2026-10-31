@@ -25,8 +25,9 @@ use officekit_xml::name::{Namespace, OfficeVersion};
 use officekit_xml::packaging::package::OpenOptions;
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::{Relationship, RelationshipType, Target, TargetMode};
+use officekit_xml::ready::ready_now;
 use os_shim::System as _;
-use os_shim::WriteMode;
+use os_shim::bucket::Condition;
 use os_shim::mock::MemorySystem;
 use png::{BitDepth, ColorType, Decoder, Encoder};
 
@@ -174,7 +175,11 @@ fn content_text(content: &ParagraphContent, relationships: &[Relationship]) -> O
 
 /// The file `source` converts to, read from `/notes/report.md`.
 fn converted(source: &str, options: MarkdownOptions) -> Result<Docx, MarkdownError> {
-    from_markdown(&notes(source), Path::new("/notes/report.md"), options)
+    ready_now(from_markdown(
+        &notes(source),
+        Path::new("/notes/report.md"),
+        options,
+    ))
 }
 
 /// A section of `blocks` under no heading, as the only section of a document.
@@ -187,12 +192,12 @@ fn document_of(blocks: Vec<Block>) -> Document {
 
 /// The Word document `document` converts to.
 fn from_arky(document: &Document) -> Docx {
-    Docx::from_arky(
+    ready_now(Docx::from_arky(
         &MemorySystem::new(),
         Path::new("/"),
         document,
         MarkdownOptions::default(),
-    )
+    ))
     .unwrap()
 }
 
@@ -213,14 +218,13 @@ fn main_relationships(docx: &Docx) -> Vec<Relationship> {
 /// A memory filesystem holding `source` at `/notes/report.md`.
 fn notes(source: &str) -> MemorySystem {
     let system = MemorySystem::new();
-    system.create_dir_all(Path::new("/notes")).unwrap();
-    system
-        .write(
-            Path::new("/notes/report.md"),
-            source.as_bytes(),
-            WriteMode::Replace,
-        )
-        .unwrap();
+    ready_now(system.create_dir_all(Path::new("/notes"))).unwrap();
+    ready_now(system.write(
+        Path::new("/notes/report.md"),
+        source.as_bytes(),
+        Condition::None,
+    ))
+    .unwrap();
     system
 }
 
@@ -377,14 +381,13 @@ fn plain(text: &str) -> Block {
 /// `docx` written through a memory filesystem and opened again.
 fn reopened(docx: &Docx) -> Docx {
     let system = MemorySystem::new();
-    system.create_dir_all(Path::new("/notes")).unwrap();
-    docx.save_transitional(&system, Path::new("/notes/report.docx"))
-        .unwrap();
-    Docx::open(
+    ready_now(system.create_dir_all(Path::new("/notes"))).unwrap();
+    ready_now(docx.save_transitional(&system, Path::new("/notes/report.docx"))).unwrap();
+    ready_now(Docx::open(
         &system,
         Path::new("/notes/report.docx"),
         OpenOptions::default(),
-    )
+    ))
     .unwrap()
 }
 
@@ -557,21 +560,24 @@ fn first<'tree>(element: &'tree Element, uri: &str, local: &str) -> Option<&'tre
 /// in `/n`.
 fn picture_notes(source: &str, files: &[(&str, &[u8])]) -> MemorySystem {
     let system = MemorySystem::new();
-    system.create_dir_all(Path::new("/n")).unwrap();
-    system
-        .write(Path::new("/n/p.md"), source.as_bytes(), WriteMode::Replace)
-        .unwrap();
+    ready_now(system.create_dir_all(Path::new("/n"))).unwrap();
+    ready_now(system.write(Path::new("/n/p.md"), source.as_bytes(), Condition::None)).unwrap();
     for &(name, bytes) in files {
-        system
-            .write(&Path::new("/n").join(name), bytes, WriteMode::Replace)
-            .unwrap();
+        ready_now(system.write(&Path::new("/n").join(name), bytes, Condition::None)).unwrap();
     }
     system
 }
 
 /// The Word document `/n/p.md` of `system` converts to, written and opened again.
 fn picture_docx(system: &MemorySystem) -> Docx {
-    reopened(&from_markdown(system, Path::new("/n/p.md"), MarkdownOptions::default()).unwrap())
+    reopened(
+        &ready_now(from_markdown(
+            system,
+            Path::new("/n/p.md"),
+            MarkdownOptions::default(),
+        ))
+        .unwrap(),
+    )
 }
 
 /// A picture as its `wp:docPr` id, name, description and title; its frame, `cx` by `cy`; and the
@@ -908,11 +914,11 @@ fn a_picture_whose_file_is_missing_fails_the_conversion_naming_its_target() {
 
 #[test]
 fn a_file_that_cannot_be_read_is_an_io_error_naming_it() {
-    let failure = from_markdown(
+    let failure = ready_now(from_markdown(
         &MemorySystem::new(),
         Path::new("/missing.md"),
         MarkdownOptions::default(),
-    )
+    ))
     .unwrap_err();
     assert!(matches!(
         failure,
@@ -1646,7 +1652,12 @@ fn a_converted_document_with_each_kind_of_picture_validates() {
             ("team.webp", &team),
         ],
     );
-    let docx = from_markdown(&system, Path::new("/n/p.md"), MarkdownOptions::default()).unwrap();
+    let docx = ready_now(from_markdown(
+        &system,
+        Path::new("/n/p.md"),
+        MarkdownOptions::default(),
+    ))
+    .unwrap();
     assert_eq!(pictures(&docx).len(), 7);
     assert_eq!(validation_errors(&docx), Vec::<String>::new());
 }
@@ -1682,12 +1693,12 @@ fn a_bookmark_name_starts_with_a_letter_or_an_underscore() {
 
 #[test]
 fn markdown_text_with_no_folder_fails_on_a_relative_picture_naming_it() {
-    let error = from_markdown_text(
+    let error = ready_now(from_markdown_text(
         &MemorySystem::new(),
         "![Logo](logo.png)\n",
         None,
         MarkdownOptions::default(),
-    )
+    ))
     .unwrap_err();
     assert!(
         matches!(&error, MarkdownError::Image { target, error: cause }
@@ -1708,8 +1719,15 @@ fn markdown_text_with_no_folder_stores_a_data_and_an_absolute_picture_and_links_
         "![Data](data:image/png;base64,{}) ![Web](https://example.com/a.png) ![Dot](/n/dot.png)\n",
         STANDARD.encode(&dot)
     );
-    let docx =
-        reopened(&from_markdown_text(&system, &source, None, MarkdownOptions::default()).unwrap());
+    let docx = reopened(
+        &ready_now(from_markdown_text(
+            &system,
+            &source,
+            None,
+            MarkdownOptions::default(),
+        ))
+        .unwrap(),
+    );
     assert_eq!(
         pictures(&docx),
         [
@@ -1718,4 +1736,22 @@ fn markdown_text_with_no_folder_stores_a_data_and_an_absolute_picture_and_links_
             r#"3 "Picture 3" "Dot" "-" 9525x9525 embed=media/image2.png"#,
         ]
     );
+}
+
+#[test]
+fn a_picture_file_is_read_wherever_the_markdown_holds_the_picture() {
+    let dot = png_of_size(1, 1);
+    let source = "# ![heading](a.png)\n\n*![emphasis](b.png)* **![strong](c.png)**\n\n\
+        [![link](d.png)](https://example.com) [*![link emphasis](e.png)*](https://example.com) \
+        [**![link strong](f.png)**](https://example.com)\n\n\
+        - ![item](g.png)\n  - ![nested](h.png)\n\n\
+        | ![head](i.png) |\n| --- |\n| ![row](j.png) |\n\n\
+        ## ![subsection](k.png)\n";
+    let names = [
+        "a.png", "b.png", "c.png", "d.png", "e.png", "f.png", "g.png", "h.png", "i.png", "j.png",
+        "k.png",
+    ];
+    let files: Vec<(&str, &[u8])> = names.iter().map(|name| (*name, dot.as_slice())).collect();
+    let docx = picture_docx(&picture_notes(source, &files));
+    assert_eq!(pictures(&docx).len(), names.len());
 }

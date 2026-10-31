@@ -3,6 +3,7 @@ use std::path::{Path, PathBuf};
 use std::process::Output;
 
 use assert_cmd::Command;
+use officekit_xml::ready::ready_now;
 use os_shim::real::RealSystem;
 use tempfile::TempDir;
 
@@ -27,7 +28,7 @@ fn write_sample(dir: &Path) -> PathBuf {
         )
         .unwrap();
     let path = dir.join("sample.docx");
-    package.save(&RealSystem::new(), &path).unwrap();
+    ready_now(package.save(&RealSystem::new(), &path)).unwrap();
     path
 }
 

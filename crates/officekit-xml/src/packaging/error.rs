@@ -2,6 +2,8 @@
 
 use std::io;
 
+use os_shim::error::StorageError;
+
 use crate::conformance::ConformanceClass;
 use crate::element::XmlError;
 use crate::error::WriteError;
@@ -103,6 +105,12 @@ pub enum PackageError {
         /// The part.
         part: PartName,
     },
+}
+
+impl From<StorageError> for PackageError {
+    fn from(error: StorageError) -> Self {
+        Self::Io(error.into())
+    }
 }
 
 /// A relationship's source as a message names it.

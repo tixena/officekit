@@ -18,13 +18,15 @@ use alloc::vec::Vec;
 use std::path::{Path, PathBuf};
 
 use anyhow::{Context as _, Result, bail};
-use os_shim::{System, WriteMode};
+use officekit_xml::ready::ready_now;
+use os_shim::System;
+use os_shim::bucket::Condition;
 use serde_json::Value;
 
 use super::namespaces;
 use super::validation::render::{self, Expr};
 use super::validation::{Emitted, Versions};
-use crate::generate_schema::inputs::Inputs;
+use crate::generate_schema::inputs::{Inputs, listed};
 use crate::generate_schema::model::Name;
 use crate::generate_schema::sdk_data::{DataVersion, SdkData};
 use schematron::Names;
@@ -714,16 +716,13 @@ pub fn emit<S>(system: &S, inputs: &Inputs, emitted: &Emitted, out: &Path) -> Re
 where
     S: System + ?Sized,
 {
-    let dump_text = system
-        .read_to_string(&inputs.semantic_dump)
+    let dump_text = ready_now(system.read_to_string(&inputs.semantic_dump))
         .with_context(|| format!("cannot read {}", inputs.semantic_dump.display()))?;
     let dump: Value = serde_json::from_str(&dump_text)
         .with_context(|| format!("{} is not JSON", inputs.semantic_dump.display()))?;
     let by_element = registrations(&emitted.corrected, &dump)?;
     let mut read: Vec<PathBuf> = vec![inputs.sdk_data.join("namespaces.json")];
-    let mut schemas: Vec<PathBuf> = system
-        .read_dir(&inputs.sdk_data.join("schemas"))
-        .context("cannot list the data's schemas")?
+    let mut schemas: Vec<PathBuf> = listed(system, &inputs.sdk_data.join("schemas"))?
         .into_iter()
         .filter(|path| {
             path.extension()
@@ -736,8 +735,7 @@ where
     read.push(inputs.semantic_dump.clone());
     let header = namespaces::header(inputs.checksums(), inputs.tools(), &read, &[])?;
     let (text, summary) = render_table(&header, emitted, &by_element)?;
-    system
-        .write(out, text.as_bytes(), WriteMode::Replace)
+    ready_now(system.write(out, text.as_bytes(), Condition::None))
         .with_context(|| format!("cannot write {}", out.display()))?;
     Ok(summary)
 }

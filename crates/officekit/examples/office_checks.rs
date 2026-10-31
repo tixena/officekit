@@ -6,11 +6,13 @@
 //! cargo run -p officekit --example office_checks --features strict -- notes/samples <out-dir>
 //! ```
 
+#[path = "../tests/stream_generation/file_sink.rs"]
+mod file_sink;
 #[path = "../tests/stream_generation/generation.rs"]
 mod generation;
 
 use core::error::Error;
-use std::io::{Read as _, Write as _, stdout};
+use std::io::{Write as _, stdout};
 use std::path::PathBuf;
 
 use clap::Parser;
@@ -35,9 +37,12 @@ use officekit_xml::packaging::package::{OpenOptions, Package};
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::{RelationshipType, Target};
 use officekit_xml::parse::parse;
+use officekit_xml::ready::ready_now;
 use officekit_xml::write::{Scope, WriteOptions};
 use os_shim::System as _;
 use os_shim::real::RealSystem;
+
+use crate::file_sink::FileSink;
 
 const SALT: [u8; 16] = [
     0x84, 0x8a, 0x8e, 0x97, 0xdf, 0x64, 0x22, 0xbf, 0xfe, 0x37, 0x48, 0x72, 0xa2, 0xf1, 0x2a, 0xed,
@@ -204,17 +209,19 @@ impl Checks {
     }
 
     fn copy_sample(&self, sample: &str, name: &str) -> Outcome {
-        self.system
-            .copy(&self.samples.join(sample), &self.output.join(name))?;
+        ready_now(
+            self.system
+                .copy(&self.samples.join(sample), &self.output.join(name)),
+        )?;
         Self::report(name)
     }
 
     fn docx(&self, sample: &str) -> Outcome<Docx> {
-        Ok(Docx::open(
+        Ok(ready_now(Docx::open(
             &self.system,
             &self.samples.join(sample),
             OpenOptions::default(),
-        )?)
+        ))?)
     }
 
     fn header(text: &str) -> Outcome<Header> {
@@ -255,12 +262,12 @@ impl Checks {
 
     fn row2(&self) -> Outcome {
         let new = Docx::new(WordprocessingKind::Document)?;
-        new.save_strict(&self.system, &self.output.join("row2-new-strict.docx"))?;
+        ready_now(new.save_strict(&self.system, &self.output.join("row2-new-strict.docx")))?;
         Self::report("row2-new-strict.docx")?;
         let mut sample = self.docx("pagare.docx")?;
         let name = "row2-sample-strict-without-unsupported-content.docx";
         loop {
-            match sample.save_strict(&self.system, &self.output.join(name)) {
+            match ready_now(sample.save_strict(&self.system, &self.output.join(name))) {
                 Ok(()) => break,
                 Err(PackageError::Write {
                     error: WriteError::NotInClass { tag, class },
@@ -318,17 +325,17 @@ impl Checks {
     fn row5(&self) -> Outcome {
         for (kind, label, extension) in WORD_KINDS {
             let name = format!("row5-new-word-{label}.{extension}");
-            Docx::create(&self.system, &self.output.join(&name), kind)?;
+            ready_now(Docx::create(&self.system, &self.output.join(&name), kind))?;
             Self::report(&name)?;
         }
         for (kind, label, extension) in EXCEL_KINDS {
             let name = format!("row5-new-excel-{label}.{extension}");
-            Xlsx::create(&self.system, &self.output.join(&name), kind)?;
+            ready_now(Xlsx::create(&self.system, &self.output.join(&name), kind))?;
             Self::report(&name)?;
         }
         for (kind, label, extension) in POWERPOINT_KINDS {
             let name = format!("row5-new-powerpoint-{label}.{extension}");
-            Pptx::create(&self.system, &self.output.join(&name), kind)?;
+            ready_now(Pptx::create(&self.system, &self.output.join(&name), kind))?;
             Self::report(&name)?;
         }
         Ok(())
@@ -413,10 +420,8 @@ impl Checks {
     }
 
     fn row6_pictures(&self) -> Outcome {
-        let mut bytes = Vec::new();
-        self.system
-            .open(&self.samples.join("wide-300x100.png"))?
-            .read_to_end(&mut bytes)?;
+        let (bytes, _revision) =
+            ready_now(self.system.read(&self.samples.join("wide-300x100.png")))?;
         let image = Image::from_bytes(bytes)?;
         for (fit, name) in [
             (PictureFit::Frame, "row6-picture-fit-frame.docx"),
@@ -467,19 +472,20 @@ impl Checks {
             ConformanceClass::Strict,
         )?;
         let name = "row6and7-protect-strict-new.docx";
-        strict.save_strict(&self.system, &self.output.join(name))?;
+        ready_now(strict.save_strict(&self.system, &self.output.join(name)))?;
         Self::report(name)
     }
 
     fn row6_stream(&self) -> Outcome {
         let name = "row6-stream-1000-rows-data-descriptors.docx";
-        let file = self.system.create(&self.output.join(name))?;
-        generation::generate(&generation::template()?, 1000, file)?.flush()?;
+        let path = self.output.join(name);
+        let file = FileSink(ready_now(self.system.create(&path))?);
+        generation::generate(&generation::template()?, 1000, file)?.close()?;
         Self::report(name)
     }
 
     fn save(&self, docx: &Docx, name: &str) -> Outcome {
-        let warnings = docx.save_transitional(&self.system, &self.output.join(name))?;
+        let warnings = ready_now(docx.save_transitional(&self.system, &self.output.join(name)))?;
         if !warnings.is_empty() {
             writeln!(stdout().lock(), "  {} save warning(s)", warnings.len())?;
         }
@@ -550,7 +556,7 @@ impl Checks {
             connections::RELATIONSHIP_TYPE.transitional,
         )?;
         let book_name = "strictC-text-file-connections-1252-932.xlsx";
-        book.save_transitional(&self.system, &self.output.join(book_name))?;
+        ready_now(book.save_transitional(&self.system, &self.output.join(book_name)))?;
         Self::report(book_name)
     }
 }
@@ -562,7 +568,7 @@ fn main() -> Outcome {
         samples: arguments.samples,
         system: RealSystem::new(),
     };
-    checks.system.create_dir_all(&checks.output)?;
+    ready_now(checks.system.create_dir_all(&checks.output))?;
     checks.row1()?;
     checks.row2()?;
     checks.row3()?;

@@ -1,3 +1,4 @@
+use alloc::collections::BTreeSet;
 use alloc::vec::Vec;
 use std::io::Cursor;
 use std::path::Path;
@@ -6,14 +7,15 @@ use base64::Engine as _;
 use base64::engine::general_purpose::STANDARD;
 use image_webp::{ColorType as WebPColor, WebPEncoder};
 use officekit_xml::packaging::image::{Image, ImageFormat};
+use officekit_xml::ready::ready_now;
 use os_shim::System as _;
-use os_shim::WriteMode;
+use os_shim::bucket::Condition;
 use os_shim::mock::MemorySystem;
 use png::{BitDepth, ColorType, Decoder, Encoder};
 
 use resvg::tiny_skia::Size;
 
-use super::{Picture, drawn_size, read};
+use super::{Picture, drawn_size};
 use crate::MarkdownError;
 
 /// The header of an AVIF file, a format officekit does not store.
@@ -39,6 +41,18 @@ const TIFF: &[u8] = b"II*\x00\x08\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00";
 
 /// A stored picture's image, its SVG and the size of its frame.
 type Parts = (Image, Option<Image>, Option<(u32, u32)>);
+
+/// What [`super::read`] gives for `target`, its file read through `system` by [`super::files`].
+fn read(
+    system: &MemorySystem,
+    base: Option<&Path>,
+    target: &str,
+) -> Result<Picture, MarkdownError> {
+    let read: Result<_, MarkdownError> = ready_now(async {
+        Ok(super::files(system, base, BTreeSet::from([target.to_owned()])).await)
+    });
+    super::read(&mut read?, target)
+}
 
 /// An SVG `width` by `height`, holding a small rectangle.
 fn svg(width: u32, height: u32) -> String {
@@ -81,11 +95,9 @@ fn decoded(bytes: &[u8]) -> (u32, u32, ColorType, Vec<u8>) {
 /// A memory filesystem holding each of `entries`, a name and its bytes, in `/n`.
 fn files(entries: &[(&str, &[u8])]) -> MemorySystem {
     let system = MemorySystem::new();
-    system.create_dir_all(Path::new("/n")).unwrap();
+    ready_now(system.create_dir_all(Path::new("/n"))).unwrap();
     for &(name, bytes) in entries {
-        system
-            .write(&Path::new("/n").join(name), bytes, WriteMode::Replace)
-            .unwrap();
+        ready_now(system.write(&Path::new("/n").join(name), bytes, Condition::None)).unwrap();
     }
     system
 }

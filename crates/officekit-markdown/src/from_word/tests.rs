@@ -1,6 +1,5 @@
 use alloc::string::String;
 use alloc::vec::Vec;
-use std::io::Read as _;
 use std::path::Path;
 
 use arky::parser::ast::{
@@ -19,8 +18,9 @@ use officekit::parts::style_definitions::{CONTENT_TYPE, RELATIONSHIP_TYPE};
 use officekit_xml::packaging::package::OpenOptions;
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::RelationshipType;
+use officekit_xml::ready::ready_now;
 use os_shim::System as _;
-use os_shim::WriteMode;
+use os_shim::bucket::Condition;
 use os_shim::mock::MemorySystem;
 
 use crate::{
@@ -299,13 +299,7 @@ fn picture_drawing(descr: &str, blip: &str) -> String {
 
 /// The bytes of the file at `path`.
 fn read_bytes(system: &MemorySystem, path: &str) -> Vec<u8> {
-    let mut bytes = Vec::new();
-    system
-        .open(Path::new(path))
-        .unwrap()
-        .read_to_end(&mut bytes)
-        .unwrap();
-    bytes
+    ready_now(system.read(Path::new(path))).unwrap().0
 }
 
 fn run(text: &str) -> String {
@@ -358,59 +352,52 @@ fn the_design_sample_writes_its_markdown_and_no_media_folder() {
         run("Ana"),
     );
     let system = MemorySystem::new();
-    system.create_dir_all(Path::new("/n")).unwrap();
-    word(&body)
-        .save_transitional(&system, Path::new("/n/contract.docx"))
-        .unwrap();
-    let docx = Docx::open(
+    ready_now(system.create_dir_all(Path::new("/n"))).unwrap();
+    ready_now(word(&body).save_transitional(&system, Path::new("/n/contract.docx"))).unwrap();
+    let docx = ready_now(Docx::open(
         &system,
         Path::new("/n/contract.docx"),
         OpenOptions::default(),
-    )
+    ))
     .unwrap();
     arky(&docx);
-    save_markdown(
+    ready_now(save_markdown(
         &docx,
         &system,
         Path::new("/n/contract.md"),
         MarkdownOptions::default(),
-    )
+    ))
     .unwrap();
     assert_eq!(
-        system.read_to_string(Path::new("/n/contract.md")).unwrap(),
+        ready_now(system.read_to_string(Path::new("/n/contract.md"))).unwrap(),
         "# Contrato\n\n**Nombre:** Ana\\\nCalle 5\n"
     );
-    assert!(!system.exists(Path::new("/n/contract_media")).unwrap());
+    assert!(!ready_now(system.exists(Path::new("/n/contract_media"))).unwrap());
 }
 
 #[test]
 fn save_markdown_leaves_a_media_folder_already_there_as_it_is() {
     let system = MemorySystem::new();
-    system
-        .create_dir_all(Path::new("/n/contract_media"))
-        .unwrap();
-    system
-        .write(
-            Path::new("/n/contract_media/kept.png"),
-            b"png",
-            WriteMode::Replace,
-        )
-        .unwrap();
-    save_markdown(
+    ready_now(system.create_dir_all(Path::new("/n/contract_media"))).unwrap();
+    ready_now(system.write(
+        Path::new("/n/contract_media/kept.png"),
+        b"png",
+        Condition::None,
+    ))
+    .unwrap();
+    ready_now(save_markdown(
         &word(&paragraph("Normal", &run("Hola"))),
         &system,
         Path::new("/n/contract.md"),
         MarkdownOptions::default(),
-    )
+    ))
     .unwrap();
     assert_eq!(
-        system.read_to_string(Path::new("/n/contract.md")).unwrap(),
+        ready_now(system.read_to_string(Path::new("/n/contract.md"))).unwrap(),
         "Hola\n"
     );
     assert_eq!(
-        system
-            .read_to_string(Path::new("/n/contract_media/kept.png"))
-            .unwrap(),
+        ready_now(system.read_to_string(Path::new("/n/contract_media/kept.png"))).unwrap(),
         "png"
     );
 }
@@ -727,29 +714,27 @@ fn sample() -> Docx {
 #[test]
 fn the_list_table_link_and_picture_sample_writes_its_markdown_and_one_image_file() {
     let system = MemorySystem::new();
-    system.create_dir_all(Path::new("/n")).unwrap();
-    sample()
-        .save_transitional(&system, Path::new("/n/contract.docx"))
-        .unwrap();
-    let docx = Docx::open(
+    ready_now(system.create_dir_all(Path::new("/n"))).unwrap();
+    ready_now(sample().save_transitional(&system, Path::new("/n/contract.docx"))).unwrap();
+    let docx = ready_now(Docx::open(
         &system,
         Path::new("/n/contract.docx"),
         OpenOptions::default(),
-    )
+    ))
     .unwrap();
     assert_eq!(
         exported(&docx, MarkdownOptions::default()).images,
         [("image1.png".to_owned(), PNG.to_vec())]
     );
-    save_markdown(
+    ready_now(save_markdown(
         &docx,
         &system,
         Path::new("/n/contract.md"),
         MarkdownOptions::default(),
-    )
+    ))
     .unwrap();
     assert_eq!(
-        system.read_to_string(Path::new("/n/contract.md")).unwrap(),
+        ready_now(system.read_to_string(Path::new("/n/contract.md"))).unwrap(),
         concat!(
             "1. one\n2. two\n\n",
             "+-----+-----+\n| a   | b   |\n+-----+-----+\n| c   | d   |\n+-----+-----+\n\n",
@@ -763,7 +748,7 @@ fn the_list_table_link_and_picture_sample_writes_its_markdown_and_one_image_file
 #[test]
 fn with_embedded_pictures_the_sample_writes_a_data_uri_and_no_media_folder() {
     let system = MemorySystem::new();
-    system.create_dir_all(Path::new("/n")).unwrap();
+    ready_now(system.create_dir_all(Path::new("/n"))).unwrap();
     let docx = sample();
     let options = MarkdownOptions {
         embed_images: true,
@@ -773,17 +758,23 @@ fn with_embedded_pictures_the_sample_writes_a_data_uri_and_no_media_folder() {
         exported(&docx, options).images,
         Vec::<(String, Vec<u8>)>::new()
     );
-    save_markdown(&docx, &system, Path::new("/n/contract.md"), options).unwrap();
+    ready_now(save_markdown(
+        &docx,
+        &system,
+        Path::new("/n/contract.md"),
+        options,
+    ))
+    .unwrap();
     let encoded = STANDARD.encode(PNG);
     assert!(encoded.starts_with("iVBORw0KGgo"));
-    let written = system.read_to_string(Path::new("/n/contract.md")).unwrap();
+    let written = ready_now(system.read_to_string(Path::new("/n/contract.md"))).unwrap();
     assert!(
         written.ends_with(&format!(
             "See [the dashboard](https://example.com/q3).\n\n![Logo](data:image/png;base64,{encoded})\n"
         )),
         "{written}"
     );
-    assert!(!system.exists(Path::new("/n/contract_media")).unwrap());
+    assert!(!ready_now(system.exists(Path::new("/n/contract_media"))).unwrap());
 }
 
 #[test]

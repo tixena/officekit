@@ -14,6 +14,7 @@ use core::iter;
 use std::path::{Path, PathBuf};
 
 use anyhow::{Context as _, Result, bail};
+use officekit_xml::ready::ready_now;
 use os_shim::System;
 
 use self::layout::{Expr, MAX_WIDTH, doc, line, statement};
@@ -503,9 +504,7 @@ where
             .get(*module)
             .with_context(|| format!("{name} has no crate"))?;
         let folder = Path::new(home.folder());
-        let tests = system
-            .is_file(&folder.join(name).join("tests.rs"))
-            .unwrap_or(false);
+        let tests = ready_now(system.is_file(&folder.join(name).join("tests.rs"))).unwrap_or(false);
         files.push((
             folder.join(format!("{name}.rs")),
             module_text(header, &names, &cycles, [&listed, &opened], tests)?,

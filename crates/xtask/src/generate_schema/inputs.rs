@@ -3,6 +3,7 @@
 use std::path::{Path, PathBuf};
 
 use anyhow::{Context as _, Result, bail};
+use officekit_xml::ready::ready_now;
 use os_shim::System;
 
 #[cfg(test)]
@@ -59,7 +60,7 @@ impl Inputs {
         let opc_schemas = xsds(system, &ecma.join("opc"))?;
 
         let sdk_data = root.join("open-xml-sdk").join("data");
-        if !system.is_dir(&sdk_data)? {
+        if !ready_now(system.is_dir(&sdk_data))? {
             bail!("missing input: {}", sdk_data.display());
         }
 
@@ -99,11 +100,29 @@ impl Inputs {
     }
 }
 
+/// The entries of `folder`, spelled from `folder` as given: `read_dir` gives a path resolved
+/// against the current folder, and `SHA256SUMS` names each input from the repository's root.
+///
+/// # Errors
+///
+/// A folder that cannot be read.
+pub fn listed<S>(system: &S, folder: &Path) -> Result<Vec<PathBuf>>
+where
+    S: System + ?Sized,
+{
+    Ok(ready_now(system.read_dir(folder))
+        .with_context(|| format!("cannot read {}", folder.display()))?
+        .iter()
+        .filter_map(|path| path.file_name())
+        .map(|name| folder.join(name))
+        .collect())
+}
+
 fn file<S>(system: &S, path: PathBuf) -> Result<PathBuf>
 where
     S: System + ?Sized,
 {
-    if system.is_file(&path)? {
+    if ready_now(system.is_file(&path))? {
         Ok(path)
     } else {
         bail!("missing input: {}", path.display())
@@ -114,8 +133,7 @@ fn read<S>(system: &S, path: &Path) -> Result<String>
 where
     S: System + ?Sized,
 {
-    system
-        .read_to_string(path)
+    ready_now(system.read_to_string(path))
         .with_context(|| format!("cannot read {}", path.display()))
 }
 
@@ -123,12 +141,10 @@ fn xsds<S>(system: &S, folder: &Path) -> Result<Vec<PathBuf>>
 where
     S: System + ?Sized,
 {
-    if !system.is_dir(folder)? {
+    if !ready_now(system.is_dir(folder))? {
         bail!("missing input: {}", folder.display());
     }
-    let mut found: Vec<PathBuf> = system
-        .read_dir(folder)
-        .with_context(|| format!("cannot read {}", folder.display()))?
+    let mut found: Vec<PathBuf> = listed(system, folder)?
         .into_iter()
         .filter(|path| path.extension().is_some_and(|ext| ext == "xsd"))
         .collect();

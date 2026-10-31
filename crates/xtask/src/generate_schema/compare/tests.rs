@@ -167,15 +167,15 @@ fn name(namespace: &str, local: &str) -> Name {
 
 fn sets() -> (SchemaSet, SchemaSet) {
     let system = MemorySystem::new()
-        .with_file("transitional/sml.xsd", TRANSITIONAL_SML.as_bytes())
+        .with_file("/transitional/sml.xsd", TRANSITIONAL_SML.as_bytes())
         .unwrap()
-        .with_file("transitional/vml-main.xsd", VML.as_bytes())
+        .with_file("/transitional/vml-main.xsd", VML.as_bytes())
         .unwrap()
-        .with_file("transitional/wml.xsd", TRANSITIONAL_WML.as_bytes())
+        .with_file("/transitional/wml.xsd", TRANSITIONAL_WML.as_bytes())
         .unwrap()
-        .with_file("strict/sml.xsd", STRICT_SML.as_bytes())
+        .with_file("/strict/sml.xsd", STRICT_SML.as_bytes())
         .unwrap()
-        .with_file("strict/wml.xsd", STRICT_WML.as_bytes())
+        .with_file("/strict/wml.xsd", STRICT_WML.as_bytes())
         .unwrap();
     let transitional = SchemaSet::read(
         &system,

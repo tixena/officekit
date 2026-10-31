@@ -18,6 +18,7 @@ use officekit_markup::{presentation, spreadsheet, wordprocessing};
 use officekit_xml::element::{Document, Element, Node};
 use officekit_xml::packaging::package::{OpenOptions, Package};
 use officekit_xml::parse::parse;
+use officekit_xml::ready::ready_now;
 use officekit_xml::write::{Layout, Scope, WriteOptions};
 use os_shim::System as _;
 use os_shim::real::RealSystem;
@@ -151,7 +152,7 @@ fn child_names(element: &Element) -> String {
 /// difference when it does not.
 fn check_file(path: &Path, out: &mut dyn Write) -> Result<(usize, usize), Box<dyn Error>> {
     let system = RealSystem::new();
-    let package = Package::open(&system, path)?;
+    let package = ready_now(Package::open(&system, path))?;
     let mut checked = 0;
     let mut equal = 0;
     for name in package.part_names()? {
@@ -194,8 +195,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let arguments = Arguments::parse();
     let system = RealSystem::new();
     let mut out = stdout().lock();
-    let mut files: Vec<PathBuf> = system
-        .read_dir(&arguments.folder)?
+    let mut files: Vec<PathBuf> = ready_now(system.read_dir(&arguments.folder))?
         .into_iter()
         .filter(|path| is_office_file(path))
         .collect();

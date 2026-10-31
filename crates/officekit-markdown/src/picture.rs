@@ -4,9 +4,10 @@
 mod tests;
 
 use alloc::boxed::Box;
+use alloc::collections::{BTreeMap, BTreeSet};
 use alloc::string::String;
 use alloc::vec::Vec;
-use std::io::{Cursor, Read as _};
+use std::io::Cursor;
 use std::path::Path;
 
 use base64::Engine as _;
@@ -39,6 +40,11 @@ const WEBP_MEMORY: usize = 256 * 1024 * 1024;
 const NO_FOLDER: &str =
     "a relative path, and markdown from standard input has no folder to find it from";
 
+/// What each target that names a file holds: the file's bytes, or why they could not be read. The
+/// conversion of a document cannot wait on a system, so its files are read before it starts, and a
+/// failure stays here until the conversion reaches that picture.
+pub type Files = BTreeMap<String, Result<Vec<u8>, String>>;
+
 /// The parts one markdown picture needs.
 pub enum Picture {
     /// A web address Word fetches when it opens the file.
@@ -67,16 +73,28 @@ fn data(address: &str) -> Result<Vec<u8>, String> {
 }
 
 /// The bytes of the file at `path`, read through `system`.
-fn file<S>(system: &S, path: &Path) -> Result<Vec<u8>, String>
+async fn file<S>(system: &S, path: &Path) -> Result<Vec<u8>, String>
 where
     S: System + ?Sized,
 {
-    let mut bytes = Vec::new();
-    system
-        .open(path)
-        .and_then(|mut reader| reader.read_to_end(&mut bytes))
-        .map_err(|error| error.to_string())?;
+    let (bytes, _revision) = system.read(path).await.map_err(|error| error.to_string())?;
     Ok(bytes)
+}
+
+/// The files `targets` name, read through `system`, a relative path from `base`. A web address and
+/// a `data:` address name no file.
+pub async fn files<S>(system: &S, base: Option<&Path>, targets: BTreeSet<String>) -> Files
+where
+    S: System + ?Sized,
+{
+    let mut read = Files::new();
+    for target in targets {
+        if !is_web_address(&target) && !target.starts_with("data:") {
+            let bytes = local(system, base, &target).await;
+            read.insert(target, bytes);
+        }
+    }
+    read
 }
 
 /// The value of an ASCII hexadecimal digit.
@@ -85,9 +103,14 @@ fn hex_digit(digit: char) -> Option<u8> {
     u8::try_from(value).ok()
 }
 
+/// Whether `target` is a web address, which Word fetches when it opens the file.
+fn is_web_address(target: &str) -> bool {
+    target.starts_with("http://") || target.starts_with("https://")
+}
+
 /// The bytes of the file `target` names, read through `system`, a relative path from `base`: the
 /// file of its percent-decoded name when that differs and exists, else the file of `target`.
-fn local<S>(system: &S, base: Option<&Path>, target: &str) -> Result<Vec<u8>, String>
+async fn local<S>(system: &S, base: Option<&Path>, target: &str) -> Result<Vec<u8>, String>
 where
     S: System + ?Sized,
 {
@@ -96,13 +119,15 @@ where
         None if Path::new(target).is_absolute() => Path::new(""),
         None => return Err(NO_FOLDER.to_owned()),
     };
-    String::from_utf8(percent_decoded(target))
-        .ok()
-        .filter(|name| name != target && system.exists(&folder.join(name)).unwrap_or(false))
-        .map_or_else(
-            || file(system, &folder.join(target)),
-            |name| file(system, &folder.join(name)),
-        )
+    if let Ok(name) = String::from_utf8(percent_decoded(target))
+        && name != target
+    {
+        let decoded = folder.join(name);
+        if system.exists(&decoded).await.unwrap_or(false) {
+            return file(system, &decoded).await;
+        }
+    }
+    file(system, &folder.join(target)).await
 }
 
 /// `text` with each `%` and the two hexadecimal digits after it replaced by the byte they name; a
@@ -142,24 +167,26 @@ fn png_of(pixels: &[u8], width: u32, height: u32, color: ColorType) -> Result<Im
     Ok(Image::with_format(ImageFormat::Png, bytes))
 }
 
-/// The picture `target` names: a web address, a `data:` address, or a file read through `system`,
-/// a relative path from `base`.
+/// The picture `target` names: a web address, a `data:` address, or a file [`files`] read; a file
+/// is taken out of `files`, since a stored picture's target is not asked for twice.
 ///
 /// # Errors
 ///
-/// [`MarkdownError::Image`] naming `target` when it is a relative path and there is no `base`,
-/// its file cannot be read, its `data:` address does not decode, or its bytes are none of PNG,
-/// JPEG, GIF, TIFF, BMP, WebP and SVG.
-pub fn read<S>(system: &S, base: Option<&Path>, target: &str) -> Result<Picture, MarkdownError>
-where
-    S: System + ?Sized,
-{
-    if target.starts_with("http://") || target.starts_with("https://") {
+/// [`MarkdownError::Image`] naming `target` when it is a relative path and there was no folder to
+/// find it from, its file could not be read, its `data:` address does not decode, or its bytes are
+/// none of PNG, JPEG, GIF, TIFF, BMP, WebP and SVG.
+pub fn read(files: &mut Files, target: &str) -> Result<Picture, MarkdownError> {
+    if is_web_address(target) {
         return Ok(Picture::Linked(target.to_owned()));
     }
-    let bytes = target
-        .strip_prefix("data:")
-        .map_or_else(|| local(system, base, target), data);
+    let bytes = target.strip_prefix("data:").map_or_else(
+        || {
+            files
+                .remove(target)
+                .unwrap_or_else(|| Err("the file was not read".to_owned()))
+        },
+        data,
+    );
     bytes
         .and_then(stored)
         .map_err(|error| MarkdownError::Image {

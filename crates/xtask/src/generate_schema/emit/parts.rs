@@ -15,13 +15,15 @@ use alloc::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
 
 use anyhow::{Context as _, Result, bail};
-use os_shim::{System, WriteMode};
+use officekit_xml::ready::ready_now;
+use os_shim::System;
+use os_shim::bucket::Condition;
 
 use super::markup::structs::Catalog;
 use super::markup::{self, Data, NodeKey, Source, names};
 use super::namespaces::{self, Row};
 use super::validation::{self, Emitted};
-use crate::generate_schema::inputs::Inputs;
+use crate::generate_schema::inputs::{Inputs, listed};
 use crate::generate_schema::model::{Name, SchemaSet, TypeRef};
 use crate::generate_schema::sdk_data::{DataPart, DataVersion, SdkData};
 use crate::generate_schema::standard_text::{
@@ -488,7 +490,7 @@ where
         &sdk_corrections_text,
     )?;
     let folder = Path::new(PARTS_PATH);
-    let tests = system.is_file(&folder.join("tests.rs")).unwrap_or(false);
+    let tests = ready_now(system.is_file(&folder.join("tests.rs"))).unwrap_or(false);
     let files = render::files(
         &header,
         &joined,
@@ -497,12 +499,10 @@ where
         &emitted.namespaces,
         tests,
     )?;
-    system
-        .create_dir_all(folder)
+    ready_now(system.create_dir_all(folder))
         .with_context(|| format!("cannot create {}", folder.display()))?;
     for (path, text) in files {
-        system
-            .write(&path, text.as_bytes(), WriteMode::Replace)
+        ready_now(system.write(&path, text.as_bytes(), Condition::None))
             .with_context(|| format!("cannot write {}", path.display()))?;
     }
     Ok(summary(&joined, &roots))
@@ -610,9 +610,7 @@ where
     read_inputs.push(inputs.sdk_data.join("namespaces.json"));
     for folder in ["schemas", "parts"] {
         let in_data = inputs.sdk_data.join(folder);
-        let mut files: Vec<PathBuf> = system
-            .read_dir(&in_data)
-            .with_context(|| format!("cannot read {}", in_data.display()))?
+        let mut files: Vec<PathBuf> = listed(system, &in_data)?
             .into_iter()
             .filter(|path| path.extension().is_some_and(|ext| ext == "json"))
             .collect();
@@ -921,8 +919,7 @@ fn read<S>(system: &S, path: &Path) -> Result<String>
 where
     S: System + ?Sized,
 {
-    system
-        .read_to_string(path)
+    ready_now(system.read_to_string(path))
         .with_context(|| format!("cannot read {}", path.display()))
 }
 

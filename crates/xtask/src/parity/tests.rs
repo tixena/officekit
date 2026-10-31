@@ -144,14 +144,14 @@ fn a_run_reads_both_sides_through_the_system_and_counts_the_kinds_asked_for() {
     let oracle = Value::Array(vec![oracle_left_margin(), markup, semantic]);
     let found = Value::Array(vec![ours(&left_margin("w"), OfficeVersion::Office2010)]);
     let system = MemorySystem::new()
-        .with_file("parity/oracle.json", oracle.to_string().as_bytes())
+        .with_file("/parity/oracle.json", oracle.to_string().as_bytes())
         .unwrap()
         .with_file(
-            "parity/officekit/canvas.instructure.docx.2010.json",
+            "/parity/officekit/canvas.instructure.docx.2010.json",
             found.to_string().as_bytes(),
         )
         .unwrap()
-        .with_file("parity/officekit/notes.txt", b"not a result")
+        .with_file("/parity/officekit/notes.txt", b"not a result")
         .unwrap();
     let kinds = ["schema".to_owned(), "markup-compatibility".to_owned()];
     let report = run(
@@ -173,9 +173,9 @@ fn a_run_reads_both_sides_through_the_system_and_counts_the_kinds_asked_for() {
 #[test]
 fn a_run_refuses_a_result_that_is_no_array() {
     let system = MemorySystem::new()
-        .with_file("parity/oracle.json", b"{}")
+        .with_file("/parity/oracle.json", b"{}")
         .unwrap()
-        .with_file("parity/officekit/a.json", b"[]")
+        .with_file("/parity/officekit/a.json", b"[]")
         .unwrap();
     let error = run(
         &system,
@@ -262,9 +262,9 @@ fn a_run_counts_a_divergence_apart_from_the_missing_errors() {
         &["extLst"],
     );
     let system = MemorySystem::new()
-        .with_file("oracle.json", json!([record]).to_string().as_bytes())
+        .with_file("/oracle.json", json!([record]).to_string().as_bytes())
         .unwrap()
-        .with_file("ours/chart.json", b"[]")
+        .with_file("/ours/chart.json", b"[]")
         .unwrap();
     let report = run(
         &system,

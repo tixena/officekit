@@ -1,14 +1,20 @@
+use core::future::poll_fn;
+use core::pin::pin;
 use core::slice;
+use core::task::{Context, Poll, Waker};
 use std::io::{Cursor, Write as _};
 use std::path::Path;
 
 use crate::conformance::ConformanceClass;
 use crate::mc::MarkupCompatibility;
 use crate::name::OfficeVersion;
+use crate::ready::ready_now;
 use crate::stream::writer::PartWriter;
 use crate::write::Layout;
-use os_shim::System as _;
+use os_shim::bucket::{Bucket, Condition, Depth, Guarantees, MemoryBucket, RevisionToken};
+use os_shim::error::Result as StorageResult;
 use os_shim::mock::MemorySystem;
+use os_shim::{FileMetadata, System as _, WalkEntry};
 use zip::write::{SimpleFileOptions, StreamWriter, ZipWriter};
 
 use super::{OpenOptions, Package};
@@ -39,6 +45,51 @@ const PORTRAIT: [u8; 8] = [0, 0, 6, 0x1B, 0, 0, 8, 2];
 const SQUARE: [u8; 4] = [1, 0xC8, 1, 0xC8];
 const SMALL: [u8; 4] = [0, 8, 0, 8];
 const TINY: [u8; 8] = [0, 0, 0, 1, 0, 0, 0, 1];
+
+/// A memory bucket whose futures wait once before they are ready, as a network bucket's do.
+struct WaitingBucket(MemoryBucket);
+
+impl Bucket for WaitingBucket {
+    fn delete(
+        &self,
+        path: &Path,
+        condition: &Condition,
+    ) -> impl Future<Output = StorageResult<()>> + Send {
+        after_a_wait(self.0.delete(path, condition))
+    }
+
+    fn get(
+        &self,
+        path: &Path,
+    ) -> impl Future<Output = StorageResult<(Vec<u8>, RevisionToken)>> + Send {
+        after_a_wait(self.0.get(path))
+    }
+
+    fn guarantees(&self) -> Guarantees {
+        Guarantees::none()
+    }
+
+    fn head(&self, path: &Path) -> impl Future<Output = StorageResult<FileMetadata>> + Send {
+        after_a_wait(self.0.head(path))
+    }
+
+    fn list(
+        &self,
+        folder: &Path,
+        depth: Depth,
+    ) -> impl Future<Output = StorageResult<Vec<WalkEntry>>> + Send {
+        after_a_wait(self.0.list(folder, depth))
+    }
+
+    fn put(
+        &self,
+        path: &Path,
+        bytes: &[u8],
+        condition: &Condition,
+    ) -> impl Future<Output = StorageResult<RevisionToken>> + Send {
+        after_a_wait(self.0.put(path, bytes, condition))
+    }
+}
 
 fn name(text: &str) -> PartName {
     PartName::new(text).unwrap()
@@ -74,7 +125,7 @@ fn with_relationship_entries(package: &Package, source: &PartName, entries: &str
 /// The text of a file inside the zip archive of `package`.
 fn archived(package: &Package, path: &str) -> Option<String> {
     let fs = MemorySystem::from_zip_reader(Cursor::new(package.to_bytes().unwrap())).unwrap();
-    fs.read_to_string(Path::new(path)).ok()
+    ready_now(fs.read_to_string(Path::new(path))).ok()
 }
 
 #[test]
@@ -107,8 +158,8 @@ fn the_end_result_in_use() {
         Target::External("https://example.org/".to_owned())
     );
     let system = MemorySystem::new().with_dir("/out").unwrap();
-    package.save(&system, Path::new("/out/new.docx")).unwrap();
-    let reopened = Package::open(&system, Path::new("/out/new.docx")).unwrap();
+    ready_now(package.save(&system, Path::new("/out/new.docx"))).unwrap();
+    let reopened = ready_now(Package::open(&system, Path::new("/out/new.docx"))).unwrap();
     assert_eq!(reopened.part_names().unwrap().len(), 2);
 }
 
@@ -156,9 +207,9 @@ fn opens_and_saves_through_the_system_gate() {
         .unwrap()
         .with_dir("/out")
         .unwrap();
-    let package = Package::open(&system, Path::new("/docs/sample.docx")).unwrap();
-    package.save(&system, Path::new("/out/copy.docx")).unwrap();
-    let reopened = Package::open(&system, Path::new("/out/copy.docx")).unwrap();
+    let package = ready_now(Package::open(&system, Path::new("/docs/sample.docx"))).unwrap();
+    ready_now(package.save(&system, Path::new("/out/copy.docx"))).unwrap();
+    let reopened = ready_now(Package::open(&system, Path::new("/out/copy.docx"))).unwrap();
     assert_eq!(reopened.part_names().unwrap(), [name("/word/document.xml")]);
     assert_eq!(
         reopened.content_type(&name("/word/document.xml")),
@@ -168,7 +219,11 @@ fn opens_and_saves_through_the_system_gate() {
 
 #[test]
 fn a_missing_file_and_bytes_that_are_not_a_zip_are_io_errors() {
-    let missing = Package::open(&MemorySystem::new(), Path::new("/missing.docx")).unwrap_err();
+    let missing = ready_now(Package::open(
+        &MemorySystem::new(),
+        Path::new("/missing.docx"),
+    ))
+    .unwrap_err();
     assert!(matches!(missing, PackageError::Io(_)), "got {missing:?}");
     let not_zip = Package::from_bytes(b"not a zip".to_vec()).unwrap_err();
     assert!(matches!(not_zip, PackageError::Io(_)), "got {not_zip:?}");
@@ -1041,5 +1096,55 @@ fn a_part_read_from_its_package_streams_a_root_that_declares_only_the_prefixes_i
             "<w:document xmlns:w=\"{W}\" xmlns:mc=\"{MC}\" xmlns:w14=\"{W14}\" mc:Ignorable=\"w14\">\
              <w:body><w:p w14:paraId=\"00000001\"/></w:body></w:document>"
         )
+    );
+}
+
+/// What `future` gives, after one poll that finds it waiting.
+async fn after_a_wait<T>(future: impl Future<Output = T> + Send) -> T {
+    let mut waited = false;
+    poll_fn(|_context| {
+        if waited {
+            Poll::Ready(())
+        } else {
+            waited = true;
+            Poll::Pending
+        }
+    })
+    .await;
+    future.await
+}
+
+/// What `future` gives, polled until it is ready.
+fn polled_to_its_end<F>(future: F) -> F::Output
+where
+    F: Future,
+{
+    let mut pinned = pin!(future);
+    let mut context = Context::from_waker(Waker::noop());
+    loop {
+        if let Poll::Ready(output) = pinned.as_mut().poll(&mut context) {
+            return output;
+        }
+    }
+}
+
+#[test]
+fn a_package_opens_and_saves_through_a_system_whose_futures_wait() {
+    let system = MemorySystem::with_bucket(WaitingBucket(MemoryBucket::default()));
+    let path = Path::new("/new.docx");
+    let main = PartName::new("/word/document.xml").unwrap();
+    let mut package = Package::new();
+    package
+        .set_part_bytes(&main, MAIN, b"<w:document/>")
+        .unwrap();
+
+    polled_to_its_end(package.save(&system, path)).unwrap();
+    let reopened = polled_to_its_end(Package::open(&system, path)).unwrap();
+    assert_eq!(reopened.part_names().unwrap(), [main]);
+
+    let refused = ready_now(Package::open(&system, path)).unwrap_err();
+    assert_eq!(
+        refused.to_string(),
+        "the future is not ready on its first poll"
     );
 }

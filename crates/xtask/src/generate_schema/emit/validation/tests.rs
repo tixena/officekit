@@ -263,27 +263,27 @@ fn data(schemas: &[&str]) -> SdkData {
 
 fn data_with_parts(schemas: &[&str], parts: &[(&str, &str)]) -> SdkData {
     let base = MemorySystem::new()
-        .with_file("data/namespaces.json", NAMESPACES.as_bytes())
+        .with_file("/data/namespaces.json", NAMESPACES.as_bytes())
         .unwrap()
-        .with_file("data/typed/namespaces.json", TYPED_NAMESPACES.as_bytes())
+        .with_file("/data/typed/namespaces.json", TYPED_NAMESPACES.as_bytes())
         .unwrap()
-        .with_file("data/parts/ImagePart.json", IMAGE_PART.as_bytes())
+        .with_file("/data/parts/ImagePart.json", IMAGE_PART.as_bytes())
         .unwrap()
-        .with_file("data/parts/MainDocumentPart.json", MAIN_PART.as_bytes())
+        .with_file("/data/parts/MainDocumentPart.json", MAIN_PART.as_bytes())
         .unwrap()
-        .with_file("data/schematrons.json", b"[]")
+        .with_file("/data/schematrons.json", b"[]")
         .unwrap();
     let with_schemas = schemas
         .iter()
         .enumerate()
         .fold(base, |files, (index, schema)| {
             files
-                .with_file(format!("data/schemas/{index}.json"), schema.as_bytes())
+                .with_file(format!("/data/schemas/{index}.json"), schema.as_bytes())
                 .unwrap()
         });
     let system = parts.iter().fold(with_schemas, |files, (name, part)| {
         files
-            .with_file(format!("data/parts/{name}.json"), part.as_bytes())
+            .with_file(format!("/data/parts/{name}.json"), part.as_bytes())
             .unwrap()
     });
     SdkData::read(&system, Path::new("data")).unwrap()
@@ -801,9 +801,9 @@ fn core_properties_and_xml_signature_keep_no_root() {
 #[test]
 fn every_transitional_only_item_of_the_comparison_is_marked() {
     let system = MemorySystem::new()
-        .with_file("t/wml.xsd", wml(W, true).as_bytes())
+        .with_file("/t/wml.xsd", wml(W, true).as_bytes())
         .unwrap()
-        .with_file("s/wml.xsd", wml(STRICT_W, false).as_bytes())
+        .with_file("/s/wml.xsd", wml(STRICT_W, false).as_bytes())
         .unwrap();
     let transitional = SchemaSet::read(&system, &["t/wml.xsd"]).unwrap();
     let strict = SchemaSet::read(&system, &["s/wml.xsd"]).unwrap();
@@ -839,11 +839,11 @@ fn every_transitional_only_item_of_the_comparison_is_marked() {
 #[test]
 fn the_strict_set_adds_strict_checks_namespaces_and_transitional_only_types() {
     let system = MemorySystem::new()
-        .with_file("t/wml.xsd", strict_wml(W, true).as_bytes())
+        .with_file("/t/wml.xsd", strict_wml(W, true).as_bytes())
         .unwrap()
-        .with_file("t/vml-main.xsd", VML.as_bytes())
+        .with_file("/t/vml-main.xsd", VML.as_bytes())
         .unwrap()
-        .with_file("s/wml.xsd", strict_wml(STRICT_W, false).as_bytes())
+        .with_file("/s/wml.xsd", strict_wml(STRICT_W, false).as_bytes())
         .unwrap();
     let transitional = SchemaSet::read(&system, &["t/vml-main.xsd", "t/wml.xsd"]).unwrap();
     let strict = SchemaSet::read(&system, &["s/wml.xsd"]).unwrap();

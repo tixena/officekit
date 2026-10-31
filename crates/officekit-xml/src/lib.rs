@@ -27,6 +27,8 @@
 //!   refusals of a class's writer and reader.
 //! - [`packaging`][]: the package: parts, part names, content types, relationships and images,
 //!   and a package written part by part.
+//! - [`ready`][]: [`ready_now`](ready::ready_now), which runs a future that never waits from
+//!   synchronous code.
 //!
 //! A namespace has one value for its Strict and its Transitional URI. A tree parsed from a Strict
 //! file and one from a Transitional file hold the same
@@ -109,6 +111,7 @@ pub mod mc;
 pub mod name;
 pub mod packaging;
 pub mod parse;
+pub mod ready;
 pub mod stream;
 pub mod values;
 pub mod write;

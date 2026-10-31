@@ -4,7 +4,7 @@
 
 use alloc::collections::{BTreeMap, BTreeSet};
 use core::fmt;
-use std::io::{Cursor, Read as _};
+use std::io::Cursor;
 use std::path::{Path, PathBuf};
 
 use crate::conformance::ConformanceClass;
@@ -12,10 +12,12 @@ use crate::element::{Attribute, Document, Element, NamespaceDeclaration, Node};
 use crate::mc::MarkupCompatibility;
 use crate::name::QName;
 use crate::parse::parse;
+use crate::ready::ready_now;
 use crate::stream::reader::PartReader;
 use crate::write::WriteOptions;
+use os_shim::System;
+use os_shim::bucket::Condition;
 use os_shim::mock::MemorySystem;
-use os_shim::{System, WriteMode};
 
 use crate::packaging::content_types::{ContentTypes, XML_CONTENT_TYPE};
 use crate::packaging::error::PackageError;
@@ -318,9 +320,7 @@ impl Package {
 
     /// Every file of the memory filesystem, by path.
     fn files(&self) -> Result<Vec<String>, PackageError> {
-        Ok(self
-            .fs
-            .walk_dir(Path::new("/"), false, true)?
+        Ok(ready_now(self.fs.walk_dir(Path::new("/"), false, true))?
             .into_iter()
             .filter(|entry| entry.is_file)
             .map(|entry| entry.path.to_string_lossy().into_owned())
@@ -459,7 +459,7 @@ impl Package {
 
     /// The file holding `path`, compared case-folded, as part names are.
     fn locate(&self, path: &str) -> Result<Option<PathBuf>, PackageError> {
-        if self.fs.is_file(Path::new(path))? {
+        if ready_now(self.fs.is_file(Path::new(path)))? {
             return Ok(Some(PathBuf::from(path)));
         }
         let folded = path.to_ascii_lowercase();
@@ -520,12 +520,11 @@ impl Package {
     ///
     /// [`PackageError::Io`] when the file cannot be read, and every error of
     /// [`from_bytes`](Self::from_bytes).
-    pub fn open<S>(system: &S, path: &Path) -> Result<Self, PackageError>
+    pub async fn open<S>(system: &S, path: &Path) -> Result<Self, PackageError>
     where
         S: System + ?Sized,
     {
-        let mut bytes = Vec::new();
-        system.open(path)?.read_to_end(&mut bytes)?;
+        let (bytes, _revision) = system.read(path).await?;
         Self::from_bytes(bytes)
     }
 
@@ -539,8 +538,7 @@ impl Package {
         let path = self
             .locate(name.as_str())?
             .ok_or_else(|| PackageError::MissingPart(name.clone()))?;
-        let mut bytes = Vec::new();
-        self.fs.open(&path)?.read_to_end(&mut bytes)?;
+        let (bytes, _revision) = ready_now(self.fs.read(&path))?;
         Ok(bytes)
     }
 
@@ -707,14 +705,14 @@ impl Package {
         let path = self
             .locate(name.as_str())?
             .ok_or_else(|| PackageError::MissingPart(name.clone()))?;
-        self.fs.remove_file(&path)?;
+        ready_now(self.fs.remove_file(&path))?;
         if self.content_types.remove(name) {
             self.write_content_types()?;
         }
         let folded = name.folded();
         self.relationships.remove(&folded);
         if let Some(own) = self.locate(&name.relationships_part())? {
-            self.fs.remove_file(&own)?;
+            ready_now(self.fs.remove_file(&own))?;
         }
         let mut removed = Vec::new();
         let mut changed = Vec::new();
@@ -790,11 +788,12 @@ impl Package {
     /// # Errors
     ///
     /// [`PackageError::Io`] when the archive cannot be built or written.
-    pub fn save<S>(&self, system: &S, path: &Path) -> Result<(), PackageError>
+    pub async fn save<S>(&self, system: &S, path: &Path) -> Result<(), PackageError>
     where
         S: System + ?Sized,
     {
-        system.write(path, &self.to_bytes()?, WriteMode::Replace)?;
+        let bytes = self.to_bytes()?;
+        system.write(path, &bytes, Condition::None).await?;
         Ok(())
     }
 
@@ -932,7 +931,7 @@ impl Package {
     ///
     /// [`PackageError::Io`] when the archive cannot be built.
     pub fn to_bytes(&self) -> Result<Vec<u8>, PackageError> {
-        Ok(self.fs.to_zip_vec(Path::new("/"))?)
+        Ok(ready_now(self.fs.to_zip_vec(Path::new("/")))?)
     }
 
     /// Parse the part called `name`, its markup compatibility left as written.
@@ -964,9 +963,9 @@ impl Package {
     /// writes a file only into a folder that exists.
     fn write_file(&self, path: &Path, bytes: &[u8]) -> Result<(), PackageError> {
         if let Some(parent) = path.parent() {
-            self.fs.create_dir_all(parent)?;
+            ready_now(self.fs.create_dir_all(parent))?;
         }
-        self.fs.write(path, bytes, WriteMode::Replace)?;
+        ready_now(self.fs.write(path, bytes, Condition::None))?;
         Ok(())
     }
 
@@ -984,7 +983,7 @@ impl Package {
         if set.items.is_empty() {
             self.relationships.remove(key);
             if let Some(path) = existing {
-                self.fs.remove_file(&path)?;
+                ready_now(self.fs.remove_file(&path))?;
             }
             return Ok(());
         }

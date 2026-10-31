@@ -4,6 +4,7 @@ use officekit::binary::{BinaryError, VERSION, decode, encode};
 use officekit::office_file::OfficeFile;
 use officekit_markdown::{MarkdownOptions, OfficeFileMarkdown as _};
 use officekit_xml::packaging::package::{OpenOptions, Package};
+use officekit_xml::ready::ready_now;
 use os_shim::mock::MemorySystem;
 use png::{BitDepth, ColorType, Encoder};
 
@@ -27,13 +28,13 @@ const fn package_of(file: &OfficeFile) -> Option<&Package> {
 
 /// The Word file the markdown `text` reads as.
 fn word(text: &str) -> OfficeFile {
-    OfficeFile::from_input(
+    ready_now(OfficeFile::from_input(
         &MemorySystem::new(),
         text.as_bytes().to_vec(),
         None,
         OpenOptions::default(),
         MarkdownOptions::default(),
-    )
+    ))
     .unwrap()
 }
 

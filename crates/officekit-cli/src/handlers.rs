@@ -6,7 +6,9 @@ use std::path::Path;
 use anyhow::{Context as _, Result, bail};
 use arky::parser::ast::RawDocument;
 use arky::writer::{self, WriteOptions};
-use os_shim::{System, WriteMode};
+use officekit_xml::ready::ready_now;
+use os_shim::System;
+use os_shim::bucket::Condition;
 use serde_json::{Value, json};
 
 #[cfg(feature = "binary-format")]
@@ -75,7 +77,7 @@ where
         target: OfficeVersion,
         max_errors: usize,
     ) -> Result<Vec<ValidationError>, String> {
-        let package = Package::open(self.system, file).map_err(|err| err.to_string())?;
+        let package = ready_now(Package::open(self.system, file)).map_err(|err| err.to_string())?;
         Ok(Validator::new(target)
             .with_max_errors(max_errors)
             .validate(&package))
@@ -88,8 +90,8 @@ where
     S: System + ?Sized,
 {
     let path = args.file.as_path();
-    let package =
-        Package::open(system, path).with_context(|| format!("opening {}", path.display()))?;
+    let package = ready_now(Package::open(system, path))
+        .with_context(|| format!("opening {}", path.display()))?;
     let name = PartName::new(&args.part)?;
     stdout.write_all(&package.part_bytes(&name)?)?;
     Ok(())
@@ -103,7 +105,7 @@ where
     let mut options = DownOptions::default();
     options.pretty = args.pretty;
     options.suffix = &args.suffix;
-    for folder in folder::down(system, &args.src, &args.tgt, options)? {
+    for folder in ready_now(folder::down(system, &args.src, &args.tgt, options))? {
         writeln!(stdout, "expanded: {}", folder.display())?;
     }
     Ok(())
@@ -117,7 +119,7 @@ where
     let mut options = UpOptions::default();
     options.minify = args.minify;
     options.suffix = &args.suffix;
-    for file in folder::up(system, &args.src, &args.tgt, options)? {
+    for file in ready_now(folder::up(system, &args.src, &args.tgt, options))? {
         writeln!(stdout, "created: {}", file.display())?;
     }
     Ok(())
@@ -128,7 +130,7 @@ pub fn cmd_format<S>(system: &S, args: &FormatArgs, stdout: &mut dyn Write) -> R
 where
     S: System + ?Sized,
 {
-    let summary = folder::format(system, &args.dir)?;
+    let summary = ready_now(folder::format(system, &args.dir))?;
     writeln!(
         stdout,
         "inspected {} XML parts, rewrote {}",
@@ -154,17 +156,20 @@ where
         (bytes, None)
     } else {
         let path = args.file.as_path();
-        let mut bytes = Vec::new();
-        system
-            .open(path)
-            .and_then(|mut file| file.read_to_end(&mut bytes))
-            .with_context(|| format!("reading {}", path.display()))?;
+        let (bytes, _revision) =
+            ready_now(system.read(path)).with_context(|| format!("reading {}", path.display()))?;
         (bytes, path.parent())
     };
     let mut markdown = MarkdownOptions::default();
     markdown.embed_images = true;
     markdown.frontmatter = args.frontmatter;
-    let file = OfficeFile::from_input(system, bytes, folder, OpenOptions::default(), markdown)?;
+    let file = ready_now(OfficeFile::from_input(
+        system,
+        bytes,
+        folder,
+        OpenOptions::default(),
+        markdown,
+    ))?;
     let output = write_form(&file, args.format, markdown, stderr)?;
     emit(system, args.output.as_deref(), &output, stdout)
 }
@@ -184,18 +189,18 @@ where
     if args.format == Form::Binary {
         bail!("save writes markdown, docx, xlsx or pptx; binary is what it reads");
     }
-    let mut bytes = Vec::new();
-    match args.input.as_deref() {
+    let bytes = match args.input.as_deref() {
         Some(path) if path != Path::new("-") => {
-            system
-                .open(path)
-                .and_then(|mut file| file.read_to_end(&mut bytes))
+            let (bytes, _revision) = ready_now(system.read(path))
                 .with_context(|| format!("reading {}", path.display()))?;
+            bytes
         }
         _ => {
+            let mut bytes = Vec::new();
             stdin.read_to_end(&mut bytes)?;
+            bytes
         }
-    }
+    };
     let file = binary::decode(&bytes)?;
     let mut markdown = MarkdownOptions::default();
     markdown.embed_images = true;
@@ -263,9 +268,10 @@ where
     S: System + ?Sized,
 {
     match output {
-        Some(path) if path != Path::new("-") => system
-            .write(path, bytes, WriteMode::Replace)
-            .with_context(|| format!("writing {}", path.display()))?,
+        Some(path) if path != Path::new("-") => {
+            ready_now(system.write(path, bytes, Condition::None))
+                .with_context(|| format!("writing {}", path.display()))?;
+        }
         _ => stdout.write_all(bytes)?,
     }
     Ok(())
@@ -297,8 +303,8 @@ where
     S: System + ?Sized,
 {
     let path = args.file();
-    let package =
-        Package::open(system, path).with_context(|| format!("opening {}", path.display()))?;
+    let package = ready_now(Package::open(system, path))
+        .with_context(|| format!("opening {}", path.display()))?;
     let parts = archive_entries(&package)?;
     if args.json() {
         let payload = json!({ "file": path.display().to_string(), "parts": parts });

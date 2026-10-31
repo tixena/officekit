@@ -12,12 +12,14 @@ use alloc::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
 
 use anyhow::{Context as _, Result, bail};
-use os_shim::{System, WriteMode};
+use officekit_xml::ready::ready_now;
+use os_shim::System;
+use os_shim::bucket::Condition;
 
 use self::strict::StrictChecks;
 use crate::generate_schema::compare::{self, Additions};
 use crate::generate_schema::emit::namespaces;
-use crate::generate_schema::inputs::Inputs;
+use crate::generate_schema::inputs::{Inputs, listed};
 use crate::generate_schema::model::{
     AttributeUse, Content, Derivation, Method, Name, Particle as SchemaParticle, ParticleKind,
     SchemaSet, TypeRef,
@@ -1634,8 +1636,7 @@ where
     S: System + ?Sized,
 {
     let mut data = SdkData::read(system, &inputs.sdk_data)?;
-    let sdk_corrections_text = system
-        .read_to_string(sdk_corrections_path)
+    let sdk_corrections_text = ready_now(system.read_to_string(sdk_corrections_path))
         .with_context(|| format!("cannot read {}", sdk_corrections_path.display()))?;
     data.correct_attributes(&sdk_corrections_text)?;
     let transitional = SchemaSet::read(system, &inputs.transitional_schemas)?;
@@ -1654,11 +1655,9 @@ where
         &compare::transitional_only(&transitional, &strict),
     )
     .with_strict(&transitional, &strict)?;
-    let simple_types_text = system
-        .read_to_string(simple_types_path)
+    let simple_types_text = ready_now(system.read_to_string(simple_types_path))
         .with_context(|| format!("cannot read {}", simple_types_path.display()))?;
-    let part_roots_text = system
-        .read_to_string(part_roots_path)
+    let part_roots_text = ready_now(system.read_to_string(part_roots_path))
         .with_context(|| format!("cannot read {}", part_roots_path.display()))?;
     let simple_types = simple_types(&simple_types_text)?;
     let part_roots = part_roots(&part_roots_text)?;
@@ -1687,8 +1686,7 @@ where
         .collect();
 
     let folder = out.with_extension("");
-    system
-        .create_dir_all(&folder)
+    ready_now(system.create_dir_all(&folder))
         .with_context(|| format!("cannot create {}", folder.display()))?;
     for (name, text) in render::files(&header, &tables, &prefixes)? {
         let path = if name == render::MODULE {
@@ -1696,8 +1694,7 @@ where
         } else {
             folder.join(name)
         };
-        system
-            .write(&path, text.as_bytes(), WriteMode::Replace)
+        ready_now(system.write(&path, text.as_bytes(), Condition::None))
             .with_context(|| format!("cannot write {}", path.display()))?;
     }
     Ok(Emitted {
@@ -1736,9 +1733,7 @@ fn json_files<S>(system: &S, folder: &Path) -> Result<Vec<PathBuf>>
 where
     S: System + ?Sized,
 {
-    let mut found: Vec<PathBuf> = system
-        .read_dir(folder)
-        .with_context(|| format!("cannot read {}", folder.display()))?
+    let mut found: Vec<PathBuf> = listed(system, folder)?
         .into_iter()
         .filter(|path| path.extension().is_some_and(|ext| ext == "json"))
         .collect();

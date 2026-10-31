@@ -12,8 +12,9 @@ use officekit_xml::packaging::error::PackageError;
 use officekit_xml::packaging::package::{OpenOptions, Package};
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::RelationshipType;
+use officekit_xml::ready::ready_now;
 use os_shim::System as _;
-use os_shim::WriteMode;
+use os_shim::bucket::Condition;
 use os_shim::mock::MemorySystem;
 use png::{BitDepth, ColorType, Encoder};
 
@@ -40,13 +41,13 @@ fn plain_xml() -> Vec<u8> {
 
 /// The model of `bytes`, read with no folder and the default options.
 fn input(system: &MemorySystem, bytes: &[u8]) -> Result<OfficeFile, MarkdownError> {
-    OfficeFile::from_input(
+    ready_now(OfficeFile::from_input(
         system,
         bytes.to_vec(),
         None,
         OpenOptions::default(),
         MarkdownOptions::default(),
-    )
+    ))
 }
 
 /// The Word file `file` is, if it is one.
@@ -191,17 +192,15 @@ fn a_relative_picture_with_no_folder_fails_naming_it() {
 #[test]
 fn a_relative_picture_is_found_from_the_folder() {
     let system = MemorySystem::new();
-    system.create_dir_all(Path::new("/notes")).unwrap();
-    system
-        .write(Path::new("/notes/logo.png"), &logo(), WriteMode::Replace)
-        .unwrap();
-    let file = OfficeFile::from_input(
+    ready_now(system.create_dir_all(Path::new("/notes"))).unwrap();
+    ready_now(system.write(Path::new("/notes/logo.png"), &logo(), Condition::None)).unwrap();
+    let file = ready_now(OfficeFile::from_input(
         &system,
         b"![Logo](logo.png)\n".to_vec(),
         Some(Path::new("/notes")),
         OpenOptions::default(),
         MarkdownOptions::default(),
-    )
+    ))
     .unwrap();
     let image = PartName::new("/word/media/image1.png").unwrap();
     assert_eq!(

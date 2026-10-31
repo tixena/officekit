@@ -15,7 +15,9 @@ use alloc::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 
 use anyhow::{Context as _, Result, bail};
-use os_shim::{System, WriteMode};
+use officekit_xml::ready::ready_now;
+use os_shim::System;
+use os_shim::bucket::Condition;
 
 use self::correspondences::Correspondences;
 use self::rules::{AttributeRule, ChildRule, Rules};
@@ -24,7 +26,7 @@ use super::markup::structs::Catalog;
 use super::markup::{self, Source, render};
 use super::namespaces;
 use super::validation::Emitted;
-use crate::generate_schema::inputs::Inputs;
+use crate::generate_schema::inputs::{Inputs, listed};
 use crate::generate_schema::model::SchemaSet;
 
 #[cfg(test)]
@@ -205,9 +207,7 @@ where
     read_inputs.push(inputs.part4_text.clone());
     read_inputs.push(inputs.sdk_data.join("namespaces.json"));
     let in_data = inputs.sdk_data.join("schemas");
-    let mut schemas: Vec<PathBuf> = system
-        .read_dir(&in_data)
-        .with_context(|| format!("cannot read {}", in_data.display()))?
+    let mut schemas: Vec<PathBuf> = listed(system, &in_data)?
         .into_iter()
         .filter(|path| path.extension().is_some_and(|ext| ext == "json"))
         .collect();
@@ -268,8 +268,7 @@ fn read<S>(system: &S, path: &Path) -> Result<String>
 where
     S: System + ?Sized,
 {
-    system
-        .read_to_string(path)
+    ready_now(system.read_to_string(path))
         .with_context(|| format!("cannot read {}", path.display()))
 }
 
@@ -280,12 +279,10 @@ where
 {
     for (path, contents) in files {
         if let Some(parent) = path.parent() {
-            system
-                .create_dir_all(parent)
+            ready_now(system.create_dir_all(parent))
                 .with_context(|| format!("cannot create {}", parent.display()))?;
         }
-        system
-            .write(&path, contents.as_bytes(), WriteMode::Replace)
+        ready_now(system.write(&path, contents.as_bytes(), Condition::None))
             .with_context(|| format!("cannot write {}", path.display()))?;
     }
     Ok(())

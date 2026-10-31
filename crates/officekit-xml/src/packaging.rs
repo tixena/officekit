@@ -26,7 +26,11 @@
 //!
 //! A [`Package`](package::Package) is held in memory. Reading and writing a file goes through an
 //! `os_shim::System` that the caller passes: `os_shim::real::RealSystem` for the disk,
-//! `MemorySystem` for tests. [`Package::from_bytes`](package::Package::from_bytes) and
+//! `MemorySystem` for tests. [`Package::open`](package::Package::open) and
+//! [`Package::save`](package::Package::save) are async, because only the caller knows what its
+//! system's futures wait on; everything else on a package is synchronous.
+//! [`ready_now`](crate::ready::ready_now) runs them from synchronous code.
+//! [`Package::from_bytes`](package::Package::from_bytes) and
 //! [`Package::to_bytes`](package::Package::to_bytes) need no system at all.
 //!
 //! With the crate's `binary-format` feature, the content types, part names, relationships and
@@ -41,6 +45,7 @@
 //! use officekit_xml::packaging::part_name::PartName;
 //! use officekit_xml::packaging::relationship::RelationshipType;
 //! use officekit_xml::conformance::ConformanceClass;
+//! use officekit_xml::ready::ready_now;
 //! use os_shim::mock::MemorySystem;
 //!
 //! # fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -53,9 +58,9 @@
 //! assert_eq!(id, "rId1");
 //!
 //! let system = MemorySystem::new().with_dir("/out")?;
-//! package.save(&system, Path::new("/out/letter.docx"))?;
+//! ready_now(package.save(&system, Path::new("/out/letter.docx")))?;
 //!
-//! let reopened = Package::open(&system, Path::new("/out/letter.docx"))?;
+//! let reopened = ready_now(Package::open(&system, Path::new("/out/letter.docx")))?;
 //! assert_eq!(reopened.part_names()?, [main.clone()]);
 //! assert_eq!(reopened.content_type(&main), Some(content_type));
 //! let main_part = reopened.main_part()?;

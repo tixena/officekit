@@ -59,14 +59,14 @@ fn named(namespace: &str, local: &str) -> TypeName {
 
 fn read(text: &str) -> Schema {
     let system = MemorySystem::new()
-        .with_file("wml.xsd", text.as_bytes())
+        .with_file("/wml.xsd", text.as_bytes())
         .unwrap();
     Schema::read(&system, Path::new("wml.xsd")).unwrap()
 }
 
 fn read_error(text: &str) -> String {
     let system = MemorySystem::new()
-        .with_file("wml.xsd", text.as_bytes())
+        .with_file("/wml.xsd", text.as_bytes())
         .unwrap();
     format!(
         "{:#}",

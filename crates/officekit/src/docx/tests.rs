@@ -22,6 +22,8 @@ use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::{RelationshipType, Target};
 #[cfg(feature = "strict")]
 use officekit_xml::parse::parse;
+#[cfg(feature = "transitional")]
+use officekit_xml::ready::ready_now;
 #[cfg(feature = "strict")]
 use officekit_xml::write::{Layout, WriteOptions};
 #[cfg(all(feature = "strict", feature = "transitional"))]
@@ -216,8 +218,13 @@ fn options_are_those_the_file_was_opened_with() {
 fn create_writes_the_new_document_through_the_system() {
     let system = MemorySystem::new().with_dir("/out").unwrap();
     let path = Path::new("/out/new.dotm");
-    let created = Docx::create(&system, path, WordprocessingKind::MacroEnabledTemplate).unwrap();
-    let opened = Docx::open(&system, path, OpenOptions::default()).unwrap();
+    let created = ready_now(Docx::create(
+        &system,
+        path,
+        WordprocessingKind::MacroEnabledTemplate,
+    ))
+    .unwrap();
+    let opened = ready_now(Docx::open(&system, path, OpenOptions::default())).unwrap();
     assert_eq!(opened.kind(), WordprocessingKind::MacroEnabledTemplate);
     assert_eq!(
         opened.package().part_names().unwrap(),
@@ -313,18 +320,17 @@ fn a_save_in_the_class_read_writes_each_part_as_it_is() {
         .unwrap()
         .with_dir("/out")
         .unwrap();
-    let docx = Docx::open(
+    let docx = ready_now(Docx::open(
         &system,
         Path::new("/in/template.docx"),
         OpenOptions::default(),
-    )
+    ))
     .unwrap();
-    let warnings = docx
-        .save_transitional(&system, Path::new("/out/saved.docx"))
-        .unwrap();
+    let warnings =
+        ready_now(docx.save_transitional(&system, Path::new("/out/saved.docx"))).unwrap();
     assert_eq!(warnings, []);
-    let before = Package::open(&system, Path::new("/in/template.docx")).unwrap();
-    let after = Package::open(&system, Path::new("/out/saved.docx")).unwrap();
+    let before = ready_now(Package::open(&system, Path::new("/in/template.docx"))).unwrap();
+    let after = ready_now(Package::open(&system, Path::new("/out/saved.docx"))).unwrap();
     let names = before.part_names().unwrap();
     assert_eq!(after.part_names().unwrap(), names);
     for part in &names {
@@ -345,14 +351,14 @@ fn a_strict_save_of_content_strict_has_no_form_for_fails_and_writes_nothing() {
         .unwrap()
         .with_dir("/out")
         .unwrap();
-    let docx = Docx::open(
+    let docx = ready_now(Docx::open(
         &system,
         Path::new("/in/template.docx"),
         OpenOptions::default(),
-    )
+    ))
     .unwrap();
     let path = Path::new("/out/strict.docx");
-    let error = docx.save_strict(&system, path).unwrap_err();
+    let error = ready_now(docx.save_strict(&system, path)).unwrap_err();
     assert!(
         matches!(
             &error,
@@ -366,7 +372,7 @@ fn a_strict_save_of_content_strict_has_no_form_for_fails_and_writes_nothing() {
         ),
         "{error:?}"
     );
-    assert!(!system.exists(path).unwrap());
+    assert!(!ready_now(system.exists(path)).unwrap());
     assert_eq!(docx.conformance_class(), ConformanceClass::Transitional);
 }
 

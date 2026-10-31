@@ -39,10 +39,13 @@ validation         the validator and its generated tables
 - **All OS access goes through `os_shim::System`.** No `std::fs`, `std::env`,
   or `std::process` calls anywhere in `crates/`. Library functions that touch
   files take `&S where S: System + ?Sized`; the CLI passes `RealSystem`, tests
-  pass `MemorySystem`.
+  pass `MemorySystem`. Those functions are `async`, because only the caller
+  knows what its system's futures wait on. Everything with a system of its own
+  stays synchronous and runs it with `officekit_xml::ready::ready_now`: `Package`
+  over its memory filesystem, the CLI, `xtask`, the examples and the tests.
 - **Zip parsing happens on an in-memory buffer**, never on a stream. Office
   files in the wild carry data descriptors, and a streaming reader cannot
-  handle those. The bytes still arrive through `System::open`.
+  handle those. The bytes still arrive through `System::read`.
 - **Quality gate is `just all`** (clippy with `restriction`, `pedantic`, and
   `nursery` denied; `cargo fmt --check`; build; tests). It runs the feature
   builds: the workspace, then `officekit` with all features, with no default

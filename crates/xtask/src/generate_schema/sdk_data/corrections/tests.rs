@@ -200,40 +200,40 @@ parents = ["w:CT_Settings/w:settings"]
 "#;
 fn read() -> SdkData {
     let system = MemorySystem::new()
-        .with_file("data/namespaces.json", NAMESPACES.as_bytes())
+        .with_file("/data/namespaces.json", NAMESPACES.as_bytes())
         .unwrap()
-        .with_file("data/typed/namespaces.json", b"[]")
+        .with_file("/data/typed/namespaces.json", b"[]")
         .unwrap()
-        .with_file("data/schemas/chart.json", CHART.as_bytes())
+        .with_file("/data/schemas/chart.json", CHART.as_bytes())
         .unwrap()
-        .with_file("data/parts/README.md", b"no parts")
+        .with_file("/data/parts/README.md", b"no parts")
         .unwrap()
-        .with_file("data/schematrons.json", b"[]")
+        .with_file("/data/schematrons.json", b"[]")
         .unwrap();
     SdkData::read(&system, Path::new("data")).unwrap()
 }
 
 fn read_word() -> SdkData {
     let system = MemorySystem::new()
-        .with_file("data/namespaces.json", WORD_NAMESPACES.as_bytes())
+        .with_file("/data/namespaces.json", WORD_NAMESPACES.as_bytes())
         .unwrap()
         .with_file(
-            "data/typed/namespaces.json",
+            "/data/typed/namespaces.json",
             WORD_TYPED_NAMESPACES.as_bytes(),
         )
         .unwrap()
-        .with_file("data/schemas/word.json", WORD.as_bytes())
+        .with_file("/data/schemas/word.json", WORD.as_bytes())
         .unwrap()
-        .with_file("data/parts/README.md", b"no parts")
+        .with_file("/data/parts/README.md", b"no parts")
         .unwrap()
-        .with_file("data/schematrons.json", b"[]")
+        .with_file("/data/schematrons.json", b"[]")
         .unwrap();
     SdkData::read(&system, Path::new("data")).unwrap()
 }
 
 fn standard() -> SchemaSet {
     let system = MemorySystem::new()
-        .with_file("standard.xsd", STANDARD.as_bytes())
+        .with_file("/standard.xsd", STANDARD.as_bytes())
         .unwrap();
     SchemaSet::read(&system, &["standard.xsd"]).unwrap()
 }
