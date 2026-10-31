@@ -17,6 +17,7 @@ notes/
 .claude/settings.json
 .claude/settings.local.json
 .claude/scheduled_tasks.lock
+/CLAUDE.md
 
 # Remargin identity (workspace-local, not shared)
 .remargin.yaml
