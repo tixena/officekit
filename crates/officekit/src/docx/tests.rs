@@ -2,11 +2,13 @@ use core::slice;
 #[cfg(feature = "transitional")]
 use std::path::Path;
 
+#[cfg(any(feature = "strict", feature = "transitional"))]
+use crate::parts::document_settings;
+#[cfg(feature = "transitional")]
+use crate::parts::font_table;
 #[cfg(feature = "transitional")]
 use crate::parts::kinds::SpreadsheetKind;
 use crate::parts::kinds::WordprocessingKind;
-#[cfg(feature = "transitional")]
-use crate::parts::{document_settings, font_table};
 #[cfg(feature = "strict")]
 use officekit_markup::wordprocessing;
 use officekit_xml::conformance::ConformanceClass;
@@ -106,8 +108,8 @@ fn package_of(class: ConformanceClass, content_type: &str) -> Package {
 }
 
 /// A Word template as the demo templates are made: a main document, a font table whose font
-/// names a character set by a code Strict has no name for, settings whose shape defaults are VML,
-/// a custom XML part no module knows, and an image.
+/// names a character set by a code Strict has no name for, settings holding a compatibility
+/// setting Strict has no form for, a custom XML part no module knows, and an image.
 #[cfg(feature = "transitional")]
 fn template() -> Package {
     let mut package = Docx::new(WordprocessingKind::Document)
@@ -130,7 +132,7 @@ fn template() -> Package {
             document_settings::CONTENT_TYPE,
             RelationshipType::SETTINGS,
             format!(
-                "<w:settings xmlns:w=\"{W}\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:v=\"urn:schemas-microsoft-com:vml\"><w:shapeDefaults><o:shapedefaults v:ext=\"edit\" spidmax=\"1026\"/></w:shapeDefaults></w:settings>"
+                "<w:settings xmlns:w=\"{W}\"><w:compat><w:footnoteLayoutLikeWW8/></w:compat></w:settings>"
             ),
         ),
         (
@@ -576,10 +578,35 @@ fn strict_refusals_names_everything_a_strict_save_refuses_in_one_call() {
                 count: 1,
                 part: name("/word/settings.xml"),
                 prefix: "w",
-                tag: "shapeDefaults",
+                tag: "footnoteLayoutLikeWW8",
             },
         ]
     );
+}
+
+#[cfg(feature = "strict")]
+#[test]
+fn a_strict_save_removes_the_settings_word_leaves_out_and_goes_on() {
+    let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
+    let main = docx.main_document_part().clone();
+    let (settings, _) = docx
+        .package_mut()
+        .add_part(
+            Some(&main),
+            RelationshipType::SETTINGS.transitional,
+            document_settings::CONTENT_TYPE,
+            "/word/settings{}.xml",
+            format!(
+                "<w:settings xmlns:w=\"{W}\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:v=\"urn:schemas-microsoft-com:vml\"><w:compat><w:useFELayout/></w:compat><w:shapeDefaults><o:shapedefaults v:ext=\"edit\" spidmax=\"1026\"/></w:shapeDefaults></w:settings>"
+            )
+            .as_bytes(),
+        )
+        .unwrap();
+    assert_eq!(docx.strict_refusals().unwrap(), []);
+    let strict = Package::from_bytes(docx.to_bytes_strict().unwrap()).unwrap();
+    let written = text(&strict, &settings);
+    assert!(!written.contains("shapeDefaults"), "{written}");
+    assert!(!written.contains("useFELayout"), "{written}");
 }
 
 #[cfg(feature = "strict")]

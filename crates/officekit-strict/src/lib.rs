@@ -30,6 +30,7 @@
 //!   spells otherwise take its spelling. For instance, the alignment `left` is `start`.
 //! - A bitmask unpacks into the attributes it packs.
 //! - A protection holding no password hash takes Part 1's `algorithmName` and `spinCount`.
+//! - The settings in [`REMOVED_SETTINGS`] are removed, as Word's own Strict files leave them out.
 //! - The text of the `wp14` relative sizes and positions, a bare number counting thousandths of a
 //!   percent, becomes a percentage, as Word writes it in Strict.
 //! - A serial date-time becomes an ISO 8601 text (see [`iso_date_time`]), a character-set code
@@ -96,12 +97,12 @@
 //! );
 //!
 //! let legacy = CompatibilitySettings::from_strict(&element(&format!(
-//!     "<w:compat xmlns:w=\"{W}\"><w:useFELayout/></w:compat>"
+//!     "<w:compat xmlns:w=\"{W}\"><w:footnoteLayoutLikeWW8/></w:compat>"
 //! )))
 //! .expect("compatibility settings");
 //! assert!(matches!(
 //!     legacy.to_strict(),
-//!     Err(WriteError::NotInClass { tag: "useFELayout", .. })
+//!     Err(WriteError::NotInClass { tag: "footnoteLayoutLikeWW8", .. })
 //! ));
 //! ```
 
@@ -173,6 +174,16 @@ const PROTECTION_ALGORITHM: [&str; 5] = [
     "cryptAlgorithmType",
     "cryptProviderType",
     "cryptSpinCount",
+];
+
+/// Settings Word writes on its own that Strict has no form for, and that Word's own Strict files
+/// leave out. A Strict save removes them, with what they hold.
+const REMOVED_SETTINGS: [&str; 5] = [
+    "hdrShapeDefaults",
+    "relyOnVML",
+    "shapeDefaults",
+    "shapeLayoutLikeWW8",
+    "useFELayout",
 ];
 
 const VML: &str = "urn:schemas-microsoft-com:vml";
@@ -493,7 +504,9 @@ fn convert_children(element: &mut Element, found: &mut Vec<Refusal>) {
             };
             index = match rule {
                 Some(ChildRule::Refuse(label)) => {
-                    if let Node::Element(child) = element.children.remove(index) {
+                    if let Node::Element(child) = element.children.remove(index)
+                        && !REMOVED_SETTINGS.contains(label)
+                    {
                         found.push(Refusal {
                             prefix: name_prefix(&child),
                             tag: label,

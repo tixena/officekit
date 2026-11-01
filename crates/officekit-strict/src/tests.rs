@@ -412,14 +412,45 @@ fn a_serial_date_takes_its_iso_attribute() {
 #[test]
 fn legacy_content_has_no_strict_form() {
     assert_eq!(
-        refusal::<CompatibilitySettings>("<w:compat xmlns:w=\"{w}\"><w:useFELayout/></w:compat>"),
-        Some("useFELayout")
+        refusal::<CompatibilitySettings>(
+            "<w:compat xmlns:w=\"{w}\"><w:footnoteLayoutLikeWW8/></w:compat>"
+        ),
+        Some("footnoteLayoutLikeWW8")
     );
     assert_eq!(
         refusal::<DocumentEditingRestrictions>(
             "<w:documentProtection xmlns:w=\"{w}\" w:hash=\"AAAA\" w:salt=\"AAAA\"/>"
         ),
         Some("documentProtection/@hash")
+    );
+}
+
+#[test]
+fn a_strict_save_removes_the_settings_word_leaves_out() {
+    assert_eq!(
+        strict::<CompatibilitySettings>(
+            "<w:compat xmlns:w=\"{w}\"><w:useFELayout/><w:shapeLayoutLikeWW8/></w:compat>"
+        ),
+        format!("<w:compat xmlns:w=\"{W_STRICT}\"/>")
+    );
+    assert_eq!(
+        refusals(element(
+            "<w:settings xmlns:w=\"{w}\" xmlns:o=\"urn:schemas-microsoft-com:office:office\"><w:shapeDefaults><o:shapelayout/></w:shapeDefaults><w:hdrShapeDefaults><o:shapelayout/></w:hdrShapeDefaults></w:settings>"
+        )),
+        []
+    );
+    assert_eq!(
+        refusals(element(
+            "<w:webSettings xmlns:w=\"{w}\"><w:relyOnVML/></w:webSettings>"
+        )),
+        []
+    );
+    assert_eq!(
+        refusal::<CompatibilitySettings>(
+            "<w:compat xmlns:w=\"{w}\"><w:useFELayout/><w:footnoteLayoutLikeWW8/></w:compat>"
+        ),
+        Some("footnoteLayoutLikeWW8"),
+        "what else the part holds stays refused"
     );
 }
 
@@ -610,12 +641,12 @@ fn refusals_names_every_refusal_in_document_order() {
     );
     assert_eq!(
         refusals(element(
-            "<w:settings xmlns:w=\"{w}\" xmlns:o=\"urn:schemas-microsoft-com:office:office\"><w:compat><w:useFELayout/><w:shapeLayoutLikeWW8/></w:compat><w:shapeDefaults><o:shapelayout/></w:shapeDefaults></w:settings>"
+            "<w:settings xmlns:w=\"{w}\"><w:compat><w:footnoteLayoutLikeWW8/><w:lineWrapLikeWord6/></w:compat></w:settings>"
         ))
         .iter()
         .map(|refusal| refusal.tag)
         .collect::<Vec<_>>(),
-        ["shapeDefaults", "useFELayout", "shapeLayoutLikeWW8"]
+        ["footnoteLayoutLikeWW8", "lineWrapLikeWord6"]
     );
 }
 
