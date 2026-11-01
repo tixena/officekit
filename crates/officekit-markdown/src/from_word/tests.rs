@@ -643,6 +643,61 @@ fn a_text_box_gives_its_paragraphs_once_after_the_paragraph_that_holds_it() {
     assert_eq!(markdown(&word(&body)), "Before\n\nBoxed\n\nBoxed\n");
 }
 
+/// A run holding a text box as Word writes it in a Strict file, `content` inside `element`.
+fn strict_text_box(element: &str, content: &str) -> String {
+    format!(
+        concat!(
+            r#"<w:r><w:drawing><wp:anchor><a:graphic><a:graphicData uri="http://schemas.microsoft.com/office/word/2010/wordprocessingShape">"#,
+            r#"<wp:wsp><wp:cNvSpPr txBox="1"/><wp:txbx>"#,
+            r#"<{element} xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml">{content}</{element}>"#,
+            "</wp:txbx><wp:bodyPr/></wp:wsp></a:graphicData></a:graphic></wp:anchor></w:drawing></w:r>",
+        ),
+        element = element,
+        content = content,
+    )
+}
+
+// XML input: the typed tree keeps a:graphicData's shape as unknown content, and its spelling is the point.
+#[test]
+fn a_text_box_in_word_s_strict_form_gives_its_paragraphs_after_the_paragraph_that_holds_it() {
+    let boxed = strict_text_box("wne:txbxContent", "<w:p><w:r><w:t>Boxed</w:t></w:r></w:p>");
+    let body = format!(
+        "<w:p><w:r><w:t>Before</w:t></w:r>{boxed}</w:p><w:p><w:r><w:t>After</w:t></w:r></w:p>"
+    );
+    assert_eq!(markdown(&word(&body)), "Before\n\nBoxed\n\nAfter\n");
+}
+
+// XML input: the typed tree keeps a:graphicData's shape as unknown content, and its spelling is the point.
+#[test]
+fn a_text_box_in_the_form_the_strict_schema_declares_gives_its_paragraphs() {
+    let boxed = strict_text_box("wp:txbxContent", "<w:p><w:r><w:t>Boxed</w:t></w:r></w:p>");
+    let body = format!("<w:p><w:r><w:t>Before</w:t></w:r>{boxed}</w:p>");
+    assert_eq!(markdown(&word(&body)), "Before\n\nBoxed\n");
+}
+
+// XML input: the typed tree keeps a:graphicData's shape as unknown content, and its spelling is the point.
+#[test]
+fn a_picture_in_a_text_box_in_word_s_strict_form_comes_once_with_the_box() {
+    let mut fixture = Fixture::new();
+    let id = fixture.part(
+        "/word/media/image1.png",
+        "image/png",
+        &RelationshipType::IMAGE,
+        PNG,
+    );
+    let inside = format!("<w:p>{}</w:p>", picture("boxed", &id));
+    let boxed = strict_text_box("wne:txbxContent", &inside);
+    let body = format!("<w:p><w:r><w:t>Before</w:t></w:r>{boxed}</w:p>");
+    let result = exported(&fixture.body(&body), MarkdownOptions::default());
+    assert_eq!(
+        result.document.body.sections,
+        no_heading(alloc::vec![
+            paragraph_of(alloc::vec![text("Before")]),
+            paragraph_of(alloc::vec![image("report_media/image1.png", "boxed")]),
+        ])
+    );
+}
+
 #[test]
 fn an_equation_gives_its_text() {
     let body = concat!(

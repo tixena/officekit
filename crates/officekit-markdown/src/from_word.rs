@@ -1915,12 +1915,12 @@ fn continues_merge(cell: &TableCell) -> bool {
 }
 
 /// The first element under `element` named `local` in the namespace the namespace table names
-/// `prefix`, in document order, outside text boxes.
+/// `prefix`, in document order, outside a text box's content.
 fn descendant<'tree>(element: &'tree Element, prefix: &str, local: &str) -> Option<&'tree Element> {
     element.child_elements().find_map(|child| {
         if is_named(child, prefix, local) {
             Some(child)
-        } else if is_named(child, "w", "txbxContent") {
+        } else if is_text_box_content(child) {
             None
         } else {
             descendant(child, prefix, local)
@@ -1967,13 +1967,13 @@ fn vml_picture(shape: &Element) -> Option<Drawing> {
     })
 }
 
-/// Every picture of a `w:drawing` or a VML `v:shape` under `node`, outside text boxes; of an
-/// `mc:AlternateContent`, those of its first branch that holds any.
+/// Every picture of a `w:drawing` or a VML `v:shape` under `node`, outside a text box's content;
+/// of an `mc:AlternateContent`, those of its first branch that holds any.
 fn drawings(node: &Node, found: &mut Vec<Drawing>) {
     let Node::Element(element) = node else {
         return;
     };
-    if is_named(element, "w", "txbxContent") {
+    if is_text_box_content(element) {
         return;
     }
     if is_named(element, "w", "drawing") {
@@ -2191,6 +2191,14 @@ fn is_head_row(row: &TableRow) -> bool {
 /// Whether `element` is named `local` in the namespace the namespace table names `prefix`.
 fn is_named(element: &Element, prefix: &str, local: &str) -> bool {
     element.name.local == local && table_prefix(&element.name.namespace) == Some(prefix)
+}
+
+/// Whether `element` holds a text box's content: `w:txbxContent`; `wne:txbxContent`, which Word
+/// writes in a Strict file; or `wp:txbxContent`, which the Strict schema declares.
+fn is_text_box_content(element: &Element) -> bool {
+    ["w", "wne", "wp"]
+        .iter()
+        .any(|prefix| is_named(element, prefix, "txbxContent"))
 }
 
 /// Whether arky writes `body`, a table cell's content, on one line; a cell arky cannot write
@@ -2453,13 +2461,13 @@ fn table_rows<'table>(content: &'table [ContentRowContent], rows: &mut Vec<&'tab
     }
 }
 
-/// Every `w:txbxContent` under `node`, read; of an `mc:AlternateContent`, those of its first
-/// branch that holds any.
+/// The content of every text box under `node`, read; of an `mc:AlternateContent`, those of its
+/// first branch that holds any.
 fn text_boxes(node: &Node, boxes: &mut Vec<RichTextBoxContentContainer>) {
     let Node::Element(element) = node else {
         return;
     };
-    if is_named(element, "w", "txbxContent") {
+    if is_text_box_content(element) {
         boxes.push(officekit_markup::read(element));
     } else if mc::is_mc(&element.name.namespace) && element.name.local == "AlternateContent" {
         for branch in &element.children {
