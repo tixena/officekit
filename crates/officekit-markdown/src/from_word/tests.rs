@@ -13,10 +13,11 @@ use arky::writer::{WriteOptions, write};
 use base64::Engine as _;
 use base64::engine::general_purpose::STANDARD;
 use officekit::docx::image::{PictureSource, inline_picture};
+use officekit::docx::table::TableRows as _;
 use officekit::parts::kinds::WordprocessingKind;
 use officekit::parts::numbering_definitions;
 use officekit::parts::style_definitions;
-use officekit_markup::common_simple_types::{OnOffValue, XMLName};
+use officekit_markup::common_simple_types::{MeasurementInTwentiethsOfAPoint, OnOffValue, XMLName};
 use officekit_markup::math::{
     OfficeMath, OfficeMathContent, Run as MathRun, RunContent as MathRunContent, Text as MathText,
 };
@@ -25,19 +26,21 @@ use officekit_markup::wordprocessing::{
     AssociatedOutlineLevel, BlockContent, BlockLevelStructuredDocumentTag,
     BlockLevelStructuredDocumentTagContent, Bold, BorderStyles, Break, BreakTypes, CarriageReturn,
     ColorValue, ComplexFieldCharacter, ComplexFieldCharacterType, ContentBlockContent,
-    DecimalNumberValue, DeletedRunContent, DeletedText, DocumentBody, FieldCode,
+    ContentCellContent, ContentRowContent, DecimalNumberValue, DeletedRunContent, DeletedText,
+    DocumentBody, FieldCode, GridColumnsSpanned, HorizontalAlignmentType, Hyperlink,
     InlineLevelCustomXMLElement, InlineLevelSmartTag, InlineLevelStructuredDocumentTag,
     InlineLevelStructuredDocumentTagContent, InsertedRunContent, Italics,
-    MeasurementInEighthsOfAPoint, MeasurementInPoints, MoveDestinationRunContent,
+    MeasurementInEighthsOfAPoint, MeasurementInPoints, MergedCellType, MoveDestinationRunContent,
     MoveSourceRunContent, NumberingDefinitionInstance, NumberingDefinitionInstanceReferenceNumId,
     NumberingDefinitionInstanceReferenceNumPr, NumberingDefinitions, NumberingFormat,
-    NumberingLevelOverrideDefinition, NumberingLevelReference,
+    NumberingLevelDefinitionOverride, NumberingLevelOverrideDefinition, NumberingLevelReference,
+    NumberingLevelStartingValueOverride, NumberingLevelText, ParagraphAlignment,
     ParagraphBorderBelowIdenticalParagraphs, ParagraphBorders, ParagraphContent,
     ParagraphIndentation, ParagraphProperties, ParagraphPropertiesPPrGeneral, ParentStyleID,
     PrimaryStyleName, ReferencedCharacterStyle, ReferencedParagraphStyle, RunFonts, RunProperties,
     RunPropertiesContent, SignedMeasurementInTwentiethsOfPoint, SimpleField, StNumberFormat,
-    StartingValue, StyleDefinition, StyleDefinitions, StyleTypes, TabCharacter, TextRun,
-    TextRunContent, TrackedRunContent,
+    StartingValue, StyleDefinition, StyleDefinitions, StyleTypes, TabCharacter,
+    TableCellProperties, TextRun, TextRunContent, TrackedRunContent, VerticallyMergedCell,
 };
 use officekit_xml::packaging::package::OpenOptions;
 use officekit_xml::packaging::part_name::PartName;
@@ -66,24 +69,6 @@ const NAMESPACES: &str = concat!(
     r#"xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" "#,
     r#"xmlns:asvg="http://schemas.microsoft.com/office/drawing/2016/SVG/main" "#,
     r#"xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape""#
-);
-
-/// The numbering part of the tests: instance 1 is bullets, instance 2 decimal numbers from 1
-/// whose levels' text starts at 720 and 1440, instance 3 a level of format `none`, and instance 4
-/// decimal numbers from 3 by a `w:startOverride`.
-const NUMBERING: &str = concat!(
-    r#"<w:numbering xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">"#,
-    r#"<w:abstractNum w:abstractNumId="0"><w:lvl w:ilvl="0"><w:start w:val="1"/><w:numFmt w:val="bullet"/></w:lvl>"#,
-    r#"<w:lvl w:ilvl="1"><w:start w:val="1"/><w:numFmt w:val="bullet"/></w:lvl></w:abstractNum>"#,
-    r#"<w:abstractNum w:abstractNumId="1"><w:lvl w:ilvl="0"><w:start w:val="1"/><w:numFmt w:val="decimal"/><w:lvlText w:val="%1)"/>"#,
-    r#"<w:pPr><w:ind w:left="720" w:hanging="360"/></w:pPr></w:lvl>"#,
-    r#"<w:lvl w:ilvl="1"><w:start w:val="1"/><w:numFmt w:val="decimal"/><w:pPr><w:ind w:left="1440" w:hanging="360"/></w:pPr></w:lvl></w:abstractNum>"#,
-    r#"<w:abstractNum w:abstractNumId="2"><w:lvl w:ilvl="0"><w:start w:val="1"/><w:numFmt w:val="none"/></w:lvl></w:abstractNum>"#,
-    r#"<w:num w:numId="1"><w:abstractNumId w:val="0"/></w:num>"#,
-    r#"<w:num w:numId="2"><w:abstractNumId w:val="1"/></w:num>"#,
-    r#"<w:num w:numId="3"><w:abstractNumId w:val="2"/></w:num>"#,
-    r#"<w:num w:numId="4"><w:abstractNumId w:val="1"/><w:lvlOverride w:ilvl="0"><w:startOverride w:val="3"/></w:lvlOverride></w:num>"#,
-    "</w:numbering>"
 );
 
 /// The first bytes of a PNG file, enough for a picture part of the tests.
@@ -157,14 +142,29 @@ impl Fixture {
         Self { docx, main }
     }
 
-    /// Add the numbering part [`NUMBERING`].
+    /// Add the numbering part holding [`numbering`], its indents in twips.
     fn numbering(&mut self) {
-        self.part(
-            "/word/numbering.xml",
-            numbering_definitions::CONTENT_TYPE,
-            &numbering_definitions::RELATIONSHIP_TYPE,
-            NUMBERING.as_bytes(),
-        );
+        self.numbering_of(&numbering(|twips| twips.to_string()));
+    }
+
+    /// Add the numbering part holding `definitions`.
+    fn numbering_of(&mut self, definitions: &NumberingDefinitions) {
+        let part = PartName::new("/word/numbering.xml").unwrap();
+        let package = self.docx.package_mut();
+        numbering_definitions::store_transitional(
+            package,
+            &part,
+            definitions,
+            XmlWriteOptions::default(),
+        )
+        .unwrap();
+        package
+            .relate(
+                Some(&self.main),
+                &part,
+                numbering_definitions::RELATIONSHIP_TYPE.transitional,
+            )
+            .unwrap();
     }
 
     /// Add the part `name` of `content_type` holding `bytes`, related from the main part by
@@ -234,12 +234,156 @@ fn marked(value: &str, marks: Vec<RunPropertiesContent>) -> TextRun {
     marked
 }
 
+/// Paragraph borders of one bottom line, the horizontal rule Word writes.
+fn bottom_border() -> Box<ParagraphBorders> {
+    let mut bottom = ParagraphBorderBelowIdenticalParagraphs::default();
+    bottom.color = Some(ColorValue::from("auto".to_owned()));
+    bottom.space = Some(MeasurementInPoints::from("1".to_owned()));
+    bottom.sz = Some(MeasurementInEighthsOfAPoint::from("6".to_owned()));
+    bottom.val = Some(BorderStyles::from("single".to_owned()));
+    let mut borders = ParagraphBorders::default();
+    borders.paragraph_border_below_identical_paragraphs = Some(Box::new(bottom));
+    Box::new(borders)
+}
+
+/// Paragraph properties of the style `style`, when given, indenting a paragraph to `left`.
+fn indented(style: Option<&str>, left: &str) -> ParagraphProperties {
+    let mut indentation = ParagraphIndentation::default();
+    indentation.left = Some(SignedMeasurementInTwentiethsOfPoint::from(left.to_owned()));
+    let mut properties = ParagraphProperties::default();
+    properties.paragraph_indentation = Some(Box::new(indentation));
+    properties.referenced_paragraph_style = style.map(|name| Box::new(style_reference(name)));
+    properties
+}
+
+/// A list of instance 2 with paragraphs indented between its items; `measure` writes each
+/// indent, the levels' too, from its twips.
+fn indented_list(measure: fn(u16) -> String) -> Docx {
+    let under = |twips: u16, value: &str| {
+        styled_by(indented(None, &measure(twips)), alloc::vec![run(value)])
+    };
+    let mut fixture = Fixture::new();
+    fixture.numbering_of(&numbering(measure));
+    fixture.body(alloc::vec![
+        numbered(2, 0, "one"),
+        numbered(2, 1, "inner"),
+        under(1440, "under inner"),
+        under(720, "under one"),
+        numbered(2, 0, "two"),
+        under(360, "elsewhere"),
+        numbered(2, 0, "three"),
+    ])
+}
+
+/// What [`indented_list`] exports: a paragraph indented to where an item's text starts is a
+/// later block of that item, and one indented elsewhere ends the list.
+fn indented_list_sections() -> Vec<Section> {
+    let inner = Block::List(List::new(
+        alloc::vec![item(alloc::vec![
+            paragraph_of(alloc::vec![text("inner")]),
+            paragraph_of(alloc::vec![text("under inner")]),
+        ])],
+        true,
+        Some(1),
+    ));
+    no_heading(alloc::vec![
+        list(
+            alloc::vec![
+                item(alloc::vec![
+                    paragraph_of(alloc::vec![text("one")]),
+                    inner,
+                    paragraph_of(alloc::vec![text("under one")]),
+                ]),
+                item(alloc::vec![paragraph_of(alloc::vec![text("two")])]),
+            ],
+            Some(1)
+        ),
+        paragraph_of(alloc::vec![text("elsewhere")]),
+        list(
+            alloc::vec![item(alloc::vec![paragraph_of(alloc::vec![text("three")])])],
+            Some(3)
+        ),
+    ])
+}
+
+/// A paragraph of the run of `value`, numbered by `instance` at `level`.
+fn numbered(instance: usize, level: usize, value: &str) -> BlockContent {
+    let mut depth = NumberingLevelReference::default();
+    depth.val = Some(decimal(level));
+    let mut id = NumberingDefinitionInstanceReferenceNumId::default();
+    id.val = Some(decimal(instance));
+    let mut reference = NumberingDefinitionInstanceReferenceNumPr::default();
+    reference.numbering_definition_instance_reference_num_id = Some(Box::new(id));
+    reference.numbering_level_reference = Some(Box::new(depth));
+    let mut properties = ParagraphProperties::default();
+    properties.numbering_definition_instance_reference_num_pr = Some(Box::new(reference));
+    styled_by(properties, alloc::vec![run(value)])
+}
+
+/// The numbering of the tests, `measure` writing each indent from its twips: instance 1 is
+/// bullets, instance 2 decimal numbers from 1 whose levels' text starts at 720 and 1440, instance
+/// 3 a level of format `none`, and instance 4 instance 2's numbers from 3 by a start override.
+fn numbering(measure: fn(u16) -> String) -> NumberingDefinitions {
+    let level = |index: usize, format: &str| {
+        let mut kind = NumberingFormat::default();
+        kind.val = Some(StNumberFormat::from(format.to_owned()));
+        let mut first = StartingValue::default();
+        first.val = Some(decimal(1));
+        let mut defined = NumberingLevelOverrideDefinition::default();
+        defined.ilvl = Some(decimal(index));
+        defined.numbering_format = Some(Box::new(kind));
+        defined.starting_value = Some(Box::new(first));
+        defined
+    };
+    let indent = |mut defined: NumberingLevelOverrideDefinition, left: u16| {
+        let mut indentation = ParagraphIndentation::default();
+        indentation.hanging = Some(MeasurementInTwentiethsOfAPoint::from(measure(360)));
+        indentation.left = Some(SignedMeasurementInTwentiethsOfPoint::from(measure(left)));
+        let mut properties = ParagraphPropertiesPPrGeneral::default();
+        properties.paragraph_indentation = Some(Box::new(indentation));
+        defined.paragraph_properties_p_pr_general = Some(Box::new(properties));
+        defined
+    };
+    let definition = |id: usize, levels: Vec<NumberingLevelOverrideDefinition>| {
+        let mut abstract_definition = AbstractNumberingDefinition::default();
+        abstract_definition.abstract_num_id = Some(decimal(id));
+        abstract_definition.numbering_level_override_definition = levels;
+        abstract_definition
+    };
+    let instance = |id: usize, abstract_id: usize| {
+        let mut reference = AbstractNumberingDefinitionReference::default();
+        reference.val = Some(decimal(abstract_id));
+        let mut numbered_by = NumberingDefinitionInstance::default();
+        numbered_by.abstract_numbering_definition_reference = Box::new(reference);
+        numbered_by.num_id = Some(decimal(id));
+        numbered_by
+    };
+    let mut parenthesis = NumberingLevelText::default();
+    parenthesis.val = Some("%1)".to_owned());
+    let mut decimals = indent(level(0, "decimal"), 720);
+    decimals.numbering_level_text = Some(Box::new(parenthesis));
+    let mut three = NumberingLevelStartingValueOverride::default();
+    three.val = Some(decimal(3));
+    let mut restart = NumberingLevelDefinitionOverride::default();
+    restart.ilvl = Some(decimal(0));
+    restart.numbering_level_starting_value_override = Some(Box::new(three));
+    let mut from_three = instance(4, 1);
+    from_three.numbering_level_definition_override = alloc::vec![restart];
+    let mut definitions = NumberingDefinitions::default();
+    definitions.abstract_numbering_definition = alloc::vec![
+        definition(0, alloc::vec![level(0, "bullet"), level(1, "bullet")]),
+        definition(1, alloc::vec![decimals, indent(level(1, "decimal"), 1440)]),
+        definition(2, alloc::vec![level(0, "none")]),
+    ];
+    definitions.numbering_definition_instance =
+        alloc::vec![instance(1, 0), instance(2, 1), instance(3, 2), from_three];
+    definitions
+}
+
 /// A paragraph of the style `style` holding `runs`.
 fn paragraph(style: &str, runs: Vec<TextRun>) -> BlockContent {
-    let mut reference = ReferencedParagraphStyle::default();
-    reference.val = Some(style.to_owned());
     let mut properties = ParagraphProperties::default();
-    properties.referenced_paragraph_style = Some(Box::new(reference));
+    properties.referenced_paragraph_style = Some(Box::new(style_reference(style)));
     styled_by(properties, runs)
 }
 
@@ -269,6 +413,13 @@ fn style(kind: &str, id: &str, name: &str) -> StyleDefinition {
     style.style_id = Some(id.to_owned());
     style.r#type = Some(StyleTypes::from(kind.to_owned()));
     style
+}
+
+/// A reference to the paragraph style `style`.
+fn style_reference(style: &str) -> ReferencedParagraphStyle {
+    let mut reference = ReferencedParagraphStyle::default();
+    reference.val = Some(style.to_owned());
+    reference
 }
 
 /// A paragraph with `properties` holding `runs`.
@@ -348,6 +499,36 @@ fn styles() -> StyleDefinitions {
         ),
     ];
     definitions
+}
+
+/// A table of `rows`, its first `head` rows marked as head rows.
+fn table(head: usize, rows: Vec<wordprocessing::TableRow>) -> BlockContent {
+    let mut built = wordprocessing::Table::default();
+    built.content_row_content = rows.into_iter().map(ContentRowContent::TableRow).collect();
+    built.repeat_header_rows(head);
+    BlockContent::Table(built)
+}
+
+/// A table cell holding `blocks`.
+fn table_cell(blocks: Vec<BlockContent>) -> wordprocessing::TableCell {
+    let mut cell = wordprocessing::TableCell::default();
+    cell.content = blocks;
+    cell
+}
+
+/// A table row of `cells`.
+fn table_row(cells: Vec<wordprocessing::TableCell>) -> wordprocessing::TableRow {
+    let mut row = wordprocessing::TableRow::default();
+    row.content = cells
+        .into_iter()
+        .map(ContentCellContent::TableCell)
+        .collect();
+    row
+}
+
+/// A table cell of one paragraph of the run of `value`.
+fn text_cell(value: &str) -> wordprocessing::TableCell {
+    table_cell(alloc::vec![plain(alloc::vec![run(value)])])
 }
 
 /// A new Word document whose body holds `blocks` and whose styles part holds [`styles`].
@@ -848,15 +1029,8 @@ fn tabs_and_text_wrapping_breaks_stay_and_a_page_break_goes() {
 
 #[test]
 fn an_empty_paragraph_gives_nothing_and_one_with_a_bottom_border_alone_a_thematic_break() {
-    let mut bottom = ParagraphBorderBelowIdenticalParagraphs::default();
-    bottom.color = Some(ColorValue::from("auto".to_owned()));
-    bottom.space = Some(MeasurementInPoints::from("1".to_owned()));
-    bottom.sz = Some(MeasurementInEighthsOfAPoint::from("6".to_owned()));
-    bottom.val = Some(BorderStyles::from("single".to_owned()));
-    let mut borders = ParagraphBorders::default();
-    borders.paragraph_border_below_identical_paragraphs = Some(Box::new(bottom));
     let mut bordered = ParagraphProperties::default();
-    bordered.paragraph_borders = Some(Box::new(borders));
+    bordered.paragraph_borders = Some(bottom_border());
     let docx = word(alloc::vec![
         plain(Vec::new()),
         plain(alloc::vec![run("a")]),
@@ -1035,14 +1209,19 @@ fn to_arky_leaves_the_main_part_as_it_was() {
 /// A table of one row, `left` and a link to the bookmark `x` reading `right`.
 #[test]
 fn a_table_cell_is_converted_by_the_same_rules_and_a_hyperlink_is_a_link() {
-    let body = concat!(
-        "<w:tbl><w:tblPr/><w:tblGrid><w:gridCol/><w:gridCol/></w:tblGrid><w:tr>",
-        "<w:tc><w:p><w:r><w:t>left</w:t></w:r></w:p></w:tc>",
-        r#"<w:tc><w:p><w:hyperlink w:anchor="x"><w:r><w:t>right</w:t></w:r></w:hyperlink></w:p></w:tc>"#,
-        "</w:tr></w:tbl>",
-    );
+    let mut hyperlink = Hyperlink::default();
+    hyperlink.anchor = Some("x".to_owned());
+    hyperlink.content = alloc::vec![ParagraphContent::TextRun(run("right"))];
+    let linked = block(alloc::vec![ParagraphContent::Hyperlink(hyperlink)]);
+    let docx = word(alloc::vec![table(
+        0,
+        alloc::vec![table_row(alloc::vec![
+            text_cell("left"),
+            table_cell(alloc::vec![linked]),
+        ])],
+    )]);
     assert_eq!(
-        markdown(&word_xml(body)),
+        markdown(&docx),
         "+------+-------------+\n| left | [right](#x) |\n+------+-------------+\n"
     );
 }
@@ -1147,12 +1326,10 @@ fn with_embedded_pictures_the_sample_writes_a_data_uri_and_no_media_folder() {
 fn a_paragraph_numbered_by_its_style_is_a_list_item_and_a_level_of_format_none_a_paragraph() {
     let mut fixture = Fixture::new();
     fixture.numbering();
-    let body = [
-        paragraph_xml("Numbered", &run_xml("styled")),
-        numbered_xml(3, 0, "hidden"),
-    ]
-    .concat();
-    let docx = fixture.body_xml(&body);
+    let docx = fixture.body(alloc::vec![
+        paragraph("Numbered", alloc::vec![run("styled")]),
+        numbered(3, 0, "hidden"),
+    ]);
     assert_eq!(
         arky(&docx).body.sections,
         no_heading(alloc::vec![
@@ -1170,14 +1347,12 @@ fn a_paragraph_numbered_by_its_style_is_a_list_item_and_a_level_of_format_none_a
 fn a_deeper_level_nests_bullets_have_no_start_and_a_start_override_gives_the_first_number() {
     let mut fixture = Fixture::new();
     fixture.numbering();
-    let body = [
-        numbered_xml(1, 0, "a"),
-        numbered_xml(1, 1, "b"),
-        numbered_xml(1, 0, "c"),
-        numbered_xml(4, 0, "three"),
-    ]
-    .concat();
-    let docx = fixture.body_xml(&body);
+    let docx = fixture.body(alloc::vec![
+        numbered(1, 0, "a"),
+        numbered(1, 1, "b"),
+        numbered(1, 0, "c"),
+        numbered(4, 0, "three"),
+    ]);
     let nested = list(
         alloc::vec![item(alloc::vec![paragraph_of(alloc::vec![text("b")])])],
         None,
@@ -1204,17 +1379,15 @@ fn a_deeper_level_nests_bullets_have_no_start_and_a_start_override_gives_the_fir
 fn a_list_a_paragraph_interrupts_goes_on_from_its_last_number_and_a_deeper_level_starts_again() {
     let mut fixture = Fixture::new();
     fixture.numbering();
-    let body = [
-        numbered_xml(2, 0, "one"),
-        numbered_xml(2, 1, "inner"),
-        numbered_xml(2, 1, "inner"),
-        numbered_xml(2, 0, "two"),
-        numbered_xml(2, 1, "again"),
-        paragraph_xml("Normal", &run_xml("between")),
-        numbered_xml(2, 0, "three"),
-    ]
-    .concat();
-    let docx = fixture.body_xml(&body);
+    let docx = fixture.body(alloc::vec![
+        numbered(2, 0, "one"),
+        numbered(2, 1, "inner"),
+        numbered(2, 1, "inner"),
+        numbered(2, 0, "two"),
+        numbered(2, 1, "again"),
+        paragraph("Normal", alloc::vec![run("between")]),
+        numbered(2, 0, "three"),
+    ]);
     assert_eq!(
         markdown(&docx),
         "1. one\n   1. inner\n   2. inner\n2. two\n   1. again\n\nbetween\n\n3. three\n"
@@ -1225,17 +1398,15 @@ fn a_list_a_paragraph_interrupts_goes_on_from_its_last_number_and_a_deeper_level
 fn paragraphs_that_write_nothing_leave_the_items_of_one_word_list_in_one_list() {
     let mut fixture = Fixture::new();
     fixture.numbering();
-    let body = [
-        numbered_xml(2, 0, "one"),
-        "<w:p/>".to_owned(),
-        numbered_xml(2, 1, "inner"),
-        paragraph_xml("Ttulo1", ""),
-        numbered_xml(2, 0, "two"),
-        "<w:p/>".to_owned(),
-        numbered_xml(1, 0, "bullet"),
-    ]
-    .concat();
-    let docx = fixture.body_xml(&body);
+    let docx = fixture.body(alloc::vec![
+        numbered(2, 0, "one"),
+        plain(Vec::new()),
+        numbered(2, 1, "inner"),
+        paragraph("Ttulo1", Vec::new()),
+        numbered(2, 0, "two"),
+        plain(Vec::new()),
+        numbered(1, 0, "bullet"),
+    ]);
     let inner = list(
         alloc::vec![item(alloc::vec![paragraph_of(alloc::vec![text("inner")])])],
         Some(1),
@@ -1263,158 +1434,10 @@ fn decimal(value: usize) -> DecimalNumberValue {
     DecimalNumberValue::from(value.to_string())
 }
 
-/// An indentation whose `w:start` is `start`.
-fn indentation(start: &str) -> Box<ParagraphIndentation> {
-    let mut indentation = ParagraphIndentation::default();
-    indentation.start = Some(SignedMeasurementInTwentiethsOfPoint::from(start.to_owned()));
-    Box::new(indentation)
-}
-
-/// Paragraph properties indented to `start`.
-fn indented_to(start: &str) -> ParagraphProperties {
-    let mut properties = ParagraphProperties::default();
-    properties.paragraph_indentation = Some(indentation(start));
-    properties
-}
-
-/// Paragraph properties numbering a paragraph at `level` of the numbering instance 1.
-fn numbered_at(level: usize) -> ParagraphProperties {
-    let mut level_reference = NumberingLevelReference::default();
-    level_reference.val = Some(decimal(level));
-    let mut instance = NumberingDefinitionInstanceReferenceNumId::default();
-    instance.val = Some(decimal(1));
-    let mut numbering = NumberingDefinitionInstanceReferenceNumPr::default();
-    numbering.numbering_level_reference = Some(Box::new(level_reference));
-    numbering.numbering_definition_instance_reference_num_id = Some(Box::new(instance));
-    let mut properties = ParagraphProperties::default();
-    properties.numbering_definition_instance_reference_num_pr = Some(Box::new(numbering));
-    properties
-}
-
-/// Numbering instance 1: decimal numbers from 1, at one level per entry of `starts`, each level's
-/// text starting at that indent.
-fn numbering_starting_at(starts: &[&str]) -> NumberingDefinitions {
-    let mut definition = AbstractNumberingDefinition::default();
-    definition.abstract_num_id = Some(decimal(0));
-    for (level, start) in starts.iter().enumerate() {
-        let mut format = NumberingFormat::default();
-        format.val = Some(StNumberFormat::from("decimal".to_owned()));
-        let mut first = StartingValue::default();
-        first.val = Some(decimal(1));
-        let mut general = ParagraphPropertiesPPrGeneral::default();
-        general.paragraph_indentation = Some(indentation(start));
-        let mut defined = NumberingLevelOverrideDefinition::default();
-        defined.ilvl = Some(decimal(level));
-        defined.numbering_format = Some(Box::new(format));
-        defined.starting_value = Some(Box::new(first));
-        defined.paragraph_properties_p_pr_general = Some(Box::new(general));
-        definition.numbering_level_override_definition.push(defined);
-    }
-    let mut reference = AbstractNumberingDefinitionReference::default();
-    reference.val = Some(decimal(0));
-    let mut instance = NumberingDefinitionInstance::default();
-    instance.num_id = Some(decimal(1));
-    instance.abstract_numbering_definition_reference = Box::new(reference);
-    let mut numbering = NumberingDefinitions::default();
-    numbering.abstract_numbering_definition.push(definition);
-    numbering.numbering_definition_instance.push(instance);
-    numbering
-}
-
-/// A paragraph of the run of `value`, with `properties`.
-fn typed_paragraph(value: &str, properties: ParagraphProperties) -> wordprocessing::Paragraph {
-    let mut text = wordprocessing::Text::default();
-    text.value = value.to_owned();
-    let mut run = TextRun::default();
-    run.content.push(TextRunContent::Text(text));
-    let mut paragraph = wordprocessing::Paragraph::default();
-    paragraph.properties = Some(Box::new(properties));
-    paragraph.content.push(ParagraphContent::TextRun(run));
-    paragraph
-}
-
-/// A Word document of `paragraphs` whose numbering part holds `numbering`, built as a caller
-/// builds one.
-fn typed_word(
-    paragraphs: Vec<wordprocessing::Paragraph>,
-    numbering: &NumberingDefinitions,
-) -> Docx {
-    let mut body = DocumentBody::default();
-    body.content = paragraphs
-        .into_iter()
-        .map(BlockContent::Paragraph)
-        .collect();
-    let mut document = wordprocessing::Document::default();
-    document.body = Some(Box::new(body));
-    let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
-    docx.set_main_document(&document).unwrap();
-    let main = docx.main_document_part().clone();
-    let part = PartName::new("/word/numbering.xml").unwrap();
-    numbering_definitions::store_transitional(
-        docx.package_mut(),
-        &part,
-        numbering,
-        XmlWriteOptions::default(),
-    )
-    .unwrap();
-    docx.package_mut()
-        .relate(
-            Some(&main),
-            &part,
-            numbering_definitions::RELATIONSHIP_TYPE.transitional,
-        )
-        .unwrap();
-    docx
-}
-
 #[test]
 fn an_indent_with_a_unit_finds_the_list_item_the_same_number_of_twips_finds() {
-    let document = |indent: fn(u16) -> String| {
-        typed_word(
-            alloc::vec![
-                typed_paragraph("one", numbered_at(0)),
-                typed_paragraph("inner", numbered_at(1)),
-                typed_paragraph("under inner", indented_to(&indent(1440))),
-                typed_paragraph("under one", indented_to(&indent(720))),
-                typed_paragraph("two", numbered_at(0)),
-                typed_paragraph("elsewhere", indented_to(&indent(360))),
-                typed_paragraph("three", numbered_at(0)),
-            ],
-            &numbering_starting_at(&[&indent(720), &indent(1440)]),
-        )
-    };
-    let bare = arky(&document(|twips| twips.to_string()));
-    let points = arky(&document(|twips| format!("{}pt", twips / 20)));
-    let inner = Block::List(List::new(
-        alloc::vec![item(alloc::vec![
-            paragraph_of(alloc::vec![text("inner")]),
-            paragraph_of(alloc::vec![text("under inner")]),
-        ])],
-        true,
-        Some(1),
-    ));
-    assert_eq!(
-        points.body.sections,
-        no_heading(alloc::vec![
-            list(
-                alloc::vec![
-                    item(alloc::vec![
-                        paragraph_of(alloc::vec![text("one")]),
-                        inner,
-                        paragraph_of(alloc::vec![text("under one")]),
-                    ]),
-                    item(alloc::vec![paragraph_of(alloc::vec![text("two")])]),
-                ],
-                Some(1)
-            ),
-            paragraph_of(alloc::vec![text("elsewhere")]),
-            list(
-                alloc::vec![item(alloc::vec![paragraph_of(alloc::vec![text("three")])])],
-                Some(3)
-            ),
-        ])
-    );
-    assert_eq!(points.body.sections, bare.body.sections);
+    let points = indented_list(|twips| format!("{}pt", twips / 20));
+    assert_eq!(arky(&points).body.sections, indented_list_sections());
 }
 
 #[test]
@@ -1436,68 +1459,20 @@ fn a_measure_with_a_unit_gives_its_twips() {
 
 #[test]
 fn a_paragraph_indented_to_where_an_items_text_starts_is_a_later_block_of_that_item() {
-    let mut fixture = Fixture::new();
-    fixture.numbering();
-    let indented = |left: u16, text: &str| {
-        format!(
-            r#"<w:p><w:pPr><w:ind w:left="{left}" w:firstLine="0"/></w:pPr>{}</w:p>"#,
-            run_xml(text)
-        )
-    };
-    let body = [
-        numbered_xml(2, 0, "one"),
-        numbered_xml(2, 1, "inner"),
-        indented(1440, "under inner"),
-        indented(720, "under one"),
-        numbered_xml(2, 0, "two"),
-        indented(360, "elsewhere"),
-        numbered_xml(2, 0, "three"),
-    ]
-    .concat();
-    let docx = fixture.body_xml(&body);
-    let inner = Block::List(List::new(
-        alloc::vec![item(alloc::vec![
-            paragraph_of(alloc::vec![text("inner")]),
-            paragraph_of(alloc::vec![text("under inner")]),
-        ])],
-        true,
-        Some(1),
-    ));
-    assert_eq!(
-        arky(&docx).body.sections,
-        no_heading(alloc::vec![
-            list(
-                alloc::vec![
-                    item(alloc::vec![
-                        paragraph_of(alloc::vec![text("one")]),
-                        inner,
-                        paragraph_of(alloc::vec![text("under one")]),
-                    ]),
-                    item(alloc::vec![paragraph_of(alloc::vec![text("two")])]),
-                ],
-                Some(1)
-            ),
-            paragraph_of(alloc::vec![text("elsewhere")]),
-            list(
-                alloc::vec![item(alloc::vec![paragraph_of(alloc::vec![text("three")])])],
-                Some(3)
-            ),
-        ])
-    );
+    let twips = indented_list(|twips| twips.to_string());
+    assert_eq!(arky(&twips).body.sections, indented_list_sections());
 }
 
 #[test]
 fn a_list_paragraph_with_no_numbering_after_a_list_paragraph_is_a_later_block_of_its_item() {
     let mut fixture = Fixture::new();
     fixture.numbering();
-    let body = [
-        numbered_xml(2, 0, "one"),
-        paragraph_xml("ListParagraph", &run_xml("more")),
-        numbered_xml(2, 0, "two"),
-        paragraph_xml("Normal", &run_xml("after")),
-    ]
-    .concat();
-    let docx = fixture.body_xml(&body);
+    let docx = fixture.body(alloc::vec![
+        numbered(2, 0, "one"),
+        paragraph("ListParagraph", alloc::vec![run("more")]),
+        numbered(2, 0, "two"),
+        paragraph("Normal", alloc::vec![run("after")]),
+    ]);
     let items = alloc::vec![
         item(alloc::vec![
             paragraph_of(alloc::vec![text("one")]),
@@ -1517,29 +1492,21 @@ fn a_list_paragraph_with_no_numbering_after_a_list_paragraph_is_a_later_block_of
 
 #[test]
 fn a_code_block_a_block_quote_and_a_rule_inside_a_list_item_come_back_inside_it() {
+    let under =
+        |style: &str, value: &str| styled_by(indented(Some(style), "720"), alloc::vec![run(value)]);
+    let mut ruled = indented(None, "720");
+    ruled.paragraph_borders = Some(bottom_border());
     let mut fixture = Fixture::new();
     fixture.numbering();
-    let indented = |style: &str, text: &str| {
-        format!(
-            r#"<w:p><w:pPr><w:pStyle w:val="{style}"/><w:ind w:left="720"/></w:pPr>{}</w:p>"#,
-            run_xml(text)
-        )
-    };
-    let body = [
-        numbered_xml(1, 0, "item"),
-        indented("HTMLPreformatted", "let a = 1;"),
-        indented("HTMLPreformatted", "let b = 2;"),
-        indented("Quote", "quoted"),
-        concat!(
-            r#"<w:p><w:pPr><w:pBdr><w:bottom w:val="single" w:sz="6" w:space="1" w:color="auto"/>"#,
-            r#"</w:pBdr><w:ind w:left="720"/></w:pPr></w:p>"#,
-        )
-        .to_owned(),
-        numbered_xml(1, 0, "next"),
-        paragraph_xml("HTMLPreformatted", &run_xml("outside")),
-    ]
-    .concat();
-    let docx = fixture.body_xml(&body);
+    let docx = fixture.body(alloc::vec![
+        numbered(1, 0, "item"),
+        under("HTMLPreformatted", "let a = 1;"),
+        under("HTMLPreformatted", "let b = 2;"),
+        under("Quote", "quoted"),
+        styled_by(ruled, Vec::new()),
+        numbered(1, 0, "next"),
+        paragraph("HTMLPreformatted", alloc::vec![run("outside")]),
+    ]);
     let inside = alloc::vec![
         paragraph_of(alloc::vec![text("item")]),
         Block::CodeBlock(CodeBlock::new(
@@ -1573,13 +1540,14 @@ fn a_code_block_a_block_quote_and_a_rule_inside_a_list_item_come_back_inside_it(
 fn a_later_block_indented_to_an_outer_level_goes_into_that_level_s_item() {
     let mut fixture = Fixture::new();
     fixture.numbering();
-    let body = [
-        numbered_xml(2, 0, "outer"),
-        numbered_xml(1, 1, "inner"),
-        r#"<w:p><w:pPr><w:pStyle w:val="HTMLPreformatted"/><w:ind w:left="720"/></w:pPr><w:r><w:t>code</w:t></w:r></w:p>"#.to_owned(),
-    ]
-    .concat();
-    let docx = fixture.body_xml(&body);
+    let docx = fixture.body(alloc::vec![
+        numbered(2, 0, "outer"),
+        numbered(1, 1, "inner"),
+        styled_by(
+            indented(Some("HTMLPreformatted"), "720"),
+            alloc::vec![run("code")]
+        ),
+    ]);
     let inner = list(
         alloc::vec![item(alloc::vec![paragraph_of(alloc::vec![text("inner")])])],
         None,
@@ -1603,17 +1571,20 @@ fn a_later_block_indented_to_an_outer_level_goes_into_that_level_s_item() {
 
 #[test]
 fn a_table_with_a_head_row_and_one_line_cells_is_a_pipe_table_aligned_by_its_first_row() {
-    let aligned = |jc: &str, text: &str| {
-        format!(
-            r#"<w:tc><w:p><w:pPr><w:jc w:val="{jc}"/></w:pPr>{}</w:p></w:tc>"#,
-            run_xml(text)
-        )
+    let aligned = |alignment: &str, value: &str| {
+        let mut justification = ParagraphAlignment::default();
+        justification.val = Some(HorizontalAlignmentType::from(alignment.to_owned()));
+        let mut properties = ParagraphProperties::default();
+        properties.paragraph_alignment = Some(Box::new(justification));
+        table_cell(alloc::vec![styled_by(properties, alloc::vec![run(value)])])
     };
-    let rows = [
-        table_row_xml(true, &[aligned("center", "h1"), aligned("end", "h2")]),
-        table_row_xml(false, &[table_cell_xml("", "a"), table_cell_xml("", "b")]),
-    ];
-    let docx = word_xml(&table_xml(&rows));
+    let docx = word(alloc::vec![table(
+        1,
+        alloc::vec![
+            table_row(alloc::vec![aligned("center", "h1"), aligned("end", "h2")]),
+            table_row(alloc::vec![text_cell("a"), text_cell("b")]),
+        ],
+    )]);
     let expected = Table::new(
         TableFormat::Pipe,
         alloc::vec![Alignment::Center, Alignment::Right],
@@ -1632,17 +1603,26 @@ fn a_table_with_a_head_row_and_one_line_cells_is_a_pipe_table_aligned_by_its_fir
 
 #[test]
 fn a_table_with_two_head_rows_or_a_one_line_code_cell_is_a_grid_table() {
-    let two_heads = [
-        table_row_xml(true, &[table_cell_xml("", "h1")]),
-        table_row_xml(true, &[table_cell_xml("", "h2")]),
-        table_row_xml(false, &[table_cell_xml("", "a")]),
-    ];
-    let code = r#"<w:tc><w:p><w:pPr><w:pStyle w:val="HTMLPreformatted"/></w:pPr><w:r><w:t>let a = 1;</w:t></w:r></w:p></w:tc>"#;
-    let code_cell = [
-        table_row_xml(true, &[table_cell_xml("", "h")]),
-        table_row_xml(false, &[code.to_owned()]),
-    ];
-    let docx = word_xml(&[table_xml(&two_heads), table_xml(&code_cell)].concat());
+    let two_heads = table(
+        2,
+        alloc::vec![
+            table_row(alloc::vec![text_cell("h1")]),
+            table_row(alloc::vec![text_cell("h2")]),
+            table_row(alloc::vec![text_cell("a")]),
+        ],
+    );
+    let code = table_cell(alloc::vec![paragraph(
+        "HTMLPreformatted",
+        alloc::vec![run("let a = 1;")]
+    )]);
+    let code_cell = table(
+        1,
+        alloc::vec![
+            table_row(alloc::vec![text_cell("h")]),
+            table_row(alloc::vec![code]),
+        ],
+    );
+    let docx = word(alloc::vec![two_heads, code_cell]);
     let formats: Vec<TableFormat> = arky(&docx)
         .body
         .sections
@@ -1661,18 +1641,20 @@ fn a_table_with_two_head_rows_or_a_one_line_code_cell_is_a_grid_table() {
 
 #[test]
 fn a_table_with_no_head_row_or_with_a_cell_of_two_paragraphs_is_a_grid_table() {
-    let two = "<w:tc><w:p><w:r><w:t>x</w:t></w:r></w:p><w:p><w:r><w:t>y</w:t></w:r></w:p></w:tc>";
-    let rows = [
-        table_row_xml(true, &[table_cell_xml("", "h")]),
-        table_row_xml(false, &[two.to_owned()]),
-    ];
-    let docx = word_xml(
-        &[
-            table_xml(&[table_row_xml(false, &[table_cell_xml("", "a")])]),
-            table_xml(&rows),
-        ]
-        .concat(),
-    );
+    let two = table_cell(alloc::vec![
+        plain(alloc::vec![run("x")]),
+        plain(alloc::vec![run("y")]),
+    ]);
+    let docx = word(alloc::vec![
+        table(0, alloc::vec![table_row(alloc::vec![text_cell("a")])]),
+        table(
+            1,
+            alloc::vec![
+                table_row(alloc::vec![text_cell("h")]),
+                table_row(alloc::vec![two]),
+            ],
+        ),
+    ]);
     let two_paragraphs = TableCell::new(MarkdownBlock::new(no_heading(alloc::vec![
         paragraph_of(alloc::vec![text("x")]),
         paragraph_of(alloc::vec![text("y")]),
@@ -1698,31 +1680,37 @@ fn a_table_with_no_head_row_or_with_a_cell_of_two_paragraphs_is_a_grid_table() {
 
 #[test]
 fn a_spanning_cell_and_a_vertical_merge_continuation_are_padded_with_empty_cells() {
-    let rows = [
-        table_row_xml(
-            false,
-            &[
-                table_cell_xml(r#"<w:gridSpan w:val="2"/>"#, "wide"),
-                table_cell_xml("", "c"),
-            ],
-        ),
-        table_row_xml(
-            false,
-            &[
-                table_cell_xml(r#"<w:vMerge w:val="restart"/>"#, "x"),
-                table_cell_xml("", "y"),
-                table_cell_xml("", "z"),
-            ],
-        ),
-        table_row_xml(
-            false,
-            &[
-                table_cell_xml("<w:vMerge/>", "under"),
-                table_cell_xml("", "q"),
-                table_cell_xml("", "r"),
-            ],
-        ),
-    ];
+    let with = |properties: TableCellProperties, value: &str| {
+        let mut cell = text_cell(value);
+        cell.properties = Some(Box::new(properties));
+        cell
+    };
+    let mut span = GridColumnsSpanned::default();
+    span.val = Some(decimal(2));
+    let mut spanning = TableCellProperties::default();
+    spanning.grid_columns_spanned = Some(Box::new(span));
+    let mut restart = VerticallyMergedCell::default();
+    restart.val = Some(MergedCellType::from("restart".to_owned()));
+    let mut merge_start = TableCellProperties::default();
+    merge_start.vertically_merged_cell = Some(Box::new(restart));
+    let mut merge_continuation = TableCellProperties::default();
+    merge_continuation.vertically_merged_cell = Some(Box::new(VerticallyMergedCell::default()));
+    let docx = word(alloc::vec![table(
+        0,
+        alloc::vec![
+            table_row(alloc::vec![with(spanning, "wide"), text_cell("c")]),
+            table_row(alloc::vec![
+                with(merge_start, "x"),
+                text_cell("y"),
+                text_cell("z"),
+            ]),
+            table_row(alloc::vec![
+                with(merge_continuation, "under"),
+                text_cell("q"),
+                text_cell("r"),
+            ]),
+        ],
+    )]);
     let expected = Table::new(
         TableFormat::Grid,
         alloc::vec![Alignment::Default; 3],
@@ -1734,7 +1722,7 @@ fn a_spanning_cell_and_a_vertical_merge_continuation_are_padded_with_empty_cells
         ],
     );
     assert_eq!(
-        arky(&word_xml(&table_xml(&rows))).body.sections,
+        arky(&docx).body.sections,
         no_heading(alloc::vec![Block::Table(expected)])
     );
 }
