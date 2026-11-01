@@ -2,19 +2,29 @@ use crate::parts::document_settings;
 use crate::parts::kinds::WordprocessingKind;
 #[cfg(feature = "transitional")]
 use crate::parts::{footer, header};
+#[cfg(feature = "transitional")]
+use officekit_markup::common_simple_types::MeasurementInTwentiethsOfAPoint;
 use officekit_markup::wordprocessing::{
     BlockContent, Footer, Header, HeaderOrFooterTypeMember, Paragraph,
 };
 #[cfg(feature = "transitional")]
-use officekit_markup::wordprocessing::{DocumentFinalSectionProperties, SectionPropertiesContent};
+use officekit_markup::wordprocessing::{
+    BlockLevelStructuredDocumentTag, BlockLevelStructuredDocumentTagContent, ContentBlockContent,
+    Document, DocumentBody, DocumentFinalSectionProperties, DocumentSettings, FooterReference,
+    HeaderOrFooterType, HeaderReference, MagnificationSetting, PageSize, ParagraphProperties,
+    PercentageMeasurement, SectionPropertiesContent,
+};
 #[cfg(all(feature = "strict", feature = "transitional"))]
 use officekit_xml::conformance::ConformanceClass;
 #[cfg(feature = "transitional")]
 use officekit_xml::packaging::error::PackageError;
+use officekit_xml::packaging::package::OpenOptions;
 #[cfg(feature = "transitional")]
-use officekit_xml::packaging::package::{OpenOptions, Package};
+use officekit_xml::packaging::package::Package;
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::{RelationshipType, Target};
+#[cfg(feature = "transitional")]
+use officekit_xml::write::WriteOptions;
 
 use crate::docx::Docx;
 
@@ -101,21 +111,124 @@ fn package_with(body: &str, prefix: &str, parts: &[(&str, &str)], settings: bool
     package
 }
 
+/// A header or footer reference of `kind` naming the relationship `id`.
+#[cfg(feature = "transitional")]
+fn header_reference(kind: &str, id: &str) -> SectionPropertiesContent {
+    let mut reference = HeaderReference::default();
+    reference.id = Some(id.to_owned());
+    reference.r#type = Some(HeaderOrFooterType::from(kind.to_owned()));
+    SectionPropertiesContent::HeaderReference(reference)
+}
+
+#[cfg(feature = "transitional")]
+fn footer_reference(kind: &str, id: &str) -> SectionPropertiesContent {
+    let mut reference = FooterReference::default();
+    reference.id = Some(id.to_owned());
+    reference.r#type = Some(HeaderOrFooterType::from(kind.to_owned()));
+    SectionPropertiesContent::FooterReference(reference)
+}
+
+/// Section properties holding `references`.
+#[cfg(feature = "transitional")]
+fn section_of(references: Vec<SectionPropertiesContent>) -> DocumentFinalSectionProperties {
+    let mut section = DocumentFinalSectionProperties::default();
+    section.content = references;
+    section
+}
+
+/// A paragraph ending a section of `section`.
+#[cfg(feature = "transitional")]
+fn section_break(section: DocumentFinalSectionProperties) -> BlockContent {
+    let mut properties = ParagraphProperties::default();
+    properties.document_final_section_properties = Some(Box::new(section));
+    let mut paragraph = Paragraph::default();
+    paragraph.properties = Some(Box::new(properties));
+    BlockContent::Paragraph(paragraph)
+}
+
+/// A Word document whose body holds `blocks` and ends in `section`, related to one header or
+/// footer part per entry of `parts`, in order, and to a settings part with a zoom when
+/// `settings` is set.
+#[cfg(feature = "transitional")]
+fn typed_docx(
+    blocks: Vec<BlockContent>,
+    section: DocumentFinalSectionProperties,
+    parts: &[&str],
+    settings: bool,
+) -> Docx {
+    let mut body = DocumentBody::default();
+    body.content = blocks;
+    body.document_final_section_properties = Some(Box::new(section));
+    let mut document = Document::default();
+    document.body = Some(Box::new(body));
+    let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
+    docx.set_main_document(&document).unwrap();
+    let main = docx.main_document_part().clone();
+    let package = docx.package_mut();
+    for part in parts {
+        let target = name(part);
+        let relationship = if part.contains("header") {
+            header::store_transitional(package, &target, &a_header(), WriteOptions::default())
+                .unwrap();
+            RelationshipType::HEADER
+        } else {
+            footer::store_transitional(package, &target, &a_footer(), WriteOptions::default())
+                .unwrap();
+            RelationshipType::FOOTER
+        };
+        package
+            .relate(Some(&main), &target, relationship.transitional)
+            .unwrap();
+    }
+    if settings {
+        let mut zoom = MagnificationSetting::default();
+        zoom.percent = Some(PercentageMeasurement::from("100".to_owned()));
+        let mut held = DocumentSettings::default();
+        held.magnification_setting = Some(Box::new(zoom));
+        let target = name("/word/settings.xml");
+        document_settings::store_transitional(package, &target, &held, WriteOptions::default())
+            .unwrap();
+        package
+            .relate(
+                Some(&main),
+                &target,
+                RelationshipType::SETTINGS.transitional,
+            )
+            .unwrap();
+    }
+    docx
+}
+
 /// One section: a default header, a default footer, and a first-page footer.
 #[cfg(feature = "transitional")]
 fn pagare() -> Docx {
-    let section = "<w:sectPr><w:headerReference w:type=\"default\" r:id=\"rId1\"/><w:footerReference w:type=\"default\" r:id=\"rId2\"/><w:footerReference w:type=\"first\" r:id=\"rId3\"/><w:pgSz w:w=\"12240\" w:h=\"15840\"/></w:sectPr>";
-    let package = package_with(
-        &format!("<w:p/>{section}"),
-        "r",
+    let mut page = PageSize::default();
+    page.h = Some(MeasurementInTwentiethsOfAPoint::from("15840".to_owned()));
+    page.w = Some(MeasurementInTwentiethsOfAPoint::from("12240".to_owned()));
+    let mut section = section_of(vec![
+        header_reference("default", "rId1"),
+        footer_reference("default", "rId2"),
+        footer_reference("first", "rId3"),
+    ]);
+    section.page_size = Some(Box::new(page));
+    typed_docx(
+        vec![BlockContent::Paragraph(Paragraph::default())],
+        section,
         &[
-            ("/word/header1.xml", "rId1"),
-            ("/word/footer1.xml", "rId2"),
-            ("/word/footer2.xml", "rId3"),
+            "/word/header1.xml",
+            "/word/footer1.xml",
+            "/word/footer2.xml",
         ],
         true,
-    );
-    Docx::from_package(package, OpenOptions::default()).unwrap()
+    )
+}
+
+/// Whether the settings part `part` turns on different even and odd headers and footers.
+fn even_and_odd(docx: &Docx, part: &str) -> bool {
+    document_settings::load(docx.package(), &name(part), OpenOptions::default())
+        .unwrap()
+        .different_even_odd_page_headers_and_footers
+        .is_some()
 }
 
 #[cfg(feature = "transitional")]
@@ -194,7 +307,6 @@ fn a_first_page_header_goes_after_the_references_and_turns_on_title_page() {
         ]
     );
     assert!(section.different_first_page_headers_and_footers.is_some());
-    assert!(text(&docx, "/word/document.xml").contains("<w:titlePg/>"));
     assert_eq!(
         docx.package().content_type(&part),
         Some(header::CONTENT_TYPE)
@@ -237,11 +349,7 @@ fn an_even_footer_creates_the_settings_part_when_the_document_has_none() {
         .unwrap();
     assert_eq!(part, name("/word/footer1.xml"));
     let settings = name("/word/settings1.xml");
-    assert!(
-        text(&docx, "/word/settings1.xml").contains("<w:evenAndOddHeaders/>"),
-        "{}",
-        text(&docx, "/word/settings1.xml")
-    );
+    assert!(even_and_odd(&docx, "/word/settings1.xml"));
     let related = docx
         .package()
         .related_by_type(Some(docx.main_document_part()), &RelationshipType::SETTINGS)
@@ -339,10 +447,7 @@ fn removing_a_footer_removes_its_part_and_leaves_the_flags() {
         .unwrap();
     assert_eq!(removed, Some(name("/word/footer3.xml")));
     assert!(!docx.package().contains(&name("/word/footer3.xml")));
-    assert!(
-        text(&docx, "/word/settings.xml").contains("<w:evenAndOddHeaders/>"),
-        "the flag stays"
-    );
+    assert!(even_and_odd(&docx, "/word/settings.xml"), "the flag stays");
     let removed_first = docx
         .remove_footer(0, HeaderOrFooterTypeMember::First)
         .unwrap();
@@ -377,21 +482,23 @@ fn removing_a_first_page_header_leaves_title_page_on() {
         .unwrap();
     docx.remove_header(0, HeaderOrFooterTypeMember::First)
         .unwrap();
-    assert!(text(&docx, "/word/document.xml").contains("<w:titlePg/>"));
+    assert!(
+        body_section(&docx)
+            .different_first_page_headers_and_footers
+            .is_some()
+    );
 }
 
 #[cfg(feature = "transitional")]
 #[test]
 fn a_part_two_sections_share_stays_until_the_last_reference_goes() {
-    let first = "<w:p><w:pPr><w:sectPr><w:headerReference w:type=\"default\" r:id=\"rId1\"/></w:sectPr></w:pPr></w:p>";
-    let second = "<w:sectPr><w:headerReference w:type=\"default\" r:id=\"rId1\"/></w:sectPr>";
-    let package = package_with(
-        &format!("{first}{second}"),
-        "r",
-        &[("/word/header1.xml", "rId1")],
+    let shared = || section_of(vec![header_reference("default", "rId1")]);
+    let mut docx = typed_docx(
+        vec![section_break(shared())],
+        shared(),
+        &["/word/header1.xml"],
         false,
     );
-    let mut docx = Docx::from_package(package, OpenOptions::default()).unwrap();
     assert_eq!(
         docx.remove_header(0, HeaderOrFooterTypeMember::Default)
             .unwrap(),
@@ -409,16 +516,26 @@ fn a_part_two_sections_share_stays_until_the_last_reference_goes() {
 #[cfg(feature = "transitional")]
 #[test]
 fn sections_inside_block_level_content_controls_count_in_document_order() {
-    let control =
-        "<w:sdt><w:sdtContent><w:p><w:pPr><w:sectPr/></w:pPr></w:p></w:sdtContent></w:sdt>";
-    let plain = "<w:p><w:pPr><w:sectPr/></w:pPr></w:p>";
-    let package = package_with(
-        &format!("{plain}{control}<w:p/><w:sectPr/>"),
-        "r",
+    let mut content = BlockLevelStructuredDocumentTagContent::default();
+    content.content = vec![ContentBlockContent::Paragraph(
+        if let BlockContent::Paragraph(found) = section_break(section_of(Vec::new())) {
+            found
+        } else {
+            Paragraph::default()
+        },
+    )];
+    let mut control = BlockLevelStructuredDocumentTag::default();
+    control.content = Some(Box::new(content));
+    let mut docx = typed_docx(
+        vec![
+            section_break(section_of(Vec::new())),
+            BlockContent::BlockLevelStructuredDocumentTag(control),
+            BlockContent::Paragraph(Paragraph::default()),
+        ],
+        section_of(Vec::new()),
         &[],
         false,
     );
-    let mut docx = Docx::from_package(package, OpenOptions::default()).unwrap();
     docx.add_header(1, HeaderOrFooterTypeMember::Default, &a_header())
         .unwrap();
     let xml = text(&docx, "/word/document.xml");
