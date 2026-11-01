@@ -575,8 +575,8 @@ impl<'set> Builder<'set> {
                             .iter()
                             .find(|row| row.type_name == *name && row.member == member_name)
                     });
-                    if let Some(found) = row {
-                        out.push(found.spelling.clone());
+                    if let Some(spelling) = row.and_then(|found| found.spelling.clone()) {
+                        out.push(spelling);
                     }
                     self.spell(member, seen, out)?;
                 }

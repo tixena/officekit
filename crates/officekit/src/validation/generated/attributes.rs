@@ -348,6 +348,7 @@
 //   e26c4528f8340924ff27391d34681ecde1f597fc5ce3dbf2d354edc9c6071a52  crates/xtask/data/part_roots.toml
 //   dc6b1af848fe7bcb2e512bb9a5364a1c2df59916b004e67613da5c81661cddd2  crates/xtask/data/sdk_corrections.toml
 //   dff6adee70b19bb1f9b56e50e9cc20316298c14255ec7e2d6cb0efe795318af0  crates/xtask/data/simple_types.toml
+//   87ddaec0674d7f7ef85efce241d09b933d6607874efbe843d734cf21c47b9617  crates/xtask/data/strict_correspondences.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 
@@ -23088,122 +23089,508 @@ const STRICT_CHECKS_5: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const STRICT_CHECKS_6: &[ValueCheck] = &[ValueCheck {
-    check: Check::String {
-        class: Some(ValueClass::String),
-        kind: StringKind::Plain,
-        length: None,
-        max_length: None,
-        min_length: None,
-        pattern: Some("0*(([0-9])|([1-9][0-9])|([1-2][0-9][0-9])|300)%"),
+const STRICT_CHECKS_6: &[ValueCheck] = &[
+    ValueCheck {
+        check: Check::String {
+            class: Some(ValueClass::String),
+            kind: StringKind::Plain,
+            length: None,
+            max_length: None,
+            min_length: None,
+            pattern: Some("0*(([0-9])|([1-9][0-9])|([1-2][0-9][0-9])|300)%"),
+        },
+        union: Some(0),
+        versions: Versions(0b11_1111),
     },
-    union: None,
-    versions: Versions(0b11_1111),
-}];
+    ValueCheck {
+        check: Check::Number {
+            bounds: Bounds {
+                max_exclusive: None,
+                max_inclusive: None,
+                min_exclusive: None,
+                min_inclusive: None,
+                non_negative: false,
+                positive: false,
+            },
+            class: ValueClass::UInt32,
+            list: false,
+        },
+        union: Some(0),
+        versions: Versions(0b11_1111),
+    },
+    ValueCheck {
+        check: Check::String {
+            class: Some(ValueClass::String),
+            kind: StringKind::Plain,
+            length: None,
+            max_length: None,
+            min_length: None,
+            pattern: Some("0*(([0-9])|([1-9][0-9])|([1-2][0-9][0-9])|300)%"),
+        },
+        union: Some(1),
+        versions: Versions(0b11_1111),
+    },
+    ValueCheck {
+        check: Check::Number {
+            bounds: Bounds {
+                max_exclusive: None,
+                max_inclusive: Some(300.0_f64),
+                min_exclusive: None,
+                min_inclusive: Some(0.0_f64),
+                non_negative: false,
+                positive: false,
+            },
+            class: ValueClass::UInt32,
+            list: false,
+        },
+        union: Some(1),
+        versions: Versions(0b11_1111),
+    },
+];
 
-const STRICT_CHECKS_7: &[ValueCheck] = &[ValueCheck {
-    check: Check::String {
-        class: Some(ValueClass::String),
-        kind: StringKind::Plain,
-        length: None,
-        max_length: None,
-        min_length: None,
-        pattern: Some("0*(([2-9][0-9])|([1-9][0-9][0-9])|(1[0-9][0-9][0-9])|2000)%"),
+const STRICT_CHECKS_7: &[ValueCheck] = &[
+    ValueCheck {
+        check: Check::String {
+            class: Some(ValueClass::String),
+            kind: StringKind::Plain,
+            length: None,
+            max_length: None,
+            min_length: None,
+            pattern: Some("0*(([2-9][0-9])|([1-9][0-9][0-9])|(1[0-9][0-9][0-9])|2000)%"),
+        },
+        union: Some(0),
+        versions: Versions(0b11_1111),
     },
-    union: None,
-    versions: Versions(0b11_1111),
-}];
+    ValueCheck {
+        check: Check::Number {
+            bounds: Bounds {
+                max_exclusive: None,
+                max_inclusive: None,
+                min_exclusive: None,
+                min_inclusive: None,
+                non_negative: false,
+                positive: false,
+            },
+            class: ValueClass::UInt16,
+            list: false,
+        },
+        union: Some(0),
+        versions: Versions(0b11_1111),
+    },
+    ValueCheck {
+        check: Check::String {
+            class: Some(ValueClass::String),
+            kind: StringKind::Plain,
+            length: None,
+            max_length: None,
+            min_length: None,
+            pattern: Some("0*(([2-9][0-9])|([1-9][0-9][0-9])|(1[0-9][0-9][0-9])|2000)%"),
+        },
+        union: Some(1),
+        versions: Versions(0b11_1111),
+    },
+    ValueCheck {
+        check: Check::Number {
+            bounds: Bounds {
+                max_exclusive: None,
+                max_inclusive: Some(2000.0_f64),
+                min_exclusive: None,
+                min_inclusive: Some(20.0_f64),
+                non_negative: false,
+                positive: false,
+            },
+            class: ValueClass::UInt16,
+            list: false,
+        },
+        union: Some(1),
+        versions: Versions(0b11_1111),
+    },
+];
 
-const STRICT_CHECKS_8: &[ValueCheck] = &[ValueCheck {
-    check: Check::String {
-        class: Some(ValueClass::String),
-        kind: StringKind::Plain,
-        length: None,
-        max_length: None,
-        min_length: None,
-        pattern: Some("0*(([0-9])|([1-9][0-9])|([1-4][0-9][0-9])|500)%"),
+const STRICT_CHECKS_8: &[ValueCheck] = &[
+    ValueCheck {
+        check: Check::String {
+            class: Some(ValueClass::String),
+            kind: StringKind::Plain,
+            length: None,
+            max_length: None,
+            min_length: None,
+            pattern: Some("0*(([0-9])|([1-9][0-9])|([1-4][0-9][0-9])|500)%"),
+        },
+        union: Some(0),
+        versions: Versions(0b11_1111),
     },
-    union: None,
-    versions: Versions(0b11_1111),
-}];
+    ValueCheck {
+        check: Check::Number {
+            bounds: Bounds {
+                max_exclusive: None,
+                max_inclusive: None,
+                min_exclusive: None,
+                min_inclusive: None,
+                non_negative: false,
+                positive: false,
+            },
+            class: ValueClass::UInt16,
+            list: false,
+        },
+        union: Some(0),
+        versions: Versions(0b11_1111),
+    },
+    ValueCheck {
+        check: Check::String {
+            class: Some(ValueClass::String),
+            kind: StringKind::Plain,
+            length: None,
+            max_length: None,
+            min_length: None,
+            pattern: Some("0*(([0-9])|([1-9][0-9])|([1-4][0-9][0-9])|500)%"),
+        },
+        union: Some(1),
+        versions: Versions(0b11_1111),
+    },
+    ValueCheck {
+        check: Check::Number {
+            bounds: Bounds {
+                max_exclusive: None,
+                max_inclusive: Some(500.0_f64),
+                min_exclusive: None,
+                min_inclusive: Some(0.0_f64),
+                non_negative: false,
+                positive: false,
+            },
+            class: ValueClass::UInt16,
+            list: false,
+        },
+        union: Some(1),
+        versions: Versions(0b11_1111),
+    },
+];
 
-const STRICT_CHECKS_9: &[ValueCheck] = &[ValueCheck {
-    check: Check::String {
-        class: Some(ValueClass::String),
-        kind: StringKind::Plain,
-        length: None,
-        max_length: None,
-        min_length: None,
-        pattern: Some("0*(([5-9])|([1-9][0-9])|([1-4][0-9][0-9])|500)%"),
+const STRICT_CHECKS_9: &[ValueCheck] = &[
+    ValueCheck {
+        check: Check::String {
+            class: Some(ValueClass::String),
+            kind: StringKind::Plain,
+            length: None,
+            max_length: None,
+            min_length: None,
+            pattern: Some("0*(([5-9])|([1-9][0-9])|([1-4][0-9][0-9])|500)%"),
+        },
+        union: Some(0),
+        versions: Versions(0b11_1111),
     },
-    union: None,
-    versions: Versions(0b11_1111),
-}];
+    ValueCheck {
+        check: Check::Number {
+            bounds: Bounds {
+                max_exclusive: None,
+                max_inclusive: None,
+                min_exclusive: None,
+                min_inclusive: None,
+                non_negative: false,
+                positive: false,
+            },
+            class: ValueClass::UInt16,
+            list: false,
+        },
+        union: Some(0),
+        versions: Versions(0b11_1111),
+    },
+    ValueCheck {
+        check: Check::String {
+            class: Some(ValueClass::String),
+            kind: StringKind::Plain,
+            length: None,
+            max_length: None,
+            min_length: None,
+            pattern: Some("0*(([5-9])|([1-9][0-9])|([1-4][0-9][0-9])|500)%"),
+        },
+        union: Some(1),
+        versions: Versions(0b11_1111),
+    },
+    ValueCheck {
+        check: Check::Number {
+            bounds: Bounds {
+                max_exclusive: None,
+                max_inclusive: Some(500.0_f64),
+                min_exclusive: None,
+                min_inclusive: Some(5.0_f64),
+                non_negative: false,
+                positive: false,
+            },
+            class: ValueClass::UInt16,
+            list: false,
+        },
+        union: Some(1),
+        versions: Versions(0b11_1111),
+    },
+];
 
-const STRICT_CHECKS_10: &[ValueCheck] = &[ValueCheck {
-    check: Check::String {
-        class: Some(ValueClass::String),
-        kind: StringKind::Plain,
-        length: None,
-        max_length: None,
-        min_length: None,
-        pattern: Some("0*([1-9]|([1-8][0-9])|90)%"),
+const STRICT_CHECKS_10: &[ValueCheck] = &[
+    ValueCheck {
+        check: Check::String {
+            class: Some(ValueClass::String),
+            kind: StringKind::Plain,
+            length: None,
+            max_length: None,
+            min_length: None,
+            pattern: Some("0*([1-9]|([1-8][0-9])|90)%"),
+        },
+        union: Some(0),
+        versions: Versions(0b11_1111),
     },
-    union: None,
-    versions: Versions(0b11_1111),
-}];
+    ValueCheck {
+        check: Check::Number {
+            bounds: Bounds {
+                max_exclusive: None,
+                max_inclusive: None,
+                min_exclusive: None,
+                min_inclusive: None,
+                non_negative: false,
+                positive: false,
+            },
+            class: ValueClass::Byte,
+            list: false,
+        },
+        union: Some(0),
+        versions: Versions(0b11_1111),
+    },
+    ValueCheck {
+        check: Check::String {
+            class: Some(ValueClass::String),
+            kind: StringKind::Plain,
+            length: None,
+            max_length: None,
+            min_length: None,
+            pattern: Some("0*([1-9]|([1-8][0-9])|90)%"),
+        },
+        union: Some(1),
+        versions: Versions(0b11_1111),
+    },
+    ValueCheck {
+        check: Check::Number {
+            bounds: Bounds {
+                max_exclusive: None,
+                max_inclusive: Some(90.0_f64),
+                min_exclusive: None,
+                min_inclusive: Some(1.0_f64),
+                non_negative: false,
+                positive: false,
+            },
+            class: ValueClass::Byte,
+            list: false,
+        },
+        union: Some(1),
+        versions: Versions(0b11_1111),
+    },
+];
 
-const STRICT_CHECKS_11: &[ValueCheck] = &[ValueCheck {
-    check: Check::String {
-        class: Some(ValueClass::String),
-        kind: StringKind::Plain,
-        length: None,
-        max_length: None,
-        min_length: None,
-        pattern: Some("0*(([0-9])|([1-9][0-9])|([1-9][0-9][0-9])|1000)%"),
+const STRICT_CHECKS_11: &[ValueCheck] = &[
+    ValueCheck {
+        check: Check::String {
+            class: Some(ValueClass::String),
+            kind: StringKind::Plain,
+            length: None,
+            max_length: None,
+            min_length: None,
+            pattern: Some("0*(([0-9])|([1-9][0-9])|([1-9][0-9][0-9])|1000)%"),
+        },
+        union: Some(0),
+        versions: Versions(0b11_1111),
     },
-    union: None,
-    versions: Versions(0b11_1111),
-}];
+    ValueCheck {
+        check: Check::Number {
+            bounds: Bounds {
+                max_exclusive: None,
+                max_inclusive: None,
+                min_exclusive: None,
+                min_inclusive: None,
+                non_negative: false,
+                positive: false,
+            },
+            class: ValueClass::UInt16,
+            list: false,
+        },
+        union: Some(0),
+        versions: Versions(0b11_1111),
+    },
+    ValueCheck {
+        check: Check::String {
+            class: Some(ValueClass::String),
+            kind: StringKind::Plain,
+            length: None,
+            max_length: None,
+            min_length: None,
+            pattern: Some("0*(([0-9])|([1-9][0-9])|([1-9][0-9][0-9])|1000)%"),
+        },
+        union: Some(1),
+        versions: Versions(0b11_1111),
+    },
+    ValueCheck {
+        check: Check::Number {
+            bounds: Bounds {
+                max_exclusive: None,
+                max_inclusive: Some(1000.0_f64),
+                min_exclusive: None,
+                min_inclusive: Some(0.0_f64),
+                non_negative: false,
+                positive: false,
+            },
+            class: ValueClass::UInt16,
+            list: false,
+        },
+        union: Some(1),
+        versions: Versions(0b11_1111),
+    },
+];
 
-const STRICT_CHECKS_12: &[ValueCheck] = &[ValueCheck {
-    check: Check::String {
-        class: Some(ValueClass::String),
-        kind: StringKind::Plain,
-        length: None,
-        max_length: None,
-        min_length: None,
-        pattern: Some("(-?0*(([0-9])|([1-9][0-9])|100))%"),
+const STRICT_CHECKS_12: &[ValueCheck] = &[
+    ValueCheck {
+        check: Check::String {
+            class: Some(ValueClass::String),
+            kind: StringKind::Plain,
+            length: None,
+            max_length: None,
+            min_length: None,
+            pattern: Some("(-?0*(([0-9])|([1-9][0-9])|100))%"),
+        },
+        union: Some(0),
+        versions: Versions(0b11_1111),
     },
-    union: None,
-    versions: Versions(0b11_1111),
-}];
+    ValueCheck {
+        check: Check::Number {
+            bounds: Bounds {
+                max_exclusive: None,
+                max_inclusive: None,
+                min_exclusive: None,
+                min_inclusive: None,
+                non_negative: false,
+                positive: false,
+            },
+            class: ValueClass::SByte,
+            list: false,
+        },
+        union: Some(0),
+        versions: Versions(0b11_1111),
+    },
+    ValueCheck {
+        check: Check::String {
+            class: Some(ValueClass::String),
+            kind: StringKind::Plain,
+            length: None,
+            max_length: None,
+            min_length: None,
+            pattern: Some("(-?0*(([0-9])|([1-9][0-9])|100))%"),
+        },
+        union: Some(1),
+        versions: Versions(0b11_1111),
+    },
+    ValueCheck {
+        check: Check::Number {
+            bounds: Bounds {
+                max_exclusive: None,
+                max_inclusive: Some(100.0_f64),
+                min_exclusive: None,
+                min_inclusive: Some(-100.0_f64),
+                non_negative: false,
+                positive: false,
+            },
+            class: ValueClass::SByte,
+            list: false,
+        },
+        union: Some(1),
+        versions: Versions(0b11_1111),
+    },
+];
 
-const STRICT_CHECKS_13: &[ValueCheck] = &[ValueCheck {
-    check: Check::String {
-        class: Some(ValueClass::String),
-        kind: StringKind::Plain,
-        length: None,
-        max_length: None,
-        min_length: None,
-        pattern: Some("0*(([5-9])|([1-9][0-9])|(1[0-9][0-9])|200)%"),
+const STRICT_CHECKS_13: &[ValueCheck] = &[
+    ValueCheck {
+        check: Check::String {
+            class: Some(ValueClass::String),
+            kind: StringKind::Plain,
+            length: None,
+            max_length: None,
+            min_length: None,
+            pattern: Some("0*(([5-9])|([1-9][0-9])|(1[0-9][0-9])|200)%"),
+        },
+        union: Some(0),
+        versions: Versions(0b11_1111),
     },
-    union: None,
-    versions: Versions(0b11_1111),
-}];
+    ValueCheck {
+        check: Check::Number {
+            bounds: Bounds {
+                max_exclusive: None,
+                max_inclusive: None,
+                min_exclusive: None,
+                min_inclusive: None,
+                non_negative: false,
+                positive: false,
+            },
+            class: ValueClass::UInt16,
+            list: false,
+        },
+        union: Some(0),
+        versions: Versions(0b11_1111),
+    },
+    ValueCheck {
+        check: Check::String {
+            class: Some(ValueClass::String),
+            kind: StringKind::Plain,
+            length: None,
+            max_length: None,
+            min_length: None,
+            pattern: Some("0*(([5-9])|([1-9][0-9])|(1[0-9][0-9])|200)%"),
+        },
+        union: Some(1),
+        versions: Versions(0b11_1111),
+    },
+    ValueCheck {
+        check: Check::Number {
+            bounds: Bounds {
+                max_exclusive: None,
+                max_inclusive: Some(200.0_f64),
+                min_exclusive: None,
+                min_inclusive: Some(5.0_f64),
+                non_negative: false,
+                positive: false,
+            },
+            class: ValueClass::UInt16,
+            list: false,
+        },
+        union: Some(1),
+        versions: Versions(0b11_1111),
+    },
+];
 
-const STRICT_CHECKS_14: &[ValueCheck] = &[ValueCheck {
-    check: Check::String {
-        class: Some(ValueClass::String),
-        kind: StringKind::Plain,
-        length: None,
-        max_length: None,
-        min_length: None,
-        pattern: Some("([0-9]+)%"),
+const STRICT_CHECKS_14: &[ValueCheck] = &[
+    ValueCheck {
+        check: Check::String {
+            class: Some(ValueClass::String),
+            kind: StringKind::Plain,
+            length: None,
+            max_length: None,
+            min_length: None,
+            pattern: Some("([0-9]+)%"),
+        },
+        union: Some(0),
+        versions: Versions(0b11_1111),
     },
-    union: None,
-    versions: Versions(0b11_1111),
-}];
+    ValueCheck {
+        check: Check::Number {
+            bounds: Bounds {
+                max_exclusive: None,
+                max_inclusive: None,
+                min_exclusive: None,
+                min_inclusive: None,
+                non_negative: false,
+                positive: false,
+            },
+            class: ValueClass::UInt32,
+            list: false,
+        },
+        union: Some(0),
+        versions: Versions(0b11_1111),
+    },
+];
 
 const STRICT_CHECKS_15: &[ValueCheck] = &[
     ValueCheck {

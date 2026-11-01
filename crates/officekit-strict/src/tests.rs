@@ -1,3 +1,4 @@
+use officekit_markup::chart::{GapWidth, LabelOffset, Overlap};
 use officekit_markup::drawing::Alpha;
 use officekit_markup::office_drawing_2012_chart_style::DefRPr;
 use officekit_markup::office_drawing_2017_03_chart::DispNaAsBlank;
@@ -26,7 +27,9 @@ use officekit_xml::write::{Layout, WriteOptions};
 use super::{Refusal, Strict, iso_date_time, refusals};
 
 const A: &str = "http://schemas.openxmlformats.org/drawingml/2006/main";
+const C: &str = "http://schemas.openxmlformats.org/drawingml/2006/chart";
 const C16R3: &str = "http://schemas.microsoft.com/office/drawing/2017/03/chart";
+const C_STRICT: &str = "http://purl.oclc.org/ooxml/drawingml/chart";
 const A_STRICT: &str = "http://purl.oclc.org/ooxml/drawingml/main";
 const CS: &str = "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
 const MC: &str = "http://schemas.openxmlformats.org/markup-compatibility/2006";
@@ -238,6 +241,26 @@ fn a_bare_percentage_takes_its_unit() {
     assert_eq!(
         strict::<Alpha>("<a:alpha xmlns:a=\"{a}\" val=\"25%\"/>"),
         format!("<a:alpha xmlns:a=\"{A_STRICT}\" val=\"25%\"/>")
+    );
+}
+
+#[test]
+fn a_chart_s_percentages_stay_the_bare_numbers_word_writes() {
+    assert_eq!(
+        strict::<GapWidth>(&format!("<c:gapWidth xmlns:c=\"{C}\" val=\"219\"/>")),
+        format!("<c:gapWidth xmlns:c=\"{C_STRICT}\" val=\"219\"/>")
+    );
+    assert_eq!(
+        strict::<Overlap>(&format!("<c:overlap xmlns:c=\"{C}\" val=\"-27\"/>")),
+        format!("<c:overlap xmlns:c=\"{C_STRICT}\" val=\"-27\"/>")
+    );
+    assert_eq!(
+        strict::<LabelOffset>(&format!("<c:lblOffset xmlns:c=\"{C}\" val=\"100\"/>")),
+        format!("<c:lblOffset xmlns:c=\"{C_STRICT}\" val=\"100\"/>")
+    );
+    assert_eq!(
+        strict::<GapWidth>(&format!("<c:gapWidth xmlns:c=\"{C}\" val=\"219%\"/>")),
+        format!("<c:gapWidth xmlns:c=\"{C_STRICT}\" val=\"219%\"/>")
     );
 }
 

@@ -59,10 +59,10 @@ written = "decimal"
     assert_eq!(table.members[0].type_name, Name::new(W, "ST_Number"));
     assert_eq!(
         table.members[0].spelling,
-        Spelling::Percent {
+        Some(Spelling::Percent {
             decimals: Some(2),
             per_percent: 1000,
-        }
+        })
     );
     assert_eq!(
         table.packed[0].bits,
@@ -85,6 +85,16 @@ written = "decimal"
             (1252, "windows-1252".to_owned())
         ])
     );
+}
+
+#[test]
+fn a_member_row_with_keep_writes_no_spelling() {
+    let table = Correspondences::parse(
+        "[[member]]\ntype = \"w:ST_Number\"\nmember = \"xsd:int\"\nkeep = true\n",
+        &rows(),
+    )
+    .unwrap();
+    assert_eq!(table.members[0].spelling, None);
 }
 
 #[test]

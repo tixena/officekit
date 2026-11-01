@@ -1,3 +1,5 @@
+use alloc::collections::BTreeSet;
+
 use os_shim::mock::MemorySystem;
 
 use super::{checks, strict_checks};
@@ -269,7 +271,7 @@ fn only_an_attribute_whose_strict_type_differs_gets_strict_checks() {
         .unwrap();
     let transitional = SchemaSet::read(&system, &["t/wml.xsd"]).unwrap();
     let strict = SchemaSet::read(&system, &["s/wml.xsd"]).unwrap();
-    let found = strict_checks(&transitional, &strict).unwrap();
+    let found = strict_checks(&transitional, &strict, &BTreeSet::new()).unwrap();
     let names: Vec<(&str, &str)> = found
         .iter()
         .flat_map(|(complex_type, attributes)| {

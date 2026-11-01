@@ -310,6 +310,26 @@ fn a_strict_file_reports_an_attribute_undeclared_at_the_target() {
 }
 
 #[test]
+fn a_strict_file_accepts_a_chart_s_percentage_in_either_form() {
+    let gap_width = |value: &str| {
+        element(&format!(
+            "<c:gapWidth xmlns:c=\"http://schemas.openxmlformats.org/drawingml/2006/chart\" val=\"{value}\"/>"
+        ))
+    };
+    let gap = "c:CT_GapAmount/c:gapWidth";
+    assert_eq!(
+        codes(&gap_width("219"), gap, true).len(),
+        0,
+        "as Word writes it"
+    );
+    assert_eq!(
+        codes(&gap_width("219%"), gap, true).len(),
+        0,
+        "as Part 1 writes it"
+    );
+}
+
+#[test]
 fn a_strict_file_checks_a_value_against_its_strict_type() {
     let alpha = |value: &str| {
         element(&format!(

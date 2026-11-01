@@ -125,7 +125,8 @@ pub struct Measure {
 #[non_exhaustive]
 pub struct Member {
     pub member: Name,
-    pub spelling: Spelling,
+    /// What Strict writes for the member's values; `None` keeps them as they are.
+    pub spelling: Option<Spelling>,
     pub type_name: Name,
 }
 
@@ -346,15 +347,18 @@ impl TableRow<'_> {
             .collect()
     }
 
-    /// What a `member` row writes: its `values`, else a percentage.
-    fn spelling(&self) -> Result<Spelling> {
-        if self.row.get("values").is_some() {
-            return Ok(Spelling::Map(self.pairs("values")?));
+    /// What a `member` row writes: nothing with `keep`, else its `values`, else a percentage.
+    fn spelling(&self) -> Result<Option<Spelling>> {
+        if self.row.get("keep").is_some() {
+            return Ok(None);
         }
-        Ok(Spelling::Percent {
+        if self.row.get("values").is_some() {
+            return Ok(Some(Spelling::Map(self.pairs("values")?)));
+        }
+        Ok(Some(Spelling::Percent {
             decimals: self.optional_number("decimals")?,
             per_percent: self.number("per_percent")?,
-        })
+        }))
     }
 
     /// A text.

@@ -18,6 +18,8 @@ use os_shim::bucket::Condition;
 
 use self::strict::StrictChecks;
 use crate::generate_schema::compare::{self, Additions};
+use crate::generate_schema::emit::classes::CORRESPONDENCES_PATH;
+use crate::generate_schema::emit::classes::correspondences::Correspondences;
 use crate::generate_schema::emit::namespaces;
 use crate::generate_schema::inputs::{Inputs, listed};
 use crate::generate_schema::model::{
@@ -936,8 +938,13 @@ impl Marks {
     /// # Errors
     ///
     /// A Strict type built from a shape the conversion does not know, named.
-    pub fn with_strict(mut self, transitional: &SchemaSet, strict: &SchemaSet) -> Result<Self> {
-        self.strict_checks = strict::strict_checks(transitional, strict)?;
+    pub fn with_strict(
+        mut self,
+        transitional: &SchemaSet,
+        strict: &SchemaSet,
+        kept: &BTreeSet<Name>,
+    ) -> Result<Self> {
+        self.strict_checks = strict::strict_checks(transitional, strict, kept)?;
         for (row, local) in [
             ("a:ST_Percentage/wp14:pctPosHOffset", "ST_Percentage"),
             ("a:ST_Percentage/wp14:pctPosVOffset", "ST_Percentage"),
@@ -1677,11 +1684,19 @@ where
         .collect();
     let open = SchemaSet::read(system, &open_specifications)?;
     let namespace_rows = namespaces::rows(&data, &transitional, &strict, &open)?;
+    let correspondences = ready_now(system.read_to_string(Path::new(CORRESPONDENCES_PATH)))
+        .with_context(|| format!("cannot read {CORRESPONDENCES_PATH}"))?;
+    let kept: BTreeSet<Name> = Correspondences::parse(&correspondences, &namespace_rows)?
+        .members
+        .into_iter()
+        .filter(|row| row.spelling.is_none())
+        .map(|row| row.type_name)
+        .collect();
     let marks = Marks::new(
         &transitional,
         &compare::transitional_only(&transitional, &strict),
     )
-    .with_strict(&transitional, &strict)?;
+    .with_strict(&transitional, &strict, &kept)?;
     let simple_types_text = ready_now(system.read_to_string(simple_types_path))
         .with_context(|| format!("cannot read {}", simple_types_path.display()))?;
     let part_roots_text = ready_now(system.read_to_string(part_roots_path))
@@ -1702,6 +1717,7 @@ where
         inputs.tools(),
         &read,
         &[
+            (Path::new(CORRESPONDENCES_PATH), correspondences.as_bytes()),
             (part_roots_path, part_roots_text.as_bytes()),
             (sdk_corrections_path, sdk_corrections_text.as_bytes()),
             (simple_types_path, simple_types_text.as_bytes()),

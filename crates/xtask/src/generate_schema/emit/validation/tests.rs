@@ -1,4 +1,4 @@
-use alloc::collections::BTreeMap;
+use alloc::collections::{BTreeMap, BTreeSet};
 use std::path::Path;
 
 use os_shim::mock::MemorySystem;
@@ -848,7 +848,7 @@ fn the_strict_set_adds_strict_checks_namespaces_and_transitional_only_types() {
     let transitional = SchemaSet::read(&system, &["t/vml-main.xsd", "t/wml.xsd"]).unwrap();
     let strict = SchemaSet::read(&system, &["s/wml.xsd"]).unwrap();
     let marks = Marks::new(&transitional, &transitional_only(&transitional, &strict))
-        .with_strict(&transitional, &strict)
+        .with_strict(&transitional, &strict, &BTreeSet::new())
         .unwrap();
     let tables = convert(
         &data(&[STRICT_MARKED]),

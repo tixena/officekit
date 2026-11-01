@@ -6,7 +6,7 @@
 //! of which must pass: a union of members that are several checks each is
 //! distributed over them, so that every clause is one check or one union.
 
-use alloc::collections::BTreeMap;
+use alloc::collections::{BTreeMap, BTreeSet};
 
 use anyhow::{Context as _, Result, bail};
 
@@ -430,12 +430,17 @@ const fn string(kind: StringKind) -> Check {
 }
 
 /// The Strict checks of every attribute both classes declare whose Strict
-/// type is not its Transitional type.
+/// type is not its Transitional type. An attribute of a type in `kept`, whose
+/// bare number a Strict save keeps, takes its Transitional type's checks.
 ///
 /// # Errors
 ///
 /// A Strict type built from a shape the conversion does not know, named.
-pub fn strict_checks(transitional: &SchemaSet, strict: &SchemaSet) -> Result<StrictChecks> {
+pub fn strict_checks(
+    transitional: &SchemaSet,
+    strict: &SchemaSet,
+    kept: &BTreeSet<Name>,
+) -> Result<StrictChecks> {
     let sets = Sets {
         strict,
         transitional,
@@ -467,7 +472,16 @@ pub fn strict_checks(transitional: &SchemaSet, strict: &SchemaSet) -> Result<Str
             if sets.same(strict_type, &attribute.type_ref) {
                 continue;
             }
-            let converted = checks(strict, strict_type).with_context(|| {
+            let keeps_bare_number = matches!(
+                &attribute.type_ref,
+                TypeRef::Simple { anonymous: _anonymous, name: type_name } if kept.contains(type_name)
+            );
+            let converted = if keeps_bare_number {
+                checks(transitional, &attribute.type_ref)
+            } else {
+                checks(strict, strict_type)
+            }
+            .with_context(|| {
                 format!(
                     "in the Strict type {strict_type} of the attribute {} of {name}",
                     attribute.name
