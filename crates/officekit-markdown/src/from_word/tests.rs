@@ -15,15 +15,29 @@ use base64::engine::general_purpose::STANDARD;
 use officekit::docx::image::{PictureSource, inline_picture};
 use officekit::parts::kinds::WordprocessingKind;
 use officekit::parts::numbering_definitions;
-use officekit::parts::style_definitions::{CONTENT_TYPE, RELATIONSHIP_TYPE};
+use officekit::parts::style_definitions;
+use officekit_markup::common_simple_types::{OnOffValue, XMLName};
+use officekit_markup::math::{
+    OfficeMath, OfficeMathContent, Run as MathRun, RunContent as MathRunContent, Text as MathText,
+};
 use officekit_markup::wordprocessing::{
-    self, AbstractNumberingDefinition, AbstractNumberingDefinitionReference, BlockContent,
-    DecimalNumberValue, DocumentBody, NumberingDefinitionInstance,
-    NumberingDefinitionInstanceReferenceNumId, NumberingDefinitionInstanceReferenceNumPr,
-    NumberingDefinitions, NumberingFormat, NumberingLevelOverrideDefinition,
-    NumberingLevelReference, ParagraphContent, ParagraphIndentation, ParagraphProperties,
-    ParagraphPropertiesPPrGeneral, SignedMeasurementInTwentiethsOfPoint, StNumberFormat,
-    StartingValue, TextRun, TextRunContent,
+    self, AbstractNumberingDefinition, AbstractNumberingDefinitionReference,
+    AssociatedOutlineLevel, BlockContent, BlockLevelStructuredDocumentTag,
+    BlockLevelStructuredDocumentTagContent, Bold, BorderStyles, Break, BreakTypes, CarriageReturn,
+    ColorValue, ComplexFieldCharacter, ComplexFieldCharacterType, ContentBlockContent,
+    DecimalNumberValue, DeletedRunContent, DeletedText, DocumentBody, FieldCode,
+    InlineLevelCustomXMLElement, InlineLevelSmartTag, InlineLevelStructuredDocumentTag,
+    InlineLevelStructuredDocumentTagContent, InsertedRunContent, Italics,
+    MeasurementInEighthsOfAPoint, MeasurementInPoints, MoveDestinationRunContent,
+    MoveSourceRunContent, NumberingDefinitionInstance, NumberingDefinitionInstanceReferenceNumId,
+    NumberingDefinitionInstanceReferenceNumPr, NumberingDefinitions, NumberingFormat,
+    NumberingLevelOverrideDefinition, NumberingLevelReference,
+    ParagraphBorderBelowIdenticalParagraphs, ParagraphBorders, ParagraphContent,
+    ParagraphIndentation, ParagraphProperties, ParagraphPropertiesPPrGeneral, ParentStyleID,
+    PrimaryStyleName, ReferencedCharacterStyle, ReferencedParagraphStyle, RunFonts, RunProperties,
+    RunPropertiesContent, SignedMeasurementInTwentiethsOfPoint, SimpleField, StNumberFormat,
+    StartingValue, StyleDefinition, StyleDefinitions, StyleTypes, TabCharacter, TextRun,
+    TextRunContent, TrackedRunContent,
 };
 use officekit_xml::packaging::package::OpenOptions;
 use officekit_xml::packaging::part_name::PartName;
@@ -75,43 +89,29 @@ const NUMBERING: &str = concat!(
 /// The first bytes of a PNG file, enough for a picture part of the tests.
 const PNG: &[u8] = b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR";
 
-/// The styles part of the tests: `Ttulo1` is named `heading 1` and has no outline level,
-/// `Subtitle` is based on `Heading2`, `Strongly` is a bold and italic paragraph style, `Cita` is
-/// named `Quote`, `Numbered` is numbered by instance 2, `ListParagraph` is named `List
-/// Paragraph`, `Emphatic` is an italic character style, and `Mono` a character style in Courier
-/// New.
-const STYLES: &str = concat!(
-    r#"<w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">"#,
-    r#"<w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/></w:style>"#,
-    r#"<w:style w:type="paragraph" w:styleId="Ttulo1"><w:name w:val="heading 1"/><w:basedOn w:val="Normal"/><w:rPr><w:b/></w:rPr></w:style>"#,
-    r#"<w:style w:type="paragraph" w:styleId="Heading2"><w:name w:val="heading 2"/><w:pPr><w:outlineLvl w:val="1"/></w:pPr></w:style>"#,
-    r#"<w:style w:type="paragraph" w:styleId="Heading3"><w:name w:val="heading 3"/></w:style>"#,
-    r#"<w:style w:type="paragraph" w:styleId="Heading7"><w:name w:val="heading 7"/></w:style>"#,
-    r#"<w:style w:type="paragraph" w:styleId="Subtitle"><w:name w:val="Subtitle"/><w:basedOn w:val="Heading2"/></w:style>"#,
-    r#"<w:style w:type="paragraph" w:styleId="Strongly"><w:name w:val="Strongly"/><w:rPr><w:b/><w:i/></w:rPr></w:style>"#,
-    r#"<w:style w:type="paragraph" w:styleId="HTMLPreformatted"><w:name w:val="HTML Preformatted"/></w:style>"#,
-    r#"<w:style w:type="paragraph" w:styleId="Cita"><w:name w:val="Quote"/></w:style>"#,
-    r#"<w:style w:type="paragraph" w:styleId="Numbered"><w:name w:val="Numbered"/><w:pPr><w:numPr><w:numId w:val="2"/></w:numPr></w:pPr></w:style>"#,
-    r#"<w:style w:type="paragraph" w:styleId="ListParagraph"><w:name w:val="List Paragraph"/></w:style>"#,
-    r#"<w:style w:type="character" w:styleId="HTMLCode"><w:name w:val="HTML Code"/></w:style>"#,
-    r#"<w:style w:type="character" w:styleId="Emphatic"><w:name w:val="Emphatic"/><w:rPr><w:i/></w:rPr></w:style>"#,
-    r#"<w:style w:type="character" w:styleId="Mono"><w:name w:val="Mono"/><w:rPr><w:rFonts w:ascii="Courier New"/></w:rPr></w:style>"#,
-    "</w:styles>"
-);
-
 /// The content of a text box holding one paragraph, `Boxed`.
 const BOXED: &str = "<w:txbxContent><w:p><w:r><w:t>Boxed</w:t></w:r></w:p></w:txbxContent>";
 
-/// A Word document being built: its styles part is [`STYLES`]; its other parts and relationships
-/// are added before its body.
+/// A Word document being built: its styles part holds [`styles`]; its other parts and
+/// relationships are added before its body.
 struct Fixture {
     docx: Docx,
     main: PartName,
 }
 
 impl Fixture {
-    /// The document, its main part holding `body`.
-    fn body(mut self, body: &str) -> Docx {
+    /// The document, its body holding `blocks`, built as a caller builds one.
+    fn body(mut self, blocks: Vec<BlockContent>) -> Docx {
+        let mut body = DocumentBody::default();
+        body.content = blocks;
+        let mut document = wordprocessing::Document::default();
+        document.body = Some(Box::new(body));
+        self.docx.set_main_document(&document).unwrap();
+        self.docx
+    }
+
+    /// The document, its main part holding the XML text `body`.
+    fn body_xml(mut self, body: &str) -> Docx {
         let content_type = self
             .docx
             .package()
@@ -138,13 +138,21 @@ impl Fixture {
     fn new() -> Self {
         let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
         let main = docx.main_document_part().clone();
-        let styles = PartName::new("/word/styles.xml").unwrap();
+        let part = PartName::new("/word/styles.xml").unwrap();
         let package = docx.package_mut();
+        style_definitions::store_transitional(
+            package,
+            &part,
+            &styles(),
+            XmlWriteOptions::default(),
+        )
+        .unwrap();
         package
-            .set_part_bytes(&styles, CONTENT_TYPE, STYLES.as_bytes())
-            .unwrap();
-        package
-            .relate(Some(&main), &styles, RELATIONSHIP_TYPE.transitional)
+            .relate(
+                Some(&main),
+                &part,
+                style_definitions::RELATIONSHIP_TYPE.transitional,
+            )
             .unwrap();
         Self { docx, main }
     }
@@ -185,7 +193,169 @@ fn arky(docx: &Docx) -> Document {
     result.document
 }
 
-fn bold_run(text: &str) -> String {
+/// A paragraph holding `content`.
+fn block(content: Vec<ParagraphContent>) -> BlockContent {
+    let mut paragraph = wordprocessing::Paragraph::default();
+    paragraph.content = content;
+    BlockContent::Paragraph(paragraph)
+}
+
+/// The text `value` of a run, its spaces kept.
+fn characters(value: &str) -> TextRunContent {
+    let mut characters = wordprocessing::Text::default();
+    characters.space = Some("preserve".to_owned());
+    characters.value = value.to_owned();
+    TextRunContent::Text(characters)
+}
+
+/// A run holding a complex field's character of `kind`: `begin`, `separate` or `end`.
+fn field_character(kind: &str) -> TextRun {
+    let mut character = ComplexFieldCharacter::default();
+    character.fld_char_type = Some(ComplexFieldCharacterType::from(kind.to_owned()));
+    run_holding(alloc::vec![TextRunContent::ComplexFieldCharacter(
+        character
+    )])
+}
+
+/// A run of `value` in bold.
+fn bold_run(value: &str) -> TextRun {
+    marked(
+        value,
+        alloc::vec![RunPropertiesContent::Bold(Bold::default())],
+    )
+}
+
+/// A run of `value` with the run properties `marks`.
+fn marked(value: &str, marks: Vec<RunPropertiesContent>) -> TextRun {
+    let mut properties = RunProperties::default();
+    properties.content = marks;
+    let mut marked = run(value);
+    marked.properties = Some(Box::new(properties));
+    marked
+}
+
+/// A paragraph of the style `style` holding `runs`.
+fn paragraph(style: &str, runs: Vec<TextRun>) -> BlockContent {
+    let mut reference = ReferencedParagraphStyle::default();
+    reference.val = Some(style.to_owned());
+    let mut properties = ParagraphProperties::default();
+    properties.referenced_paragraph_style = Some(Box::new(reference));
+    styled_by(properties, runs)
+}
+
+/// A paragraph of no style holding `runs`.
+fn plain(runs: Vec<TextRun>) -> BlockContent {
+    block(runs.into_iter().map(ParagraphContent::TextRun).collect())
+}
+
+/// A run of `value`, its text's spaces kept.
+fn run(value: &str) -> TextRun {
+    run_holding(alloc::vec![characters(value)])
+}
+
+/// A run holding `content`.
+fn run_holding(content: Vec<TextRunContent>) -> TextRun {
+    let mut run = TextRun::default();
+    run.content = content;
+    run
+}
+
+/// A style of `kind`, `id` and `name`.
+fn style(kind: &str, id: &str, name: &str) -> StyleDefinition {
+    let mut primary = PrimaryStyleName::default();
+    primary.val = Some(name.to_owned());
+    let mut style = StyleDefinition::default();
+    style.primary_style_name = Some(Box::new(primary));
+    style.style_id = Some(id.to_owned());
+    style.r#type = Some(StyleTypes::from(kind.to_owned()));
+    style
+}
+
+/// A paragraph with `properties` holding `runs`.
+fn styled_by(properties: ParagraphProperties, runs: Vec<TextRun>) -> BlockContent {
+    let BlockContent::Paragraph(mut paragraph) = plain(runs) else {
+        return BlockContent::Paragraph(wordprocessing::Paragraph::default());
+    };
+    paragraph.properties = Some(Box::new(properties));
+    BlockContent::Paragraph(paragraph)
+}
+
+/// The styles of the tests: `Ttulo1` is named `heading 1` and has no outline level, `Subtitle`
+/// is based on `Heading2`, `Strongly` is a bold and italic paragraph style, `Cita` is named
+/// `Quote`, `Numbered` is numbered by instance 2, `ListParagraph` is named `List Paragraph`,
+/// `Emphatic` is an italic character style, and `Mono` a character style in Courier New.
+fn styles() -> StyleDefinitions {
+    let based_on = |mut style: StyleDefinition, parent: &str| {
+        let mut reference = ParentStyleID::default();
+        reference.val = Some(parent.to_owned());
+        style.parent_style_id = Some(Box::new(reference));
+        style
+    };
+    let with_marks = |mut style: StyleDefinition, marks: Vec<RunPropertiesContent>| {
+        let mut properties = RunProperties::default();
+        properties.content = marks;
+        style.run_properties = Some(Box::new(properties));
+        style
+    };
+    let with_paragraph = |mut style: StyleDefinition, properties: ParagraphPropertiesPPrGeneral| {
+        style.paragraph_properties_p_pr_general = Some(Box::new(properties));
+        style
+    };
+    let mut normal = style("paragraph", "Normal", "Normal");
+    normal.default = Some(OnOffValue::from("1".to_owned()));
+    let mut level = AssociatedOutlineLevel::default();
+    level.val = Some(decimal(1));
+    let mut outline = ParagraphPropertiesPPrGeneral::default();
+    outline.associated_outline_level = Some(Box::new(level));
+    let mut instance = NumberingDefinitionInstanceReferenceNumId::default();
+    instance.val = Some(decimal(2));
+    let mut reference = NumberingDefinitionInstanceReferenceNumPr::default();
+    reference.numbering_definition_instance_reference_num_id = Some(Box::new(instance));
+    let mut numbered = ParagraphPropertiesPPrGeneral::default();
+    numbered.numbering_definition_instance_reference_num_pr = Some(Box::new(reference));
+    let mut fonts = RunFonts::default();
+    fonts.ascii = Some("Courier New".to_owned());
+    let mut definitions = StyleDefinitions::default();
+    definitions.style_definition = alloc::vec![
+        normal,
+        with_marks(
+            based_on(style("paragraph", "Ttulo1", "heading 1"), "Normal"),
+            alloc::vec![RunPropertiesContent::Bold(Bold::default())],
+        ),
+        with_paragraph(style("paragraph", "Heading2", "heading 2"), outline),
+        style("paragraph", "Heading3", "heading 3"),
+        style("paragraph", "Heading7", "heading 7"),
+        based_on(style("paragraph", "Subtitle", "Subtitle"), "Heading2"),
+        with_marks(
+            style("paragraph", "Strongly", "Strongly"),
+            alloc::vec![
+                RunPropertiesContent::Bold(Bold::default()),
+                RunPropertiesContent::Italics(Italics::default()),
+            ],
+        ),
+        style("paragraph", "HTMLPreformatted", "HTML Preformatted"),
+        style("paragraph", "Cita", "Quote"),
+        with_paragraph(style("paragraph", "Numbered", "Numbered"), numbered),
+        style("paragraph", "ListParagraph", "List Paragraph"),
+        style("character", "HTMLCode", "HTML Code"),
+        with_marks(
+            style("character", "Emphatic", "Emphatic"),
+            alloc::vec![RunPropertiesContent::Italics(Italics::default())],
+        ),
+        with_marks(
+            style("character", "Mono", "Mono"),
+            alloc::vec![RunPropertiesContent::RunFonts(fonts)],
+        ),
+    ];
+    definitions
+}
+
+/// A new Word document whose body holds `blocks` and whose styles part holds [`styles`].
+fn word(blocks: Vec<BlockContent>) -> Docx {
+    Fixture::new().body(blocks)
+}
+
+fn bold_run_xml(text: &str) -> String {
     format!(r#"<w:r><w:rPr><w:b/></w:rPr><w:t xml:space="preserve">{text}</w:t></w:r>"#)
 }
 
@@ -272,14 +442,14 @@ fn no_heading(blocks: Vec<Block>) -> Vec<Section> {
 }
 
 /// A paragraph of the run of `text`, numbered by `instance` at `level`.
-fn numbered(instance: u8, level: u8, text: &str) -> String {
+fn numbered_xml(instance: u8, level: u8, text: &str) -> String {
     format!(
         r#"<w:p><w:pPr><w:numPr><w:ilvl w:val="{level}"/><w:numId w:val="{instance}"/></w:numPr></w:pPr>{}</w:p>"#,
-        run(text)
+        run_xml(text)
     )
 }
 
-fn paragraph(style: &str, runs: &str) -> String {
+fn paragraph_xml(style: &str, runs: &str) -> String {
     format!(r#"<w:p><w:pPr><w:pStyle w:val="{style}"/></w:pPr>{runs}</w:p>"#)
 }
 
@@ -294,15 +464,15 @@ fn paragraph_lines(lines: Vec<Vec<Inline>>) -> Block {
 }
 
 /// A run holding an inline picture whose `a:blip` names `id` and whose alt text is `descr`.
-fn picture(descr: &str, id: &str) -> String {
+fn picture_xml(descr: &str, id: &str) -> String {
     format!(
         "<w:r>{}</w:r>",
-        picture_drawing(descr, &format!(r#"<a:blip r:embed="{id}"/>"#))
+        picture_drawing_xml(descr, &format!(r#"<a:blip r:embed="{id}"/>"#))
     )
 }
 
 /// A `w:drawing` of an inline picture whose `a:blip` is `blip` and whose alt text is `descr`.
-fn picture_drawing(descr: &str, blip: &str) -> String {
+fn picture_drawing_xml(descr: &str, blip: &str) -> String {
     format!(
         r#"<w:drawing><wp:inline><wp:extent cx="914400" cy="914400"/><wp:docPr id="1" name="Picture 1" descr="{descr}"/><a:graphic><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic><pic:nvPicPr><pic:cNvPr id="0" name="image"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill>{blip}<a:stretch><a:fillRect/></a:stretch></pic:blipFill><pic:spPr/></pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing>"#
     )
@@ -313,7 +483,7 @@ fn read_bytes(system: &MemorySystem, path: &str) -> Vec<u8> {
     ready_now(system.read(Path::new(path))).unwrap().0
 }
 
-fn run(text: &str) -> String {
+fn run_xml(text: &str) -> String {
     format!(r#"<w:r><w:t xml:space="preserve">{text}</w:t></w:r>"#)
 }
 
@@ -322,21 +492,21 @@ fn strong(children: Vec<Inline>) -> Inline {
 }
 
 /// A table of `rows`.
-fn table(rows: &[String]) -> String {
+fn table_xml(rows: &[String]) -> String {
     format!("<w:tbl><w:tblPr/><w:tblGrid/>{}</w:tbl>", rows.concat())
 }
 
 /// A table cell of `properties`, the inside of its `w:tcPr`, holding a paragraph of the run of
 /// `text`.
-fn table_cell(properties: &str, text: &str) -> String {
+fn table_cell_xml(properties: &str, text: &str) -> String {
     format!(
         "<w:tc><w:tcPr>{properties}</w:tcPr><w:p>{}</w:p></w:tc>",
-        run(text)
+        run_xml(text)
     )
 }
 
 /// A table row of `cells`, marked `w:tblHeader` when `head` is set.
-fn table_row(head: bool, cells: &[String]) -> String {
+fn table_row_xml(head: bool, cells: &[String]) -> String {
     let properties = if head {
         "<w:trPr><w:tblHeader/></w:trPr>"
     } else {
@@ -349,22 +519,24 @@ fn text(value: &str) -> Inline {
     Inline::Text(Text::new(value.to_owned()))
 }
 
-/// A new Word document whose body is `body` and whose styles part is [`STYLES`].
-fn word(body: &str) -> Docx {
-    Fixture::new().body(body)
+/// A new Word document whose body is the XML text `body` and whose styles part holds [`styles`].
+fn word_xml(body: &str) -> Docx {
+    Fixture::new().body_xml(body)
 }
 
 #[test]
 fn the_design_sample_writes_its_markdown_and_no_media_folder() {
-    let body = format!(
-        "{}<w:p>{}{}<w:r><w:br/><w:t>Calle 5</w:t></w:r></w:p>",
-        paragraph("Ttulo1", &run("Contrato")),
-        bold_run("Nombre: "),
-        run("Ana"),
-    );
+    let address = run_holding(alloc::vec![
+        TextRunContent::Break(Break::default()),
+        characters("Calle 5")
+    ]);
+    let document = word(alloc::vec![
+        paragraph("Ttulo1", alloc::vec![run("Contrato")]),
+        plain(alloc::vec![bold_run("Nombre: "), run("Ana"), address]),
+    ]);
     let system = MemorySystem::new();
     ready_now(system.create_dir_all(Path::new("/n"))).unwrap();
-    ready_now(word(&body).save_transitional(&system, Path::new("/n/contract.docx"))).unwrap();
+    ready_now(document.save_transitional(&system, Path::new("/n/contract.docx"))).unwrap();
     let docx = ready_now(Docx::open(
         &system,
         Path::new("/n/contract.docx"),
@@ -397,7 +569,7 @@ fn save_markdown_leaves_a_media_folder_already_there_as_it_is() {
     ))
     .unwrap();
     ready_now(save_markdown(
-        &word(&paragraph("Normal", &run("Hola"))),
+        &word(alloc::vec![paragraph("Normal", alloc::vec![run("Hola")])]),
         &system,
         Path::new("/n/contract.md"),
         MarkdownOptions::default(),
@@ -415,12 +587,14 @@ fn save_markdown_leaves_a_media_folder_already_there_as_it_is() {
 
 #[test]
 fn a_style_named_heading_1_and_an_own_outline_level_0_both_give_depth_1_headings() {
-    let body = format!(
-        r#"{}<w:p><w:pPr><w:outlineLvl w:val="0"/></w:pPr>{}</w:p>"#,
-        paragraph("Ttulo1", &run("One")),
-        run("Two"),
-    );
-    let docx = word(&body);
+    let mut level = AssociatedOutlineLevel::default();
+    level.val = Some(decimal(0));
+    let mut outlined = ParagraphProperties::default();
+    outlined.associated_outline_level = Some(Box::new(level));
+    let docx = word(alloc::vec![
+        paragraph("Ttulo1", alloc::vec![run("One")]),
+        styled_by(outlined, alloc::vec![run("Two")]),
+    ]);
     assert_eq!(
         arky(&docx).body.sections,
         [
@@ -433,22 +607,19 @@ fn a_style_named_heading_1_and_an_own_outline_level_0_both_give_depth_1_headings
 
 #[test]
 fn a_style_based_on_a_heading_style_takes_its_level() {
-    let body = [
-        paragraph("Ttulo1", &run("Top")),
-        paragraph("Subtitle", &run("Under")),
-    ]
-    .concat();
-    assert_eq!(markdown(&word(&body)), "# Top\n\n## Under\n");
+    let docx = word(alloc::vec![
+        paragraph("Ttulo1", alloc::vec![run("Top")]),
+        paragraph("Subtitle", alloc::vec![run("Under")]),
+    ]);
+    assert_eq!(markdown(&docx), "# Top\n\n## Under\n");
 }
 
 #[test]
 fn a_level_3_heading_after_a_level_1_heading_sits_in_a_depth_2_section_with_no_heading() {
-    let body = [
-        paragraph("Ttulo1", &run("One")),
-        paragraph("Heading3", &run("Three")),
-    ]
-    .concat();
-    let docx = word(&body);
+    let docx = word(alloc::vec![
+        paragraph("Ttulo1", alloc::vec![run("One")]),
+        paragraph("Heading3", alloc::vec![run("Three")]),
+    ]);
     let three = Section::new(Some(heading("Three")), Vec::new(), Vec::new());
     let skipped = Section::new(None, Vec::new(), alloc::vec![three]);
     assert_eq!(
@@ -464,12 +635,10 @@ fn a_level_3_heading_after_a_level_1_heading_sits_in_a_depth_2_section_with_no_h
 
 #[test]
 fn a_level_7_heading_is_a_bold_paragraph_of_the_open_section() {
-    let body = [
-        paragraph("Ttulo1", &run("Top")),
-        paragraph("Heading7", &run("Deep")),
-    ]
-    .concat();
-    let docx = word(&body);
+    let docx = word(alloc::vec![
+        paragraph("Ttulo1", alloc::vec![run("Top")]),
+        paragraph("Heading7", alloc::vec![run("Deep")]),
+    ]);
     let deep = paragraph_of(alloc::vec![strong(alloc::vec![text("Deep")])]);
     assert_eq!(
         arky(&docx).body.sections,
@@ -484,24 +653,27 @@ fn a_level_7_heading_is_a_bold_paragraph_of_the_open_section() {
 
 #[test]
 fn a_heading_with_no_text_gives_nothing_and_a_line_break_in_a_heading_is_a_space() {
-    let body = [
-        paragraph("Ttulo1", ""),
-        paragraph("Heading3", "<w:r><w:t>a</w:t><w:br/><w:t>b</w:t></w:r>"),
-    ]
-    .concat();
-    assert_eq!(markdown(&word(&body)), "### a b\n");
+    let broken = run_holding(alloc::vec![
+        characters("a"),
+        TextRunContent::Break(Break::default()),
+        characters("b"),
+    ]);
+    let docx = word(alloc::vec![
+        paragraph("Ttulo1", Vec::new()),
+        paragraph("Heading3", alloc::vec![broken]),
+    ]);
+    assert_eq!(markdown(&docx), "### a b\n");
 }
 
 #[test]
 fn three_bold_runs_become_one_strong_node() {
-    let body = format!(
-        "<w:p>{}{}{}</w:p>",
+    let docx = word(alloc::vec![plain(alloc::vec![
         bold_run("Re"),
         bold_run("ve"),
         bold_run("nue")
-    );
+    ])]);
     assert_eq!(
-        arky(&word(&body)).body.sections,
+        arky(&docx).body.sections,
         no_heading(alloc::vec![paragraph_of(alloc::vec![strong(alloc::vec![
             text("Revenue")
         ])])])
@@ -510,8 +682,10 @@ fn three_bold_runs_become_one_strong_node() {
 
 #[test]
 fn the_space_at_the_end_of_a_bold_stretch_goes_outside_it() {
-    let body = format!("<w:p>{}{}</w:p>", bold_run("Nombre: "), run("Ana"));
-    let docx = word(&body);
+    let docx = word(alloc::vec![plain(alloc::vec![
+        bold_run("Nombre: "),
+        run("Ana")
+    ])]);
     assert_eq!(
         arky(&docx).body.sections,
         no_heading(alloc::vec![paragraph_of(alloc::vec![
@@ -524,7 +698,13 @@ fn the_space_at_the_end_of_a_bold_stretch_goes_outside_it() {
 
 #[test]
 fn a_run_both_bold_and_italic_is_emphasis_holding_strong() {
-    let docx = word("<w:p><w:r><w:rPr><w:b/><w:i/></w:rPr><w:t>x</w:t></w:r></w:p>");
+    let docx = word(alloc::vec![plain(alloc::vec![marked(
+        "x",
+        alloc::vec![
+            RunPropertiesContent::Bold(Bold::default()),
+            RunPropertiesContent::Italics(Italics::default()),
+        ],
+    )])]);
     let both = Inline::Emphasis(Emphasis::new(alloc::vec![strong(alloc::vec![text("x")])]));
     assert_eq!(
         arky(&docx).body.sections,
@@ -535,48 +715,94 @@ fn a_run_both_bold_and_italic_is_emphasis_holding_strong() {
 
 #[test]
 fn character_styles_and_code_fonts_mark_runs_and_a_paragraph_style_does_not() {
-    let body = format!(
-        "<w:p>{}{}{}{}{}</w:p>{}",
-        r#"<w:r><w:rPr><w:rStyle w:val="Emphatic"/></w:rPr><w:t>says</w:t></w:r>"#,
-        run(" "),
-        r#"<w:r><w:rPr><w:rStyle w:val="HTMLCode"/></w:rPr><w:t>a</w:t></w:r>"#,
-        r#"<w:r><w:rPr><w:rFonts w:ascii="Consolas"/></w:rPr><w:t xml:space="preserve"> </w:t></w:r>"#,
-        r#"<w:r><w:rPr><w:rStyle w:val="Mono"/><w:b w:val="0"/></w:rPr><w:t>b</w:t></w:r>"#,
-        paragraph("Strongly", &run("plain")),
-    );
-    assert_eq!(markdown(&word(&body)), "*says* `a b`\n\nplain\n");
+    let character_style = |id: &str| {
+        let mut reference = ReferencedCharacterStyle::default();
+        reference.val = Some(id.to_owned());
+        RunPropertiesContent::ReferencedCharacterStyle(reference)
+    };
+    let mut consolas = RunFonts::default();
+    consolas.ascii = Some("Consolas".to_owned());
+    let mut not_bold = Bold::default();
+    not_bold.val = Some(OnOffValue::from("0".to_owned()));
+    let docx = word(alloc::vec![
+        plain(alloc::vec![
+            marked("says", alloc::vec![character_style("Emphatic")]),
+            run(" "),
+            marked("a", alloc::vec![character_style("HTMLCode")]),
+            marked(" ", alloc::vec![RunPropertiesContent::RunFonts(consolas)]),
+            marked(
+                "b",
+                alloc::vec![
+                    character_style("Mono"),
+                    RunPropertiesContent::Bold(not_bold)
+                ],
+            ),
+        ]),
+        paragraph("Strongly", alloc::vec![run("plain")]),
+    ]);
+    assert_eq!(markdown(&docx), "*says* `a b`\n\nplain\n");
 }
 
 #[test]
 fn inserted_text_stays_deleted_text_goes_and_a_field_gives_its_shown_text() {
-    let body = concat!(
-        r#"<w:p><w:r><w:t xml:space="preserve">Kept </w:t></w:r>"#,
-        r#"<w:ins w:id="1" w:author="a"><w:r><w:t>new</w:t></w:r></w:ins>"#,
-        r#"<w:del w:id="2" w:author="a"><w:r><w:delText>old</w:delText></w:r></w:del>"#,
-        r#"<w:r><w:t xml:space="preserve"> on </w:t></w:r>"#,
-        r#"<w:r><w:fldChar w:fldCharType="begin"/></w:r>"#,
-        r#"<w:r><w:instrText xml:space="preserve"> DATE \@ "d/M/yyyy" </w:instrText></w:r>"#,
-        r#"<w:r><w:fldChar w:fldCharType="separate"/></w:r>"#,
-        r#"<w:r><w:t>19/10/2026</w:t></w:r>"#,
-        r#"<w:r><w:fldChar w:fldCharType="end"/></w:r>"#,
-        r#"<w:r><w:t xml:space="preserve"> by </w:t></w:r>"#,
-        r#"<w:fldSimple w:instr=" AUTHOR "><w:r><w:t>Ana</w:t></w:r></w:fldSimple>"#,
-        r#"<w:moveFrom w:id="3" w:author="a"><w:r><w:t>gone</w:t></w:r></w:moveFrom>"#,
-        r#"<w:moveTo w:id="4" w:author="a"><w:r><w:t>.</w:t></w:r></w:moveTo></w:p>"#,
+    let tracked =
+        |id: usize, runs: Vec<TextRun>| -> (Option<DecimalNumberValue>, Vec<TrackedRunContent>) {
+            (
+                Some(decimal(id)),
+                runs.into_iter().map(TrackedRunContent::TextRun).collect(),
+            )
+        };
+    let mut inserted = InsertedRunContent::default();
+    (inserted.id, inserted.content) = tracked(1, alloc::vec![run("new")]);
+    inserted.author = Some("a".to_owned());
+    let mut old = DeletedText::default();
+    old.value = "old".to_owned();
+    let mut deleted = DeletedRunContent::default();
+    (deleted.id, deleted.content) = tracked(
+        2,
+        alloc::vec![run_holding(alloc::vec![TextRunContent::DeletedText(old)])],
     );
-    assert_eq!(markdown(&word(body)), "Kept new on 19/10/2026 by Ana.\n");
+    deleted.author = Some("a".to_owned());
+    let mut instruction = FieldCode::default();
+    instruction.space = Some("preserve".to_owned());
+    instruction.value = r#" DATE \@ "d/M/yyyy" "#.to_owned();
+    let mut simple = SimpleField::default();
+    simple.instr = Some(" AUTHOR ".to_owned());
+    simple.content = alloc::vec![ParagraphContent::TextRun(run("Ana"))];
+    let mut moved_from = MoveSourceRunContent::default();
+    (moved_from.id, moved_from.content) = tracked(3, alloc::vec![run("gone")]);
+    moved_from.author = Some("a".to_owned());
+    let mut moved_to = MoveDestinationRunContent::default();
+    (moved_to.id, moved_to.content) = tracked(4, alloc::vec![run(".")]);
+    moved_to.author = Some("a".to_owned());
+    let docx = word(alloc::vec![block(alloc::vec![
+        ParagraphContent::TextRun(run("Kept ")),
+        ParagraphContent::InsertedRunContent(inserted),
+        ParagraphContent::DeletedRunContent(deleted),
+        ParagraphContent::TextRun(run(" on ")),
+        ParagraphContent::TextRun(field_character("begin")),
+        ParagraphContent::TextRun(run_holding(alloc::vec![TextRunContent::FieldCode(
+            instruction
+        )])),
+        ParagraphContent::TextRun(field_character("separate")),
+        ParagraphContent::TextRun(run("19/10/2026")),
+        ParagraphContent::TextRun(field_character("end")),
+        ParagraphContent::TextRun(run(" by ")),
+        ParagraphContent::SimpleField(simple),
+        ParagraphContent::MoveSourceRunContent(moved_from),
+        ParagraphContent::MoveDestinationRunContent(moved_to),
+    ])]);
+    assert_eq!(markdown(&docx), "Kept new on 19/10/2026 by Ana.\n");
 }
 
 #[test]
 fn consecutive_code_and_quote_paragraphs_become_one_code_block_and_one_block_quote() {
-    let body = [
-        paragraph("HTMLPreformatted", &run("fn main() {")),
-        paragraph("HTMLPreformatted", &run("}")),
-        paragraph("Cita", &run("a")),
-        paragraph("Cita", &run("b")),
-    ]
-    .concat();
-    let docx = word(&body);
+    let docx = word(alloc::vec![
+        paragraph("HTMLPreformatted", alloc::vec![run("fn main() {")]),
+        paragraph("HTMLPreformatted", alloc::vec![run("}")]),
+        paragraph("Cita", alloc::vec![run("a")]),
+        paragraph("Cita", alloc::vec![run("b")]),
+    ]);
     assert_eq!(
         arky(&docx).body.sections,
         no_heading(alloc::vec![
@@ -593,13 +819,25 @@ fn consecutive_code_and_quote_paragraphs_become_one_code_block_and_one_block_quo
 
 #[test]
 fn tabs_and_text_wrapping_breaks_stay_and_a_page_break_goes() {
-    let body = concat!(
-        "<w:p><w:r><w:t>a</w:t><w:tab/><w:t>b</w:t><w:cr/><w:t>c</w:t>",
-        r#"<w:br w:type="page"/><w:t>d</w:t><w:br w:type="textWrapping"/><w:t>e</w:t>"#,
-        "<w:br/></w:r></w:p>",
-    );
+    let typed_break = |kind: &str| {
+        let mut found = Break::default();
+        found.r#type = Some(BreakTypes::from(kind.to_owned()));
+        TextRunContent::Break(found)
+    };
+    let docx = word(alloc::vec![plain(alloc::vec![run_holding(alloc::vec![
+        characters("a"),
+        TextRunContent::TabCharacter(TabCharacter::default()),
+        characters("b"),
+        TextRunContent::CarriageReturn(CarriageReturn::default()),
+        characters("c"),
+        typed_break("page"),
+        characters("d"),
+        typed_break("textWrapping"),
+        characters("e"),
+        TextRunContent::Break(Break::default()),
+    ])])]);
     assert_eq!(
-        arky(&word(body)).body.sections,
+        arky(&docx).body.sections,
         no_heading(alloc::vec![paragraph_lines(alloc::vec![
             alloc::vec![text("a\tb"), line_break()],
             alloc::vec![text("cd"), line_break()],
@@ -610,16 +848,24 @@ fn tabs_and_text_wrapping_breaks_stay_and_a_page_break_goes() {
 
 #[test]
 fn an_empty_paragraph_gives_nothing_and_one_with_a_bottom_border_alone_a_thematic_break() {
-    let body = concat!(
-        "<w:p/>",
-        "<w:p><w:r><w:t>a</w:t></w:r></w:p>",
-        r#"<w:p><w:pPr><w:pBdr><w:bottom w:val="single" w:sz="6" w:space="1" w:color="auto"/>"#,
-        "</w:pBdr></w:pPr></w:p>",
-        r#"<w:p><w:r><w:t xml:space="preserve">  </w:t></w:r></w:p>"#,
-        "<w:p><w:r><w:t>b</w:t></w:r></w:p>",
-    );
+    let mut bottom = ParagraphBorderBelowIdenticalParagraphs::default();
+    bottom.color = Some(ColorValue::from("auto".to_owned()));
+    bottom.space = Some(MeasurementInPoints::from("1".to_owned()));
+    bottom.sz = Some(MeasurementInEighthsOfAPoint::from("6".to_owned()));
+    bottom.val = Some(BorderStyles::from("single".to_owned()));
+    let mut borders = ParagraphBorders::default();
+    borders.paragraph_border_below_identical_paragraphs = Some(Box::new(bottom));
+    let mut bordered = ParagraphProperties::default();
+    bordered.paragraph_borders = Some(Box::new(borders));
+    let docx = word(alloc::vec![
+        plain(Vec::new()),
+        plain(alloc::vec![run("a")]),
+        styled_by(bordered, Vec::new()),
+        plain(alloc::vec![run("  ")]),
+        plain(alloc::vec![run("b")]),
+    ]);
     assert_eq!(
-        arky(&word(body)).body.sections,
+        arky(&docx).body.sections,
         no_heading(alloc::vec![
             paragraph_of(alloc::vec![text("a")]),
             Block::ThematicBreak(ThematicBreak::default()),
@@ -630,16 +876,35 @@ fn an_empty_paragraph_gives_nothing_and_one_with_a_bottom_border_alone_a_themati
 
 #[test]
 fn content_controls_smart_tags_and_custom_xml_give_their_content() {
-    let body = concat!(
-        r#"<w:sdt><w:sdtContent><w:p><w:r><w:t xml:space="preserve">a </w:t></w:r>"#,
-        "<w:sdt><w:sdtContent><w:r><w:t>b</w:t></w:r></w:sdtContent></w:sdt>",
-        r#"<w:smartTag w:uri="u" w:element="e"><w:r><w:t xml:space="preserve"> c</w:t></w:r></w:smartTag>"#,
-        r#"<w:customXml w:element="f"><w:r><w:t xml:space="preserve"> d</w:t></w:r></w:customXml>"#,
-        "</w:p></w:sdtContent></w:sdt>",
-    );
-    assert_eq!(markdown(&word(body)), "a b c d\n");
+    let mut inner_content = InlineLevelStructuredDocumentTagContent::default();
+    inner_content.content = alloc::vec![ParagraphContent::TextRun(run("b"))];
+    let mut inner = InlineLevelStructuredDocumentTag::default();
+    inner.content = Some(Box::new(inner_content));
+    let mut smart_tag = InlineLevelSmartTag::default();
+    smart_tag.content = alloc::vec![ParagraphContent::TextRun(run(" c"))];
+    smart_tag.element = Some(XMLName::from("e".to_owned()));
+    smart_tag.uri = Some("u".to_owned());
+    let mut custom = InlineLevelCustomXMLElement::default();
+    custom.content = alloc::vec![ParagraphContent::TextRun(run(" d"))];
+    custom.element = Some(XMLName::from("f".to_owned()));
+    let mut held = wordprocessing::Paragraph::default();
+    held.content = alloc::vec![
+        ParagraphContent::TextRun(run("a ")),
+        ParagraphContent::InlineLevelStructuredDocumentTag(inner),
+        ParagraphContent::InlineLevelSmartTag(smart_tag),
+        ParagraphContent::InlineLevelCustomXMLElement(custom),
+    ];
+    let mut outer_content = BlockLevelStructuredDocumentTagContent::default();
+    outer_content.content = alloc::vec![ContentBlockContent::Paragraph(held)];
+    let mut outer = BlockLevelStructuredDocumentTag::default();
+    outer.content = Some(Box::new(outer_content));
+    let docx = word(alloc::vec![BlockContent::BlockLevelStructuredDocumentTag(
+        outer
+    )]);
+    assert_eq!(markdown(&docx), "a b c d\n");
 }
 
+// XML input: the typed tree keeps mc:AlternateContent's branches and Word's wps shape as unknown content.
 #[test]
 fn a_text_box_gives_its_paragraphs_once_after_the_paragraph_that_holds_it() {
     let choice = format!(
@@ -651,7 +916,7 @@ fn a_text_box_gives_its_paragraphs_once_after_the_paragraph_that_holds_it() {
     let body = format!(
         "<w:p><w:r><w:t>Before</w:t></w:r><w:r><mc:AlternateContent>{choice}{fallback}</mc:AlternateContent></w:r></w:p><w:p><w:r><w:pict><v:shape><v:textbox>{BOXED}</v:textbox></v:shape></w:pict></w:r></w:p>"
     );
-    assert_eq!(markdown(&word(&body)), "Before\n\nBoxed\n\nBoxed\n");
+    assert_eq!(markdown(&word_xml(&body)), "Before\n\nBoxed\n\nBoxed\n");
 }
 
 /// A run holding a text box as Word writes it in a Strict file, `content` inside `element`.
@@ -675,7 +940,7 @@ fn a_text_box_in_word_s_strict_form_gives_its_paragraphs_after_the_paragraph_tha
     let body = format!(
         "<w:p><w:r><w:t>Before</w:t></w:r>{boxed}</w:p><w:p><w:r><w:t>After</w:t></w:r></w:p>"
     );
-    assert_eq!(markdown(&word(&body)), "Before\n\nBoxed\n\nAfter\n");
+    assert_eq!(markdown(&word_xml(&body)), "Before\n\nBoxed\n\nAfter\n");
 }
 
 // XML input: the typed tree keeps a:graphicData's shape as unknown content, and its spelling is the point.
@@ -683,7 +948,7 @@ fn a_text_box_in_word_s_strict_form_gives_its_paragraphs_after_the_paragraph_tha
 fn a_text_box_in_the_form_the_strict_schema_declares_gives_its_paragraphs() {
     let boxed = strict_text_box("wp:txbxContent", "<w:p><w:r><w:t>Boxed</w:t></w:r></w:p>");
     let body = format!("<w:p><w:r><w:t>Before</w:t></w:r>{boxed}</w:p>");
-    assert_eq!(markdown(&word(&body)), "Before\n\nBoxed\n");
+    assert_eq!(markdown(&word_xml(&body)), "Before\n\nBoxed\n");
 }
 
 // XML input: the typed tree keeps a:graphicData's shape as unknown content, and its spelling is the point.
@@ -696,10 +961,10 @@ fn a_picture_in_a_text_box_in_word_s_strict_form_comes_once_with_the_box() {
         &RelationshipType::IMAGE,
         PNG,
     );
-    let inside = format!("<w:p>{}</w:p>", picture("boxed", &id));
+    let inside = format!("<w:p>{}</w:p>", picture_xml("boxed", &id));
     let boxed = strict_text_box("wne:txbxContent", &inside);
     let body = format!("<w:p><w:r><w:t>Before</w:t></w:r>{boxed}</w:p>");
-    let result = exported(&fixture.body(&body), MarkdownOptions::default());
+    let result = exported(&fixture.body_xml(&body), MarkdownOptions::default());
     assert_eq!(
         result.document.body.sections,
         no_heading(alloc::vec![
@@ -718,25 +983,19 @@ fn an_inline_picture_built_through_the_model_exports_with_its_alt_text() {
         &RelationshipType::IMAGE,
         PNG,
     );
-    let mut run = TextRun::default();
-    run.content
-        .push(TextRunContent::DrawingMLObject(inline_picture(
+    let picture = run_holding(alloc::vec![TextRunContent::DrawingMLObject(
+        inline_picture(
             PictureSource::Embedded(&id),
             1,
             "Picture 1",
             Some("Logo"),
             (914_400, 914_400),
-        )));
-    let mut document = wordprocessing::Document::default();
-    document.body = Some(Box::new(DocumentBody::default()));
-    if let Some(body) = document.body.as_mut() {
-        body.content
-            .push(BlockContent::Paragraph(typed_paragraph_of_runs(
-                alloc::vec![run],
-            )));
-    }
-    fixture.docx.set_main_document(&document).unwrap();
-    let result = exported(&fixture.docx, MarkdownOptions::default());
+        )
+    )]);
+    let result = exported(
+        &fixture.body(alloc::vec![plain(alloc::vec![picture])]),
+        MarkdownOptions::default(),
+    );
     assert_eq!(
         result.document.body.sections,
         no_heading(alloc::vec![paragraph_of(alloc::vec![image(
@@ -748,21 +1007,25 @@ fn an_inline_picture_built_through_the_model_exports_with_its_alt_text() {
 
 #[test]
 fn an_equation_gives_its_text() {
-    let body = concat!(
-        r#"<w:p><w:r><w:t xml:space="preserve">Solve </w:t></w:r>"#,
-        "<m:oMath><m:r><m:t>x=1</m:t></m:r></m:oMath></w:p>",
-    );
-    assert_eq!(markdown(&word(body)), "Solve x=1\n");
+    let mut solution = MathText::default();
+    solution.value = "x=1".to_owned();
+    let mut math_run = MathRun::default();
+    math_run.content = alloc::vec![MathRunContent::Text(solution)];
+    let mut equation = OfficeMath::default();
+    equation.content = alloc::vec![OfficeMathContent::Run(math_run)];
+    let docx = word(alloc::vec![block(alloc::vec![
+        ParagraphContent::TextRun(run("Solve ")),
+        ParagraphContent::OfficeMath(equation),
+    ])]);
+    assert_eq!(markdown(&docx), "Solve x=1\n");
 }
 
 #[test]
 fn to_arky_leaves_the_main_part_as_it_was() {
-    let body = format!(
-        "{}<w:p>{}</w:p>",
-        paragraph("Ttulo1", &run("Contrato")),
-        bold_run("x")
-    );
-    let docx = word(&body);
+    let docx = word(alloc::vec![
+        paragraph("Ttulo1", alloc::vec![run("Contrato")]),
+        plain(alloc::vec![bold_run("x")]),
+    ]);
     let main = docx.main_document_part().clone();
     let before = docx.package().part_bytes(&main).unwrap();
     arky(&docx);
@@ -779,7 +1042,7 @@ fn a_table_cell_is_converted_by_the_same_rules_and_a_hyperlink_is_a_link() {
         "</w:tr></w:tbl>",
     );
     assert_eq!(
-        markdown(&word(body)),
+        markdown(&word_xml(body)),
         "+------+-------------+\n| left | [right](#x) |\n+------+-------------+\n"
     );
 }
@@ -798,20 +1061,20 @@ fn sample() -> Docx {
     );
     let link_id = fixture.external("https://example.com/q3", &RelationshipType::HYPERLINK);
     let rows = [
-        table_row(false, &[table_cell("", "a"), table_cell("", "b")]),
-        table_row(false, &[table_cell("", "c"), table_cell("", "d")]),
+        table_row_xml(false, &[table_cell_xml("", "a"), table_cell_xml("", "b")]),
+        table_row_xml(false, &[table_cell_xml("", "c"), table_cell_xml("", "d")]),
     ];
     let body = format!(
         r#"{}{}{}<w:p>{}<w:hyperlink r:id="{link_id}">{}</w:hyperlink>{}</w:p><w:p>{}</w:p>"#,
-        numbered(2, 0, "one"),
-        numbered(2, 0, "two"),
-        table(&rows),
-        run("See "),
-        run("the dashboard"),
-        run("."),
-        picture("Logo", &picture_id),
+        numbered_xml(2, 0, "one"),
+        numbered_xml(2, 0, "two"),
+        table_xml(&rows),
+        run_xml("See "),
+        run_xml("the dashboard"),
+        run_xml("."),
+        picture_xml("Logo", &picture_id),
     );
-    fixture.body(&body)
+    fixture.body_xml(&body)
 }
 
 #[test]
@@ -885,11 +1148,11 @@ fn a_paragraph_numbered_by_its_style_is_a_list_item_and_a_level_of_format_none_a
     let mut fixture = Fixture::new();
     fixture.numbering();
     let body = [
-        paragraph("Numbered", &run("styled")),
-        numbered(3, 0, "hidden"),
+        paragraph_xml("Numbered", &run_xml("styled")),
+        numbered_xml(3, 0, "hidden"),
     ]
     .concat();
-    let docx = fixture.body(&body);
+    let docx = fixture.body_xml(&body);
     assert_eq!(
         arky(&docx).body.sections,
         no_heading(alloc::vec![
@@ -908,13 +1171,13 @@ fn a_deeper_level_nests_bullets_have_no_start_and_a_start_override_gives_the_fir
     let mut fixture = Fixture::new();
     fixture.numbering();
     let body = [
-        numbered(1, 0, "a"),
-        numbered(1, 1, "b"),
-        numbered(1, 0, "c"),
-        numbered(4, 0, "three"),
+        numbered_xml(1, 0, "a"),
+        numbered_xml(1, 1, "b"),
+        numbered_xml(1, 0, "c"),
+        numbered_xml(4, 0, "three"),
     ]
     .concat();
-    let docx = fixture.body(&body);
+    let docx = fixture.body_xml(&body);
     let nested = list(
         alloc::vec![item(alloc::vec![paragraph_of(alloc::vec![text("b")])])],
         None,
@@ -942,16 +1205,16 @@ fn a_list_a_paragraph_interrupts_goes_on_from_its_last_number_and_a_deeper_level
     let mut fixture = Fixture::new();
     fixture.numbering();
     let body = [
-        numbered(2, 0, "one"),
-        numbered(2, 1, "inner"),
-        numbered(2, 1, "inner"),
-        numbered(2, 0, "two"),
-        numbered(2, 1, "again"),
-        paragraph("Normal", &run("between")),
-        numbered(2, 0, "three"),
+        numbered_xml(2, 0, "one"),
+        numbered_xml(2, 1, "inner"),
+        numbered_xml(2, 1, "inner"),
+        numbered_xml(2, 0, "two"),
+        numbered_xml(2, 1, "again"),
+        paragraph_xml("Normal", &run_xml("between")),
+        numbered_xml(2, 0, "three"),
     ]
     .concat();
-    let docx = fixture.body(&body);
+    let docx = fixture.body_xml(&body);
     assert_eq!(
         markdown(&docx),
         "1. one\n   1. inner\n   2. inner\n2. two\n   1. again\n\nbetween\n\n3. three\n"
@@ -963,16 +1226,16 @@ fn paragraphs_that_write_nothing_leave_the_items_of_one_word_list_in_one_list() 
     let mut fixture = Fixture::new();
     fixture.numbering();
     let body = [
-        numbered(2, 0, "one"),
+        numbered_xml(2, 0, "one"),
         "<w:p/>".to_owned(),
-        numbered(2, 1, "inner"),
-        paragraph("Ttulo1", ""),
-        numbered(2, 0, "two"),
+        numbered_xml(2, 1, "inner"),
+        paragraph_xml("Ttulo1", ""),
+        numbered_xml(2, 0, "two"),
         "<w:p/>".to_owned(),
-        numbered(1, 0, "bullet"),
+        numbered_xml(1, 0, "bullet"),
     ]
     .concat();
-    let docx = fixture.body(&body);
+    let docx = fixture.body_xml(&body);
     let inner = list(
         alloc::vec![item(alloc::vec![paragraph_of(alloc::vec![text("inner")])])],
         Some(1),
@@ -1067,13 +1330,6 @@ fn typed_paragraph(value: &str, properties: ParagraphProperties) -> wordprocessi
     let mut paragraph = wordprocessing::Paragraph::default();
     paragraph.properties = Some(Box::new(properties));
     paragraph.content.push(ParagraphContent::TextRun(run));
-    paragraph
-}
-
-/// A paragraph holding `runs`.
-fn typed_paragraph_of_runs(runs: Vec<TextRun>) -> wordprocessing::Paragraph {
-    let mut paragraph = wordprocessing::Paragraph::default();
-    paragraph.content = runs.into_iter().map(ParagraphContent::TextRun).collect();
     paragraph
 }
 
@@ -1185,20 +1441,20 @@ fn a_paragraph_indented_to_where_an_items_text_starts_is_a_later_block_of_that_i
     let indented = |left: u16, text: &str| {
         format!(
             r#"<w:p><w:pPr><w:ind w:left="{left}" w:firstLine="0"/></w:pPr>{}</w:p>"#,
-            run(text)
+            run_xml(text)
         )
     };
     let body = [
-        numbered(2, 0, "one"),
-        numbered(2, 1, "inner"),
+        numbered_xml(2, 0, "one"),
+        numbered_xml(2, 1, "inner"),
         indented(1440, "under inner"),
         indented(720, "under one"),
-        numbered(2, 0, "two"),
+        numbered_xml(2, 0, "two"),
         indented(360, "elsewhere"),
-        numbered(2, 0, "three"),
+        numbered_xml(2, 0, "three"),
     ]
     .concat();
-    let docx = fixture.body(&body);
+    let docx = fixture.body_xml(&body);
     let inner = Block::List(List::new(
         alloc::vec![item(alloc::vec![
             paragraph_of(alloc::vec![text("inner")]),
@@ -1235,13 +1491,13 @@ fn a_list_paragraph_with_no_numbering_after_a_list_paragraph_is_a_later_block_of
     let mut fixture = Fixture::new();
     fixture.numbering();
     let body = [
-        numbered(2, 0, "one"),
-        paragraph("ListParagraph", &run("more")),
-        numbered(2, 0, "two"),
-        paragraph("Normal", &run("after")),
+        numbered_xml(2, 0, "one"),
+        paragraph_xml("ListParagraph", &run_xml("more")),
+        numbered_xml(2, 0, "two"),
+        paragraph_xml("Normal", &run_xml("after")),
     ]
     .concat();
-    let docx = fixture.body(&body);
+    let docx = fixture.body_xml(&body);
     let items = alloc::vec![
         item(alloc::vec![
             paragraph_of(alloc::vec![text("one")]),
@@ -1266,11 +1522,11 @@ fn a_code_block_a_block_quote_and_a_rule_inside_a_list_item_come_back_inside_it(
     let indented = |style: &str, text: &str| {
         format!(
             r#"<w:p><w:pPr><w:pStyle w:val="{style}"/><w:ind w:left="720"/></w:pPr>{}</w:p>"#,
-            run(text)
+            run_xml(text)
         )
     };
     let body = [
-        numbered(1, 0, "item"),
+        numbered_xml(1, 0, "item"),
         indented("HTMLPreformatted", "let a = 1;"),
         indented("HTMLPreformatted", "let b = 2;"),
         indented("Quote", "quoted"),
@@ -1279,11 +1535,11 @@ fn a_code_block_a_block_quote_and_a_rule_inside_a_list_item_come_back_inside_it(
             r#"</w:pBdr><w:ind w:left="720"/></w:pPr></w:p>"#,
         )
         .to_owned(),
-        numbered(1, 0, "next"),
-        paragraph("HTMLPreformatted", &run("outside")),
+        numbered_xml(1, 0, "next"),
+        paragraph_xml("HTMLPreformatted", &run_xml("outside")),
     ]
     .concat();
-    let docx = fixture.body(&body);
+    let docx = fixture.body_xml(&body);
     let inside = alloc::vec![
         paragraph_of(alloc::vec![text("item")]),
         Block::CodeBlock(CodeBlock::new(
@@ -1318,12 +1574,12 @@ fn a_later_block_indented_to_an_outer_level_goes_into_that_level_s_item() {
     let mut fixture = Fixture::new();
     fixture.numbering();
     let body = [
-        numbered(2, 0, "outer"),
-        numbered(1, 1, "inner"),
+        numbered_xml(2, 0, "outer"),
+        numbered_xml(1, 1, "inner"),
         r#"<w:p><w:pPr><w:pStyle w:val="HTMLPreformatted"/><w:ind w:left="720"/></w:pPr><w:r><w:t>code</w:t></w:r></w:p>"#.to_owned(),
     ]
     .concat();
-    let docx = fixture.body(&body);
+    let docx = fixture.body_xml(&body);
     let inner = list(
         alloc::vec![item(alloc::vec![paragraph_of(alloc::vec![text("inner")])])],
         None,
@@ -1350,14 +1606,14 @@ fn a_table_with_a_head_row_and_one_line_cells_is_a_pipe_table_aligned_by_its_fir
     let aligned = |jc: &str, text: &str| {
         format!(
             r#"<w:tc><w:p><w:pPr><w:jc w:val="{jc}"/></w:pPr>{}</w:p></w:tc>"#,
-            run(text)
+            run_xml(text)
         )
     };
     let rows = [
-        table_row(true, &[aligned("center", "h1"), aligned("end", "h2")]),
-        table_row(false, &[table_cell("", "a"), table_cell("", "b")]),
+        table_row_xml(true, &[aligned("center", "h1"), aligned("end", "h2")]),
+        table_row_xml(false, &[table_cell_xml("", "a"), table_cell_xml("", "b")]),
     ];
-    let docx = word(&table(&rows));
+    let docx = word_xml(&table_xml(&rows));
     let expected = Table::new(
         TableFormat::Pipe,
         alloc::vec![Alignment::Center, Alignment::Right],
@@ -1377,16 +1633,16 @@ fn a_table_with_a_head_row_and_one_line_cells_is_a_pipe_table_aligned_by_its_fir
 #[test]
 fn a_table_with_two_head_rows_or_a_one_line_code_cell_is_a_grid_table() {
     let two_heads = [
-        table_row(true, &[table_cell("", "h1")]),
-        table_row(true, &[table_cell("", "h2")]),
-        table_row(false, &[table_cell("", "a")]),
+        table_row_xml(true, &[table_cell_xml("", "h1")]),
+        table_row_xml(true, &[table_cell_xml("", "h2")]),
+        table_row_xml(false, &[table_cell_xml("", "a")]),
     ];
     let code = r#"<w:tc><w:p><w:pPr><w:pStyle w:val="HTMLPreformatted"/></w:pPr><w:r><w:t>let a = 1;</w:t></w:r></w:p></w:tc>"#;
     let code_cell = [
-        table_row(true, &[table_cell("", "h")]),
-        table_row(false, &[code.to_owned()]),
+        table_row_xml(true, &[table_cell_xml("", "h")]),
+        table_row_xml(false, &[code.to_owned()]),
     ];
-    let docx = word(&[table(&two_heads), table(&code_cell)].concat());
+    let docx = word_xml(&[table_xml(&two_heads), table_xml(&code_cell)].concat());
     let formats: Vec<TableFormat> = arky(&docx)
         .body
         .sections
@@ -1407,13 +1663,13 @@ fn a_table_with_two_head_rows_or_a_one_line_code_cell_is_a_grid_table() {
 fn a_table_with_no_head_row_or_with_a_cell_of_two_paragraphs_is_a_grid_table() {
     let two = "<w:tc><w:p><w:r><w:t>x</w:t></w:r></w:p><w:p><w:r><w:t>y</w:t></w:r></w:p></w:tc>";
     let rows = [
-        table_row(true, &[table_cell("", "h")]),
-        table_row(false, &[two.to_owned()]),
+        table_row_xml(true, &[table_cell_xml("", "h")]),
+        table_row_xml(false, &[two.to_owned()]),
     ];
-    let docx = word(
+    let docx = word_xml(
         &[
-            table(&[table_row(false, &[table_cell("", "a")])]),
-            table(&rows),
+            table_xml(&[table_row_xml(false, &[table_cell_xml("", "a")])]),
+            table_xml(&rows),
         ]
         .concat(),
     );
@@ -1443,27 +1699,27 @@ fn a_table_with_no_head_row_or_with_a_cell_of_two_paragraphs_is_a_grid_table() {
 #[test]
 fn a_spanning_cell_and_a_vertical_merge_continuation_are_padded_with_empty_cells() {
     let rows = [
-        table_row(
+        table_row_xml(
             false,
             &[
-                table_cell(r#"<w:gridSpan w:val="2"/>"#, "wide"),
-                table_cell("", "c"),
+                table_cell_xml(r#"<w:gridSpan w:val="2"/>"#, "wide"),
+                table_cell_xml("", "c"),
             ],
         ),
-        table_row(
+        table_row_xml(
             false,
             &[
-                table_cell(r#"<w:vMerge w:val="restart"/>"#, "x"),
-                table_cell("", "y"),
-                table_cell("", "z"),
+                table_cell_xml(r#"<w:vMerge w:val="restart"/>"#, "x"),
+                table_cell_xml("", "y"),
+                table_cell_xml("", "z"),
             ],
         ),
-        table_row(
+        table_row_xml(
             false,
             &[
-                table_cell("<w:vMerge/>", "under"),
-                table_cell("", "q"),
-                table_cell("", "r"),
+                table_cell_xml("<w:vMerge/>", "under"),
+                table_cell_xml("", "q"),
+                table_cell_xml("", "r"),
             ],
         ),
     ];
@@ -1478,7 +1734,7 @@ fn a_spanning_cell_and_a_vertical_merge_continuation_are_padded_with_empty_cells
         ],
     );
     assert_eq!(
-        arky(&word(&table(&rows))).body.sections,
+        arky(&word_xml(&table_xml(&rows))).body.sections,
         no_heading(alloc::vec![Block::Table(expected)])
     );
 }
@@ -1495,14 +1751,14 @@ fn anchors_lose_their_underscores_and_hyperlink_fields_are_links() {
             r#"<w:r><w:fldChar w:fldCharType="end"/></w:r>{}"#,
             r#"<w:fldSimple w:instr=" HYPERLINK &quot;https://y.example&quot; ">{}</w:fldSimple></w:p>"#,
         ),
-        run("Q3"),
-        run(" and "),
-        run("plan"),
-        run("x"),
-        run(" or "),
-        run("y"),
+        run_xml("Q3"),
+        run_xml(" and "),
+        run_xml("plan"),
+        run_xml("x"),
+        run_xml(" or "),
+        run_xml("y"),
     );
-    let docx = word(&body);
+    let docx = word_xml(&body);
     assert_eq!(
         arky(&docx).body.sections,
         no_heading(alloc::vec![
@@ -1531,11 +1787,11 @@ fn a_hyperlink_inside_a_hyperlink_joins_its_text_and_bold_inside_a_link_is_link_
     let inner = fixture.external("https://inner.example", &RelationshipType::HYPERLINK);
     let body = format!(
         r#"<w:p><w:hyperlink r:id="{outer}" w:tooltip="Tip">{}{}<w:hyperlink r:id="{inner}">{}</w:hyperlink></w:hyperlink></w:p>"#,
-        run("a "),
-        bold_run("b"),
-        run(" c"),
+        run_xml("a "),
+        bold_run_xml("b"),
+        run_xml(" c"),
     );
-    let docx = fixture.body(&body);
+    let docx = fixture.body_xml(&body);
     let expected = Inline::Link(Link::new(
         LinkForm::Markdown,
         "https://outer.example".to_owned(),
@@ -1567,10 +1823,10 @@ fn an_image_part_named_twice_is_exported_once() {
     );
     let body = format!(
         "<w:p>{}</w:p><w:p>{}</w:p>",
-        picture("A", &id),
-        picture("B", &id)
+        picture_xml("A", &id),
+        picture_xml("B", &id)
     );
-    let result = exported(&fixture.body(&body), MarkdownOptions::default());
+    let result = exported(&fixture.body_xml(&body), MarkdownOptions::default());
     assert_eq!(result.images, [("image1.png".to_owned(), PNG.to_vec())]);
     assert_eq!(
         result.document.body.sections,
@@ -1581,6 +1837,7 @@ fn an_image_part_named_twice_is_exported_once() {
     );
 }
 
+// XML input: the typed blip keeps asvg:svgBlip in a:ext as unknown content, and reading it from there is the behavior.
 #[test]
 fn a_picture_with_an_svg_extension_exports_the_svg_part_and_not_the_png() {
     let mut fixture = Fixture::new();
@@ -1599,8 +1856,11 @@ fn a_picture_with_an_svg_extension_exports_the_svg_part_and_not_the_png() {
     let blip = format!(
         r#"<a:blip r:embed="{png}"><a:extLst><a:ext uri="{{96DAC541-7B7A-43D3-8B79-37D633B846F1}}"><asvg:svgBlip r:embed="{svg}"/></a:ext></a:extLst></a:blip>"#
     );
-    let body = format!("<w:p><w:r>{}</w:r></w:p>", picture_drawing("Chart", &blip));
-    let result = exported(&fixture.body(&body), MarkdownOptions::default());
+    let body = format!(
+        "<w:p><w:r>{}</w:r></w:p>",
+        picture_drawing_xml("Chart", &blip)
+    );
+    let result = exported(&fixture.body_xml(&body), MarkdownOptions::default());
     assert_eq!(
         result.images,
         [("image2.svg".to_owned(), b"<svg/>".to_vec())]
@@ -1619,9 +1879,12 @@ fn a_linked_picture_is_an_image_of_its_address() {
     let mut fixture = Fixture::new();
     let id = fixture.external("https://example.com/logo.png", &RelationshipType::IMAGE);
     let blip = format!(r#"<a:blip r:link="{id}"/>"#);
-    let body = format!("<w:p><w:r>{}</w:r></w:p>", picture_drawing("Logo", &blip));
+    let body = format!(
+        "<w:p><w:r>{}</w:r></w:p>",
+        picture_drawing_xml("Logo", &blip)
+    );
     assert_eq!(
-        arky(&fixture.body(&body)).body.sections,
+        arky(&fixture.body_xml(&body)).body.sections,
         no_heading(alloc::vec![paragraph_of(alloc::vec![image(
             "https://example.com/logo.png",
             "Logo"
@@ -1629,6 +1892,7 @@ fn a_linked_picture_is_an_image_of_its_address() {
     );
 }
 
+// XML input: which mc:AlternateContent branch is read is the behavior, and the typed tree keeps the branches as unknown content.
 #[test]
 fn a_picture_inside_alternate_content_is_read_from_the_first_branch_that_holds_one() {
     let mut fixture = Fixture::new();
@@ -1647,12 +1911,12 @@ fn a_picture_inside_alternate_content_is_read_from_the_first_branch_that_holds_o
             r#"<w:p><w:r><mc:AlternateContent><mc:Choice Requires="wps">{}</mc:Choice>"#,
             "<mc:Fallback>{}</mc:Fallback></mc:AlternateContent></w:r></w:p>",
         ),
-        picture_drawing("first", &blip(&first)),
-        picture_drawing("unused", &blip(&unused)),
+        picture_drawing_xml("first", &blip(&first)),
+        picture_drawing_xml("unused", &blip(&unused)),
         text_box,
-        picture_drawing("second", &blip(&second)),
+        picture_drawing_xml("second", &blip(&second)),
     );
-    let result = exported(&fixture.body(&body), MarkdownOptions::default());
+    let result = exported(&fixture.body_xml(&body), MarkdownOptions::default());
     assert_eq!(
         result.images,
         [
@@ -1681,9 +1945,9 @@ fn an_alt_chunk_naming_an_html_part_is_an_html_block_of_its_body() {
     );
     let body = format!(
         r#"{}<w:altChunk r:id="{id}"/>"#,
-        paragraph("Normal", &run("before"))
+        paragraph_xml("Normal", &run_xml("before"))
     );
-    let docx = fixture.body(&body);
+    let docx = fixture.body_xml(&body);
     assert_eq!(
         arky(&docx).body.sections,
         no_heading(alloc::vec![
@@ -1696,7 +1960,7 @@ fn an_alt_chunk_naming_an_html_part_is_an_html_block_of_its_body() {
 #[test]
 fn the_frontmatter_part_is_the_frontmatter_only_when_asked_and_one_that_does_not_read_fails() {
     let with_part = |toml: &[u8]| {
-        let mut docx = word(&paragraph("Normal", &run("Hola")));
+        let mut docx = word(alloc::vec![paragraph("Normal", alloc::vec![run("Hola")])]);
         let name = PartName::new("/docProps/frontmatter.toml").unwrap();
         let package = docx.package_mut();
         package
@@ -1755,7 +2019,7 @@ fn a_vml_picture_in_a_pict_or_an_object_is_an_image_with_the_shape_s_alt_text() 
         vml_picture("Company logo", &id),
         vml_picture("Sheet", &id),
     );
-    let result = exported(&fixture.body(&body), MarkdownOptions::default());
+    let result = exported(&fixture.body_xml(&body), MarkdownOptions::default());
     assert_eq!(result.images, [("image1.png".to_owned(), PNG.to_vec())]);
     assert_eq!(
         result.document.body.sections,
@@ -1778,7 +2042,7 @@ fn a_vml_picture_of_an_external_relationship_is_an_image_of_its_address() {
         vml_picture("Logo", &id)
     );
     assert_eq!(
-        arky(&fixture.body(&body)).body.sections,
+        arky(&fixture.body_xml(&body)).body.sections,
         no_heading(alloc::vec![paragraph_of(alloc::vec![image(
             "https://example.com/logo.png",
             "Logo"
@@ -1786,6 +2050,7 @@ fn a_vml_picture_of_an_external_relationship_is_an_image_of_its_address() {
     );
 }
 
+// XML input: which mc:AlternateContent branch is read is the behavior, and the typed tree keeps the branches as unknown content.
 #[test]
 fn a_drawing_in_the_choice_wins_over_a_vml_picture_in_the_fallback() {
     let mut fixture = Fixture::new();
@@ -1794,10 +2059,10 @@ fn a_drawing_in_the_choice_wins_over_a_vml_picture_in_the_fallback() {
     let vml = add("/word/media/image2.png");
     let body = format!(
         r#"<w:p><w:r><mc:AlternateContent><mc:Choice Requires="wps">{}</mc:Choice><mc:Fallback><w:pict>{}</w:pict></mc:Fallback></mc:AlternateContent></w:r></w:p>"#,
-        picture_drawing("drawn", &format!(r#"<a:blip r:embed="{drawn}"/>"#)),
+        picture_drawing_xml("drawn", &format!(r#"<a:blip r:embed="{drawn}"/>"#)),
         vml_picture("vml", &vml),
     );
-    let result = exported(&fixture.body(&body), MarkdownOptions::default());
+    let result = exported(&fixture.body_xml(&body), MarkdownOptions::default());
     assert_eq!(result.images, [("image1.png".to_owned(), PNG.to_vec())]);
     assert_eq!(
         result.document.body.sections,
@@ -1820,30 +2085,29 @@ fn a_hyperlink_field_s_l_switch_names_a_bookmark_or_an_address_s_fragment() {
             r#"<w:fldSimple w:instr=" HYPERLINK &quot;https://x.example&quot; \l &quot;part_two&quot; ">{}</w:fldSimple>{}"#,
             r#"<w:fldSimple w:instr=" HYPERLINK \o &quot;tip&quot; ">{}</w:fldSimple></w:p>"#,
         ),
-        run("Q3"),
-        run(", "),
-        run("plan"),
-        run(", "),
-        run("part"),
-        run(", "),
-        run("plain"),
+        run_xml("Q3"),
+        run_xml(", "),
+        run_xml("plan"),
+        run_xml(", "),
+        run_xml("part"),
+        run_xml(", "),
+        run_xml("plain"),
     );
     assert_eq!(
-        markdown(&word(&body)),
+        markdown(&word_xml(&body)),
         "[Q3](#q3-results), [plan](#2024-plan), [part](https://x.example#part_two), plain\n"
     );
 }
 
 #[test]
 fn a_bold_stretch_next_to_punctuation_comes_back_bold() {
-    let body = [
-        format!("<w:p>{}{}</w:p>", run("MONTO SOLICITUD"), bold_run(":")),
-        format!("<w:p>{}{}{}</w:p>", run("a"), bold_run("(bold)"), run("b")),
-        format!("<w:p>{}{}</w:p>", bold_run("bold."), run("b")),
-    ]
-    .concat();
+    let docx = word(alloc::vec![
+        plain(alloc::vec![run("MONTO SOLICITUD"), bold_run(":")]),
+        plain(alloc::vec![run("a"), bold_run("(bold)"), run("b")]),
+        plain(alloc::vec![bold_run("bold."), run("b")]),
+    ]);
     assert_eq!(
-        arky(&word(&body)).body.sections,
+        arky(&docx).body.sections,
         no_heading(alloc::vec![
             paragraph_of(alloc::vec![
                 text("MONTO SOLICITUD"),
