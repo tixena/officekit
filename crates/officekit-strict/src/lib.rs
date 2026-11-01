@@ -24,10 +24,14 @@
 //!
 //! The rules of the walk:
 //!
-//! - Every known namespace takes its Strict URI.
+//! - Every known namespace takes its Strict URI, and so do the addresses `a:graphicData/@uri`
+//!   and `ds:schemaRef/@ds:uri` hold.
 //! - A Transitional-only attribute or child takes its Strict name, and values that Strict
 //!   spells otherwise take its spelling. For instance, the alignment `left` is `start`.
 //! - A bitmask unpacks into the attributes it packs.
+//! - A protection holding no password hash takes Part 1's `algorithmName` and `spinCount`.
+//! - The text of the `wp14` relative sizes and positions, a bare number counting thousandths of a
+//!   percent, becomes a percentage, as Word writes it in Strict.
 //! - A serial date-time becomes an ISO 8601 text (see [`iso_date_time`]), a character-set code
 //!   becomes its name, and a bare number becomes a measure with a unit.
 //! - The root of a main part (a `w:document`, `x:workbook` or `p:presentation`) gets the
@@ -38,9 +42,9 @@
 //!
 //! The rules are keyed by tag, so the walk also reaches content the typed tree keeps as unknown,
 //! such as the branches of `mc:AlternateContent`. Word saves a text box as `mc:AlternateContent`
-//! around Microsoft's `wps:wsp` holding `w:txbxContent`. Strict writes the `wps:wsp` in place of
-//! the `mc:AlternateContent`, its text in `wne:txbxContent`, as Microsoft documents for Strict. A
-//! text box inside a group or in VML has no Strict form.
+//! around Microsoft's `wps:wsp` holding `w:txbxContent`. Strict writes the shape in place of the
+//! `mc:AlternateContent` as Word does: `wp:wsp` in the `graphicData` of the `wps` namespace, its
+//! text in `wne:txbxContent`. A text box inside a group or in VML has no Strict form.
 //!
 //! A date cell (`t="d"`) exists only in Strict, so the Strict write keeps it as it is. The
 //! Transitional write of `officekit::transitional` refuses it and has a function that converts it.
@@ -137,6 +141,41 @@ const WORDPROCESSING_SHAPE: &str =
     "http://schemas.microsoft.com/office/word/2010/wordprocessingShape";
 
 /// The namespace of Word's text-box content in Strict, `wne`.
+/// Each `cryptAlgorithmSid` of ECMA-376 Part 4, 14.8.2.3 with the `algorithmName` Part 1,
+/// 17.15.1.29 gives the same algorithm.
+const ALGORITHM_NAMES: [(&str, &str); 8] = [
+    ("1", "MD2"),
+    ("2", "MD4"),
+    ("3", "MD5"),
+    ("4", "SHA-1"),
+    ("7", "RIPEMD-160"),
+    ("12", "SHA-256"),
+    ("13", "SHA-384"),
+    ("14", "SHA-512"),
+];
+
+/// The attributes of Part 4's protection that hold what Part 1 has no slot for.
+const PROTECTION_WITH_NO_SLOT: [&str; 7] = [
+    "algIdExt",
+    "algIdExtSource",
+    "cryptProvider",
+    "cryptProviderTypeExt",
+    "cryptProviderTypeExtSource",
+    "hash",
+    "salt",
+];
+
+/// The attributes of Part 4's protection that only name the algorithm.
+const PROTECTION_ALGORITHM: [&str; 5] = [
+    "cryptAlgorithmClass",
+    "cryptAlgorithmSid",
+    "cryptAlgorithmType",
+    "cryptProviderType",
+    "cryptSpinCount",
+];
+
+const VML: &str = "urn:schemas-microsoft-com:vml";
+
 const WORD_ML: &str = "http://schemas.microsoft.com/office/word/2006/wordml";
 
 // The tables of the walk, generated: `ATTRIBUTES`, `CHILDREN`, `CONTEXTUAL`,
@@ -217,6 +256,17 @@ enum Spelling {
     },
 }
 
+/// One refusal of a Strict write.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[non_exhaustive]
+pub struct Refusal {
+    /// The prefix the namespace table gives the namespace of the refused element, or of the
+    /// element holding the refused attribute.
+    pub prefix: &'static str,
+    /// What a [`WriteError::NotInClass`] for it names.
+    pub tag: &'static str,
+}
+
 /// A node of the typed tree read from, and written to, the Strict class.
 ///
 /// It is implemented for every node of every namespace of `officekit_markup`, and is in
@@ -241,7 +291,7 @@ pub trait Strict: Sized {
 
 /// Apply one attribute rule to the attribute `attribute` of `element`, when
 /// the element has it.
-fn apply(element: &mut Element, attribute: Tag, rule: &AttributeRule) -> Result<(), WriteError> {
+fn apply(element: &mut Element, attribute: Tag, rule: &AttributeRule) -> Result<(), &'static str> {
     let Some(index) = element
         .attributes
         .iter()
@@ -259,7 +309,7 @@ fn apply(element: &mut Element, attribute: Tag, rule: &AttributeRule) -> Result<
                 .attributes
                 .get(index)
                 .and_then(|found| character_set(*codes, &found.value))
-                .ok_or_else(|| not_in_class(label))?;
+                .ok_or(*label)?;
             set(element, index, to, name);
             Ok(())
         }
@@ -276,7 +326,7 @@ fn apply(element: &mut Element, attribute: Tag, rule: &AttributeRule) -> Result<
                 .attributes
                 .get(index)
                 .and_then(|found| iso_date_time(&found.value, false))
-                .ok_or_else(|| not_in_class(label))?;
+                .ok_or(*label)?;
             set(element, index, to, &text);
             Ok(())
         }
@@ -309,7 +359,7 @@ fn apply(element: &mut Element, attribute: Tag, rule: &AttributeRule) -> Result<
             }
             Ok(())
         }
-        AttributeRule::Refuse(label) => Err(not_in_class(label)),
+        AttributeRule::Refuse(label) => Err(*label),
         AttributeRule::Rename(to) => {
             if has_attribute(element, index, to) {
                 element.attributes.remove(index);
@@ -328,6 +378,32 @@ fn apply(element: &mut Element, attribute: Tag, rule: &AttributeRule) -> Result<
                 found.value = text;
             }
             Ok(())
+        }
+    }
+}
+
+/// A `v:background` that holds only a color takes its place as attributes of `w:background`, which
+/// Strict declares (ECMA-376 Part 1, 17.2.1). One with a fill of its own stays for the walk to
+/// refuse.
+fn background_color(element: &mut Element) {
+    if !named(element, WORDPROCESSING, "background") {
+        return;
+    }
+    let position = element.children.iter().position(|node| {
+        matches!(node, Node::Element(child) if named(child, VML, "background") && holds_only_color(child, &element.name.namespace))
+    });
+    let Some(index) = position else {
+        return;
+    };
+    if let Node::Element(child) = element.children.remove(index) {
+        for attribute in child.attributes {
+            let present = element
+                .attributes
+                .iter()
+                .any(|found| found.name == attribute.name);
+            if attribute.name.namespace == element.name.namespace && !present {
+                element.attributes.push(attribute);
+            }
         }
     }
 }
@@ -390,9 +466,9 @@ const fn civil_from_days(days: i64) -> (i64, i64, i64) {
     (year, month, day)
 }
 
-/// Rename and refuse the children of `element` its tag's rules name, then
-/// convert every child element.
-fn convert_children(element: &mut Element) -> Result<(), WriteError> {
+/// Rename the children of `element` its tag's rules name and take out, into `found`, those they
+/// refuse, then convert every child element.
+fn convert_children(element: &mut Element, found: &mut Vec<Refusal>) {
     unwrap_word_shapes(element);
     if let Some(owner) = officekit_markup::name(element) {
         let rules = rules_of(CHILDREN, owner);
@@ -407,7 +483,15 @@ fn convert_children(element: &mut Element) -> Result<(), WriteError> {
                 None
             };
             index = match rule {
-                Some(ChildRule::Refuse(label)) => return Err(not_in_class(label)),
+                Some(ChildRule::Refuse(label)) => {
+                    if let Node::Element(child) = element.children.remove(index) {
+                        found.push(Refusal {
+                            prefix: name_prefix(&child),
+                            tag: label,
+                        });
+                    }
+                    index
+                }
                 Some(ChildRule::Rename { before, to }) => rename_child(element, index, before, to),
                 None => index + 1,
             };
@@ -416,42 +500,78 @@ fn convert_children(element: &mut Element) -> Result<(), WriteError> {
     let parent = tag_of(&element.name);
     for child in &mut element.children {
         if let Node::Element(inner) = child {
-            convert(inner, parent)?;
+            convert(inner, parent, found);
         }
     }
-    Ok(())
 }
 
-/// Apply every rule to `element` and its subtree; `parent` is the tag of the
-/// element holding it.
+/// Apply every rule to `element` and its subtree, each refusal into `found`; `parent` is the tag
+/// of the element holding it. A refused element counts once, its content unwalked.
 fn convert(
     element: &mut Element,
     parent: Option<(Option<NamespaceId>, &str)>,
-) -> Result<(), WriteError> {
+    found: &mut Vec<Refusal>,
+) {
     if named(element, WORDPROCESSING_DRAWING, "anchor")
         || named(element, WORDPROCESSING_DRAWING, "inline")
     {
-        word_text_box_content(element);
+        let prefix = element.name.prefix.clone();
+        word_shape(element, &prefix);
     }
-    refuse_element(element)?;
+    protection_with_no_password(element);
+    background_color(element);
+    if let Err(tag) = refuse_element(element) {
+        found.push(Refusal {
+            prefix: name_prefix(element),
+            tag,
+        });
+        return;
+    }
     for attribute in &element.attributes {
         if let Namespace::Known(id) = attribute.name.namespace
             && REFUSED_NAMESPACES.iter().any(|(refused, _)| *refused == id)
         {
-            return Err(not_in_class(prefix(id)));
+            found.push(Refusal {
+                prefix: prefix(id),
+                tag: prefix(id),
+            });
         }
     }
     if let Some(owner) = officekit_markup::name(element) {
         let rules = rules_of(ATTRIBUTES, owner);
-        let contextual = parent.map_or(&[][..], |found| contextual_rules(found, owner));
-        for (_, attribute, rule) in rules {
-            apply(element, *attribute, rule)?;
-        }
-        for (_, _, attribute, rule) in contextual {
-            apply(element, *attribute, rule)?;
+        let contextual = parent.map_or(&[][..], |tag| contextual_rules(tag, owner));
+        let owner_prefix = name_prefix(element);
+        let applied = rules
+            .iter()
+            .map(|(_, attribute, rule)| (*attribute, rule))
+            .chain(
+                contextual
+                    .iter()
+                    .map(|(_, _, attribute, rule)| (*attribute, rule)),
+            );
+        for (attribute, rule) in applied {
+            if let Err(tag) = apply(element, attribute, rule) {
+                found.push(Refusal {
+                    prefix: owner_prefix,
+                    tag,
+                });
+            }
         }
     }
-    convert_children(element)
+    let text_rule = officekit_markup::name(element)
+        .and_then(|owner| TEXTS.binary_search_by(|(tag, _)| order(*tag, owner)).ok())
+        .and_then(|index| TEXTS.get(index))
+        .map(|(_, spellings)| *spellings);
+    if let Some(spellings) = text_rule {
+        for node in &mut element.children {
+            if let Node::Text(text) = node
+                && let Some(spelled) = spell(text, spellings)
+            {
+                *text = spelled;
+            }
+        }
+    }
+    convert_children(element, found);
 }
 
 /// The rules of `CONTEXTUAL` for an element `owner` under `parent`.
@@ -521,6 +641,21 @@ fn has_word_shape(element: &Element) -> bool {
     holds_word_shape(element) || element.child_elements().any(has_word_shape)
 }
 
+/// Whether the `v:background` `background` holds nothing but its id, `filled="t"` and theme color
+/// attributes in `namespace`.
+fn holds_only_color(background: &Element, namespace: &Namespace) -> bool {
+    background.children.is_empty()
+        && background
+            .attributes
+            .iter()
+            .all(|found| match found.name.local.as_str() {
+                "id" => true,
+                "filled" => matches!(found.value.as_str(), "t" | "true"),
+                "themeColor" | "themeShade" | "themeTint" => found.name.namespace == *namespace,
+                _ => false,
+            })
+}
+
 /// Whether `element` is a `graphicData` holding Word's shape.
 fn holds_word_shape(element: &Element) -> bool {
     named(element, DRAWING, "graphicData")
@@ -570,6 +705,15 @@ fn named(element: &Element, uri: &str, local: &str) -> bool {
     element.name.local == local && element.name.namespace == Namespace::from_uri(uri)
 }
 
+/// The prefix the namespace table gives the namespace of `element`; empty for no known namespace.
+fn name_prefix(element: &Element) -> &'static str {
+    if let Namespace::Known(id) = element.name.namespace {
+        prefix(id)
+    } else {
+        ""
+    }
+}
+
 /// The Strict refusal naming `tag`.
 const fn not_in_class(tag: &'static str) -> WriteError {
     WriteError::NotInClass {
@@ -591,9 +735,78 @@ fn prefix(id: NamespaceId) -> &'static str {
     NAMESPACES.get(usize::from(id)).map_or("", |row| row.prefix)
 }
 
+/// A protection with no password hash in Part 1's attributes: Part 4's only name the algorithm a
+/// password would take. A hash needs Part 4's legacy step, so a protection holding one stays for
+/// the rules to refuse, as does one holding what Part 1 has no slot for.
+fn protection_with_no_password(element: &mut Element) {
+    if !named(element, WORDPROCESSING, "documentProtection")
+        && !named(element, WORDPROCESSING, "writeProtection")
+    {
+        return;
+    }
+    let namespace = element.name.namespace.clone();
+    let value = |local: &str| {
+        element
+            .attributes
+            .iter()
+            .find(|found| found.name.local == local && found.name.namespace == namespace)
+            .map(|found| found.value.as_str())
+    };
+    let algorithm = value("cryptAlgorithmSid").map(|sid| {
+        ALGORITHM_NAMES
+            .iter()
+            .find(|(code, _)| *code == sid)
+            .map(|(_, name)| *name)
+    });
+    if PROTECTION_WITH_NO_SLOT
+        .iter()
+        .any(|local| value(local).is_some())
+        || value("cryptAlgorithmClass").is_some_and(|text| text != "hash")
+        || value("cryptAlgorithmType").is_some_and(|text| text != "typeAny")
+        || value("cryptProviderType").is_some_and(|text| text == "custom")
+        || algorithm == Some(None)
+    {
+        return;
+    }
+    let spin_count = value("cryptSpinCount").map(str::to_owned);
+    let strict = [
+        ("algorithmName", algorithm.flatten().map(str::to_owned)),
+        ("spinCount", spin_count),
+    ];
+    element.attributes.retain(|found| {
+        found.name.namespace != namespace
+            || !PROTECTION_ALGORITHM.contains(&found.name.local.as_str())
+    });
+    for (local, text) in strict {
+        let present = element
+            .attributes
+            .iter()
+            .any(|found| found.name.local == local && found.name.namespace == namespace);
+        if let (Some(written), false) = (text, present) {
+            element.attributes.push(Attribute::new(
+                QName::new(
+                    element.name.prefix.clone(),
+                    local.to_owned(),
+                    namespace.clone(),
+                ),
+                written,
+            ));
+        }
+    }
+}
+
+/// Every refusal a Strict write of `element` meets, in the order the walk meets them: the first is
+/// the one [`Strict::to_strict`] names. A refused element counts once, its content unwalked.
+#[must_use]
+pub fn refusals(mut element: Element) -> Vec<Refusal> {
+    let mut found = Vec::new();
+    convert(&mut element, None, &mut found);
+    found
+}
+
 /// Fail on an element of a namespace with no Strict twin, or one no Strict
 /// schema declares.
-fn refuse_element(element: &Element) -> Result<(), WriteError> {
+fn refuse_element(element: &Element) -> Result<(), &'static str> {
     let Namespace::Known(id) = element.name.namespace else {
         return Ok(());
     };
@@ -607,12 +820,12 @@ fn refuse_element(element: &Element) -> Result<(), WriteError> {
             .find(|known| **known == local)
             .copied()
             .unwrap_or_else(|| prefix(id));
-        return Err(not_in_class(label));
+        return Err(label);
     }
     if let Ok(found) = ELEMENTS.binary_search_by(|tag| order(*tag, (Some(id), local)))
         && let Some(tag) = ELEMENTS.get(found)
     {
-        return Err(not_in_class(tag.1));
+        return Err(tag.1);
     }
     Ok(())
 }
@@ -648,23 +861,26 @@ fn rename_child(element: &mut Element, index: usize, before: &[&str], to: &'stat
     index + 1
 }
 
-/// Word's text box in Strict, as Microsoft documents it: the shape stays `wps:wsp` in the
-/// `graphicData` of the `wps` namespace, and the `w:txbxContent` of each `wps:txbx` becomes
+/// Word's shape in Strict, as Word writes it: the `graphicData` keeps its `uri`, each element of
+/// the `wps` namespace takes `wp` in `prefix`, and the `w:txbxContent` of each `wps:txbx` becomes
 /// `wne:txbxContent`, declaring `wne` itself. A `graphicData` of another namespace is left alone.
-fn word_text_box_content(element: &mut Element) {
+fn word_shape(element: &mut Element, prefix: &str) {
     if holds_word_shape(element) {
-        write_text_box_content(element);
+        write_word_shape(element, prefix);
         return;
     }
     for node in &mut element.children {
         if let Node::Element(child) = node {
-            word_text_box_content(child);
+            word_shape(child, prefix);
         }
     }
 }
 
-fn write_text_box_content(element: &mut Element) {
+fn write_word_shape(element: &mut Element, prefix: &str) {
     let text_box = named(element, WORDPROCESSING_SHAPE, "txbx");
+    if element.name.namespace == Namespace::from_uri(WORDPROCESSING_SHAPE) {
+        element.name = QName::prefixed(prefix, &element.name.local, WORDPROCESSING_DRAWING);
+    }
     for node in &mut element.children {
         if let Node::Element(child) = node {
             if text_box && named(child, WORDPROCESSING, "txbxContent") {
@@ -674,7 +890,7 @@ fn write_text_box_content(element: &mut Element) {
                     WORD_ML.to_owned(),
                 ));
             }
-            write_text_box_content(child);
+            write_word_shape(child, prefix);
         }
     }
 }
@@ -788,14 +1004,14 @@ fn unpack(
     index: usize,
     bits: &Bits,
     label: &'static str,
-) -> Result<(), WriteError> {
+) -> Result<(), &'static str> {
     let source = element.attributes.remove(index);
     let values: Vec<(&str, bool)> = match bits {
         Bits::Characters(names) => {
             let valid = source.value.len() == names.len()
                 && source.value.bytes().all(|byte| matches!(byte, b'0' | b'1'));
             if !valid {
-                return Err(not_in_class(label));
+                return Err(label);
             }
             names
                 .iter()
@@ -804,8 +1020,7 @@ fn unpack(
                 .collect()
         }
         Bits::Hex(names) => {
-            let mask =
-                u16::from_str_radix(&source.value, 16).map_err(|_error| not_in_class(label))?;
+            let mask = u16::from_str_radix(&source.value, 16).map_err(|_error| label)?;
             names
                 .iter()
                 .map(|(bit, name)| (*name, mask & bit != 0))
@@ -876,7 +1091,11 @@ fn word_shape_choice(element: &Element) -> bool {
 /// The shared writer's element, converted to Strict, with the Strict URI of
 /// every known namespace it declares.
 fn write(mut element: Element) -> Result<Element, WriteError> {
-    convert(&mut element, None)?;
+    let mut found = Vec::new();
+    convert(&mut element, None, &mut found);
+    if let Some(first) = found.first() {
+        return Err(not_in_class(first.tag));
+    }
     element.set_class(ConformanceClass::Strict);
     Ok(element)
 }

@@ -1,10 +1,11 @@
 //! Reading a part's bytes into the generic element tree, over `quick-xml`'s
 //! `Reader`.
 
+use alloc::borrow::Cow;
 use core::fmt::Display;
 use core::mem;
 
-use quick_xml::events::{BytesRef, BytesStart, Event};
+use quick_xml::events::{BytesDecl, BytesRef, BytesStart, Event};
 use quick_xml::{Reader, XmlVersion};
 
 use super::element::{Attribute, Document, Element, NamespaceDeclaration, Node, XmlError};
@@ -85,6 +86,17 @@ impl Scope {
     }
 }
 
+/// The declaration of a part read from UTF-16: a tree writes as UTF-8, so a declared encoding
+/// names UTF-8.
+fn declaration_in_utf8(declaration: &BytesDecl<'_>) -> Result<String, XmlError> {
+    if declaration.encoding().is_none() {
+        return Ok((**declaration).to_owned());
+    }
+    let version = declaration.version().map_err(malformed)?;
+    let standalone = declaration.standalone().transpose().map_err(malformed)?;
+    Ok((*BytesDecl::new(&version, Some("UTF-8"), standalone.as_deref())).to_owned())
+}
+
 pub(crate) fn malformed<E>(error: E) -> XmlError
 where
     E: Display,
@@ -101,7 +113,9 @@ where
 /// [`XmlError::Malformed`] for bytes that are not well-formed XML or that hold
 /// a document type declaration.
 pub fn parse(bytes: &[u8]) -> Result<Document, XmlError> {
-    let mut reader = Reader::from_reader(bytes);
+    let utf8 = utf8_of(bytes)?;
+    let read_from_utf16 = matches!(utf8, Cow::Owned(_));
+    let mut reader = Reader::from_reader(utf8.as_ref());
     reader.config_mut().trim_text(false);
     let mut scope = Scope::default();
     let mut declaration = None;
@@ -115,6 +129,9 @@ pub fn parse(bytes: &[u8]) -> Result<Document, XmlError> {
         match event {
             Event::CData(content) => builder.push(Node::CData((*content).to_owned())),
             Event::Comment(content) => builder.push(Node::Comment((*content).to_owned())),
+            Event::Decl(content) if read_from_utf16 => {
+                declaration = Some(declaration_in_utf8(&content)?);
+            }
             Event::Decl(content) => declaration = Some((*content).to_owned()),
             Event::DocType(_) => {
                 return Err(XmlError::Malformed(
@@ -157,6 +174,57 @@ pub fn parse(bytes: &[u8]) -> Result<Document, XmlError> {
         prolog: builder.prolog,
         root,
     })
+}
+
+/// The name of the part's root element, from its bytes up to the root's start tag; what follows
+/// that tag is not read. `None` when the bytes show no root element this reader can name.
+#[must_use]
+pub fn root_name(bytes: &[u8]) -> Option<QName> {
+    let utf8 = utf8_of(bytes).ok()?;
+    let mut reader = Reader::from_reader(utf8.as_ref());
+    let mut scope = Scope::default();
+    loop {
+        match reader.read_event().ok()? {
+            Event::DocType(_) | Event::Eof => return None,
+            Event::Empty(start) | Event::Start(start) => {
+                return start_element(&start, &mut scope).ok().map(|root| root.name);
+            }
+            Event::CData(_)
+            | Event::Comment(_)
+            | Event::Decl(_)
+            | Event::End(_)
+            | Event::GeneralRef(_)
+            | Event::PI(_)
+            | Event::Text(_) => {}
+        }
+    }
+}
+
+/// The part's bytes as UTF-8. A byte order mark names UTF-16, as XML 1.0, 4.3.3 requires of it.
+fn utf8_of(bytes: &[u8]) -> Result<Cow<'_, [u8]>, XmlError> {
+    let (rest, big_endian) = match bytes {
+        [0xFF, 0xFE, rest @ ..] => (rest, false),
+        [0xFE, 0xFF, rest @ ..] => (rest, true),
+        _ => return Ok(Cow::Borrowed(bytes)),
+    };
+    let (pairs, odd) = rest.as_chunks::<2>();
+    if !odd.is_empty() {
+        return Err(XmlError::Malformed(
+            "a UTF-16 part ends inside a character".to_owned(),
+        ));
+    }
+    let units = pairs.iter().map(|&[first, second]| {
+        let (high, low) = if big_endian {
+            (first, second)
+        } else {
+            (second, first)
+        };
+        (u16::from(high) << 8_u8) | u16::from(low)
+    });
+    let text = char::decode_utf16(units)
+        .collect::<Result<String, _>>()
+        .map_err(malformed)?;
+    Ok(Cow::Owned(text.into_bytes()))
 }
 
 /// The character a character or entity reference in text stands for.

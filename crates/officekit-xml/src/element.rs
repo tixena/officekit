@@ -21,6 +21,18 @@ use super::write::{self, WriteOptions};
 #[cfg(test)]
 mod tests;
 
+/// The Transitional namespaces of the custom XML parts a class save moves, which a data binding
+/// can name in its prefix mappings; every other custom XML part keeps its bytes.
+const BOUND_PARTS: [&str; 2] = [
+    "http://schemas.openxmlformats.org/officeDocument/2006/bibliography",
+    "http://schemas.openxmlformats.org/officeDocument/2006/characteristics",
+];
+const CUSTOM_XML: &str = "http://schemas.openxmlformats.org/officeDocument/2006/customXml";
+const DRAWING: &str = "http://schemas.openxmlformats.org/drawingml/2006/main";
+/// The address of an embedded presentation object, which no namespace has: Part 1, L.7.2.5.
+const OLE: &str = "http://schemas.openxmlformats.org/presentationml/2006/ole";
+const OLE_STRICT: &str = "http://purl.oclc.org/ooxml/presentationml/ole";
+
 /// An attribute: its qualified name and its value, unescaped.
 #[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(
@@ -212,8 +224,68 @@ impl Element {
         }
     }
 
-    /// Declare every namespace of the subtree with the class's URI; a
-    /// namespace with one URI for both is left alone.
+    /// Write the address this element's `uri` attribute names in the class's spelling, for
+    /// `a:graphicData` and `ds:schemaRef`, the two elements whose `uri` names a namespace.
+    fn set_address_class(&mut self, class: ConformanceClass) {
+        let namespace = if self.name.local == "graphicData"
+            && self.name.namespace == Namespace::from_uri(DRAWING)
+        {
+            Namespace::None
+        } else if self.name.local == "schemaRef"
+            && self.name.namespace == Namespace::from_uri(CUSTOM_XML)
+        {
+            self.name.namespace.clone()
+        } else {
+            return;
+        };
+        let Some(address) = self
+            .attributes
+            .iter_mut()
+            .find(|found| found.name.local == "uri" && found.name.namespace == namespace)
+        else {
+            return;
+        };
+        if address.value == OLE || address.value == OLE_STRICT {
+            let spelled = match class {
+                ConformanceClass::Strict => OLE_STRICT,
+                ConformanceClass::Transitional => OLE,
+            };
+            spelled.clone_into(&mut address.value);
+            return;
+        }
+        let named = Namespace::from_uri(&address.value);
+        if let Namespace::Known(_) = named {
+            named.uri(class).clone_into(&mut address.value);
+        }
+    }
+
+    /// Write the address of a part a class save moves, in a data binding's prefix mappings, in
+    /// the class's spelling: the mapping names the namespace its `XPath` finds in that part.
+    fn set_binding_class(&mut self, class: ConformanceClass) {
+        if self.name.local != "dataBinding" {
+            return;
+        }
+        let Some(mappings) = self
+            .attributes
+            .iter_mut()
+            .find(|found| found.name.local == "prefixMappings")
+        else {
+            return;
+        };
+        for address in BOUND_PARTS {
+            let namespace = Namespace::from_uri(address);
+            for other in [ConformanceClass::Strict, ConformanceClass::Transitional] {
+                mappings.value = mappings.value.replace(
+                    &format!("'{}'", namespace.uri(other)),
+                    &format!("'{}'", namespace.uri(class)),
+                );
+            }
+        }
+    }
+
+    /// Declare every namespace of the subtree with the class's URI, and write
+    /// `a:graphicData/@uri`, `ds:schemaRef/@ds:uri` and a data binding's mapping to a part a
+    /// class save moves in the class's spelling; a namespace with one URI for both is left alone.
     pub fn set_class(&mut self, class: ConformanceClass) {
         for declaration in &mut self.namespace_declarations {
             let namespace = Namespace::from_uri(&declaration.uri);
@@ -221,6 +293,8 @@ impl Element {
                 namespace.uri(class).clone_into(&mut declaration.uri);
             }
         }
+        self.set_address_class(class);
+        self.set_binding_class(class);
         for child in &mut self.children {
             if let Node::Element(element) = child {
                 element.set_class(class);

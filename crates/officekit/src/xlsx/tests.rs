@@ -321,3 +321,29 @@ fn a_new_workbook_saved_strict_reopens_strict() {
     let related = xlsx.package().related(Some(xlsx.workbook_part())).unwrap();
     assert_eq!(related[0].type_uri, RelationshipType::WORKSHEET.strict);
 }
+
+#[cfg(feature = "strict")]
+#[test]
+fn strict_refusals_names_a_workbook_s_legacy_password() {
+    let mut xlsx = Xlsx::new(SpreadsheetKind::Workbook).unwrap();
+    assert_eq!(xlsx.strict_refusals().unwrap(), []);
+    let part = name("/xl/workbook.xml");
+    let content_type = xlsx.package().content_type(&part).unwrap().to_owned();
+    xlsx.package_mut()
+        .set_part_bytes(
+            &part,
+            &content_type,
+            b"<workbook xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\"><fileSharing reservationPassword=\"ABCD\"/><sheets/></workbook>",
+        )
+        .unwrap();
+    assert_eq!(
+        xlsx.strict_refusals().unwrap(),
+        [crate::StrictRefusal {
+            count: 1,
+            part,
+            prefix: "x",
+            tag: "fileSharing/@reservationPassword",
+        }]
+    );
+    xlsx.to_bytes_strict().unwrap_err();
+}

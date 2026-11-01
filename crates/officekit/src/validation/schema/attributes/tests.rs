@@ -75,6 +75,7 @@ const NEWER_TYPE: SchemaType = SchemaType {
     children: &[],
     name: "w:CT_Newer/w:newer",
     particles: &[],
+    strict_text_checks: None,
     text_checks: &[],
     versions: Versions(0b11_1111),
 };

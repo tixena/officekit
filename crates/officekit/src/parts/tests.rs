@@ -437,3 +437,21 @@ fn each_file_type_has_its_kinds_and_its_main_part_lists_them() {
     assert_eq!(workbook::CONTENT_TYPES.len(), 5);
     assert_eq!(presentation::CONTENT_TYPES.len(), 7);
 }
+
+#[cfg(any(feature = "strict", feature = "transitional"))]
+#[test]
+fn a_part_whose_root_cannot_be_named_has_no_model() {
+    let item = name("/customXml/item1.xml");
+    for held in [
+        "",
+        "<?xml version=\"1.0\"?>",
+        "<x:root/>",
+        "<!DOCTYPE a><a/>",
+    ] {
+        let package = package_with(&item, "application/xml", held);
+        assert_eq!(
+            model_of(&package, &item, OpenOptions::default()).unwrap(),
+            None
+        );
+    }
+}

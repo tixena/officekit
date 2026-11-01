@@ -1,6 +1,6 @@
 use alloc::sync::Arc;
 
-use super::parse;
+use super::{parse, root_name};
 use crate::element::{Node, XmlError};
 use crate::name::{Namespace, QName};
 
@@ -175,4 +175,102 @@ fn markup_that_is_not_one_well_formed_element_is_malformed() {
     assert!(malformed(b"<a>"));
     assert!(malformed(b""));
     assert!(malformed(b"<a>&unknown;</a>"));
+}
+
+/// ASCII `text` in UTF-16 with its byte order mark, little-endian.
+fn utf16_little_endian(text: &str) -> Vec<u8> {
+    let mut bytes = vec![0xFF, 0xFE];
+    bytes.extend(text.bytes().flat_map(|byte| [byte, 0]));
+    bytes
+}
+
+/// ASCII `text` in UTF-16 with its byte order mark, big-endian.
+fn utf16_big_endian(text: &str) -> Vec<u8> {
+    let mut bytes = vec![0xFE, 0xFF];
+    bytes.extend(text.bytes().flat_map(|byte| [0, byte]));
+    bytes
+}
+
+#[test]
+fn a_part_in_utf16_reads_as_the_same_part_in_utf8() {
+    let body = format!("<w:t xmlns:w=\"{W}\" w:rsidR=\"1\">x y</w:t>");
+    let expected = parse(body.as_bytes()).unwrap();
+    assert_eq!(
+        parse(&utf16_little_endian(&body)).unwrap().root,
+        expected.root
+    );
+    assert_eq!(parse(&utf16_big_endian(&body)).unwrap().root, expected.root);
+}
+
+#[test]
+fn a_character_outside_ascii_survives_utf16_in_both_byte_orders() {
+    // <a>U+00E9 U+1F600</a>; the second character is the surrogate pair D83D DE00.
+    let little = [
+        0xFF, 0xFE, b'<', 0, b'a', 0, b'>', 0, 0xE9, 0, 0x3D, 0xD8, 0x00, 0xDE, b'<', 0, b'/', 0,
+        b'a', 0, b'>', 0,
+    ];
+    let big = [
+        0xFE, 0xFF, 0, b'<', 0, b'a', 0, b'>', 0, 0xE9, 0xD8, 0x3D, 0xDE, 0x00, 0, b'<', 0, b'/',
+        0, b'a', 0, b'>',
+    ];
+    for bytes in [little, big] {
+        assert_eq!(
+            parse(&bytes).unwrap().root.children,
+            [Node::Text("\u{e9}\u{1F600}".to_owned())]
+        );
+    }
+}
+
+#[test]
+fn a_part_read_from_utf16_declares_utf8_because_it_writes_as_utf8() {
+    let body = "<?xml version=\"1.0\" encoding=\"UTF-16\" standalone=\"yes\"?><a/>";
+    let document = parse(&utf16_little_endian(body)).unwrap();
+    assert_eq!(
+        document.declaration.as_deref(),
+        Some("xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"")
+    );
+    let bare = parse(&utf16_little_endian("<?xml version=\"1.0\"?><a/>")).unwrap();
+    assert_eq!(bare.declaration.as_deref(), Some("xml version=\"1.0\""));
+}
+
+#[test]
+fn a_part_that_only_declares_utf16_keeps_its_bytes_and_its_declaration() {
+    let body = "<?xml version=\"1.0\" encoding=\"utf-16\"?><a/>";
+    let document = parse(body.as_bytes()).unwrap();
+    assert_eq!(
+        document.declaration.as_deref(),
+        Some("xml version=\"1.0\" encoding=\"utf-16\"")
+    );
+}
+
+#[test]
+fn a_utf16_part_with_half_a_character_or_a_lone_surrogate_is_malformed() {
+    let mut odd = utf16_little_endian("<a/>");
+    odd.push(b' ');
+    assert!(malformed(&odd));
+    let mut lone = utf16_little_endian("<a>");
+    lone.extend([0x00, 0xD8]);
+    lone.extend(utf16_little_endian("</a>").split_off(2));
+    assert!(malformed(&lone));
+}
+
+#[test]
+fn a_root_name_needs_only_the_start_tag() {
+    let source = format!("<?xml version=\"1.0\"?><!--c--><w:r xmlns:w=\"{W}\"><x:y/><unclosed>");
+    assert_eq!(
+        root_name(source.as_bytes()),
+        Some(QName::prefixed("w", "r", W))
+    );
+    assert_eq!(
+        root_name(b"<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><root><v>\xE9</v></root>"),
+        Some(QName::unprefixed("root", ""))
+    );
+}
+
+#[test]
+fn bytes_that_show_no_root_have_no_root_name() {
+    assert_eq!(root_name(b""), None);
+    assert_eq!(root_name(b"<?xml version=\"1.0\"?>"), None);
+    assert_eq!(root_name(b"<!DOCTYPE a><a/>"), None);
+    assert_eq!(root_name(b"<x:a/>"), None);
 }

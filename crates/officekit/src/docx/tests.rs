@@ -32,6 +32,8 @@ use os_shim::System as _;
 use os_shim::mock::MemorySystem;
 
 use super::Docx;
+#[cfg(all(feature = "strict", feature = "transitional"))]
+use crate::StrictRefusal;
 use crate::compact::Comments;
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
@@ -41,6 +43,28 @@ const STRICT_W: &str = "http://purl.oclc.org/ooxml/wordprocessingml/main";
 /// A Transitional main document with a left-justified paragraph.
 #[cfg(feature = "strict")]
 const JUSTIFIED: &str = "<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body><w:p><w:pPr><w:jc w:val=\"left\"/></w:pPr></w:p></w:body></w:document>";
+
+/// A Transitional main document whose content control is bound to a bibliography's first title.
+#[cfg(all(feature = "strict", feature = "transitional"))]
+const BOUND: &str = concat!(
+    "<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body><w:p>",
+    "<w:sdt><w:sdtPr><w:dataBinding ",
+    "w:prefixMappings=\"xmlns:ns0='http://schemas.openxmlformats.org/officeDocument/2006/bibliography' \" ",
+    "w:xpath=\"/ns0:Sources[1]/ns0:Source[1]/ns0:Title[1]\" w:storeItemID=\"{1}\"/><w:text/></w:sdtPr>",
+    "<w:sdtContent><w:r><w:t>x</w:t></w:r></w:sdtContent></w:sdt></w:p></w:body></w:document>"
+);
+
+/// A Transitional main document holding a picture's frame, which names its content by address.
+#[cfg(all(feature = "strict", feature = "transitional"))]
+const PICTURE_FRAME: &str = concat!(
+    "<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" ",
+    "xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" ",
+    "xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\">",
+    "<w:body><w:p><w:r><w:drawing><wp:inline><wp:extent cx=\"1\" cy=\"1\"/>",
+    "<wp:docPr id=\"1\" name=\"Picture 1\"/><a:graphic>",
+    "<a:graphicData uri=\"http://schemas.openxmlformats.org/drawingml/2006/picture\"/>",
+    "</a:graphic></wp:inline></w:drawing></w:r></w:p></w:body></w:document>"
+);
 
 /// A Transitional main document whose run holds a block only Office 2015 understands, with a
 /// fallback.
@@ -493,4 +517,195 @@ fn compact_runs_merges_neighbouring_runs_of_the_main_part_and_keeps_the_text() {
     let stored = text(docx.package(), &main);
     assert_eq!(stored.matches("<w:r>").count(), 1, "{stored}");
     assert!(stored.contains("<w:t>The </w:t><w:t>fox</w:t>"), "{stored}");
+}
+
+#[cfg(all(feature = "strict", feature = "transitional"))]
+#[test]
+fn a_save_writes_the_addresses_of_graphics_and_schema_references_in_its_class() {
+    let picture = "http://schemas.openxmlformats.org/drawingml/2006/picture";
+    let bibliography = "http://schemas.openxmlformats.org/officeDocument/2006/bibliography";
+    let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
+    let document = wordprocessing::read::document(&parse(PICTURE_FRAME.as_bytes()).unwrap().root);
+    docx.set_main_document(&document).unwrap();
+    let main = docx.main_document_part().clone();
+    docx.package_mut()
+        .add_custom_xml(&main, SOURCES.as_bytes(), "{1}", &[bibliography])
+        .unwrap();
+
+    let strict = Docx::from_bytes(docx.to_bytes_strict().unwrap(), OpenOptions::default()).unwrap();
+    let strict_main = text(strict.package(), strict.main_document_part());
+    assert!(
+        strict_main.contains("uri=\"http://purl.oclc.org/ooxml/drawingml/picture\""),
+        "{strict_main}"
+    );
+    let strict_properties = text(strict.package(), &name("/customXml/itemProps1.xml"));
+    assert!(
+        strict_properties
+            .contains("ds:uri=\"http://purl.oclc.org/ooxml/officeDocument/bibliography\""),
+        "{strict_properties}"
+    );
+
+    let (bytes, _) = strict.to_bytes_transitional().unwrap();
+    let back = Docx::from_bytes(bytes, OpenOptions::default()).unwrap();
+    let back_main = text(back.package(), back.main_document_part());
+    assert!(
+        back_main.contains(&format!("uri=\"{picture}\"")),
+        "{back_main}"
+    );
+    let back_properties = text(back.package(), &name("/customXml/itemProps1.xml"));
+    assert!(
+        back_properties.contains(&format!("ds:uri=\"{bibliography}\"")),
+        "{back_properties}"
+    );
+}
+
+#[cfg(all(feature = "strict", feature = "transitional"))]
+#[test]
+fn strict_refusals_names_everything_a_strict_save_refuses_in_one_call() {
+    let docx = Docx::from_bytes(template().to_bytes().unwrap(), OpenOptions::default()).unwrap();
+    assert_eq!(
+        docx.strict_refusals().unwrap(),
+        [
+            StrictRefusal {
+                count: 1,
+                part: name("/word/fontTable.xml"),
+                prefix: "w",
+                tag: "charset/@val",
+            },
+            StrictRefusal {
+                count: 1,
+                part: name("/word/settings.xml"),
+                prefix: "w",
+                tag: "shapeDefaults",
+            },
+        ]
+    );
+}
+
+#[cfg(feature = "strict")]
+#[test]
+fn strict_refusals_is_empty_for_a_file_a_strict_save_takes() {
+    let docx = Docx::new(WordprocessingKind::Document).unwrap();
+    assert_eq!(docx.strict_refusals().unwrap(), []);
+    docx.to_bytes_strict().unwrap();
+}
+
+/// Whether the main part's binding maps its prefix to the namespace the bibliography's root is in.
+#[cfg(all(feature = "strict", feature = "transitional"))]
+fn binding_names_the_root(package: &Package, main: &PartName, item: &PartName) -> bool {
+    let root = parse(&package.part_bytes(item).unwrap()).unwrap().root;
+    let address = &root
+        .namespace_declarations
+        .iter()
+        .find(|declaration| declaration.prefix == root.name.prefix)
+        .unwrap()
+        .uri;
+    text(package, main).contains(&format!("xmlns:ns0='{address}'"))
+}
+
+#[cfg(all(feature = "strict", feature = "transitional"))]
+#[test]
+fn a_binding_to_a_bibliography_follows_the_bibliography_into_each_class() {
+    let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
+    let main = docx.main_document_part().clone();
+    let content_type = docx.package().content_type(&main).unwrap().to_owned();
+    docx.package_mut()
+        .set_part_bytes(&main, &content_type, BOUND.as_bytes())
+        .unwrap();
+    let item = docx
+        .package_mut()
+        .add_custom_xml(&main, SOURCES.as_bytes(), "{1}", &[])
+        .unwrap();
+
+    let strict_bytes = docx.to_bytes_strict().unwrap();
+    let strict = Package::from_bytes(strict_bytes.clone()).unwrap();
+    assert!(
+        binding_names_the_root(&strict, &main, &item),
+        "{}",
+        text(&strict, &main)
+    );
+
+    let (back, _) = Docx::from_bytes(strict_bytes, OpenOptions::default())
+        .unwrap()
+        .to_bytes_transitional()
+        .unwrap();
+    let transitional = Package::from_bytes(back).unwrap();
+    assert!(
+        binding_names_the_root(&transitional, &main, &item),
+        "{}",
+        text(&transitional, &main)
+    );
+}
+
+/// ASCII `text` as UTF-16 with its byte order mark.
+#[cfg(feature = "strict")]
+fn in_utf16(text: &str) -> Vec<u8> {
+    let mut bytes = vec![0xFF, 0xFE];
+    bytes.extend(text.bytes().flat_map(|byte| [byte, 0]));
+    bytes
+}
+
+#[cfg(feature = "strict")]
+#[test]
+fn a_strict_save_moves_a_bibliography_in_utf16_and_carries_foreign_data_in_utf16() {
+    let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
+    let main = docx.main_document_part().clone();
+    let declared = format!("<?xml version=\"1.0\" encoding=\"UTF-16\"?>{SOURCES}");
+    let sources = docx
+        .package_mut()
+        .add_custom_xml(&main, &in_utf16(&declared), "{1}", &[])
+        .unwrap();
+    let foreign_bytes = in_utf16(FOREIGN);
+    let foreign = docx
+        .package_mut()
+        .add_custom_xml(&main, &foreign_bytes, "{2}", &[])
+        .unwrap();
+    let strict = Package::from_bytes(docx.to_bytes_strict().unwrap()).unwrap();
+    let bibliography = text(&strict, &sources);
+    assert!(
+        bibliography.starts_with("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"),
+        "{bibliography}"
+    );
+    assert!(
+        bibliography.contains("xmlns:b=\"http://purl.oclc.org/ooxml/officeDocument/bibliography\""),
+        "{bibliography}"
+    );
+    assert_eq!(strict.part_bytes(&foreign).unwrap(), foreign_bytes);
+}
+
+#[cfg(feature = "strict")]
+#[test]
+fn a_strict_save_carries_custom_xml_no_module_takes_whatever_its_bytes() {
+    let held: [&[u8]; 6] = [
+        b"<root xmlns=\"urn:x\"><x:v>1</x:v></root>",
+        b"<root><unclosed></root>",
+        b"",
+        b"<?xml version=\"1.0\"?><!DOCTYPE root [<!ENTITY e \"x\">]><root>&e;</root>",
+        b"<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><root><v>\xE9</v></root>",
+        b"<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body/></w:document>",
+    ];
+    for bytes in held {
+        let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
+        let main = docx.main_document_part().clone();
+        let item = docx
+            .package_mut()
+            .add_custom_xml(&main, bytes, "{1}", &[])
+            .unwrap();
+        let strict = Package::from_bytes(docx.to_bytes_strict().unwrap()).unwrap();
+        assert_eq!(strict.part_bytes(&item).unwrap(), bytes);
+    }
+}
+
+#[cfg(feature = "strict")]
+#[test]
+fn a_strict_save_refuses_a_bibliography_it_cannot_read_naming_the_part() {
+    let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
+    let main = docx.main_document_part().clone();
+    let held = "<b:Sources xmlns:b=\"http://schemas.openxmlformats.org/officeDocument/2006/bibliography\"><b:Source></b:Sources>";
+    let item = docx
+        .package_mut()
+        .add_custom_xml(&main, held.as_bytes(), "{1}", &[])
+        .unwrap();
+    let failure = docx.to_bytes_strict().unwrap_err().to_string();
+    assert!(failure.contains(item.as_str()), "{failure}");
 }

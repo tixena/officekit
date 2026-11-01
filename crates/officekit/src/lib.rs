@@ -467,3 +467,6 @@ pub mod pptx;
 pub mod transitional;
 pub mod validation;
 pub mod xlsx;
+
+#[cfg(feature = "strict")]
+pub use file::StrictRefusal;

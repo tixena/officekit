@@ -253,3 +253,29 @@ fn compact_runs_merges_neighbouring_runs_of_a_slide_and_keeps_the_text() {
     assert_eq!(stored.matches("<a:r>").count(), 1, "{stored}");
     assert!(stored.contains("<a:t>The fox</a:t>"), "{stored}");
 }
+
+#[cfg(feature = "strict")]
+#[test]
+fn strict_refusals_names_a_presentation_s_legacy_verifier() {
+    let mut pptx = Pptx::new(PresentationKind::Presentation).unwrap();
+    assert_eq!(pptx.strict_refusals().unwrap(), []);
+    let part = name("/ppt/presentation.xml");
+    let content_type = pptx.package().content_type(&part).unwrap().to_owned();
+    pptx.package_mut()
+        .set_part_bytes(
+            &part,
+            &content_type,
+            b"<p:presentation xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\"><p:modifyVerifier hashData=\"AAAA\"/></p:presentation>",
+        )
+        .unwrap();
+    assert_eq!(
+        pptx.strict_refusals().unwrap(),
+        [crate::StrictRefusal {
+            count: 1,
+            part,
+            prefix: "p",
+            tag: "modifyVerifier/@hashData",
+        }]
+    );
+    pptx.to_bytes_strict().unwrap_err();
+}

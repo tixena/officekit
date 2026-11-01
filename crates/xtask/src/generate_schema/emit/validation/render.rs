@@ -863,6 +863,13 @@ fn schema_type(
                 "particles",
                 Expr::Atom(lists.particles(&row.particles, type_ids)?),
             ),
+            (
+                "strict_text_checks",
+                row.strict_text_checks.as_ref().map_or_else(
+                    || Expr::Atom("None".to_owned()),
+                    |checks| Expr::Atom(format!("Some({})", lists.strict_checks(checks))),
+                ),
+            ),
             ("text_checks", Expr::Atom(lists.checks(&row.text_checks))),
             ("versions", versions_expr(row.versions)),
         ],

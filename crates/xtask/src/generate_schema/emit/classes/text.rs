@@ -148,6 +148,7 @@ pub fn strict_rules(header: &str, prefixes: &[String], rules: &Rules) -> String 
         namespaces.extend(parent.0.into_iter().chain(owner.0).chain(item.0));
     }
     namespaces.extend(rules.elements.iter().filter_map(|tag| tag.0));
+    namespaces.extend(rules.texts.keys().filter_map(|tag| tag.0));
     out.push('\n');
     out.push_str(&constants(prefixes, &namespaces));
     attributes_static(prefixes, rules, &mut out);
@@ -157,6 +158,7 @@ pub fn strict_rules(header: &str, prefixes: &[String], rules: &Rules) -> String 
     elements_static(prefixes, rules, &mut out);
     namespaces_static(rules, &mut out);
     spellings_statics(rules, &mut out);
+    texts_static(prefixes, rules, &mut out);
     out
 }
 
@@ -374,6 +376,28 @@ fn spellings_statics(rules: &Rules, out: &mut String) {
             out,
         );
     }
+}
+
+/// `TEXTS`: what Strict writes for the text of each extension element it names.
+fn texts_static(prefixes: &[String], rules: &Rules, out: &mut String) {
+    let rows: Vec<Expr> = rules
+        .texts
+        .iter()
+        .map(|(owner, spellings)| {
+            let name = rules.spellings.get(spellings).cloned().unwrap_or_default();
+            Expr::Tuple(vec![tag(prefixes, owner), Expr::Atom(name)])
+        })
+        .collect();
+    out.push('\n');
+    out.push_str(
+        "/// What a Strict write does with the text of an element, by element;\n\
+         /// sorted.\n",
+    );
+    layout::statement(
+        "static TEXTS: &[(Tag, &[Spelling])] = ",
+        &Expr::Slice(rows),
+        out,
+    );
 }
 
 /// An attribute rule's expression.

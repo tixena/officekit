@@ -1,6 +1,8 @@
 //! What the three file types share: the main part, its class, and its kind on open; the store of a
 //! typed root in the file's class; and the bytes of the file in a class.
 
+#[cfg(feature = "strict")]
+use crate::parts::model_of;
 use crate::parts::part_root::{self, PartRoot};
 #[cfg(any(feature = "strict", feature = "transitional"))]
 use crate::parts::restore_through_module;
@@ -14,6 +16,22 @@ use officekit_xml::write::WriteOptions;
 
 #[cfg(test)]
 mod tests;
+
+/// What a Strict save refuses in one part. Needs the feature `strict`.
+#[cfg(feature = "strict")]
+#[derive(Clone, Debug, PartialEq, Eq)]
+#[non_exhaustive]
+pub struct StrictRefusal {
+    /// How many times the part holds it.
+    pub count: usize,
+    /// The part.
+    pub part: PartName,
+    /// The prefix of the refused element's namespace, or of the element holding the refused
+    /// attribute, as the namespace table gives it.
+    pub prefix: &'static str,
+    /// What a [`WriteError::NotInClass`](officekit_xml::error::WriteError::NotInClass) for it names.
+    pub tag: &'static str,
+}
 
 /// Whether this build reads and writes `class`: its feature is on.
 const fn class_enabled(class: ConformanceClass) -> bool {
@@ -59,6 +77,45 @@ pub fn main_part(package: &Package) -> Result<MainPart, PackageError> {
         return Err(PackageError::ClassNotEnabled(main.class));
     }
     Ok(main)
+}
+
+/// Everything a Strict save of `package`, read in `from`, refuses: one row per part and refused
+/// content, in part order and then in the order the part holds them. Empty when the save takes
+/// every part, and for a file read Strict, whose save writes the package as it is.
+///
+/// # Errors
+///
+/// The errors of reading a part, as a Strict save has them.
+#[cfg(feature = "strict")]
+pub fn strict_refusals(
+    package: &Package,
+    from: ConformanceClass,
+    open: OpenOptions,
+) -> Result<Vec<StrictRefusal>, PackageError> {
+    let mut rows: Vec<StrictRefusal> = Vec::new();
+    if from == ConformanceClass::Strict {
+        return Ok(rows);
+    }
+    for name in package.part_names()? {
+        if model_of(package, &name, open)?.is_none() {
+            continue;
+        }
+        for refusal in officekit_strict::refusals(package.load_tree(&name, open)?.root) {
+            if let Some(row) = rows.iter_mut().find(|row| {
+                row.part == name && row.tag == refusal.tag && row.prefix == refusal.prefix
+            }) {
+                row.count += 1;
+            } else {
+                rows.push(StrictRefusal {
+                    count: 1,
+                    part: name.clone(),
+                    prefix: refusal.prefix,
+                    tag: refusal.tag,
+                });
+            }
+        }
+    }
+    Ok(rows)
 }
 
 /// Store `root` into the part `name` in `class`; the part keeps its content type, or takes

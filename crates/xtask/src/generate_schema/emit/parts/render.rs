@@ -267,8 +267,7 @@ const MODEL_OF: &str = "
 ///
 /// # Errors
 ///
-/// The errors of the module's `load`, and [`PackageError::Xml`] for a part of a content type
-/// several modules list that is not well-formed.
+/// The errors of the module's `load`.
 pub fn model_of(
     package: &Package,
     name: &PartName,
@@ -291,27 +290,24 @@ pub fn model_of(
 /// `root_entry`, after `restore_through_module` when a content type is
 /// shared.
 const ROOT_ENTRY: &str = "
-/// The entry of `roots` whose root element the part `name` holds, when one does.
+/// The entry of `roots` whose root element the part `name` holds, when one does; a part whose
+/// root cannot be named has no entry.
 ///
 /// # Errors
 ///
-/// The errors of [`Package::part_bytes`], and [`PackageError::Xml`] for a part that is not
-/// well-formed.
+/// The errors of [`Package::part_bytes`].
 fn root_entry<'roots, T>(
     package: &Package,
     name: &PartName,
     roots: &'roots [(NamespaceId, &str, T)],
 ) -> Result<Option<&'roots T>, PackageError> {
-    let root = parse(&package.part_bytes(name)?)
-        .map_err(|error| PackageError::Xml {
-            error,
-            part: name.clone(),
-        })?
-        .root;
+    let Some(root) = root_name(&package.part_bytes(name)?) else {
+        return Ok(None);
+    };
     Ok(roots
         .iter()
         .find(|(namespace, local, _)| {
-            root.name.namespace == Namespace::Known(*namespace) && root.name.local == *local
+            root.namespace == Namespace::Known(*namespace) && root.local == *local
         })
         .map(|(_, _, entry)| entry))
 }
@@ -350,8 +346,7 @@ const RESTORE_THROUGH_MODULE: &str = "
 ///
 /// # Errors
 ///
-/// The errors of the module's `load` and of [`part_root::store`], and [`PackageError::Xml`] for a
-/// part of a content type several modules list that is not well-formed.
+/// The errors of the module's `load` and of [`part_root::store`].
 pub fn restore_through_module(
     package: &mut Package,
     name: &PartName,
@@ -967,7 +962,7 @@ fn lib_imports(
         }
     }
     let parse_use = if shared {
-        "use officekit_xml::parse::parse;\n"
+        "use officekit_xml::parse::root_name;\n"
     } else {
         ""
     };

@@ -1151,3 +1151,41 @@ fn a_package_opens_and_saves_through_a_system_whose_futures_wait() {
         "the future is not ready on its first poll"
     );
 }
+
+#[test]
+fn a_package_whose_own_parts_are_utf16_opens() {
+    let utf16 = |text: &str| {
+        let mut bytes = vec![0xFF, 0xFE];
+        bytes.extend(text.bytes().flat_map(|byte| [byte, 0]));
+        bytes
+    };
+    let mut writer = ZipWriter::new(Cursor::new(Vec::new()));
+    let options = SimpleFileOptions::default();
+    writer.start_file("[Content_Types].xml", options).unwrap();
+    writer
+        .write_all(&utf16(concat!(
+            "<?xml version=\"1.0\" encoding=\"UTF-16\"?>",
+            "<Types xmlns=\"http://schemas.openxmlformats.org/package/2006/content-types\">",
+            "<Default Extension=\"rels\" ContentType=\"application/vnd.openxmlformats-package.relationships+xml\"/>",
+            "<Override PartName=\"/word/document.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml\"/>",
+            "</Types>"
+        )))
+        .unwrap();
+    writer.start_file("_rels/.rels", options).unwrap();
+    writer
+        .write_all(&utf16(concat!(
+            "<?xml version=\"1.0\" encoding=\"UTF-16\"?>",
+            "<Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\">",
+            "<Relationship Id=\"rId1\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument\" Target=\"word/document.xml\"/>",
+            "</Relationships>"
+        )))
+        .unwrap();
+    writer.start_file("word/document.xml", options).unwrap();
+    writer.write_all(b"<w:document/>").unwrap();
+    let bytes = writer.finish().unwrap().into_inner();
+
+    let package = Package::from_bytes(bytes).unwrap();
+    let main = name("/word/document.xml");
+    assert_eq!(package.content_type(&main), Some(MAIN));
+    assert_eq!(package.related(None).unwrap()[0].target, Target::Part(main));
+}

@@ -547,6 +547,17 @@ impl Docx {
         self.write_options = options;
     }
 
+    /// Everything [`to_bytes_strict`](Self::to_bytes_strict) refuses, in one call: one row per part
+    /// and refused content. Empty when the save takes every part. Needs the feature `strict`.
+    ///
+    /// # Errors
+    ///
+    /// The errors of reading a part, as the save has them.
+    #[cfg(feature = "strict")]
+    pub fn strict_refusals(&self) -> Result<Vec<crate::StrictRefusal>, PackageError> {
+        file::strict_refusals(&self.package, self.class, self.options)
+    }
+
     /// The file's bytes in the Strict class: as they are when it was read Strict, else every
     /// part a part module knows written again in Strict, every relationship type in Strict's
     /// spelling, and every other part as it is. Needs the feature `strict`.

@@ -219,6 +219,8 @@ pub struct SchemaType {
     pub name: &'static str,
     /// The content model at each target, equal ones merged.
     pub particles: &'static [(Versions, Option<Particle>)],
+    /// The checks of a leaf element's text in a Strict file, when they are not `text_checks`.
+    pub strict_text_checks: Option<&'static [ValueCheck]>,
     /// The checks of a leaf element's text.
     pub text_checks: &'static [ValueCheck],
     /// The targets the element type exists at; at another target an element

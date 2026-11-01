@@ -193,6 +193,41 @@ percent = "pct"
 per_percent = 50
 per_point = 20
 
+# Text of an element Microsoft's schemas type with a DrawingML percentage: Word
+# writes it as a percentage in a Strict file, and the comparison of the two ECMA
+# schema sets cannot see it. `per_percent` as for a member. A row needs Word's
+# own Strict output behind it: `w14` values have the same Microsoft type and
+# Word writes them as whole numbers.
+
+[[extension_text]]
+# [MS-ODRAWXML] CT_SizeRelH: a:ST_PositivePercentage.
+element = "wp14:pctWidth"
+per_percent = 1000
+
+[[extension_text]]
+# The SDK's schema data: a:ST_PositivePercentage.
+element = "wp14:pctHeight"
+per_percent = 1000
+
+[[extension_text]]
+# The SDK's schema data: a:ST_Percentage.
+element = "wp14:pctPosHOffset"
+per_percent = 1000
+
+[[extension_text]]
+# The SDK's schema data: a:ST_Percentage.
+element = "wp14:pctPosVOffset"
+per_percent = 1000
+
+# An attribute of an element Microsoft's schemas type with a DrawingML complex
+# type whose attribute Strict spells as a percentage, as Word writes it.
+
+[[extension_attribute]]
+# [MS-ODRAWXML] CT_StyleEntry: defRPr is a:CT_TextCharacterProperties.
+element = "cs:defRPr"
+attribute = "baseline"
+per_percent = 1000
+
 # Children Transitional adds that Strict names otherwise. When the element
 # holds both, the Strict one is kept.
 

@@ -511,6 +511,38 @@ impl<'tree> Walker<'tree, '_> {
         self.path.pop();
     }
 
+    /// What is wrong with a leaf element's text: in a Strict file its Strict type's failures,
+    /// when it has that type and the text is not Transitional's spelling, which is reported here.
+    fn text_failures(
+        &mut self,
+        schema_type: &SchemaType,
+        element_name: &str,
+        text: &str,
+    ) -> Vec<Failure> {
+        let transitional = attributes::run(
+            schema_type.text_checks,
+            &ValueClass::String,
+            Some(text),
+            self.target,
+            false,
+        );
+        let Some(checks) = schema_type.strict_text_checks.filter(|_| self.strict) else {
+            return transitional;
+        };
+        let found = attributes::run(checks, &ValueClass::String, Some(text), self.target, false);
+        if found.is_empty() || !transitional.is_empty() {
+            return found;
+        }
+        self.error(
+            ErrorCode::TransitionalOnlyValue,
+            &[
+                ("attribute", element_name.to_owned()),
+                ("value", text.to_owned()),
+            ],
+        );
+        Vec::new()
+    }
+
     /// The checks of one typed element that exists at the target.
     fn validate(&mut self, element: &'tree Element, type_id: TypeId) {
         let Some(schema_type) = SCHEMA_TYPES.get(usize::from(type_id)) else {
@@ -576,13 +608,7 @@ impl<'tree> Walker<'tree, '_> {
                 }
             })
             .unwrap_or_default();
-        for failure in attributes::run(
-            schema_type.text_checks,
-            &ValueClass::String,
-            Some(text),
-            self.target,
-            false,
-        ) {
+        for failure in self.text_failures(schema_type, &element_name, text) {
             let (code, detail) = match failure {
                 Failure::Invalid(detail) => (ErrorCode::InvalidElementValue, detail),
                 Failure::Missing => (ErrorCode::MissingRequiredAttribute, String::new()),

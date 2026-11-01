@@ -564,6 +564,41 @@ pub const DIVERGENCES: &[Divergence] = &[
         targets: ALL_TARGETS,
     },
     Divergence {
+        id: "Sch_ElementValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD_2010_DRAWING, "pctHeight")],
+        reason: STRICT_VALUES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_ElementValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD_2010_DRAWING, "pctPosHOffset")],
+        reason: STRICT_VALUES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_ElementValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD_2010_DRAWING, "pctPosVOffset")],
+        reason: STRICT_VALUES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_ElementValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD_2010_DRAWING, "pctWidth")],
+        reason: STRICT_VALUES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(CHART_STYLE, "defRPr")],
+        reason: STRICT_VALUES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
         id: "Sch_InvalidElementContentExpectingComplex",
         mentioning: Some("main:pStyle'"),
         path: &[(WORD, "pPr")],
@@ -681,6 +716,8 @@ const ON_OFF_ONLY: &str = "SDK 3.5.1 types these elements as CT_OnOffOnly, which
 
 const CHART: &str = "http://schemas.openxmlformats.org/drawingml/2006/chart";
 
+const CHART_STYLE: &str = "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
+
 const CHART_EXTENSION_LIST: &str = "SDK 3.5.1 types the c:ext of c:chart's extension list as the \
     content of c16r3:dataDisplayOptions16, with no uri, and from Office 2019; ECMA-376 types it \
     CT_Extension, and Word writes the extension at every version";
@@ -719,6 +756,9 @@ const WORDPROCESSING_SHAPE: &str =
     "http://schemas.microsoft.com/office/word/2010/wordprocessingShape";
 
 const WORD: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+
+const WORD_2010_DRAWING: &str =
+    "http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing";
 
 /// An SDK 3.5.1 error officekit deliberately does not report, because the
 /// markup it flags is valid in ECMA-376 and written by Office.

@@ -71,11 +71,30 @@ pub struct Correspondences {
     pub character_sets: Vec<CharacterSet>,
     pub child_attributes: Vec<ChildAttribute>,
     pub children: Vec<ChildRenames>,
+    pub extension_attributes: Vec<ExtensionAttribute>,
+    pub extension_texts: Vec<ExtensionText>,
     pub iso_dates: Vec<IsoDate>,
     pub measures: Vec<Measure>,
     pub members: Vec<Member>,
     pub packed: Vec<Packed>,
     pub values: Vec<Values>,
+}
+
+/// An attribute of an extension element Strict writes as a percentage.
+#[derive(Clone, Debug, Eq, PartialEq)]
+#[non_exhaustive]
+pub struct ExtensionAttribute {
+    pub attribute: String,
+    pub element: Name,
+    pub per_percent: u32,
+}
+
+/// The text of an extension element Strict writes as a percentage.
+#[derive(Clone, Debug, Eq, PartialEq)]
+#[non_exhaustive]
+pub struct ExtensionText {
+    pub element: Name,
+    pub per_percent: u32,
 }
 
 /// A serial date-time attribute Strict writes in ISO 8601.
@@ -180,6 +199,19 @@ impl Correspondences {
                 Ok(ChildRenames {
                     renames: row.pairs("renames")?,
                     type_name: row.name("type")?,
+                })
+            })?,
+            extension_attributes: read_rows(&table, "extension_attribute", rows, |row| {
+                Ok(ExtensionAttribute {
+                    attribute: row.text("attribute")?,
+                    element: row.name("element")?,
+                    per_percent: row.number("per_percent")?,
+                })
+            })?,
+            extension_texts: read_rows(&table, "extension_text", rows, |row| {
+                Ok(ExtensionText {
+                    element: row.name("element")?,
+                    per_percent: row.number("per_percent")?,
                 })
             })?,
             iso_dates: read_rows(&table, "iso_date", rows, |row| {

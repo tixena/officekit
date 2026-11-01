@@ -91,6 +91,8 @@ pub struct Rules {
     /// By element and attribute: the values only Strict has, and the label
     /// of a Transitional write's refusal.
     pub strict_only: BTreeMap<(Tag, Tag), (Vec<String>, String)>,
+    /// By element: what Strict writes for the text of an extension element.
+    pub texts: BTreeMap<Tag, Vec<Spelling>>,
 }
 
 /// What one type of a tag says of an attribute, with the tags of the
@@ -345,6 +347,36 @@ impl<'set> Builder<'set> {
                      declares it"
                 ));
             }
+        }
+        Ok(())
+    }
+
+    /// The rows for extension elements, which no comparison of the ECMA schema sets names.
+    fn extensions(&mut self) -> Result<()> {
+        let table = self.table;
+        for row in &table.extension_attributes {
+            let element = self.tag(&row.element)?;
+            let spellings = vec![Spelling::Percent {
+                decimals: None,
+                per_percent: row.per_percent,
+            }];
+            self.attribute_votes
+                .entry((element, (None, row.attribute.clone())))
+                .or_default()
+                .push(Vote {
+                    parents: BTreeSet::new(),
+                    rule: Some(AttributeRule::Values(spellings)),
+                });
+        }
+        for row in &table.extension_texts {
+            let element = self.tag(&row.element)?;
+            let spellings = vec![Spelling::Percent {
+                decimals: None,
+                per_percent: row.per_percent,
+            }];
+            let name = spellings_name(&spellings).unwrap_or_default();
+            self.rules.spellings.insert(spellings.clone(), name);
+            self.rules.texts.insert(element, spellings);
         }
         Ok(())
     }
@@ -793,6 +825,7 @@ pub fn build(
     builder.namespaces()?;
     builder.strict_only()?;
     builder.check_rows();
+    builder.extensions()?;
     builder.settle();
     if !builder.problems.is_empty() {
         bail!(

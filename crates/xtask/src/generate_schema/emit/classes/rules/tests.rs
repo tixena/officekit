@@ -359,3 +359,23 @@ fn a_static_is_named_after_its_type_or_its_unit() {
     );
     assert_eq!(spellings_name(&[Spelling::Map(Vec::new())]), None);
 }
+
+#[test]
+fn an_extension_row_takes_a_percentage_rule_for_its_text_or_attribute() {
+    let table = format!(
+        "{TABLE}\n[[extension_text]]\nelement = \"v:shape\"\nper_percent = 1000\n\n\
+         [[extension_attribute]]\nelement = \"v:shape\"\nattribute = \"baseline\"\nper_percent = 1000\n"
+    );
+    let found = rules(&table).unwrap();
+    let percent = vec![Spelling::Percent {
+        decimals: None,
+        per_percent: 1000,
+    }];
+    assert_eq!(found.texts.get(&tag(Some(0), "shape")), Some(&percent));
+    assert_eq!(
+        found
+            .attributes
+            .get(&(tag(Some(0), "shape"), tag(None, "baseline"))),
+        Some(&AttributeRule::Values(percent))
+    );
+}

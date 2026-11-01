@@ -560,7 +560,7 @@ use officekit_xml::packaging::error::PackageError;
 use officekit_xml::packaging::package::{DECLARATION, OpenOptions, Package};
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::RelationshipType;
-use officekit_xml::parse::parse;
+use officekit_xml::parse::root_name;
 use officekit_xml::write::WriteOptions;
 
 /// The match on the part model `$model` that writes the typed root of each of the variants
@@ -2419,8 +2419,7 @@ fn check_root(root: &Element, namespace: NamespaceId, local: &str) -> Result<(),
 ///
 /// # Errors
 ///
-/// The errors of the module's `load`, and [`PackageError::Xml`] for a part of a content type
-/// several modules list that is not well-formed.
+/// The errors of the module's `load`.
 pub fn model_of(
     package: &Package,
     name: &PartName,
@@ -2447,8 +2446,7 @@ pub fn model_of(
 ///
 /// # Errors
 ///
-/// The errors of the module's `load` and of [`part_root::store`], and [`PackageError::Xml`] for a
-/// part of a content type several modules list that is not well-formed.
+/// The errors of the module's `load` and of [`part_root::store`].
 pub fn restore_through_module(
     package: &mut Package,
     name: &PartName,
@@ -2472,27 +2470,24 @@ pub fn restore_through_module(
     })
 }
 
-/// The entry of `roots` whose root element the part `name` holds, when one does.
+/// The entry of `roots` whose root element the part `name` holds, when one does; a part whose
+/// root cannot be named has no entry.
 ///
 /// # Errors
 ///
-/// The errors of [`Package::part_bytes`], and [`PackageError::Xml`] for a part that is not
-/// well-formed.
+/// The errors of [`Package::part_bytes`].
 fn root_entry<'roots, T>(
     package: &Package,
     name: &PartName,
     roots: &'roots [(NamespaceId, &str, T)],
 ) -> Result<Option<&'roots T>, PackageError> {
-    let root = parse(&package.part_bytes(name)?)
-        .map_err(|error| PackageError::Xml {
-            error,
-            part: name.clone(),
-        })?
-        .root;
+    let Some(root) = root_name(&package.part_bytes(name)?) else {
+        return Ok(None);
+    };
     Ok(roots
         .iter()
         .find(|(namespace, local, _)| {
-            root.name.namespace == Namespace::Known(*namespace) && root.name.local == *local
+            root.namespace == Namespace::Known(*namespace) && root.local == *local
         })
         .map(|(_, _, entry)| entry))
 }

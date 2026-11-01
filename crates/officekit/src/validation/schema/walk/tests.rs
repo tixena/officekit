@@ -27,6 +27,7 @@ const TARGETS: [OfficeVersion; 6] = [
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const W14: &str = "http://schemas.microsoft.com/office/word/2010/wordml";
 const WPS: &str = "http://schemas.microsoft.com/office/word/2010/wordprocessingShape";
+const WP14: &str = "http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing";
 const BLOCK_PATH: &str =
     "/word/document.xml /w:document[1]/w:body[1]/w:p[1]/w:r[1]/mc:AlternateContent[1]";
 
@@ -479,4 +480,48 @@ fn a_strict_file_gets_an_error_for_each_thing_only_transitional_allows() {
 #[test]
 fn a_transitional_file_gets_none_of_the_strict_errors() {
     assert_eq!(transitional_only(&transitional_content(false)), []);
+}
+
+/// The codes of the errors on a relative width of `width` in a file of the class `strict` declares.
+fn relative_width(strict: bool, width: &str) -> Vec<ErrorCode> {
+    let (relationship, w, wp) = if strict {
+        (
+            STRICT_OFFICE_DOCUMENT,
+            STRICT_W,
+            "http://purl.oclc.org/ooxml/drawingml/wordprocessingDrawing",
+        )
+    } else {
+        (
+            OFFICE_DOCUMENT,
+            W,
+            "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing",
+        )
+    };
+    let body = format!(
+        "<w:body xmlns:wp=\"{wp}\" xmlns:wp14=\"{WP14}\"><w:p><w:r><w:drawing><wp:anchor>\
+         <wp14:sizeRelH relativeFrom=\"margin\"><wp14:pctWidth>{width}</wp14:pctWidth>\
+         </wp14:sizeRelH></wp:anchor></w:drawing></w:r></w:p></w:body>"
+    );
+    found(
+        &document(w, relationship, &body, None),
+        OfficeVersion::Microsoft365,
+    )
+    .into_iter()
+    .filter(|(_, path)| path.ends_with("wp14:pctWidth[1]"))
+    .map(|(code, _)| code)
+    .collect()
+}
+
+#[test]
+fn a_relative_width_is_a_percentage_in_a_strict_file() {
+    assert_eq!(relative_width(true, "36%"), []);
+    assert_eq!(
+        relative_width(true, "36000"),
+        [ErrorCode::TransitionalOnlyValue]
+    );
+    assert_eq!(relative_width(false, "36000"), []);
+    assert_eq!(
+        relative_width(false, "36%"),
+        [ErrorCode::InvalidElementValue]
+    );
 }

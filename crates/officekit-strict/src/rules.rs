@@ -207,7 +207,7 @@
 //   1ccb90bdf037137918dfb7ed2e243c2377dec75cfcc65808a1b8904f084302e2  inputs/open-xml-sdk/data/schemas/www_w3_org_XML_1998_namespace.json
 //   faa0956ead6fa73f20a3ea60eec008389b059f72512d83029c27109a69a87e0f  crates/xtask/data/enum_names.toml
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
-//   021f7654571e30427cd1fd4a0eeb98561f2246fe0d9d0ea36146f3aaa67b4af8  crates/xtask/data/strict_correspondences.toml
+//   b558eec52247ad60d6505de60f43014d871642453d450e4f783adb9074a6e766  crates/xtask/data/strict_correspondences.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 // The tables of the Strict walk, generated from the comparison of the two
@@ -216,10 +216,12 @@
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_C: Option<NamespaceId> = Some(22);
+const NS_CS: Option<NamespaceId> = Some(37);
 const NS_DGM: Option<NamespaceId> = Some(42);
 const NS_M: Option<NamespaceId> = Some(52);
 const NS_P: Option<NamespaceId> = Some(64);
 const NS_W: Option<NamespaceId> = Some(97);
+const NS_WP14: Option<NamespaceId> = Some(113);
 const NS_X: Option<NamespaceId> = Some(118);
 
 /// What a Strict write does with an attribute, by element and attribute;
@@ -659,6 +661,11 @@ static ATTRIBUTES: &[(Tag, Tag, AttributeRule)] = &[
         (NS_C, "thickness"),
         (None, "val"),
         AttributeRule::Values(WHOLE_PERCENT),
+    ),
+    (
+        (NS_CS, "defRPr"),
+        (None, "baseline"),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_DGM, "prSet"),
@@ -3898,3 +3905,12 @@ static W_ST_TEXT_DIRECTION: &[Spelling] = &[Spelling::Map(&[
 ])];
 
 static X_ST_PIVOT_AREA_TYPE: &[Spelling] = &[Spelling::Map(&[("topRight", "topEnd")])];
+
+/// What a Strict write does with the text of an element, by element;
+/// sorted.
+static TEXTS: &[(Tag, &[Spelling])] = &[
+    ((NS_WP14, "pctHeight"), PERCENT_IN_1000THS),
+    ((NS_WP14, "pctPosHOffset"), PERCENT_IN_1000THS),
+    ((NS_WP14, "pctPosVOffset"), PERCENT_IN_1000THS),
+    ((NS_WP14, "pctWidth"), PERCENT_IN_1000THS),
+];

@@ -182,6 +182,8 @@ pub struct Marks {
     items: BTreeSet<String>,
     simple_types: BTreeSet<Name>,
     strict_checks: StrictChecks,
+    /// By SDK type row: the Strict checks of an extension element's text.
+    strict_text_checks: BTreeMap<String, Vec<ValueCheck>>,
     /// The namespace of every Transitional schema file with no Strict twin.
     transitional_only_namespaces: BTreeSet<String>,
     /// The complex types only Transitional declares.
@@ -310,6 +312,8 @@ pub struct TypeRow {
     pub name: String,
     /// The content model at each target, equal ones merged.
     pub particles: Vec<(Versions, Option<Particle>)>,
+    /// The checks of the text in a Strict file, when they are not `text_checks`.
+    pub strict_text_checks: Option<Vec<ValueCheck>>,
     pub text_checks: Vec<ValueCheck>,
     /// The targets the element type exists at.
     pub versions: Versions,
@@ -857,6 +861,7 @@ impl<'data> Converter<'data> {
             children,
             name: name.to_owned(),
             particles: particles(data_type.particle.as_ref())?,
+            strict_text_checks: self.marks.strict_text_checks.get(name).cloned(),
             text_checks,
             versions: data_type.version.map_or(Versions::ALL, Versions::since),
         })
@@ -933,6 +938,28 @@ impl Marks {
     /// A Strict type built from a shape the conversion does not know, named.
     pub fn with_strict(mut self, transitional: &SchemaSet, strict: &SchemaSet) -> Result<Self> {
         self.strict_checks = strict::strict_checks(transitional, strict)?;
+        for (row, local) in [
+            ("a:ST_Percentage/wp14:pctPosHOffset", "ST_Percentage"),
+            ("a:ST_Percentage/wp14:pctPosVOffset", "ST_Percentage"),
+            (
+                "a:ST_PositivePercentage/wp14:pctHeight",
+                "ST_PositivePercentage",
+            ),
+            (
+                "a:ST_PositivePercentage/wp14:pctWidth",
+                "ST_PositivePercentage",
+            ),
+        ] {
+            let name = Name::new("http://purl.oclc.org/ooxml/drawingml/main", local);
+            if strict.simple_types.contains_key(&name) {
+                let type_ref = TypeRef::Simple {
+                    anonymous: false,
+                    name,
+                };
+                self.strict_text_checks
+                    .insert(row.to_owned(), strict::checks(strict, &type_ref)?);
+            }
+        }
         let twins = compare::twins(transitional, strict);
         let twinned: BTreeSet<&String> = twins.values().collect();
         self.transitional_only_namespaces = transitional
