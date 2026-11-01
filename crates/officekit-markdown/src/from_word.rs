@@ -2150,13 +2150,42 @@ fn indent_level(properties: Option<&ParagraphProperties>) -> Option<usize> {
     (0..=DEEPEST_LEVEL).find(|level| parts::level_indent(*level) == written)
 }
 
-/// The `w:left`, or `w:start`, of `indentation`, in twentieths of a point.
+/// The `w:left`, or `w:start`, of `indentation`, in twentieths of a point, a bare number or one
+/// with a unit alike.
 fn left_indent(indentation: &ParagraphIndentation) -> Option<i64> {
     let left = indentation.left.as_ref().or(indentation.start.as_ref())?;
-    let Ok(SignedMeasurementInTwentiethsOfPointMember::Integer(twips)) = left.value() else {
-        return None;
-    };
-    Some(twips)
+    match left.value().ok()? {
+        SignedMeasurementInTwentiethsOfPointMember::Integer(twips) => Some(twips),
+        SignedMeasurementInTwentiethsOfPointMember::UniversalMeasurement(_) | _ => {
+            twips_of(&left.0)
+        }
+    }
+}
+
+/// `measure`, a number with a unit such as the `36pt` Word writes in a Strict file, in twentieths
+/// of a point, rounded half away from zero.
+fn twips_of(measure: &str) -> Option<i64> {
+    const UNITS: [(&str, i128, i128); 6] = [
+        ("pt", 20, 1),
+        ("in", 1440, 1),
+        ("pc", 240, 1),
+        ("pi", 240, 1),
+        ("cm", 144_000, 254),
+        ("mm", 14_400, 254),
+    ];
+    let (digits, numerator, denominator) =
+        UNITS.iter().find_map(|(unit, numerator, denominator)| {
+            Some((measure.strip_suffix(unit)?, *numerator, *denominator))
+        })?;
+    let (negative, unsigned) = digits
+        .strip_prefix('-')
+        .map_or((false, digits), |rest| (true, rest));
+    let (whole, fraction) = unsigned.split_once('.').unwrap_or((unsigned, ""));
+    let places = u32::try_from(fraction.len()).ok()?;
+    let divisor = 10_i128.checked_pow(places)?.checked_mul(denominator)?;
+    let mantissa: i128 = format!("{whole}{fraction}").parse().ok()?;
+    let twips = mantissa.checked_mul(numerator)?.checked_add(divisor / 2)? / divisor;
+    i64::try_from(if negative { -twips } else { twips }).ok()
 }
 
 /// Whether `style` is the default paragraph style.

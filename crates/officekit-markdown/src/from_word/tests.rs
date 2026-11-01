@@ -15,10 +15,20 @@ use base64::engine::general_purpose::STANDARD;
 use officekit::parts::kinds::WordprocessingKind;
 use officekit::parts::numbering_definitions;
 use officekit::parts::style_definitions::{CONTENT_TYPE, RELATIONSHIP_TYPE};
+use officekit_markup::wordprocessing::{
+    self, AbstractNumberingDefinition, AbstractNumberingDefinitionReference, BlockContent,
+    DecimalNumberValue, DocumentBody, NumberingDefinitionInstance,
+    NumberingDefinitionInstanceReferenceNumId, NumberingDefinitionInstanceReferenceNumPr,
+    NumberingDefinitions, NumberingFormat, NumberingLevelOverrideDefinition,
+    NumberingLevelReference, ParagraphContent, ParagraphIndentation, ParagraphProperties,
+    ParagraphPropertiesPPrGeneral, SignedMeasurementInTwentiethsOfPoint, StNumberFormat,
+    StartingValue, TextRun, TextRunContent,
+};
 use officekit_xml::packaging::package::OpenOptions;
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::RelationshipType;
 use officekit_xml::ready::ready_now;
+use officekit_xml::write::WriteOptions as XmlWriteOptions;
 use os_shim::System as _;
 use os_shim::bucket::Condition;
 use os_shim::mock::MemorySystem;
@@ -945,6 +955,182 @@ fn paragraphs_that_write_nothing_leave_the_items_of_one_word_list_in_one_list() 
             ),
         ])
     );
+}
+
+/// A decimal number of the typed tree.
+fn decimal(value: usize) -> DecimalNumberValue {
+    DecimalNumberValue::from(value.to_string())
+}
+
+/// An indentation whose `w:start` is `start`.
+fn indentation(start: &str) -> Box<ParagraphIndentation> {
+    let mut indentation = ParagraphIndentation::default();
+    indentation.start = Some(SignedMeasurementInTwentiethsOfPoint::from(start.to_owned()));
+    Box::new(indentation)
+}
+
+/// Paragraph properties indented to `start`.
+fn indented_to(start: &str) -> ParagraphProperties {
+    let mut properties = ParagraphProperties::default();
+    properties.paragraph_indentation = Some(indentation(start));
+    properties
+}
+
+/// Paragraph properties numbering a paragraph at `level` of the numbering instance 1.
+fn numbered_at(level: usize) -> ParagraphProperties {
+    let mut level_reference = NumberingLevelReference::default();
+    level_reference.val = Some(decimal(level));
+    let mut instance = NumberingDefinitionInstanceReferenceNumId::default();
+    instance.val = Some(decimal(1));
+    let mut numbering = NumberingDefinitionInstanceReferenceNumPr::default();
+    numbering.numbering_level_reference = Some(Box::new(level_reference));
+    numbering.numbering_definition_instance_reference_num_id = Some(Box::new(instance));
+    let mut properties = ParagraphProperties::default();
+    properties.numbering_definition_instance_reference_num_pr = Some(Box::new(numbering));
+    properties
+}
+
+/// Numbering instance 1: decimal numbers from 1, at one level per entry of `starts`, each level's
+/// text starting at that indent.
+fn numbering_starting_at(starts: &[&str]) -> NumberingDefinitions {
+    let mut definition = AbstractNumberingDefinition::default();
+    definition.abstract_num_id = Some(decimal(0));
+    for (level, start) in starts.iter().enumerate() {
+        let mut format = NumberingFormat::default();
+        format.val = Some(StNumberFormat::from("decimal".to_owned()));
+        let mut first = StartingValue::default();
+        first.val = Some(decimal(1));
+        let mut general = ParagraphPropertiesPPrGeneral::default();
+        general.paragraph_indentation = Some(indentation(start));
+        let mut defined = NumberingLevelOverrideDefinition::default();
+        defined.ilvl = Some(decimal(level));
+        defined.numbering_format = Some(Box::new(format));
+        defined.starting_value = Some(Box::new(first));
+        defined.paragraph_properties_p_pr_general = Some(Box::new(general));
+        definition.numbering_level_override_definition.push(defined);
+    }
+    let mut reference = AbstractNumberingDefinitionReference::default();
+    reference.val = Some(decimal(0));
+    let mut instance = NumberingDefinitionInstance::default();
+    instance.num_id = Some(decimal(1));
+    instance.abstract_numbering_definition_reference = Box::new(reference);
+    let mut numbering = NumberingDefinitions::default();
+    numbering.abstract_numbering_definition.push(definition);
+    numbering.numbering_definition_instance.push(instance);
+    numbering
+}
+
+/// A paragraph of the run of `value`, with `properties`.
+fn typed_paragraph(value: &str, properties: ParagraphProperties) -> wordprocessing::Paragraph {
+    let mut text = wordprocessing::Text::default();
+    text.value = value.to_owned();
+    let mut run = TextRun::default();
+    run.content.push(TextRunContent::Text(text));
+    let mut paragraph = wordprocessing::Paragraph::default();
+    paragraph.properties = Some(Box::new(properties));
+    paragraph.content.push(ParagraphContent::TextRun(run));
+    paragraph
+}
+
+/// A Word document of `paragraphs` whose numbering part holds `numbering`, built as a caller
+/// builds one.
+fn typed_word(
+    paragraphs: Vec<wordprocessing::Paragraph>,
+    numbering: &NumberingDefinitions,
+) -> Docx {
+    let mut body = DocumentBody::default();
+    body.content = paragraphs
+        .into_iter()
+        .map(BlockContent::Paragraph)
+        .collect();
+    let mut document = wordprocessing::Document::default();
+    document.body = Some(Box::new(body));
+    let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
+    docx.set_main_document(&document).unwrap();
+    let main = docx.main_document_part().clone();
+    let part = PartName::new("/word/numbering.xml").unwrap();
+    numbering_definitions::store_transitional(
+        docx.package_mut(),
+        &part,
+        numbering,
+        XmlWriteOptions::default(),
+    )
+    .unwrap();
+    docx.package_mut()
+        .relate(
+            Some(&main),
+            &part,
+            numbering_definitions::RELATIONSHIP_TYPE.transitional,
+        )
+        .unwrap();
+    docx
+}
+
+#[test]
+fn an_indent_with_a_unit_finds_the_list_item_the_same_number_of_twips_finds() {
+    let document = |indent: fn(u16) -> String| {
+        typed_word(
+            alloc::vec![
+                typed_paragraph("one", numbered_at(0)),
+                typed_paragraph("inner", numbered_at(1)),
+                typed_paragraph("under inner", indented_to(&indent(1440))),
+                typed_paragraph("under one", indented_to(&indent(720))),
+                typed_paragraph("two", numbered_at(0)),
+                typed_paragraph("elsewhere", indented_to(&indent(360))),
+                typed_paragraph("three", numbered_at(0)),
+            ],
+            &numbering_starting_at(&[&indent(720), &indent(1440)]),
+        )
+    };
+    let bare = arky(&document(|twips| twips.to_string()));
+    let points = arky(&document(|twips| format!("{}pt", twips / 20)));
+    let inner = Block::List(List::new(
+        alloc::vec![item(alloc::vec![
+            paragraph_of(alloc::vec![text("inner")]),
+            paragraph_of(alloc::vec![text("under inner")]),
+        ])],
+        true,
+        Some(1),
+    ));
+    assert_eq!(
+        points.body.sections,
+        no_heading(alloc::vec![
+            list(
+                alloc::vec![
+                    item(alloc::vec![
+                        paragraph_of(alloc::vec![text("one")]),
+                        inner,
+                        paragraph_of(alloc::vec![text("under one")]),
+                    ]),
+                    item(alloc::vec![paragraph_of(alloc::vec![text("two")])]),
+                ],
+                Some(1)
+            ),
+            paragraph_of(alloc::vec![text("elsewhere")]),
+            list(
+                alloc::vec![item(alloc::vec![paragraph_of(alloc::vec![text("three")])])],
+                Some(3)
+            ),
+        ])
+    );
+    assert_eq!(points.body.sections, bare.body.sections);
+}
+
+#[test]
+fn a_measure_with_a_unit_gives_its_twips() {
+    for (measure, twips) in [
+        ("36pt", 720_i64),
+        ("451.15pt", 9023),
+        ("-18pt", -360),
+        ("0.5in", 720),
+        ("3pc", 720),
+        ("3pi", 720),
+        ("1.27cm", 720),
+        ("12.7mm", 720),
+    ] {
+        assert_eq!(super::twips_of(measure), Some(twips), "{measure}");
+    }
+    assert_eq!(super::twips_of("36"), None);
 }
 
 #[test]
