@@ -24,7 +24,7 @@ default = ["binary-format"]
 binary-format = ["officekit/binary-format", "officekit-markdown/binary-format"]
 
 [dependencies]
-officekit = { workspace = true, features = ["transitional"] }
+officekit = { workspace = true, features = ["transitional", "strict"] }
 
 # A Word file from markdown text, and markdown from a Word file
 officekit-markdown.workspace = true

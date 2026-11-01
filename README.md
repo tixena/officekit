@@ -30,7 +30,9 @@ Built and tested:
 - streaming a part and a package;
 - the validator: schema, markup compatibility, package, and semantic checks
   against an Office version, 2010 to 365;
-- the CLI: `parts`, `cat`, `validate`, `down`, `up`, and `format`.
+- the CLI: `parts`, `cat`, `validate`, `down`, `up`, `format`, `get`, and
+  `save`. `get` reads a file of either class, and `get` and `save` write a Word,
+  Excel or PowerPoint file in Transitional.
 
 ## Layout
 

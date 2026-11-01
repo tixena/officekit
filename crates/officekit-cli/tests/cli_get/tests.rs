@@ -1,5 +1,5 @@
 use core::str;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::process::Output;
 
 use assert_cmd::Command;
@@ -12,7 +12,8 @@ use tempfile::TempDir;
 use officekit::docx::Docx;
 use officekit::parts::kinds::SpreadsheetKind;
 use officekit::xlsx::Xlsx;
-use officekit_xml::packaging::package::OpenOptions;
+use officekit_xml::conformance::ConformanceClass;
+use officekit_xml::packaging::package::{OpenOptions, Package};
 
 const REPORT: &str = "# Report\n\n1. one\n2. two\n";
 
@@ -42,6 +43,54 @@ fn report_docx(dir: &Path) -> Vec<u8> {
     );
     assert_eq!(output.status.code(), Some(0_i32), "got {output:?}");
     ready_now(RealSystem::new().read(&word)).unwrap().0
+}
+
+/// The file `report_docx` writes, saved in Strict through the library, as a caller saves one.
+fn strict_report(dir: &Path) -> PathBuf {
+    let docx = Docx::from_bytes(report_docx(dir), OpenOptions::default()).unwrap();
+    let path = dir.join("strict.docx");
+    ready_now(RealSystem::new().write(&path, &docx.to_bytes_strict().unwrap(), Condition::None))
+        .unwrap();
+    path
+}
+
+#[test]
+fn a_strict_word_file_reads_as_markdown() {
+    let dir = TempDir::new().unwrap();
+    let strict = strict_report(dir.path());
+
+    let output = run(&["get", strict.to_str().unwrap(), "-f", "md"], b"");
+    assert_eq!(output.status.code(), Some(0_i32), "got {output:?}");
+    assert_eq!(str::from_utf8(&output.stdout).unwrap(), REPORT);
+}
+
+#[test]
+fn a_strict_word_file_writes_as_a_transitional_word_file() {
+    let dir = TempDir::new().unwrap();
+    let strict = strict_report(dir.path());
+    let word = dir.path().join("out.docx");
+
+    let output = run(
+        &[
+            "get",
+            strict.to_str().unwrap(),
+            "-f",
+            "docx",
+            "-o",
+            word.to_str().unwrap(),
+        ],
+        b"",
+    );
+    assert_eq!(output.status.code(), Some(0_i32), "got {output:?}");
+    let saved = ready_now(RealSystem::new().read(&word)).unwrap().0;
+    assert_eq!(
+        Package::from_bytes(saved)
+            .unwrap()
+            .main_part()
+            .unwrap()
+            .class,
+        ConformanceClass::Transitional
+    );
 }
 
 #[test]
