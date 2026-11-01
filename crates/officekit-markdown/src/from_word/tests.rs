@@ -21,26 +21,28 @@ use officekit_markup::common_simple_types::{MeasurementInTwentiethsOfAPoint, OnO
 use officekit_markup::math::{
     OfficeMath, OfficeMathContent, Run as MathRun, RunContent as MathRunContent, Text as MathText,
 };
+use officekit_markup::vml::{ImageData, ShapeDefinition, ShapeDefinitionContent};
 use officekit_markup::wordprocessing::{
     self, AbstractNumberingDefinition, AbstractNumberingDefinitionReference,
-    AssociatedOutlineLevel, BlockContent, BlockLevelStructuredDocumentTag,
-    BlockLevelStructuredDocumentTagContent, Bold, BorderStyles, Break, BreakTypes, CarriageReturn,
-    ColorValue, ComplexFieldCharacter, ComplexFieldCharacterType, ContentBlockContent,
-    ContentCellContent, ContentRowContent, DecimalNumberValue, DeletedRunContent, DeletedText,
-    DocumentBody, FieldCode, GridColumnsSpanned, HorizontalAlignmentType, Hyperlink,
-    InlineLevelCustomXMLElement, InlineLevelSmartTag, InlineLevelStructuredDocumentTag,
-    InlineLevelStructuredDocumentTagContent, InsertedRunContent, Italics,
-    MeasurementInEighthsOfAPoint, MeasurementInPoints, MergedCellType, MoveDestinationRunContent,
-    MoveSourceRunContent, NumberingDefinitionInstance, NumberingDefinitionInstanceReferenceNumId,
-    NumberingDefinitionInstanceReferenceNumPr, NumberingDefinitions, NumberingFormat,
-    NumberingLevelDefinitionOverride, NumberingLevelOverrideDefinition, NumberingLevelReference,
-    NumberingLevelStartingValueOverride, NumberingLevelText, ParagraphAlignment,
-    ParagraphBorderBelowIdenticalParagraphs, ParagraphBorders, ParagraphContent,
-    ParagraphIndentation, ParagraphProperties, ParagraphPropertiesPPrGeneral, ParentStyleID,
-    PrimaryStyleName, ReferencedCharacterStyle, ReferencedParagraphStyle, RunFonts, RunProperties,
-    RunPropertiesContent, SignedMeasurementInTwentiethsOfPoint, SimpleField, StNumberFormat,
-    StartingValue, StyleDefinition, StyleDefinitions, StyleTypes, TabCharacter,
-    TableCellProperties, TextRun, TextRunContent, TrackedRunContent, VerticallyMergedCell,
+    AnchorForImportedExternalContent, AssociatedOutlineLevel, BlockContent,
+    BlockLevelStructuredDocumentTag, BlockLevelStructuredDocumentTagContent, Bold, BorderStyles,
+    Break, BreakTypes, CarriageReturn, ColorValue, ComplexFieldCharacter,
+    ComplexFieldCharacterType, ContentBlockContent, ContentCellContent, ContentRowContent,
+    DecimalNumberValue, DeletedRunContent, DeletedText, DocumentBody, EmbeddedObject, FieldCode,
+    GridColumnsSpanned, HorizontalAlignmentType, Hyperlink, InlineLevelCustomXMLElement,
+    InlineLevelSmartTag, InlineLevelStructuredDocumentTag, InlineLevelStructuredDocumentTagContent,
+    InsertedRunContent, Italics, MeasurementInEighthsOfAPoint, MeasurementInPoints, MergedCellType,
+    MoveDestinationRunContent, MoveSourceRunContent, NumberingDefinitionInstance,
+    NumberingDefinitionInstanceReferenceNumId, NumberingDefinitionInstanceReferenceNumPr,
+    NumberingDefinitions, NumberingFormat, NumberingLevelDefinitionOverride,
+    NumberingLevelOverrideDefinition, NumberingLevelReference, NumberingLevelStartingValueOverride,
+    NumberingLevelText, ParagraphAlignment, ParagraphBorderBelowIdenticalParagraphs,
+    ParagraphBorders, ParagraphContent, ParagraphIndentation, ParagraphProperties,
+    ParagraphPropertiesPPrGeneral, ParentStyleID, PrimaryStyleName, ReferencedCharacterStyle,
+    ReferencedParagraphStyle, RunFonts, RunProperties, RunPropertiesContent,
+    SignedMeasurementInTwentiethsOfPoint, SimpleField, StNumberFormat, StartingValue,
+    StyleDefinition, StyleDefinitions, StyleTypes, TabCharacter, TableCellProperties, TextRun,
+    TextRunContent, TrackedRunContent, VMLObject, VerticallyMergedCell, VmlElementContent,
 };
 use officekit_xml::packaging::package::OpenOptions;
 use officekit_xml::packaging::part_name::PartName;
@@ -531,13 +533,78 @@ fn text_cell(value: &str) -> wordprocessing::TableCell {
     table_cell(alloc::vec![plain(alloc::vec![run(value)])])
 }
 
+/// A hyperlink to the bookmark `anchor` holding the run of `value`.
+fn anchored(anchor: &str, value: &str) -> ParagraphContent {
+    let mut hyperlink = Hyperlink::default();
+    hyperlink.anchor = Some(anchor.to_owned());
+    hyperlink.content = alloc::vec![text_run(value)];
+    ParagraphContent::Hyperlink(hyperlink)
+}
+
+/// The runs of a complex field of `instruction` whose result is the run of `shown`.
+fn complex_field(instruction: &str, shown: &str) -> Vec<ParagraphContent> {
+    let mut code = FieldCode::default();
+    code.space = Some("preserve".to_owned());
+    code.value = instruction.to_owned();
+    [
+        field_character("begin"),
+        run_holding(alloc::vec![TextRunContent::FieldCode(code)]),
+        field_character("separate"),
+        run(shown),
+        field_character("end"),
+    ]
+    .into_iter()
+    .map(ParagraphContent::TextRun)
+    .collect()
+}
+
+/// A run holding a `w:pict` of [`vml_picture`].
+fn pict(alt: &str, id: &str) -> TextRun {
+    let mut object = VMLObject::default();
+    object.content = alloc::vec![vml_picture(alt, id)];
+    run_holding(alloc::vec![TextRunContent::VMLObject(object)])
+}
+
+/// A run holding a one-inch inline picture from `source`, of the drawing id `id` and the alt text
+/// `descr`.
+fn picture(source: PictureSource<'_>, id: u32, descr: &str) -> TextRun {
+    run_holding(alloc::vec![TextRunContent::DrawingMLObject(
+        inline_picture(
+            source,
+            id,
+            &format!("Picture {id}"),
+            Some(descr),
+            (914_400, 914_400),
+        )
+    )])
+}
+
+/// A simple field of `instruction` whose result is the run of `shown`.
+fn simple_field(instruction: &str, shown: &str) -> ParagraphContent {
+    let mut field = SimpleField::default();
+    field.content = alloc::vec![text_run(shown)];
+    field.instr = Some(instruction.to_owned());
+    ParagraphContent::SimpleField(field)
+}
+
+/// The run of `value` as paragraph content.
+fn text_run(value: &str) -> ParagraphContent {
+    ParagraphContent::TextRun(run(value))
+}
+
+/// A VML `v:shape` of the alt text `alt` whose `v:imagedata` names the relationship `id`.
+fn vml_picture(alt: &str, id: &str) -> VmlElementContent {
+    let mut data = ImageData::default();
+    data.r_id = Some(id.to_owned());
+    let mut shape = ShapeDefinition::default();
+    shape.alt = Some(alt.to_owned());
+    shape.content = alloc::vec![ShapeDefinitionContent::ImageData(data)];
+    VmlElementContent::ShapeDefinition(shape)
+}
+
 /// A new Word document whose body holds `blocks` and whose styles part holds [`styles`].
 fn word(blocks: Vec<BlockContent>) -> Docx {
     Fixture::new().body(blocks)
-}
-
-fn bold_run_xml(text: &str) -> String {
-    format!(r#"<w:r><w:rPr><w:b/></w:rPr><w:t xml:space="preserve">{text}</w:t></w:r>"#)
 }
 
 /// A table cell of one paragraph of plain `value`.
@@ -622,18 +689,6 @@ fn no_heading(blocks: Vec<Block>) -> Vec<Section> {
     alloc::vec![Section::new(None, blocks, Vec::new())]
 }
 
-/// A paragraph of the run of `text`, numbered by `instance` at `level`.
-fn numbered_xml(instance: u8, level: u8, text: &str) -> String {
-    format!(
-        r#"<w:p><w:pPr><w:numPr><w:ilvl w:val="{level}"/><w:numId w:val="{instance}"/></w:numPr></w:pPr>{}</w:p>"#,
-        run_xml(text)
-    )
-}
-
-fn paragraph_xml(style: &str, runs: &str) -> String {
-    format!(r#"<w:p><w:pPr><w:pStyle w:val="{style}"/></w:pPr>{runs}</w:p>"#)
-}
-
 /// A paragraph of one line of `children`.
 fn paragraph_of(children: Vec<Inline>) -> Block {
     paragraph_lines(alloc::vec![children])
@@ -664,36 +719,8 @@ fn read_bytes(system: &MemorySystem, path: &str) -> Vec<u8> {
     ready_now(system.read(Path::new(path))).unwrap().0
 }
 
-fn run_xml(text: &str) -> String {
-    format!(r#"<w:r><w:t xml:space="preserve">{text}</w:t></w:r>"#)
-}
-
 fn strong(children: Vec<Inline>) -> Inline {
     Inline::Strong(Strong::new(children))
-}
-
-/// A table of `rows`.
-fn table_xml(rows: &[String]) -> String {
-    format!("<w:tbl><w:tblPr/><w:tblGrid/>{}</w:tbl>", rows.concat())
-}
-
-/// A table cell of `properties`, the inside of its `w:tcPr`, holding a paragraph of the run of
-/// `text`.
-fn table_cell_xml(properties: &str, text: &str) -> String {
-    format!(
-        "<w:tc><w:tcPr>{properties}</w:tcPr><w:p>{}</w:p></w:tc>",
-        run_xml(text)
-    )
-}
-
-/// A table row of `cells`, marked `w:tblHeader` when `head` is set.
-fn table_row_xml(head: bool, cells: &[String]) -> String {
-    let properties = if head {
-        "<w:trPr><w:tblHeader/></w:trPr>"
-    } else {
-        ""
-    };
-    format!("<w:tr>{properties}{}</w:tr>", cells.concat())
 }
 
 fn text(value: &str) -> Inline {
@@ -1238,22 +1265,30 @@ fn sample() -> Docx {
         &RelationshipType::IMAGE,
         PNG,
     );
-    let link_id = fixture.external("https://example.com/q3", &RelationshipType::HYPERLINK);
-    let rows = [
-        table_row_xml(false, &[table_cell_xml("", "a"), table_cell_xml("", "b")]),
-        table_row_xml(false, &[table_cell_xml("", "c"), table_cell_xml("", "d")]),
-    ];
-    let body = format!(
-        r#"{}{}{}<w:p>{}<w:hyperlink r:id="{link_id}">{}</w:hyperlink>{}</w:p><w:p>{}</w:p>"#,
-        numbered_xml(2, 0, "one"),
-        numbered_xml(2, 0, "two"),
-        table_xml(&rows),
-        run_xml("See "),
-        run_xml("the dashboard"),
-        run_xml("."),
-        picture_xml("Logo", &picture_id),
-    );
-    fixture.body_xml(&body)
+    let mut dashboard = Hyperlink::default();
+    dashboard.content = alloc::vec![text_run("the dashboard")];
+    dashboard.id = Some(fixture.external("https://example.com/q3", &RelationshipType::HYPERLINK));
+    fixture.body(alloc::vec![
+        numbered(2, 0, "one"),
+        numbered(2, 0, "two"),
+        table(
+            0,
+            alloc::vec![
+                table_row(alloc::vec![text_cell("a"), text_cell("b")]),
+                table_row(alloc::vec![text_cell("c"), text_cell("d")]),
+            ],
+        ),
+        block(alloc::vec![
+            text_run("See "),
+            ParagraphContent::Hyperlink(dashboard),
+            text_run("."),
+        ]),
+        plain(alloc::vec![picture(
+            PictureSource::Embedded(&picture_id),
+            1,
+            "Logo"
+        )]),
+    ])
 }
 
 #[test]
@@ -1729,24 +1764,22 @@ fn a_spanning_cell_and_a_vertical_merge_continuation_are_padded_with_empty_cells
 
 #[test]
 fn anchors_lose_their_underscores_and_hyperlink_fields_are_links() {
-    let body = format!(
-        concat!(
-            r#"<w:p><w:hyperlink w:anchor="q3_results">{}</w:hyperlink>{}"#,
-            r#"<w:hyperlink w:anchor="_2024_plan">{}</w:hyperlink></w:p>"#,
-            r#"<w:p><w:r><w:fldChar w:fldCharType="begin"/></w:r>"#,
-            r#"<w:r><w:instrText xml:space="preserve"> HYPERLINK "https://x.example" </w:instrText></w:r>"#,
-            r#"<w:r><w:fldChar w:fldCharType="separate"/></w:r>{}"#,
-            r#"<w:r><w:fldChar w:fldCharType="end"/></w:r>{}"#,
-            r#"<w:fldSimple w:instr=" HYPERLINK &quot;https://y.example&quot; ">{}</w:fldSimple></w:p>"#,
-        ),
-        run_xml("Q3"),
-        run_xml(" and "),
-        run_xml("plan"),
-        run_xml("x"),
-        run_xml(" or "),
-        run_xml("y"),
-    );
-    let docx = word_xml(&body);
+    let fields = [
+        complex_field(r#" HYPERLINK "https://x.example" "#, "x"),
+        alloc::vec![
+            text_run(" or "),
+            simple_field(r#" HYPERLINK "https://y.example" "#, "y"),
+        ],
+    ]
+    .concat();
+    let docx = word(alloc::vec![
+        block(alloc::vec![
+            anchored("q3_results", "Q3"),
+            text_run(" and "),
+            anchored("_2024_plan", "plan"),
+        ]),
+        block(fields),
+    ]);
     assert_eq!(
         arky(&docx).body.sections,
         no_heading(alloc::vec![
@@ -1771,15 +1804,20 @@ fn anchors_lose_their_underscores_and_hyperlink_fields_are_links() {
 #[test]
 fn a_hyperlink_inside_a_hyperlink_joins_its_text_and_bold_inside_a_link_is_link_strong() {
     let mut fixture = Fixture::new();
-    let outer = fixture.external("https://outer.example", &RelationshipType::HYPERLINK);
-    let inner = fixture.external("https://inner.example", &RelationshipType::HYPERLINK);
-    let body = format!(
-        r#"<w:p><w:hyperlink r:id="{outer}" w:tooltip="Tip">{}{}<w:hyperlink r:id="{inner}">{}</w:hyperlink></w:hyperlink></w:p>"#,
-        run_xml("a "),
-        bold_run_xml("b"),
-        run_xml(" c"),
-    );
-    let docx = fixture.body_xml(&body);
+    let mut nested = Hyperlink::default();
+    nested.content = alloc::vec![text_run(" c")];
+    nested.id = Some(fixture.external("https://inner.example", &RelationshipType::HYPERLINK));
+    let mut outer = Hyperlink::default();
+    outer.content = alloc::vec![
+        text_run("a "),
+        ParagraphContent::TextRun(bold_run("b")),
+        ParagraphContent::Hyperlink(nested),
+    ];
+    outer.id = Some(fixture.external("https://outer.example", &RelationshipType::HYPERLINK));
+    outer.tooltip = Some("Tip".to_owned());
+    let docx = fixture.body(alloc::vec![block(alloc::vec![
+        ParagraphContent::Hyperlink(outer)
+    ])]);
     let expected = Inline::Link(Link::new(
         LinkForm::Markdown,
         "https://outer.example".to_owned(),
@@ -1809,12 +1847,11 @@ fn an_image_part_named_twice_is_exported_once() {
         &RelationshipType::IMAGE,
         PNG,
     );
-    let body = format!(
-        "<w:p>{}</w:p><w:p>{}</w:p>",
-        picture_xml("A", &id),
-        picture_xml("B", &id)
-    );
-    let result = exported(&fixture.body_xml(&body), MarkdownOptions::default());
+    let docx = fixture.body(alloc::vec![
+        plain(alloc::vec![picture(PictureSource::Embedded(&id), 1, "A")]),
+        plain(alloc::vec![picture(PictureSource::Embedded(&id), 2, "B")]),
+    ]);
+    let result = exported(&docx, MarkdownOptions::default());
     assert_eq!(result.images, [("image1.png".to_owned(), PNG.to_vec())]);
     assert_eq!(
         result.document.body.sections,
@@ -1866,13 +1903,13 @@ fn a_picture_with_an_svg_extension_exports_the_svg_part_and_not_the_png() {
 fn a_linked_picture_is_an_image_of_its_address() {
     let mut fixture = Fixture::new();
     let id = fixture.external("https://example.com/logo.png", &RelationshipType::IMAGE);
-    let blip = format!(r#"<a:blip r:link="{id}"/>"#);
-    let body = format!(
-        "<w:p><w:r>{}</w:r></w:p>",
-        picture_drawing_xml("Logo", &blip)
-    );
+    let docx = fixture.body(alloc::vec![plain(alloc::vec![picture(
+        PictureSource::Linked(&id),
+        1,
+        "Logo"
+    )])]);
     assert_eq!(
-        arky(&fixture.body_xml(&body)).body.sections,
+        arky(&docx).body.sections,
         no_heading(alloc::vec![paragraph_of(alloc::vec![image(
             "https://example.com/logo.png",
             "Logo"
@@ -1925,17 +1962,17 @@ fn a_picture_inside_alternate_content_is_read_from_the_first_branch_that_holds_o
 #[test]
 fn an_alt_chunk_naming_an_html_part_is_an_html_block_of_its_body() {
     let mut fixture = Fixture::new();
-    let id = fixture.part(
+    let mut chunk = AnchorForImportedExternalContent::default();
+    chunk.id = Some(fixture.part(
         "/word/htmlChunk1.html",
         "text/html",
         &RelationshipType::A_F_CHUNK,
         b"<html><BODY lang=\"es\"><div>hi</div></BODY></html>",
-    );
-    let body = format!(
-        r#"{}<w:altChunk r:id="{id}"/>"#,
-        paragraph_xml("Normal", &run_xml("before"))
-    );
-    let docx = fixture.body_xml(&body);
+    ));
+    let docx = fixture.body(alloc::vec![
+        paragraph("Normal", alloc::vec![run("before")]),
+        BlockContent::AnchorForImportedExternalContent(chunk),
+    ]);
     assert_eq!(
         arky(&docx).body.sections,
         no_heading(alloc::vec![
@@ -1989,7 +2026,7 @@ fn the_frontmatter_part_is_the_frontmatter_only_when_asked_and_one_that_does_not
 }
 
 /// A VML `v:shape` of alt text `alt` whose `v:imagedata` names the relationship `id`.
-fn vml_picture(alt: &str, id: &str) -> String {
+fn vml_picture_xml(alt: &str, id: &str) -> String {
     format!(r#"<v:shape alt="{alt}"><v:imagedata r:id="{id}"/></v:shape>"#)
 }
 
@@ -2002,12 +2039,15 @@ fn a_vml_picture_in_a_pict_or_an_object_is_an_image_with_the_shape_s_alt_text() 
         &RelationshipType::IMAGE,
         PNG,
     );
-    let body = format!(
-        "<w:p><w:r><w:pict>{}</w:pict></w:r></w:p><w:p><w:r><w:object>{}</w:object></w:r></w:p>",
-        vml_picture("Company logo", &id),
-        vml_picture("Sheet", &id),
-    );
-    let result = exported(&fixture.body_xml(&body), MarkdownOptions::default());
+    let mut object = EmbeddedObject::default();
+    object.vml_element_content = alloc::vec![vml_picture("Sheet", &id)];
+    let docx = fixture.body(alloc::vec![
+        plain(alloc::vec![pict("Company logo", &id)]),
+        plain(alloc::vec![run_holding(alloc::vec![
+            TextRunContent::EmbeddedObject(object)
+        ])]),
+    ]);
+    let result = exported(&docx, MarkdownOptions::default());
     assert_eq!(result.images, [("image1.png".to_owned(), PNG.to_vec())]);
     assert_eq!(
         result.document.body.sections,
@@ -2025,12 +2065,9 @@ fn a_vml_picture_in_a_pict_or_an_object_is_an_image_with_the_shape_s_alt_text() 
 fn a_vml_picture_of_an_external_relationship_is_an_image_of_its_address() {
     let mut fixture = Fixture::new();
     let id = fixture.external("https://example.com/logo.png", &RelationshipType::IMAGE);
-    let body = format!(
-        "<w:p><w:r><w:pict>{}</w:pict></w:r></w:p>",
-        vml_picture("Logo", &id)
-    );
+    let docx = fixture.body(alloc::vec![plain(alloc::vec![pict("Logo", &id)])]);
     assert_eq!(
-        arky(&fixture.body_xml(&body)).body.sections,
+        arky(&docx).body.sections,
         no_heading(alloc::vec![paragraph_of(alloc::vec![image(
             "https://example.com/logo.png",
             "Logo"
@@ -2048,7 +2085,7 @@ fn a_drawing_in_the_choice_wins_over_a_vml_picture_in_the_fallback() {
     let body = format!(
         r#"<w:p><w:r><mc:AlternateContent><mc:Choice Requires="wps">{}</mc:Choice><mc:Fallback><w:pict>{}</w:pict></mc:Fallback></mc:AlternateContent></w:r></w:p>"#,
         picture_drawing_xml("drawn", &format!(r#"<a:blip r:embed="{drawn}"/>"#)),
-        vml_picture("vml", &vml),
+        vml_picture_xml("vml", &vml),
     );
     let result = exported(&fixture.body_xml(&body), MarkdownOptions::default());
     assert_eq!(result.images, [("image1.png".to_owned(), PNG.to_vec())]);
@@ -2063,26 +2100,20 @@ fn a_drawing_in_the_choice_wins_over_a_vml_picture_in_the_fallback() {
 
 #[test]
 fn a_hyperlink_field_s_l_switch_names_a_bookmark_or_an_address_s_fragment() {
-    let body = format!(
-        concat!(
-            r#"<w:p><w:r><w:fldChar w:fldCharType="begin"/></w:r>"#,
-            r#"<w:r><w:instrText xml:space="preserve"> HYPERLINK \l "q3_results" </w:instrText></w:r>"#,
-            r#"<w:r><w:fldChar w:fldCharType="separate"/></w:r>{}"#,
-            r#"<w:r><w:fldChar w:fldCharType="end"/></w:r>{}"#,
-            r#"<w:fldSimple w:instr=" HYPERLINK \l &quot;_2024_plan&quot; ">{}</w:fldSimple>{}"#,
-            r#"<w:fldSimple w:instr=" HYPERLINK &quot;https://x.example&quot; \l &quot;part_two&quot; ">{}</w:fldSimple>{}"#,
-            r#"<w:fldSimple w:instr=" HYPERLINK \o &quot;tip&quot; ">{}</w:fldSimple></w:p>"#,
-        ),
-        run_xml("Q3"),
-        run_xml(", "),
-        run_xml("plan"),
-        run_xml(", "),
-        run_xml("part"),
-        run_xml(", "),
-        run_xml("plain"),
-    );
+    let content = [
+        complex_field(r#" HYPERLINK \l "q3_results" "#, "Q3"),
+        alloc::vec![
+            text_run(", "),
+            simple_field(r#" HYPERLINK \l "_2024_plan" "#, "plan"),
+            text_run(", "),
+            simple_field(r#" HYPERLINK "https://x.example" \l "part_two" "#, "part"),
+            text_run(", "),
+            simple_field(r#" HYPERLINK \o "tip" "#, "plain"),
+        ],
+    ]
+    .concat();
     assert_eq!(
-        markdown(&word_xml(&body)),
+        markdown(&word(alloc::vec![block(content)])),
         "[Q3](#q3-results), [plan](#2024-plan), [part](https://x.example#part_two), plain\n"
     );
 }
