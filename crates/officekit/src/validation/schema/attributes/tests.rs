@@ -309,8 +309,9 @@ fn a_strict_file_reports_an_attribute_undeclared_at_the_target() {
     );
 }
 
+// XML input: the spelling is the point, 219 against 219%, checked on the generic element.
 #[test]
-fn a_strict_file_accepts_a_chart_s_percentage_in_either_form() {
+fn a_strict_file_reports_a_chart_s_percentage_with_a_sign() {
     let gap_width = |value: &str| {
         element(&format!(
             "<c:gapWidth xmlns:c=\"http://schemas.openxmlformats.org/drawingml/2006/chart\" val=\"{value}\"/>"
@@ -323,9 +324,19 @@ fn a_strict_file_accepts_a_chart_s_percentage_in_either_form() {
         "as Word writes it"
     );
     assert_eq!(
-        codes(&gap_width("219%"), gap, true).len(),
-        0,
-        "as Part 1 writes it"
+        codes(&gap_width("219%"), gap, true),
+        [ErrorCode::InvalidAttributeValue],
+        "as Word refuses it"
+    );
+    assert_eq!(
+        codes(&gap_width("219%"), gap, false),
+        [ErrorCode::InvalidAttributeValue],
+        "the same in a Transitional file"
+    );
+    assert_eq!(
+        codes(&gap_width("501"), gap, true),
+        [ErrorCode::InvalidAttributeValue],
+        "out of range"
     );
 }
 

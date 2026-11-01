@@ -348,7 +348,7 @@
 //   e26c4528f8340924ff27391d34681ecde1f597fc5ce3dbf2d354edc9c6071a52  crates/xtask/data/part_roots.toml
 //   fbf0be1333c4222066cf32730001139ef31634bad0f057c9b6986f9b5630be85  crates/xtask/data/sdk_corrections.toml
 //   dff6adee70b19bb1f9b56e50e9cc20316298c14255ec7e2d6cb0efe795318af0  crates/xtask/data/simple_types.toml
-//   b968709cb207c10c0e4c709caaf786004378630038cd5a2bd94a218cf1e794c2  crates/xtask/data/strict_correspondences.toml
+//   d76c27da1a7d0a68f1ce73d2d40a8da0bf2cf8ec57eb87fa9ce131009fc226dd  crates/xtask/data/strict_correspondences.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 
@@ -23313,509 +23313,6 @@ const STRICT_CHECKS_9: &[ValueCheck] = &[
 
 const STRICT_CHECKS_10: &[ValueCheck] = &[
     ValueCheck {
-        check: Check::String {
-            class: Some(ValueClass::String),
-            kind: StringKind::Plain,
-            length: None,
-            max_length: None,
-            min_length: None,
-            pattern: Some("0*(([0-9])|([1-9][0-9])|([1-2][0-9][0-9])|300)%"),
-        },
-        union: Some(0),
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::Number {
-            bounds: Bounds {
-                max_exclusive: None,
-                max_inclusive: None,
-                min_exclusive: None,
-                min_inclusive: None,
-                non_negative: false,
-                positive: false,
-            },
-            class: ValueClass::UInt32,
-            list: false,
-        },
-        union: Some(0),
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::String {
-            class: Some(ValueClass::String),
-            kind: StringKind::Plain,
-            length: None,
-            max_length: None,
-            min_length: None,
-            pattern: Some("0*(([0-9])|([1-9][0-9])|([1-2][0-9][0-9])|300)%"),
-        },
-        union: Some(1),
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::Number {
-            bounds: Bounds {
-                max_exclusive: None,
-                max_inclusive: Some(300.0_f64),
-                min_exclusive: None,
-                min_inclusive: Some(0.0_f64),
-                non_negative: false,
-                positive: false,
-            },
-            class: ValueClass::UInt32,
-            list: false,
-        },
-        union: Some(1),
-        versions: Versions(0b11_1111),
-    },
-];
-
-const STRICT_CHECKS_11: &[ValueCheck] = &[
-    ValueCheck {
-        check: Check::String {
-            class: Some(ValueClass::String),
-            kind: StringKind::Plain,
-            length: None,
-            max_length: None,
-            min_length: None,
-            pattern: Some("0*(([2-9][0-9])|([1-9][0-9][0-9])|(1[0-9][0-9][0-9])|2000)%"),
-        },
-        union: Some(0),
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::Number {
-            bounds: Bounds {
-                max_exclusive: None,
-                max_inclusive: None,
-                min_exclusive: None,
-                min_inclusive: None,
-                non_negative: false,
-                positive: false,
-            },
-            class: ValueClass::UInt16,
-            list: false,
-        },
-        union: Some(0),
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::String {
-            class: Some(ValueClass::String),
-            kind: StringKind::Plain,
-            length: None,
-            max_length: None,
-            min_length: None,
-            pattern: Some("0*(([2-9][0-9])|([1-9][0-9][0-9])|(1[0-9][0-9][0-9])|2000)%"),
-        },
-        union: Some(1),
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::Number {
-            bounds: Bounds {
-                max_exclusive: None,
-                max_inclusive: Some(2000.0_f64),
-                min_exclusive: None,
-                min_inclusive: Some(20.0_f64),
-                non_negative: false,
-                positive: false,
-            },
-            class: ValueClass::UInt16,
-            list: false,
-        },
-        union: Some(1),
-        versions: Versions(0b11_1111),
-    },
-];
-
-const STRICT_CHECKS_12: &[ValueCheck] = &[
-    ValueCheck {
-        check: Check::String {
-            class: Some(ValueClass::String),
-            kind: StringKind::Plain,
-            length: None,
-            max_length: None,
-            min_length: None,
-            pattern: Some("0*(([0-9])|([1-9][0-9])|([1-4][0-9][0-9])|500)%"),
-        },
-        union: Some(0),
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::Number {
-            bounds: Bounds {
-                max_exclusive: None,
-                max_inclusive: None,
-                min_exclusive: None,
-                min_inclusive: None,
-                non_negative: false,
-                positive: false,
-            },
-            class: ValueClass::UInt16,
-            list: false,
-        },
-        union: Some(0),
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::String {
-            class: Some(ValueClass::String),
-            kind: StringKind::Plain,
-            length: None,
-            max_length: None,
-            min_length: None,
-            pattern: Some("0*(([0-9])|([1-9][0-9])|([1-4][0-9][0-9])|500)%"),
-        },
-        union: Some(1),
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::Number {
-            bounds: Bounds {
-                max_exclusive: None,
-                max_inclusive: Some(500.0_f64),
-                min_exclusive: None,
-                min_inclusive: Some(0.0_f64),
-                non_negative: false,
-                positive: false,
-            },
-            class: ValueClass::UInt16,
-            list: false,
-        },
-        union: Some(1),
-        versions: Versions(0b11_1111),
-    },
-];
-
-const STRICT_CHECKS_13: &[ValueCheck] = &[
-    ValueCheck {
-        check: Check::String {
-            class: Some(ValueClass::String),
-            kind: StringKind::Plain,
-            length: None,
-            max_length: None,
-            min_length: None,
-            pattern: Some("0*(([5-9])|([1-9][0-9])|([1-4][0-9][0-9])|500)%"),
-        },
-        union: Some(0),
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::Number {
-            bounds: Bounds {
-                max_exclusive: None,
-                max_inclusive: None,
-                min_exclusive: None,
-                min_inclusive: None,
-                non_negative: false,
-                positive: false,
-            },
-            class: ValueClass::UInt16,
-            list: false,
-        },
-        union: Some(0),
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::String {
-            class: Some(ValueClass::String),
-            kind: StringKind::Plain,
-            length: None,
-            max_length: None,
-            min_length: None,
-            pattern: Some("0*(([5-9])|([1-9][0-9])|([1-4][0-9][0-9])|500)%"),
-        },
-        union: Some(1),
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::Number {
-            bounds: Bounds {
-                max_exclusive: None,
-                max_inclusive: Some(500.0_f64),
-                min_exclusive: None,
-                min_inclusive: Some(5.0_f64),
-                non_negative: false,
-                positive: false,
-            },
-            class: ValueClass::UInt16,
-            list: false,
-        },
-        union: Some(1),
-        versions: Versions(0b11_1111),
-    },
-];
-
-const STRICT_CHECKS_14: &[ValueCheck] = &[
-    ValueCheck {
-        check: Check::String {
-            class: Some(ValueClass::String),
-            kind: StringKind::Plain,
-            length: None,
-            max_length: None,
-            min_length: None,
-            pattern: Some("0*([1-9]|([1-8][0-9])|90)%"),
-        },
-        union: Some(0),
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::Number {
-            bounds: Bounds {
-                max_exclusive: None,
-                max_inclusive: None,
-                min_exclusive: None,
-                min_inclusive: None,
-                non_negative: false,
-                positive: false,
-            },
-            class: ValueClass::Byte,
-            list: false,
-        },
-        union: Some(0),
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::String {
-            class: Some(ValueClass::String),
-            kind: StringKind::Plain,
-            length: None,
-            max_length: None,
-            min_length: None,
-            pattern: Some("0*([1-9]|([1-8][0-9])|90)%"),
-        },
-        union: Some(1),
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::Number {
-            bounds: Bounds {
-                max_exclusive: None,
-                max_inclusive: Some(90.0_f64),
-                min_exclusive: None,
-                min_inclusive: Some(1.0_f64),
-                non_negative: false,
-                positive: false,
-            },
-            class: ValueClass::Byte,
-            list: false,
-        },
-        union: Some(1),
-        versions: Versions(0b11_1111),
-    },
-];
-
-const STRICT_CHECKS_15: &[ValueCheck] = &[
-    ValueCheck {
-        check: Check::String {
-            class: Some(ValueClass::String),
-            kind: StringKind::Plain,
-            length: None,
-            max_length: None,
-            min_length: None,
-            pattern: Some("0*(([0-9])|([1-9][0-9])|([1-9][0-9][0-9])|1000)%"),
-        },
-        union: Some(0),
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::Number {
-            bounds: Bounds {
-                max_exclusive: None,
-                max_inclusive: None,
-                min_exclusive: None,
-                min_inclusive: None,
-                non_negative: false,
-                positive: false,
-            },
-            class: ValueClass::UInt16,
-            list: false,
-        },
-        union: Some(0),
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::String {
-            class: Some(ValueClass::String),
-            kind: StringKind::Plain,
-            length: None,
-            max_length: None,
-            min_length: None,
-            pattern: Some("0*(([0-9])|([1-9][0-9])|([1-9][0-9][0-9])|1000)%"),
-        },
-        union: Some(1),
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::Number {
-            bounds: Bounds {
-                max_exclusive: None,
-                max_inclusive: Some(1000.0_f64),
-                min_exclusive: None,
-                min_inclusive: Some(0.0_f64),
-                non_negative: false,
-                positive: false,
-            },
-            class: ValueClass::UInt16,
-            list: false,
-        },
-        union: Some(1),
-        versions: Versions(0b11_1111),
-    },
-];
-
-const STRICT_CHECKS_16: &[ValueCheck] = &[
-    ValueCheck {
-        check: Check::String {
-            class: Some(ValueClass::String),
-            kind: StringKind::Plain,
-            length: None,
-            max_length: None,
-            min_length: None,
-            pattern: Some("(-?0*(([0-9])|([1-9][0-9])|100))%"),
-        },
-        union: Some(0),
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::Number {
-            bounds: Bounds {
-                max_exclusive: None,
-                max_inclusive: None,
-                min_exclusive: None,
-                min_inclusive: None,
-                non_negative: false,
-                positive: false,
-            },
-            class: ValueClass::SByte,
-            list: false,
-        },
-        union: Some(0),
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::String {
-            class: Some(ValueClass::String),
-            kind: StringKind::Plain,
-            length: None,
-            max_length: None,
-            min_length: None,
-            pattern: Some("(-?0*(([0-9])|([1-9][0-9])|100))%"),
-        },
-        union: Some(1),
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::Number {
-            bounds: Bounds {
-                max_exclusive: None,
-                max_inclusive: Some(100.0_f64),
-                min_exclusive: None,
-                min_inclusive: Some(-100.0_f64),
-                non_negative: false,
-                positive: false,
-            },
-            class: ValueClass::SByte,
-            list: false,
-        },
-        union: Some(1),
-        versions: Versions(0b11_1111),
-    },
-];
-
-const STRICT_CHECKS_17: &[ValueCheck] = &[
-    ValueCheck {
-        check: Check::String {
-            class: Some(ValueClass::String),
-            kind: StringKind::Plain,
-            length: None,
-            max_length: None,
-            min_length: None,
-            pattern: Some("0*(([5-9])|([1-9][0-9])|(1[0-9][0-9])|200)%"),
-        },
-        union: Some(0),
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::Number {
-            bounds: Bounds {
-                max_exclusive: None,
-                max_inclusive: None,
-                min_exclusive: None,
-                min_inclusive: None,
-                non_negative: false,
-                positive: false,
-            },
-            class: ValueClass::UInt16,
-            list: false,
-        },
-        union: Some(0),
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::String {
-            class: Some(ValueClass::String),
-            kind: StringKind::Plain,
-            length: None,
-            max_length: None,
-            min_length: None,
-            pattern: Some("0*(([5-9])|([1-9][0-9])|(1[0-9][0-9])|200)%"),
-        },
-        union: Some(1),
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::Number {
-            bounds: Bounds {
-                max_exclusive: None,
-                max_inclusive: Some(200.0_f64),
-                min_exclusive: None,
-                min_inclusive: Some(5.0_f64),
-                non_negative: false,
-                positive: false,
-            },
-            class: ValueClass::UInt16,
-            list: false,
-        },
-        union: Some(1),
-        versions: Versions(0b11_1111),
-    },
-];
-
-const STRICT_CHECKS_18: &[ValueCheck] = &[
-    ValueCheck {
-        check: Check::String {
-            class: Some(ValueClass::String),
-            kind: StringKind::Plain,
-            length: None,
-            max_length: None,
-            min_length: None,
-            pattern: Some("([0-9]+)%"),
-        },
-        union: Some(0),
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::Number {
-            bounds: Bounds {
-                max_exclusive: None,
-                max_inclusive: None,
-                min_exclusive: None,
-                min_inclusive: None,
-                non_negative: false,
-                positive: false,
-            },
-            class: ValueClass::UInt32,
-            list: false,
-        },
-        union: Some(0),
-        versions: Versions(0b11_1111),
-    },
-];
-
-const STRICT_CHECKS_19: &[ValueCheck] = &[
-    ValueCheck {
         check: Check::Number {
             bounds: Bounds {
                 max_exclusive: None,
@@ -23873,7 +23370,7 @@ const STRICT_CHECKS_19: &[ValueCheck] = &[
     },
 ];
 
-const STRICT_CHECKS_20: &[ValueCheck] = &[
+const STRICT_CHECKS_11: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
             class: Some(ValueClass::String),
@@ -23972,7 +23469,7 @@ const STRICT_CHECKS_20: &[ValueCheck] = &[
     },
 ];
 
-const STRICT_CHECKS_21: &[ValueCheck] = &[
+const STRICT_CHECKS_12: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Number {
             bounds: Bounds {
@@ -24003,7 +23500,7 @@ const STRICT_CHECKS_21: &[ValueCheck] = &[
     },
 ];
 
-const STRICT_CHECKS_22: &[ValueCheck] = &[ValueCheck {
+const STRICT_CHECKS_13: &[ValueCheck] = &[ValueCheck {
     check: Check::String {
         class: Some(ValueClass::String),
         kind: StringKind::Plain,
@@ -24018,7 +23515,7 @@ const STRICT_CHECKS_22: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const STRICT_CHECKS_23: &[ValueCheck] = &[ValueCheck {
+const STRICT_CHECKS_14: &[ValueCheck] = &[ValueCheck {
     check: Check::String {
         class: Some(ValueClass::String),
         kind: StringKind::Plain,
@@ -24031,7 +23528,7 @@ const STRICT_CHECKS_23: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const STRICT_CHECKS_24: &[ValueCheck] = &[ValueCheck {
+const STRICT_CHECKS_15: &[ValueCheck] = &[ValueCheck {
     check: Check::String {
         class: Some(ValueClass::String),
         kind: StringKind::Plain,
@@ -24044,7 +23541,7 @@ const STRICT_CHECKS_24: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const STRICT_CHECKS_25: &[ValueCheck] = &[ValueCheck {
+const STRICT_CHECKS_16: &[ValueCheck] = &[ValueCheck {
     check: Check::String {
         class: Some(ValueClass::String),
         kind: StringKind::Plain,
@@ -24057,7 +23554,7 @@ const STRICT_CHECKS_25: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const STRICT_CHECKS_26: &[ValueCheck] = &[
+const STRICT_CHECKS_17: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
             class: Some(ValueClass::String),
@@ -24084,7 +23581,7 @@ const STRICT_CHECKS_26: &[ValueCheck] = &[
     },
 ];
 
-const STRICT_CHECKS_27: &[ValueCheck] = &[ValueCheck {
+const STRICT_CHECKS_18: &[ValueCheck] = &[ValueCheck {
     check: Check::String {
         class: Some(ValueClass::String),
         kind: StringKind::Plain,
@@ -24097,7 +23594,7 @@ const STRICT_CHECKS_27: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const STRICT_CHECKS_28: &[ValueCheck] = &[ValueCheck {
+const STRICT_CHECKS_19: &[ValueCheck] = &[ValueCheck {
     check: Check::String {
         class: Some(ValueClass::String),
         kind: StringKind::Plain,
@@ -24110,7 +23607,7 @@ const STRICT_CHECKS_28: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const STRICT_CHECKS_29: &[ValueCheck] = &[ValueCheck {
+const STRICT_CHECKS_20: &[ValueCheck] = &[ValueCheck {
     check: Check::String {
         class: Some(ValueClass::String),
         kind: StringKind::Plain,
@@ -24123,7 +23620,7 @@ const STRICT_CHECKS_29: &[ValueCheck] = &[ValueCheck {
     versions: Versions(0b11_1111),
 }];
 
-const STRICT_CHECKS_30: &[ValueCheck] = &[ValueCheck {
+const STRICT_CHECKS_21: &[ValueCheck] = &[ValueCheck {
     check: Check::String {
         class: Some(ValueClass::String),
         kind: StringKind::Plain,
@@ -28626,7 +28123,7 @@ const ATTRIBUTES_194: &[AttributeConstraint] = &[AttributeConstraint {
     class: ValueClass::UInt32,
     name: "val",
     namespace: None,
-    strict_checks: Some(STRICT_CHECKS_10),
+    strict_checks: None,
     transitional_only: false,
 }];
 
@@ -28698,7 +28195,7 @@ const ATTRIBUTES_200: &[AttributeConstraint] = &[AttributeConstraint {
     class: ValueClass::UInt16,
     name: "val",
     namespace: None,
-    strict_checks: Some(STRICT_CHECKS_11),
+    strict_checks: None,
     transitional_only: false,
 }];
 
@@ -28770,7 +28267,7 @@ const ATTRIBUTES_208: &[AttributeConstraint] = &[AttributeConstraint {
     class: ValueClass::UInt16,
     name: "val",
     namespace: None,
-    strict_checks: Some(STRICT_CHECKS_12),
+    strict_checks: None,
     transitional_only: false,
 }];
 
@@ -28788,7 +28285,7 @@ const ATTRIBUTES_210: &[AttributeConstraint] = &[AttributeConstraint {
     class: ValueClass::UInt16,
     name: "val",
     namespace: None,
-    strict_checks: Some(STRICT_CHECKS_13),
+    strict_checks: None,
     transitional_only: false,
 }];
 
@@ -28824,7 +28321,7 @@ const ATTRIBUTES_212: &[AttributeConstraint] = &[AttributeConstraint {
     class: ValueClass::Byte,
     name: "val",
     namespace: None,
-    strict_checks: Some(STRICT_CHECKS_14),
+    strict_checks: None,
     transitional_only: false,
 }];
 
@@ -28860,7 +28357,7 @@ const ATTRIBUTES_216: &[AttributeConstraint] = &[AttributeConstraint {
     class: ValueClass::UInt16,
     name: "val",
     namespace: None,
-    strict_checks: Some(STRICT_CHECKS_15),
+    strict_checks: None,
     transitional_only: false,
 }];
 
@@ -28970,7 +28467,7 @@ const ATTRIBUTES_226: &[AttributeConstraint] = &[AttributeConstraint {
     class: ValueClass::SByte,
     name: "val",
     namespace: None,
-    strict_checks: Some(STRICT_CHECKS_16),
+    strict_checks: None,
     transitional_only: false,
 }];
 
@@ -29168,7 +28665,7 @@ const ATTRIBUTES_236: &[AttributeConstraint] = &[AttributeConstraint {
     class: ValueClass::UInt16,
     name: "val",
     namespace: None,
-    strict_checks: Some(STRICT_CHECKS_17),
+    strict_checks: None,
     transitional_only: false,
 }];
 
@@ -29276,7 +28773,7 @@ const ATTRIBUTES_248: &[AttributeConstraint] = &[AttributeConstraint {
     class: ValueClass::Byte,
     name: "val",
     namespace: None,
-    strict_checks: Some(STRICT_CHECKS_18),
+    strict_checks: None,
     transitional_only: false,
 }];
 
@@ -34048,7 +33545,7 @@ const ATTRIBUTES_406: &[AttributeConstraint] = &[AttributeConstraint {
     class: ValueClass::UInt32,
     name: "val",
     namespace: Some(52),
-    strict_checks: Some(STRICT_CHECKS_19),
+    strict_checks: Some(STRICT_CHECKS_10),
     transitional_only: false,
 }];
 
@@ -56314,7 +55811,7 @@ const ATTRIBUTES_677: &[AttributeConstraint] = &[
         class: ValueClass::String,
         name: "tm",
         namespace: None,
-        strict_checks: Some(STRICT_CHECKS_20),
+        strict_checks: Some(STRICT_CHECKS_11),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -63460,7 +62957,7 @@ const ATTRIBUTES_777: &[AttributeConstraint] = &[
         class: ValueClass::String,
         name: "w",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -63468,7 +62965,7 @@ const ATTRIBUTES_777: &[AttributeConstraint] = &[
         class: ValueClass::String,
         name: "space",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
 ];
@@ -63487,7 +62984,7 @@ const ATTRIBUTES_778: &[AttributeConstraint] = &[
         class: ValueClass::String,
         name: "space",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -64047,7 +63544,7 @@ const ATTRIBUTES_802: &[AttributeConstraint] = &[
         class: ValueClass::UInt32,
         name: "val",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -64289,7 +63786,7 @@ const ATTRIBUTES_810: &[AttributeConstraint] = &[
         class: ValueClass::String,
         name: "w",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -64297,7 +63794,7 @@ const ATTRIBUTES_810: &[AttributeConstraint] = &[
         class: ValueClass::UInt32,
         name: "h",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -64305,7 +63802,7 @@ const ATTRIBUTES_810: &[AttributeConstraint] = &[
         class: ValueClass::String,
         name: "vSpace",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -64313,7 +63810,7 @@ const ATTRIBUTES_810: &[AttributeConstraint] = &[
         class: ValueClass::String,
         name: "hSpace",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -64345,7 +63842,7 @@ const ATTRIBUTES_810: &[AttributeConstraint] = &[
         class: ValueClass::String,
         name: "x",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_21),
+        strict_checks: Some(STRICT_CHECKS_12),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -64361,7 +63858,7 @@ const ATTRIBUTES_810: &[AttributeConstraint] = &[
         class: ValueClass::String,
         name: "y",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_21),
+        strict_checks: Some(STRICT_CHECKS_12),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -64507,7 +64004,7 @@ const ATTRIBUTES_820: &[AttributeConstraint] = &[
         class: ValueClass::UInt32,
         name: "val",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -64534,7 +64031,7 @@ const ATTRIBUTES_822: &[AttributeConstraint] = &[AttributeConstraint {
     class: ValueClass::UInt32,
     name: "val",
     namespace: Some(97),
-    strict_checks: Some(STRICT_CHECKS_19),
+    strict_checks: Some(STRICT_CHECKS_10),
     transitional_only: false,
 }];
 
@@ -64543,7 +64040,7 @@ const ATTRIBUTES_823: &[AttributeConstraint] = &[AttributeConstraint {
     class: ValueClass::String,
     name: "val",
     namespace: Some(97),
-    strict_checks: Some(STRICT_CHECKS_19),
+    strict_checks: Some(STRICT_CHECKS_10),
     transitional_only: false,
 }];
 
@@ -64552,7 +64049,7 @@ const ATTRIBUTES_824: &[AttributeConstraint] = &[AttributeConstraint {
     class: ValueClass::Int16,
     name: "val",
     namespace: Some(97),
-    strict_checks: Some(STRICT_CHECKS_19),
+    strict_checks: Some(STRICT_CHECKS_10),
     transitional_only: false,
 }];
 
@@ -64672,7 +64169,7 @@ const ATTRIBUTES_827: &[AttributeConstraint] = &[
         class: ValueClass::String,
         name: "start",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_21),
+        strict_checks: Some(STRICT_CHECKS_12),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -64704,7 +64201,7 @@ const ATTRIBUTES_827: &[AttributeConstraint] = &[
         class: ValueClass::String,
         name: "end",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_21),
+        strict_checks: Some(STRICT_CHECKS_12),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -64728,7 +64225,7 @@ const ATTRIBUTES_827: &[AttributeConstraint] = &[
         class: ValueClass::String,
         name: "hanging",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -64744,7 +64241,7 @@ const ATTRIBUTES_827: &[AttributeConstraint] = &[
         class: ValueClass::String,
         name: "firstLine",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -64762,7 +64259,7 @@ const ATTRIBUTES_828: &[AttributeConstraint] = &[AttributeConstraint {
     class: ValueClass::Enum("w:ST_Jc"),
     name: "val",
     namespace: Some(97),
-    strict_checks: Some(STRICT_CHECKS_22),
+    strict_checks: Some(STRICT_CHECKS_13),
     transitional_only: false,
 }];
 
@@ -64941,7 +64438,7 @@ const ATTRIBUTES_836: &[AttributeConstraint] = &[
         class: ValueClass::String,
         name: "distance",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -65360,7 +64857,7 @@ const ATTRIBUTES_861: &[AttributeConstraint] = &[
         class: ValueClass::String,
         name: "dxaOrig",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -65368,7 +64865,7 @@ const ATTRIBUTES_861: &[AttributeConstraint] = &[
         class: ValueClass::String,
         name: "dyaOrig",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -65628,7 +65125,7 @@ const ATTRIBUTES_869: &[AttributeConstraint] = &[
         class: ValueClass::Int32,
         name: "top",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_21),
+        strict_checks: Some(STRICT_CHECKS_12),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -65636,7 +65133,7 @@ const ATTRIBUTES_869: &[AttributeConstraint] = &[
         class: ValueClass::UInt32,
         name: "right",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -65644,7 +65141,7 @@ const ATTRIBUTES_869: &[AttributeConstraint] = &[
         class: ValueClass::Int32,
         name: "bottom",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_21),
+        strict_checks: Some(STRICT_CHECKS_12),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -65652,7 +65149,7 @@ const ATTRIBUTES_869: &[AttributeConstraint] = &[
         class: ValueClass::UInt32,
         name: "left",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -65660,7 +65157,7 @@ const ATTRIBUTES_869: &[AttributeConstraint] = &[
         class: ValueClass::UInt32,
         name: "header",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -65668,7 +65165,7 @@ const ATTRIBUTES_869: &[AttributeConstraint] = &[
         class: ValueClass::UInt32,
         name: "footer",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -65676,7 +65173,7 @@ const ATTRIBUTES_869: &[AttributeConstraint] = &[
         class: ValueClass::UInt32,
         name: "gutter",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
 ];
@@ -65722,7 +65219,7 @@ const ATTRIBUTES_871: &[AttributeConstraint] = &[
         class: ValueClass::UInt32,
         name: "w",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -65730,7 +65227,7 @@ const ATTRIBUTES_871: &[AttributeConstraint] = &[
         class: ValueClass::UInt32,
         name: "h",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -66233,7 +65730,7 @@ const ATTRIBUTES_895: &[AttributeConstraint] = &[AttributeConstraint {
     class: ValueClass::Int32,
     name: "val",
     namespace: Some(97),
-    strict_checks: Some(STRICT_CHECKS_21),
+    strict_checks: Some(STRICT_CHECKS_12),
     transitional_only: false,
 }];
 
@@ -66242,7 +65739,7 @@ const ATTRIBUTES_896: &[AttributeConstraint] = &[AttributeConstraint {
     class: ValueClass::String,
     name: "val",
     namespace: Some(97),
-    strict_checks: Some(STRICT_CHECKS_21),
+    strict_checks: Some(STRICT_CHECKS_12),
     transitional_only: false,
 }];
 
@@ -66352,7 +65849,7 @@ const ATTRIBUTES_901: &[AttributeConstraint] = &[
         class: ValueClass::String,
         name: "before",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -66376,7 +65873,7 @@ const ATTRIBUTES_901: &[AttributeConstraint] = &[
         class: ValueClass::String,
         name: "after",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -66400,7 +65897,7 @@ const ATTRIBUTES_901: &[AttributeConstraint] = &[
         class: ValueClass::String,
         name: "line",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_21),
+        strict_checks: Some(STRICT_CHECKS_12),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -66629,7 +66126,7 @@ const ATTRIBUTES_909: &[AttributeConstraint] = &[AttributeConstraint {
     class: ValueClass::String,
     name: "val",
     namespace: Some(97),
-    strict_checks: Some(STRICT_CHECKS_23),
+    strict_checks: Some(STRICT_CHECKS_14),
     transitional_only: false,
 }];
 
@@ -66658,7 +66155,7 @@ const ATTRIBUTES_911: &[AttributeConstraint] = &[
         class: ValueClass::Enum("w:ST_TabJc"),
         name: "val",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_24),
+        strict_checks: Some(STRICT_CHECKS_15),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -66674,7 +66171,7 @@ const ATTRIBUTES_911: &[AttributeConstraint] = &[
         class: ValueClass::Int32,
         name: "pos",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_21),
+        strict_checks: Some(STRICT_CHECKS_12),
         transitional_only: false,
     },
 ];
@@ -66693,7 +66190,7 @@ const ATTRIBUTES_913: &[AttributeConstraint] = &[AttributeConstraint {
     class: ValueClass::String,
     name: "w",
     namespace: Some(97),
-    strict_checks: Some(STRICT_CHECKS_19),
+    strict_checks: Some(STRICT_CHECKS_10),
     transitional_only: false,
 }];
 
@@ -66702,7 +66199,7 @@ const ATTRIBUTES_914: &[AttributeConstraint] = &[AttributeConstraint {
     class: ValueClass::Enum("w:ST_TblJc"),
     name: "val",
     namespace: Some(97),
-    strict_checks: Some(STRICT_CHECKS_25),
+    strict_checks: Some(STRICT_CHECKS_16),
     transitional_only: false,
 }];
 
@@ -66789,7 +66286,7 @@ const ATTRIBUTES_918: &[AttributeConstraint] = &[
         class: ValueClass::Int16,
         name: "leftFromText",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -66797,7 +66294,7 @@ const ATTRIBUTES_918: &[AttributeConstraint] = &[
         class: ValueClass::Int16,
         name: "rightFromText",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -66805,7 +66302,7 @@ const ATTRIBUTES_918: &[AttributeConstraint] = &[
         class: ValueClass::Int16,
         name: "topFromText",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -66813,7 +66310,7 @@ const ATTRIBUTES_918: &[AttributeConstraint] = &[
         class: ValueClass::Int16,
         name: "bottomFromText",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_19),
+        strict_checks: Some(STRICT_CHECKS_10),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -66845,7 +66342,7 @@ const ATTRIBUTES_918: &[AttributeConstraint] = &[
         class: ValueClass::Int32,
         name: "tblpX",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_21),
+        strict_checks: Some(STRICT_CHECKS_12),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -66861,7 +66358,7 @@ const ATTRIBUTES_918: &[AttributeConstraint] = &[
         class: ValueClass::Int32,
         name: "tblpY",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_21),
+        strict_checks: Some(STRICT_CHECKS_12),
         transitional_only: false,
     },
 ];
@@ -66881,7 +66378,7 @@ const ATTRIBUTES_920: &[AttributeConstraint] = &[
         class: ValueClass::String,
         name: "w",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_26),
+        strict_checks: Some(STRICT_CHECKS_17),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -66900,7 +66397,7 @@ const ATTRIBUTES_921: &[AttributeConstraint] = &[
         class: ValueClass::Int16,
         name: "w",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_26),
+        strict_checks: Some(STRICT_CHECKS_17),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -66919,7 +66416,7 @@ const ATTRIBUTES_922: &[AttributeConstraint] = &[
         class: ValueClass::Int32,
         name: "w",
         namespace: Some(97),
-        strict_checks: Some(STRICT_CHECKS_26),
+        strict_checks: Some(STRICT_CHECKS_17),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -66946,7 +66443,7 @@ const ATTRIBUTES_924: &[AttributeConstraint] = &[AttributeConstraint {
     class: ValueClass::Enum("w:ST_TextDirection"),
     name: "val",
     namespace: Some(97),
-    strict_checks: Some(STRICT_CHECKS_27),
+    strict_checks: Some(STRICT_CHECKS_18),
     transitional_only: false,
 }];
 
@@ -66964,7 +66461,7 @@ const ATTRIBUTES_926: &[AttributeConstraint] = &[AttributeConstraint {
     class: ValueClass::Integer,
     name: "val",
     namespace: Some(97),
-    strict_checks: Some(STRICT_CHECKS_28),
+    strict_checks: Some(STRICT_CHECKS_19),
     transitional_only: false,
 }];
 
@@ -67068,7 +66565,7 @@ const ATTRIBUTES_930: &[AttributeConstraint] = &[AttributeConstraint {
     class: ValueClass::String,
     name: "val",
     namespace: Some(97),
-    strict_checks: Some(STRICT_CHECKS_19),
+    strict_checks: Some(STRICT_CHECKS_10),
     transitional_only: false,
 }];
 
@@ -67077,7 +66574,7 @@ const ATTRIBUTES_931: &[AttributeConstraint] = &[AttributeConstraint {
     class: ValueClass::Int16,
     name: "val",
     namespace: Some(97),
-    strict_checks: Some(STRICT_CHECKS_19),
+    strict_checks: Some(STRICT_CHECKS_10),
     transitional_only: false,
 }];
 
@@ -71996,7 +71493,7 @@ const ATTRIBUTES_1087: &[AttributeConstraint] = &[
         class: ValueClass::Enum("x:ST_CellType"),
         name: "t",
         namespace: None,
-        strict_checks: Some(STRICT_CHECKS_29),
+        strict_checks: Some(STRICT_CHECKS_20),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -74772,7 +74269,7 @@ const ATTRIBUTES_1135: &[AttributeConstraint] = &[
         class: ValueClass::Enum("x:ST_CellType"),
         name: "t",
         namespace: None,
-        strict_checks: Some(STRICT_CHECKS_29),
+        strict_checks: Some(STRICT_CHECKS_20),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -76533,7 +76030,7 @@ const ATTRIBUTES_1186: &[AttributeConstraint] = &[
         class: ValueClass::Enum("x:ST_CellType"),
         name: "t",
         namespace: None,
-        strict_checks: Some(STRICT_CHECKS_29),
+        strict_checks: Some(STRICT_CHECKS_20),
         transitional_only: false,
     },
     AttributeConstraint {
@@ -77578,7 +77075,7 @@ const ATTRIBUTES_1207: &[AttributeConstraint] = &[
         class: ValueClass::Enum("x:ST_PivotAreaType"),
         name: "type",
         namespace: None,
-        strict_checks: Some(STRICT_CHECKS_30),
+        strict_checks: Some(STRICT_CHECKS_21),
         transitional_only: false,
     },
     AttributeConstraint {

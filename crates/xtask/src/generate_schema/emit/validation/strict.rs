@@ -481,7 +481,7 @@ const fn string(kind: StringKind) -> Check {
 
 /// The Strict checks of every attribute both classes declare whose Strict
 /// type is not its Transitional type, or takes a universal measure. An attribute of a type in `kept`, whose
-/// bare number a Strict save keeps, takes its Transitional type's checks.
+/// bare number a Strict save keeps, gets none, so a Strict file takes its own checks.
 ///
 /// # Errors
 ///
@@ -526,12 +526,10 @@ pub fn strict_checks(
                 &attribute.type_ref,
                 TypeRef::Simple { anonymous: _anonymous, name: type_name } if kept.contains(type_name)
             );
-            let converted = if keeps_bare_number {
-                checks(transitional, &attribute.type_ref)
-            } else {
-                checks(strict, strict_type)
+            if keeps_bare_number {
+                continue;
             }
-            .with_context(|| {
+            let converted = checks(strict, strict_type).with_context(|| {
                 format!(
                     "in the Strict type {strict_type} of the attribute {} of {name}",
                     attribute.name

@@ -49,7 +49,7 @@ values = { topRight = "topEnd" }
 # when the Strict type's pattern does, the last kept place rounded half away
 # from zero. `keep` leaves the bare number as it is, as Word, Excel and
 # PowerPoint write a chart's percentages in their own Strict files, and the
-# validator accepts both forms in a Strict file.
+# validator reports the signed form in a Strict file, which Word refuses.
 
 [[member]]
 # Part 4, 18.1.3.16: a whole number of percent.

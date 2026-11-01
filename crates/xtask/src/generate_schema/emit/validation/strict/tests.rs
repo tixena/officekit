@@ -289,6 +289,24 @@ fn only_an_attribute_whose_strict_type_differs_gets_strict_checks() {
     );
 }
 
+// XSD input: the generator reads schema files, a form the typed model does not hold.
+#[test]
+fn a_kept_type_gets_no_strict_checks() {
+    let system = MemorySystem::new()
+        .with_file("/t/wml.xsd", wml(W, true).as_bytes())
+        .unwrap()
+        .with_file("/s/wml.xsd", wml(STRICT_W, false).as_bytes())
+        .unwrap();
+    let transitional = SchemaSet::read(&system, &["t/wml.xsd"]).unwrap();
+    let strict = SchemaSet::read(&system, &["s/wml.xsd"]).unwrap();
+    let kept = BTreeSet::from([Name::new(W, "ST_OnOff")]);
+    let found = strict_checks(&transitional, &strict, &kept).unwrap();
+    assert!(
+        found.is_empty(),
+        "a kept type gets no Strict checks: {found:?}"
+    );
+}
+
 #[test]
 fn an_attribute_that_takes_a_measure_gets_strict_checks_though_both_classes_type_it_alike() {
     let schema = |namespace: &str| {
