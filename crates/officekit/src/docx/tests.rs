@@ -81,6 +81,10 @@ const SOURCES: &str = "<b:Sources xmlns:b=\"http://schemas.openxmlformats.org/of
 #[cfg(any(feature = "strict", feature = "transitional"))]
 const FOREIGN: &str = "<DocumentGeneration xmlns=\"http://example.org/generation\"><Field key=\"a\"/></DocumentGeneration>";
 
+/// A Transitional main document whose run holds a VML picture outside any `mc:AlternateContent`.
+#[cfg(all(feature = "strict", feature = "transitional"))]
+const LOOSE_VML: &str = "<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:v=\"urn:schemas-microsoft-com:vml\"><w:body><w:p><w:r><w:pict><v:shape style=\"width:108.75pt;height:40.5pt\"/></w:pict></w:r></w:p></w:body></w:document>";
+
 fn name(text: &str) -> PartName {
     PartName::new(text).unwrap()
 }
@@ -479,6 +483,30 @@ fn the_write_options_apply_to_every_store_the_save_included() {
     let strict = Package::from_bytes(docx.to_bytes_strict().unwrap()).unwrap();
     let main = text(&strict, &name("/word/document.xml"));
     assert!(main.contains("\n  <w:body>"), "{main}");
+}
+
+#[cfg(all(feature = "strict", feature = "transitional"))]
+#[test]
+fn vml_takes_the_wrapper_in_strict_and_keeps_it_through_a_round_trip() {
+    let block = "<mc:AlternateContent xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\"><mc:Choice Requires=\"v\"><w:pict>";
+    let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
+    let document = wordprocessing::read::document(&parse(LOOSE_VML.as_bytes()).unwrap().root);
+    docx.set_main_document(&document).unwrap();
+    let strict = Docx::from_bytes(docx.to_bytes_strict().unwrap(), OpenOptions::default()).unwrap();
+    let first = text(strict.package(), strict.main_document_part());
+    assert!(first.contains(block), "{first}");
+    assert!(!first.contains("Fallback"), "{first}");
+    let (bytes, warnings) = strict.to_bytes_transitional().unwrap();
+    assert_eq!(warnings, []);
+    let transitional = Docx::from_bytes(bytes, OpenOptions::default()).unwrap();
+    let main = text(transitional.package(), transitional.main_document_part());
+    assert!(main.contains(block), "{main}");
+    let again = Docx::from_bytes(
+        transitional.to_bytes_strict().unwrap(),
+        OpenOptions::default(),
+    )
+    .unwrap();
+    assert_eq!(text(again.package(), again.main_document_part()), first);
 }
 
 #[cfg(all(feature = "strict", feature = "transitional"))]

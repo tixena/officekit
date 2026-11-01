@@ -159,12 +159,92 @@ fn reading_another_tag_is_an_error() {
 }
 
 #[test]
-fn a_vml_picture_has_no_strict_form() {
+fn a_vml_picture_takes_the_wrapper_word_writes() {
     assert_eq!(
-        refusal::<TextRun>(
-            "<w:r xmlns:w=\"{w}\"><w:pict><v:shape xmlns:v=\"{v}\"/></w:pict></w:r>"
-        ),
+        strict::<TextRun>("<w:r xmlns:w=\"{w}\"><w:pict><v:shape xmlns:v=\"{v}\"/></w:pict></w:r>"),
+        format!(
+            "<w:r xmlns:w=\"{W_STRICT}\"><mc:AlternateContent xmlns:mc=\"{MC}\" xmlns:v=\"{V}\"><mc:Choice Requires=\"v\"><w:pict><v:shape xmlns:v=\"{V}\"/></w:pict></mc:Choice></mc:AlternateContent></w:r>"
+        )
+    );
+}
+
+#[test]
+fn a_choice_that_requires_vml_stays_as_word_writes_it() {
+    let written = strict::<TextRun>(&format!(
+        "<w:r {RUN_DECLARATIONS}><mc:AlternateContent><mc:Choice Requires=\"v\"><w:pict><v:shape/></w:pict></mc:Choice></mc:AlternateContent></w:r>"
+    ));
+    assert_eq!(
+        written,
+        format!(
+            "<w:r {}><mc:AlternateContent><mc:Choice Requires=\"v\"><w:pict><v:shape/></w:pict></mc:Choice></mc:AlternateContent></w:r>",
+            strict_run_declarations()
+        )
+    );
+}
+
+#[test]
+fn a_choice_matches_the_prefix_it_requires_by_its_namespace() {
+    assert_eq!(
+        refusal::<TextRun>(&format!(
+            "<w:r {RUN_DECLARATIONS} xmlns:vml=\"{{v}}\"><mc:AlternateContent><mc:Choice Requires=\"vml\"><w:pict><vml:shape/></w:pict></mc:Choice></mc:AlternateContent></w:r>"
+        )),
+        None
+    );
+    assert_eq!(
+        refusal::<TextRun>(&format!(
+            "<w:r {RUN_DECLARATIONS}><mc:AlternateContent><mc:Choice Requires=\"wps\"><w:pict><v:shape/></w:pict></mc:Choice></mc:AlternateContent></w:r>"
+        )),
         Some("pict")
+    );
+}
+
+#[test]
+fn a_loose_vml_picture_takes_the_wrapper_with_no_fallback() {
+    let written =
+        strict::<TextRun>("<w:r xmlns:w=\"{w}\"><w:pict><v:shape xmlns:v=\"{v}\"/></w:pict></w:r>");
+    assert!(
+        written.contains("<mc:Choice Requires=\"v\"><w:pict>"),
+        "{written}"
+    );
+    assert!(written.contains(&format!("xmlns:v=\"{V}\"")), "{written}");
+    assert!(!written.contains("Fallback"), "{written}");
+}
+
+#[test]
+fn an_embedded_object_takes_the_wrapper_and_its_attribute_rules() {
+    let written = strict::<TextRun>(&format!(
+        "<w:r {RUN_DECLARATIONS} xmlns:o=\"urn:schemas-microsoft-com:office:office\"><w:object w:dxaOrig=\"3630\" w:dyaOrig=\"1935\"><v:shape/><o:OLEObject Type=\"Embed\" ProgID=\"PBrush\"/><w:objectLink w:updateMode=\"always\" w:lockedField=\"on\"/></w:object></w:r>"
+    ));
+    assert!(
+        written
+            .contains("<mc:Choice Requires=\"v\"><w:object w:dxaOrig=\"3630\" w:dyaOrig=\"1935\">"),
+        "{written}"
+    );
+    assert!(written.contains("ProgID=\"PBrush\""), "{written}");
+    assert!(written.contains("w:lockedField=\"true\""), "{written}");
+}
+
+#[test]
+fn an_object_holding_no_vml_stays_in_the_run() {
+    let written = strict::<TextRun>(&format!(
+        "<w:r {RUN_DECLARATIONS}><w:object w:dxaOrig=\"3630\"><w:drawing/></w:object></w:r>"
+    ));
+    assert!(
+        written.ends_with("><w:object w:dxaOrig=\"3630\"><w:drawing/></w:object></w:r>"),
+        "{written}"
+    );
+}
+
+#[test]
+fn a_vml_picture_bullet_stays_refused() {
+    assert_eq!(
+        refusals(element(
+            "<w:numbering xmlns:w=\"{w}\" xmlns:v=\"{v}\"><w:numPicBullet w:numPicBulletId=\"0\"><w:pict><v:shape/></w:pict></w:numPicBullet></w:numbering>"
+        )),
+        [Refusal {
+            prefix: "w",
+            tag: "pict"
+        }]
     );
 }
 
@@ -555,12 +635,25 @@ fn vml_fallback_of_any_other_choice_stays_refused() {
 }
 
 #[test]
-fn a_text_box_in_vml_has_no_strict_form() {
+fn a_text_box_in_vml_takes_the_wrapper_and_writes_its_text_in_wne_txbx_content() {
+    assert_eq!(
+        strict::<TextRun>(&format!(
+            "<w:r {RUN_DECLARATIONS}><w:pict><v:shape><v:textbox><w:txbxContent><w:p><w:pPr><w:jc w:val=\"left\"/></w:pPr></w:p></w:txbxContent></v:textbox></v:shape></w:pict></w:r>"
+        )),
+        format!(
+            "<w:r {}><mc:AlternateContent><mc:Choice Requires=\"v\"><w:pict><v:shape><v:textbox><wne:txbxContent xmlns:wne=\"{WNE}\"><w:p><w:pPr><w:jc w:val=\"start\"/></w:pPr></w:p></wne:txbxContent></v:textbox></v:shape></w:pict></mc:Choice></mc:AlternateContent></w:r>",
+            strict_run_declarations()
+        )
+    );
+}
+
+#[test]
+fn what_a_vml_text_box_holds_is_still_refused_with_its_own_label() {
     assert_eq!(
         refusal::<TextRun>(&format!(
-            "<w:r {RUN_DECLARATIONS}><w:pict><v:shape><v:textbox><w:txbxContent><w:p/></w:txbxContent></v:textbox></v:shape></w:pict></w:r>"
+            "<w:r {RUN_DECLARATIONS}><w:pict><v:shape><v:textbox><w:txbxContent><w:p><w:r><mc:AlternateContent><mc:Fallback><v:oval/></mc:Fallback></mc:AlternateContent></w:r></w:p></w:txbxContent></v:textbox></v:shape></w:pict></w:r>"
         )),
-        Some("pict")
+        Some("oval")
     );
 }
 
@@ -627,7 +720,7 @@ fn a_word_text_effect_keeps_its_whole_numbers_in_strict() {
 #[test]
 fn refusals_names_every_refusal_in_document_order() {
     let run = element(&format!(
-        "<w:r {RUN_DECLARATIONS}><w:pict><v:shape><v:textbox><w:txbxContent><w:p/></w:txbxContent></v:textbox></v:shape></w:pict><w:pict/></w:r>"
+        "<w:r {RUN_DECLARATIONS}><mc:AlternateContent><mc:Fallback><w:pict><v:shape><v:textbox><w:txbxContent><w:p/></w:txbxContent></v:textbox></v:shape></w:pict></mc:Fallback></mc:AlternateContent><mc:AlternateContent><mc:Fallback><w:pict/></mc:Fallback></mc:AlternateContent></w:r>"
     ));
     assert_eq!(
         refusals(run),
@@ -665,7 +758,9 @@ fn refusals_names_the_namespace_of_a_vml_background() {
 
 #[test]
 fn the_first_of_refusals_is_what_a_write_refuses() {
-    let text = format!("<w:r {RUN_DECLARATIONS}><w:pict/><w:object><v:shape/></w:object></w:r>");
+    let text = format!(
+        "<w:r {RUN_DECLARATIONS}><mc:AlternateContent><mc:Fallback><w:pict/></mc:Fallback></mc:AlternateContent><mc:AlternateContent><mc:Fallback><w:object><v:shape/></w:object></mc:Fallback></mc:AlternateContent></w:r>"
+    );
     assert_eq!(
         refusals(element(&text)).first().map(|refusal| refusal.tag),
         refusal::<TextRun>(&text)

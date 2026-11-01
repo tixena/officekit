@@ -45,8 +45,12 @@
 //! such as the branches of `mc:AlternateContent`. Word saves a text box as `mc:AlternateContent`
 //! around Microsoft's `wps:wsp` holding `w:txbxContent`. Strict writes the shape in place of the
 //! `mc:AlternateContent` as Word does: `wp:wsp` in the `graphicData` of the `wps` namespace, its
-//! text in `wne:txbxContent`, and a group (`wp:wgp`) or a canvas (`wp:wpc`) the same way. A text
-//! box in VML has no Strict form.
+//! text in `wne:txbxContent`, and a group (`wp:wgp`) or a canvas (`wp:wpc`) the same way.
+//!
+//! VML has no form of its own in Strict. Word writes it inside `mc:Choice Requires="v"`, so the
+//! walk keeps such a Choice and wraps a loose `w:pict` or `w:object` of a run the same way, with no
+//! fallback. Inside it nothing is refused: the attribute rules still apply, and a text box's
+//! `w:txbxContent` becomes `wne:txbxContent`, its content converted as anywhere else.
 //!
 //! A date cell (`t="d"`) exists only in Strict, so the Strict write keeps it as it is. The
 //! Transitional write of `officekit::transitional` refuses it and has a function that converts it.
@@ -134,6 +138,7 @@ const MAX_PLACES: u32 = 9;
 
 const DRAWING: &str = "http://schemas.openxmlformats.org/drawingml/2006/main";
 const MARKUP_COMPATIBILITY: &str = "http://schemas.openxmlformats.org/markup-compatibility/2006";
+const OFFICE: &str = "urn:schemas-microsoft-com:office:office";
 const WORDPROCESSING: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const WORDPROCESSING_DRAWING: &str =
     "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing";
@@ -487,9 +492,15 @@ const fn civil_from_days(days: i64) -> (i64, i64, i64) {
 }
 
 /// Rename the children of `element` its tag's rules name and take out, into `found`, those they
-/// refuse, then convert every child element.
-fn convert_children(element: &mut Element, found: &mut Vec<Refusal>) {
+/// refuse, then convert every child element. `scope` holds the declarations of the elements
+/// around `element`, outermost first.
+fn convert_children(
+    element: &mut Element,
+    scope: &mut Vec<NamespaceDeclaration>,
+    found: &mut Vec<Refusal>,
+) {
     unwrap_word_shapes(element);
+    wrap_loose_vml(element, scope);
     if let Some(owner) = officekit_markup::name(element) {
         let rules = rules_of(CHILDREN, owner);
         let mut index = 0;
@@ -520,18 +531,23 @@ fn convert_children(element: &mut Element, found: &mut Vec<Refusal>) {
         }
     }
     let parent = tag_of(&element.name);
+    let depth = scope.len();
+    scope.extend(element.namespace_declarations.iter().cloned());
     for child in &mut element.children {
         if let Node::Element(inner) = child {
-            convert(inner, parent, found);
+            convert(inner, parent, scope, found);
         }
     }
+    scope.truncate(depth);
 }
 
 /// Apply every rule to `element` and its subtree, each refusal into `found`; `parent` is the tag
-/// of the element holding it. A refused element counts once, its content unwalked.
+/// of the element holding it, and `scope` the declarations around it. A refused element counts
+/// once, its content unwalked.
 fn convert(
     element: &mut Element,
     parent: Option<(Option<NamespaceId>, &str)>,
+    scope: &mut Vec<NamespaceDeclaration>,
     found: &mut Vec<Refusal>,
 ) {
     if named(element, WORDPROCESSING_DRAWING, "anchor")
@@ -542,6 +558,10 @@ fn convert(
     }
     protection_with_no_password(element);
     background_color(element);
+    if named(element, MARKUP_COMPATIBILITY, "Choice") && holds_vml_requirement(element, scope) {
+        convert_inside_vml(element, scope, found);
+        return;
+    }
     if let Err(tag) = refuse_element(element) {
         found.push(Refusal {
             prefix: name_prefix(element),
@@ -559,6 +579,17 @@ fn convert(
             });
         }
     }
+    apply_rules(element, parent, found);
+    convert_children(element, scope, found);
+}
+
+/// Apply the attribute rules and the text spellings of `element`'s tag, under `parent`, each
+/// refusal into `found`.
+fn apply_rules(
+    element: &mut Element,
+    parent: Option<(Option<NamespaceId>, &str)>,
+    found: &mut Vec<Refusal>,
+) {
     if let Some(owner) = officekit_markup::name(element) {
         let rules = rules_of(ATTRIBUTES, owner);
         let contextual = parent.map_or(&[][..], |tag| contextual_rules(tag, owner));
@@ -593,7 +624,38 @@ fn convert(
             }
         }
     }
-    convert_children(element, found);
+}
+
+/// Convert what `element`, an `mc:Choice` requiring VML or an element inside one, holds. Nothing
+/// is refused; each element takes its tag's attribute rules, and a text box's `w:txbxContent`
+/// becomes `wne:txbxContent`, its content converted as anywhere else.
+fn convert_inside_vml(
+    element: &mut Element,
+    scope: &mut Vec<NamespaceDeclaration>,
+    found: &mut Vec<Refusal>,
+) {
+    let parent = tag_of(&element.name);
+    let depth = scope.len();
+    scope.extend(element.namespace_declarations.iter().cloned());
+    for node in &mut element.children {
+        let Node::Element(child) = node else {
+            continue;
+        };
+        if named(child, WORDPROCESSING, "txbxContent") {
+            child.name = QName::prefixed("wne", "txbxContent", WORD_ML);
+            child.namespace_declarations.push(NamespaceDeclaration::new(
+                "wne".to_owned(),
+                WORD_ML.to_owned(),
+            ));
+        }
+        if named(child, WORD_ML, "txbxContent") {
+            convert_children(child, scope, found);
+        } else {
+            apply_rules(child, parent, found);
+            convert_inside_vml(child, scope, found);
+        }
+    }
+    scope.truncate(depth);
 }
 
 /// The rules of `CONTEXTUAL` for an element `owner` under `parent`.
@@ -655,6 +717,20 @@ fn has_attribute(element: &Element, index: usize, local: &str) -> bool {
             position != index
                 && found.name.local == local
                 && found.name.namespace == source.name.namespace
+        })
+}
+
+/// Whether the `mc:Choice` `choice` requires VML: a prefix its `Requires` names is bound to VML,
+/// or is `v` and bound to nothing in reach.
+fn holds_vml_requirement(choice: &Element, scope: &[NamespaceDeclaration]) -> bool {
+    choice
+        .attribute(&Namespace::None, "Requires")
+        .is_some_and(|names| {
+            names.split_whitespace().any(|name| {
+                bound_uri(choice, scope, name).map_or(name == "v", |uri| {
+                    Namespace::from_uri(uri) == Namespace::from_uri(VML)
+                })
+            })
         })
 }
 
@@ -722,6 +798,17 @@ pub fn iso_date_time(serial: &str, date1904: bool) -> Option<String> {
         text = format!("{text}.{millisecond:03}");
     }
     Some(text)
+}
+
+/// Whether `element`, a child of a run, is VML Word writes in Strict inside
+/// `mc:Choice Requires="v"`: a `w:pict`, or a `w:object` holding a VML or Office element.
+fn loose_vml(element: &Element) -> bool {
+    named(element, WORDPROCESSING, "pict")
+        || named(element, WORDPROCESSING, "object")
+            && element.child_elements().any(|child| {
+                child.name.namespace == Namespace::from_uri(VML)
+                    || child.name.namespace == Namespace::from_uri(OFFICE)
+            })
 }
 
 /// Whether `element` is `local` in the namespace `uri`.
@@ -824,8 +911,23 @@ fn protection_with_no_password(element: &mut Element) {
 #[must_use]
 pub fn refusals(mut element: Element) -> Vec<Refusal> {
     let mut found = Vec::new();
-    convert(&mut element, None, &mut found);
+    convert(&mut element, None, &mut Vec::new(), &mut found);
     found
+}
+
+/// The URI `prefix` is bound to by `element`'s own declarations or, failing those, the innermost
+/// of `scope`'s.
+fn bound_uri<'tree>(
+    element: &'tree Element,
+    scope: &'tree [NamespaceDeclaration],
+    prefix: &str,
+) -> Option<&'tree str> {
+    element
+        .namespace_declarations
+        .iter()
+        .chain(scope.iter().rev())
+        .find(|declaration| declaration.prefix == prefix)
+        .map(|declaration| declaration.uri.as_str())
 }
 
 /// Fail on an element of a namespace with no Strict twin, or one no Strict
@@ -1095,6 +1197,52 @@ fn unwrap_word_shapes(element: &mut Element) {
     }
 }
 
+/// Put each child of the run `element` that [`loose_vml`] names inside
+/// `mc:AlternateContent/mc:Choice Requires="v"`, with no fallback, as Word writes VML in Strict.
+/// The block declares `mc` and `v` where neither the run nor `scope` binds them.
+fn wrap_loose_vml(element: &mut Element, scope: &[NamespaceDeclaration]) {
+    if !named(element, WORDPROCESSING, "r")
+        || !element
+            .children
+            .iter()
+            .any(|node| matches!(node, Node::Element(child) if loose_vml(child)))
+    {
+        return;
+    }
+    let declarations: Vec<NamespaceDeclaration> = [("mc", MARKUP_COMPATIBILITY), ("v", VML)]
+        .into_iter()
+        .filter(|(prefix, uri)| {
+            bound_uri(element, scope, prefix)
+                .is_none_or(|bound| Namespace::from_uri(bound) != Namespace::from_uri(uri))
+        })
+        .map(|(prefix, uri)| NamespaceDeclaration::new(prefix.to_owned(), uri.to_owned()))
+        .collect();
+    for node in mem::take(&mut element.children) {
+        let Node::Element(child) = node else {
+            element.children.push(node);
+            continue;
+        };
+        if !loose_vml(&child) {
+            element.children.push(Node::Element(child));
+            continue;
+        }
+        let mut choice = Element::new(QName::prefixed("mc", "Choice", MARKUP_COMPATIBILITY));
+        choice.attributes.push(Attribute::new(
+            QName::new(String::new(), "Requires".to_owned(), Namespace::None),
+            "v".to_owned(),
+        ));
+        choice.children.push(Node::Element(child));
+        let mut block = Element::new(QName::prefixed(
+            "mc",
+            "AlternateContent",
+            MARKUP_COMPATIBILITY,
+        ));
+        block.namespace_declarations.clone_from(&declarations);
+        block.children.push(Node::Element(choice));
+        element.children.push(Node::Element(block));
+    }
+}
+
 /// A bare whole number's sign and magnitude: optional sign, digits only.
 fn whole_number(text: &str) -> Option<(bool, u128)> {
     let (negative, digits) = signed(text);
@@ -1119,7 +1267,7 @@ fn word_shape_choice(element: &Element) -> bool {
 /// every known namespace it declares.
 fn write(mut element: Element) -> Result<Element, WriteError> {
     let mut found = Vec::new();
-    convert(&mut element, None, &mut found);
+    convert(&mut element, None, &mut Vec::new(), &mut found);
     if let Some(first) = found.first() {
         return Err(not_in_class(first.tag));
     }

@@ -181,7 +181,7 @@ fn a_strict_store_of_the_main_document_converts_the_content_and_marks_it_strict(
 #[cfg(feature = "strict")]
 #[test]
 fn a_strict_store_of_content_strict_has_no_form_for_fails_and_stores_nothing() {
-    const VML: &str = "<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body><w:p><w:r><w:pict><v:rect xmlns:v=\"urn:schemas-microsoft-com:vml\"/></w:pict></w:r></w:p></w:body></w:document>";
+    const VML: &str = "<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\"><w:body><w:p><w:r><mc:AlternateContent><mc:Fallback><w:pict><v:rect xmlns:v=\"urn:schemas-microsoft-com:vml\"/></w:pict></mc:Fallback></mc:AlternateContent></w:r></w:p></w:body></w:document>";
     let source = name("/word/document.xml");
     let loaded = package_with(&source, main_document::CONTENT_TYPES[0], VML);
     let root = main_document::load(&loaded, &source, OpenOptions::default()).unwrap();
@@ -260,7 +260,7 @@ fn bytes_of_writes_a_typed_root_as_the_store_of_its_module_does() {
 #[cfg(feature = "strict")]
 #[test]
 fn bytes_of_content_strict_has_no_form_for_is_a_write_error_naming_the_part() {
-    const VML: &str = "<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body><w:p><w:r><w:pict><v:rect xmlns:v=\"urn:schemas-microsoft-com:vml\"/></w:pict></w:r></w:p></w:body></w:document>";
+    const VML: &str = "<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\"><w:body><w:p><w:r><mc:AlternateContent><mc:Fallback><w:pict><v:rect xmlns:v=\"urn:schemas-microsoft-com:vml\"/></w:pict></mc:Fallback></mc:AlternateContent></w:r></w:p></w:body></w:document>";
     let part = name("/word/document.xml");
     let package = package_with(&part, main_document::CONTENT_TYPES[0], VML);
     let model = model_of(&package, &part, OpenOptions::default())
