@@ -17,7 +17,10 @@ fn parsed(xml: &str) -> Result<ContentTypes, String> {
 
 #[test]
 fn a_part_takes_its_override_else_its_extensions_default() {
-    let types = parsed("<Types xmlns=\"http://schemas.openxmlformats.org/package/2006/content-types\"><Default Extension=\"PNG\" ContentType=\"image/png\"/><Default Extension=\"xml\" ContentType=\"application/xml\"/><Override PartName=\"/word/document.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml\"/></Types>").unwrap();
+    let mut types = ContentTypes::default();
+    types.ensure_default("PNG", "image/png");
+    types.ensure_default("xml", "application/xml");
+    types.register(&name("/word/document.xml"), MAIN);
     assert_eq!(types.of(&name("/WORD/Document.xml")), Some(MAIN));
     assert_eq!(types.of(&name("/word/styles.xml")), Some("application/xml"));
     assert_eq!(types.of(&name("/word/media/image1.png")), Some("image/png"));

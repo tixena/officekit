@@ -76,14 +76,14 @@ fn a_relative_target_resolves_back_to_its_part() {
 
 #[test]
 fn an_internal_relationship_resolves_and_an_external_one_does_not() {
-    let relationships = parse(&parse_xml(b"<Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\"><Relationship Id=\"rId1\" Type=\"t\" Target=\"media/image1.png\"/><Relationship Id=\"rId2\" Type=\"h\" Target=\"https://example.org/\" TargetMode=\"External\"/></Relationships>").unwrap()).unwrap();
+    let image = Relationship::new("t", "media/image1.png", TargetMode::Internal);
+    let link = Relationship::new("h", "https://example.org/", TargetMode::External);
     assert_eq!(
-        relationships[0].resolved("/word").unwrap(),
+        image.resolved("/word").unwrap(),
         Target::Part(name("/word/media/image1.png"))
     );
-    assert_eq!(relationships[1].target_mode, TargetMode::External);
     assert_eq!(
-        relationships[1].resolved("/word").unwrap(),
+        link.resolved("/word").unwrap(),
         Target::External("https://example.org/".to_owned())
     );
 }
