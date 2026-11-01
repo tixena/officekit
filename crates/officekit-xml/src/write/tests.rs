@@ -43,6 +43,7 @@ fn compact_keeps_preserved_space() {
     assert_eq!(write(&blank, KEEP), blank);
 }
 
+// XML input: officekit-xml's writer works on generic elements, below the model.
 #[test]
 fn compact_drops_whitespace_between_elements_but_not_preserved_space() {
     let xml = format!(
@@ -51,9 +52,27 @@ fn compact_drops_whitespace_between_elements_but_not_preserved_space() {
     assert_eq!(
         write(&xml, KEEP),
         format!(
-            "<w:p xmlns:w=\"{W}\"><w:r><w:t xml:space=\"preserve\"> </w:t></w:r><w:r><w:t>a b</w:t></w:r><w:r/></w:p>"
+            "<w:p xmlns:w=\"{W}\"><w:r><w:t xml:space=\"preserve\"> </w:t></w:r><w:r><w:t>a b</w:t></w:r><w:r>\n</w:r></w:p>"
         )
     );
+}
+
+// XML input: officekit-xml's writer works on generic elements, below the model.
+#[test]
+fn compact_keeps_whitespace_that_is_all_an_element_holds() {
+    let a = "http://schemas.openxmlformats.org/drawingml/2006/main";
+    let xml = format!(
+        "<a:p xmlns:a=\"{a}\">\n  <a:r><a:t>main</a:t></a:r><a:r><a:t> </a:t></a:r>\n  <a:r><a:t>title</a:t></a:r>\n</a:p>"
+    );
+    assert_eq!(
+        write(&xml, KEEP),
+        format!(
+            "<a:p xmlns:a=\"{a}\"><a:r><a:t>main</a:t></a:r><a:r><a:t> </a:t></a:r><a:r><a:t>title</a:t></a:r></a:p>"
+        )
+    );
+    let separator = "<separator>\n</separator>";
+    assert_eq!(write(separator, KEEP), separator);
+    assert_eq!(write("<a> <b/></a>", KEEP), "<a><b/></a>");
 }
 
 #[test]

@@ -1089,12 +1089,12 @@ fn both_paths(value: Text) -> (String, String) {
 }
 
 #[test]
-fn whitespace_only_text_written_through_is_dropped_as_the_compact_writer_drops_it() {
+fn whitespace_that_is_all_a_text_holds_is_written_through_as_the_compact_writer_keeps_it() {
     let mut blank = Text::default();
     blank.value = " ".to_owned();
     let (through, tree) = both_paths(blank);
     assert_eq!(through, tree);
-    assert!(through.contains("<w:t/>"));
+    assert!(through.contains("<w:t> </w:t>"));
 }
 
 #[test]

@@ -2,7 +2,7 @@ use super::PartWriter;
 use crate::element::{NamespaceDeclaration, Node};
 use crate::parse::parse;
 use crate::stream::reader::PartReader;
-use crate::write::Layout;
+use crate::write::{Layout, WriteOptions};
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const DECLARATION: &str = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n";
@@ -89,8 +89,9 @@ fn values_are_escaped_as_the_generic_tree_writer_escapes_them() {
     assert_eq!(document.root.attributes[0].value, "\"\t\n\r<&>'");
 }
 
+// XML input: officekit-xml's writer works on generic elements, below the model.
 #[test]
-fn whitespace_only_text_is_dropped_in_the_compact_layout_outside_a_preserve_scope() {
+fn whitespace_that_is_all_an_element_holds_is_kept_in_the_compact_layout() {
     let part = |out: &mut PartWriter<'_>| {
         out.start("a", &[], &[]).unwrap();
         out.start("t", &[], &[]).unwrap();
@@ -103,7 +104,7 @@ fn whitespace_only_text_is_dropped_in_the_compact_layout_outside_a_preserve_scop
     };
     assert_eq!(
         written(Layout::Compact, part),
-        "<a><t/><t xml:space=\"preserve\"> </t></a>"
+        "<a><t> </t><t xml:space=\"preserve\"> </t></a>"
     );
     assert_eq!(
         written(Layout::Pretty, part),
@@ -111,6 +112,7 @@ fn whitespace_only_text_is_dropped_in_the_compact_layout_outside_a_preserve_scop
     );
 }
 
+// XML input: officekit-xml's writer works on generic elements, below the model.
 #[test]
 fn a_preserve_scope_reaches_the_descendants_until_an_inner_default_ends_it() {
     let bytes = written(Layout::Compact, |out| {
@@ -126,7 +128,7 @@ fn a_preserve_scope_reaches_the_descendants_until_an_inner_default_ends_it() {
     });
     assert_eq!(
         bytes,
-        "<a xml:space=\"preserve\"><b> </b><c xml:space=\"default\"/> </a>"
+        "<a xml:space=\"preserve\"><b> </b><c xml:space=\"default\"> </c> </a>"
     );
 }
 
@@ -140,6 +142,34 @@ fn whitespace_only_text_written_as_a_node_is_dropped_in_the_compact_layout() {
     };
     assert_eq!(written(Layout::Compact, part), "<a>b &lt; c</a>");
     assert_eq!(written(Layout::Pretty, part), "<a> b &lt; c</a>");
+}
+
+// XML input: officekit-xml's writers work on generic elements, below the model.
+#[test]
+fn whitespace_that_is_all_an_element_holds_stays_through_both_writers() {
+    let streamed = written(Layout::Compact, |out| {
+        out.start("p", &[], &[]).unwrap();
+        out.text("\n  ").unwrap();
+        out.start("t", &[], &[]).unwrap();
+        out.text(" ").unwrap();
+        out.end("t").unwrap();
+        out.start("s", &[], &[]).unwrap();
+        out.text("\n").unwrap();
+        out.end("s").unwrap();
+        out.start("a", &[], &[]).unwrap();
+        out.text(" ").unwrap();
+        out.empty("b", &[]).unwrap();
+        out.end("a").unwrap();
+        out.start("c", &[], &[]).unwrap();
+        out.end("c").unwrap();
+        out.text("\n").unwrap();
+        out.end("p").unwrap();
+    });
+    assert_eq!(streamed, "<p><t> </t><s>\n</s><a><b/></a><c/></p>");
+    let tree = parse(b"<p>\n  <t> </t><s>\n</s><a> <b/></a><c/>\n</p>")
+        .unwrap()
+        .to_xml(WriteOptions::new(Layout::Compact, false));
+    assert_eq!(String::from_utf8(tree).unwrap(), streamed);
 }
 
 #[test]

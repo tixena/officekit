@@ -1,5 +1,6 @@
 //! `PartWriter`: one part's XML written in order, straight into its sink.
 
+use core::mem;
 use std::io::{self, Write};
 
 use quick_xml::Writer;
@@ -27,9 +28,11 @@ const DECLARATION: &[u8] = b"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone
 /// keeps the names and namespace declarations of the elements it has started
 /// and not ended, which a typed node written through it takes its prefixes
 /// from, and their `xml:space` state, so the compact layout drops
-/// whitespace-only text outside a preserve scope as the generic tree's writer
-/// does.
+/// whitespace-only text outside a preserve scope, unless whitespace is all its
+/// element holds, as the generic tree's writer does.
 pub struct PartWriter<'sink> {
+    /// Whitespace-only text written since the start tag still waiting in `pending`.
+    held: String,
     layout: Layout,
     /// The qualified names of the elements started and not ended.
     names: Vec<String>,
@@ -47,7 +50,14 @@ impl<'sink> PartWriter<'sink> {
         self.scope.end();
         self.preserve.pop();
         match self.pending.take() {
-            Some(start) => self.writer.write_event(Event::Empty(start)),
+            Some(start) if self.held.is_empty() => self.writer.write_event(Event::Empty(start)),
+            Some(start) => {
+                self.writer.write_event(Event::Start(start))?;
+                let held = mem::take(&mut self.held);
+                self.writer
+                    .write_event(Event::Text(BytesText::from_escaped(escape(&held, false))))?;
+                self.writer.write_event(Event::End(BytesEnd::new(name)))
+            }
             None => self.writer.write_event(Event::End(BytesEnd::new(name))),
         }
     }
@@ -97,8 +107,10 @@ impl<'sink> PartWriter<'sink> {
         self.close(name)
     }
 
-    /// Write the start tag waiting for its element's first content.
+    /// Write the start tag waiting for its element's first content; the whitespace held for it
+    /// was layout.
     fn flush(&mut self) -> io::Result<()> {
+        self.held.clear();
         match self.pending.take() {
             Some(start) => self.writer.write_event(Event::Start(start)),
             None => Ok(()),
@@ -113,6 +125,7 @@ impl<'sink> PartWriter<'sink> {
             Layout::Pretty => Writer::new_with_indent(sink, b' ', 2),
         };
         Self {
+            held: String::new(),
             layout,
             names: Vec::new(),
             pending: None,
@@ -217,6 +230,9 @@ impl<'sink> PartWriter<'sink> {
                 .write_event(Event::Text(BytesText::from_escaped(value)));
         }
         if self.layout == Layout::Compact && !self.preserved() && is_whitespace(value) {
+            if self.pending.is_some() {
+                self.held.push_str(value);
+            }
             return Ok(());
         }
         self.flush()?;

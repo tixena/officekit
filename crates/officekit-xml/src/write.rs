@@ -40,7 +40,8 @@ const XML_NAMESPACE: &str = "http://www.w3.org/XML/1998/namespace";
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum Layout {
-    /// Every whitespace-only text node inside the root is dropped.
+    /// A whitespace-only text node inside the root is dropped, unless whitespace is all its element
+    /// holds.
     #[default]
     Compact,
     /// Each child of an element whose children include no text or CDATA goes on a line of its
@@ -582,10 +583,13 @@ where
     let preserved = preserves_space(element, preserve);
     let tag = qualified(&element.name);
     let start = BytesStart::from_content(start_tag(element, &tag), tag.len());
+    let only_whitespace = element.children.iter().all(is_whitespace_text);
     let children: Vec<&Node> = element
         .children
         .iter()
-        .filter(|child| layout == Layout::Pretty || preserved || !is_whitespace_text(child))
+        .filter(|child| {
+            layout == Layout::Pretty || preserved || only_whitespace || !is_whitespace_text(child)
+        })
         .collect();
     if children.is_empty() {
         return writer.write_event(Event::Empty(start));
