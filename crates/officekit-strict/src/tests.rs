@@ -42,6 +42,7 @@ const W14: &str = "http://schemas.microsoft.com/office/word/2010/wordml";
 const WP: &str = "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing";
 const WP_STRICT: &str = "http://purl.oclc.org/ooxml/drawingml/wordprocessingDrawing";
 const WP14: &str = "http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing";
+const WPC: &str = "http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas";
 const WPG: &str = "http://schemas.microsoft.com/office/word/2010/wordprocessingGroup";
 const WNE: &str = "http://schemas.microsoft.com/office/word/2006/wordml";
 const WPS: &str = "http://schemas.microsoft.com/office/word/2010/wordprocessingShape";
@@ -56,6 +57,7 @@ const KEEP: WriteOptions = WriteOptions::new(Layout::Compact, false);
 fn element(text: &str) -> Element {
     let expanded = text
         .replace("{wp}", WP)
+        .replace("{wpc}", WPC)
         .replace("{wpg}", WPG)
         .replace("{wps}", WPS)
         .replace("{w}", W)
@@ -484,13 +486,45 @@ fn a_drawing_inside_a_text_box_keeps_its_own_wp_names() {
 }
 
 #[test]
-fn a_text_box_in_a_group_or_in_vml_has_no_strict_form() {
+fn word_s_group_takes_wp_and_writes_its_text_in_wne_txbx_content() {
+    let run = format!(
+        "<w:r {RUN_DECLARATIONS} xmlns:wpg=\"{{wpg}}\"><mc:AlternateContent><mc:Choice Requires=\"wpg\"><w:drawing><wp:inline><a:graphic><a:graphicData uri=\"{{wpg}}\"><wpg:wgp><wpg:cNvGrpSpPr/><wpg:grpSpPr/><wps:wsp><wps:cNvSpPr txBox=\"1\"/><wps:spPr/><wps:txbx id=\"3\"><w:txbxContent><w:p><w:pPr><w:jc w:val=\"left\"/></w:pPr><w:r><w:t>Box</w:t></w:r></w:p></w:txbxContent></wps:txbx><wps:bodyPr/></wps:wsp><wpg:grpSp><wpg:cNvGrpSpPr/><wpg:grpSpPr/></wpg:grpSp></wpg:wgp></a:graphicData></a:graphic></wp:inline></w:drawing></mc:Choice><mc:Fallback><w:pict><v:group/></w:pict></mc:Fallback></mc:AlternateContent></w:r>"
+    );
+    assert_eq!(
+        strict::<TextRun>(&run),
+        format!(
+            "<w:r {} xmlns:wpg=\"{WPG}\"><w:drawing><wp:inline><a:graphic><a:graphicData uri=\"{WPG}\"><wp:wgp><wp:cNvGrpSpPr/><wp:grpSpPr/><wp:wsp><wp:cNvSpPr txBox=\"1\"/><wp:spPr/><wp:txbx id=\"3\"><wne:txbxContent xmlns:wne=\"{WNE}\"><w:p><w:pPr><w:jc w:val=\"start\"/></w:pPr><w:r><w:t>Box</w:t></w:r></w:p></wne:txbxContent></wp:txbx><wp:bodyPr/></wp:wsp><wp:grpSp><wp:cNvGrpSpPr/><wp:grpSpPr/></wp:grpSp></wp:wgp></a:graphicData></a:graphic></wp:inline></w:drawing></w:r>",
+            strict_run_declarations()
+        )
+    );
+}
+
+#[test]
+fn word_s_canvas_takes_wp_and_writes_its_text_in_wne_txbx_content() {
+    let run = format!(
+        "<w:r {RUN_DECLARATIONS} xmlns:wpc=\"{{wpc}}\"><mc:AlternateContent><mc:Choice Requires=\"wpc\"><w:drawing><wp:inline><a:graphic><a:graphicData uri=\"{{wpc}}\"><wpc:wpc><wps:wsp><wps:cNvSpPr/><wps:spPr/><wps:txbx><w:txbxContent><w:p/></w:txbxContent></wps:txbx><wps:bodyPr/></wps:wsp></wpc:wpc></a:graphicData></a:graphic></wp:inline></w:drawing></mc:Choice><mc:Fallback><w:pict><v:group/></w:pict></mc:Fallback></mc:AlternateContent></w:r>"
+    );
+    assert_eq!(
+        strict::<TextRun>(&run),
+        format!(
+            "<w:r {} xmlns:wpc=\"{WPC}\"><w:drawing><wp:inline><a:graphic><a:graphicData uri=\"{WPC}\"><wp:wpc><wp:wsp><wp:cNvSpPr/><wp:spPr/><wp:txbx><wne:txbxContent xmlns:wne=\"{WNE}\"><w:p/></wne:txbxContent></wp:txbx><wp:bodyPr/></wp:wsp></wp:wpc></a:graphicData></a:graphic></wp:inline></w:drawing></w:r>",
+            strict_run_declarations()
+        )
+    );
+}
+
+#[test]
+fn vml_fallback_of_any_other_choice_stays_refused() {
     assert_eq!(
         refusal::<TextRun>(&format!(
-            "<w:r {RUN_DECLARATIONS} xmlns:wpg=\"{{wpg}}\"><w:drawing><wp:inline><a:graphic><a:graphicData uri=\"{{wpg}}\"><wpg:wgp><wps:wsp><wps:txbx><w:txbxContent><w:p/></w:txbxContent></wps:txbx></wps:wsp></wpg:wgp></a:graphicData></a:graphic></wp:inline></w:drawing></w:r>"
+            "<w:r {RUN_DECLARATIONS}><mc:AlternateContent><mc:Choice Requires=\"wpi\"><w:drawing><wp:inline><a:graphic><a:graphicData uri=\"{{a}}\"/></a:graphic></wp:inline></w:drawing></mc:Choice><mc:Fallback><w:pict><v:shape/></w:pict></mc:Fallback></mc:AlternateContent></w:r>"
         )),
-        Some("txbxContent")
+        Some("pict")
     );
+}
+
+#[test]
+fn a_text_box_in_vml_has_no_strict_form() {
     assert_eq!(
         refusal::<TextRun>(&format!(
             "<w:r {RUN_DECLARATIONS}><w:pict><v:shape><v:textbox><w:txbxContent><w:p/></w:txbxContent></v:textbox></v:shape></w:pict></w:r>"

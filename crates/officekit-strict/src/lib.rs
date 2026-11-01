@@ -44,7 +44,8 @@
 //! such as the branches of `mc:AlternateContent`. Word saves a text box as `mc:AlternateContent`
 //! around Microsoft's `wps:wsp` holding `w:txbxContent`. Strict writes the shape in place of the
 //! `mc:AlternateContent` as Word does: `wp:wsp` in the `graphicData` of the `wps` namespace, its
-//! text in `wne:txbxContent`. A text box inside a group or in VML has no Strict form.
+//! text in `wne:txbxContent`, and a group (`wp:wgp`) or a canvas (`wp:wpc`) the same way. A text
+//! box in VML has no Strict form.
 //!
 //! A date cell (`t="d"`) exists only in Strict, so the Strict write keeps it as it is. The
 //! Transitional write of `officekit::transitional` refuses it and has a function that converts it.
@@ -177,6 +178,14 @@ const PROTECTION_ALGORITHM: [&str; 5] = [
 const VML: &str = "urn:schemas-microsoft-com:vml";
 
 const WORD_ML: &str = "http://schemas.microsoft.com/office/word/2006/wordml";
+
+/// The namespace of each of Word's drawing containers, which is also the `uri` of the
+/// `graphicData` that holds it: a shape, a group (`wpg`) and a canvas (`wpc`).
+const WORD_SHAPE_URIS: [&str; 3] = [
+    WORDPROCESSING_SHAPE,
+    "http://schemas.microsoft.com/office/word/2010/wordprocessingGroup",
+    "http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas",
+];
 
 // The tables of the walk, generated: `ATTRIBUTES`, `CHILDREN`, `CONTEXTUAL`,
 // `ELEMENTS`, `REFUSED_NAMESPACES`, the code tables, and the spellings.
@@ -659,7 +668,9 @@ fn holds_only_color(background: &Element, namespace: &Namespace) -> bool {
 /// Whether `element` is a `graphicData` holding Word's shape.
 fn holds_word_shape(element: &Element) -> bool {
     named(element, DRAWING, "graphicData")
-        && element.attribute(&Namespace::None, "uri") == Some(WORDPROCESSING_SHAPE)
+        && element
+            .attribute(&Namespace::None, "uri")
+            .is_some_and(|uri| WORD_SHAPE_URIS.contains(&uri))
 }
 
 /// The ISO 8601 date-time of a serial date-time's text, to the millisecond.
@@ -878,7 +889,10 @@ fn word_shape(element: &mut Element, prefix: &str) {
 
 fn write_word_shape(element: &mut Element, prefix: &str) {
     let text_box = named(element, WORDPROCESSING_SHAPE, "txbx");
-    if element.name.namespace == Namespace::from_uri(WORDPROCESSING_SHAPE) {
+    if WORD_SHAPE_URIS
+        .iter()
+        .any(|uri| element.name.namespace == Namespace::from_uri(uri))
+    {
         element.name = QName::prefixed(prefix, &element.name.local, WORDPROCESSING_DRAWING);
     }
     for node in &mut element.children {
