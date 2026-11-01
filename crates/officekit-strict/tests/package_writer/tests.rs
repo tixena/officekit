@@ -1,12 +1,18 @@
 use core::slice;
 use std::io::{self, Write};
 
-use officekit_markup::wordprocessing::{self, TableRow, Text, read};
+use officekit_markup::common_simple_types::MeasurementInTwentiethsOfAPoint;
+use officekit_markup::wordprocessing::{
+    self, BlockContent, ContentCellContent, ContentRowContent, Document, DocumentBody,
+    GridColumnDefinition, MeasurementOrPercentageValue, Paragraph, ParagraphContent,
+    PreferredTableWidth, StyleDefinitions, Table, TableCell, TableRow, TableWidthUnits, Text,
+    TextRun, TextRunContent, read, write,
+};
 use officekit_markup::{Descend, Written};
-use officekit_strict::traversal::{Visit as _, WriteThrough as _};
-use officekit_xml::element::{Element, NamespaceDeclaration, Node};
+use officekit_strict::traversal::{Visit, WriteThrough as _};
+use officekit_xml::element::{Document as Part, Element, NamespaceDeclaration};
 use officekit_xml::name::Namespace;
-use officekit_xml::packaging::package::{OpenOptions, Package};
+use officekit_xml::packaging::package::{DECLARATION as XML_DECLARATION, OpenOptions, Package};
 use officekit_xml::packaging::package_writer::PackageWriter;
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::{
@@ -14,16 +20,17 @@ use officekit_xml::packaging::relationship::{
 };
 use officekit_xml::stream::reader::PartEvent;
 use officekit_xml::stream::writer::PartWriter;
-use officekit_xml::write::Layout;
+use officekit_xml::write::{Layout, Scope, WriteOptions};
 
 const DECLARATION: &str = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n";
-const STYLES: &str = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n\
-                      <w:styles xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"/>";
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const MAIN_DOCUMENT_CONTENT_TYPE: &str =
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml";
 const STYLE_DEFINITIONS_CONTENT_TYPE: &str =
     "application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml";
+
+/// The value of every text it visits, in order.
+struct CollectText(String);
 
 /// Gives every text `value`.
 struct Fill {
@@ -39,6 +46,19 @@ struct FindPlaceholder {
 /// on in its place.
 struct RepeatRows {
     count: usize,
+}
+
+impl officekit_markup::Visitor for CollectText {
+    fn wordprocessing(&mut self) -> Option<&mut dyn wordprocessing::Visitor> {
+        Some(self)
+    }
+}
+
+impl wordprocessing::Visitor for CollectText {
+    fn text(&mut self, node: &Text) -> Descend {
+        self.0.push_str(&node.value);
+        Descend::Yes
+    }
 }
 
 impl officekit_markup::Context for Fill {
@@ -140,21 +160,56 @@ fn styles() -> PartName {
     PartName::new("/word/styles.xml").unwrap()
 }
 
+/// The bytes of a part whose root is `root`, after the declaration Office writes.
+fn part_bytes(root: Element) -> Vec<u8> {
+    Part::new(XML_DECLARATION, root).to_xml(WriteOptions::default())
+}
+
 /// A document of a paragraph, a table with a header row and a `placeholder`
 /// row, a paragraph, and the section's properties, and a styles part the
 /// document relates to.
 fn template() -> Package {
-    let cell = |text: &str| format!("<w:tc><w:p><w:r><w:t>{text}</w:t></w:r></w:p></w:tc>");
-    let document = format!(
-        "{DECLARATION}<w:document xmlns:w=\"{W}\"><w:body><w:p><w:r><w:t>Before</w:t></w:r></w:p>\
-         <w:tbl><w:tblPr><w:tblW w:w=\"0\" w:type=\"auto\"/></w:tblPr><w:tblGrid><w:gridCol w:w=\"4000\"/></w:tblGrid>\
-         <w:tr>{}</w:tr><w:tr>{}</w:tr></w:tbl><w:p><w:r><w:t>After</w:t></w:r></w:p><w:sectPr/></w:body></w:document>",
-        cell("Name"),
-        cell("placeholder")
-    );
+    let paragraph = |value: &str| {
+        let mut text = Text::default();
+        text.value = value.to_owned();
+        let mut run = TextRun::default();
+        run.content = vec![TextRunContent::Text(text)];
+        let mut paragraph = Paragraph::default();
+        paragraph.content = vec![ParagraphContent::TextRun(run)];
+        paragraph
+    };
+    let row = |value: &str| {
+        let mut cell = TableCell::default();
+        cell.content = vec![BlockContent::Paragraph(paragraph(value))];
+        let mut row = TableRow::default();
+        row.content = vec![ContentCellContent::TableCell(cell)];
+        ContentRowContent::TableRow(row)
+    };
+    let mut width = PreferredTableWidth::default();
+    width.r#type = Some(TableWidthUnits::from("auto".to_owned()));
+    width.w = Some(MeasurementOrPercentageValue::from("0".to_owned()));
+    let mut column = GridColumnDefinition::default();
+    column.w = Some(MeasurementInTwentiethsOfAPoint::from("4000".to_owned()));
+    let mut table = Table::default();
+    table.content_row_content = vec![row("Name"), row("placeholder")];
+    table.grid.column_definition = vec![column];
+    table.properties.preferred_table_width = Some(Box::new(width));
+    let mut body = DocumentBody::default();
+    body.content = vec![
+        BlockContent::Paragraph(paragraph("Before")),
+        BlockContent::Table(table),
+        BlockContent::Paragraph(paragraph("After")),
+    ];
+    body.document_final_section_properties = Some(Box::default());
+    let mut document = Document::default();
+    document.body = Some(Box::new(body));
     let mut package = Package::new();
     package
-        .set_part_bytes(&main(), MAIN_DOCUMENT_CONTENT_TYPE, document.as_bytes())
+        .set_part_bytes(
+            &main(),
+            MAIN_DOCUMENT_CONTENT_TYPE,
+            &part_bytes(write::document(&document, &mut Scope::default())),
+        )
         .unwrap();
     package
         .relate(
@@ -164,7 +219,14 @@ fn template() -> Package {
         )
         .unwrap();
     package
-        .set_part_bytes(&styles(), STYLE_DEFINITIONS_CONTENT_TYPE, STYLES.as_bytes())
+        .set_part_bytes(
+            &styles(),
+            STYLE_DEFINITIONS_CONTENT_TYPE,
+            &part_bytes(write::style_definitions(
+                &StyleDefinitions::default(),
+                &mut Scope::default(),
+            )),
+        )
         .unwrap();
     package
         .relate(
@@ -176,18 +238,14 @@ fn template() -> Package {
     package
 }
 
-/// The text of an element's subtree, in order.
-fn text_of(element: &Element) -> String {
-    let mut text = String::new();
-    for child in &element.children {
-        if let Node::Element(inner) = child {
-            text.push_str(&text_of(inner));
-        }
-        if let Node::Text(value) = child {
-            text.push_str(value);
-        }
-    }
-    text
+/// The text of every `w:t` under `node`, in order.
+fn text_of<N>(node: &N) -> String
+where
+    N: Visit,
+{
+    let mut collected = CollectText(String::new());
+    node.visit(&mut collected);
+    collected.0
 }
 
 #[test]
@@ -276,7 +334,10 @@ fn a_streamed_package_of_1_000_rows_has_data_descriptors_and_opens_with_every_ro
     // The first local header's general-purpose flags: bit 3 says the sizes follow the entry, in a data descriptor.
     assert_ne!(bytes[6] & 0x08, 0);
     let package = Package::from_bytes(bytes).unwrap();
-    assert_eq!(package.part_bytes(&styles()).unwrap(), STYLES.as_bytes());
+    assert_eq!(
+        package.part_bytes(&styles()).unwrap(),
+        template.part_bytes(&styles()).unwrap()
+    );
     assert_eq!(
         package.content_type(&main()),
         Some(MAIN_DOCUMENT_CONTENT_TYPE)
@@ -289,15 +350,21 @@ fn a_streamed_package_of_1_000_rows_has_data_descriptors_and_opens_with_every_ro
         .map(|block| block.name.local.as_str())
         .collect();
     assert_eq!(names, ["p", "tbl", "p", "sectPr"]);
-    let rows: Vec<String> = blocks[1]
-        .child_elements()
-        .filter(|child| child.name.local == "tr")
-        .map(text_of)
+    let rows: Vec<String> = read::table(blocks[1])
+        .content_row_content
+        .iter()
+        .filter_map(|row| {
+            if let ContentRowContent::TableRow(found) = row {
+                Some(text_of(found))
+            } else {
+                None
+            }
+        })
         .collect();
     assert_eq!(rows.len(), 1_001);
     assert_eq!(
         (rows[0].as_str(), rows[1].as_str(), rows[1_000].as_str()),
         ("Name", "item 000000", "item 000999")
     );
-    assert_eq!(text_of(blocks[2]), "After");
+    assert_eq!(text_of(&read::paragraph(blocks[2])), "After");
 }
