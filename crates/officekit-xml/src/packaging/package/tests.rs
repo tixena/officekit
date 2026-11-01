@@ -1189,3 +1189,57 @@ fn a_package_whose_own_parts_are_utf16_opens() {
     assert_eq!(package.content_type(&main), Some(MAIN));
     assert_eq!(package.related(None).unwrap()[0].target, Target::Part(main));
 }
+
+#[test]
+fn a_part_with_a_non_ascii_name_takes_an_ascii_zip_item_and_stays_related() {
+    let mut package = Package::new();
+    let main = PartName::new("/word/document.xml").unwrap();
+    let part = PartName::new("/word/m\u{e9}dia.xml").unwrap();
+    package
+        .set_part_bytes(&main, "application/xml", b"<a/>")
+        .unwrap();
+    package
+        .set_part_bytes(&part, "application/xml", b"<b/>")
+        .unwrap();
+    package
+        .relate(Some(&main), &part, "http://example.com/related")
+        .unwrap();
+    let bytes = package.to_bytes().unwrap();
+    let mut archive = zip::ZipArchive::new(Cursor::new(bytes.clone())).unwrap();
+    for index in 0..archive.len() {
+        let entry = archive.by_index(index).unwrap();
+        assert!(entry.name().unwrap().is_ascii(), "{:?}", entry.name());
+    }
+    let reopened = Package::from_bytes(bytes).unwrap();
+    assert_eq!(reopened.part_bytes(&part).unwrap(), b"<b/>");
+    let related = reopened.related(Some(&main)).unwrap();
+    assert_eq!(related[0].target, Target::Part(part));
+}
+
+#[test]
+fn a_zip_item_with_a_non_ascii_name_opens_and_saves_with_an_ascii_name() {
+    let mut writer = ZipWriter::new(Cursor::new(Vec::new()));
+    writer
+        .start_file("[Content_Types].xml", SimpleFileOptions::default())
+        .unwrap();
+    writer.write_all(b"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Types xmlns=\"http://schemas.openxmlformats.org/package/2006/content-types\"><Default Extension=\"xml\" ContentType=\"application/xml\"/><Default Extension=\"rels\" ContentType=\"application/vnd.openxmlformats-package.relationships+xml\"/></Types>").unwrap();
+    writer
+        .start_file("word/m\u{e9}dia.xml", SimpleFileOptions::default())
+        .unwrap();
+    writer.write_all(b"<b/>").unwrap();
+    writer
+        .start_file("_rels/.rels", SimpleFileOptions::default())
+        .unwrap();
+    writer.write_all("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\"><Relationship Id=\"rId1\" Type=\"http://example.com/related\" Target=\"word/m\u{e9}dia.xml\"/></Relationships>".as_bytes()).unwrap();
+    let bytes = writer.finish().unwrap().into_inner();
+    let package = Package::from_bytes(bytes).unwrap();
+    let part = PartName::new("/word/m%C3%A9dia.xml").unwrap();
+    assert_eq!(package.part_names().unwrap(), slice::from_ref(&part));
+    assert_eq!(package.part_bytes(&part).unwrap(), b"<b/>");
+    assert_eq!(package.related(None).unwrap()[0].target, Target::Part(part));
+    let mut archive = zip::ZipArchive::new(Cursor::new(package.to_bytes().unwrap())).unwrap();
+    for index in 0..archive.len() {
+        let entry = archive.by_index(index).unwrap();
+        assert!(entry.name().unwrap().is_ascii(), "{:?}", entry.name());
+    }
+}

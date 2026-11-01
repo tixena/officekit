@@ -23,7 +23,7 @@ use crate::packaging::content_types::{ContentTypes, XML_CONTENT_TYPE};
 use crate::packaging::error::PackageError;
 use crate::packaging::image::{Image, ImageFormat};
 use crate::packaging::part_allocation;
-use crate::packaging::part_name::PartName;
+use crate::packaging::part_name::{PartName, percent_encode_non_ascii};
 use crate::packaging::relationship::{
     self, RELATIONSHIPS_CONTENT_TYPE, RelatedPart, Relationship, RelationshipType, Target,
     TargetMode, class_of_office_document,
@@ -318,6 +318,19 @@ impl Package {
         Self::from_bytes(self.to_bytes()?)
     }
 
+    /// Move each file whose path holds a non-ASCII character to the path its part name gives.
+    fn encode_non_ascii_paths(&self) -> Result<(), PackageError> {
+        for path in self.files()? {
+            if !path.is_ascii() {
+                let target = PathBuf::from(percent_encode_non_ascii(&path));
+                let (bytes, _revision) = ready_now(self.fs.read(Path::new(&path)))?;
+                self.write_file(&target, &bytes)?;
+                ready_now(self.fs.remove_file(Path::new(&path)))?;
+            }
+        }
+        Ok(())
+    }
+
     /// Every file of the memory filesystem, by path.
     fn files(&self) -> Result<Vec<String>, PackageError> {
         Ok(ready_now(self.fs.walk_dir(Path::new("/"), false, true))?
@@ -355,6 +368,7 @@ impl Package {
             fs: MemorySystem::from_zip_reader(Cursor::new(bytes))?,
             relationships: BTreeMap::new(),
         };
+        package.encode_non_ascii_paths()?;
         for path in package.files()? {
             match file_kind(&path) {
                 FileKind::ContentTypes => {

@@ -134,3 +134,14 @@ fn path_is_the_name_as_a_path() {
     let part = PartName::new("/word/document.xml").unwrap();
     assert_eq!(part.path(), Path::new("/word/document.xml"));
 }
+
+#[test]
+fn a_non_ascii_character_is_held_percent_encoded() {
+    let part = PartName::new("/word/m\u{e9}dia/\u{65e5}.xml").unwrap();
+    assert_eq!(part.as_str(), "/word/m%C3%A9dia/%E6%97%A5.xml");
+    assert_eq!(part.zip_entry_name(), "word/m%C3%A9dia/%E6%97%A5.xml");
+    assert_eq!(
+        part,
+        PartName::new("/word/m%C3%A9dia/%E6%97%A5.xml").unwrap()
+    );
+}

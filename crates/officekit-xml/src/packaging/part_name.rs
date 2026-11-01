@@ -1,6 +1,6 @@
 //! Part names: the `/word/document.xml` style identifiers of OPC parts.
 
-use core::fmt;
+use core::fmt::{self, Write as _};
 use std::path::Path;
 
 use crate::packaging::error::PackageError;
@@ -11,7 +11,8 @@ use crate::packaging::error::PackageError;
 /// by single `/` characters, never ends in `/`, and never has a segment that is
 /// `.`, `..`, or ends in `.`. Comparisons are exact; a package resolves names
 /// without regard to ASCII case, as the specification requires, by filing each
-/// part under its [`folded`](Self::folded) form.
+/// part under its [`folded`](Self::folded) form. A non-ASCII character is held percent-encoded,
+/// the form a zip item name must take.
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(
     feature = "binary-format",
@@ -23,7 +24,7 @@ pub struct PartName {
 }
 
 impl PartName {
-    /// The name exactly as it was given, leading `/` included.
+    /// The name, leading `/` included, with any non-ASCII character percent-encoded.
     #[must_use]
     pub fn as_str(&self) -> &str {
         &self.name
@@ -78,7 +79,7 @@ impl PartName {
             });
         }
         Ok(Self {
-            name: name.to_owned(),
+            name: percent_encode_non_ascii(name),
         })
     }
 
@@ -109,6 +110,22 @@ impl fmt::Display for PartName {
 }
 
 /// The first part-name rule `name` breaks, if any.
+/// `name` with every non-ASCII character percent-encoded in UTF-8 (ECMA-376 Part 2, 7.3.4).
+pub(crate) fn percent_encode_non_ascii(name: &str) -> String {
+    let mut encoded = String::with_capacity(name.len());
+    for character in name.chars() {
+        if character.is_ascii() {
+            encoded.push(character);
+        } else {
+            let mut buffer = [0_u8; 4];
+            for byte in character.encode_utf8(&mut buffer).bytes() {
+                let _: fmt::Result = write!(encoded, "%{byte:02X}");
+            }
+        }
+    }
+    encoded
+}
+
 fn violation(name: &str) -> Option<&'static str> {
     if name.is_empty() {
         return Some("must not be empty");
