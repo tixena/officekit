@@ -2,9 +2,14 @@
 
 use crate::parts::kinds::WordprocessingKind;
 use officekit_markup::Read as _;
-use officekit_markup::wordprocessing::{TextRun, write};
+use officekit_markup::drawing::{AnyElementContent, Blip};
+use officekit_markup::wordprocessing::{
+    BlockContent, Document, DocumentBody, DrawingMLObject, DrawingObjectContent, Paragraph,
+    ParagraphContent, TextRun, TextRunContent, write,
+};
+use officekit_markup::wordprocessing_drawing::InlineDrawingMLObject;
 use officekit_xml::element::Element;
-use officekit_xml::name::{Namespace, QName};
+use officekit_xml::name::{Namespace, OfficeVersion, QName};
 use officekit_xml::packaging::error::PackageError;
 use officekit_xml::packaging::image::{Image, ImageFormat};
 use officekit_xml::packaging::package::{OpenOptions, Package};
@@ -12,8 +17,9 @@ use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::{RelationshipType, Target};
 use officekit_xml::write::Scope;
 
-use super::PictureFit;
+use super::{PictureFit, PictureSource, inline_picture};
 use crate::docx::Docx;
+use crate::validation::validator::Validator;
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const R: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
@@ -316,4 +322,212 @@ fn only_the_first_picture_of_the_run_changes() {
     assert_ne!(embeds[0], "rId7");
     assert_eq!(embeds[1], "rId7");
     assert_eq!(values(&element, "extent", "cy"), ["1045274", "2000000"]);
+}
+
+/// The inline drawing a picture of [`inline_picture`] holds.
+fn inline_of(drawing: &DrawingMLObject) -> &InlineDrawingMLObject {
+    drawing
+        .content
+        .iter()
+        .find_map(|item| {
+            if let DrawingObjectContent::InlineDrawingMLObject(found) = item {
+                Some(found)
+            } else {
+                None
+            }
+        })
+        .unwrap()
+}
+
+/// The blip of the picture an inline drawing shows.
+fn blip_of(inline: &InlineDrawingMLObject) -> &Blip {
+    inline
+        .graphic_object
+        .data
+        .content
+        .iter()
+        .find_map(|item| {
+            if let AnyElementContent::Picture(picture) = item {
+                picture.fill.blip.as_deref()
+            } else {
+                None
+            }
+        })
+        .unwrap()
+}
+
+/// The width and height of an inline drawing's frame and of its picture's transform.
+fn sizes(inline: &InlineDrawingMLObject) -> [(String, String); 2] {
+    let frame = &inline.drawing_object_size;
+    let transform = inline
+        .graphic_object
+        .data
+        .content
+        .iter()
+        .find_map(|item| {
+            let AnyElementContent::Picture(picture) = item else {
+                return None;
+            };
+            picture
+                .shape_properties
+                .xfrm_transform2d
+                .as_ref()?
+                .extents
+                .as_deref()
+        })
+        .unwrap();
+    let text = |value: Option<&String>| value.cloned().unwrap_or_default();
+    [
+        (
+            text(frame.cx.as_ref().map(|found| &found.0)),
+            text(frame.cy.as_ref().map(|found| &found.0)),
+        ),
+        (
+            text(transform.cx.as_ref().map(|found| &found.0)),
+            text(transform.cy.as_ref().map(|found| &found.0)),
+        ),
+    ]
+}
+
+/// A run holding `drawing`.
+fn run_holding(drawing: DrawingMLObject) -> TextRun {
+    let mut run = TextRun::default();
+    run.content = alloc::vec![TextRunContent::DrawingMLObject(drawing)];
+    run
+}
+
+/// A document of one paragraph per run.
+fn document_of(runs: Vec<TextRun>) -> Document {
+    let mut body = DocumentBody::default();
+    body.content = runs
+        .into_iter()
+        .map(|run| {
+            let mut paragraph = Paragraph::default();
+            paragraph.content = alloc::vec![ParagraphContent::TextRun(run)];
+            BlockContent::Paragraph(paragraph)
+        })
+        .collect();
+    let mut document = Document::default();
+    document.body = Some(Box::new(body));
+    document
+}
+
+#[test]
+fn an_embedded_inline_picture_holds_what_it_was_given() {
+    let drawing = inline_picture(
+        PictureSource::Embedded("rId1"),
+        7,
+        "Picture 7",
+        Some("Logo"),
+        (914_400, 457_200),
+    );
+    let inline = inline_of(&drawing);
+    let properties = &inline.drawing_object_non_visual_properties;
+    assert_eq!(properties.descr.as_deref(), Some("Logo"));
+    assert_eq!(properties.name.as_deref(), Some("Picture 7"));
+    assert_eq!(properties.id.as_ref().map(|id| id.0.as_str()), Some("7"));
+    let blip = blip_of(inline);
+    assert_eq!(blip.embed.as_deref(), Some("rId1"));
+    assert_eq!(blip.link, None);
+    let size = ("914400".to_owned(), "457200".to_owned());
+    assert_eq!(sizes(inline), [size.clone(), size]);
+}
+
+#[test]
+fn a_linked_inline_picture_names_its_image_by_link() {
+    let drawing = inline_picture(PictureSource::Linked("rId2"), 1, "Picture 1", None, (1, 1));
+    let inline = inline_of(&drawing);
+    let blip = blip_of(inline);
+    assert_eq!(blip.link.as_deref(), Some("rId2"));
+    assert_eq!(blip.embed, None);
+    assert_eq!(inline.drawing_object_non_visual_properties.descr, None);
+}
+
+#[test]
+fn a_document_holding_inline_pictures_validates_clean_and_reads_them_back() {
+    let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
+    let main = docx.main_document_part().clone();
+    let (_, id) = docx.package_mut().add_image(&main, &wide_png()).unwrap();
+    let pictures = [(1, Some("Logo")), (2, None)].map(|(number, description)| {
+        run_holding(inline_picture(
+            PictureSource::Embedded(&id),
+            number,
+            &format!("Picture {number}"),
+            description,
+            (914_400, 914_400),
+        ))
+    });
+    docx.set_main_document(&document_of(pictures.to_vec()))
+        .unwrap();
+    let errors = Validator::new(OfficeVersion::Microsoft365).validate(docx.package());
+    assert_eq!(errors, Vec::new());
+    let read_back: Vec<(Option<String>, Option<String>, Option<String>)> = docx
+        .main_document()
+        .unwrap()
+        .body
+        .unwrap()
+        .content
+        .iter()
+        .filter_map(|block| {
+            let BlockContent::Paragraph(paragraph) = block else {
+                return None;
+            };
+            let Some(ParagraphContent::TextRun(run)) = paragraph.content.first() else {
+                return None;
+            };
+            let Some(TextRunContent::DrawingMLObject(drawing)) = run.content.first() else {
+                return None;
+            };
+            let inline = inline_of(drawing);
+            let properties = &inline.drawing_object_non_visual_properties;
+            Some((
+                properties.id.as_ref().map(|found| found.0.clone()),
+                properties.descr.clone(),
+                blip_of(inline).embed.clone(),
+            ))
+        })
+        .collect();
+    assert_eq!(
+        read_back,
+        [
+            (
+                Some("1".to_owned()),
+                Some("Logo".to_owned()),
+                Some(id.clone())
+            ),
+            (Some("2".to_owned()), None, Some(id)),
+        ]
+    );
+}
+
+#[test]
+fn set_picture_fits_an_inline_picture_in_either_mode() {
+    for (fit, height) in [(PictureFit::Width, "304800"), (PictureFit::Frame, "914400")] {
+        let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
+        let main = docx.main_document_part().clone();
+        let mut run = run_holding(inline_picture(
+            PictureSource::Embedded("rId99"),
+            1,
+            "Picture 1",
+            None,
+            (914_400, 914_400),
+        ));
+        let replaced = docx.set_picture(&main, &mut run, &wide_png(), fit).unwrap();
+        assert_eq!(replaced.as_deref(), Some("rId99"));
+        let drawing = run
+            .content
+            .iter()
+            .find_map(|item| {
+                if let TextRunContent::DrawingMLObject(found) = item {
+                    Some(found)
+                } else {
+                    None
+                }
+            })
+            .unwrap();
+        let inline = inline_of(drawing);
+        let size = ("914400".to_owned(), height.to_owned());
+        assert_eq!(sizes(inline), [size.clone(), size], "{fit:?}");
+        assert_ne!(blip_of(inline).embed.as_deref(), Some("rId99"));
+    }
 }

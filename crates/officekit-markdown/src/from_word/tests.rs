@@ -12,6 +12,7 @@ use arky::parser::parse;
 use arky::writer::{WriteOptions, write};
 use base64::Engine as _;
 use base64::engine::general_purpose::STANDARD;
+use officekit::docx::image::{PictureSource, inline_picture};
 use officekit::parts::kinds::WordprocessingKind;
 use officekit::parts::numbering_definitions;
 use officekit::parts::style_definitions::{CONTENT_TYPE, RELATIONSHIP_TYPE};
@@ -709,6 +710,43 @@ fn a_picture_in_a_text_box_in_word_s_strict_form_comes_once_with_the_box() {
 }
 
 #[test]
+fn an_inline_picture_built_through_the_model_exports_with_its_alt_text() {
+    let mut fixture = Fixture::new();
+    let id = fixture.part(
+        "/word/media/image1.png",
+        "image/png",
+        &RelationshipType::IMAGE,
+        PNG,
+    );
+    let mut run = TextRun::default();
+    run.content
+        .push(TextRunContent::DrawingMLObject(inline_picture(
+            PictureSource::Embedded(&id),
+            1,
+            "Picture 1",
+            Some("Logo"),
+            (914_400, 914_400),
+        )));
+    let mut document = wordprocessing::Document::default();
+    document.body = Some(Box::new(DocumentBody::default()));
+    if let Some(body) = document.body.as_mut() {
+        body.content
+            .push(BlockContent::Paragraph(typed_paragraph_of_runs(
+                alloc::vec![run],
+            )));
+    }
+    fixture.docx.set_main_document(&document).unwrap();
+    let result = exported(&fixture.docx, MarkdownOptions::default());
+    assert_eq!(
+        result.document.body.sections,
+        no_heading(alloc::vec![paragraph_of(alloc::vec![image(
+            "report_media/image1.png",
+            "Logo"
+        )])])
+    );
+}
+
+#[test]
 fn an_equation_gives_its_text() {
     let body = concat!(
         r#"<w:p><w:r><w:t xml:space="preserve">Solve </w:t></w:r>"#,
@@ -1029,6 +1067,13 @@ fn typed_paragraph(value: &str, properties: ParagraphProperties) -> wordprocessi
     let mut paragraph = wordprocessing::Paragraph::default();
     paragraph.properties = Some(Box::new(properties));
     paragraph.content.push(ParagraphContent::TextRun(run));
+    paragraph
+}
+
+/// A paragraph holding `runs`.
+fn typed_paragraph_of_runs(runs: Vec<TextRun>) -> wordprocessing::Paragraph {
+    let mut paragraph = wordprocessing::Paragraph::default();
+    paragraph.content = runs.into_iter().map(ParagraphContent::TextRun).collect();
     paragraph
 }
 
