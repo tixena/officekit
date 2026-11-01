@@ -69,6 +69,8 @@ const WORD_NAMESPACES: &str = r#"xmlns:w="http://schemas.openxmlformats.org/word
 const WNE: &str = "http://schemas.microsoft.com/office/word/2006/wordml";
 const STRICT_SETTINGS: &str = "http://purl.oclc.org/ooxml/officeDocument/relationships/settings";
 const STRICT_W: &str = "http://purl.oclc.org/ooxml/wordprocessingml/main";
+const STRICT_A: &str = "http://purl.oclc.org/ooxml/drawingml/main";
+const STRICT_WP: &str = "http://purl.oclc.org/ooxml/drawingml/wordprocessingDrawing";
 const WPS: &str = "http://schemas.microsoft.com/office/word/2010/wordprocessingShape";
 const UNKNOWN: &str = "http://example.com/relationships/unknown";
 const PARAGRAPH_STYLE: &str = r#"<w:style w:type="paragraph" w:styleId="S1"><w:name w:val="S1"/><w:pPr>PPR</w:pPr></w:style>"#;
@@ -1033,4 +1035,49 @@ fn a_style_still_refuses_the_run_properties_word_does_not_allow_there() {
         &styles,
     );
     assert_eq!(all_errors(&package).len(), 1);
+}
+
+/// Word's Strict shape, `wp:wsp` under `graphicData`, in a Strict document.
+fn strict_shape(shape: &str) -> Package {
+    strict_document(&format!(
+        r#"<w:p><w:r><w:drawing><wp:inline xmlns:wp="{STRICT_WP}"><wp:extent cx="100" cy="100"/><wp:docPr id="1" name="Box"/><a:graphic xmlns:a="{STRICT_A}"><a:graphicData uri="{WPS}">{shape}</a:graphicData></a:graphic></wp:inline></w:drawing></w:r></w:p>"#
+    ))
+}
+
+#[test]
+fn word_s_strict_shape_is_checked_as_its_microsoft_form_is() {
+    let good = "<w:p><w:r><w:t>text</w:t></w:r></w:p>";
+    let shape = |text: &str| {
+        format!(
+            r#"<wp:wsp xmlns:wp="{STRICT_WP}"><wp:cNvSpPr txBox="1"/><wp:spPr/><wp:txbx><wne:txbxContent>{text}</wne:txbxContent></wp:txbx><wp:bodyPr/></wp:wsp>"#
+        )
+    };
+    assert_eq!(
+        all_errors(&strict_shape(&shape(good))),
+        Vec::<String>::new()
+    );
+    let bad = "<w:p><w:pPr><w:bogus/></w:pPr></w:p>";
+    let errors = all_errors(&strict_shape(&shape(bad)));
+    assert_eq!(errors.len(), 1, "{errors:?}");
+    assert!(errors[0].contains("wne:txbxContent"), "{errors:?}");
+}
+
+#[test]
+fn word_s_strict_shape_refuses_a_child_of_another_namespace() {
+    let shape = format!(
+        r#"<wp:wsp xmlns:wp="{STRICT_WP}" xmlns:wps="{WPS}"><wp:cNvSpPr/><wp:spPr/><wps:style/><wp:bodyPr/></wp:wsp>"#
+    );
+    let errors = all_errors(&strict_shape(&shape));
+    assert_eq!(errors.len(), 1, "{errors:?}");
+    assert!(errors[0].contains("wps:style"), "{errors:?}");
+}
+
+#[test]
+fn word_s_strict_group_is_checked_down_to_its_shapes() {
+    let group = format!(
+        r#"<wp:wgp xmlns:wp="{STRICT_WP}"><wp:cNvGrpSpPr/><wp:grpSpPr/><wp:grpSp><wp:cNvGrpSpPr/><wp:grpSpPr/><wp:wsp><wp:bogus/></wp:wsp></wp:grpSp></wp:wgp>"#
+    );
+    let errors = all_errors(&strict_shape(&group));
+    assert_eq!(errors.len(), 1, "{errors:?}");
+    assert!(errors[0].contains("wp:bogus"), "{errors:?}");
 }

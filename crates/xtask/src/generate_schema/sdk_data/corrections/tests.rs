@@ -35,7 +35,9 @@ children = ["x:CT_Inner/x:inner"]
 
 const WORD_NAMESPACES: &str = r#"[
   {"Prefix": "", "Uri": ""},
-  {"Prefix": "w", "Uri": "urn:w"}
+  {"Prefix": "w", "Uri": "urn:w"},
+  {"Prefix": "wp", "Uri": "urn:wp"},
+  {"Prefix": "wps", "Uri": "urn:wps"}
 ]"#;
 
 const WORD_TYPED_NAMESPACES: &str = r#"[{"Prefix": "w", "Namespace": "Office.Word"}]"#;
@@ -59,6 +61,10 @@ const WORD: &str = r#"{
       {"Kind": "Group", "Occurs": [{}], "Items": [{"Kind": "Choice", "Items": [{"Name": "w:CT_Sdt/w:sdt"}, {"Kind": "Group", "Items": [{"Kind": "Choice", "Items": [{"Name": "w:CT_Custom/w:custom"}]}]}]}]}
     ]}},
     {"Name": "w:CT_OnOff/w:extra", "IsDerived": true},
+    {"Name": "wps:CT_Shape/wps:shape", "Children": [{"Name": "wps:CT_Text/wps:text"}, {"Name": "w:CT_A/w:a"}], "Particle": {"Kind": "Sequence", "Items": [{"Name": "wps:CT_Text/wps:text"}, {"Name": "w:CT_A/w:a"}]}},
+    {"Name": "wps:CT_Text/wps:text"},
+    {"Name": "w:CT_A/w:a"},
+    {"Name": "w:CT_Holder/w:holder", "Children": []},
     {"Name": "w:CT_Props/w:props", "Particle": {"Kind": "Sequence", "Items": [
       {"Name": "w:CT_PFirst/w:pfirst", "Occurs": [{"Max": 1}]},
       {"Kind": "Group", "InitialVersion": "Office2010", "Occurs": [{"Max": 1}], "Items": [{"Kind": "Sequence", "Items": [
@@ -162,6 +168,14 @@ const STRING_ROW: &str = r#"
 type = "w:CT_Setting/w:setting"
 attribute = "w:name"
 string = true
+"#;
+
+const TWIN_ROW: &str = r#"
+[[twin]]
+roots = ["wps:CT_Shape/wps:shape"]
+from = ["wps"]
+prefix = "wp"
+parent = "w:CT_Holder/w:holder"
 "#;
 
 const ORDER_ROW: &str = r#"
@@ -880,6 +894,39 @@ fn an_any_order_row_that_names_what_the_data_lacks_stops_the_generator() {
         let mut data = read_word();
         let error = data
             .correct(&ORDER_ROW.replace(from, to), &standard())
+            .unwrap_err();
+        assert!(format!("{error:#}").contains(to), "{error:#}");
+    }
+}
+
+#[test]
+fn a_twin_row_builds_the_types_in_the_other_namespace_and_places_the_root() {
+    let mut data = read_word();
+    data.correct(TWIN_ROW, &standard()).unwrap();
+    let twin = &data.types["wp:CT_Shape/wp:shape"];
+    assert_eq!(twin.children, ["wp:CT_Text/wp:text", "w:CT_A/w:a"]);
+    assert_eq!(
+        twin.particle.as_ref().unwrap().items[0].name.as_deref(),
+        Some("wp:CT_Text/wp:text")
+    );
+    assert!(data.types.contains_key("wp:CT_Text/wp:text"));
+    assert!(data.types.contains_key("wps:CT_Shape/wps:shape"));
+    assert!(
+        data.types["w:CT_Holder/w:holder"]
+            .children
+            .contains(&"wp:CT_Shape/wp:shape".to_owned())
+    );
+}
+
+#[test]
+fn a_twin_row_that_names_what_the_data_lacks_stops_the_generator() {
+    for (from, to) in [
+        ("wps:CT_Shape/wps:shape", "wps:CT_Missing/wps:shape"),
+        ("w:CT_Holder/w:holder", "w:CT_Missing/w:holder"),
+    ] {
+        let mut data = read_word();
+        let error = data
+            .correct(&TWIN_ROW.replace(from, to), &standard())
             .unwrap_err();
         assert!(format!("{error:#}").contains(to), "{error:#}");
     }

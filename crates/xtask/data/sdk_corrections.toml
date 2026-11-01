@@ -353,3 +353,16 @@ type = "w:CT_RPrStyle/w:rPr"
 type = "w:CT_ParaRPr/w:rPr"
 before = ["w:CT_TrackChange/w:ins", "w:CT_TrackChange/w:del", "w:CT_TrackChange/w:moveFrom", "w:CT_TrackChange/w:moveTo"]
 after = ["w:CT_ParaRPrChange/w:rPrChange"]
+
+# ECMA-376 declares wsp, wgp and wpc in wordprocessingDrawing, and Word's Strict
+# files write them there (dml-wordprocessingDrawing.xsd). The data has them only
+# in Microsoft's three namespaces, with the same content.
+[[twin]]
+roots = [
+  "wps:CT_WordprocessingShape/wps:wsp",
+  "wpg:CT_WordprocessingGroup/wpg:wgp",
+  "wpc:CT_WordprocessingCanvas/wpc:wpc",
+]
+from = ["wps", "wpg", "wpc"]
+prefix = "wp"
+parent = "a:CT_GraphicalObjectData/a:graphicData"

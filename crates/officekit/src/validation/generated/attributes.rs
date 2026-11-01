@@ -346,7 +346,7 @@
 //   bf519385b6d23eb8b28cd78f23c63a7fa7d6dd7f48bb7de09b8e36ad6e22588e  inputs/open-xml-sdk/data/parts/WorksheetThreadedCommentsPart.json
 //   ee0ae0ea09db0cdfae1bc11eef04ea2ff123c8dbdd548e7feec91b14689565f5  inputs/open-xml-sdk/data/parts/XmlSignaturePart.json
 //   e26c4528f8340924ff27391d34681ecde1f597fc5ce3dbf2d354edc9c6071a52  crates/xtask/data/part_roots.toml
-//   5f3abb9d6fe5bcfdbe2314abae067605da2a12942a514975c1513366128c5bb3  crates/xtask/data/sdk_corrections.toml
+//   fbf0be1333c4222066cf32730001139ef31634bad0f057c9b6986f9b5630be85  crates/xtask/data/sdk_corrections.toml
 //   dff6adee70b19bb1f9b56e50e9cc20316298c14255ec7e2d6cb0efe795318af0  crates/xtask/data/simple_types.toml
 //   826c3dd8910b449bfeb890e69497433d022b1a31561d1821960683e824941ef2  crates/xtask/data/strict_correspondences.toml
 // pdftotext version 26.01.0
@@ -19887,25 +19887,27 @@ const CHECKS_766: &[ValueCheck] = &[
 
 const CHECKS_767: &[ValueCheck] = &[
     ValueCheck {
+        check: Check::OfficeVersion,
+        union: None,
+        versions: Versions(0b11_1111),
+    },
+    ValueCheck {
         check: Check::Required,
         union: None,
         versions: Versions(0b11_1111),
     },
     ValueCheck {
-        check: Check::String {
-            class: None,
-            kind: StringKind::Token,
-            length: None,
-            max_length: None,
-            min_length: None,
-            pattern: None,
-        },
-        union: None,
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::Enum {
-            class: ValueClass::Enum("wp:ST_RelFromH"),
+        check: Check::Number {
+            bounds: Bounds {
+                max_exclusive: None,
+                max_inclusive: None,
+                min_exclusive: None,
+                min_inclusive: None,
+                non_negative: false,
+                positive: false,
+            },
+            class: ValueClass::UInt16,
+            list: false,
         },
         union: None,
         versions: Versions(0b11_1111),
@@ -19932,7 +19934,7 @@ const CHECKS_768: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::Enum {
-            class: ValueClass::Enum("wp:ST_RelFromV"),
+            class: ValueClass::Enum("wp:ST_RelFromH"),
         },
         union: None,
         versions: Versions(0b11_1111),
@@ -19959,7 +19961,7 @@ const CHECKS_769: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::Enum {
-            class: ValueClass::Enum("wp:ST_WrapText"),
+            class: ValueClass::Enum("wp:ST_RelFromV"),
         },
         union: None,
         versions: Versions(0b11_1111),
@@ -19967,6 +19969,57 @@ const CHECKS_769: &[ValueCheck] = &[
 ];
 
 const CHECKS_770: &[ValueCheck] = &[
+    ValueCheck {
+        check: Check::OfficeVersion,
+        union: None,
+        versions: Versions(0b11_1111),
+    },
+    ValueCheck {
+        check: Check::Number {
+            bounds: Bounds {
+                max_exclusive: None,
+                max_inclusive: None,
+                min_exclusive: None,
+                min_inclusive: None,
+                non_negative: false,
+                positive: false,
+            },
+            class: ValueClass::UInt16,
+            list: false,
+        },
+        union: None,
+        versions: Versions(0b11_1111),
+    },
+];
+
+const CHECKS_771: &[ValueCheck] = &[
+    ValueCheck {
+        check: Check::Required,
+        union: None,
+        versions: Versions(0b11_1111),
+    },
+    ValueCheck {
+        check: Check::String {
+            class: None,
+            kind: StringKind::Token,
+            length: None,
+            max_length: None,
+            min_length: None,
+            pattern: None,
+        },
+        union: None,
+        versions: Versions(0b11_1111),
+    },
+    ValueCheck {
+        check: Check::Enum {
+            class: ValueClass::Enum("wp:ST_WrapText"),
+        },
+        union: None,
+        versions: Versions(0b11_1111),
+    },
+];
+
+const CHECKS_772: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
             class: None,
@@ -19988,7 +20041,7 @@ const CHECKS_770: &[ValueCheck] = &[
     },
 ];
 
-const CHECKS_771: &[ValueCheck] = &[
+const CHECKS_773: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
             class: None,
@@ -20004,59 +20057,6 @@ const CHECKS_771: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Enum {
             class: ValueClass::Enum("wp:ST_AlignV"),
-        },
-        union: None,
-        versions: Versions(0b11_1111),
-    },
-];
-
-const CHECKS_772: &[ValueCheck] = &[
-    ValueCheck {
-        check: Check::OfficeVersion,
-        union: None,
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::Required,
-        union: None,
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::Number {
-            bounds: Bounds {
-                max_exclusive: None,
-                max_inclusive: None,
-                min_exclusive: None,
-                min_inclusive: None,
-                non_negative: false,
-                positive: false,
-            },
-            class: ValueClass::UInt16,
-            list: false,
-        },
-        union: None,
-        versions: Versions(0b11_1111),
-    },
-];
-
-const CHECKS_773: &[ValueCheck] = &[
-    ValueCheck {
-        check: Check::OfficeVersion,
-        union: None,
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
-        check: Check::Number {
-            bounds: Bounds {
-                max_exclusive: None,
-                max_inclusive: None,
-                min_exclusive: None,
-                min_inclusive: None,
-                non_negative: false,
-                positive: false,
-            },
-            class: ValueClass::UInt16,
-            list: false,
         },
         union: None,
         versions: Versions(0b11_1111),
@@ -68051,125 +68051,9 @@ const ATTRIBUTES_967: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_968: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_767,
-    class: ValueClass::Enum("wp:ST_RelFromH"),
-    name: "relativeFrom",
-    namespace: None,
-    strict_checks: None,
-    transitional_only: false,
-}];
-
-const ATTRIBUTES_969: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_768,
-    class: ValueClass::Enum("wp:ST_RelFromV"),
-    name: "relativeFrom",
-    namespace: None,
-    strict_checks: None,
-    transitional_only: false,
-}];
-
-const ATTRIBUTES_970: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_2,
-    class: ValueClass::Boolean,
-    name: "edited",
-    namespace: None,
-    strict_checks: None,
-    transitional_only: false,
-}];
-
-const ATTRIBUTES_971: &[AttributeConstraint] = &[
+const ATTRIBUTES_968: &[AttributeConstraint] = &[
     AttributeConstraint {
-        checks: CHECKS_769,
-        class: ValueClass::Enum("wp:ST_WrapText"),
-        name: "wrapText",
-        namespace: None,
-        strict_checks: None,
-        transitional_only: false,
-    },
-    AttributeConstraint {
-        checks: CHECKS_38,
-        class: ValueClass::UInt32,
-        name: "distT",
-        namespace: None,
-        strict_checks: None,
-        transitional_only: false,
-    },
-    AttributeConstraint {
-        checks: CHECKS_38,
-        class: ValueClass::UInt32,
-        name: "distB",
-        namespace: None,
-        strict_checks: None,
-        transitional_only: false,
-    },
-    AttributeConstraint {
-        checks: CHECKS_38,
-        class: ValueClass::UInt32,
-        name: "distL",
-        namespace: None,
-        strict_checks: None,
-        transitional_only: false,
-    },
-    AttributeConstraint {
-        checks: CHECKS_38,
-        class: ValueClass::UInt32,
-        name: "distR",
-        namespace: None,
-        strict_checks: None,
-        transitional_only: false,
-    },
-];
-
-const ATTRIBUTES_972: &[AttributeConstraint] = &[
-    AttributeConstraint {
-        checks: CHECKS_769,
-        class: ValueClass::Enum("wp:ST_WrapText"),
-        name: "wrapText",
-        namespace: None,
-        strict_checks: None,
-        transitional_only: false,
-    },
-    AttributeConstraint {
-        checks: CHECKS_38,
-        class: ValueClass::UInt32,
-        name: "distL",
-        namespace: None,
-        strict_checks: None,
-        transitional_only: false,
-    },
-    AttributeConstraint {
-        checks: CHECKS_38,
-        class: ValueClass::UInt32,
-        name: "distR",
-        namespace: None,
-        strict_checks: None,
-        transitional_only: false,
-    },
-];
-
-const ATTRIBUTES_973: &[AttributeConstraint] = &[
-    AttributeConstraint {
-        checks: CHECKS_38,
-        class: ValueClass::UInt32,
-        name: "distT",
-        namespace: None,
-        strict_checks: None,
-        transitional_only: false,
-    },
-    AttributeConstraint {
-        checks: CHECKS_38,
-        class: ValueClass::UInt32,
-        name: "distB",
-        namespace: None,
-        strict_checks: None,
-        transitional_only: false,
-    },
-];
-
-const ATTRIBUTES_974: &[AttributeConstraint] = &[
-    AttributeConstraint {
-        checks: CHECKS_772,
+        checks: CHECKS_767,
         class: ValueClass::UInt16,
         name: "id",
         namespace: None,
@@ -68177,7 +68061,7 @@ const ATTRIBUTES_974: &[AttributeConstraint] = &[
         transitional_only: false,
     },
     AttributeConstraint {
-        checks: CHECKS_772,
+        checks: CHECKS_767,
         class: ValueClass::UInt16,
         name: "seq",
         namespace: None,
@@ -68186,8 +68070,26 @@ const ATTRIBUTES_974: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_975: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_773,
+const ATTRIBUTES_969: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_768,
+    class: ValueClass::Enum("wp:ST_RelFromH"),
+    name: "relativeFrom",
+    namespace: None,
+    strict_checks: None,
+    transitional_only: false,
+}];
+
+const ATTRIBUTES_970: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_769,
+    class: ValueClass::Enum("wp:ST_RelFromV"),
+    name: "relativeFrom",
+    namespace: None,
+    strict_checks: None,
+    transitional_only: false,
+}];
+
+const ATTRIBUTES_971: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_770,
     class: ValueClass::UInt16,
     name: "id",
     namespace: None,
@@ -68195,7 +68097,7 @@ const ATTRIBUTES_975: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_976: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_972: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_6,
     class: ValueClass::Boolean,
     name: "normalEastAsianFlow",
@@ -68203,6 +68105,104 @@ const ATTRIBUTES_976: &[AttributeConstraint] = &[AttributeConstraint {
     strict_checks: None,
     transitional_only: false,
 }];
+
+const ATTRIBUTES_973: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_2,
+    class: ValueClass::Boolean,
+    name: "edited",
+    namespace: None,
+    strict_checks: None,
+    transitional_only: false,
+}];
+
+const ATTRIBUTES_974: &[AttributeConstraint] = &[
+    AttributeConstraint {
+        checks: CHECKS_771,
+        class: ValueClass::Enum("wp:ST_WrapText"),
+        name: "wrapText",
+        namespace: None,
+        strict_checks: None,
+        transitional_only: false,
+    },
+    AttributeConstraint {
+        checks: CHECKS_38,
+        class: ValueClass::UInt32,
+        name: "distT",
+        namespace: None,
+        strict_checks: None,
+        transitional_only: false,
+    },
+    AttributeConstraint {
+        checks: CHECKS_38,
+        class: ValueClass::UInt32,
+        name: "distB",
+        namespace: None,
+        strict_checks: None,
+        transitional_only: false,
+    },
+    AttributeConstraint {
+        checks: CHECKS_38,
+        class: ValueClass::UInt32,
+        name: "distL",
+        namespace: None,
+        strict_checks: None,
+        transitional_only: false,
+    },
+    AttributeConstraint {
+        checks: CHECKS_38,
+        class: ValueClass::UInt32,
+        name: "distR",
+        namespace: None,
+        strict_checks: None,
+        transitional_only: false,
+    },
+];
+
+const ATTRIBUTES_975: &[AttributeConstraint] = &[
+    AttributeConstraint {
+        checks: CHECKS_771,
+        class: ValueClass::Enum("wp:ST_WrapText"),
+        name: "wrapText",
+        namespace: None,
+        strict_checks: None,
+        transitional_only: false,
+    },
+    AttributeConstraint {
+        checks: CHECKS_38,
+        class: ValueClass::UInt32,
+        name: "distL",
+        namespace: None,
+        strict_checks: None,
+        transitional_only: false,
+    },
+    AttributeConstraint {
+        checks: CHECKS_38,
+        class: ValueClass::UInt32,
+        name: "distR",
+        namespace: None,
+        strict_checks: None,
+        transitional_only: false,
+    },
+];
+
+const ATTRIBUTES_976: &[AttributeConstraint] = &[
+    AttributeConstraint {
+        checks: CHECKS_38,
+        class: ValueClass::UInt32,
+        name: "distT",
+        namespace: None,
+        strict_checks: None,
+        transitional_only: false,
+    },
+    AttributeConstraint {
+        checks: CHECKS_38,
+        class: ValueClass::UInt32,
+        name: "distB",
+        namespace: None,
+        strict_checks: None,
+        transitional_only: false,
+    },
+];
 
 const ATTRIBUTES_977: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_6,

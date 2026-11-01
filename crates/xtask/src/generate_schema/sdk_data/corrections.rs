@@ -85,6 +85,16 @@ struct AnyOrder {
     type_name: String,
 }
 
+/// Types the standard declares in `prefix`'s namespace and the data has only in
+/// Microsoft's: each of `roots`, the types it reaches in the namespaces of
+/// `from`, element for element, and `parent` holding the roots.
+struct Twin {
+    from: Vec<String>,
+    parent: String,
+    prefix: String,
+    roots: Vec<String>,
+}
+
 /// One attribute the data requires and the standard leaves optional.
 struct Optional {
     attribute: String,
@@ -164,6 +174,9 @@ pub(super) fn apply(data: &mut SdkData, text: &str, standard: &SchemaSet) -> Res
     for row in any_orders(&table)? {
         free_order(data, &row)
             .with_context(|| format!("in the correction of `{}`", row.type_name))?;
+    }
+    for row in twins(&table)? {
+        add_twins(data, &row).with_context(|| format!("in the correction of `{}`", row.parent))?;
     }
     Ok(())
 }
@@ -354,6 +367,59 @@ fn add_alternative(data: &mut SdkData, row: &Alternative) -> Result<()> {
     parent.children.push(row.type_name.clone());
     data.types.insert(row.type_name.clone(), built);
     Ok(())
+}
+
+fn add_twins(data: &mut SdkData, row: &Twin) -> Result<()> {
+    let twin_name = |name: &str| -> String {
+        let Some((schema_type, element)) = name.split_once('/') else {
+            return name.to_owned();
+        };
+        let swap = |qualified: &str| match qualified.split_once(':') {
+            Some((prefix, local)) if row.from.iter().any(|from| from == prefix) => {
+                format!("{}:{local}", row.prefix)
+            }
+            Some(_) | None => qualified.to_owned(),
+        };
+        format!("{}/{}", swap(schema_type), swap(element))
+    };
+    let mut queue: Vec<String> = row.roots.clone();
+    let mut seen = Vec::new();
+    while let Some(name) = queue.pop() {
+        if seen.contains(&name) {
+            continue;
+        }
+        let renamed = twin_name(&name);
+        let mut twin = known(data, &name)?.clone();
+        for child in &twin.children {
+            if twin_name(child) != *child {
+                queue.push(child.clone());
+            }
+        }
+        twin.name.clone_from(&renamed);
+        twin.children = twin.children.iter().map(|child| twin_name(child)).collect();
+        if let Some(particle) = &mut twin.particle {
+            rename_items(particle, &twin_name);
+        }
+        seen.push(name);
+        data.types.entry(renamed).or_insert(twin);
+    }
+    let parent = data
+        .types
+        .get_mut(&row.parent)
+        .with_context(|| format!("the data has no `{}`", row.parent))?;
+    for root in &row.roots {
+        parent.children.push(twin_name(root));
+    }
+    Ok(())
+}
+
+fn rename_items(particle: &mut DataParticle, twin_name: &impl Fn(&str) -> String) {
+    if let Some(name) = &particle.name {
+        particle.name = Some(twin_name(name));
+    }
+    for item in &mut particle.items {
+        rename_items(item, twin_name);
+    }
 }
 
 /// Move every element of the type's content model into one choice that repeats.
@@ -556,6 +622,20 @@ fn optional_texts(row: &toml::Table, name: &str) -> Result<Vec<String>> {
     } else {
         Ok(Vec::new())
     }
+}
+
+fn twins(table: &toml::Table) -> Result<Vec<Twin>> {
+    rows(table, "twin")?
+        .into_iter()
+        .map(|row| {
+            Ok(Twin {
+                from: texts(row, "from")?,
+                parent: text_field(row, "parent")?,
+                prefix: text_field(row, "prefix")?,
+                roots: texts(row, "roots")?,
+            })
+        })
+        .collect()
 }
 
 fn optionals(table: &toml::Table) -> Result<Vec<Optional>> {
