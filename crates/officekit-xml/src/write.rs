@@ -213,13 +213,16 @@ fn binds(uri: &str, namespace: &Namespace) -> bool {
 }
 
 /// Remove every namespace declaration whose prefix no element or attribute in
-/// its scope uses and no `mc:Choice`'s `Requires` names, and the same prefix
-/// from the `mc` lists where the declaration was in scope. Repeats until
-/// nothing changes: a dropped list can leave `mc` itself unused.
+/// its scope uses and no `mc:Choice`'s `Requires` names, unless an `mc` list
+/// still needs it (see `list_entry_needed`), and the same prefix from the `mc`
+/// lists where the declaration was in scope. Repeats until nothing changes: a
+/// dropped list can leave `mc` itself unused.
 fn clean_namespaces(root: &mut Element) {
     loop {
+        let mut items = BTreeSet::new();
+        item_namespaces(root, &mut items);
         let mut removed = Removed::new();
-        strip_unused(root, &mut 0, &mut removed);
+        strip_unused(root, &mut 0, &mut removed, &items);
         if removed.is_empty() {
             return;
         }
@@ -273,6 +276,15 @@ fn drop_list_entries(
     scope.pop();
 }
 
+/// Whether `element`'s name or an attribute's is in the namespace `uri`.
+fn element_holds_namespace(element: &Element, uri: &str) -> bool {
+    binds(uri, &element.name.namespace)
+        || element
+            .attributes
+            .iter()
+            .any(|attribute| binds(uri, &attribute.name.namespace))
+}
+
 /// The escaping `quick-xml`'s writer is handed: `&` and `<` always; `>` in
 /// text; in an attribute value `"`, and the tab and line feed a reader would
 /// turn into spaces; a carriage return everywhere, which a reader would
@@ -324,6 +336,21 @@ pub fn is_whitespace_text(node: &Node) -> bool {
     }
 }
 
+/// The namespace of every element and prefixed attribute in `element`'s subtree.
+fn item_namespaces(element: &Element, found: &mut BTreeSet<Namespace>) {
+    found.insert(element.name.namespace.clone());
+    for attribute in &element.attributes {
+        if !attribute.name.prefix.is_empty() {
+            found.insert(attribute.name.namespace.clone());
+        }
+    }
+    for child in &element.children {
+        if let Node::Element(child_element) = child {
+            item_namespaces(child_element, found);
+        }
+    }
+}
+
 /// Drop the removed prefixes from an `mc` list attribute; whether the
 /// attribute stays. A list nothing was dropped from is kept as read.
 fn keep_list(attribute: &mut Attribute, scope: &[Vec<(String, bool)>]) -> bool {
@@ -355,6 +382,45 @@ fn keep_list(attribute: &mut Attribute, scope: &[Vec<(String, bool)>]) -> bool {
     !attribute.value.is_empty()
 }
 
+/// Whether the declaration of `prefix` as `uri` on `element` stays although no name uses the
+/// prefix: `mc:Ignorable` names a namespace through a prefix, so an item in that namespace written
+/// with another prefix, or under an inner declaration of this one, is ignorable only through this
+/// entry.
+fn list_entry_needed(
+    element: &Element,
+    prefix: &str,
+    uri: &str,
+    items: &BTreeSet<Namespace>,
+) -> bool {
+    if !items.iter().any(|namespace| binds(uri, namespace)) {
+        return false;
+    }
+    let mut named = list_names(element, prefix);
+    let mut item = element_holds_namespace(element, uri);
+    for child in &element.children {
+        if let Node::Element(child_element) = child {
+            scan_list_use(child_element, prefix, uri, None, &mut named, &mut item);
+        }
+    }
+    named && item
+}
+
+/// Whether an `mc` list on `element` names `prefix`.
+fn list_names(element: &Element, prefix: &str) -> bool {
+    element.attributes.iter().any(|attribute| {
+        let local = attribute.name.local.as_str();
+        is_mc(&attribute.name.namespace)
+            && (PREFIX_LISTS.contains(&local) || QUALIFIED_LISTS.contains(&local))
+            && attribute.value.split_whitespace().any(|item| {
+                if QUALIFIED_LISTS.contains(&local) {
+                    split_qualified(item).0 == prefix
+                } else {
+                    item == prefix
+                }
+            })
+    })
+}
+
 /// Whether whitespace is preserved inside `element`, given whether it is
 /// around it.
 #[must_use]
@@ -373,6 +439,36 @@ pub fn qualified(name: &QName) -> String {
         name.local.clone()
     } else {
         format!("{}:{}", name.prefix, name.local)
+    }
+}
+
+/// Walk `element`'s subtree for `list_entry_needed`. `inner` is the URI an inner declaration binds
+/// `prefix` to; a list that names `prefix` through an inner declaration of the same namespace
+/// covers its own subtree.
+fn scan_list_use<'tree>(
+    element: &'tree Element,
+    prefix: &str,
+    uri: &str,
+    inner: Option<&'tree str>,
+    named: &mut bool,
+    item: &mut bool,
+) {
+    let binding = element
+        .namespace_declarations
+        .iter()
+        .find(|declaration| declaration.prefix == prefix)
+        .map(|declaration| declaration.uri.as_str())
+        .or(inner);
+    let lists = list_names(element, prefix);
+    if lists && binding == Some(uri) {
+        return;
+    }
+    *named |= lists && binding.is_none();
+    *item |= element_holds_namespace(element, uri);
+    for child in &element.children {
+        if let Node::Element(child_element) = child {
+            scan_list_use(child_element, prefix, uri, binding, named, item);
+        }
     }
 }
 
@@ -407,6 +503,7 @@ fn strip_unused(
     element: &mut Element,
     index: &mut usize,
     removed: &mut Removed,
+    items: &BTreeSet<Namespace>,
 ) -> BTreeSet<String> {
     let position = *index;
     *index += 1;
@@ -423,13 +520,16 @@ fn strip_unused(
     }
     for child in &mut element.children {
         if let Node::Element(child_element) = child {
-            used.extend(strip_unused(child_element, index, removed));
+            used.extend(strip_unused(child_element, index, removed, items));
         }
     }
     let unused: BTreeSet<String> = element
         .namespace_declarations
         .iter()
-        .filter(|declaration| !used.contains(&declaration.prefix))
+        .filter(|declaration| {
+            !used.contains(&declaration.prefix)
+                && !list_entry_needed(element, &declaration.prefix, &declaration.uri, items)
+        })
         .map(|declaration| declaration.prefix.clone())
         .collect();
     element

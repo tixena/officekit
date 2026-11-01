@@ -240,6 +240,46 @@ fn the_cleanup_drops_a_list_entry_only_where_the_removed_declaration_is_in_scope
 }
 
 #[test]
+fn the_cleanup_keeps_an_entry_whose_namespace_is_used_under_an_inner_declaration() {
+    let xml = format!(
+        r#"<w:body xmlns:w="{W}" {MC} xmlns:x="urn:x" mc:Ignorable="x"><w:p xmlns:x="urn:x" x:a="1"/></w:body>"#
+    );
+    assert_eq!(write(&xml, WriteOptions::default()), xml);
+}
+
+#[test]
+fn the_cleanup_keeps_an_entry_whose_namespace_is_used_with_another_prefix() {
+    let xml = format!(
+        r#"<w:body xmlns:w="{W}" {MC} xmlns:x="urn:x" mc:Ignorable="x"><w:p xmlns:y="urn:x" y:a="1"/></w:body>"#
+    );
+    assert_eq!(write(&xml, WriteOptions::default()), xml);
+}
+
+#[test]
+fn the_cleanup_keeps_an_entry_whose_namespace_is_used_by_an_element_under_an_inner_declaration() {
+    let xml = format!(
+        r#"<w:body xmlns:w="{W}" {MC} xmlns:x="urn:x" mc:Ignorable="x"><x:a xmlns:x="urn:x"/></w:body>"#
+    );
+    assert_eq!(write(&xml, WriteOptions::default()), xml);
+}
+
+#[test]
+fn the_cleanup_keeps_an_entry_when_a_second_prefix_for_the_namespace_is_the_one_used() {
+    let xml = format!(
+        r#"<w:body xmlns:w="{W}" {MC} xmlns:a="urn:x" xmlns:b="urn:x" mc:Ignorable="a"><w:p b:x="1"/></w:body>"#
+    );
+    assert_eq!(write(&xml, WriteOptions::default()), xml);
+}
+
+#[test]
+fn the_cleanup_keeps_an_entry_when_an_inner_list_rebinds_the_prefix_to_another_namespace() {
+    let xml = format!(
+        r#"<w:body xmlns:w="{W}" {MC} xmlns:x="urn:x" mc:Ignorable="x"><w:p xmlns:x="urn:other" mc:Ignorable="x" x:a="1"><w:r xmlns:y="urn:x" y:b="2"/></w:p></w:body>"#
+    );
+    assert_eq!(write(&xml, WriteOptions::default()), xml);
+}
+
+#[test]
 fn the_cleanup_leaves_a_list_nothing_was_dropped_from_as_read() {
     let xml = format!(
         "<w:body xmlns:w=\"{W}\" {MC} {W14} mc:Ignorable=\"w14  w14\"><w:p w14:paraId=\"1\"/></w:body>"
