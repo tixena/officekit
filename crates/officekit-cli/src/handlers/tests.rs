@@ -2,7 +2,8 @@ use std::path::{Path, PathBuf};
 
 #[cfg(feature = "binary-format")]
 use officekit::binary::{MAGIC, VERSION};
-use officekit::parts::kinds::SpreadsheetKind;
+use officekit::docx::Docx;
+use officekit::parts::kinds::{SpreadsheetKind, WordprocessingKind};
 use officekit::validation::error::{ErrorCode, Step, ValidationError};
 use officekit::xlsx::Xlsx;
 use officekit_xml::name::OfficeVersion;
@@ -20,8 +21,6 @@ use super::{PackageValidator, Validate, cmd_cat, cmd_get, cmd_save, cmd_validate
 use crate::cli::{CatArgs, Form, GetArgs, SaveArgs, ValidateArgs};
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
-const MAIN: &str =
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml";
 
 const DOT: &str = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGNgYGD4DwABBAEAwS2OUAAAAABJRU5ErkJggg==";
 
@@ -77,16 +76,9 @@ fn run(result: Result<Vec<ValidationError>, String>, json: bool) -> (u8, String,
 }
 
 fn sample(system: &MemorySystem) -> PathBuf {
-    let mut package = Package::new();
-    package
-        .set_part_bytes(
-            &PartName::new("/word/document.xml").unwrap(),
-            MAIN,
-            b"<w:document/>",
-        )
-        .unwrap();
     let path = PathBuf::from("/sample.docx");
-    ready_now(package.save(system, &path)).unwrap();
+    let docx = Docx::new(WordprocessingKind::Document).unwrap();
+    ready_now(docx.save_transitional(system, &path)).unwrap();
     path
 }
 
@@ -162,7 +154,13 @@ fn cat_writes_the_bytes_of_the_part() {
     };
     let mut out = Vec::new();
     cmd_cat(&system, &args, &mut out).unwrap();
-    assert_eq!(out, b"<w:document/>");
+    let package = ready_now(Package::open(&system, &args.file)).unwrap();
+    assert_eq!(
+        out,
+        package
+            .part_bytes(&PartName::new("/word/document.xml").unwrap())
+            .unwrap()
+    );
 }
 
 #[test]

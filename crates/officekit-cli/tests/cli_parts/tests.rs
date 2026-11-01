@@ -3,14 +3,13 @@ use std::path::{Path, PathBuf};
 use std::process::Output;
 
 use assert_cmd::Command;
+use officekit::docx::Docx;
+use officekit::parts::kinds::WordprocessingKind;
 use officekit_xml::ready::ready_now;
 use os_shim::System as _;
 use os_shim::real::RealSystem;
 use serde_json::Value;
 use tempfile::TempDir;
-
-use officekit_xml::packaging::package::Package;
-use officekit_xml::packaging::part_name::PartName;
 
 fn run(args: &[&str]) -> Output {
     Command::cargo_bin("officekit")
@@ -21,16 +20,9 @@ fn run(args: &[&str]) -> Output {
 }
 
 fn write_sample(dir: &Path) -> PathBuf {
-    let mut package = Package::new();
-    package
-        .set_part_bytes(
-            &PartName::new("/word/document.xml").unwrap(),
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml",
-            b"<w:document/>",
-        )
-        .unwrap();
     let path = dir.join("sample.docx");
-    ready_now(package.save(&RealSystem::new(), &path)).unwrap();
+    let docx = Docx::new(WordprocessingKind::Document).unwrap();
+    ready_now(docx.save_transitional(&RealSystem::new(), &path)).unwrap();
     path
 }
 
@@ -42,7 +34,10 @@ fn lists_part_names_one_per_line() {
     let output = run(&["parts", path.to_str().unwrap()]);
     assert!(output.status.success(), "command failed: {output:?}");
     let stdout = str::from_utf8(&output.stdout).unwrap();
-    assert_eq!(stdout, "/[Content_Types].xml\n/word/document.xml\n");
+    assert_eq!(
+        stdout,
+        "/[Content_Types].xml\n/_rels/.rels\n/word/document.xml\n"
+    );
 }
 
 #[test]
@@ -58,6 +53,7 @@ fn json_output_carries_file_and_parts() {
         payload["parts"],
         Value::Array(vec![
             Value::from("/[Content_Types].xml"),
+            Value::from("/_rels/.rels"),
             Value::from("/word/document.xml")
         ])
     );

@@ -3,6 +3,8 @@ use std::path::{Path, PathBuf};
 use std::process::Output;
 
 use assert_cmd::Command;
+use officekit::docx::Docx;
+use officekit::parts::kinds::WordprocessingKind;
 use officekit_xml::ready::ready_now;
 use os_shim::real::RealSystem;
 use tempfile::TempDir;
@@ -19,17 +21,16 @@ fn run(args: &[&str]) -> Output {
 }
 
 fn write_sample(dir: &Path) -> PathBuf {
-    let mut package = Package::new();
-    package
-        .set_part_bytes(
-            &PartName::new("/word/document.xml").unwrap(),
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml",
-            b"<w:document/>",
-        )
-        .unwrap();
     let path = dir.join("sample.docx");
-    ready_now(package.save(&RealSystem::new(), &path)).unwrap();
+    let docx = Docx::new(WordprocessingKind::Document).unwrap();
+    ready_now(docx.save_transitional(&RealSystem::new(), &path)).unwrap();
     path
+}
+
+/// The bytes of the part `name` of the package at `path`.
+fn part_bytes(path: &Path, name: &str) -> Vec<u8> {
+    let package = ready_now(Package::open(&RealSystem::new(), path)).unwrap();
+    package.part_bytes(&PartName::new(name).unwrap()).unwrap()
 }
 
 #[test]
@@ -39,7 +40,7 @@ fn writes_the_bytes_of_the_part() {
 
     let output = run(&["cat", path.to_str().unwrap(), "/word/document.xml"]);
     assert_eq!(output.status.code(), Some(0_i32), "got {output:?}");
-    assert_eq!(output.stdout, b"<w:document/>");
+    assert_eq!(output.stdout, part_bytes(&path, "/word/document.xml"));
 }
 
 #[test]

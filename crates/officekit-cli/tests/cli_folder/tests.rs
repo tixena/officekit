@@ -3,6 +3,8 @@ use std::path::Path;
 use std::process::Output;
 
 use assert_cmd::Command;
+use officekit::docx::Docx;
+use officekit::parts::kinds::WordprocessingKind;
 use officekit_xml::ready::ready_now;
 use os_shim::System as _;
 use os_shim::real::RealSystem;
@@ -20,17 +22,10 @@ fn run(args: &[&str]) -> Output {
 }
 
 fn write_sample(path: &Path) {
-    let mut package = Package::new();
-    package
-        .set_part_bytes(
-            &PartName::new("/word/document.xml").unwrap(),
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml",
-            b"<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body/></w:document>",
-        )
-        .unwrap();
     let system = RealSystem::new();
     ready_now(system.create_dir_all(path.parent().unwrap())).unwrap();
-    ready_now(package.save(&system, path)).unwrap();
+    let docx = Docx::new(WordprocessingKind::Document).unwrap();
+    ready_now(docx.save_transitional(&system, path)).unwrap();
 }
 
 fn text(path: &Path) -> String {
@@ -58,7 +53,9 @@ fn down_format_up_round_trip() {
         str::from_utf8(&expanding.stdout).unwrap(),
         format!("expanded: {}\n", folder.display())
     );
-    assert!(text(&folder.join("word/document.xml")).contains("\n  <w:body/>"));
+    assert!(
+        text(&folder.join("word/document.xml")).contains("\n  <w:body>\n    <w:p/>\n  </w:body>")
+    );
     assert_eq!(
         text(&folder.join("info.json")),
         "{\n  \"name\": \"My Doc.docx\"\n}"
@@ -68,7 +65,7 @@ fn down_format_up_round_trip() {
     assert!(formatting.status.success(), "{formatting:?}");
     assert_eq!(
         str::from_utf8(&formatting.stdout).unwrap(),
-        "inspected 2 XML parts, rewrote 0\n"
+        "inspected 3 XML parts, rewrote 0\n"
     );
 
     let collapsing = run(&[
@@ -89,7 +86,9 @@ fn down_format_up_round_trip() {
     let part = package
         .part_bytes(&PartName::new("/word/document.xml").unwrap())
         .unwrap();
-    assert!(!part.contains(&b'\n'));
+    let text = String::from_utf8(part).unwrap();
+    let (_, element) = text.split_once("?>\r\n").unwrap();
+    assert!(!element.contains('\n'), "{element}");
 }
 
 #[test]

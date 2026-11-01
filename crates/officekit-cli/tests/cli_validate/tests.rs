@@ -3,14 +3,13 @@ use std::path::{Path, PathBuf};
 use std::process::Output;
 
 use assert_cmd::Command;
+use officekit::docx::Docx;
+use officekit::parts::kinds::WordprocessingKind;
 use officekit_xml::ready::ready_now;
 use os_shim::System as _;
 use os_shim::bucket::Condition;
 use os_shim::real::RealSystem;
 use tempfile::TempDir;
-
-use officekit_xml::packaging::package::Package;
-use officekit_xml::packaging::part_name::PartName;
 
 fn run(args: &[&str]) -> Output {
     Command::cargo_bin("officekit")
@@ -21,16 +20,9 @@ fn run(args: &[&str]) -> Output {
 }
 
 fn write_sample(dir: &Path) -> PathBuf {
-    let mut package = Package::new();
-    package
-        .set_part_bytes(
-            &PartName::new("/word/document.xml").unwrap(),
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml",
-            b"<w:document/>",
-        )
-        .unwrap();
     let path = dir.join("sample.docx");
-    ready_now(package.save(&RealSystem::new(), &path)).unwrap();
+    let docx = Docx::new(WordprocessingKind::Document).unwrap();
+    ready_now(docx.save_transitional(&RealSystem::new(), &path)).unwrap();
     path
 }
 
