@@ -2,7 +2,7 @@
 //!
 //! Transitional has no date cell type, so each date cell (`t="d"`) becomes a
 //! number cell holding the date's serial date-time in the workbook's date
-//! system (ECMA-376 Part 1, 18.17.4.1), and the save reports each cell it
+//! system (ECMA-376 Part 4, 15.3.4), and the save reports each cell it
 //! converted.
 
 use core::fmt;
@@ -102,10 +102,13 @@ pub fn convert_date_cells(
     warnings
 }
 
-/// The serial date-time of `date` (ECMA-376 Part 1, 18.17.4.1).
+/// The serial date-time of `date` in a Transitional workbook (ECMA-376 Part 4, 15.3.4).
 ///
 /// The serial counts days from the base date of the 1900 date system, or of
-/// the 1904 one when `date1904`, the time of day as a fraction of a day.
+/// the 1904 one when `date1904`, the time of day as a fraction of a day. From
+/// 1899-12-31 through 1900-02-28 the 1900 system counts one less, because
+/// Office counts a 1900-02-29 at serial 60 and 1900-01-01 is 1 ([MS-OI29500],
+/// Part 1 18.2.28, note j).
 /// `None` outside 0001-01-01 to 9999-12-31; a zone the date names is ignored,
 /// as a workbook's dates are local.
 ///
@@ -123,11 +126,16 @@ pub fn serial_date_time(date: &DateTime, date1904: bool) -> Option<f64> {
         return None;
     }
     let base = if date1904 { BASE_1904 } else { BASE_1900 };
-    let days = days_from_civil(
+    let counted = days_from_civil(
         i64::from(date.year),
         i64::from(date.month),
         i64::from(date.day),
     ) - base;
+    let days = if !date1904 && (1..=60).contains(&counted) {
+        counted - 1
+    } else {
+        counted
+    };
     let seconds =
         (i128::from(date.hour) * 60 + i128::from(date.minute)) * 60 + i128::from(date.second);
     let total = i128::from(days) * DAY + seconds * 1_000_000_000 + i128::from(date.nanosecond);

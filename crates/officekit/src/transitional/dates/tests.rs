@@ -47,7 +47,6 @@ fn the_date_of_a_save_gives_its_serial_in_both_systems() {
 #[test]
 fn the_standards_dates_give_their_serial_date_times() {
     // ECMA-376 Part 1, 18.17.4.1: the examples and the limits of both systems.
-    assert_eq!(serial("1899-12-31T12:00", false).as_deref(), Some("1.5"));
     assert_eq!(serial("1899-12-25T18:00", false).as_deref(), Some("-4.25"));
     assert_eq!(serial("0001-01-01", false).as_deref(), Some("-693593"));
     assert_eq!(serial("0001-01-01", true).as_deref(), Some("-695055"));
@@ -75,7 +74,6 @@ fn the_standards_dates_give_their_serial_date_times() {
         rounded("1910-02-03T10:05:54", false, 7).as_deref(),
         Some("3687.4207639")
     );
-    assert_eq!(serial("1900-01-01T12:00:00", false).as_deref(), Some("2.5"));
     assert_eq!(
         rounded("9999-12-31T23:59:59", false, 7).as_deref(),
         Some("2958465.9999884")
@@ -93,6 +91,18 @@ fn the_standards_dates_give_their_serial_date_times() {
         rounded("9999-12-31T23:59:59", true, 7).as_deref(),
         Some("2957003.9999884")
     );
+}
+
+#[test]
+fn a_transitional_workbook_counts_1900_01_01_as_one() {
+    assert_eq!(serial("1899-12-30", false).as_deref(), Some("0"));
+    assert_eq!(serial("1899-12-31T12:00", false).as_deref(), Some("0.5"));
+    assert_eq!(serial("1900-01-01", false).as_deref(), Some("1"));
+    assert_eq!(serial("1900-01-01T12:00:00", false).as_deref(), Some("1.5"));
+    assert_eq!(serial("1900-02-28", false).as_deref(), Some("59"));
+    assert_eq!(serial("1900-03-01", false).as_deref(), Some("61"));
+    assert_eq!(serial("12:00", false).as_deref(), Some("0.5"));
+    assert_eq!(serial("1904-01-01", true).as_deref(), Some("0"));
 }
 
 #[test]
