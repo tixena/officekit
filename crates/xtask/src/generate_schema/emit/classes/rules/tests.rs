@@ -24,6 +24,13 @@ const TRANSITIONAL_WML: &str = r#"<xsd:schema xmlns:xsd="http://www.w3.org/2001/
       <xsd:enumeration value="left"/>
     </xsd:restriction>
   </xsd:simpleType>
+  <xsd:simpleType name="ST_TwipsMeasure">
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+  <xsd:complexType name="CT_PageSz">
+    <xsd:attribute name="w" type="ST_TwipsMeasure"/>
+    <xsd:attribute name="code" type="xsd:integer"/>
+  </xsd:complexType>
   <xsd:simpleType name="ST_OnOff1">
     <xsd:restriction base="xsd:string">
       <xsd:enumeration value="on"/>
@@ -79,6 +86,7 @@ const TRANSITIONAL_WML: &str = r#"<xsd:schema xmlns:xsd="http://www.w3.org/2001/
       <xsd:element name="compat" type="CT_Compat" minOccurs="0"/>
       <xsd:element name="checkBox" type="CT_CheckBox" minOccurs="0"/>
       <xsd:element name="ddList" type="CT_DdList" minOccurs="0"/>
+      <xsd:element name="pgSz" type="CT_PageSz" minOccurs="0"/>
     </xsd:sequence>
   </xsd:complexType>
   <xsd:element name="pPr" type="CT_PPr"/>
@@ -97,6 +105,13 @@ const STRICT_WML: &str = r#"<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSch
   <xsd:simpleType name="ST_OnOff">
     <xsd:union memberTypes="xsd:boolean"/>
   </xsd:simpleType>
+  <xsd:simpleType name="ST_TwipsMeasure">
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+  <xsd:complexType name="CT_PageSz">
+    <xsd:attribute name="w" type="ST_TwipsMeasure"/>
+    <xsd:attribute name="code" type="xsd:integer"/>
+  </xsd:complexType>
   <xsd:complexType name="CT_Jc">
     <xsd:attribute name="val" type="ST_Jc"/>
   </xsd:complexType>
@@ -140,30 +155,50 @@ const STRICT_WML: &str = r#"<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSch
       <xsd:element name="compat" type="CT_Compat" minOccurs="0"/>
       <xsd:element name="checkBox" type="CT_CheckBox" minOccurs="0"/>
       <xsd:element name="ddList" type="CT_DdList" minOccurs="0"/>
+      <xsd:element name="pgSz" type="CT_PageSz" minOccurs="0"/>
     </xsd:sequence>
   </xsd:complexType>
   <xsd:element name="pPr" type="CT_PPr"/>
 </xsd:schema>"#;
 
-/// Transitional `sml.xsd`: a cell type without `d`.
+/// Transitional `sml.xsd`: a cell type without `d`, and a calculation chain's cell of the same
+/// tag whose `ref` Strict names `r`.
 const TRANSITIONAL_SML: &str = r#"<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"
-  targetNamespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
+  targetNamespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main"
+  elementFormDefault="qualified">
   <xsd:simpleType name="ST_CellType">
     <xsd:restriction base="xsd:string">
       <xsd:enumeration value="n"/>
     </xsd:restriction>
   </xsd:simpleType>
   <xsd:complexType name="CT_Cell">
+    <xsd:attribute name="r" type="xsd:string"/>
     <xsd:attribute name="t" type="ST_CellType"/>
   </xsd:complexType>
-  <xsd:element name="c" type="CT_Cell"/>
+  <xsd:complexType name="CT_Row">
+    <xsd:sequence>
+      <xsd:element name="c" type="CT_Cell" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CT_CalcCell">
+    <xsd:attribute name="r" type="xsd:string"/>
+    <xsd:attribute name="ref" type="xsd:string"/>
+  </xsd:complexType>
+  <xsd:complexType name="CT_CalcChain">
+    <xsd:sequence>
+      <xsd:element name="c" type="CT_CalcCell" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="row" type="CT_Row"/>
+  <xsd:element name="calcChain" type="CT_CalcChain"/>
 </xsd:schema>"#;
 
-/// Strict `sml.xsd`: the cell type with `d`.
+/// Strict `sml.xsd`: the cell type with `d`, and the calculation chain's cell with `r` alone.
 const STRICT_SML: &str = r#"<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xmlns="http://purl.oclc.org/ooxml/spreadsheetml/main"
-  targetNamespace="http://purl.oclc.org/ooxml/spreadsheetml/main">
+  targetNamespace="http://purl.oclc.org/ooxml/spreadsheetml/main"
+  elementFormDefault="qualified">
   <xsd:simpleType name="ST_CellType">
     <xsd:restriction base="xsd:string">
       <xsd:enumeration value="n"/>
@@ -171,9 +206,24 @@ const STRICT_SML: &str = r#"<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSch
     </xsd:restriction>
   </xsd:simpleType>
   <xsd:complexType name="CT_Cell">
+    <xsd:attribute name="r" type="xsd:string"/>
     <xsd:attribute name="t" type="ST_CellType"/>
   </xsd:complexType>
-  <xsd:element name="c" type="CT_Cell"/>
+  <xsd:complexType name="CT_Row">
+    <xsd:sequence>
+      <xsd:element name="c" type="CT_Cell" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CT_CalcCell">
+    <xsd:attribute name="r" type="xsd:string"/>
+  </xsd:complexType>
+  <xsd:complexType name="CT_CalcChain">
+    <xsd:sequence>
+      <xsd:element name="c" type="CT_CalcCell" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="row" type="CT_Row"/>
+  <xsd:element name="calcChain" type="CT_CalcChain"/>
 </xsd:schema>"#;
 
 /// A Transitional file with no Strict twin.
@@ -201,6 +251,13 @@ renames = { left = "start" }
 [[attribute]]
 type = "w:CT_Ind"
 renames = { left = "start" }
+
+[[attribute]]
+type = "x:CT_CalcCell"
+renames = { ref = "r" }
+
+[[twips]]
+type = "w:ST_TwipsMeasure"
 "#;
 
 fn row(prefix: &str, uri: &str, strict: Option<&str>) -> Row {
@@ -377,5 +434,47 @@ fn an_extension_row_takes_a_percentage_rule_for_its_text_or_attribute() {
             .attributes
             .get(&(tag(Some(0), "shape"), tag(None, "baseline"))),
         Some(&AttributeRule::Values(percent))
+    );
+}
+
+#[test]
+fn an_attribute_of_a_twips_type_is_found_by_its_element() {
+    let found = rules(TABLE).unwrap();
+    assert!(
+        found
+            .twips
+            .contains(&(tag(Some(1), "pgSz"), tag(Some(1), "w")))
+    );
+    assert!(
+        !found
+            .twips
+            .contains(&(tag(Some(1), "pgSz"), tag(Some(1), "code")))
+    );
+}
+
+#[test]
+fn the_attribute_a_rename_moves_to_keeps_its_way_back_to_the_parent_that_renamed_it() {
+    let found = rules(TABLE).unwrap();
+    let (owner, target) = (tag(Some(2), "c"), tag(None, "r"));
+    assert_eq!(found.moved.get(&(owner.clone(), target.clone())), None);
+    assert_eq!(
+        found
+            .moved_contextual
+            .get(&(tag(Some(2), "calcChain"), owner.clone(), target.clone())),
+        Some(&(tag(None, "ref"), AttributeRule::Rename("r".to_owned())))
+    );
+    assert!(
+        !found
+            .moved_contextual
+            .contains_key(&(tag(Some(2), "row"), owner, target))
+    );
+    assert_eq!(
+        found
+            .moved
+            .get(&(tag(Some(1), "ind"), tag(Some(1), "start"))),
+        Some(&(
+            tag(Some(1), "left"),
+            AttributeRule::Rename("start".to_owned())
+        ))
     );
 }

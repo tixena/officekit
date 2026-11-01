@@ -6,6 +6,8 @@ use crate::parts::model_of;
 use crate::parts::part_root::{self, PartRoot};
 #[cfg(any(feature = "strict", feature = "transitional"))]
 use crate::parts::restore_through_module;
+#[cfg(feature = "transitional")]
+use crate::transitional;
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::packaging::error::PackageError;
 #[cfg(any(feature = "strict", feature = "transitional"))]
@@ -144,7 +146,8 @@ where
 /// In `from`, the package as it is. In the other class, a copy: `own` is given each part first
 /// and answers whether it stored the part itself; every other part goes through the module its
 /// content type names, loaded with `open` and stored with `write` in `to`, a part no module knows
-/// staying as it is; then every relationship type takes `to`'s spelling.
+/// staying as it is; then every relationship type takes `to`'s spelling. From Strict to
+/// Transitional, each part written again then takes Transitional's own spelling of every value.
 ///
 /// # Errors
 ///
@@ -164,8 +167,18 @@ pub fn to_bytes_in_class(
     }
     let mut copy = package.duplicate()?;
     for name in copy.part_names()? {
+        #[cfg(feature = "transitional")]
+        let before = (from == ConformanceClass::Strict && to == ConformanceClass::Transitional)
+            .then(|| copy.part_bytes(&name))
+            .transpose()?;
         if !own(&mut copy, &name)? {
             restore_through_module(&mut copy, &name, to, open, write)?;
+        }
+        #[cfg(feature = "transitional")]
+        if let Some(original) = before
+            && copy.part_bytes(&name)? != original
+        {
+            transitional::spell_tree(&mut copy, &name, write)?;
         }
     }
     copy.set_relationship_class(to)?;

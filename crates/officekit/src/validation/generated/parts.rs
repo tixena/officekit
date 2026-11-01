@@ -348,7 +348,7 @@
 //   e26c4528f8340924ff27391d34681ecde1f597fc5ce3dbf2d354edc9c6071a52  crates/xtask/data/part_roots.toml
 //   fbf0be1333c4222066cf32730001139ef31634bad0f057c9b6986f9b5630be85  crates/xtask/data/sdk_corrections.toml
 //   dff6adee70b19bb1f9b56e50e9cc20316298c14255ec7e2d6cb0efe795318af0  crates/xtask/data/simple_types.toml
-//   826c3dd8910b449bfeb890e69497433d022b1a31561d1821960683e824941ef2  crates/xtask/data/strict_correspondences.toml
+//   15d7605929c6001fc8949c1bad8f52f4f78bb8b4d3729a1f55007809a6364719  crates/xtask/data/strict_correspondences.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 

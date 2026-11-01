@@ -581,7 +581,8 @@ impl Docx {
     /// The file's bytes in the Transitional class. Needs the feature `transitional`.
     ///
     /// They are the package as it is when the file was read Transitional. Otherwise every part a
-    /// part module knows is written again in Transitional, every relationship type takes
+    /// part module knows is written again in Transitional, each of its values in Transitional's
+    /// own spelling (`start` is `left`, `234pt` is `4680`), every relationship type takes
     /// Transitional's spelling, and every other part stays as it is.
     ///
     /// The list of warnings is always empty: a Word file has no date cells to convert, and an

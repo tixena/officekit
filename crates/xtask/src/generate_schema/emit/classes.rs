@@ -7,6 +7,7 @@
 //! `strict_correspondences.toml`, which says what each Transitional addition
 //! becomes in Strict.
 
+pub mod back;
 pub mod correspondences;
 pub mod rules;
 pub mod text;
@@ -87,6 +88,7 @@ where
     let transitional = SchemaSet::read(system, &inputs.transitional_schemas)?;
     let strict = SchemaSet::read(system, &inputs.strict_schemas)?;
     let built = rules::build(&transitional, &strict, &emitted.namespaces, &table)?;
+    let way_back = back::build(&built, &table)?;
     let header = header(system, inputs, &text)?;
     let prefixes: Vec<String> = emitted
         .namespaces
@@ -142,6 +144,10 @@ where
     files.push((
         Path::new(TRANSITIONAL_PATH).join("rules.rs"),
         text::transitional_rules(&header, &prefixes, &built),
+    ));
+    files.push((
+        Path::new(TRANSITIONAL_PATH).join("spellings.rs"),
+        text::transitional_spellings(&header, &prefixes, &way_back),
     ));
     write(system, files)?;
     count(&built, &mut summary);

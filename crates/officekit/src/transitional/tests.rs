@@ -6,7 +6,7 @@ use officekit_xml::error::{ReadError, WriteError};
 use officekit_xml::parse::parse;
 use officekit_xml::write::{Layout, WriteOptions};
 
-use super::Transitional;
+use super::{Transitional, spell};
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const W_STRICT: &str = "http://purl.oclc.org/ooxml/wordprocessingml/main";
@@ -250,4 +250,124 @@ fn an_ecma_wsp_under_another_address_stays_as_it_is() {
         "<w:r xmlns:w=\"{W}\" xmlns:wp=\"{WP}\" xmlns:a=\"{A}\"><w:drawing><wp:inline><a:graphic><a:graphicData uri=\"{uri}\"><wp:wsp><wp:bodyPr/></wp:wsp></a:graphicData></a:graphic></wp:inline></w:drawing></w:r>"
     );
     assert_eq!(transitional::<TextRun>(&run), run);
+}
+
+/// `text` after a save from Strict to Transitional's walk, serialized compact, with whether the
+/// walk changed it.
+fn spelled(text: &str) -> (String, bool) {
+    let mut root = element(text);
+    let changed = spell(&mut root, None);
+    let mut part = Part::new("", root);
+    part.declaration = None;
+    part.prolog.clear();
+    (String::from_utf8(part.to_xml(KEEP)).unwrap(), changed)
+}
+
+#[test]
+fn the_walk_back_writes_each_kind_of_row_in_transitional_s_spelling() {
+    let (written, changed) = spelled(&format!(
+        "<w:body xmlns:w=\"{W}\"><w:tbl><w:tblPr><w:tblW w:w=\"234pt\" w:type=\"dxa\"/><w:jc w:val=\"end\"/><w:tblBorders><w:start w:val=\"single\"/><w:end w:val=\"single\"/></w:tblBorders><w:tblLook w:firstRow=\"1\" w:lastRow=\"0\" w:firstColumn=\"true\" w:lastColumn=\"0\" w:noHBand=\"0\" w:noVBand=\"1\"/></w:tblPr></w:tbl><w:p><w:pPr><w:tabs><w:tab w:val=\"start\" w:pos=\"72pt\"/></w:tabs><w:ind w:start=\"36pt\" w:hanging=\"0.5in\"/><w:jc w:val=\"start\"/></w:pPr><w:r><w:rPr><w:w w:val=\"89%\"/></w:rPr></w:r></w:p><w:sectPr><w:pgSz w:w=\"612pt\" w:h=\"792pt\"/></w:sectPr></w:body>"
+    ));
+    assert!(changed);
+    for expected in [
+        "<w:tblW w:w=\"4680\" w:type=\"dxa\"/>",
+        "<w:jc w:val=\"right\"/>",
+        "<w:tblBorders><w:left w:val=\"single\"/><w:right w:val=\"single\"/></w:tblBorders>",
+        "w:noVBand=\"1\" w:val=\"04A0\"/>",
+        "<w:tab w:val=\"left\" w:pos=\"1440\"/>",
+        "<w:ind w:left=\"720\" w:hanging=\"720\"/>",
+        "<w:jc w:val=\"left\"/>",
+        "<w:w w:val=\"89\"/>",
+        "<w:pgSz w:w=\"12240\" w:h=\"15840\"/>",
+    ] {
+        assert!(written.contains(expected), "{expected} in {written}");
+    }
+}
+
+#[test]
+fn a_measure_rounds_half_away_from_zero_and_a_value_it_cannot_read_stays() {
+    let (written, _) = spelled(&format!(
+        "<w:tblPr xmlns:w=\"{W}\"><w:tblW w:w=\"233.33pt\" w:type=\"dxa\"/><w:tblInd w:w=\"96.08%\" w:type=\"pct\"/><w:tblCellSpacing w:w=\"abc\" w:type=\"dxa\"/></w:tblPr>"
+    ));
+    assert!(
+        written.contains("<w:tblW w:w=\"4667\" w:type=\"dxa\"/>"),
+        "{written}"
+    );
+    assert!(
+        written.contains("<w:tblInd w:w=\"4804\" w:type=\"pct\"/>"),
+        "{written}"
+    );
+    assert!(
+        written.contains("<w:tblCellSpacing w:w=\"abc\" w:type=\"dxa\"/>"),
+        "{written}"
+    );
+    let (negative, _) = spelled(&format!(
+        "<w:ind xmlns:w=\"{W}\" w:start=\"-0.025pt\" w:end=\"2.54cm\"/>"
+    ));
+    assert_eq!(
+        negative,
+        format!("<w:ind xmlns:w=\"{W}\" w:left=\"-1\" w:right=\"1440\"/>")
+    );
+}
+
+#[test]
+fn the_walk_back_moves_codes_dates_and_children_back_into_their_attributes() {
+    let (font, _) = spelled(&format!(
+        "<w:fonts xmlns:w=\"{W}\"><w:font w:name=\"A\"><w:charset w:characterSet=\"iso-8859-1\"/></w:font><w:font w:name=\"B\"><w:charset w:characterSet=\"x-unknown\"/></w:font></w:fonts>"
+    ));
+    assert!(font.contains("<w:charset w:val=\"00\"/>"), "{font}");
+    assert!(
+        font.contains("<w:charset w:characterSet=\"x-unknown\"/>"),
+        "{font}"
+    );
+    let (workbook, _) = spelled(&format!(
+        "<x:root xmlns:x=\"{X}\"><x:textPr characterSet=\"iso-2022-jp\"/><x:dynamicFilter type=\"today\" maxValIso=\"2024-01-01T12:00:00\"/><x:protectedRange name=\"p\" sqref=\"A1\"><x:securityDescriptor>O:WD</x:securityDescriptor></x:protectedRange><x:dxf><x:border><x:start style=\"thin\"/><x:end/></x:border></x:dxf></x:root>"
+    ));
+    for expected in [
+        "<x:textPr codePage=\"50220\"/>",
+        "<x:dynamicFilter type=\"today\" maxVal=\"45292.5\"/>",
+        "<x:protectedRange name=\"p\" sqref=\"A1\" securityDescriptor=\"O:WD\"/>",
+        "<x:border><x:left style=\"thin\"/><x:right/></x:border>",
+    ] {
+        assert!(workbook.contains(expected), "{expected} in {workbook}");
+    }
+}
+
+#[test]
+fn the_walk_back_scopes_a_rule_to_the_parent_that_has_it() {
+    let (written, _) = spelled(&format!(
+        "<x:root xmlns:x=\"{X}\"><x:calcChain><x:c r=\"A1\" i=\"1\"/></x:calcChain><x:row><x:c r=\"A1\"/></x:row></x:root>"
+    ));
+    assert_eq!(
+        written,
+        format!(
+            "<x:root xmlns:x=\"{X}\"><x:calcChain><x:c ref=\"A1\" i=\"1\"/></x:calcChain><x:row><x:c r=\"A1\"/></x:row></x:root>"
+        )
+    );
+}
+
+#[test]
+fn the_walk_back_converts_percentages_in_text_and_attributes_and_keeps_a_chart_s_numbers() {
+    let wp14 = "http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing";
+    let chart = "http://schemas.openxmlformats.org/drawingml/2006/chart";
+    let (written, _) = spelled(&format!(
+        "<a:root xmlns:a=\"{A}\" xmlns:wp14=\"{wp14}\" xmlns:c=\"{chart}\"><a:alpha val=\"93.999%\"/><a:gs pos=\"50%\"/><wp14:pctWidth>40%</wp14:pctWidth><c:gapWidth val=\"219\"/><c:overlap val=\"-27\"/></a:root>"
+    ));
+    for expected in [
+        "<a:alpha val=\"93999\"/>",
+        "<a:gs pos=\"50000\"/>",
+        "<wp14:pctWidth>40000</wp14:pctWidth>",
+        "<c:gapWidth val=\"219\"/>",
+        "<c:overlap val=\"-27\"/>",
+    ] {
+        assert!(written.contains(expected), "{expected} in {written}");
+    }
+}
+
+#[test]
+fn the_walk_back_leaves_transitional_s_own_spelling_unchanged() {
+    let text = format!(
+        "<w:p xmlns:w=\"{W}\"><w:pPr><w:ind w:left=\"720\"/><w:jc w:val=\"left\"/></w:pPr></w:p>"
+    );
+    assert_eq!(spelled(&text), (text, false));
 }

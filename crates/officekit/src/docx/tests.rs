@@ -509,6 +509,62 @@ fn vml_takes_the_wrapper_in_strict_and_keeps_it_through_a_round_trip() {
     assert_eq!(text(again.package(), again.main_document_part()), first);
 }
 
+/// A Word file read in `class`, whose main document in `uri` holds `body`.
+#[cfg(feature = "transitional")]
+fn docx_with_body(class: ConformanceClass, uri: &str, body: &str) -> Docx {
+    let content_type = WordprocessingKind::Document.main_content_type();
+    let mut package = package_of(class, content_type);
+    package
+        .set_part_bytes(
+            &name("/word/document.xml"),
+            content_type,
+            format!("<w:document xmlns:w=\"{uri}\"><w:body>{body}</w:body></w:document>")
+                .as_bytes(),
+        )
+        .unwrap();
+    Docx::from_bytes(package.to_bytes().unwrap(), OpenOptions::default()).unwrap()
+}
+
+/// The main document of the file `bytes`.
+#[cfg(feature = "transitional")]
+fn main_part_text(bytes: Vec<u8>) -> String {
+    text(
+        &Package::from_bytes(bytes).unwrap(),
+        &name("/word/document.xml"),
+    )
+}
+
+#[cfg(all(feature = "strict", feature = "transitional"))]
+#[test]
+fn a_transitional_save_of_a_strict_file_writes_transitional_s_spelling() {
+    let strict = docx_with_body(
+        ConformanceClass::Strict,
+        STRICT_W,
+        concat!(
+            "<w:tbl><w:tblPr><w:tblW w:w=\"234pt\" w:type=\"dxa\"/><w:jc w:val=\"end\"/></w:tblPr></w:tbl>",
+            "<w:p><w:pPr><w:jc w:val=\"start\"/></w:pPr><w:r><w:rPr><w:w w:val=\"89%\"/></w:rPr></w:r></w:p>",
+        ),
+    );
+    let (bytes, _) = strict.to_bytes_transitional().unwrap();
+    let body = main_part_text(bytes);
+    assert!(body.contains("w:w=\"4680\""), "{body}");
+    assert!(body.contains("<w:jc w:val=\"left\"/>"), "{body}");
+    assert!(body.contains("<w:jc w:val=\"right\"/>"), "{body}");
+    assert!(body.contains("<w:w w:val=\"89\"/>"), "{body}");
+}
+
+#[cfg(feature = "transitional")]
+#[test]
+fn a_transitional_save_of_a_transitional_file_keeps_what_it_read() {
+    let original = docx_with_body(
+        ConformanceClass::Transitional,
+        W,
+        "<w:p><w:pPr><w:jc w:val=\"start\"/></w:pPr></w:p>",
+    );
+    let (bytes, _) = original.to_bytes_transitional().unwrap();
+    assert!(main_part_text(bytes).contains("<w:jc w:val=\"start\"/>"));
+}
+
 #[cfg(all(feature = "strict", feature = "transitional"))]
 #[test]
 fn a_strict_file_saved_transitional_takes_transitional_names_back() {

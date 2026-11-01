@@ -5,6 +5,7 @@
 use alloc::collections::BTreeSet;
 use core::fmt::Write as _;
 
+use super::back::{Back, BackRule};
 use super::correspondences::{Bits, Codes, Spelling};
 use super::rules::{AttributeRule, ChildRule, Rules, Tag};
 use crate::generate_schema::emit::markup::render::layout::{self, Expr};
@@ -160,6 +161,167 @@ pub fn strict_rules(header: &str, prefixes: &[String], rules: &Rules) -> String 
     spellings_statics(rules, &mut out);
     texts_static(prefixes, rules, &mut out);
     out
+}
+
+/// `spellings.rs` of `officekit::transitional`: the tables of a save from Strict to
+/// Transitional, a module of its own.
+#[must_use]
+pub fn transitional_spellings(header: &str, prefixes: &[String], back: &Back) -> String {
+    let mut out = String::from(header);
+    out.push_str(
+        "//! The tables of a save from Strict to Transitional, generated from the Strict walk's\n\
+         //! tables reversed: what each Strict spelling is in Transitional.\n",
+    );
+    let mut namespaces: BTreeSet<u8> = BTreeSet::new();
+    for (owner, item) in back
+        .attributes
+        .keys()
+        .chain(back.children.keys())
+        .chain(back.child_attributes.keys())
+    {
+        namespaces.extend(owner.0.into_iter().chain(item.0));
+    }
+    for attribute in back.child_attributes.values() {
+        namespaces.extend(attribute.0);
+    }
+    for (parent, owner, item) in back.contextual.keys() {
+        namespaces.extend(parent.0.into_iter().chain(owner.0).chain(item.0));
+    }
+    namespaces.extend(back.texts.keys().filter_map(|found| found.0));
+    out.push_str(
+        "\nuse officekit_markup::Tag;\nuse officekit_xml::name::NamespaceId;\n\nuse super::{BackRule, Bits};\n\n",
+    );
+    out.push_str(&constants(prefixes, &namespaces));
+    back_attributes_static(prefixes, back, &mut out);
+    back_children_statics(prefixes, back, &mut out);
+    for (name, pairs) in &back.codes {
+        out.push('\n');
+        out.push_str("/// Each name with the code Transitional writes for it; sorted.\n");
+        layout::statement(
+            &format!("pub static {}: &[(&str, &str)] = ", codes_static(name)),
+            &pairs_expr(pairs),
+            &mut out,
+        );
+    }
+    back_contextual_static(prefixes, back, &mut out);
+    let texts: Vec<Expr> = back
+        .texts
+        .iter()
+        .map(|(owner, per_percent)| {
+            Expr::Tuple(vec![
+                tag(prefixes, owner),
+                Expr::Atom(layout::integer(i128::from(*per_percent))),
+            ])
+        })
+        .collect();
+    out.push('\n');
+    out.push_str(
+        "/// The elements whose text is a percentage, each with how many of the bare number make\n\
+         /// one percent; sorted.\n",
+    );
+    layout::statement(
+        "pub static TEXTS: &[(Tag, u32)] = ",
+        &Expr::Slice(texts),
+        &mut out,
+    );
+    out
+}
+
+/// `ATTRIBUTES` of the way back: each attribute's rules, in the order they apply.
+fn back_attributes_static(prefixes: &[String], back: &Back, out: &mut String) {
+    let rows: Vec<Expr> = back
+        .attributes
+        .iter()
+        .flat_map(|((owner, attribute), rules)| {
+            rules.iter().map(|rule| {
+                Expr::Tuple(vec![
+                    tag(prefixes, owner),
+                    tag(prefixes, attribute),
+                    back_rule(rule),
+                ])
+            })
+        })
+        .collect();
+    out.push('\n');
+    out.push_str(
+        "/// What the save does with an attribute, by element and attribute, an attribute's rules\n\
+         /// in the order they apply; sorted.\n",
+    );
+    layout::statement(
+        "pub static ATTRIBUTES: &[(Tag, Tag, BackRule)] = ",
+        &Expr::Slice(rows),
+        out,
+    );
+}
+
+/// `CHILD_ATTRIBUTES` and `CHILDREN` of the way back.
+fn back_children_statics(prefixes: &[String], back: &Back, out: &mut String) {
+    let moved: Vec<Expr> = back
+        .child_attributes
+        .iter()
+        .map(|((owner, child), attribute)| {
+            Expr::Tuple(vec![
+                tag(prefixes, owner),
+                tag(prefixes, child),
+                tag(prefixes, attribute),
+            ])
+        })
+        .collect();
+    out.push('\n');
+    out.push_str(
+        "/// The children whose text goes back into an attribute, by element and child; sorted.\n",
+    );
+    layout::statement(
+        "pub static CHILD_ATTRIBUTES: &[(Tag, Tag, Tag)] = ",
+        &Expr::Slice(moved),
+        out,
+    );
+    let renamed: Vec<Expr> = back
+        .children
+        .iter()
+        .map(|((parent, child), to)| {
+            Expr::Tuple(vec![
+                tag(prefixes, parent),
+                tag(prefixes, child),
+                Expr::Atom(layout::string(to)),
+            ])
+        })
+        .collect();
+    out.push('\n');
+    out.push_str("/// Transitional's name for a child, by parent and child; sorted.\n");
+    layout::statement(
+        "pub static CHILDREN: &[(Tag, Tag, &str)] = ",
+        &Expr::Slice(renamed),
+        out,
+    );
+}
+
+/// `CONTEXTUAL` of the way back: the rules that depend on the element's parent.
+fn back_contextual_static(prefixes: &[String], back: &Back, out: &mut String) {
+    let rows: Vec<Expr> = back
+        .contextual
+        .iter()
+        .flat_map(|((parent, owner, attribute), rules)| {
+            rules.iter().map(|rule| {
+                Expr::Tuple(vec![
+                    tag(prefixes, parent),
+                    tag(prefixes, owner),
+                    tag(prefixes, attribute),
+                    back_rule(rule),
+                ])
+            })
+        })
+        .collect();
+    out.push('\n');
+    out.push_str(
+        "/// What the save does with an attribute of an element whose types disagree, by\n\
+         /// parent, element, and attribute; sorted.\n",
+    );
+    layout::statement(
+        "pub static CONTEXTUAL: &[(Tag, Tag, Tag, BackRule)] = ",
+        &Expr::Slice(rows),
+        out,
+    );
 }
 
 /// `rules.rs` of `officekit::transitional`: the values a Transitional write refuses.
@@ -451,33 +613,75 @@ fn attribute_rule(rules: &Rules, rule: &AttributeRule) -> Expr {
         ),
         AttributeRule::Refuse(label) => Expr::call("AttributeRule::Refuse", vec![string(label)]),
         AttributeRule::Rename(to) => Expr::call("AttributeRule::Rename", vec![string(to)]),
-        AttributeRule::Unpack { bits, label } => {
-            let bits_expr = match bits {
-                Bits::Characters(names) => Expr::call("Bits::Characters", vec![strings(names)]),
-                Bits::Hex(names) => Expr::call(
-                    "Bits::Hex",
-                    vec![Expr::Slice(
-                        names
-                            .iter()
-                            .map(|(bit, name)| {
-                                Expr::Tuple(vec![Expr::Atom(format!("0x{bit:04X}")), string(name)])
-                            })
-                            .collect(),
-                    )],
-                ),
-            };
-            Expr::Struct(
-                "AttributeRule::Unpack".to_owned(),
-                vec![
-                    ("bits".to_owned(), bits_expr),
-                    ("label".to_owned(), string(label)),
-                ],
-            )
-        }
+        AttributeRule::Unpack { bits, label } => Expr::Struct(
+            "AttributeRule::Unpack".to_owned(),
+            vec![
+                ("bits".to_owned(), bits_expr(bits)),
+                ("label".to_owned(), string(label)),
+            ],
+        ),
         AttributeRule::Values(list) => Expr::call(
             "AttributeRule::Values",
             vec![Expr::Atom(
                 rules.spellings.get(list).cloned().unwrap_or_default(),
+            )],
+        ),
+    }
+}
+
+/// A way-back rule's expression.
+fn back_rule(rule: &BackRule) -> Expr {
+    let string = |text: &str| Expr::Atom(layout::string(text));
+    let number = |value: u32| Expr::Atom(layout::integer(i128::from(value)));
+    match rule {
+        BackRule::Code { codes, to } => Expr::Struct(
+            "BackRule::Code".to_owned(),
+            vec![
+                ("codes".to_owned(), Expr::Atom(codes_static(codes))),
+                ("to".to_owned(), string(to)),
+            ],
+        ),
+        BackRule::Measure {
+            per_percent,
+            per_point,
+            percent,
+            unit,
+        } => Expr::Struct(
+            "BackRule::Measure".to_owned(),
+            vec![
+                ("per_percent".to_owned(), number(*per_percent)),
+                ("per_point".to_owned(), number(*per_point)),
+                ("percent".to_owned(), string(percent)),
+                ("unit".to_owned(), string(unit)),
+            ],
+        ),
+        BackRule::Pack(bits) => Expr::call("BackRule::Pack", vec![bits_expr(bits)]),
+        BackRule::Percent(per_percent) => {
+            Expr::call("BackRule::Percent", vec![number(*per_percent)])
+        }
+        BackRule::Rename(to) => Expr::call("BackRule::Rename", vec![string(to)]),
+        BackRule::Serial(to) => Expr::call("BackRule::Serial", vec![string(to)]),
+        BackRule::Twips => Expr::atom("BackRule::Twips"),
+        BackRule::Values(pairs) => Expr::call("BackRule::Values", vec![pairs_expr(pairs)]),
+    }
+}
+
+/// A packed attribute's bits' expression.
+fn bits_expr(bits: &Bits) -> Expr {
+    match bits {
+        Bits::Characters(names) => Expr::call("Bits::Characters", vec![strings(names)]),
+        Bits::Hex(names) => Expr::call(
+            "Bits::Hex",
+            vec![Expr::Slice(
+                names
+                    .iter()
+                    .map(|(bit, name)| {
+                        Expr::Tuple(vec![
+                            Expr::Atom(format!("0x{bit:04X}")),
+                            Expr::Atom(layout::string(name)),
+                        ])
+                    })
+                    .collect(),
             )],
         ),
     }
@@ -589,6 +793,21 @@ fn spelling(item: &Spelling) -> Expr {
             ],
         ),
     }
+}
+
+/// A slice of pairs of string literals.
+fn pairs_expr(pairs: &[(String, String)]) -> Expr {
+    Expr::Slice(
+        pairs
+            .iter()
+            .map(|(from, to)| {
+                Expr::Tuple(vec![
+                    Expr::Atom(layout::string(from)),
+                    Expr::Atom(layout::string(to)),
+                ])
+            })
+            .collect(),
+    )
 }
 
 /// A slice of string literals.

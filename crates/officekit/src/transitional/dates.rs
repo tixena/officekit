@@ -142,6 +142,14 @@ pub fn serial_date_time(date: &DateTime, date1904: bool) -> Option<f64> {
     decimal(total, DAY).parse().ok()
 }
 
+/// The serial date-time, in the 1900 date system, of an ISO 8601 date-time's text; `None` when
+/// the text is no date.
+pub(crate) fn serial_text(text: &str) -> Option<String> {
+    cell_date(text, false)
+        .and_then(|date| serial_date_time(&date, false))
+        .map(|serial| serial.to_string())
+}
+
 /// A date cell's text as a date-time (ECMA-376 Part 1, 18.17.4): a date
 /// alone at midnight, a time of day alone on the date system's base date, or
 /// both joined by `T`; minutes, and seconds with up to nine decimal places.

@@ -30,6 +30,9 @@ pub enum Bits {
 #[non_exhaustive]
 pub struct CharacterSet {
     pub attribute: String,
+    /// The code a save from Strict to Transitional writes for a name two codes share, as the
+    /// code is written; sorted by name.
+    pub back: Vec<(String, String)>,
     pub codes: Codes,
     pub to: String,
     pub type_name: Name,
@@ -77,6 +80,8 @@ pub struct Correspondences {
     pub measures: Vec<Measure>,
     pub members: Vec<Member>,
     pub packed: Vec<Packed>,
+    /// The simple types of a measure in twentieths of a point.
+    pub twips: Vec<Name>,
     pub values: Vec<Values>,
 }
 
@@ -182,9 +187,12 @@ impl Correspondences {
                 })
             })?,
             character_sets: read_rows(&table, "character_set", rows, |row| {
+                let key = row.text("codes")?;
+                let written = row.text("written")?;
                 Ok(CharacterSet {
                     attribute: row.text("attribute")?,
-                    codes: codes(&table, &row.text("codes")?, &row.text("written")?)?,
+                    back: backs(&table, &key, &written)?,
+                    codes: codes(&table, &key, &written)?,
                     to: row.text("to")?,
                     type_name: row.name("type")?,
                 })
@@ -246,6 +254,7 @@ impl Correspondences {
                     type_name: row.name("type")?,
                 })
             })?,
+            twips: read_rows(&table, "twips", rows, |row| row.name("type"))?,
             values: read_rows(&table, "value", rows, |row| {
                 Ok(Values {
                     type_name: row.name("type")?,
@@ -402,6 +411,29 @@ where
         .iter()
         .map(|row| read(&TableRow { key, row, rows }))
         .collect()
+}
+
+/// The table `{key}_back`, when there is one: each name two codes of the table `key` share,
+/// with the code a save from Strict to Transitional writes for it, as `written` spells it.
+fn backs(table: &toml::Table, key: &str, written: &str) -> Result<Vec<(String, String)>> {
+    let back_key = format!("{key}_back");
+    let Some(listed) = table.get(&back_key) else {
+        return Ok(Vec::new());
+    };
+    let entries = listed
+        .as_table()
+        .with_context(|| format!("`{back_key}` is not a table"))?;
+    let mut rows = Vec::new();
+    for (name, value) in entries {
+        let code = match (written, value) {
+            ("decimal", toml::Value::Integer(number)) => number.to_string(),
+            ("hexadecimal", toml::Value::String(text)) => text.clone(),
+            _ => bail!("the code of {name} in `{back_key}` is not written as `{key}`'s codes are"),
+        };
+        rows.push((name.clone(), code));
+    }
+    rows.sort();
+    Ok(rows)
 }
 
 /// The code table `key`, its codes `written` in `hexadecimal` (one byte

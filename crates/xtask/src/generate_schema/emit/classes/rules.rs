@@ -8,7 +8,7 @@
 //! or a child of that tag.
 
 use alloc::collections::{BTreeMap, BTreeSet};
-use core::mem;
+use core::{fmt, mem};
 
 use anyhow::{Context as _, Result, bail};
 
@@ -25,6 +25,9 @@ mod tests;
 /// A tag of the tables: its namespace's id, `None` when unqualified, and its
 /// local name.
 pub type Tag = (Option<u8>, String);
+
+/// An attribute a rule moves to another, with the rule.
+pub type Moved = (Tag, AttributeRule);
 
 /// What a Strict save does with an attribute of an element.
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
@@ -83,6 +86,11 @@ pub struct Rules {
     pub contextual: BTreeMap<(Tag, Tag, Tag), AttributeRule>,
     /// Elements of the Transitional schemas no Strict schema declares.
     pub elements: BTreeSet<Tag>,
+    /// By element and the attribute a rule moves an attribute to: the attribute it moves and
+    /// the rule, for the way back. A rename, a character set, or an ISO date moves one.
+    pub moved: BTreeMap<(Tag, Tag), Moved>,
+    /// By parent, element, and attribute: the same, for an element whose types disagree.
+    pub moved_contextual: BTreeMap<(Tag, Tag, Tag), Moved>,
     /// The namespaces with no Strict twin, each with the local names of its
     /// elements.
     pub namespaces: BTreeMap<u8, Vec<String>>,
@@ -93,14 +101,26 @@ pub struct Rules {
     pub strict_only: BTreeMap<(Tag, Tag), (Vec<String>, String)>,
     /// By element: what Strict writes for the text of an extension element.
     pub texts: BTreeMap<Tag, Vec<Spelling>>,
+    /// By element and attribute: the attributes whose type is a measure in twentieths of a
+    /// point, by the table's `twips` rows.
+    pub twips: BTreeSet<(Tag, Tag)>,
+    /// By parent, element, and attribute: the same, for an element whose types disagree.
+    pub twips_contextual: BTreeSet<(Tag, Tag, Tag)>,
+}
+
+/// The rules a vote settles: by element and attribute where a tag's types agree, and by
+/// parent, element and attribute where they agree only under one parent.
+struct Settled<R> {
+    agreed: BTreeMap<(Tag, Tag), R>,
+    by_parent: BTreeMap<(Tag, Tag, Tag), R>,
 }
 
 /// What one type of a tag says of an attribute, with the tags of the
 /// parents the tag has that type under.
 #[derive(Clone, Debug, Eq, PartialEq)]
-struct Vote {
+struct Vote<R> {
     parents: BTreeSet<Tag>,
-    rule: Option<AttributeRule>,
+    rule: Option<R>,
 }
 
 /// What `build` works with and what it gathers.
@@ -108,10 +128,13 @@ struct Builder<'set> {
     additions: Additions,
     /// What each type of a tag says of an attribute, with the parents the
     /// tag has that type in; `None` keeps the attribute as it is.
-    attribute_votes: BTreeMap<(Tag, Tag), Vec<Vote>>,
+    attribute_votes: BTreeMap<(Tag, Tag), Vec<Vote<AttributeRule>>>,
     /// What each tag's types say of a child.
     child_votes: BTreeMap<(Tag, Tag), BTreeSet<Option<ChildRule>>>,
     ids: BTreeMap<&'set str, u8>,
+    /// What each type of a tag says of an attribute another attribute moves to: the attribute
+    /// moved and its rule; `None` for an attribute of its own.
+    moved_votes: BTreeMap<(Tag, Tag), Vec<Vote<Moved>>>,
     /// Each pair of tag and complex type, with the tags of its parents.
     parents: BTreeMap<(Name, Name), BTreeSet<Name>>,
     problems: Vec<String>,
@@ -131,41 +154,6 @@ struct Builder<'set> {
 }
 
 impl<'set> Builder<'set> {
-    /// The rules of an attribute whose tag's types disagree, by the parent
-    /// each type stands in, where the types under one parent agree.
-    fn by_parent(&mut self, owner: &Tag, attribute: &Tag, votes: &[Vote]) {
-        let all: BTreeSet<&Tag> = votes.iter().flat_map(|vote| &vote.parents).collect();
-        if votes
-            .iter()
-            .any(|vote| vote.parents.is_empty() && vote.rule.is_some())
-        {
-            self.problems.push(format!(
-                "a root type of {owner:?} converts its attribute {attribute:?}, which another \
-                 type of the tag keeps"
-            ));
-        }
-        for parent in all {
-            let rules: BTreeSet<&Option<AttributeRule>> = votes
-                .iter()
-                .filter(|vote| vote.parents.contains(parent))
-                .map(|vote| &vote.rule)
-                .collect();
-            match rules.into_iter().collect::<Vec<_>>().as_slice() {
-                [None] => {}
-                [Some(rule)] => {
-                    self.rules.contextual.insert(
-                        (parent.clone(), owner.clone(), attribute.clone()),
-                        rule.clone(),
-                    );
-                }
-                _ => self.problems.push(format!(
-                    "the types of {owner:?} under {parent:?} disagree on its attribute \
-                     {attribute:?}"
-                )),
-            }
-        }
-    }
-
     /// The table's rows each take an addition the comparison names, and each
     /// addition of a value or a member has a row.
     fn check_rows(&mut self) {
@@ -288,18 +276,47 @@ impl<'set> Builder<'set> {
             .iter()
             .map(|attribute| compare::translate(&attribute.name, &self.twins))
             .collect();
+        let mut moved: BTreeMap<Tag, Moved> = BTreeMap::new();
         for attribute in &effective.attributes {
-            let key = (own.clone(), self.tag(&attribute.name)?);
+            let attribute_tag = self.tag(&attribute.name)?;
+            let key = (own.clone(), attribute_tag.clone());
             let label = format!("{}/@{}", tag.local, attribute.name.local);
             let rule = if strict_attributes.contains(&attribute.name) {
                 self.shared_attribute(name, &attribute.name.local, &attribute.type_ref)?
             } else {
                 Some(self.transitional_only_attribute(name, &attribute.name.local, label))
             };
+            if let Some(target) = rule.as_ref().and_then(moved_to) {
+                let target_tag = (attribute_tag.0, target.to_owned());
+                if let Some(moving) = &rule {
+                    moved.insert(target_tag, (attribute_tag, moving.clone()));
+                }
+            }
             self.attribute_votes.entry(key).or_default().push(Vote {
                 parents: parents.clone(),
                 rule,
             });
+        }
+        for attribute in &effective.attributes {
+            let attribute_tag = self.tag(&attribute.name)?;
+            if !moved.contains_key(&attribute_tag) {
+                self.moved_votes
+                    .entry((own.clone(), attribute_tag))
+                    .or_default()
+                    .push(Vote {
+                        parents: parents.clone(),
+                        rule: None,
+                    });
+            }
+        }
+        for (target, rule) in moved {
+            self.moved_votes
+                .entry((own.clone(), target))
+                .or_default()
+                .push(Vote {
+                    parents: parents.clone(),
+                    rule: Some(rule),
+                });
         }
         let ordered = children(self.transitional, &effective.content);
         let strict_children: BTreeSet<Name> = children(self.strict, &twin.content)
@@ -434,6 +451,7 @@ impl<'set> Builder<'set> {
             attribute_votes: BTreeMap::new(),
             child_votes: BTreeMap::new(),
             ids,
+            moved_votes: BTreeMap::new(),
             parents: parents(transitional),
             problems: Vec::new(),
             rows,
@@ -451,19 +469,13 @@ impl<'set> Builder<'set> {
     /// Each tag's rules, where its types agree.
     fn settle(&mut self) {
         let attribute_votes = mem::take(&mut self.attribute_votes);
-        for ((owner, attribute), votes) in &attribute_votes {
-            let rules: BTreeSet<&Option<AttributeRule>> =
-                votes.iter().map(|vote| &vote.rule).collect();
-            match rules.into_iter().collect::<Vec<_>>().as_slice() {
-                [None] => {}
-                [Some(rule)] => {
-                    self.rules
-                        .attributes
-                        .insert((owner.clone(), attribute.clone()), rule.clone());
-                }
-                _ => self.by_parent(owner, attribute, votes),
-            }
-        }
+        let attributes = settled(&attribute_votes, &mut self.problems);
+        self.rules.attributes.extend(attributes.agreed);
+        self.rules.contextual.extend(attributes.by_parent);
+        let moved_votes = mem::take(&mut self.moved_votes);
+        let moved = settled(&moved_votes, &mut self.problems);
+        self.rules.moved = moved.agreed;
+        self.rules.moved_contextual = moved.by_parent;
         for ((owner, child), votes) in &self.child_votes {
             match votes.iter().collect::<Vec<_>>().as_slice() {
                 [None] => {}
@@ -792,6 +804,58 @@ impl<'set> Builder<'set> {
             .get(&Name::new(strict_namespace, &name.local))?;
         Some(self.strict.effective(declared))
     }
+
+    /// The attributes whose type holds one of the table's `twips` types, by the parent where a
+    /// tag's types disagree.
+    fn twips(&mut self) -> Result<()> {
+        for type_name in &self.table.twips {
+            if !self.transitional.simple_types.contains_key(type_name) {
+                self.problems.push(format!(
+                    "the `twips` row names {type_name}, which no schema declares"
+                ));
+            }
+        }
+        let mut votes: BTreeMap<(Tag, Tag), Vec<Vote<()>>> = BTreeMap::new();
+        for (tag, type_ref) in self.transitional.element_tags() {
+            if !self.to_strict.contains_key(&tag.namespace) {
+                continue;
+            }
+            let TypeRef::Complex {
+                anonymous: _anonymous,
+                name,
+            } = type_ref
+            else {
+                continue;
+            };
+            let Some(declared) = self.transitional.complex_types.get(name) else {
+                continue;
+            };
+            let parents: BTreeSet<Tag> = self
+                .parents
+                .get(&(tag.clone(), name.clone()))
+                .map(|found| found.iter().map(|parent| self.tag(parent)).collect())
+                .transpose()?
+                .unwrap_or_default();
+            for attribute in self.transitional.effective(declared).attributes {
+                let twips = self
+                    .table
+                    .twips
+                    .iter()
+                    .any(|type_name| holds(self.transitional, &attribute.type_ref, type_name));
+                votes
+                    .entry((self.tag(tag)?, self.tag(&attribute.name)?))
+                    .or_default()
+                    .push(Vote {
+                        parents: parents.clone(),
+                        rule: twips.then_some(()),
+                    });
+            }
+        }
+        let twips = settled(&votes, &mut self.problems);
+        self.rules.twips = twips.agreed.into_keys().collect();
+        self.rules.twips_contextual = twips.by_parent.into_keys().collect();
+        Ok(())
+    }
 }
 
 /// Every table the walks read, from the two schema sets, the namespace
@@ -824,6 +888,7 @@ pub fn build(
     builder.elements()?;
     builder.namespaces()?;
     builder.strict_only()?;
+    builder.twips()?;
     builder.check_rows();
     builder.extensions()?;
     builder.settle();
@@ -840,6 +905,82 @@ pub fn build(
         }
     }
     Ok(rules)
+}
+
+/// The attribute a rule moves its attribute to: a rename's, a character set's or an ISO date's.
+fn moved_to(rule: &AttributeRule) -> Option<&str> {
+    match rule {
+        AttributeRule::CharacterSet {
+            codes: _codes,
+            label: _label,
+            to,
+        } => Some(to),
+        AttributeRule::Iso { label: _label, to } => Some(to),
+        AttributeRule::Rename(to) => Some(to),
+        AttributeRule::Measure {
+            per_percent: _per_percent,
+            per_point: _per_point,
+            percent: _percent,
+            unit: _unit,
+        } => None,
+        AttributeRule::Unpack {
+            bits: _bits,
+            label: _label,
+        } => None,
+        AttributeRule::Child(_) | AttributeRule::Refuse(_) | AttributeRule::Values(_) => None,
+    }
+}
+
+/// The rule of each element's attribute whose types agree, and by parent the rule of one whose
+/// types disagree but agree under that parent; each disagreement left into `problems`.
+fn settled<R>(votes: &BTreeMap<(Tag, Tag), Vec<Vote<R>>>, problems: &mut Vec<String>) -> Settled<R>
+where
+    R: Clone + fmt::Debug + Ord,
+{
+    let mut agreed = BTreeMap::new();
+    let mut by_parent = BTreeMap::new();
+    for ((owner, attribute), found) in votes {
+        let rules: BTreeSet<&Option<R>> = found.iter().map(|vote| &vote.rule).collect();
+        match rules.into_iter().collect::<Vec<_>>().as_slice() {
+            [None] => continue,
+            [Some(rule)] => {
+                agreed.insert((owner.clone(), attribute.clone()), rule.clone());
+                continue;
+            }
+            _ => {}
+        }
+        if found
+            .iter()
+            .any(|vote| vote.parents.is_empty() && vote.rule.is_some())
+        {
+            problems.push(format!(
+                "a root type of {owner:?} converts its attribute {attribute:?}, which another \
+                 type of the tag keeps"
+            ));
+        }
+        let parents: BTreeSet<&Tag> = found.iter().flat_map(|vote| &vote.parents).collect();
+        for parent in parents {
+            let under: BTreeSet<&Option<R>> = found
+                .iter()
+                .filter(|vote| vote.parents.contains(parent))
+                .map(|vote| &vote.rule)
+                .collect();
+            match under.into_iter().collect::<Vec<_>>().as_slice() {
+                [None] => {}
+                [Some(rule)] => {
+                    by_parent.insert(
+                        (parent.clone(), owner.clone(), attribute.clone()),
+                        rule.clone(),
+                    );
+                }
+                _ => problems.push(format!(
+                    "the types of {owner:?} under {parent:?} disagree on its attribute \
+                     {attribute:?}"
+                )),
+            }
+        }
+    }
+    Settled { agreed, by_parent }
 }
 
 /// Each pair of tag and complex type, with the tags of the elements whose
@@ -918,7 +1059,8 @@ fn children(set: &SchemaSet, content: &Content) -> Vec<Name> {
 }
 
 /// The name of the static holding a code table: the table's key, upper case.
-fn codes_name(codes: &Codes) -> String {
+#[must_use]
+pub fn codes_name(codes: &Codes) -> String {
     match codes {
         Codes::Byte(_) => "CHARSET".to_owned(),
         Codes::Number(_) => "CODE_PAGE".to_owned(),

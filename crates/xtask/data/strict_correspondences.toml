@@ -367,6 +367,18 @@ type = "x:CT_PivotCacheDefinition"
 attribute = "refreshedDate"
 to = "refreshedDateIso"
 
+# Simple types of a measure in twentieths of a point (twips), Part 1, 22.9.2.14
+# and 17.18.81. Both classes take a universal measure in them, and Word writes
+# one in its Strict files. A save from Strict to Transitional writes each as
+# the bare number Word writes in its Transitional files, rounded half away
+# from zero.
+
+[[twips]]
+type = "s:ST_TwipsMeasure"
+
+[[twips]]
+type = "w:ST_SignedTwipsMeasure"
+
 # Part 4, 14.5.1.1: each one-byte character-set code with the name Part 4
 # gives it, spelled as Part 4 prints it. 01 (default), 02 (Symbol), and FF
 # (OEM) have none.
@@ -486,3 +498,11 @@ to = "refreshedDateIso"
 54936 = "GB18030"
 65000 = "utf-7"
 65001 = "utf-8"
+
+# The code a save from Strict to Transitional writes for a name two code pages
+# share. iso-2022-jp names 50220 and 50222; .NET's Encoding.GetEncoding takes
+# it to 50220
+# (https://learn.microsoft.com/archive/blogs/shawnste/encoding-getencodings-has-a-couple-duplicate-names,
+# read 2026-11-01).
+[code_page_back]
+"iso-2022-jp" = 50220

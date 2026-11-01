@@ -98,6 +98,37 @@ fn a_member_row_with_keep_writes_no_spelling() {
 }
 
 #[test]
+fn the_table_reads_the_twips_types_and_a_code_table_s_way_back() {
+    let table = Correspondences::parse(
+        r#"
+[[twips]]
+type = "w:ST_TwipsMeasure"
+
+[[character_set]]
+type = "w:CT_TextPr"
+attribute = "codePage"
+to = "characterSet"
+codes = "code_page"
+written = "decimal"
+
+[code_page]
+50220 = "iso-2022-jp"
+50222 = "iso-2022-jp"
+
+[code_page_back]
+"iso-2022-jp" = 50220
+"#,
+        &rows(),
+    )
+    .unwrap();
+    assert_eq!(table.twips, [Name::new(W, "ST_TwipsMeasure")]);
+    assert_eq!(
+        table.character_sets[0].back,
+        [("iso-2022-jp".to_owned(), "50220".to_owned())]
+    );
+}
+
+#[test]
 fn a_prefix_the_namespace_table_lacks_is_an_error() {
     let error = Correspondences::parse("[[value]]\ntype = \"q:ST_Jc\"\nvalues = {}\n", &rows())
         .unwrap_err()

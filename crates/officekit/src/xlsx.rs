@@ -356,8 +356,9 @@ impl Xlsx {
     }
 
     /// The file's bytes in the Transitional class: as they are when it was read Transitional,
-    /// else every part a part module knows written again in Transitional, every relationship type
-    /// in Transitional's spelling, and every other part, an embedded workbook among them, as it is.
+    /// else every part a part module knows written again in Transitional, each of its values in
+    /// Transitional's own spelling (`50%` of an `a:alpha` is `50000`), every relationship type in
+    /// Transitional's spelling, and every other part, an embedded workbook among them, as it is.
     /// Each date cell of a worksheet that holds a date becomes a number cell in the workbook's date
     /// system, with one warning per cell. A date cell with no value loses its type with no
     /// warning, and one whose text is not a date stays, so the write refuses it. Needs the feature `transitional`.
