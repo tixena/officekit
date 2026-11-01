@@ -1,4 +1,9 @@
 use officekit_markup::chart::{GapWidth, LabelOffset, Overlap};
+use officekit_markup::common_simple_types::{
+    BooleanValue, CryptographicAlgorithmClasses, CryptographicAlgorithmTypes,
+    CryptographicProviderTypes, DocumentConformanceClassValue, DocumentConformanceClassValueMember,
+    MeasurementInTwentiethsOfAPoint, OnOffValue,
+};
 use officekit_markup::drawing::Alpha;
 use officekit_markup::office_drawing_2012_chart_style::DefRPr;
 use officekit_markup::office_drawing_2017_03_chart::DispNaAsBlank;
@@ -8,21 +13,34 @@ use officekit_markup::office_word_2010_wordprocessing_drawing::{
 };
 use officekit_markup::presentation::Presentation;
 use officekit_markup::spreadsheet::{
-    Border, CalculationChainInfo, Cell, DynamicFilter, PivotArea, ProtectedRange,
-    TextImportSettings, Workbook,
+    Border, CalculationChainInfo, Cell, CellCalcCell, DynamicFilter, PivotArea, ProtectedRange,
+    ReferenceSequence, TextImportSettings, Workbook,
 };
+use officekit_markup::vml::{
+    DocumentBackground as VmlBackground, ShapeDefinition, ShapeFillProperties, ShapeFillType,
+};
+use officekit_markup::vml_office_drawing::{EmbeddedOLEObject, OLEType, ShapeLayoutProperties};
 use officekit_markup::wordprocessing::{
-    CharacterSetSupportedByFont, CheckboxFormFieldProperties, CompatibilitySettings, Document,
-    DocumentBackground, DocumentEditingRestrictions, DropDownListFormFieldProperties,
-    FramesetSplitterProperties, Paragraph, ParagraphConditionalFormatting, ParagraphIndentation,
-    PreferredTableWidth, PropertiesForASingleFont, RunProperties, SuggestedSorting,
-    TableCellBorders, TableStyleConditionalFormattingSettingsException, TextRun, WriteProtection,
+    BorderStyles, CharacterSetSupportedByFont, CheckboxFormFieldProperties, ColorValue,
+    CompatibilitySettings, ConditionalFormattingBitmask, DecimalNumberValue,
+    DefaultPropertiesForVMLObjectsInHeaderAndFooter, DefaultPropertiesForVMLObjectsInMainDocument,
+    Document, DocumentBackground, DocumentEditingRestrictions, DocumentProtectionTypes,
+    DocumentSettings, DropDownListFormFieldProperties, EightDigitHexadecimalValue, EmbeddedObject,
+    EmbeddedObjectContent, EmbeddedObjectUpdateModes, FontFamily, FontFamilyValue,
+    FourDigitHexadecimalValue, FramesetSplitterProperties, HorizontalAlignmentType,
+    HorizontalAlignmentTypeMember, LeftParagraphBorder, LinkedObjectProperties, Paragraph,
+    ParagraphAlignment, ParagraphConditionalFormatting, ParagraphContent, ParagraphIndentation,
+    ParagraphProperties, PreferredTableWidth, PropertiesForASingleFont, RightParagraphBorder,
+    RunProperties, SignedMeasurementInTwentiethsOfPoint, SuggestedSorting, TableCellBorders,
+    TableCellLeadingEdgeBorder, TableStyleConditionalFormattingSettingsException, Text as WordText,
+    TextRun, TextRunContent, TwoDigitHexadecimalValue, VMLObject, VmlElementContent,
+    VmlOfficeDrawingElementContent, WebPageSettings, WriteProtection, write,
 };
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::{Document as Part, Element};
 use officekit_xml::error::{ReadError, WriteError};
 use officekit_xml::parse::parse;
-use officekit_xml::write::{Layout, WriteOptions};
+use officekit_xml::write::{Layout, Scope, WriteOptions};
 
 use super::{Refusal, Strict, iso_date_time, refusals};
 
@@ -34,7 +52,6 @@ const A_STRICT: &str = "http://purl.oclc.org/ooxml/drawingml/main";
 const CS: &str = "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
 const MC: &str = "http://schemas.openxmlformats.org/markup-compatibility/2006";
 const P: &str = "http://schemas.openxmlformats.org/presentationml/2006/main";
-const P_STRICT: &str = "http://purl.oclc.org/ooxml/presentationml/main";
 const V: &str = "urn:schemas-microsoft-com:vml";
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const W_STRICT: &str = "http://purl.oclc.org/ooxml/wordprocessingml/main";
@@ -99,6 +116,55 @@ fn written(root: Element) -> String {
     String::from_utf8(part.to_xml(KEEP)).unwrap()
 }
 
+/// What an on and off value holds; `None` when it is absent or holds no such value.
+fn flag(value: Option<&OnOffValue>) -> Option<bool> {
+    value?.value().ok()
+}
+
+fn number(value: &str) -> DecimalNumberValue {
+    DecimalNumberValue::from(value.to_owned())
+}
+
+/// The refusal writing `node` in Strict gives; `None` when the write succeeds.
+fn refused<T>(node: &T) -> Option<&'static str>
+where
+    T: Strict,
+{
+    if let Err(WriteError::NotInClass { class, tag }) = node.to_strict() {
+        (class == ConformanceClass::Strict).then_some(tag)
+    } else {
+        None
+    }
+}
+
+/// A run holding `content`.
+fn run_of(content: TextRunContent) -> TextRun {
+    let mut run = TextRun::default();
+    run.content = vec![content];
+    run
+}
+
+/// `node` written in Strict and read back.
+fn through_strict<T>(node: &T) -> T
+where
+    T: Strict,
+{
+    T::from_strict(&node.to_strict().unwrap()).unwrap()
+}
+
+fn twips(value: &str) -> MeasurementInTwentiethsOfAPoint {
+    MeasurementInTwentiethsOfAPoint::from(value.to_owned())
+}
+
+/// A run holding a `w:pict` of an empty VML shape.
+fn vml_run() -> TextRun {
+    let mut picture = VMLObject::default();
+    picture.content = vec![VmlElementContent::ShapeDefinition(
+        ShapeDefinition::default(),
+    )];
+    run_of(TextRunContent::VMLObject(picture))
+}
+
 #[test]
 fn a_strict_and_a_transitional_paragraph_read_into_equal_structs() {
     let body = "<w:p><w:pPr><w:jc w:val=\"start\"/></w:pPr><w:r><w:t>Hello</w:t></w:r></w:p>";
@@ -113,10 +179,21 @@ fn a_strict_and_a_transitional_paragraph_read_into_equal_structs() {
 
 #[test]
 fn a_transitional_paragraph_writes_as_strict() {
+    let mut alignment = ParagraphAlignment::default();
+    alignment.val = Some(HorizontalAlignmentType::from(
+        HorizontalAlignmentTypeMember::Left,
+    ));
+    let mut properties = ParagraphProperties::default();
+    properties.paragraph_alignment = Some(Box::new(alignment));
+    let mut characters = WordText::default();
+    characters.value = "Hello".to_owned();
+    let mut paragraph = Paragraph::default();
+    paragraph.content = vec![ParagraphContent::TextRun(run_of(TextRunContent::Text(
+        characters,
+    )))];
+    paragraph.properties = Some(Box::new(properties));
     assert_eq!(
-        strict::<Paragraph>(
-            "<w:p xmlns:w=\"{w}\"><w:pPr><w:jc w:val=\"left\"/></w:pPr><w:r><w:t>Hello</w:t></w:r></w:p>"
-        ),
+        written(paragraph.to_strict().unwrap()),
         format!(
             "<w:p xmlns:w=\"{W_STRICT}\"><w:pPr><w:jc w:val=\"start\"/></w:pPr><w:r><w:t>Hello</w:t></w:r></w:p>"
         )
@@ -125,28 +202,25 @@ fn a_transitional_paragraph_writes_as_strict() {
 
 #[test]
 fn the_roots_of_the_main_parts_declare_strict_conformance() {
+    let declared = |member| Some(DocumentConformanceClassValue::from(member));
+    let mut document = Document::default();
+    document.body = Some(Box::default());
     assert_eq!(
-        strict::<Document>("<w:document xmlns:w=\"{w}\"><w:body/></w:document>"),
-        format!(
-            "<w:document xmlns:w=\"{W_STRICT}\" w:conformance=\"strict\"><w:body/></w:document>"
-        )
+        through_strict(&document).conformance,
+        declared(DocumentConformanceClassValueMember::Strict)
+    );
+    document.conformance = declared(DocumentConformanceClassValueMember::Transitional);
+    assert_eq!(
+        through_strict(&document).conformance,
+        declared(DocumentConformanceClassValueMember::Strict)
     );
     assert_eq!(
-        strict::<Document>(
-            "<w:document xmlns:w=\"{w}\" w:conformance=\"transitional\"><w:body/></w:document>"
-        ),
-        format!(
-            "<w:document xmlns:w=\"{W_STRICT}\" w:conformance=\"strict\"><w:body/></w:document>"
-        )
-    );
-    let workbook = strict::<Workbook>("<x:workbook xmlns:x=\"{x}\"><x:sheets/></x:workbook>");
-    assert!(
-        workbook.contains(" conformance=\"strict\""),
-        "{workbook} declares no conformance"
+        through_strict(&Workbook::default()).conformance,
+        declared(DocumentConformanceClassValueMember::Strict)
     );
     assert_eq!(
-        strict::<Presentation>("<p:presentation xmlns:p=\"{p}\"/>"),
-        format!("<p:presentation xmlns:p=\"{P_STRICT}\" conformance=\"strict\"/>")
+        through_strict(&Presentation::default()).conformance,
+        declared(DocumentConformanceClassValueMember::Strict)
     );
 }
 
@@ -161,7 +235,7 @@ fn reading_another_tag_is_an_error() {
 #[test]
 fn a_vml_picture_takes_the_wrapper_word_writes() {
     assert_eq!(
-        strict::<TextRun>("<w:r xmlns:w=\"{w}\"><w:pict><v:shape xmlns:v=\"{v}\"/></w:pict></w:r>"),
+        written(vml_run().to_strict().unwrap()),
         format!(
             "<w:r xmlns:w=\"{W_STRICT}\"><mc:AlternateContent xmlns:mc=\"{MC}\" xmlns:v=\"{V}\"><mc:Choice Requires=\"v\"><w:pict><v:shape xmlns:v=\"{V}\"/></w:pict></mc:Choice></mc:AlternateContent></w:r>"
         )
@@ -200,38 +274,59 @@ fn a_choice_matches_the_prefix_it_requires_by_its_namespace() {
 
 #[test]
 fn a_loose_vml_picture_takes_the_wrapper_with_no_fallback() {
-    let written =
-        strict::<TextRun>("<w:r xmlns:w=\"{w}\"><w:pict><v:shape xmlns:v=\"{v}\"/></w:pict></w:r>");
+    let text = written(vml_run().to_strict().unwrap());
     assert!(
-        written.contains("<mc:Choice Requires=\"v\"><w:pict>"),
-        "{written}"
+        text.contains("<mc:Choice Requires=\"v\"><w:pict>"),
+        "{text}"
     );
-    assert!(written.contains(&format!("xmlns:v=\"{V}\"")), "{written}");
-    assert!(!written.contains("Fallback"), "{written}");
+    assert!(text.contains(&format!("xmlns:v=\"{V}\"")), "{text}");
+    assert!(!text.contains("Fallback"), "{text}");
 }
 
 #[test]
 fn an_embedded_object_takes_the_wrapper_and_its_attribute_rules() {
-    let written = strict::<TextRun>(&format!(
-        "<w:r {RUN_DECLARATIONS} xmlns:o=\"urn:schemas-microsoft-com:office:office\"><w:object w:dxaOrig=\"3630\" w:dyaOrig=\"1935\"><v:shape/><o:OLEObject Type=\"Embed\" ProgID=\"PBrush\"/><w:objectLink w:updateMode=\"always\" w:lockedField=\"on\"/></w:object></w:r>"
-    ));
-    assert!(
-        written
-            .contains("<mc:Choice Requires=\"v\"><w:object w:dxaOrig=\"3630\" w:dyaOrig=\"1935\">"),
-        "{written}"
+    let mut ole = EmbeddedOLEObject::default();
+    ole.prog_id = Some("PBrush".to_owned());
+    ole.r#type = Some(OLEType::from("Embed".to_owned()));
+    let mut link = LinkedObjectProperties::default();
+    link.locked_field = Some(OnOffValue::from("on".to_owned()));
+    link.update_mode = Some(EmbeddedObjectUpdateModes::from("always".to_owned()));
+    let mut object = EmbeddedObject::default();
+    object.content = Some(Box::new(EmbeddedObjectContent::LinkedObjectProperties(
+        link,
+    )));
+    object.dxa_orig = Some(twips("3630"));
+    object.dya_orig = Some(twips("1935"));
+    object.vml_element_content = vec![
+        VmlElementContent::ShapeDefinition(ShapeDefinition::default()),
+        VmlElementContent::EmbeddedOLEObject(ole),
+    ];
+    let text = written(
+        run_of(TextRunContent::EmbeddedObject(object))
+            .to_strict()
+            .unwrap(),
     );
-    assert!(written.contains("ProgID=\"PBrush\""), "{written}");
-    assert!(written.contains("w:lockedField=\"true\""), "{written}");
+    assert!(
+        text.contains("<mc:Choice Requires=\"v\"><w:object w:dxaOrig=\"3630\" w:dyaOrig=\"1935\">"),
+        "{text}"
+    );
+    assert!(text.contains("ProgID=\"PBrush\""), "{text}");
+    assert!(text.contains("w:lockedField=\"true\""), "{text}");
 }
 
 #[test]
 fn an_object_holding_no_vml_stays_in_the_run() {
-    let written = strict::<TextRun>(&format!(
-        "<w:r {RUN_DECLARATIONS}><w:object w:dxaOrig=\"3630\"><w:drawing/></w:object></w:r>"
-    ));
+    let mut object = EmbeddedObject::default();
+    object.drawingml_object = Some(Box::default());
+    object.dxa_orig = Some(twips("3630"));
+    let text = written(
+        run_of(TextRunContent::EmbeddedObject(object))
+            .to_strict()
+            .unwrap(),
+    );
     assert!(
-        written.ends_with("><w:object w:dxaOrig=\"3630\"><w:drawing/></w:object></w:r>"),
-        "{written}"
+        text.ends_with("><w:object w:dxaOrig=\"3630\"><w:drawing/></w:object></w:r>"),
+        "{text}"
     );
 }
 
@@ -275,39 +370,44 @@ fn content_the_typed_tree_keeps_unknown_is_converted_and_checked() {
 
 #[test]
 fn a_packed_bitmask_unpacks_into_its_attributes() {
+    let look = |first_row: Option<&str>| {
+        let mut look = TableStyleConditionalFormattingSettingsException::default();
+        look.first_row = first_row.map(|value| OnOffValue::from(value.to_owned()));
+        look.val = Some(FourDigitHexadecimalValue::from("04A0".to_owned()));
+        let unpacked = through_strict(&look);
+        assert_eq!(unpacked.val, None);
+        [
+            unpacked.first_row,
+            unpacked.last_row,
+            unpacked.first_column,
+            unpacked.last_column,
+            unpacked.no_h_band,
+            unpacked.no_v_band,
+        ]
+        .map(|value| flag(value.as_ref()))
+    };
+    let (yes, no) = (Some(true), Some(false));
+    assert_eq!(look(None), [yes, no, yes, no, no, yes]);
+    assert_eq!(look(Some("0")), [no, no, yes, no, no, yes]);
+    let style = |val: &str| {
+        let mut style = ParagraphConditionalFormatting::default();
+        style.val = Some(ConditionalFormattingBitmask::from(val.to_owned()));
+        style
+    };
+    let unpacked = through_strict(&style("101000000100"));
+    assert_eq!(unpacked.val, None);
     assert_eq!(
-        strict::<TableStyleConditionalFormattingSettingsException>(
-            "<w:tblLook xmlns:w=\"{w}\" w:val=\"04A0\"/>"
-        ),
-        format!(
-            "<w:tblLook xmlns:w=\"{W_STRICT}\" w:firstRow=\"1\" w:lastRow=\"0\" w:firstColumn=\"1\" w:lastColumn=\"0\" w:noHBand=\"0\" w:noVBand=\"1\"/>"
-        )
+        [
+            unpacked.first_row,
+            unpacked.last_row,
+            unpacked.first_column,
+            unpacked.first_row_first_column,
+            unpacked.last_row_first_column,
+        ]
+        .map(|value| flag(value.as_ref())),
+        [yes, no, yes, yes, no]
     );
-    assert_eq!(
-        strict::<TableStyleConditionalFormattingSettingsException>(
-            "<w:tblLook xmlns:w=\"{w}\" w:val=\"04A0\" w:firstRow=\"0\"/>"
-        ),
-        format!(
-            "<w:tblLook xmlns:w=\"{W_STRICT}\" w:firstRow=\"0\" w:lastRow=\"0\" w:firstColumn=\"1\" w:lastColumn=\"0\" w:noHBand=\"0\" w:noVBand=\"1\"/>"
-        )
-    );
-    let unpacked = strict::<ParagraphConditionalFormatting>(
-        "<w:cnfStyle xmlns:w=\"{w}\" w:val=\"101000000100\"/>",
-    );
-    for expected in [
-        "w:firstRow=\"1\"",
-        "w:lastRow=\"0\"",
-        "w:firstColumn=\"1\"",
-        "w:firstRowFirstColumn=\"1\"",
-        "w:lastRowFirstColumn=\"0\"",
-    ] {
-        assert!(unpacked.contains(expected), "{unpacked} lacks {expected}");
-    }
-    assert!(!unpacked.contains("w:val="), "{unpacked} keeps w:val");
-    assert_eq!(
-        refusal::<ParagraphConditionalFormatting>("<w:cnfStyle xmlns:w=\"{w}\" w:val=\"1010\"/>"),
-        Some("cnfStyle/@val")
-    );
+    assert_eq!(refused(&style("1010")), Some("cnfStyle/@val"));
 }
 
 #[test]
@@ -391,43 +491,83 @@ fn a_tag_whose_types_differ_converts_by_its_parent() {
 
 #[test]
 fn renamed_children_and_attributes_take_their_strict_names() {
+    let style = |value: &str| Some(BorderStyles::from(value.to_owned()));
+    let mut left = LeftParagraphBorder::default();
+    left.val = style("single");
+    let mut right = RightParagraphBorder::default();
+    right.val = style("nil");
+    let mut sides = TableCellBorders::default();
+    sides.left_paragraph_border = Some(Box::new(left.clone()));
+    sides.right_paragraph_border = Some(Box::new(right));
+    let renamed = through_strict(&sides);
+    assert_eq!(renamed.left_paragraph_border, None);
+    assert_eq!(renamed.right_paragraph_border, None);
     assert_eq!(
-        strict::<TableCellBorders>(
-            "<w:tcBorders xmlns:w=\"{w}\"><w:left w:val=\"single\"/><w:right w:val=\"nil\"/></w:tcBorders>"
-        ),
-        format!(
-            "<w:tcBorders xmlns:w=\"{W_STRICT}\"><w:start w:val=\"single\"/><w:end w:val=\"nil\"/></w:tcBorders>"
-        )
+        renamed
+            .table_cell_leading_edge_border
+            .and_then(|border| border.val),
+        style("single")
     );
     assert_eq!(
-        strict::<TableCellBorders>(
-            "<w:tcBorders xmlns:w=\"{w}\"><w:start w:val=\"double\"/><w:left w:val=\"single\"/></w:tcBorders>"
-        ),
-        format!("<w:tcBorders xmlns:w=\"{W_STRICT}\"><w:start w:val=\"double\"/></w:tcBorders>")
+        renamed
+            .table_cell_trailing_margin_exception
+            .and_then(|border| border.val),
+        style("nil")
     );
+    let mut start = TableCellLeadingEdgeBorder::default();
+    start.val = style("double");
+    let mut both = TableCellBorders::default();
+    both.left_paragraph_border = Some(Box::new(left));
+    both.table_cell_leading_edge_border = Some(Box::new(start));
+    let kept = through_strict(&both);
+    assert_eq!(kept.left_paragraph_border, None);
     assert_eq!(
-        strict::<Border>("<x:border xmlns:x=\"{x}\"><x:end/><x:left/></x:border>"),
-        format!("<x:border xmlns:x=\"{X_STRICT}\"><x:start/><x:end/></x:border>")
+        kept.table_cell_leading_edge_border
+            .and_then(|border| border.val),
+        style("double")
     );
+    let mut border = Border::default();
+    border.leading_edge_border_left = Some(Box::default());
+    border.trailing_edge_border_end = Some(Box::default());
+    let cell_border = through_strict(&border);
+    assert_eq!(cell_border.leading_edge_border_left, None);
+    assert!(cell_border.leading_edge_border_start.is_some());
+    assert!(cell_border.trailing_edge_border_end.is_some());
+    let measure = |value: &str| Some(SignedMeasurementInTwentiethsOfPoint::from(value.to_owned()));
+    let mut indentation = ParagraphIndentation::default();
+    indentation.hanging = Some(twips("360"));
+    indentation.left = measure("720");
+    let moved = through_strict(&indentation);
+    assert_eq!((moved.start, moved.left), (measure("720"), None));
+    assert_eq!(moved.hanging, Some(twips("360")));
+    indentation.start = measure("10");
+    let started = through_strict(&indentation);
+    assert_eq!((started.start, started.left), (measure("10"), None));
+    let mut cell = CellCalcCell::default();
+    cell.i = Some("1".to_owned());
+    cell.r#ref = Some("A1".to_owned());
+    let mut chain = CalculationChainInfo::default();
+    chain.cell_calc_cell = vec![cell];
+    let cells = through_strict(&chain).cell_calc_cell;
+    let first = cells.first().unwrap();
     assert_eq!(
-        strict::<ParagraphIndentation>("<w:ind xmlns:w=\"{w}\" w:left=\"720\" w:hanging=\"360\"/>"),
-        format!("<w:ind xmlns:w=\"{W_STRICT}\" w:start=\"720\" w:hanging=\"360\"/>")
+        (first.r.as_deref(), first.r#ref.as_deref()),
+        (Some("A1"), None)
     );
+    assert_eq!(first.i.as_deref(), Some("1"));
+    let mut range = ProtectedRange::default();
+    range.name = Some("r".to_owned());
+    range.security_descriptor_attribute = Some("O:WD".to_owned());
+    range.sqref = Some(ReferenceSequence::from("A1".to_owned()));
+    let protected = through_strict(&range);
+    assert_eq!(protected.security_descriptor_attribute, None);
     assert_eq!(
-        strict::<ParagraphIndentation>("<w:ind xmlns:w=\"{w}\" w:start=\"10\" w:left=\"720\"/>"),
-        format!("<w:ind xmlns:w=\"{W_STRICT}\" w:start=\"10\"/>")
-    );
-    let chain = strict::<CalculationChainInfo>(
-        "<x:calcChain xmlns:x=\"{x}\"><x:c ref=\"A1\" i=\"1\"/></x:calcChain>",
-    );
-    assert!(chain.contains("<x:c r=\"A1\" i=\"1\"/>"), "{chain}");
-    assert_eq!(
-        strict::<ProtectedRange>(
-            "<x:protectedRange xmlns:x=\"{x}\" sqref=\"A1\" name=\"r\" securityDescriptor=\"O:WD\"/>"
-        ),
-        format!(
-            "<x:protectedRange xmlns:x=\"{X_STRICT}\" sqref=\"A1\" name=\"r\"><x:securityDescriptor>O:WD</x:securityDescriptor></x:protectedRange>"
-        )
+        protected
+            .security_descriptor
+            .iter()
+            .map(|descriptor| descriptor.value.as_str())
+            .collect::<Vec<_>>(),
+        ["O:WD"]
     );
 }
 
@@ -466,30 +606,42 @@ fn a_character_set_code_takes_its_iana_name() {
 
 #[test]
 fn a_font_drops_a_character_set_code_with_no_name() {
+    let font = |name: &str, code: &str| {
+        let mut charset = CharacterSetSupportedByFont::default();
+        charset.val = Some(TwoDigitHexadecimalValue::from(code.to_owned()));
+        let mut font = PropertiesForASingleFont::default();
+        font.character_set_supported_by_font = Some(Box::new(charset));
+        font.name = Some(name.to_owned());
+        font
+    };
+    let character_set =
+        |held: PropertiesForASingleFont| held.character_set_supported_by_font?.character_set;
     for code in ["01", "02"] {
-        let text = format!(
-            "<w:font xmlns:w=\"{{w}}\" w:name=\"Wingdings\"><w:charset w:val=\"{code}\"/><w:family w:val=\"auto\"/></w:font>"
-        );
-        let written = strict::<PropertiesForASingleFont>(&text);
-        assert!(!written.contains("charset"), "{written}");
-        assert!(written.contains("family"), "{written}");
+        let mut family = FontFamily::default();
+        family.val = Some(FontFamilyValue::from("auto".to_owned()));
+        let mut wingdings = font("Wingdings", code);
+        wingdings.family = Some(Box::new(family));
+        let dropped = through_strict(&wingdings);
+        assert_eq!(dropped.character_set_supported_by_font, None, "{code}");
+        assert!(dropped.family.is_some(), "{code}");
     }
-    let named = strict::<PropertiesForASingleFont>(
-        "<w:font xmlns:w=\"{w}\" w:name=\"Times New Roman\"><w:charset w:val=\"00\"/></w:font>",
-    );
-    assert!(named.contains("characterSet=\"iso-8859-1\""), "{named}");
-    let given = strict::<PropertiesForASingleFont>(
-        "<w:font xmlns:w=\"{w}\" w:name=\"Wingdings\"><w:charset w:val=\"02\" w:characterSet=\"windows-1252\"/></w:font>",
-    );
-    assert!(given.contains("characterSet=\"windows-1252\""), "{given}");
     assert_eq!(
-        refusal::<PropertiesForASingleFont>(
-            "<w:font xmlns:w=\"{w}\" w:name=\"Terminal\"><w:charset w:val=\"FF\"/></w:font>",
-        ),
-        Some("charset/@val")
+        character_set(through_strict(&font("Times New Roman", "00"))).as_deref(),
+        Some("iso-8859-1")
     );
+    let mut given = font("Wingdings", "02");
+    if let Some(charset) = given.character_set_supported_by_font.as_mut() {
+        charset.character_set = Some("windows-1252".to_owned());
+    }
     assert_eq!(
-        refusal::<CharacterSetSupportedByFont>("<w:charset xmlns:w=\"{w}\" w:val=\"01\"/>"),
+        character_set(through_strict(&given)).as_deref(),
+        Some("windows-1252")
+    );
+    assert_eq!(refused(&font("Terminal", "FF")), Some("charset/@val"));
+    let mut loose = CharacterSetSupportedByFont::default();
+    loose.val = Some(TwoDigitHexadecimalValue::from("01".to_owned()));
+    assert_eq!(
+        refused(&loose),
         Some("charset/@val"),
         "a character set outside a font stays refused"
     );
@@ -522,44 +674,68 @@ fn a_serial_date_takes_its_iso_attribute() {
 
 #[test]
 fn legacy_content_has_no_strict_form() {
-    assert_eq!(
-        refusal::<CompatibilitySettings>(
-            "<w:compat xmlns:w=\"{w}\"><w:footnoteLayoutLikeWW8/></w:compat>"
-        ),
-        Some("footnoteLayoutLikeWW8")
-    );
-    assert_eq!(
-        refusal::<DocumentEditingRestrictions>(
-            "<w:documentProtection xmlns:w=\"{w}\" w:hash=\"AAAA\" w:salt=\"AAAA\"/>"
-        ),
-        Some("documentProtection/@hash")
-    );
+    let mut compatibility = CompatibilitySettings::default();
+    compatibility.ignore_page_break_from_continuous_section_break = Some(Box::default());
+    assert_eq!(refused(&compatibility), Some("footnoteLayoutLikeWW8"));
+    let mut protection = DocumentEditingRestrictions::default();
+    protection.hash = Some("AAAA".to_owned());
+    protection.salt = Some("AAAA".to_owned());
+    assert_eq!(refused(&protection), Some("documentProtection/@hash"));
 }
 
 #[test]
 fn a_strict_save_removes_the_settings_word_leaves_out() {
+    let mut compatibility = CompatibilitySettings::default();
+    compatibility.do_not_bypass_east_asian_complex_script_layout_code = Some(Box::default());
+    compatibility.ignore_text_wrapping_around_objects_at_bottom_of_page = Some(Box::default());
+    let removed = through_strict(&compatibility);
     assert_eq!(
-        strict::<CompatibilitySettings>(
-            "<w:compat xmlns:w=\"{w}\"><w:useFELayout/><w:shapeLayoutLikeWW8/></w:compat>"
-        ),
-        format!("<w:compat xmlns:w=\"{W_STRICT}\"/>")
+        removed.do_not_bypass_east_asian_complex_script_layout_code,
+        None
     );
     assert_eq!(
-        refusals(element(
-            "<w:settings xmlns:w=\"{w}\" xmlns:o=\"urn:schemas-microsoft-com:office:office\"><w:shapeDefaults><o:shapelayout/></w:shapeDefaults><w:hdrShapeDefaults><o:shapelayout/></w:hdrShapeDefaults></w:settings>"
-        )),
+        removed.ignore_text_wrapping_around_objects_at_bottom_of_page,
+        None
+    );
+    let layout = || {
+        vec![VmlOfficeDrawingElementContent::ShapeLayoutProperties(
+            ShapeLayoutProperties::default(),
+        )]
+    };
+    let mut main_defaults = DefaultPropertiesForVMLObjectsInMainDocument::default();
+    main_defaults.content = layout();
+    let mut header_defaults = DefaultPropertiesForVMLObjectsInHeaderAndFooter::default();
+    header_defaults.content = layout();
+    let mut settings = DocumentSettings::default();
+    settings.default_properties_for_vml_objects_in_header_and_footer =
+        Some(Box::new(header_defaults));
+    settings.default_properties_for_vml_objects_in_main_document = Some(Box::new(main_defaults));
+    assert_eq!(
+        refusals(write::document_settings(&settings, &mut Scope::default())),
+        []
+    );
+    let without = through_strict(&settings);
+    assert_eq!(
+        without.default_properties_for_vml_objects_in_header_and_footer,
+        None
+    );
+    assert_eq!(
+        without.default_properties_for_vml_objects_in_main_document,
+        None
+    );
+    let mut web = WebPageSettings::default();
+    web.utilize_vml_when_saving_as_web_page = Some(Box::default());
+    assert_eq!(
+        refusals(write::web_page_settings(&web, &mut Scope::default())),
         []
     );
     assert_eq!(
-        refusals(element(
-            "<w:webSettings xmlns:w=\"{w}\"><w:relyOnVML/></w:webSettings>"
-        )),
-        []
+        through_strict(&web).utilize_vml_when_saving_as_web_page,
+        None
     );
+    compatibility.ignore_page_break_from_continuous_section_break = Some(Box::default());
     assert_eq!(
-        refusal::<CompatibilitySettings>(
-            "<w:compat xmlns:w=\"{w}\"><w:useFELayout/><w:footnoteLayoutLikeWW8/></w:compat>"
-        ),
+        refused(&compatibility),
         Some("footnoteLayoutLikeWW8"),
         "what else the part holds stays refused"
     );
@@ -800,52 +976,118 @@ fn the_first_of_refusals_is_what_a_write_refuses() {
 
 #[test]
 fn a_protection_with_no_password_takes_part_1_s_attributes() {
+    let crypt = |provider: &str, sid: &str, spin: &str| {
+        let mut protection = DocumentEditingRestrictions::default();
+        protection.crypt_algorithm_class =
+            Some(CryptographicAlgorithmClasses::from("hash".to_owned()));
+        protection.crypt_algorithm_sid = Some(number(sid));
+        protection.crypt_algorithm_type =
+            Some(CryptographicAlgorithmTypes::from("typeAny".to_owned()));
+        protection.crypt_provider_type =
+            Some(CryptographicProviderTypes::from(provider.to_owned()));
+        protection.crypt_spin_count = Some(number(spin));
+        protection
+    };
+    let sha_512 = through_strict(&crypt("rsaAES", "14", "100000"));
+    assert_eq!(sha_512.algorithm_name.as_deref(), Some("SHA-512"));
+    assert_eq!(sha_512.spin_count, Some(number("100000")));
     assert_eq!(
-        strict::<DocumentEditingRestrictions>(
-            "<w:documentProtection xmlns:w=\"{w}\" w:cryptProviderType=\"rsaAES\" w:cryptAlgorithmClass=\"hash\" w:cryptAlgorithmType=\"typeAny\" w:cryptAlgorithmSid=\"14\" w:cryptSpinCount=\"100000\"/>"
-        ),
-        format!(
-            "<w:documentProtection xmlns:w=\"{W_STRICT}\" w:algorithmName=\"SHA-512\" w:spinCount=\"100000\"/>"
-        )
+        (sha_512.crypt_algorithm_sid, sha_512.crypt_spin_count),
+        (None, None)
     );
-    assert_eq!(
-        strict::<DocumentEditingRestrictions>(
-            "<w:documentProtection xmlns:w=\"{w}\" w:edit=\"readOnly\" w:enforcement=\"0\" w:cryptProviderType=\"rsaFull\" w:cryptAlgorithmClass=\"hash\" w:cryptAlgorithmType=\"typeAny\" w:cryptAlgorithmSid=\"4\" w:cryptSpinCount=\"50000\"/>"
-        ),
-        format!(
-            "<w:documentProtection xmlns:w=\"{W_STRICT}\" w:edit=\"readOnly\" w:enforcement=\"0\" w:algorithmName=\"SHA-1\" w:spinCount=\"50000\"/>"
-        )
-    );
-    assert_eq!(
-        strict::<WriteProtection>(
-            "<w:writeProtection xmlns:w=\"{w}\" w:cryptProviderType=\"rsaAES\" w:cryptAlgorithmClass=\"hash\" w:cryptAlgorithmType=\"typeAny\" w:cryptAlgorithmSid=\"12\" w:cryptSpinCount=\"100000\"/>"
-        ),
-        format!(
-            "<w:writeProtection xmlns:w=\"{W_STRICT}\" w:algorithmName=\"SHA-256\" w:spinCount=\"100000\"/>"
-        )
-    );
+    let mut read_only = crypt("rsaFull", "4", "50000");
+    read_only.edit = Some(DocumentProtectionTypes::from("readOnly".to_owned()));
+    read_only.enforcement = Some(OnOffValue::from("0".to_owned()));
+    let sha_1 = through_strict(&read_only);
+    assert_eq!(sha_1.algorithm_name.as_deref(), Some("SHA-1"));
+    assert_eq!(sha_1.spin_count, Some(number("50000")));
+    assert_eq!(sha_1.edit, read_only.edit);
+    assert_eq!(flag(sha_1.enforcement.as_ref()), Some(false));
+    let mut write_protection = WriteProtection::default();
+    write_protection.crypt_algorithm_class =
+        Some(CryptographicAlgorithmClasses::from("hash".to_owned()));
+    write_protection.crypt_algorithm_sid = Some(number("12"));
+    write_protection.crypt_algorithm_type =
+        Some(CryptographicAlgorithmTypes::from("typeAny".to_owned()));
+    write_protection.crypt_provider_type =
+        Some(CryptographicProviderTypes::from("rsaAES".to_owned()));
+    write_protection.crypt_spin_count = Some(number("100000"));
+    let sha_256 = through_strict(&write_protection);
+    assert_eq!(sha_256.algorithm_name.as_deref(), Some("SHA-256"));
+    assert_eq!(sha_256.spin_count, Some(number("100000")));
 }
 
 #[test]
 fn a_protection_part_1_has_no_slot_for_stays_refused() {
-    for attributes in [
-        "w:cryptAlgorithmSid=\"4\" w:hash=\"9oN7nWkCAyEZib1RomSJTjmPpCY=\"",
-        "w:cryptAlgorithmSid=\"4\" w:salt=\"ZUdHa+D8F/OAKP3I7ssUnQ==\"",
-        "w:cryptAlgorithmSid=\"5\"",
-        "w:cryptProvider=\"Provider\"",
-        "w:algIdExt=\"0000A5691D\"",
-        "w:cryptProviderTypeExt=\"00A5691D\"",
-        "w:cryptAlgorithmClass=\"custom\"",
-        "w:cryptAlgorithmType=\"custom\"",
-        "w:cryptProviderType=\"custom\"",
-    ] {
-        assert!(
-            refusal::<DocumentEditingRestrictions>(&format!(
-                "<w:documentProtection xmlns:w=\"{{w}}\" {attributes}/>"
-            ))
-            .is_some(),
-            "{attributes}"
-        );
+    let protection = |set: fn(&mut DocumentEditingRestrictions)| {
+        let mut node = DocumentEditingRestrictions::default();
+        set(&mut node);
+        node
+    };
+    let cases = [
+        (
+            "SHA-1 with a hash",
+            protection(|node| {
+                node.crypt_algorithm_sid = Some(number("4"));
+                node.hash = Some("9oN7nWkCAyEZib1RomSJTjmPpCY=".to_owned());
+            }),
+        ),
+        (
+            "SHA-1 with a salt",
+            protection(|node| {
+                node.crypt_algorithm_sid = Some(number("4"));
+                node.salt = Some("ZUdHa+D8F/OAKP3I7ssUnQ==".to_owned());
+            }),
+        ),
+        (
+            "an algorithm with no name",
+            protection(|node| {
+                node.crypt_algorithm_sid = Some(number("5"));
+            }),
+        ),
+        (
+            "a provider",
+            protection(|node| {
+                node.crypt_provider = Some("Provider".to_owned());
+            }),
+        ),
+        (
+            "an algorithm extension",
+            protection(|node| {
+                node.alg_id_ext = Some(EightDigitHexadecimalValue::from("0000A5691D".to_owned()));
+            }),
+        ),
+        (
+            "a provider type extension",
+            protection(|node| {
+                node.crypt_provider_type_ext =
+                    Some(EightDigitHexadecimalValue::from("00A5691D".to_owned()));
+            }),
+        ),
+        (
+            "a custom algorithm class",
+            protection(|node| {
+                node.crypt_algorithm_class =
+                    Some(CryptographicAlgorithmClasses::from("custom".to_owned()));
+            }),
+        ),
+        (
+            "a custom algorithm type",
+            protection(|node| {
+                node.crypt_algorithm_type =
+                    Some(CryptographicAlgorithmTypes::from("custom".to_owned()));
+            }),
+        ),
+        (
+            "a custom provider type",
+            protection(|node| {
+                node.crypt_provider_type =
+                    Some(CryptographicProviderTypes::from("custom".to_owned()));
+            }),
+        ),
+    ];
+    for (case, protected) in cases {
+        assert!(refused(&protected).is_some(), "{case}");
     }
 }
 
@@ -863,17 +1105,30 @@ fn a_vml_background_holding_only_a_color_becomes_the_background_s_attributes() {
 
 #[test]
 fn a_vml_background_with_a_fill_of_its_own_stays_refused() {
-    for background in [
-        "<v:background id=\"_x0000_s1025\" fillcolor=\"yellow\"/>",
-        "<v:background id=\"_x0000_s1025\"><v:fill type=\"gradient\"/></v:background>",
-        "<v:background id=\"_x0000_s1025\" filled=\"f\"/>",
+    let background = |content: VmlBackground| {
+        let mut background = DocumentBackground::default();
+        background.color = Some(ColorValue::from("ffffff".to_owned()));
+        background.content = vec![VmlElementContent::DocumentBackground(content)];
+        background
+    };
+    let shape = || {
+        let mut shape = VmlBackground::default();
+        shape.id = Some("_x0000_s1025".to_owned());
+        shape
+    };
+    let mut colored = shape();
+    colored.fillcolor = Some("yellow".to_owned());
+    let mut fill = ShapeFillProperties::default();
+    fill.r#type = Some(ShapeFillType::from("gradient".to_owned()));
+    let mut gradient = shape();
+    gradient.shape_fill_properties = Some(Box::new(fill));
+    let mut unfilled = shape();
+    unfilled.filled = Some(BooleanValue::from("f".to_owned()));
+    for (case, content) in [
+        ("a fill color", colored),
+        ("a fill of its own", gradient),
+        ("no fill", unfilled),
     ] {
-        assert_eq!(
-            refusal::<DocumentBackground>(&format!(
-                "<w:background xmlns:w=\"{{w}}\" xmlns:v=\"{{v}}\" w:color=\"ffffff\">{background}</w:background>"
-            )),
-            Some("background"),
-            "{background}"
-        );
+        assert_eq!(refused(&background(content)), Some("background"), "{case}");
     }
 }
