@@ -91,6 +91,61 @@ fn a_required_child_missing_is_missing_with_what_is_expected() {
 }
 
 #[test]
+fn content_control_properties_follow_the_order_ecma_376_gives_them() {
+    let properties = "w:CT_SdtPr/w:sdtPr";
+    assert_eq!(mismatch(properties, &["alias", "temporary"]), None);
+    assert_eq!(
+        mismatch(properties, &["temporary", "alias"]).map(|(child, code, _)| (child, code)),
+        Some((Some(1), ErrorCode::UnexpectedChild))
+    );
+}
+
+#[test]
+fn an_office_extension_child_of_content_control_properties_goes_anywhere() {
+    let properties = "w:CT_SdtPr/w:sdtPr";
+    let parent_type = &SCHEMA_TYPES[usize::from(id(properties))];
+    let w15 = "http://schemas.microsoft.com/office/word/2012/wordml";
+    let color = QName::prefixed("w15", "color", w15);
+    let typed = parent_type
+        .children
+        .iter()
+        .find(|(namespace, own, _, _)| {
+            color.namespace == Namespace::Known(*namespace) && *own == "color"
+        })
+        .map(|(_, _, type_id, _)| *type_id);
+    let mut named = names(properties, &["alias", "temporary"]);
+    named.insert(1, (color.clone(), typed));
+    named.insert(0, (color, typed));
+    let namespace = Namespace::from_uri(W);
+    let children: Vec<Child<'_>> = named
+        .iter()
+        .map(|(name, found)| Child::new(name, &namespace, *found))
+        .collect();
+    assert_eq!(
+        check(model(properties), &children, id(properties), TARGET).map(|found| found.code),
+        None
+    );
+}
+
+#[test]
+fn a_mail_merge_needs_the_main_document_type_ecma_376_requires() {
+    let merge = "w:CT_MailMerge/w:mailMerge";
+    assert_eq!(mismatch(merge, &["mainDocumentType", "dataType"]), None);
+    assert_eq!(
+        mismatch(merge, &[]),
+        Some((
+            None,
+            ErrorCode::MissingChild,
+            ", expected w:mainDocumentType".to_owned()
+        ))
+    );
+    assert_eq!(
+        mismatch(merge, &["dataType"]).map(|(child, code, _)| (child, code)),
+        Some((Some(0), ErrorCode::UnexpectedChild))
+    );
+}
+
+#[test]
 fn a_child_the_parent_does_not_declare_is_invalid() {
     let found = mismatch("w:CT_P/w:p", &["pPr", "tbl"]);
     assert_eq!(

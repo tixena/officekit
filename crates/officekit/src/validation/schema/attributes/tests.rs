@@ -80,6 +80,31 @@ const NEWER_TYPE: SchemaType = SchemaType {
     versions: Versions(0b11_1111),
 };
 
+const REQUIRED: [ValueCheck; 1] = [ValueCheck {
+    check: Check::Required,
+    union: None,
+    versions: Versions(0b11_1111),
+}];
+
+const STRICT_REQUIRES: [AttributeConstraint; 1] = [AttributeConstraint {
+    checks: &[],
+    class: ValueClass::String,
+    name: "val",
+    namespace: None,
+    strict_checks: Some(&REQUIRED),
+    transitional_only: false,
+}];
+
+const STRICT_REQUIRES_TYPE: SchemaType = SchemaType {
+    attributes: &STRICT_REQUIRES,
+    children: &[],
+    name: "w:CT_StrictRequires/w:strictRequires",
+    particles: &[],
+    strict_text_checks: None,
+    text_checks: &[],
+    versions: Versions(0b11_1111),
+};
+
 /// The `w:w` attribute of a type.
 fn width(type_name: &str) -> &'static AttributeConstraint {
     schema_type(type_name)
@@ -126,6 +151,26 @@ fn codes(element: &Element, type_name: &str, strict: bool) -> Vec<ErrorCode> {
     .into_iter()
     .map(|problem| problem.code)
     .collect()
+}
+
+// XML input: the attribute check works on the generic element, below the model.
+#[test]
+fn a_page_margin_missing_an_attribute_ecma_376_requires_is_reported() {
+    let margin = |attributes: &str| element(&format!("<w:pgMar xmlns:w=\"{W}\" {attributes}/>"));
+    let page = "w:CT_PageMar/w:pgMar";
+    let partial = margin(r#"w:top="1440" w:bottom="1440""#);
+    for strict in [false, true] {
+        assert_eq!(
+            codes(&partial, page, strict),
+            [ErrorCode::MissingRequiredAttribute; 5],
+            "right, left, header, footer and gutter"
+        );
+    }
+    let complete = margin(concat!(
+        r#"w:top="1440" w:right="1440" w:bottom="1440" w:left="1440" "#,
+        r#"w:header="720" w:footer="720" w:gutter="0""#
+    ));
+    assert_eq!(codes(&complete, page, false), []);
 }
 
 #[test]
@@ -270,6 +315,29 @@ fn a_strict_file_reports_a_value_only_transitional_allows() {
     assert_eq!(codes(&left, "w:CT_Jc/w:jc", false).len(), 0);
     let start = element(&format!("<w:jc xmlns:w=\"{W}\" w:val=\"start\"/>"));
     assert_eq!(codes(&start, "w:CT_Jc/w:jc", true).len(), 0);
+}
+
+// XML input: the attribute check works on the generic element, below the model.
+#[test]
+fn an_attribute_only_strict_requires_is_missing_in_a_strict_file_only() {
+    let missing = |xml: &str, strict: bool| -> Vec<ErrorCode> {
+        check(
+            &element(xml),
+            &STRICT_REQUIRES_TYPE,
+            OfficeVersion::Microsoft365,
+            strict,
+            |_| false,
+        )
+        .into_iter()
+        .map(|problem| problem.code)
+        .collect()
+    };
+    assert_eq!(
+        missing("<strictRequires/>", true),
+        [ErrorCode::MissingRequiredAttribute]
+    );
+    assert_eq!(missing("<strictRequires/>", false), []);
+    assert_eq!(missing(r#"<strictRequires val="a"/>"#, true), []);
 }
 
 #[test]

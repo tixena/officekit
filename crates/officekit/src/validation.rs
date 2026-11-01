@@ -28,8 +28,9 @@
 //! error, or [`error::ValidationError::record`] with `--json`. It exits with 0 when no error is
 //! found, 1 when some are, and 2 when the check could not run.
 //!
-//! The tables behind the checks are generated from the schema data of the Open XML SDK 3.5.1 and
-//! are public in [`generated`]. The types of the tables are in [`schema::types`] and
+//! The tables behind the checks are generated from the schema data of the Open XML SDK 3.5.1, with
+//! what ECMA-376's schemas require and that data does not check added, and are public in
+//! [`generated`]. The types of the tables are in [`schema::types`] and
 //! [`semantic::constraint`].
 //!
 //! # Example

@@ -101,6 +101,9 @@ where
         );
         let mut transitional_spelling = false;
         let failures = match constraint.strict_checks {
+            Some(checks) if strict && value.is_none() && transitional.is_empty() => {
+                run(checks, &constraint.class, value, target, ignorable_here)
+            }
             Some(checks) if strict && value.is_some() && transitional != [Failure::Undeclared] => {
                 let found = run(checks, &constraint.class, value, target, ignorable_here);
                 if !found.is_empty() && transitional.is_empty() {

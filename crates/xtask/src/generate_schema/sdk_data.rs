@@ -346,6 +346,18 @@ impl SdkData {
             types,
         })
     }
+
+    /// Add what the Transitional schemas `standard` require and the data does not check: the
+    /// required check of each attribute they make required, and the content model of each type
+    /// whose order or required children the data loosens. What the table `text` keeps stays.
+    ///
+    /// # Errors
+    ///
+    /// Text that is not TOML, a requirement the data cannot hold that no row names, or a row
+    /// naming one it can.
+    pub fn require_standard(&mut self, text: &str, standard: &SchemaSet) -> Result<()> {
+        corrections::apply_requirements(self, text, standard)
+    }
 }
 
 fn argument(entry: &Value) -> Result<(String, Option<String>, String)> {

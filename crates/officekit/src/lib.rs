@@ -446,8 +446,9 @@ assert_eq!(rebuilt.kind(), WordprocessingKind::Document);
 //!   constructor, assign its fields, and keep a wildcard arm in a `match`.
 //! - `Docx::protect` writes a document-protection setting into the settings part. It does not
 //!   encrypt the file. The caller gives the 16 bytes of salt.
-//! - The validator reports what a version of Office would refuse in the parts reachable from the
-//!   package relationships. It does not render a document or calculate a formula.
+//! - The validator reports what ECMA-376 requires and what a version of Office would refuse, in the
+//!   parts reachable from the package relationships. It does not render a document or calculate a
+//!   formula.
 //! - The typed tree is large generated code, so a build that depends on it takes a while.
 
 extern crate alloc;

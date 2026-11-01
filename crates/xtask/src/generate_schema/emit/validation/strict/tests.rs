@@ -307,6 +307,33 @@ fn a_kept_type_gets_no_strict_checks() {
     );
 }
 
+// XSD input: the generator reads schema files, a form the typed model does not hold.
+#[test]
+fn an_attribute_only_strict_requires_gets_strict_checks_with_the_required_check() {
+    let schema = |namespace: &str, required: &str| {
+        format!(
+            r#"<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="{namespace}"
+  targetNamespace="{namespace}" elementFormDefault="qualified" attributeFormDefault="qualified">
+  <xsd:complexType name="CT_CalcCell">
+    <xsd:attribute name="r" type="xsd:string" use="{required}"/>
+  </xsd:complexType>
+</xsd:schema>"#
+        )
+    };
+    let system = MemorySystem::new()
+        .with_file("/t/wml.xsd", schema(W, "optional").as_bytes())
+        .unwrap()
+        .with_file("/s/wml.xsd", schema(STRICT_W, "required").as_bytes())
+        .unwrap();
+    let transitional = SchemaSet::read(&system, &["t/wml.xsd"]).unwrap();
+    let strict = SchemaSet::read(&system, &["s/wml.xsd"]).unwrap();
+    let found = strict_checks(&transitional, &strict, &BTreeSet::new()).unwrap();
+    assert_eq!(
+        found[&Name::new(W, "CT_CalcCell")][&Name::new(W, "r")],
+        [every_target(Check::Required)]
+    );
+}
+
 #[test]
 fn an_attribute_that_takes_a_measure_gets_strict_checks_though_both_classes_type_it_alike() {
     let schema = |namespace: &str| {

@@ -366,3 +366,55 @@ roots = [
 from = ["wps", "wpg", "wpc"]
 prefix = "wp"
 parent = "a:CT_GraphicalObjectData/a:graphicData"
+
+# Attributes ECMA-376 requires that the data does not declare. The generator
+# adds the required check of every attribute the Transitional schemas require
+# and the data leaves optional; it cannot place these, so each stays as the
+# data has it, a decision this table has not made.
+#
+# vt:array: the schema names lBounds and uBounds
+# (shared-documentPropertiesVariantTypes.xsd, CT_Array); the data, lBound and
+# uBound.
+[[undeclared_required]]
+type = "vt:CT_Array/vt:array"
+attribute = ":lBounds"
+
+[[undeclared_required]]
+type = "vt:CT_Array/vt:array"
+attribute = ":uBounds"
+
+# w:customXml: the schema declares uri and the required element
+# (wml.xsd, CT_CustomXmlElement); the data declares no attribute.
+[[undeclared_required]]
+type = "w:CT_CustomXmlBlock/w:customXml"
+attribute = "w:element"
+
+[[undeclared_required]]
+type = "w:CT_CustomXmlCell/w:customXml"
+attribute = "w:element"
+
+[[undeclared_required]]
+type = "w:CT_CustomXmlRow/w:customXml"
+attribute = "w:element"
+
+[[undeclared_required]]
+type = "w:CT_CustomXmlRun/w:customXml"
+attribute = "w:element"
+
+# Children ECMA-376 requires under a name the data does not hold. The generator
+# takes the schema's content model of a type whose data model accepts another
+# order or leaves out a required child; it cannot place these, so each type
+# keeps the data's model, a decision this table has not made.
+#
+# wp:txbx: the schema's txbxContent is in the wp namespace
+# (dml-wordprocessingDrawing.xsd, CT_TextboxInfo); the data holds
+# w:txbxContent, which Word writes.
+[[undeclared_child]]
+type = "wp:CT_TextboxInfo/wp:txbx"
+element = "wp:txbxContent"
+
+# x:anchor: the schema refers to xdr:from and xdr:to (sml.xsd,
+# CT_ObjectAnchor); the data holds x:from and x:to.
+[[undeclared_child]]
+type = "x:CT_ObjectAnchor/x:anchor"
+element = "xdr:from"

@@ -480,8 +480,9 @@ const fn string(kind: StringKind) -> Check {
 }
 
 /// The Strict checks of every attribute both classes declare whose Strict
-/// type is not its Transitional type, or takes a universal measure. An attribute of a type in `kept`, whose
-/// bare number a Strict save keeps, gets none, so a Strict file takes its own checks.
+/// type is not its Transitional type, or takes a universal measure, or that only Strict requires;
+/// an attribute Strict requires has the required check among them. An attribute of a type in
+/// `kept`, whose bare number a Strict save keeps, gets none, so a Strict file takes its own checks.
 ///
 /// # Errors
 ///
@@ -509,17 +510,26 @@ pub fn strict_checks(
         else {
             continue;
         };
-        let strict_types: BTreeMap<Name, TypeRef> = strict
+        let strict_types: BTreeMap<Name, (TypeRef, bool)> = strict
             .effective(twin)
             .attributes
             .into_iter()
-            .map(|attribute| (translate(&attribute.name, &sets.twins), attribute.type_ref))
+            .map(|attribute| {
+                (
+                    translate(&attribute.name, &sets.twins),
+                    (attribute.type_ref, attribute.required),
+                )
+            })
             .collect();
         for attribute in transitional.effective(complex_type).attributes {
-            let Some(strict_type) = strict_types.get(&attribute.name) else {
+            let Some((strict_type, strict_required)) = strict_types.get(&attribute.name) else {
                 continue;
             };
-            if sets.same(strict_type, &attribute.type_ref) && !holds_measure(strict, strict_type) {
+            let only_strict_requires = *strict_required && !attribute.required;
+            if sets.same(strict_type, &attribute.type_ref)
+                && !holds_measure(strict, strict_type)
+                && !only_strict_requires
+            {
                 continue;
             }
             let keeps_bare_number = matches!(
@@ -529,12 +539,19 @@ pub fn strict_checks(
             if keeps_bare_number {
                 continue;
             }
-            let converted = checks(strict, strict_type).with_context(|| {
+            let mut converted = checks(strict, strict_type).with_context(|| {
                 format!(
                     "in the Strict type {strict_type} of the attribute {} of {name}",
                     attribute.name
                 )
             })?;
+            if *strict_required {
+                converted.push(ValueCheck {
+                    check: Check::Required,
+                    union: None,
+                    versions: Versions::ALL,
+                });
+            }
             found
                 .entry(name.clone())
                 .or_default()

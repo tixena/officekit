@@ -1,6 +1,7 @@
 //! The hand-maintained table of corrections to SDK 3.5.1's data, applied to
 //! the types read before anything is emitted.
 
+mod requirements;
 mod standard;
 
 use core::mem;
@@ -8,6 +9,7 @@ use core::slice;
 
 use anyhow::{Context as _, Result, bail};
 
+use self::requirements::{Kept, require};
 use self::standard::{FromStandard, place};
 use super::{DataParticle, DataType, DataVersion, Facet, Occurs, SdkData};
 use crate::generate_schema::model::SchemaSet;
@@ -179,6 +181,31 @@ pub(super) fn apply(data: &mut SdkData, text: &str, standard: &SchemaSet) -> Res
         add_twins(data, &row).with_context(|| format!("in the correction of `{}`", row.parent))?;
     }
     Ok(())
+}
+
+/// Add to `data` what the Transitional schemas `standard` require and the data does not check,
+/// keeping what the table's rows keep.
+pub(super) fn apply_requirements(
+    data: &mut SdkData,
+    text: &str,
+    standard: &SchemaSet,
+) -> Result<()> {
+    let table: toml::Table = text
+        .parse()
+        .context("the table of corrections is not TOML")?;
+    let kept = Kept {
+        free: any_orders(&table)?
+            .into_iter()
+            .map(|row| row.type_name)
+            .collect(),
+        optional: optionals(&table)?
+            .into_iter()
+            .map(|row| (row.type_name, row.attribute))
+            .collect(),
+        undeclared: pairs(&table, "undeclared_required", "attribute")?,
+        undeclared_children: pairs(&table, "undeclared_child", "element")?,
+    };
+    require(data, standard, &kept)
 }
 
 fn known<'data>(data: &'data SdkData, name: &str) -> Result<&'data DataType> {
@@ -647,6 +674,14 @@ fn optionals(table: &toml::Table) -> Result<Vec<Optional>> {
                 type_name: text_field(row, "type")?,
             })
         })
+        .collect()
+}
+
+/// The `type` and the field `second` of each row of the kind `name`.
+fn pairs(table: &toml::Table, name: &str, second: &str) -> Result<Vec<(String, String)>> {
+    rows(table, name)?
+        .into_iter()
+        .map(|row| Ok((text_field(row, "type")?, text_field(row, second)?)))
         .collect()
 }
 

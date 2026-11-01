@@ -1676,6 +1676,7 @@ where
     let transitional = SchemaSet::read(system, &inputs.transitional_schemas)?;
     let mut corrected = data.clone();
     corrected.correct(&sdk_corrections_text, &transitional)?;
+    corrected.require_standard(&sdk_corrections_text, &transitional)?;
     let strict = SchemaSet::read(system, &inputs.strict_schemas)?;
     let open_specifications: Vec<&PathBuf> = inputs
         .open_specifications

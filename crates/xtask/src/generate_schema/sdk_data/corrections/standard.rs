@@ -454,7 +454,8 @@ fn once(name: &str, min: u32, max: Option<u32>) -> DataParticle {
     }
 }
 
-fn prefix_of<'data>(data: &'data SdkData, uri: &str) -> Result<&'data str> {
+/// The data's prefix of the namespace `uri`; empty for no namespace.
+pub(super) fn prefix_of<'data>(data: &'data SdkData, uri: &str) -> Result<&'data str> {
     if uri.is_empty() {
         return Ok("");
     }
