@@ -985,3 +985,20 @@ fn a_transitional_file_checks_a_measure_as_before() {
     let package = word_document("", r#"<w:sectPr><w:pgSz w:w="612pt"/></w:sectPr>"#);
     refused_with(&package, "w:pgSz", "InvalidAttributeValue");
 }
+
+#[test]
+fn a_conditional_format_needs_no_val_in_either_class() {
+    let body = r#"<w:p><w:pPr><w:cnfStyle w:firstRow="1"/></w:pPr></w:p>"#;
+    assert_eq!(all_errors(&word_document("", body)), Vec::<String>::new());
+    assert_eq!(all_errors(&strict_document(body)), Vec::<String>::new());
+    let with_val = r#"<w:p><w:pPr><w:cnfStyle w:val="100000000000"/></w:pPr></w:p>"#;
+    assert_eq!(
+        all_errors(&word_document("", with_val)),
+        Vec::<String>::new()
+    );
+    refused_with(
+        &strict_document(with_val),
+        "w:cnfStyle",
+        "TransitionalOnlyAttribute",
+    );
+}

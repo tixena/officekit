@@ -156,6 +156,12 @@ attribute = "w:name"
 string = true
 "#;
 
+const OPTIONAL_ROW: &str = r#"
+[[optional]]
+type = "w:CT_Level/w:level"
+attribute = "w:val"
+"#;
+
 const STANDARD_NAME_ROW: &str = r#"
 [[standard_name]]
 type = "w:CT_OnOff/w:bold"
@@ -816,4 +822,19 @@ fn a_standard_name_row_that_names_what_the_data_lacks_stops_the_generator() {
             .unwrap_err();
         assert!(format!("{error:#}").contains(to), "{error:#}");
     }
+}
+
+#[test]
+fn an_optional_row_takes_away_only_the_required_check() {
+    let mut data = read_word();
+    data.correct(OPTIONAL_ROW, &standard()).unwrap();
+    assert_eq!(
+        data.types["w:CT_Level/w:level"].attributes[0]
+            .validators
+            .len(),
+        0
+    );
+    let mut twice = read_word();
+    twice.correct(OPTIONAL_ROW, &standard()).unwrap();
+    assert!(twice.correct(OPTIONAL_ROW, &standard()).is_err());
 }

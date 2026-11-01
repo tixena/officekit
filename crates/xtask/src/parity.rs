@@ -724,6 +724,13 @@ pub const DIVERGENCES: &[Divergence] = &[
         reason: STRICT_MEASURES,
         targets: ALL_TARGETS,
     },
+    Divergence {
+        id: "Sch_MissRequiredAttribute",
+        mentioning: None,
+        path: &[(WORD, "cnfStyle")],
+        reason: CONDITIONAL_VAL,
+        targets: ALL_TARGETS,
+    },
 ];
 
 const ALL_TARGETS: &[&str] = &[
@@ -764,6 +771,9 @@ const ECMA_ELEMENTS: &str = "SDK 3.5.1 leaves out elements ECMA-376 declares: di
 
 const SMART_TAG_SETTINGS: &str = "SDK 3.5.1 leaves out w:doNotEmbedSmartTags and \
     w:saveSmartTagsAsXml; ECMA-376 declares them in CT_Settings and CT_WebSettings";
+
+const CONDITIONAL_VAL: &str = "SDK 3.5.1 requires the val of w:cnfStyle from Office 2013; \
+    ECMA-376 leaves it optional in CT_Cnf, and [MS-OI29500] 2.1.41 says Word reads the attributes";
 
 const STRICT_MEASURES: &str = "SDK 3.5.1 types these as a bare number; ECMA-376's Strict \
     ST_TwipsMeasure and ST_SignedTwipsMeasure hold a universal measure, and Word writes 72pt";

@@ -323,3 +323,10 @@ standard = "w:CT_TblPrBase"
 type = "w:CT_NonNegativeShort/w:defaultTabStop"
 name = "w:CT_TwipsMeasure/w:defaultTabStop"
 parents = ["w:CT_Settings/w:settings"]
+
+# ECMA-376 leaves cnfStyle's val optional in Transitional (wml.xsd, CT_Cnf) and
+# has no val in Strict; [MS-OI29500] 2.1.41 says Word reads the attributes, and
+# val only when none is present. The data requires val from Office 2013.
+[[optional]]
+type = "w:CT_Cnf/w:cnfStyle"
+attribute = "w:val"

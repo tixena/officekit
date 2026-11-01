@@ -77,6 +77,12 @@ struct Alternative {
     type_name: String,
 }
 
+/// One attribute the data requires and the standard leaves optional.
+struct Optional {
+    attribute: String,
+    type_name: String,
+}
+
 /// One type whose schema type names another element's in the data, renamed to
 /// the schema type the standard gives its element, with its attributes.
 struct StandardName {
@@ -141,6 +147,10 @@ pub(super) fn apply(data: &mut SdkData, text: &str, standard: &SchemaSet) -> Res
     }
     for row in standard_names(&table)? {
         rename_type(data, &row)
+            .with_context(|| format!("in the correction of `{}`", row.type_name))?;
+    }
+    for row in optionals(&table)? {
+        make_optional(data, &row)
             .with_context(|| format!("in the correction of `{}`", row.type_name))?;
     }
     Ok(())
@@ -334,6 +344,25 @@ fn add_alternative(data: &mut SdkData, row: &Alternative) -> Result<()> {
     Ok(())
 }
 
+fn make_optional(data: &mut SdkData, row: &Optional) -> Result<()> {
+    let attribute = data
+        .types
+        .get_mut(&row.type_name)
+        .with_context(|| format!("the data has no `{}`", row.type_name))?
+        .attributes
+        .iter_mut()
+        .find(|attribute| attribute.qname == row.attribute)
+        .with_context(|| format!("the type has no attribute `{}`", row.attribute))?;
+    let before = attribute.validators.len();
+    attribute
+        .validators
+        .retain(|validator| validator.name != "RequiredValidator");
+    if attribute.validators.len() == before {
+        bail!("`{}` is not required", row.attribute);
+    }
+    Ok(())
+}
+
 fn rename_type(data: &mut SdkData, row: &StandardName) -> Result<()> {
     if data.types.contains_key(&row.name) {
         bail!("the data already has `{}`", row.name);
@@ -408,6 +437,18 @@ fn alternatives(table: &toml::Table) -> Result<Vec<Alternative>> {
                 beside: text_field(row, "beside")?,
                 like: text_field(row, "like")?,
                 parent: text_field(row, "parent")?,
+                type_name: text_field(row, "type")?,
+            })
+        })
+        .collect()
+}
+
+fn optionals(table: &toml::Table) -> Result<Vec<Optional>> {
+    rows(table, "optional")?
+        .into_iter()
+        .map(|row| {
+            Ok(Optional {
+                attribute: text_field(row, "attribute")?,
                 type_name: text_field(row, "type")?,
             })
         })
