@@ -346,7 +346,7 @@
 //   bf519385b6d23eb8b28cd78f23c63a7fa7d6dd7f48bb7de09b8e36ad6e22588e  inputs/open-xml-sdk/data/parts/WorksheetThreadedCommentsPart.json
 //   ee0ae0ea09db0cdfae1bc11eef04ea2ff123c8dbdd548e7feec91b14689565f5  inputs/open-xml-sdk/data/parts/XmlSignaturePart.json
 //   e26c4528f8340924ff27391d34681ecde1f597fc5ce3dbf2d354edc9c6071a52  crates/xtask/data/part_roots.toml
-//   dc6b1af848fe7bcb2e512bb9a5364a1c2df59916b004e67613da5c81661cddd2  crates/xtask/data/sdk_corrections.toml
+//   34aa1dc617bbdedc732df9adf845b80d202495b591137488ee28b4c492a6800a  crates/xtask/data/sdk_corrections.toml
 //   dff6adee70b19bb1f9b56e50e9cc20316298c14255ec7e2d6cb0efe795318af0  crates/xtask/data/simple_types.toml
 //   87ddaec0674d7f7ef85efce241d09b933d6607874efbe843d734cf21c47b9617  crates/xtask/data/strict_correspondences.toml
 // pdftotext version 26.01.0
@@ -19041,7 +19041,7 @@ const PARTICLES_500: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_639: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 2952,
+    type_id: 2951,
 }];
 
 const ITEMS_640: &[Particle] = &[Particle::Composite {
@@ -19934,7 +19934,7 @@ const ITEMS_674: &[Particle] = &[
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 3025,
+        type_id: 3024,
     },
     Particle::Element {
         max: 1,
@@ -19954,17 +19954,17 @@ const ITEMS_676: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2950,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2940,
+        type_id: 2949,
     },
     Particle::Element {
         max: 1,
         min: 0,
         type_id: 2939,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2938,
     },
 ];
 
@@ -20029,7 +20029,7 @@ const ITEMS_680: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3154,
+        type_id: 3153,
     },
     Particle::Element {
         max: 1,
@@ -20039,7 +20039,7 @@ const ITEMS_680: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3153,
+        type_id: 3152,
     },
     Particle::Element {
         max: 1,
@@ -20049,7 +20049,7 @@ const ITEMS_680: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3155,
+        type_id: 3154,
     },
     Particle::Element {
         max: 1,
@@ -20059,7 +20059,7 @@ const ITEMS_680: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3156,
+        type_id: 3155,
     },
     Particle::Element {
         max: 1,
@@ -20091,7 +20091,7 @@ const ITEMS_682: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3150,
+        type_id: 3149,
     },
     Particle::Element {
         max: 1,
@@ -20101,7 +20101,7 @@ const ITEMS_682: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3149,
+        type_id: 3148,
     },
     Particle::Element {
         max: 1,
@@ -20121,12 +20121,12 @@ const ITEMS_684: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2982,
+        type_id: 2981,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2981,
+        type_id: 2980,
     },
 ];
 
@@ -20153,22 +20153,22 @@ const ITEMS_686: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2984,
+        type_id: 2983,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2983,
+        type_id: 2982,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 2984,
     },
     Particle::Element {
         max: 1,
         min: 1,
         type_id: 2985,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 2986,
     },
     Particle::Element {
         max: 0,
@@ -20242,12 +20242,12 @@ const ITEMS_692: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3028,
+        type_id: 3027,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3006,
+        type_id: 3005,
     },
     Particle::Composite {
         items: ITEMS_691,
@@ -20373,7 +20373,7 @@ const PARTICLES_525: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_701: &[Particle] = &[Particle::Element {
     max: 1,
     min: 1,
-    type_id: 2951,
+    type_id: 2950,
 }];
 
 const ITEMS_702: &[Particle] = &[Particle::Composite {
@@ -20540,7 +20540,12 @@ const ITEMS_710: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3136,
+        type_id: 3135,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3133,
     },
     Particle::Element {
         max: 1,
@@ -20550,12 +20555,7 @@ const ITEMS_710: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3135,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3133,
+        type_id: 3132,
     },
     Particle::Element {
         max: 1,
@@ -20625,7 +20625,7 @@ const ITEMS_710: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3083,
+        type_id: 3082,
     },
     Particle::Element {
         max: 1,
@@ -20645,12 +20645,12 @@ const ITEMS_710: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 2701,
+        type_id: 2700,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 2941,
+        type_id: 2940,
     },
     Particle::Element {
         max: 1,
@@ -20660,7 +20660,7 @@ const ITEMS_710: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 2974,
+        type_id: 2973,
     },
     Particle::Element {
         max: 1,
@@ -20685,7 +20685,7 @@ const ITEMS_710: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2929,
+        type_id: 2928,
     },
     Particle::Element {
         max: 1,
@@ -31449,12 +31449,12 @@ const ITEMS_1130: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3032,
+        type_id: 3031,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2709,
+        type_id: 2708,
     },
 ];
 
@@ -31613,17 +31613,17 @@ const ITEMS_1135: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3066,
+        type_id: 3065,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3071,
+        type_id: 3070,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3068,
+        type_id: 3067,
     },
     Particle::Element {
         max: 9,
@@ -31661,7 +31661,7 @@ const PARTICLES_844: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1137: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 2811,
+    type_id: 2810,
 }];
 
 const PARTICLES_845: &[(Versions, Option<Particle>)] = &[(
@@ -31768,7 +31768,7 @@ const ITEMS_1143: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 2972,
+        type_id: 2971,
     },
 ];
 
@@ -31811,17 +31811,17 @@ const ITEMS_1147: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 2988,
+        type_id: 2987,
     },
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 2920,
+        type_id: 2919,
     },
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 3087,
+        type_id: 3086,
     },
 ];
 
@@ -31900,7 +31900,7 @@ const ITEMS_1155: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3009,
+        type_id: 3008,
     },
 ];
 
@@ -32077,182 +32077,12 @@ const ITEMS_1169: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2888,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2897,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2822,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2818,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2856,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2815,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2730,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2817,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2759,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2880,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2756,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2857,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2807,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2829,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2830,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2898,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2849,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2864,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2866,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2871,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2870,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2872,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2869,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2873,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2743,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2878,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2814,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
         type_id: 2887,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2767,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2899,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2788,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2848,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2716,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2789,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2713,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2726,
+        type_id: 2896,
     },
     Particle::Element {
         max: 1,
@@ -32262,12 +32092,47 @@ const ITEMS_1169: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2771,
+        type_id: 2817,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2805,
+        type_id: 2855,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2814,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2729,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2816,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2758,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2879,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2755,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2856,
     },
     Particle::Element {
         max: 1,
@@ -32277,52 +32142,72 @@ const ITEMS_1169: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2890,
+        type_id: 2828,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2752,
+        type_id: 2829,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2764,
+        type_id: 2897,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2846,
+        type_id: 2848,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2721,
+        type_id: 2863,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2778,
+        type_id: 2865,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2770,
+        type_id: 2870,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2889,
+        type_id: 2869,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2792,
+        type_id: 2871,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2885,
+        type_id: 2868,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2872,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2742,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2877,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2813,
     },
     Particle::Element {
         max: 1,
@@ -32332,52 +32217,67 @@ const ITEMS_1169: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2772,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2883,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2718,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
         type_id: 2766,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2750,
+        type_id: 2898,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2727,
+        type_id: 2787,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2881,
+        type_id: 2847,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2748,
+        type_id: 2715,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2859,
+        type_id: 2788,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2776,
+        type_id: 2712,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2725,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2820,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2770,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2804,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2805,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2889,
     },
     Particle::Element {
         max: 1,
@@ -32387,7 +32287,37 @@ const ITEMS_1169: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
+        type_id: 2763,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2845,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2720,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
         type_id: 2777,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2769,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2888,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2791,
     },
     Particle::Element {
         max: 1,
@@ -32397,7 +32327,77 @@ const ITEMS_1169: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2738,
+        type_id: 2885,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2771,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2882,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2717,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2765,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2749,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2726,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2880,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2747,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2858,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2775,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2750,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2776,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2883,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2737,
     },
     Particle::Element {
         max: 0,
@@ -32444,7 +32444,7 @@ const ITEMS_1171: &[Particle] = &[
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 3124,
+        type_id: 3123,
     },
     Particle::Element {
         max: 1,
@@ -32454,7 +32454,7 @@ const ITEMS_1171: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 2989,
+        type_id: 2988,
     },
     Particle::Composite {
         items: ITEMS_687,
@@ -32499,7 +32499,7 @@ const ITEMS_1174: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3050,
+        type_id: 3049,
     },
     Particle::Element {
         max: 0,
@@ -32522,7 +32522,7 @@ const ITEMS_1175: &[Particle] = &[
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 2973,
+        type_id: 2972,
     },
     Particle::Element {
         max: 1,
@@ -32532,7 +32532,7 @@ const ITEMS_1175: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3005,
+        type_id: 3004,
     },
     Particle::Composite {
         items: ITEMS_687,
@@ -32582,7 +32582,7 @@ const ITEMS_1178: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3026,
+        type_id: 3025,
     },
     Particle::Element {
         max: 1,
@@ -32592,12 +32592,12 @@ const ITEMS_1178: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 2951,
+        type_id: 2950,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3007,
+        type_id: 3006,
     },
     Particle::Composite {
         items: ITEMS_691,
@@ -32666,12 +32666,17 @@ const ITEMS_1182: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2732,
+        type_id: 2731,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2733,
+        type_id: 2732,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3021,
     },
     Particle::Element {
         max: 1,
@@ -32686,12 +32691,7 @@ const ITEMS_1182: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3024,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3021,
+        type_id: 3020,
     },
     Particle::Element {
         max: 1,
@@ -32768,12 +32768,12 @@ const ITEMS_1185: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2955,
+        type_id: 2954,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2926,
+        type_id: 2925,
     },
 ];
 
@@ -32830,7 +32830,7 @@ const ITEMS_1188: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3048,
+        type_id: 3047,
     },
     Particle::Element {
         max: 1,
@@ -32858,7 +32858,7 @@ const ITEMS_1189: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3052,
+        type_id: 3051,
     },
     Particle::Element {
         max: 1,
@@ -32878,7 +32878,7 @@ const ITEMS_1189: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3040,
+        type_id: 3039,
     },
     Particle::Element {
         max: 1,
@@ -33037,7 +33037,7 @@ const ITEMS_1198: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2699,
+        type_id: 2698,
     },
 ];
 
@@ -33057,7 +33057,7 @@ const ITEMS_1200: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2695,
+        type_id: 2694,
     },
     Particle::Composite {
         items: ITEMS_1199,
@@ -33133,7 +33133,7 @@ const ITEMS_1204: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 2853,
+        type_id: 2852,
     },
 ];
 
@@ -33147,12 +33147,12 @@ const ITEMS_1205: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2745,
+        type_id: 2744,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2741,
+        type_id: 2740,
     },
 ];
 
@@ -33180,7 +33180,7 @@ const ITEMS_1206: &[Particle] = &[
     Particle::Element {
         max: 25,
         min: 0,
-        type_id: 3075,
+        type_id: 3074,
     },
 ];
 
@@ -33231,12 +33231,12 @@ const ITEMS_1208: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 2785,
+        type_id: 2784,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 2739,
+        type_id: 2738,
     },
     Particle::Element {
         max: 1,
@@ -33285,17 +33285,17 @@ const ITEMS_1209: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3074,
+        type_id: 3073,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2948,
+        type_id: 2947,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3077,
+        type_id: 3076,
     },
 ];
 
@@ -33323,7 +33323,7 @@ const ITEMS_1210: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3161,
+        type_id: 3160,
     },
 ];
 
@@ -33341,12 +33341,12 @@ const ITEMS_1211: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3035,
+        type_id: 3034,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2934,
+        type_id: 2933,
     },
     Particle::Element {
         max: 1,
@@ -33361,12 +33361,12 @@ const ITEMS_1211: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2823,
+        type_id: 2822,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2943,
+        type_id: 2942,
     },
     Particle::Element {
         max: 1,
@@ -33441,32 +33441,27 @@ const ITEMS_1214: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3053,
+        type_id: 3052,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3076,
+        type_id: 3075,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3058,
+        type_id: 3057,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2966,
+        type_id: 2965,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2970,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2946,
+        type_id: 2969,
     },
     Particle::Element {
         max: 1,
@@ -33476,17 +33471,22 @@ const ITEMS_1214: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
+        type_id: 2944,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
         type_id: 2594,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2910,
+        type_id: 2909,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2907,
+        type_id: 2906,
     },
 ];
 
@@ -33524,7 +33524,7 @@ const ITEMS_1217: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3053,
+        type_id: 3052,
     },
     Particle::Element {
         max: 1,
@@ -33539,7 +33539,7 @@ const ITEMS_1217: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3058,
+        type_id: 3057,
     },
     Particle::Composite {
         items: ITEMS_1216,
@@ -33573,12 +33573,12 @@ const ITEMS_1218: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2909,
+        type_id: 2908,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2904,
+        type_id: 2903,
     },
 ];
 
@@ -33601,7 +33601,7 @@ const ITEMS_1219: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2695,
+        type_id: 2694,
     },
     Particle::Composite {
         items: ITEMS_1199,
@@ -33745,7 +33745,7 @@ const ITEMS_1226: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2695,
+        type_id: 2694,
     },
     Particle::Element {
         max: 1,
@@ -33755,12 +33755,12 @@ const ITEMS_1226: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3069,
+        type_id: 3068,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2801,
+        type_id: 2800,
     },
     Particle::Element {
         max: 1,
@@ -33790,12 +33790,12 @@ const ITEMS_1226: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2923,
+        type_id: 2922,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2956,
+        type_id: 2955,
     },
 ];
 
@@ -33818,7 +33818,7 @@ const ITEMS_1227: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2809,
+        type_id: 2808,
     },
     Particle::Element {
         max: 1,
@@ -33828,12 +33828,17 @@ const ITEMS_1227: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3037,
+        type_id: 3036,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3051,
+        type_id: 3050,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2963,
     },
     Particle::Element {
         max: 1,
@@ -33843,12 +33848,7 @@ const ITEMS_1227: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2965,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2765,
+        type_id: 2764,
     },
     Particle::Element {
         max: 1,
@@ -33858,22 +33858,22 @@ const ITEMS_1227: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3033,
+        type_id: 3032,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3046,
+        type_id: 3045,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2810,
+        type_id: 2809,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2893,
+        type_id: 2892,
     },
     Particle::Element {
         max: 1,
@@ -33888,7 +33888,7 @@ const ITEMS_1227: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2704,
+        type_id: 2703,
     },
 ];
 
@@ -34005,7 +34005,7 @@ const ITEMS_1234: &[Particle] = &[
     Particle::Element {
         max: 9,
         min: 0,
-        type_id: 2696,
+        type_id: 2695,
     },
 ];
 
@@ -34046,7 +34046,7 @@ const ITEMS_1236: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 2942,
+        type_id: 2941,
     },
     Particle::Element {
         max: 1,
@@ -34086,12 +34086,12 @@ const ITEMS_1238: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3161,
+        type_id: 3160,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3158,
+        type_id: 3157,
     },
 ];
 
@@ -34109,7 +34109,7 @@ const ITEMS_1239: &[Particle] = &[
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 2697,
+        type_id: 2696,
     },
     Particle::Element {
         max: 0,
@@ -34119,7 +34119,7 @@ const ITEMS_1239: &[Particle] = &[
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 2694,
+        type_id: 2693,
     },
     Particle::Element {
         max: 1,
@@ -34226,17 +34226,17 @@ const ITEMS_1243: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 2702,
+        type_id: 2701,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2967,
+        type_id: 2966,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 2703,
+        type_id: 2702,
     },
 ];
 
@@ -34283,17 +34283,17 @@ const ITEMS_1246: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3059,
+        type_id: 3058,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3054,
+        type_id: 3053,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2971,
+        type_id: 2970,
     },
     Particle::Element {
         max: 1,
@@ -34308,17 +34308,17 @@ const ITEMS_1246: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2787,
+        type_id: 2786,
     },
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 2705,
+        type_id: 2704,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2969,
+        type_id: 2968,
     },
 ];
 
@@ -34341,12 +34341,12 @@ const ITEMS_1247: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3048,
+        type_id: 3047,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3047,
+        type_id: 3046,
     },
     Particle::Element {
         max: 1,
@@ -34361,7 +34361,7 @@ const ITEMS_1247: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2781,
+        type_id: 2780,
     },
 ];
 
@@ -34379,7 +34379,7 @@ const ITEMS_1248: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2922,
+        type_id: 2921,
     },
     Particle::Composite {
         items: ITEMS_1144,
@@ -34445,7 +34445,7 @@ const PARTICLES_910: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1250: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 3049,
+    type_id: 3048,
 }];
 
 const ITEMS_1251: &[Particle] = &[Particle::Composite {
@@ -34459,67 +34459,12 @@ const ITEMS_1252: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2803,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
         type_id: 2802,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2828,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2593,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2895,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2698,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2867,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2921,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3017,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3085,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2865,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2804,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2896,
+        type_id: 2801,
     },
     Particle::Element {
         max: 1,
@@ -34529,7 +34474,67 @@ const ITEMS_1252: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2876,
+        type_id: 2593,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2894,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2697,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2866,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2920,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3016,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3084,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2864,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2803,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2895,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2826,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2875,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2723,
     },
     Particle::Element {
         max: 1,
@@ -34539,27 +34544,22 @@ const ITEMS_1252: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2725,
+        type_id: 2730,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2731,
+        type_id: 2713,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2714,
+        type_id: 2854,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2855,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3030,
+        type_id: 3029,
     },
     Particle::Element {
         max: 1,
@@ -34569,17 +34569,17 @@ const ITEMS_1252: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2742,
+        type_id: 2741,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2812,
+        type_id: 2811,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2868,
+        type_id: 2867,
     },
     Particle::Element {
         max: 1,
@@ -34589,17 +34589,17 @@ const ITEMS_1252: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3138,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
         type_id: 3137,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3141,
+        type_id: 3136,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3140,
     },
     Particle::Element {
         max: 1,
@@ -34634,7 +34634,7 @@ const ITEMS_1255: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2693,
+        type_id: 2692,
     },
     Particle::Element {
         max: 1,
@@ -34661,7 +34661,7 @@ const ITEMS_1256: &[Particle] = &[
 const ITEMS_1257: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 2925,
+    type_id: 2924,
 }];
 
 const ITEMS_1258: &[Particle] = &[Particle::Composite {
@@ -34675,12 +34675,12 @@ const ITEMS_1259: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2936,
+        type_id: 2935,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3009,
+        type_id: 3008,
     },
     Particle::Composite {
         items: ITEMS_1258,
@@ -34719,67 +34719,12 @@ const ITEMS_1261: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2803,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
         type_id: 2802,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2828,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2593,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2895,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2698,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2867,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2921,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3017,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3085,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2865,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2804,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2896,
+        type_id: 2801,
     },
     Particle::Element {
         max: 1,
@@ -34789,7 +34734,67 @@ const ITEMS_1261: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2876,
+        type_id: 2593,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2894,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2697,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2866,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2920,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3016,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3084,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2864,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2803,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2895,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2826,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2875,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2723,
     },
     Particle::Element {
         max: 1,
@@ -34799,27 +34804,22 @@ const ITEMS_1261: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2725,
+        type_id: 2730,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2731,
+        type_id: 2713,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2714,
+        type_id: 2854,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2855,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3030,
+        type_id: 3029,
     },
     Particle::Element {
         max: 1,
@@ -34829,17 +34829,17 @@ const ITEMS_1261: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2742,
+        type_id: 2741,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2812,
+        type_id: 2811,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2868,
+        type_id: 2867,
     },
     Particle::Element {
         max: 1,
@@ -34849,17 +34849,17 @@ const ITEMS_1261: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3138,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
         type_id: 3137,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3141,
+        type_id: 3136,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3140,
     },
     Particle::Element {
         max: 1,
@@ -34869,7 +34869,7 @@ const ITEMS_1261: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2693,
+        type_id: 2692,
     },
     Particle::Element {
         max: 1,
@@ -34901,7 +34901,7 @@ const ITEMS_1263: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2925,
+        type_id: 2924,
     },
 ];
 
@@ -34919,12 +34919,7 @@ const ITEMS_1264: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3049,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2803,
+        type_id: 3048,
     },
     Particle::Element {
         max: 1,
@@ -34934,57 +34929,7 @@ const ITEMS_1264: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2828,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2593,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2895,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2698,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2867,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2921,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3017,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3085,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2865,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2804,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2896,
+        type_id: 2801,
     },
     Particle::Element {
         max: 1,
@@ -34994,7 +34939,67 @@ const ITEMS_1264: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2876,
+        type_id: 2593,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2894,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2697,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2866,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2920,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3016,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3084,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2864,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2803,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2895,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2826,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2875,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2723,
     },
     Particle::Element {
         max: 1,
@@ -35004,27 +35009,22 @@ const ITEMS_1264: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2725,
+        type_id: 2730,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2731,
+        type_id: 2713,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2714,
+        type_id: 2854,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2855,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3030,
+        type_id: 3029,
     },
     Particle::Element {
         max: 1,
@@ -35034,17 +35034,17 @@ const ITEMS_1264: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2742,
+        type_id: 2741,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2812,
+        type_id: 2811,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2868,
+        type_id: 2867,
     },
     Particle::Element {
         max: 1,
@@ -35054,17 +35054,17 @@ const ITEMS_1264: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3138,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
         type_id: 3137,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3141,
+        type_id: 3136,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3140,
     },
     Particle::Element {
         max: 1,
@@ -35074,7 +35074,7 @@ const ITEMS_1264: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2693,
+        type_id: 2692,
     },
     Particle::Element {
         max: 1,
@@ -35100,7 +35100,7 @@ const ITEMS_1266: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2925,
+        type_id: 2924,
     },
 ];
 
@@ -35117,7 +35117,7 @@ const PARTICLES_913: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1267: &[Particle] = &[Particle::Element {
     max: 1,
     min: 1,
-    type_id: 2927,
+    type_id: 2926,
 }];
 
 const ITEMS_1268: &[Particle] = &[Particle::Composite {
@@ -35140,7 +35140,7 @@ const PARTICLES_914: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1269: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 2924,
+    type_id: 2923,
 }];
 
 const PARTICLES_915: &[(Versions, Option<Particle>)] = &[(
@@ -35206,12 +35206,12 @@ const ITEMS_1273: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3148,
+        type_id: 3147,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3147,
+        type_id: 3146,
     },
 ];
 
@@ -35226,22 +35226,22 @@ const ITEMS_1275: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3158,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
         type_id: 3157,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3159,
+        type_id: 3156,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3160,
+        type_id: 3158,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3159,
     },
     Particle::Composite {
         items: ITEMS_1274,
@@ -35261,7 +35261,7 @@ const ITEMS_1276: &[Particle] = &[Particle::Composite {
 const ITEMS_1277: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 3070,
+    type_id: 3069,
 }];
 
 const ITEMS_1278: &[Particle] = &[Particle::Composite {
@@ -35280,12 +35280,17 @@ const ITEMS_1279: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
+        type_id: 2727,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
         type_id: 2728,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2729,
+        type_id: 2796,
     },
     Particle::Element {
         max: 1,
@@ -35295,12 +35300,47 @@ const ITEMS_1279: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2798,
+        type_id: 2739,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2740,
+        type_id: 2853,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2860,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2779,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2825,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2846,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2783,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2799,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2818,
     },
     Particle::Element {
         max: 1,
@@ -35310,52 +35350,12 @@ const ITEMS_1279: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2861,
+        type_id: 2891,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2780,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2826,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2847,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2784,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2800,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2819,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2855,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2892,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2894,
+        type_id: 2893,
     },
     Particle::Element {
         max: 1,
@@ -35365,12 +35365,12 @@ const ITEMS_1279: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3018,
+        type_id: 3017,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3140,
+        type_id: 3139,
     },
     Particle::Element {
         max: 1,
@@ -35380,7 +35380,7 @@ const ITEMS_1279: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3019,
+        type_id: 3018,
     },
     Particle::Element {
         max: 1,
@@ -35423,7 +35423,7 @@ const ITEMS_1283: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3139,
+        type_id: 3138,
     },
     Particle::Element {
         max: 1,
@@ -35433,7 +35433,7 @@ const ITEMS_1283: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3017,
+        type_id: 3016,
     },
     Particle::Element {
         max: 1,
@@ -35458,12 +35458,12 @@ const ITEMS_1285: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2838,
+        type_id: 2837,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2744,
+        type_id: 2743,
     },
 ];
 
@@ -35493,7 +35493,7 @@ const ITEMS_1287: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2858,
+        type_id: 2857,
     },
 ];
 
@@ -35652,7 +35652,7 @@ const ITEMS_1295: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2824,
+        type_id: 2823,
     },
 ];
 
@@ -35679,7 +35679,7 @@ const ITEMS_1297: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2937,
+        type_id: 2936,
     },
 ];
 
@@ -35696,7 +35696,7 @@ const PARTICLES_918: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1298: &[Particle] = &[Particle::Element {
     max: 1,
     min: 1,
-    type_id: 2938,
+    type_id: 2937,
 }];
 
 const ITEMS_1299: &[Particle] = &[Particle::Composite {
@@ -35745,7 +35745,7 @@ const ITEMS_1301: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2967,
+        type_id: 2966,
     },
     Particle::Element {
         max: 1,
@@ -35799,7 +35799,7 @@ const PARTICLES_922: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1304: &[Particle] = &[Particle::Element {
     max: 1,
     min: 1,
-    type_id: 3041,
+    type_id: 3040,
 }];
 
 const PARTICLES_923: &[(Versions, Option<Particle>)] = &[(
@@ -35840,7 +35840,7 @@ const PARTICLES_924: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1306: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 2954,
+    type_id: 2953,
 }];
 
 const ITEMS_1307: &[Particle] = &[Particle::Composite {
@@ -35937,7 +35937,7 @@ const PARTICLES_926: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1314: &[Particle] = &[Particle::Element {
     max: 1,
     min: 1,
-    type_id: 2957,
+    type_id: 2956,
 }];
 
 const ITEMS_1315: &[Particle] = &[Particle::Composite {
@@ -35960,7 +35960,7 @@ const PARTICLES_927: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1316: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 2953,
+    type_id: 2952,
 }];
 
 const PARTICLES_928: &[(Versions, Option<Particle>)] = &[(
@@ -36070,7 +36070,7 @@ const ITEMS_1322: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2712,
+        type_id: 2711,
     },
     Particle::Element {
         max: 1,
@@ -36097,7 +36097,7 @@ const PARTICLES_932: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1323: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 2960,
+    type_id: 2959,
 }];
 
 const PARTICLES_933: &[(Versions, Option<Particle>)] = &[(
@@ -36114,12 +36114,12 @@ const ITEMS_1324: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3102,
+        type_id: 3101,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3142,
+        type_id: 3141,
     },
     Particle::Composite {
         items: ITEMS_1172,
@@ -36143,17 +36143,17 @@ const ITEMS_1325: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 2979,
+        type_id: 2978,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 2976,
     },
     Particle::Element {
         max: 1,
         min: 1,
         type_id: 2977,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 2978,
     },
 ];
 
@@ -36171,7 +36171,7 @@ const ITEMS_1326: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 2975,
+        type_id: 2974,
     },
     Particle::Element {
         max: 1,
@@ -36196,7 +36196,7 @@ const ITEMS_1326: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2746,
+        type_id: 2745,
     },
 ];
 
@@ -36238,17 +36238,17 @@ const ITEMS_1329: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3004,
+        type_id: 3003,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3002,
+        type_id: 3001,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2991,
+        type_id: 2990,
     },
     Particle::Composite {
         items: ITEMS_683,
@@ -36272,17 +36272,17 @@ const ITEMS_1330: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3004,
+        type_id: 3003,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3002,
+        type_id: 3001,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2992,
+        type_id: 2991,
     },
     Particle::Composite {
         items: ITEMS_683,
@@ -36305,7 +36305,7 @@ const PARTICLES_939: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1331: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
-    type_id: 3003,
+    type_id: 3002,
 }];
 
 const PARTICLES_940: &[(Versions, Option<Particle>)] = &[(
@@ -36377,7 +36377,7 @@ const ITEMS_1333: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3038,
+        type_id: 3037,
     },
     Particle::Element {
         max: 1,
@@ -36387,7 +36387,7 @@ const ITEMS_1333: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2997,
+        type_id: 2996,
     },
     Particle::Element {
         max: 1,
@@ -36410,17 +36410,17 @@ const ITEMS_1334: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3043,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
         type_id: 3042,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2779,
+        type_id: 3041,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2778,
     },
 ];
 
@@ -36459,17 +36459,12 @@ const ITEMS_1336: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 2990,
+        type_id: 2989,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 2996,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3000,
+        type_id: 2995,
     },
     Particle::Element {
         max: 1,
@@ -36479,7 +36474,12 @@ const ITEMS_1336: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3001,
+        type_id: 2998,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3000,
     },
     Particle::Element {
         max: 1,
@@ -36494,7 +36494,7 @@ const ITEMS_1336: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3008,
+        type_id: 3007,
     },
     Particle::Element {
         max: 1,
@@ -36527,12 +36527,12 @@ const ITEMS_1337: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2952,
+        type_id: 2951,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3034,
+        type_id: 3033,
     },
     Particle::Element {
         max: 1,
@@ -36542,12 +36542,12 @@ const ITEMS_1337: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2947,
+        type_id: 2946,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2852,
+        type_id: 2851,
     },
     Particle::Composite {
         items: ITEMS_1335,
@@ -36558,7 +36558,7 @@ const ITEMS_1337: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2874,
+        type_id: 2873,
     },
     Particle::Element {
         max: 1,
@@ -36568,7 +36568,7 @@ const ITEMS_1337: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3055,
+        type_id: 3054,
     },
     Particle::Element {
         max: 1,
@@ -36610,17 +36610,12 @@ const ITEMS_1339: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 2990,
+        type_id: 2989,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 2996,
-    },
-    Particle::Element {
-        max: 1,
-        min: 1,
-        type_id: 3000,
+        type_id: 2995,
     },
     Particle::Element {
         max: 1,
@@ -36630,7 +36625,12 @@ const ITEMS_1339: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3001,
+        type_id: 2998,
+    },
+    Particle::Element {
+        max: 1,
+        min: 1,
+        type_id: 3000,
     },
     Particle::Element {
         max: 1,
@@ -36645,7 +36645,7 @@ const ITEMS_1339: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3008,
+        type_id: 3007,
     },
     Particle::Element {
         max: 1,
@@ -36688,12 +36688,12 @@ const ITEMS_1340: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2952,
+        type_id: 2951,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3034,
+        type_id: 3033,
     },
     Particle::Element {
         max: 1,
@@ -36703,12 +36703,12 @@ const ITEMS_1340: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2947,
+        type_id: 2946,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2852,
+        type_id: 2851,
     },
     Particle::Composite {
         items: ITEMS_1338,
@@ -36719,7 +36719,7 @@ const ITEMS_1340: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2874,
+        type_id: 2873,
     },
     Particle::Element {
         max: 1,
@@ -36729,7 +36729,7 @@ const ITEMS_1340: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3055,
+        type_id: 3054,
     },
     Particle::Element {
         max: 1,
@@ -36744,12 +36744,12 @@ const ITEMS_1340: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 2711,
+        type_id: 2710,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 2710,
+        type_id: 2709,
     },
     Particle::Element {
         max: 1,
@@ -36794,17 +36794,17 @@ const ITEMS_1341: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3004,
+        type_id: 3003,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3002,
+        type_id: 3001,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2993,
+        type_id: 2992,
     },
     Particle::Composite {
         items: ITEMS_683,
@@ -36828,17 +36828,17 @@ const ITEMS_1342: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3004,
+        type_id: 3003,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3002,
+        type_id: 3001,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2994,
+        type_id: 2993,
     },
     Particle::Composite {
         items: ITEMS_683,
@@ -36862,17 +36862,17 @@ const ITEMS_1343: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3004,
+        type_id: 3003,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3002,
+        type_id: 3001,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2995,
+        type_id: 2994,
     },
     Particle::Composite {
         items: ITEMS_683,
@@ -36926,32 +36926,7 @@ const ITEMS_1346: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3012,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2933,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2931,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2935,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2930,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2643,
+        type_id: 3011,
     },
     Particle::Element {
         max: 1,
@@ -36961,12 +36936,37 @@ const ITEMS_1346: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
+        type_id: 2930,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2934,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2929,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2643,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2931,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
         type_id: 2478,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2790,
+        type_id: 2789,
     },
     Particle::Element {
         max: 1,
@@ -36976,27 +36976,27 @@ const ITEMS_1346: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2816,
+        type_id: 2815,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2875,
+        type_id: 2874,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3138,
+        type_id: 3137,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2731,
+        type_id: 2730,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2839,
+        type_id: 2838,
     },
     Particle::Element {
         max: 1,
@@ -37006,7 +37006,7 @@ const ITEMS_1346: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2968,
+        type_id: 2967,
     },
 ];
 
@@ -37033,7 +37033,7 @@ const ITEMS_1348: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3011,
+        type_id: 3010,
     },
 ];
 
@@ -37051,32 +37051,7 @@ const ITEMS_1349: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3012,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2933,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2931,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2935,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2930,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2643,
+        type_id: 3011,
     },
     Particle::Element {
         max: 1,
@@ -37086,12 +37061,37 @@ const ITEMS_1349: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
+        type_id: 2930,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2934,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2929,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2643,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2931,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
         type_id: 2478,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2790,
+        type_id: 2789,
     },
     Particle::Element {
         max: 1,
@@ -37101,27 +37101,27 @@ const ITEMS_1349: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2816,
+        type_id: 2815,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2875,
+        type_id: 2874,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3138,
+        type_id: 3137,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2731,
+        type_id: 2730,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2839,
+        type_id: 2838,
     },
     Particle::Element {
         max: 1,
@@ -37131,7 +37131,7 @@ const ITEMS_1349: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2968,
+        type_id: 2967,
     },
     Particle::Element {
         max: 1,
@@ -37163,7 +37163,7 @@ const ITEMS_1351: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3011,
+        type_id: 3010,
     },
 ];
 
@@ -37226,7 +37226,7 @@ const PARTICLES_953: &[(Versions, Option<Particle>)] = &[
 const ITEMS_1354: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 3010,
+    type_id: 3009,
 }];
 
 const ITEMS_1355: &[Particle] = &[Particle::Composite {
@@ -37265,27 +37265,22 @@ const ITEMS_1356: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2837,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
         type_id: 2836,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2754,
+        type_id: 2835,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2747,
+        type_id: 2753,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2833,
+        type_id: 2746,
     },
     Particle::Element {
         max: 1,
@@ -37300,7 +37295,7 @@ const ITEMS_1356: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2783,
+        type_id: 2830,
     },
     Particle::Element {
         max: 1,
@@ -37310,27 +37305,27 @@ const ITEMS_1356: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2844,
+        type_id: 2781,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2840,
+        type_id: 2843,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2813,
+        type_id: 2839,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2715,
+        type_id: 2812,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2737,
+        type_id: 2714,
     },
     Particle::Element {
         max: 1,
@@ -37340,17 +37335,22 @@ const ITEMS_1356: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2793,
+        type_id: 2735,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2796,
+        type_id: 2792,
     },
     Particle::Element {
         max: 1,
         min: 0,
         type_id: 2795,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2794,
     },
     Particle::Element {
         max: 0,
@@ -37360,32 +37360,32 @@ const ITEMS_1356: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2949,
+        type_id: 2948,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2791,
+        type_id: 2790,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2963,
+        type_id: 2962,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2808,
+        type_id: 2807,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3079,
     },
     Particle::Element {
         max: 1,
         min: 0,
         type_id: 3080,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3081,
     },
     Particle::Element {
         max: 1,
@@ -37400,17 +37400,12 @@ const ITEMS_1356: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3162,
+        type_id: 3161,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2877,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2769,
+        type_id: 2876,
     },
     Particle::Element {
         max: 1,
@@ -37420,17 +37415,17 @@ const ITEMS_1356: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
+        type_id: 2767,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
         type_id: 2527,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2722,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2863,
+        type_id: 2721,
     },
     Particle::Element {
         max: 1,
@@ -37440,12 +37435,17 @@ const ITEMS_1356: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2692,
+        type_id: 2861,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2723,
+        type_id: 3163,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2722,
     },
     Particle::Element {
         max: 1,
@@ -37460,12 +37460,12 @@ const ITEMS_1356: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2757,
+        type_id: 2756,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2850,
+        type_id: 2849,
     },
     Particle::Element {
         max: 1,
@@ -37475,27 +37475,27 @@ const ITEMS_1356: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
+        type_id: 3062,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
         type_id: 3063,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3064,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2786,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2735,
+        type_id: 2785,
     },
     Particle::Element {
         max: 1,
         min: 0,
         type_id: 2734,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2733,
     },
     Particle::Element {
         max: 1,
@@ -37525,7 +37525,7 @@ const ITEMS_1356: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2774,
+        type_id: 2773,
     },
     Particle::Element {
         max: 1,
@@ -37540,12 +37540,12 @@ const ITEMS_1356: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2763,
+        type_id: 2762,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2820,
+        type_id: 2819,
     },
     Particle::Element {
         max: 1,
@@ -37555,12 +37555,12 @@ const ITEMS_1356: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2834,
+        type_id: 2833,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2860,
+        type_id: 2859,
     },
     Particle::Element {
         max: 1,
@@ -37575,52 +37575,22 @@ const ITEMS_1356: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2842,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2775,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
         type_id: 2841,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2799,
+        type_id: 2774,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2720,
+        type_id: 2840,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2753,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2845,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2891,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2987,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2851,
+        type_id: 2798,
     },
     Particle::Element {
         max: 1,
@@ -37630,12 +37600,42 @@ const ITEMS_1356: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2882,
+        type_id: 2752,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3015,
+        type_id: 2844,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2890,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2986,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2850,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2718,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2881,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3014,
     },
     Particle::Element {
         max: 1,
@@ -37670,12 +37670,12 @@ const ITEMS_1356: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2879,
+        type_id: 2878,
     },
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 3036,
+        type_id: 3035,
     },
     Particle::Element {
         max: 1,
@@ -37690,12 +37690,12 @@ const ITEMS_1356: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2758,
+        type_id: 2757,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2749,
+        type_id: 2748,
     },
     Particle::Element {
         max: 1,
@@ -37710,12 +37710,12 @@ const ITEMS_1356: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2959,
+        type_id: 2958,
     },
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 3029,
+        type_id: 3028,
     },
     Particle::Element {
         max: 1,
@@ -37725,22 +37725,22 @@ const ITEMS_1356: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3016,
+        type_id: 3015,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2755,
+        type_id: 2754,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3039,
+        type_id: 3038,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3045,
+        type_id: 3044,
     },
     Particle::Element {
         max: 1,
@@ -37783,27 +37783,22 @@ const ITEMS_1357: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2837,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
         type_id: 2836,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2754,
+        type_id: 2835,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2747,
+        type_id: 2753,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2833,
+        type_id: 2746,
     },
     Particle::Element {
         max: 1,
@@ -37818,7 +37813,7 @@ const ITEMS_1357: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2783,
+        type_id: 2830,
     },
     Particle::Element {
         max: 1,
@@ -37828,27 +37823,27 @@ const ITEMS_1357: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2844,
+        type_id: 2781,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2840,
+        type_id: 2843,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2813,
+        type_id: 2839,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2715,
+        type_id: 2812,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2737,
+        type_id: 2714,
     },
     Particle::Element {
         max: 1,
@@ -37858,17 +37853,22 @@ const ITEMS_1357: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2793,
+        type_id: 2735,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2796,
+        type_id: 2792,
     },
     Particle::Element {
         max: 1,
         min: 0,
         type_id: 2795,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2794,
     },
     Particle::Element {
         max: 0,
@@ -37878,32 +37878,32 @@ const ITEMS_1357: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2949,
+        type_id: 2948,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2791,
+        type_id: 2790,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2963,
+        type_id: 2962,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2808,
+        type_id: 2807,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3079,
     },
     Particle::Element {
         max: 1,
         min: 0,
         type_id: 3080,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3081,
     },
     Particle::Element {
         max: 1,
@@ -37918,17 +37918,12 @@ const ITEMS_1357: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3162,
+        type_id: 3161,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2877,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2769,
+        type_id: 2876,
     },
     Particle::Element {
         max: 1,
@@ -37938,17 +37933,17 @@ const ITEMS_1357: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
+        type_id: 2767,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
         type_id: 2527,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2722,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2863,
+        type_id: 2721,
     },
     Particle::Element {
         max: 1,
@@ -37958,12 +37953,17 @@ const ITEMS_1357: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2692,
+        type_id: 2861,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2723,
+        type_id: 3163,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2722,
     },
     Particle::Element {
         max: 1,
@@ -37978,12 +37978,12 @@ const ITEMS_1357: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2757,
+        type_id: 2756,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2850,
+        type_id: 2849,
     },
     Particle::Element {
         max: 1,
@@ -37993,27 +37993,27 @@ const ITEMS_1357: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
+        type_id: 3062,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
         type_id: 3063,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3064,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2786,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2735,
+        type_id: 2785,
     },
     Particle::Element {
         max: 1,
         min: 0,
         type_id: 2734,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2733,
     },
     Particle::Element {
         max: 1,
@@ -38043,7 +38043,7 @@ const ITEMS_1357: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2774,
+        type_id: 2773,
     },
     Particle::Element {
         max: 1,
@@ -38058,12 +38058,12 @@ const ITEMS_1357: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2763,
+        type_id: 2762,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2820,
+        type_id: 2819,
     },
     Particle::Element {
         max: 1,
@@ -38073,12 +38073,12 @@ const ITEMS_1357: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2834,
+        type_id: 2833,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2860,
+        type_id: 2859,
     },
     Particle::Element {
         max: 1,
@@ -38093,52 +38093,22 @@ const ITEMS_1357: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2842,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2775,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
         type_id: 2841,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2799,
+        type_id: 2774,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2720,
+        type_id: 2840,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2753,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2845,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2891,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2987,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2851,
+        type_id: 2798,
     },
     Particle::Element {
         max: 1,
@@ -38148,12 +38118,42 @@ const ITEMS_1357: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2882,
+        type_id: 2752,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3015,
+        type_id: 2844,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2890,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2986,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2850,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2718,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2881,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3014,
     },
     Particle::Element {
         max: 1,
@@ -38188,12 +38188,12 @@ const ITEMS_1357: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2879,
+        type_id: 2878,
     },
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 3036,
+        type_id: 3035,
     },
     Particle::Element {
         max: 1,
@@ -38208,12 +38208,12 @@ const ITEMS_1357: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2758,
+        type_id: 2757,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2749,
+        type_id: 2748,
     },
     Particle::Element {
         max: 1,
@@ -38228,12 +38228,12 @@ const ITEMS_1357: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2959,
+        type_id: 2958,
     },
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 3029,
+        type_id: 3028,
     },
     Particle::Element {
         max: 1,
@@ -38243,22 +38243,22 @@ const ITEMS_1357: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3016,
+        type_id: 3015,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2755,
+        type_id: 2754,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3039,
+        type_id: 3038,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3045,
+        type_id: 3044,
     },
     Particle::Element {
         max: 1,
@@ -38283,7 +38283,7 @@ const ITEMS_1357: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2707,
+        type_id: 2706,
     },
     Particle::Element {
         max: 1,
@@ -38404,7 +38404,7 @@ const ITEMS_1362: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3027,
+        type_id: 3026,
     },
     Particle::Composite {
         items: ITEMS_1144,
@@ -38428,7 +38428,12 @@ const ITEMS_1363: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3079,
+        type_id: 3078,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3060,
     },
     Particle::Element {
         max: 1,
@@ -38438,27 +38443,22 @@ const ITEMS_1363: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3062,
+        type_id: 3066,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3067,
+        type_id: 3064,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3065,
+        type_id: 2900,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2901,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2905,
+        type_id: 2904,
     },
     Particle::Element {
         max: 1,
@@ -38468,22 +38468,27 @@ const ITEMS_1363: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2916,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2919,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
         type_id: 2915,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2908,
+        type_id: 2918,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2914,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2907,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2911,
     },
     Particle::Element {
         max: 1,
@@ -38498,42 +38503,37 @@ const ITEMS_1363: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2914,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
         type_id: 2647,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2928,
+        type_id: 2927,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2958,
+        type_id: 2957,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3105,
+        type_id: 3104,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3144,
+        type_id: 3143,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3130,
+        type_id: 3129,
     },
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 3107,
+        type_id: 3106,
     },
 ];
 
@@ -38561,7 +38561,7 @@ const ITEMS_1364: &[Particle] = &[
     Particle::Element {
         max: 0,
         min: 0,
-        type_id: 3078,
+        type_id: 3077,
     },
 ];
 
@@ -38578,7 +38578,7 @@ const PARTICLES_962: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1365: &[Particle] = &[Particle::Element {
     max: 0,
     min: 1,
-    type_id: 3084,
+    type_id: 3083,
 }];
 
 const PARTICLES_963: &[(Versions, Option<Particle>)] = &[(
@@ -38601,12 +38601,12 @@ const ITEMS_1366: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3099,
+        type_id: 3098,
     },
     Particle::Element {
         max: 1,
         min: 1,
-        type_id: 3090,
+        type_id: 3089,
     },
     Particle::Composite {
         items: ITEMS_1176,
@@ -38683,7 +38683,22 @@ const ITEMS_1368: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3117,
+        type_id: 3116,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3120,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3112,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3108,
     },
     Particle::Element {
         max: 1,
@@ -38693,22 +38708,7 @@ const ITEMS_1368: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3113,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
         type_id: 3109,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3122,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3110,
     },
 ];
 
@@ -38725,13 +38725,13 @@ const PARTICLES_966: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1369: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
-    type_id: 3093,
+    type_id: 3092,
 }];
 
 const ITEMS_1370: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 3092,
+    type_id: 3091,
 }];
 
 const ITEMS_1371: &[Particle] = &[
@@ -38772,7 +38772,7 @@ const PARTICLES_968: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1372: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 3091,
+    type_id: 3090,
 }];
 
 const ITEMS_1373: &[Particle] = &[Particle::Composite {
@@ -38796,12 +38796,7 @@ const ITEMS_1374: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3072,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3098,
+        type_id: 3071,
     },
     Particle::Element {
         max: 1,
@@ -38811,7 +38806,12 @@ const ITEMS_1374: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2902,
+        type_id: 3096,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2901,
     },
 ];
 
@@ -38825,7 +38825,7 @@ const ITEMS_1375: &[Particle] = &[Particle::Composite {
 const ITEMS_1376: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 3115,
+    type_id: 3114,
 }];
 
 const ITEMS_1377: &[Particle] = &[Particle::Composite {
@@ -38839,27 +38839,27 @@ const ITEMS_1378: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3094,
+        type_id: 3093,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3114,
+        type_id: 3113,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3123,
+        type_id: 3122,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3088,
+        type_id: 3087,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3017,
+        type_id: 3016,
     },
 ];
 
@@ -38873,7 +38873,7 @@ const ITEMS_1379: &[Particle] = &[Particle::Composite {
 const ITEMS_1380: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 3095,
+    type_id: 3094,
 }];
 
 const ITEMS_1381: &[Particle] = &[Particle::Composite {
@@ -38886,7 +38886,7 @@ const ITEMS_1381: &[Particle] = &[Particle::Composite {
 const ITEMS_1382: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 3089,
+    type_id: 3088,
 }];
 
 const ITEMS_1383: &[Particle] = &[Particle::Composite {
@@ -38899,7 +38899,7 @@ const ITEMS_1383: &[Particle] = &[Particle::Composite {
 const ITEMS_1384: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 3096,
+    type_id: 3095,
 }];
 
 const ITEMS_1385: &[Particle] = &[Particle::Composite {
@@ -38959,19 +38959,19 @@ const ITEMS_1386: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3056,
+        type_id: 3055,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3057,
+        type_id: 3056,
     },
 ];
 
 const ITEMS_1387: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 3101,
+    type_id: 3100,
 }];
 
 const ITEMS_1388: &[Particle] = &[
@@ -39012,7 +39012,7 @@ const PARTICLES_971: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1389: &[Particle] = &[Particle::Element {
     max: 1,
     min: 1,
-    type_id: 3100,
+    type_id: 3099,
 }];
 
 const ITEMS_1390: &[Particle] = &[Particle::Composite {
@@ -39036,7 +39036,32 @@ const ITEMS_1391: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3115,
+        type_id: 3114,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3093,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3113,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3122,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3087,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3016,
     },
     Particle::Element {
         max: 1,
@@ -39046,44 +39071,19 @@ const ITEMS_1391: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3114,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3123,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
         type_id: 3088,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3017,
     },
     Particle::Element {
         max: 1,
         min: 0,
         type_id: 3095,
     },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3089,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3096,
-    },
 ];
 
 const ITEMS_1392: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 3104,
+    type_id: 3103,
 }];
 
 const ITEMS_1393: &[Particle] = &[
@@ -39124,7 +39124,7 @@ const PARTICLES_974: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1394: &[Particle] = &[Particle::Element {
     max: 1,
     min: 1,
-    type_id: 3103,
+    type_id: 3102,
 }];
 
 const ITEMS_1395: &[Particle] = &[Particle::Composite {
@@ -39148,12 +39148,7 @@ const ITEMS_1396: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3072,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3098,
+        type_id: 3071,
     },
     Particle::Element {
         max: 1,
@@ -39163,7 +39158,12 @@ const ITEMS_1396: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2902,
+        type_id: 3096,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2901,
     },
     Particle::Element {
         max: 1,
@@ -39188,22 +39188,22 @@ const ITEMS_1398: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3089,
+        type_id: 3088,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3096,
+        type_id: 3095,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3055,
     },
     Particle::Element {
         max: 1,
         min: 0,
         type_id: 3056,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3057,
     },
 ];
 
@@ -39224,7 +39224,7 @@ const ITEMS_1400: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3115,
+        type_id: 3114,
     },
     Particle::Composite {
         items: ITEMS_1379,
@@ -39235,7 +39235,7 @@ const ITEMS_1400: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3095,
+        type_id: 3094,
     },
     Particle::Composite {
         items: ITEMS_1399,
@@ -39259,12 +39259,7 @@ const ITEMS_1401: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3072,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3098,
+        type_id: 3071,
     },
     Particle::Element {
         max: 1,
@@ -39274,7 +39269,12 @@ const ITEMS_1401: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2902,
+        type_id: 3096,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2901,
     },
     Particle::Element {
         max: 1,
@@ -39289,32 +39289,32 @@ const ITEMS_1401: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3115,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3094,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
         type_id: 3114,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3123,
+        type_id: 3093,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3088,
+        type_id: 3113,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3017,
+        type_id: 3122,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3087,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3016,
     },
 ];
 
@@ -39335,7 +39335,7 @@ const ITEMS_1403: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3095,
+        type_id: 3094,
     },
     Particle::Composite {
         items: ITEMS_1399,
@@ -39359,27 +39359,27 @@ const ITEMS_1404: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2928,
+        type_id: 2927,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2953,
+        type_id: 2952,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3106,
+        type_id: 3105,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3144,
+        type_id: 3143,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3131,
+        type_id: 3130,
     },
 ];
 
@@ -39397,7 +39397,7 @@ const ITEMS_1405: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3127,
+        type_id: 3126,
     },
     Particle::Composite {
         items: ITEMS_1154,
@@ -39484,22 +39484,12 @@ const ITEMS_1407: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3117,
+        type_id: 3116,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3111,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3113,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 3109,
+        type_id: 3110,
     },
     Particle::Element {
         max: 1,
@@ -39509,7 +39499,17 @@ const ITEMS_1407: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3110,
+        type_id: 3108,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3111,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3109,
     },
 ];
 
@@ -39532,7 +39532,7 @@ const ITEMS_1408: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3116,
+        type_id: 3115,
     },
     Particle::Element {
         max: 1,
@@ -39561,7 +39561,7 @@ const ITEMS_1409: &[Particle] = &[Particle::Composite {
 const ITEMS_1410: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 3125,
+    type_id: 3124,
 }];
 
 const ITEMS_1411: &[Particle] = &[Particle::Composite {
@@ -39575,17 +39575,17 @@ const ITEMS_1412: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3017,
+        type_id: 3016,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2911,
+        type_id: 2910,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3126,
+        type_id: 3125,
     },
 ];
 
@@ -39600,12 +39600,12 @@ const ITEMS_1414: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3138,
+        type_id: 3137,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2918,
+        type_id: 2917,
     },
 ];
 
@@ -39632,7 +39632,7 @@ const ITEMS_1417: &[Particle] = &[Particle::Composite {
 const ITEMS_1418: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 2906,
+    type_id: 2905,
 }];
 
 const ITEMS_1419: &[Particle] = &[Particle::Composite {
@@ -39685,12 +39685,12 @@ const ITEMS_1421: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3152,
+        type_id: 3151,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3151,
+        type_id: 3150,
     },
     Particle::Element {
         max: 1,
@@ -39731,7 +39731,7 @@ const ITEMS_1424: &[Particle] = &[
 const ITEMS_1425: &[Particle] = &[Particle::Element {
     max: 1,
     min: 0,
-    type_id: 3128,
+    type_id: 3127,
 }];
 
 const ITEMS_1426: &[Particle] = &[
@@ -39762,7 +39762,7 @@ const PARTICLES_982: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1427: &[Particle] = &[Particle::Element {
     max: 1,
     min: 1,
-    type_id: 3129,
+    type_id: 3128,
 }];
 
 const ITEMS_1428: &[Particle] = &[Particle::Composite {
@@ -39857,7 +39857,7 @@ const ITEMS_1431: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2693,
+        type_id: 2692,
     },
     Particle::Element {
         max: 1,
@@ -39872,12 +39872,12 @@ const ITEMS_1431: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3119,
+        type_id: 3118,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3118,
+        type_id: 3117,
     },
     Particle::Element {
         max: 1,
@@ -39897,27 +39897,27 @@ const ITEMS_1433: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2794,
+        type_id: 2793,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2903,
+        type_id: 2902,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2917,
+        type_id: 2916,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3114,
+        type_id: 3113,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3094,
+        type_id: 3093,
     },
 ];
 
@@ -39947,17 +39947,17 @@ const ITEMS_1436: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3158,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
         type_id: 3157,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3145,
+        type_id: 3156,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 3144,
     },
     Particle::Composite {
         items: ITEMS_1274,
@@ -40022,7 +40022,7 @@ const PARTICLES_989: &[(Versions, Option<Particle>)] = &[(
 const ITEMS_1439: &[Particle] = &[Particle::Element {
     max: 1,
     min: 1,
-    type_id: 3143,
+    type_id: 3142,
 }];
 
 const ITEMS_1440: &[Particle] = &[Particle::Composite {
@@ -40056,32 +40056,22 @@ const ITEMS_1441: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3044,
+        type_id: 3043,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2825,
+        type_id: 2824,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2835,
+        type_id: 2834,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2717,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2761,
-    },
-    Particle::Element {
-        max: 1,
-        min: 0,
-        type_id: 2762,
+        type_id: 2716,
     },
     Particle::Element {
         max: 1,
@@ -40091,7 +40081,17 @@ const ITEMS_1441: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2773,
+        type_id: 2761,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2759,
+    },
+    Particle::Element {
+        max: 1,
+        min: 0,
+        type_id: 2772,
     },
     Particle::Element {
         max: 1,
@@ -40101,12 +40101,12 @@ const ITEMS_1441: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 3086,
+        type_id: 3085,
     },
     Particle::Element {
         max: 1,
         min: 0,
-        type_id: 2843,
+        type_id: 2842,
     },
 ];
 

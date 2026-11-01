@@ -314,3 +314,12 @@ standard = "w:CT_TblPrBase"
 type = "w:CT_String/w:tblDescription"
 parents = ["w:CT_TblPrStyle/w:tblPr", "w:CT_TblPrStyleOverride/w:tblPr"]
 standard = "w:CT_TblPrBase"
+
+# ECMA-376 types defaultTabStop CT_TwipsMeasure (CT_Settings). The data's type
+# for it, CT_NonNegativeShort, also types bookFoldPrintingSheets, which ECMA-376
+# types CT_DecimalNumber, so the type has no one definition in the standard to
+# read a Strict type from.
+[[standard_name]]
+type = "w:CT_NonNegativeShort/w:defaultTabStop"
+name = "w:CT_TwipsMeasure/w:defaultTabStop"
+parents = ["w:CT_Settings/w:settings"]

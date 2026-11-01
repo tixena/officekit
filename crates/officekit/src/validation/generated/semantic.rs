@@ -3116,7 +3116,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: false,
             values: &["0"],
         },
-        type_id: 2693,
+        type_id: 2692,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3126,7 +3126,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 32,
             min: 0,
         },
-        type_id: 2694,
+        type_id: 2693,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3136,7 +3136,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 2697,
+        type_id: 2696,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3148,7 +3148,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: false,
         },
-        type_id: 2920,
+        type_id: 2919,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3160,7 +3160,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: false,
         },
-        type_id: 2920,
+        type_id: 2919,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3170,7 +3170,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 2925,
+        type_id: 2924,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3180,7 +3180,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 2937,
+        type_id: 2936,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3190,7 +3190,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 2939,
+        type_id: 2938,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3200,7 +3200,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 2940,
+        type_id: 2939,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3210,7 +3210,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 2954,
+        type_id: 2953,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3219,7 +3219,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             attribute: None,
             relationship_type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/recipientData",
         },
-        type_id: 2960,
+        type_id: 2959,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3228,13 +3228,13 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             attribute: Some(0),
             relationship_type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/attachedTemplate",
         },
-        type_id: 2963,
+        type_id: 2962,
         versions: Versions(0b11_1111),
     },
     Registration {
         applications: Applications(0b111),
         constraint: Constraint::RelationshipExists { attribute: Some(0) },
-        type_id: 2963,
+        type_id: 2962,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3243,7 +3243,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             attribute: Some(0),
             relationship_type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/mailMergeSource",
         },
-        type_id: 2964,
+        type_id: 2963,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3252,7 +3252,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             attribute: Some(0),
             relationship_type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/printerSettings",
         },
-        type_id: 2968,
+        type_id: 2967,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3261,7 +3261,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             attribute: Some(0),
             relationship_type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/recipientData",
         },
-        type_id: 2969,
+        type_id: 2968,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3270,7 +3270,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             attribute: Some(0),
             relationship_type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/frame",
         },
-        type_id: 2970,
+        type_id: 2969,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3279,7 +3279,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             attribute: Some(0),
             relationship_type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/mailMergeSource",
         },
-        type_id: 2971,
+        type_id: 2970,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3288,7 +3288,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             attribute: Some(0),
             relationship_type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/subDocument",
         },
-        type_id: 2972,
+        type_id: 2971,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3300,7 +3300,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: false,
         },
-        type_id: 2973,
+        type_id: 2972,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3312,7 +3312,17 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             min: 0.0_f64,
             min_inclusive: false,
         },
-        type_id: 2973,
+        type_id: 2972,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::UniqueValue {
+            attribute: Some(3),
+            case_sensitive: true,
+            parent: None,
+        },
+        type_id: 2982,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3347,31 +3357,21 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
     },
     Registration {
         applications: Applications(0b111),
-        constraint: Constraint::UniqueValue {
-            attribute: Some(3),
-            case_sensitive: true,
-            parent: None,
+        constraint: Constraint::RelationshipType {
+            attribute: Some(0),
+            relationship_type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/transform",
         },
         type_id: 2986,
         versions: Versions(0b11_1111),
     },
     Registration {
         applications: Applications(0b111),
-        constraint: Constraint::RelationshipType {
-            attribute: Some(0),
-            relationship_type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/transform",
-        },
-        type_id: 2987,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
         constraint: Constraint::UniqueValue {
             attribute: Some(3),
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3011,
+        type_id: 3010,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3380,7 +3380,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             attribute: Some(0),
             pattern: "^.{1}$",
         },
-        type_id: 3039,
+        type_id: 3038,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3389,7 +3389,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             attribute: Some(0),
             pattern: "^.{1}$",
         },
-        type_id: 3045,
+        type_id: 3044,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3398,7 +3398,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             attribute: Some(0),
             pattern: "^[^,]*$",
         },
-        type_id: 3048,
+        type_id: 3047,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3408,7 +3408,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 253,
             min: 0,
         },
-        type_id: 3049,
+        type_id: 3048,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3418,7 +3418,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3052,
+        type_id: 3051,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3427,7 +3427,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             attribute: Some(0),
             pattern: "^[^,]*$",
         },
-        type_id: 3066,
+        type_id: 3065,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3437,7 +3437,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 253,
             min: 0,
         },
-        type_id: 3069,
+        type_id: 3068,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3446,7 +3446,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             attribute: Some(0),
             pattern: "^[^,]*$",
         },
-        type_id: 3076,
+        type_id: 3075,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3456,7 +3456,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3078,
+        type_id: 3077,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3465,7 +3465,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             attribute: Some(0),
             pattern: "^[^,]*$",
         },
-        type_id: 3079,
+        type_id: 3078,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3475,7 +3475,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             valid: false,
             values: &["0x0040", "0x0080", "0x0800"],
         },
-        type_id: 3080,
+        type_id: 3079,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3485,7 +3485,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3092,
+        type_id: 3091,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3495,7 +3495,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3101,
+        type_id: 3100,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3505,19 +3505,19 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3104,
+        type_id: 3103,
         versions: Versions(0b11_1111),
     },
     Registration {
         applications: Applications(0b001),
         constraint: Constraint::CannotBeOmitted { attribute: Some(1) },
-        type_id: 3109,
+        type_id: 3108,
         versions: Versions(0b11_1111),
     },
     Registration {
         applications: Applications(0b001),
         constraint: Constraint::CannotBeOmitted { attribute: Some(0) },
-        type_id: 3109,
+        type_id: 3108,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3527,7 +3527,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3128,
+        type_id: 3127,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3537,7 +3537,17 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3145,
+        type_id: 3144,
+        versions: Versions(0b11_1111),
+    },
+    Registration {
+        applications: Applications(0b111),
+        constraint: Constraint::UniqueValue {
+            attribute: Some(3),
+            case_sensitive: true,
+            parent: None,
+        },
+        type_id: 3150,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3554,7 +3564,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
         applications: Applications(0b111),
         constraint: Constraint::UniqueValue {
             attribute: Some(3),
-            case_sensitive: true,
+            case_sensitive: false,
             parent: None,
         },
         type_id: 3152,
@@ -3564,7 +3574,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
         applications: Applications(0b111),
         constraint: Constraint::UniqueValue {
             attribute: Some(3),
-            case_sensitive: false,
+            case_sensitive: true,
             parent: None,
         },
         type_id: 3153,
@@ -3633,21 +3643,11 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
     Registration {
         applications: Applications(0b111),
         constraint: Constraint::UniqueValue {
-            attribute: Some(3),
-            case_sensitive: true,
-            parent: None,
-        },
-        type_id: 3160,
-        versions: Versions(0b11_1111),
-    },
-    Registration {
-        applications: Applications(0b111),
-        constraint: Constraint::UniqueValue {
             attribute: Some(4),
             case_sensitive: true,
             parent: None,
         },
-        type_id: 3161,
+        type_id: 3160,
         versions: Versions(0b11_1111),
     },
     Registration {
@@ -3657,7 +3657,7 @@ pub static SEMANTIC_CONSTRAINTS: &[Registration] = &[
             max: 15,
             min: 0,
         },
-        type_id: 3161,
+        type_id: 3160,
         versions: Versions(0b11_1111),
     },
     Registration {

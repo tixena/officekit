@@ -18,7 +18,8 @@ use crate::generate_schema::model::{Facets, Name, SchemaSet, SimpleType, TypeRef
 mod tests;
 
 /// By Transitional complex type, each attribute both classes declare whose
-/// Strict type is not its Transitional type, with the Strict type's checks.
+/// Strict type is not its Transitional type, or takes a universal measure,
+/// with the Strict type's checks.
 pub type StrictChecks = BTreeMap<Name, BTreeMap<Name, Vec<ValueCheck>>>;
 
 /// Checks that must all pass, each a list of alternatives one of which must pass.
@@ -331,6 +332,36 @@ fn class(set: &SchemaSet, type_ref: &TypeRef) -> Result<ValueClass> {
     }
 }
 
+/// Whether `type_ref` takes a universal measure: `72pt` in a Strict file. SDK 3.5.1's data types
+/// some of these as a bare number, whose checks would refuse what Word writes.
+fn holds_measure(set: &SchemaSet, type_ref: &TypeRef) -> bool {
+    let TypeRef::Simple {
+        anonymous: _anonymous,
+        name,
+    } = type_ref
+    else {
+        return false;
+    };
+    name.local == "ST_UniversalMeasure"
+        || match set.simple_types.get(name) {
+            Some(SimpleType::Restriction {
+                base,
+                enumeration: _enumeration,
+                facets: _facets,
+                name: _name,
+            }) => holds_measure(set, base),
+            Some(SimpleType::Union {
+                members,
+                name: _name,
+            }) => members.iter().any(|member| holds_measure(set, member)),
+            Some(SimpleType::List {
+                item: _item,
+                name: _name,
+            }) => false,
+            None => false,
+        }
+}
+
 /// The clauses with those that always pass, and repeated ones, left out.
 fn kept(clauses: Clauses) -> Clauses {
     let mut found: Clauses = Vec::with_capacity(clauses.len());
@@ -430,7 +461,7 @@ const fn string(kind: StringKind) -> Check {
 }
 
 /// The Strict checks of every attribute both classes declare whose Strict
-/// type is not its Transitional type. An attribute of a type in `kept`, whose
+/// type is not its Transitional type, or takes a universal measure. An attribute of a type in `kept`, whose
 /// bare number a Strict save keeps, takes its Transitional type's checks.
 ///
 /// # Errors
@@ -469,7 +500,7 @@ pub fn strict_checks(
             let Some(strict_type) = strict_types.get(&attribute.name) else {
                 continue;
             };
-            if sets.same(strict_type, &attribute.type_ref) {
+            if sets.same(strict_type, &attribute.type_ref) && !holds_measure(strict, strict_type) {
                 continue;
             }
             let keeps_bare_number = matches!(

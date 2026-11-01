@@ -288,3 +288,37 @@ fn only_an_attribute_whose_strict_type_differs_gets_strict_checks() {
         })]
     );
 }
+
+#[test]
+fn an_attribute_that_takes_a_measure_gets_strict_checks_though_both_classes_type_it_alike() {
+    let schema = |namespace: &str| {
+        format!(
+            r#"<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="{namespace}"
+  targetNamespace="{namespace}" elementFormDefault="qualified" attributeFormDefault="qualified">
+  <xsd:simpleType name="ST_UniversalMeasure">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="-?[0-9]+(.[0-9]+)?(mm|cm|in|pt|pc|pi)"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="ST_SignedTwipsMeasure">
+    <xsd:union memberTypes="xsd:integer ST_UniversalMeasure"/>
+  </xsd:simpleType>
+  <xsd:complexType name="CT_TabStop">
+    <xsd:attribute name="pos" type="ST_SignedTwipsMeasure"/>
+  </xsd:complexType>
+</xsd:schema>"#
+        )
+    };
+    let system = MemorySystem::new()
+        .with_file("/t/wml.xsd", schema(W).as_bytes())
+        .unwrap()
+        .with_file("/s/wml.xsd", schema(STRICT_W).as_bytes())
+        .unwrap();
+    let transitional = SchemaSet::read(&system, &["t/wml.xsd"]).unwrap();
+    let strict = SchemaSet::read(&system, &["s/wml.xsd"]).unwrap();
+    let found = strict_checks(&transitional, &strict, &BTreeSet::new()).unwrap();
+    assert_eq!(
+        found[&Name::new(W, "CT_TabStop")][&Name::new(W, "pos")].len(),
+        2
+    );
+}

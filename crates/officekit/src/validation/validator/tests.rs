@@ -67,6 +67,8 @@ const VERSIONS: [OfficeVersion; 6] = [
 ];
 const WORD_NAMESPACES: &str = r#"xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:v="urn:schemas-microsoft-com:vml""#;
 const WNE: &str = "http://schemas.microsoft.com/office/word/2006/wordml";
+const STRICT_SETTINGS: &str = "http://purl.oclc.org/ooxml/officeDocument/relationships/settings";
+const STRICT_W: &str = "http://purl.oclc.org/ooxml/wordprocessingml/main";
 const WPS: &str = "http://schemas.microsoft.com/office/word/2010/wordprocessingShape";
 const UNKNOWN: &str = "http://example.com/relationships/unknown";
 const PARAGRAPH_STYLE: &str = r#"<w:style w:type="paragraph" w:styleId="S1"><w:name w:val="S1"/><w:pPr>PPR</w:pPr></w:style>"#;
@@ -916,4 +918,70 @@ fn wne_txbx_content_outside_a_text_box_is_refused() {
         errors_at(&package, OfficeVersion::Microsoft365, "wne:txbxContent").len(),
         1
     );
+}
+
+/// A Strict document holding `body`, declared as Word's Strict save declares it.
+fn strict_document(body: &str) -> Package {
+    let mut package = Package::new();
+    let main = PartName::new("/word/document.xml").unwrap();
+    let document = format!(
+        r#"<w:document xmlns:w="{STRICT_W}" xmlns:wne="{WNE}" w:conformance="strict"><w:body>{body}</w:body></w:document>"#
+    );
+    package
+        .set_part_bytes(&main, MAIN, document.as_bytes())
+        .unwrap();
+    package.relate(None, &main, STRICT_OFFICE_DOCUMENT).unwrap();
+    package
+}
+
+fn all_errors(package: &Package) -> Vec<String> {
+    Validator::new(OfficeVersion::Microsoft365)
+        .with_max_errors(0)
+        .validate(package)
+        .iter()
+        .map(ValidationError::line)
+        .collect()
+}
+
+#[test]
+fn a_strict_file_accepts_the_measures_word_writes() {
+    let package = strict_document(
+        r#"<w:p><w:pPr><w:tabs><w:tab w:val="start" w:pos="467.50pt"/></w:tabs></w:pPr></w:p><w:sectPr><w:pgSz w:w="612pt" w:h="792pt"/><w:pgMar w:top="72pt" w:right="72pt" w:bottom="-72pt" w:left="72pt" w:header="36pt" w:footer="36pt" w:gutter="0pt"/></w:sectPr>"#,
+    );
+    assert_eq!(all_errors(&package), Vec::<String>::new());
+}
+
+#[test]
+fn a_strict_file_accepts_a_default_tab_stop_in_points() {
+    let settings = format!(
+        r#"<w:settings xmlns:w="{STRICT_W}"><w:defaultTabStop w:val="36pt"/></w:settings>"#
+    );
+    let package = with_part(
+        strict_document(""),
+        "/word/settings.xml",
+        STRICT_SETTINGS,
+        SETTINGS_CONTENT,
+        &settings,
+    );
+    assert_eq!(all_errors(&package), Vec::<String>::new());
+}
+
+#[test]
+fn a_strict_file_accepts_a_bare_number_of_twips_and_refuses_what_is_neither() {
+    assert_eq!(
+        all_errors(&strict_document(
+            r#"<w:sectPr><w:pgSz w:w="12240" w:h="15840"/></w:sectPr>"#
+        )),
+        Vec::<String>::new()
+    );
+    let errors = all_errors(&strict_document(
+        r#"<w:sectPr><w:pgSz w:w="wide" w:h="-72pt"/></w:sectPr>"#,
+    ));
+    assert_eq!(errors.len(), 2, "{errors:?}");
+}
+
+#[test]
+fn a_transitional_file_checks_a_measure_as_before() {
+    let package = word_document("", r#"<w:sectPr><w:pgSz w:w="612pt"/></w:sectPr>"#);
+    refused_with(&package, "w:pgSz", "InvalidAttributeValue");
 }

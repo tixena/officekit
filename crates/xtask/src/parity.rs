@@ -696,6 +696,34 @@ pub const DIVERGENCES: &[Divergence] = &[
         reason: STYLE_PROPERTIES,
         targets: ALL_TARGETS,
     },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "pgSz")],
+        reason: STRICT_MEASURES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "pgMar")],
+        reason: STRICT_MEASURES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "tab")],
+        reason: STRICT_MEASURES,
+        targets: ALL_TARGETS,
+    },
+    Divergence {
+        id: "Sch_AttributeValueDataTypeDetailed",
+        mentioning: None,
+        path: &[(WORD, "defaultTabStop")],
+        reason: STRICT_MEASURES,
+        targets: ALL_TARGETS,
+    },
 ];
 
 const ALL_TARGETS: &[&str] = &[
@@ -736,6 +764,9 @@ const ECMA_ELEMENTS: &str = "SDK 3.5.1 leaves out elements ECMA-376 declares: di
 
 const SMART_TAG_SETTINGS: &str = "SDK 3.5.1 leaves out w:doNotEmbedSmartTags and \
     w:saveSmartTagsAsXml; ECMA-376 declares them in CT_Settings and CT_WebSettings";
+
+const STRICT_MEASURES: &str = "SDK 3.5.1 types these as a bare number; ECMA-376's Strict \
+    ST_TwipsMeasure and ST_SignedTwipsMeasure hold a universal measure, and Word writes 72pt";
 
 const STRICT_TEXT_BOX: &str = "SDK 3.5.1 gives wps:txbx only w:txbxContent; Microsoft documents \
     wne:txbxContent in its place in Strict ([MS-ODRAWXML] 2.13.3.2, CT_TextboxInfo)";

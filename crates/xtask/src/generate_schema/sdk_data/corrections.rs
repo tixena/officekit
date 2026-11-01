@@ -77,6 +77,14 @@ struct Alternative {
     type_name: String,
 }
 
+/// One type whose schema type names another element's in the data, renamed to
+/// the schema type the standard gives its element, with its attributes.
+struct StandardName {
+    name: String,
+    parents: Vec<String>,
+    type_name: String,
+}
+
 /// Apply every `[[attribute]]` row of the table of corrections to `data`.
 pub(super) fn apply_attributes(data: &mut SdkData, text: &str) -> Result<()> {
     let table: toml::Table = text
@@ -130,6 +138,10 @@ pub(super) fn apply(data: &mut SdkData, text: &str, standard: &SchemaSet) -> Res
     for row in alternatives(&table)? {
         add_alternative(data, &row)
             .with_context(|| format!("in the correction adding `{}`", row.type_name))?;
+    }
+    for row in standard_names(&table)? {
+        rename_type(data, &row)
+            .with_context(|| format!("in the correction of `{}`", row.type_name))?;
     }
     Ok(())
 }
@@ -322,6 +334,35 @@ fn add_alternative(data: &mut SdkData, row: &Alternative) -> Result<()> {
     Ok(())
 }
 
+fn rename_type(data: &mut SdkData, row: &StandardName) -> Result<()> {
+    if data.types.contains_key(&row.name) {
+        bail!("the data already has `{}`", row.name);
+    }
+    let mut moved = data
+        .types
+        .remove(&row.type_name)
+        .with_context(|| format!("the data has no `{}`", row.type_name))?;
+    if moved.is_derived
+        && let Some((schema_type, _)) = row.type_name.split_once('/')
+    {
+        let base = known(data, &format!("{schema_type}/"))?.attributes.clone();
+        moved.attributes.splice(0..0, base);
+        moved.is_derived = false;
+    }
+    moved.name.clone_from(&row.name);
+    for parent in &row.parents {
+        let parent_type = data
+            .types
+            .get_mut(parent)
+            .with_context(|| format!("the data has no `{parent}`"))?;
+        if !rename(parent_type, &row.type_name, &row.name) {
+            bail!("`{parent}` does not hold `{}`", row.type_name);
+        }
+    }
+    data.types.insert(row.name.clone(), moved);
+    Ok(())
+}
+
 /// Replace the first element item named `beside` with a choice of it and
 /// `alternative`, the choice taking the item's occurrences.
 fn make_choice(particle: &mut DataParticle, beside: &str, alternative: &str) -> bool {
@@ -367,6 +408,19 @@ fn alternatives(table: &toml::Table) -> Result<Vec<Alternative>> {
                 beside: text_field(row, "beside")?,
                 like: text_field(row, "like")?,
                 parent: text_field(row, "parent")?,
+                type_name: text_field(row, "type")?,
+            })
+        })
+        .collect()
+}
+
+fn standard_names(table: &toml::Table) -> Result<Vec<StandardName>> {
+    rows(table, "standard_name")?
+        .into_iter()
+        .map(|row| {
+            Ok(StandardName {
+                name: text_field(row, "name")?,
+                parents: texts(row, "parents")?,
                 type_name: text_field(row, "type")?,
             })
         })

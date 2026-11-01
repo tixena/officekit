@@ -346,7 +346,7 @@
 //   bf519385b6d23eb8b28cd78f23c63a7fa7d6dd7f48bb7de09b8e36ad6e22588e  inputs/open-xml-sdk/data/parts/WorksheetThreadedCommentsPart.json
 //   ee0ae0ea09db0cdfae1bc11eef04ea2ff123c8dbdd548e7feec91b14689565f5  inputs/open-xml-sdk/data/parts/XmlSignaturePart.json
 //   e26c4528f8340924ff27391d34681ecde1f597fc5ce3dbf2d354edc9c6071a52  crates/xtask/data/part_roots.toml
-//   dc6b1af848fe7bcb2e512bb9a5364a1c2df59916b004e67613da5c81661cddd2  crates/xtask/data/sdk_corrections.toml
+//   34aa1dc617bbdedc732df9adf845b80d202495b591137488ee28b4c492a6800a  crates/xtask/data/sdk_corrections.toml
 //   dff6adee70b19bb1f9b56e50e9cc20316298c14255ec7e2d6cb0efe795318af0  crates/xtask/data/simple_types.toml
 //   87ddaec0674d7f7ef85efce241d09b933d6607874efbe843d734cf21c47b9617  crates/xtask/data/strict_correspondences.toml
 // pdftotext version 26.01.0
@@ -879,7 +879,7 @@ pub static PART_RULES: &[PartRule] = &[
         relationship_type: Some(
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings",
         ),
-        root: Some(3013),
+        root: Some(3012),
         versions: Versions(0b11_1111),
     },
     PartRule {
@@ -2981,7 +2981,7 @@ pub static PART_RULES: &[PartRule] = &[
         relationship_type: Some(
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/numbering",
         ),
-        root: Some(2700),
+        root: Some(2699),
         versions: Versions(0b11_1111),
     },
     PartRule {
@@ -4229,7 +4229,7 @@ pub static PART_RULES: &[PartRule] = &[
         relationship_type: Some(
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles",
         ),
-        root: Some(3082),
+        root: Some(3081),
         versions: Versions(0b11_1111),
     },
     PartRule {
@@ -4239,7 +4239,7 @@ pub static PART_RULES: &[PartRule] = &[
         relationship_type: Some(
             "http://schemas.microsoft.com/office/2007/relationships/stylesWithEffects",
         ),
-        root: Some(3082),
+        root: Some(3081),
         versions: Versions(0b11_1111),
     },
     PartRule {

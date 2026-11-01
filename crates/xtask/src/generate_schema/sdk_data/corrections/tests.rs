@@ -156,6 +156,13 @@ attribute = "w:name"
 string = true
 "#;
 
+const STANDARD_NAME_ROW: &str = r#"
+[[standard_name]]
+type = "w:CT_OnOff/w:bold"
+name = "w:CT_Bold/w:bold"
+parents = ["w:CT_Own/w:own"]
+"#;
+
 const VALUES_ROW: &str = r#"
 [[enumeration_values]]
 enumeration = "w:ST_Level"
@@ -781,5 +788,32 @@ fn a_from_standard_row_that_names_what_the_data_or_the_standard_lacks_stops_the_
                 .is_err(),
             "{to}"
         );
+    }
+}
+
+#[test]
+fn a_standard_name_row_renames_a_type_with_its_base_s_attributes() {
+    let mut data = read_word();
+    data.correct(STANDARD_NAME_ROW, &standard()).unwrap();
+    assert!(!data.types.contains_key("w:CT_OnOff/w:bold"));
+    let renamed = &data.types["w:CT_Bold/w:bold"];
+    assert_eq!(renamed.name, "w:CT_Bold/w:bold");
+    assert!(!renamed.is_derived);
+    assert_eq!(renamed.attributes[0].qname, "w:val");
+    let parent = data.types["w:CT_Own/w:own"].particle.as_ref().unwrap();
+    assert_eq!(parent.items[0].name.as_deref(), Some("w:CT_Bold/w:bold"));
+}
+
+#[test]
+fn a_standard_name_row_that_names_what_the_data_lacks_stops_the_generator() {
+    for (from, to) in [
+        ("w:CT_OnOff/w:bold", "w:CT_Missing/w:bold"),
+        ("w:CT_Own/w:own", "w:CT_Missing/w:own"),
+    ] {
+        let mut data = read_word();
+        let error = data
+            .correct(&STANDARD_NAME_ROW.replace(from, to), &standard())
+            .unwrap_err();
+        assert!(format!("{error:#}").contains(to), "{error:#}");
     }
 }
