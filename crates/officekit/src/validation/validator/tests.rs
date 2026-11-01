@@ -1,12 +1,66 @@
 use core::iter;
 
+use officekit_markup::common_simple_types::{
+    BooleanValue, OnOffValue, UnsignedDecimalNumberValue, XMLName,
+};
+use officekit_markup::vml::DocumentBackground as VmlBackground;
+use officekit_markup::wordprocessing::{
+    AbstractNumberingDefinition, AssociatedHTMLDivID, AutomaticallyMergeUserFormatting,
+    BlockContent, BlockLevelStructuredDocumentTag, BlockLevelStructuredDocumentTagContent,
+    CellLevelStructuredDocumentTag, CellLevelStructuredDocumentTagContent, ColorValue,
+    CompatibilitySettings, ComplexFieldCharacter, ComplexFieldCharacterContent,
+    ComplexFieldCharacterType, ConditionalFormattingBitmask, ConditionalTableStyleFormattingTypes,
+    ContentBlockContent, ContentCellContent, ContentRowContent, CustomCompatibilitySetting,
+    CustomXMLAttribute, DecimalNumberValue, DefaultParagraphProperties,
+    DoNotDisplayFramesetSplitters, Document, DocumentBackground, DocumentBody,
+    DocumentDefaultParagraphAndRunProperties, DocumentSettings, DontWrapCellContent,
+    EMailMessageCompositionStyle, EMailMessageReplyStyle, EMailMessageTextStyle, EmbeddedObject,
+    EmbeddedObjectContent, EmbeddedVideo, FitTextWithinCell, FloatingTableAllowsOverlap,
+    FloatingTablePositioning, FormFieldEnabled, FormFieldName, FormFieldNameValue,
+    FormFieldProperties, FormFieldPropertiesContent, FourDigitHexadecimalValue,
+    FrameCannotBeResized, FrameLongDescription, FrameOrFramesetTitle, FrameSize,
+    FramesetDefinitionContent, FramesetSplitterBorderStyle, FramesetSplitterProperties,
+    HiddenTableRowMarker, HideStyleFromMainUserInterface, HorizontalAlignmentType,
+    IgnoreEndOfCellMarker, InlineLevelSmartTag, InlineLevelStructuredDocumentTag,
+    InlineLevelStructuredDocumentTagContent, Justification, LeftAndRightMarginForFrame,
+    MaintainLinkToExistingFile, MeasurementInPixels, MeasurementOrPercentageValue,
+    NestedFramesetDefinition, NumberOfColumnsInColumnBand, NumberOfRowsInRowBand,
+    NumberingDefinitions, NumberingLevelOverrideDefinition, Paragraph,
+    ParagraphConditionalFormatting, ParagraphContent, ParagraphProperties,
+    ParagraphPropertiesPPrGeneral, PlainTextStructuredDocumentTag, PreferredTableWidth,
+    PreviousTableProperties, PrimaryStyle, PrimaryStyleName, ProgrammaticTag,
+    ReferencedParagraphStyle, ReferencedTableStyle, RemoveSemiHiddenProperty, RepeatTableRow,
+    RevisionInformationForParagraphProperties, RowLevelStructuredDocumentTag,
+    RowLevelStructuredDocumentTagContent, SignedMeasurementInTwentiethsOfPoint,
+    SingleFrameProperties, SmartTagProperties, StructuredDocumentTagLabel,
+    StructuredDocumentTagNavigationOrderIndex, StructuredDocumentTagProperties,
+    StructuredDocumentTagPropertiesContent, StyleCannotBeApplied,
+    StyleConditionalTableFormattingProperties, StyleDefinition, StyleDefinitions, StyleTypes,
+    SupplementarySmartTagInformation, Table, TableAlignmentException, TableAlignmentType,
+    TableCaption, TableCell, TableCellProperties, TableDescription, TableLayout, TableLayoutType,
+    TableOverlapSetting, TableProperties, TableRow, TableRowCannotBreakAcrossPages,
+    TableRowProperties, TableRowPropertiesContent,
+    TableStyleConditionalFormattingSettingsException, TableWidthUnits, Text, TextRun,
+    TextRunContent, VisuallyRightToLeftTable, VmlElementContent, WebPageSettings, write,
+};
+use officekit_xml::element::{Document as XmlDocument, Element};
 use officekit_xml::name::OfficeVersion;
-use officekit_xml::packaging::package::Package;
+use officekit_xml::packaging::package::{DECLARATION, Package};
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::RelationshipType;
+use officekit_xml::write::{Scope, WriteOptions};
 
 use super::{Validator, document_parts, reachable_parts, rule};
 use crate::validation::error::{ErrorCode, ValidationError};
+
+/// A node of the on and off element type `$node` whose `w:val` is `$value`.
+macro_rules! on_off {
+    ($node:ty, $value:expr) => {{
+        let mut node = <$node>::default();
+        node.val = Some(OnOffValue::from($value.to_owned()));
+        node
+    }};
+}
 
 const CHART: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart";
 const CHART_CONTENT: &str = "application/vnd.openxmlformats-officedocument.drawingml.chart+xml";
@@ -76,7 +130,6 @@ const UNKNOWN: &str = "http://example.com/relationships/unknown";
 const PARAGRAPH_STYLE: &str = r#"<w:style w:type="paragraph" w:styleId="S1"><w:name w:val="S1"/><w:pPr>PPR</w:pPr></w:style>"#;
 const RELATIONSHIPS: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
 const BAND_SIZES: &str = r#"<w:tblStyleRowBandSize w:val="1"/><w:tblStyleColBandSize w:val="1"/>"#;
-const TABLE_STYLE_PROPERTIES: &str = r#"<w:tblPr><w:tblStyle w:val="T1"/><w:tblpPr w:tblpX="1"/><w:tblOverlap w:val="never"/><w:bidiVisual/><w:tblStyleRowBandSize w:val="4"/><w:tblStyleColBandSize w:val="4"/><w:tblW w:w="0" w:type="auto"/><w:jc w:val="center"/><w:tblLayout w:type="fixed"/><w:tblLook w:val="04A0"/><w:tblCaption w:val="c"/><w:tblDescription w:val="d"/></w:tblPr>"#;
 const PARAGRAPH_PROPERTIES_CHANGE: &str =
     r#"<w:pPrChange w:id="1" w:author="a"><w:pPr/></w:pPrChange>"#;
 
@@ -129,6 +182,164 @@ fn word_document(before_body: &str, body: &str) -> Package {
     package
 }
 
+/// The part text of `root`, after the declaration Office writes.
+fn xml_of(root: Element) -> String {
+    String::from_utf8(XmlDocument::new(DECLARATION, root).to_xml(WriteOptions::default())).unwrap()
+}
+
+/// A Word document whose main part is `document`, written by the shared tree writer.
+fn typed_word(document: &Document) -> Package {
+    let mut package = Package::new();
+    let main = PartName::new("/word/document.xml").unwrap();
+    let xml = xml_of(write::document(document, &mut Scope::default()));
+    package.set_part_bytes(&main, MAIN, xml.as_bytes()).unwrap();
+    package.relate(None, &main, OFFICE_DOCUMENT).unwrap();
+    package
+}
+
+/// A Word document whose body holds `blocks`.
+fn typed_body(blocks: Vec<BlockContent>) -> Package {
+    let mut body = DocumentBody::default();
+    body.content = blocks;
+    let mut document = Document::default();
+    document.body = Some(Box::new(body));
+    typed_word(&document)
+}
+
+/// A Word document whose body holds one paragraph of `content`.
+fn typed_paragraph(content: Vec<ParagraphContent>) -> Package {
+    let mut paragraph = Paragraph::default();
+    paragraph.content = content;
+    typed_body(vec![BlockContent::Paragraph(paragraph)])
+}
+
+/// An empty Word document whose numbering part holds `numbering`.
+fn typed_numbering(numbering: &NumberingDefinitions) -> Package {
+    with_part(
+        typed_body(Vec::new()),
+        "/word/numbering.xml",
+        NUMBERING,
+        NUMBERING_CONTENT,
+        &xml_of(write::numbering_definitions(
+            numbering,
+            &mut Scope::default(),
+        )),
+    )
+}
+
+/// An empty Word document whose styles part holds `styles`.
+fn typed_styles(styles: Vec<StyleDefinition>) -> Package {
+    let mut definitions = StyleDefinitions::default();
+    definitions.style_definition = styles;
+    typed_style_definitions(&definitions)
+}
+
+/// An empty Word document whose styles part is `definitions`.
+fn typed_style_definitions(definitions: &StyleDefinitions) -> Package {
+    with_part(
+        typed_body(Vec::new()),
+        "/word/styles.xml",
+        STYLES,
+        STYLES_CONTENT,
+        &xml_of(write::style_definitions(definitions, &mut Scope::default())),
+    )
+}
+
+/// An empty Word document whose settings part holds `settings`.
+fn typed_settings(settings: &DocumentSettings) -> Package {
+    with_part(
+        typed_body(Vec::new()),
+        "/word/settings.xml",
+        SETTINGS,
+        SETTINGS_CONTENT,
+        &xml_of(write::document_settings(settings, &mut Scope::default())),
+    )
+}
+
+/// `package` with a web settings part holding `web_settings`.
+fn with_web_settings(package: Package, web_settings: &WebPageSettings) -> Package {
+    with_part(
+        package,
+        "/word/webSettings.xml",
+        WEB_SETTINGS,
+        WEB_SETTINGS_CONTENT,
+        &xml_of(write::web_page_settings(
+            web_settings,
+            &mut Scope::default(),
+        )),
+    )
+}
+
+/// A table of `properties` and no row.
+fn typed_table(properties: TableProperties) -> Package {
+    let mut table = Table::default();
+    table.properties = Box::new(properties);
+    typed_body(vec![BlockContent::Table(table)])
+}
+
+/// A table of one row of `properties` holding one cell of `cell_properties` and an empty
+/// paragraph.
+fn table_of_one_cell(
+    properties: TableRowProperties,
+    cell_properties: Option<TableCellProperties>,
+) -> Table {
+    let mut cell = TableCell::default();
+    cell.content = vec![BlockContent::Paragraph(Paragraph::default())];
+    cell.properties = cell_properties.map(Box::new);
+    let mut row = TableRow::default();
+    row.content = vec![ContentCellContent::TableCell(cell)];
+    row.properties = Some(Box::new(properties));
+    let mut table = Table::default();
+    table.content_row_content = vec![ContentRowContent::TableRow(row)];
+    table
+}
+
+/// A style of `kind` whose id and name are `id`.
+fn typed_style(kind: &str, id: &str) -> StyleDefinition {
+    let mut name = PrimaryStyleName::default();
+    name.val = Some(id.to_owned());
+    let mut style = StyleDefinition::default();
+    style.primary_style_name = Some(Box::new(name));
+    style.style_id = Some(id.to_owned());
+    style.r#type = Some(StyleTypes::from(kind.to_owned()));
+    style
+}
+
+/// The table style `T1`, its `firstRow` condition holding `condition`.
+fn table_style_condition(condition: StyleConditionalTableFormattingProperties) -> StyleDefinition {
+    let mut first_row = condition;
+    first_row.r#type = Some(ConditionalTableStyleFormattingTypes::from(
+        "firstRow".to_owned(),
+    ));
+    let mut style = typed_style("table", "T1");
+    style.style_conditional_table_formatting_properties = vec![first_row];
+    style
+}
+
+/// The document defaults, their paragraph properties being `properties`.
+fn document_defaults(properties: ParagraphPropertiesPPrGeneral) -> Package {
+    let mut paragraph = DefaultParagraphProperties::default();
+    paragraph.p_pr_general = Some(Box::new(properties));
+    let mut defaults = DocumentDefaultParagraphAndRunProperties::default();
+    defaults.default_paragraph_properties = Some(Box::new(paragraph));
+    let mut definitions = StyleDefinitions::default();
+    definitions.document_default_paragraph_and_run_properties = Some(Box::new(defaults));
+    typed_style_definitions(&definitions)
+}
+
+fn number(value: &str) -> DecimalNumberValue {
+    DecimalNumberValue::from(value.to_owned())
+}
+
+/// A run of the text `value`.
+fn typed_run(value: &str) -> TextRun {
+    let mut text = Text::default();
+    text.value = value.to_owned();
+    let mut run = TextRun::default();
+    run.content = vec![TextRunContent::Text(text)];
+    run
+}
+
 fn with_part(
     mut package: Package,
     name: &str,
@@ -177,56 +388,6 @@ fn web_settings_document(web_settings: &str) -> Package {
         WEB_SETTINGS,
         WEB_SETTINGS_CONTENT,
         &part,
-    )
-}
-
-fn on_off_document(value: &str) -> Package {
-    let on = |name: &str| format!(r#"<w:{name} w:val="{value}"/>"#);
-    let table = format!(
-        "<w:tbl><w:tblPr/><w:tblGrid/><w:tr><w:trPr>{}{}{}</w:trPr><w:tc><w:tcPr>{}{}{}</w:tcPr><w:p/></w:tc></w:tr></w:tbl>",
-        on("cantSplit"),
-        on("tblHeader"),
-        on("hidden"),
-        on("noWrap"),
-        on("tcFitText"),
-        on("hideMark"),
-    );
-    let style: String = [
-        "autoRedefine",
-        "hidden",
-        "semiHidden",
-        "unhideWhenUsed",
-        "qFormat",
-        "locked",
-        "personal",
-        "personalCompose",
-        "personalReply",
-    ]
-    .map(on)
-    .concat();
-    let styles = format!(
-        r#"<w:styles {WORD_NAMESPACES}><w:style w:type="paragraph" w:styleId="Body"><w:name w:val="Body"/>{style}</w:style></w:styles>"#
-    );
-    let web = format!(
-        "<w:webSettings {WORD_NAMESPACES}><w:frameset><w:framesetSplitbar>{}{}</w:framesetSplitbar><w:frame>{}{}</w:frame></w:frameset></w:webSettings>",
-        on("noBorder"),
-        on("flatBorders"),
-        on("noResizeAllowed"),
-        on("linkedToFile"),
-    );
-    let package = with_part(
-        word_document("", &table),
-        "/word/styles.xml",
-        STYLES,
-        STYLES_CONTENT,
-        &styles,
-    );
-    with_part(
-        package,
-        "/word/webSettings.xml",
-        WEB_SETTINGS,
-        WEB_SETTINGS_CONTENT,
-        &web,
     )
 }
 
@@ -470,46 +631,259 @@ fn a_chart_extension_without_its_content_element_is_refused() {
     assert!(errors[0].contains("InvalidChild"), "{errors:?}");
 }
 
+/// A document whose numbering level 0 is justified `value`.
+fn numbering_with_justification(value: &str) -> Package {
+    let mut justification = Justification::default();
+    justification.val = Some(HorizontalAlignmentType::from(value.to_owned()));
+    let mut level = NumberingLevelOverrideDefinition::default();
+    level.ilvl = Some(number("0"));
+    level.justification = Some(Box::new(justification));
+    let mut definition = AbstractNumberingDefinition::default();
+    definition.abstract_num_id = Some(number("0"));
+    definition.numbering_level_override_definition = vec![level];
+    let mut numbering = NumberingDefinitions::default();
+    numbering.abstract_numbering_definition = vec![definition];
+    typed_numbering(&numbering)
+}
+
+/// A table aligned `value`.
+fn table_aligned(value: &str) -> Package {
+    let mut alignment = TableAlignmentException::default();
+    alignment.val = Some(TableAlignmentType::from(value.to_owned()));
+    let mut properties = TableProperties::default();
+    properties.table_alignment_exception = Some(Box::new(alignment));
+    typed_table(properties)
+}
+
+/// A table whose `w:bidiVisual` is `value`.
+fn right_to_left_table(value: &str) -> Package {
+    let mut properties = TableProperties::default();
+    properties.visually_right_to_left_table =
+        Some(Box::new(on_off!(VisuallyRightToLeftTable, value)));
+    typed_table(properties)
+}
+
+/// A paragraph in the HTML division `value`.
+fn paragraph_in_div(value: &str) -> Package {
+    let mut div_id = AssociatedHTMLDivID::default();
+    div_id.val = Some(number(value));
+    let mut properties = ParagraphProperties::default();
+    properties.associated_html_div_id = Some(Box::new(div_id));
+    let mut paragraph = Paragraph::default();
+    paragraph.properties = Some(Box::new(properties));
+    typed_body(vec![BlockContent::Paragraph(paragraph)])
+}
+
+/// A document holding each of the 18 on and off elements of [`ON_OFF_ELEMENTS`] at `value`: in a
+/// table row and cell, in a paragraph style, and in the web settings' frameset.
+fn on_off_document(value: &str) -> Package {
+    let mut row = TableRowProperties::default();
+    row.content = vec![
+        TableRowPropertiesContent::TableRowCannotBreakAcrossPages(on_off!(
+            TableRowCannotBreakAcrossPages,
+            value
+        )),
+        TableRowPropertiesContent::RepeatTableRow(on_off!(RepeatTableRow, value)),
+        TableRowPropertiesContent::HiddenTableRowMarker(on_off!(HiddenTableRowMarker, value)),
+    ];
+    let mut cell = TableCellProperties::default();
+    cell.dont_wrap_cell_content = Some(Box::new(on_off!(DontWrapCellContent, value)));
+    cell.fit_text_within_cell = Some(Box::new(on_off!(FitTextWithinCell, value)));
+    cell.ignore_end_of_cell_marker = Some(Box::new(on_off!(IgnoreEndOfCellMarker, value)));
+    let mut style = typed_style("paragraph", "Body");
+    style.automatically_merge_user_formatting =
+        Some(Box::new(on_off!(AutomaticallyMergeUserFormatting, value)));
+    style.e_mail_message_composition_style =
+        Some(Box::new(on_off!(EMailMessageCompositionStyle, value)));
+    style.e_mail_message_reply_style = Some(Box::new(on_off!(EMailMessageReplyStyle, value)));
+    style.e_mail_message_text_style = Some(Box::new(on_off!(EMailMessageTextStyle, value)));
+    style.hidden_table_row_marker = Some(Box::new(on_off!(HiddenTableRowMarker, value)));
+    style.hide_style_from_main_user_interface =
+        Some(Box::new(on_off!(HideStyleFromMainUserInterface, value)));
+    style.primary_style = Some(Box::new(on_off!(PrimaryStyle, value)));
+    style.remove_semi_hidden_property = Some(Box::new(on_off!(RemoveSemiHiddenProperty, value)));
+    style.style_cannot_be_applied = Some(Box::new(on_off!(StyleCannotBeApplied, value)));
+    let mut splitter = FramesetSplitterProperties::default();
+    splitter.do_not_display_frameset_splitters =
+        Some(Box::new(on_off!(DoNotDisplayFramesetSplitters, value)));
+    splitter.frameset_splitter_border_style =
+        Some(Box::new(on_off!(FramesetSplitterBorderStyle, value)));
+    let mut frame = SingleFrameProperties::default();
+    frame.frame_cannot_be_resized = Some(Box::new(on_off!(FrameCannotBeResized, value)));
+    frame.maintain_link_to_existing_file =
+        Some(Box::new(on_off!(MaintainLinkToExistingFile, value)));
+    let mut frameset = NestedFramesetDefinition::default();
+    frameset.content = vec![FramesetDefinitionContent::SingleFrameProperties(frame)];
+    frameset.frameset_splitter_properties = Some(Box::new(splitter));
+    let mut web = WebPageSettings::default();
+    web.nested_frameset_definition = Some(Box::new(frameset));
+    let mut styles = StyleDefinitions::default();
+    styles.style_definition = vec![style];
+    let package = with_part(
+        typed_body(vec![BlockContent::Table(table_of_one_cell(
+            row,
+            Some(cell),
+        ))]),
+        "/word/styles.xml",
+        STYLES,
+        STYLES_CONTENT,
+        &xml_of(write::style_definitions(&styles, &mut Scope::default())),
+    );
+    with_web_settings(package, &web)
+}
+
+/// A content control tagged `a` with a label and a tab index, as a block, around a run, around a
+/// cell and around a row.
+fn content_controls() -> [Package; 4] {
+    let properties = || {
+        let mut tag = ProgrammaticTag::default();
+        tag.val = Some("a".to_owned());
+        let mut label = StructuredDocumentTagLabel::default();
+        label.val = Some(number("1"));
+        let mut tab_index = StructuredDocumentTagNavigationOrderIndex::default();
+        tab_index.val = Some(UnsignedDecimalNumberValue::from("1".to_owned()));
+        let mut properties = StructuredDocumentTagProperties::default();
+        properties.content = Some(Box::new(
+            StructuredDocumentTagPropertiesContent::PlainTextStructuredDocumentTag(
+                PlainTextStructuredDocumentTag::default(),
+            ),
+        ));
+        properties.programmatic_tag = Some(Box::new(tag));
+        properties.structured_document_tag_label = Some(Box::new(label));
+        properties.structured_document_tag_navigation_order_index = Some(Box::new(tab_index));
+        Some(Box::new(properties))
+    };
+    let cell = || {
+        let mut cell = TableCell::default();
+        cell.content = vec![BlockContent::Paragraph(Paragraph::default())];
+        cell
+    };
+    let table_of = |rows: Vec<ContentRowContent>| {
+        let mut table = Table::default();
+        table.content_row_content = rows;
+        typed_body(vec![BlockContent::Table(table)])
+    };
+    let mut block_content = BlockLevelStructuredDocumentTagContent::default();
+    block_content.content = vec![ContentBlockContent::Paragraph(Paragraph::default())];
+    let mut block = BlockLevelStructuredDocumentTag::default();
+    block.content = Some(Box::new(block_content));
+    block.properties = properties();
+    let mut run_content = InlineLevelStructuredDocumentTagContent::default();
+    run_content.content = vec![ParagraphContent::TextRun(typed_run("a"))];
+    let mut around_run = InlineLevelStructuredDocumentTag::default();
+    around_run.content = Some(Box::new(run_content));
+    around_run.properties = properties();
+    let mut cell_content = CellLevelStructuredDocumentTagContent::default();
+    cell_content.content = vec![ContentCellContent::TableCell(cell())];
+    let mut around_cell = CellLevelStructuredDocumentTag::default();
+    around_cell.content = Some(Box::new(cell_content));
+    around_cell.properties = properties();
+    let mut row_of_control = TableRow::default();
+    row_of_control.content = vec![ContentCellContent::CellLevelStructuredDocumentTag(
+        around_cell,
+    )];
+    let mut row = TableRow::default();
+    row.content = vec![ContentCellContent::TableCell(cell())];
+    let mut row_content = RowLevelStructuredDocumentTagContent::default();
+    row_content.content = vec![ContentRowContent::TableRow(row)];
+    let mut around_row = RowLevelStructuredDocumentTag::default();
+    around_row.content = Some(Box::new(row_content));
+    around_row.properties = properties();
+    [
+        typed_body(vec![BlockContent::BlockLevelStructuredDocumentTag(block)]),
+        typed_paragraph(vec![ParagraphContent::InlineLevelStructuredDocumentTag(
+            around_run,
+        )]),
+        table_of(vec![ContentRowContent::TableRow(row_of_control)]),
+        table_of(vec![ContentRowContent::RowLevelStructuredDocumentTag(
+            around_row,
+        )]),
+    ]
+}
+
+/// Table properties holding every child of `CT_TblPrBase`.
+fn every_table_style_property() -> PreviousTableProperties {
+    let mut style = ReferencedTableStyle::default();
+    style.val = Some("T1".to_owned());
+    let mut position = FloatingTablePositioning::default();
+    position.tblp_x = Some(SignedMeasurementInTwentiethsOfPoint::from("1".to_owned()));
+    let mut overlap = FloatingTableAllowsOverlap::default();
+    overlap.val = Some(TableOverlapSetting::from("never".to_owned()));
+    let mut row_band = NumberOfRowsInRowBand::default();
+    row_band.val = Some(number("4"));
+    let mut column_band = NumberOfColumnsInColumnBand::default();
+    column_band.val = Some(number("4"));
+    let mut width = PreferredTableWidth::default();
+    width.r#type = Some(TableWidthUnits::from("auto".to_owned()));
+    width.w = Some(MeasurementOrPercentageValue::from("0".to_owned()));
+    let mut alignment = TableAlignmentException::default();
+    alignment.val = Some(TableAlignmentType::from("center".to_owned()));
+    let mut layout = TableLayout::default();
+    layout.r#type = Some(TableLayoutType::from("fixed".to_owned()));
+    let mut look = TableStyleConditionalFormattingSettingsException::default();
+    look.val = Some(FourDigitHexadecimalValue::from("04A0".to_owned()));
+    let mut caption = TableCaption::default();
+    caption.val = Some("c".to_owned());
+    let mut description = TableDescription::default();
+    description.val = Some("d".to_owned());
+    let mut properties = PreviousTableProperties::default();
+    properties.floating_table_allows_overlap = Some(Box::new(overlap));
+    properties.floating_table_positioning = Some(Box::new(position));
+    properties.number_of_columns_in_column_band = Some(Box::new(column_band));
+    properties.number_of_rows_in_row_band = Some(Box::new(row_band));
+    properties.preferred_table_width = Some(Box::new(width));
+    properties.referenced_table_style = Some(Box::new(style));
+    properties.table_alignment_exception = Some(Box::new(alignment));
+    properties.table_caption = Some(Box::new(caption));
+    properties.table_description = Some(Box::new(description));
+    properties.table_layout = Some(Box::new(layout));
+    properties.table_style_conditional_formatting_settings_exception = Some(Box::new(look));
+    properties.visually_right_to_left_table = Some(Box::default());
+    properties
+}
+
 #[test]
 fn a_numbering_level_accepts_start_and_end() {
     for value in ["start", "end"] {
-        let package = numbering_document(&format!(r#"<w:lvlJc w:val="{value}"/>"#));
-        accepted_at_every_version(&package, "w:lvlJc");
+        accepted_at_every_version(&numbering_with_justification(value), "w:lvlJc");
     }
 }
 
 #[test]
 fn a_numbering_level_refuses_a_value_outside_st_jc() {
-    let package = numbering_document(r#"<w:lvlJc w:val="middle"/>"#);
-    refused_with(&package, "w:lvlJc", "InvalidAttributeValue");
+    refused_with(
+        &numbering_with_justification("middle"),
+        "w:lvlJc",
+        "InvalidAttributeValue",
+    );
 }
 
 #[test]
 fn a_table_accepts_start_and_end_as_its_alignment() {
     for value in ["start", "end"] {
-        let package = table_document(&format!(r#"<w:jc w:val="{value}"/>"#));
-        accepted_at_every_version(&package, "w:jc");
+        accepted_at_every_version(&table_aligned(value), "w:jc");
     }
 }
 
 #[test]
 fn a_table_refuses_an_alignment_outside_st_jc_table() {
-    let package = table_document(r#"<w:jc w:val="both"/>"#);
-    refused_with(&package, "w:jc", "InvalidAttributeValue");
+    refused_with(&table_aligned("both"), "w:jc", "InvalidAttributeValue");
 }
 
 #[test]
 fn a_table_accepts_every_on_off_value_for_bidi_visual() {
     for value in ["0", "1", "true", "false", "on", "off"] {
-        let package = table_document(&format!(r#"<w:bidiVisual w:val="{value}"/>"#));
-        accepted_at_every_version(&package, "w:bidiVisual");
+        accepted_at_every_version(&right_to_left_table(value), "w:bidiVisual");
     }
 }
 
 #[test]
 fn a_table_refuses_a_value_outside_st_on_off_for_bidi_visual() {
-    let package = table_document(r#"<w:bidiVisual w:val="maybe"/>"#);
-    refused_with(&package, "w:bidiVisual", "InvalidAttributeValue");
+    refused_with(
+        &right_to_left_table("maybe"),
+        "w:bidiVisual",
+        "InvalidAttributeValue",
+    );
 }
 
 #[test]
@@ -524,20 +898,24 @@ fn the_on_off_elements_accept_every_on_off_value() {
 
 #[test]
 fn an_on_off_element_refuses_a_value_outside_st_on_off() {
-    let package = word_document(
-        "",
-        r#"<w:tbl><w:tblPr/><w:tblGrid/><w:tr><w:trPr><w:cantSplit w:val="maybe"/></w:trPr><w:tc><w:p/></w:tc></w:tr></w:tbl>"#,
-    );
+    let mut row = TableRowProperties::default();
+    row.content = vec![TableRowPropertiesContent::TableRowCannotBreakAcrossPages(
+        on_off!(TableRowCannotBreakAcrossPages, "maybe"),
+    )];
+    let package = typed_body(vec![BlockContent::Table(table_of_one_cell(row, None))]);
     refused_with(&package, "w:cantSplit", "InvalidAttributeValue");
 }
 
 #[test]
 fn a_document_background_accepts_filled() {
-    let package = word_document(
-        r#"<w:background><v:background filled="t"/></w:background>"#,
-        "",
-    );
-    accepted_at_every_version(&package, "v:background");
+    let mut shape = VmlBackground::default();
+    shape.filled = Some(BooleanValue::from("t".to_owned()));
+    let mut background = DocumentBackground::default();
+    background.content = vec![VmlElementContent::DocumentBackground(shape)];
+    let mut document = Document::default();
+    document.background = Some(Box::new(background));
+    document.body = Some(Box::default());
+    accepted_at_every_version(&typed_word(&document), "v:background");
 }
 
 #[test]
@@ -551,12 +929,25 @@ fn a_document_background_refuses_fill() {
 
 #[test]
 fn a_paragraph_and_the_settings_accept_smart_tags() {
-    let paragraph = word_document("", &format!("<w:p>{SMART_TAG}</w:p>"));
+    let mut attribute = CustomXMLAttribute::default();
+    attribute.name = Some("ProductID".to_owned());
+    attribute.val = Some("LA VIVIENDA".to_owned());
+    let mut properties = SmartTagProperties::default();
+    properties.custom_xml_attribute = vec![attribute];
+    let mut tag = InlineLevelSmartTag::default();
+    tag.content = vec![ParagraphContent::TextRun(typed_run("LA VIVIENDA"))];
+    tag.element = Some(XMLName::from("PersonName".to_owned()));
+    tag.properties = Some(Box::new(properties));
+    tag.uri = Some("urn:schemas-microsoft-com:office:smarttags".to_owned());
+    let paragraph = typed_paragraph(vec![ParagraphContent::InlineLevelSmartTag(tag)]);
     accepted_at_every_version(&paragraph, "w:smartTag");
-    let settings = settings_document(
-        r#"<w:smartTagType w:namespaceuri="urn:schemas-microsoft-com:office:smarttags" w:name="PersonName" w:url="http://example.com/"/>"#,
-    );
-    accepted_at_every_version(&settings, "w:smartTagType");
+    let mut tag_type = SupplementarySmartTagInformation::default();
+    tag_type.name = Some("PersonName".to_owned());
+    tag_type.namespaceuri = Some("urn:schemas-microsoft-com:office:smarttags".to_owned());
+    tag_type.url = Some("http://example.com/".to_owned());
+    let mut settings = DocumentSettings::default();
+    settings.supplementary_smart_tag_information = vec![tag_type];
+    accepted_at_every_version(&typed_settings(&settings), "w:smartTagType");
 }
 
 #[test]
@@ -615,26 +1006,6 @@ fn table_with_band_sizes(sizes: &str) -> String {
     )
 }
 
-fn content_control(shape: &str) -> Package {
-    let properties = r#"<w:sdtPr><w:tag w:val="a"/><w:label w:val="1"/><w:tabIndex w:val="1"/><w:text/></w:sdtPr>"#;
-    let sdt = |content: &str| {
-        format!("<w:sdt>{properties}<w:sdtContent>{content}</w:sdtContent></w:sdt>")
-    };
-    let body = match shape {
-        "block" => sdt("<w:p/>"),
-        "run" => format!("<w:p>{}</w:p>", sdt("<w:r><w:t>a</w:t></w:r>")),
-        "cell" => format!(
-            "<w:tbl><w:tblPr/><w:tblGrid/><w:tr>{}</w:tr></w:tbl>",
-            sdt("<w:tc><w:p/></w:tc>")
-        ),
-        _ => format!(
-            "<w:tbl><w:tblPr/><w:tblGrid/>{}</w:tbl>",
-            sdt("<w:tr><w:tc><w:p/></w:tc></w:tr>")
-        ),
-    };
-    word_document("", &body)
-}
-
 #[test]
 fn a_numbering_level_accepts_div_id_and_cnf_style_after_the_outline_level() {
     let div_id =
@@ -657,14 +1028,22 @@ fn a_style_accepts_div_id_and_cnf_style_after_the_outline_level() {
 
 #[test]
 fn the_document_defaults_and_a_table_style_condition_accept_div_id_and_cnf_style() {
-    let properties = r#"<w:divId w:val="1"/><w:cnfStyle w:val="000000000000"/>"#;
-    let defaults = styles_document(&format!(
-        "<w:docDefaults><w:pPrDefault><w:pPr>{properties}</w:pPr></w:pPrDefault></w:docDefaults>"
-    ));
-    let condition = styles_document(&format!(
-        r#"<w:style w:type="table" w:styleId="T1"><w:name w:val="T1"/><w:tblStylePr w:type="firstRow"><w:pPr>{properties}</w:pPr></w:tblStylePr></w:style>"#
-    ));
-    for package in [defaults, condition] {
+    let properties = || {
+        let mut div_id = AssociatedHTMLDivID::default();
+        div_id.val = Some(number("1"));
+        let mut cnf_style = ParagraphConditionalFormatting::default();
+        cnf_style.val = Some(ConditionalFormattingBitmask::from(
+            "000000000000".to_owned(),
+        ));
+        let mut properties = ParagraphPropertiesPPrGeneral::default();
+        properties.associated_html_div_id = Some(Box::new(div_id));
+        properties.paragraph_conditional_formatting = Some(Box::new(cnf_style));
+        properties
+    };
+    let mut first_row = StyleConditionalTableFormattingProperties::default();
+    first_row.paragraph_properties_p_pr_general = Some(Box::new(properties()));
+    let condition = typed_styles(vec![table_style_condition(first_row)]);
+    for package in [document_defaults(properties()), condition] {
         accepted_at_every_version(&package, "holds w:divId");
         accepted_at_every_version(&package, "holds w:cnfStyle");
     }
@@ -699,38 +1078,57 @@ fn a_table_style_condition_accepts_the_band_sizes_before_the_justification() {
 
 #[test]
 fn a_background_accepts_a_drawing() {
-    let package = word_document(
-        r#"<w:background w:color="FFFFFF"><w:drawing/></w:background>"#,
-        "",
-    );
-    accepted_at_every_version(&package, "holds w:drawing");
+    let mut background = DocumentBackground::default();
+    background.color = Some(ColorValue::from("FFFFFF".to_owned()));
+    background.drawingml_object = Some(Box::default());
+    let mut document = Document::default();
+    document.background = Some(Box::new(background));
+    document.body = Some(Box::default());
+    accepted_at_every_version(&typed_word(&document), "holds w:drawing");
 }
 
 #[test]
 fn an_object_accepts_a_movie() {
-    let package = word_document(
-        "",
-        &format!(
-            r#"<w:p><w:r><w:object><w:movie xmlns:r="{RELATIONSHIPS}" r:id="rId9"/></w:object></w:r></w:p>"#
-        ),
-    );
+    let mut movie = EmbeddedVideo::default();
+    movie.id = Some("rId9".to_owned());
+    let mut object = EmbeddedObject::default();
+    object.content = Some(Box::new(EmbeddedObjectContent::EmbeddedVideo(movie)));
+    let mut run = TextRun::default();
+    run.content = vec![TextRunContent::EmbeddedObject(object)];
+    let package = typed_paragraph(vec![ParagraphContent::TextRun(run)]);
     accepted_at_every_version(&package, "holds w:movie");
 }
 
 #[test]
 fn a_form_field_accepts_a_label_and_a_tab_index() {
-    let package = word_document(
-        "",
-        r#"<w:p><w:r><w:fldChar w:fldCharType="begin"><w:ffData><w:name w:val="a"/><w:label w:val="1"/><w:tabIndex w:val="1"/><w:enabled/></w:ffData></w:fldChar></w:r></w:p>"#,
-    );
+    let mut name = FormFieldName::default();
+    name.val = Some(FormFieldNameValue::from("a".to_owned()));
+    let mut label = StructuredDocumentTagLabel::default();
+    label.val = Some(number("1"));
+    let mut tab_index = StructuredDocumentTagNavigationOrderIndex::default();
+    tab_index.val = Some(UnsignedDecimalNumberValue::from("1".to_owned()));
+    let mut form_field = FormFieldProperties::default();
+    form_field.content = vec![
+        FormFieldPropertiesContent::FormFieldName(name),
+        FormFieldPropertiesContent::StructuredDocumentTagLabel(label),
+        FormFieldPropertiesContent::StructuredDocumentTagNavigationOrderIndex(tab_index),
+        FormFieldPropertiesContent::FormFieldEnabled(FormFieldEnabled::default()),
+    ];
+    let mut begin = ComplexFieldCharacter::default();
+    begin.content = Some(Box::new(ComplexFieldCharacterContent::FormFieldProperties(
+        form_field,
+    )));
+    begin.fld_char_type = Some(ComplexFieldCharacterType::from("begin".to_owned()));
+    let mut run = TextRun::default();
+    run.content = vec![TextRunContent::ComplexFieldCharacter(begin)];
+    let package = typed_paragraph(vec![ParagraphContent::TextRun(run)]);
     accepted_at_every_version(&package, "holds w:label");
     accepted_at_every_version(&package, "holds w:tabIndex");
 }
 
 #[test]
 fn a_content_control_accepts_a_label_and_a_tab_index() {
-    for shape in ["block", "run", "cell", "row"] {
-        let package = content_control(shape);
+    for package in content_controls() {
         accepted_at_every_version(&package, "holds w:label");
         accepted_at_every_version(&package, "holds w:tabIndex");
     }
@@ -738,15 +1136,45 @@ fn a_content_control_accepts_a_label_and_a_tab_index() {
 
 #[test]
 fn a_frame_accepts_a_title_and_a_long_description_and_a_frameset_a_title() {
-    let frame = web_settings_document(&format!(
-        r#"<w:frameset><w:frame xmlns:r="{RELATIONSHIPS}"><w:sz w:val="x"/><w:name w:val="n"/><w:title w:val="t"/><w:longDesc r:id="rId9"/><w:marW w:val="1"/></w:frame></w:frameset>"#
-    ));
-    accepted_at_every_version(&frame, "holds w:title");
-    accepted_at_every_version(&frame, "holds w:longDesc");
-    let frameset = web_settings_document(
-        r#"<w:frameset><w:sz w:val="x"/><w:title w:val="t"/><w:frame/></w:frameset>"#,
-    );
-    accepted_at_every_version(&frameset, "holds w:title");
+    let title = || {
+        let mut title = FrameOrFramesetTitle::default();
+        title.val = Some("t".to_owned());
+        Some(Box::new(title))
+    };
+    let size = || {
+        let mut size = FrameSize::default();
+        size.val = Some("x".to_owned());
+        Some(Box::new(size))
+    };
+    let mut name = PrimaryStyleName::default();
+    name.val = Some("n".to_owned());
+    let mut description = FrameLongDescription::default();
+    description.id = Some("rId9".to_owned());
+    let mut margin = LeftAndRightMarginForFrame::default();
+    margin.val = Some(MeasurementInPixels::from("1".to_owned()));
+    let mut frame = SingleFrameProperties::default();
+    frame.frame_long_description = Some(Box::new(description));
+    frame.frame_or_frameset_title = title();
+    frame.frame_size = size();
+    frame.left_and_right_margin_for_frame = Some(Box::new(margin));
+    frame.primary_style_name = Some(Box::new(name));
+    let framed = |frameset: NestedFramesetDefinition| {
+        let mut web = WebPageSettings::default();
+        web.nested_frameset_definition = Some(Box::new(frameset));
+        with_web_settings(typed_body(Vec::new()), &web)
+    };
+    let mut holding_frame = NestedFramesetDefinition::default();
+    holding_frame.content = vec![FramesetDefinitionContent::SingleFrameProperties(frame)];
+    let frame_package = framed(holding_frame);
+    accepted_at_every_version(&frame_package, "holds w:title");
+    accepted_at_every_version(&frame_package, "holds w:longDesc");
+    let mut titled = NestedFramesetDefinition::default();
+    titled.content = vec![FramesetDefinitionContent::SingleFrameProperties(
+        SingleFrameProperties::default(),
+    )];
+    titled.frame_or_frameset_title = title();
+    titled.frame_size = size();
+    accepted_at_every_version(&framed(titled), "holds w:title");
 }
 
 #[test]
@@ -798,10 +1226,11 @@ fn a_frameset_refuses_a_title_after_a_frame() {
 
 #[test]
 fn a_table_style_and_its_conditions_accept_every_child_of_ct_tbl_pr_base() {
-    let style = format!(
-        r#"<w:style w:type="table" w:styleId="T1"><w:name w:val="T1"/>{TABLE_STYLE_PROPERTIES}<w:tblStylePr w:type="firstRow">{TABLE_STYLE_PROPERTIES}</w:tblStylePr></w:style>"#
-    );
-    let package = styles_document(&style);
+    let mut first_row = StyleConditionalTableFormattingProperties::default();
+    first_row.previous_table_properties = Some(Box::new(every_table_style_property()));
+    let mut style = table_style_condition(first_row);
+    style.previous_table_properties = Some(Box::new(every_table_style_property()));
+    let package = typed_styles(vec![style]);
     for version in VERSIONS {
         assert_eq!(
             errors_at(&package, version, "/w:tblPr[1]"),
@@ -823,9 +1252,16 @@ fn a_style_and_a_table_style_condition_accept_p_style_before_the_other_propertie
 
 #[test]
 fn the_document_defaults_accept_p_style_and_a_properties_change() {
-    let package = styles_document(&format!(
-        r#"<w:docDefaults><w:pPrDefault><w:pPr><w:pStyle w:val="S1"/><w:keepNext/>{PARAGRAPH_PROPERTIES_CHANGE}</w:pPr></w:pPrDefault></w:docDefaults>"#
-    ));
+    let mut style = ReferencedParagraphStyle::default();
+    style.val = Some("S1".to_owned());
+    let mut change = RevisionInformationForParagraphProperties::default();
+    change.author = Some("a".to_owned());
+    change.id = Some(number("1"));
+    let mut properties = ParagraphPropertiesPPrGeneral::default();
+    properties.keep_paragraph_with_next_paragraph = Some(Box::default());
+    properties.referenced_paragraph_style = Some(Box::new(style));
+    properties.revision_information_for_paragraph_properties = Some(Box::new(change));
+    let package = document_defaults(properties);
     accepted_at_every_version(&package, "holds w:pStyle");
     accepted_at_every_version(&package, "holds w:pPrChange");
 }
@@ -840,14 +1276,12 @@ fn a_numbering_level_accepts_a_properties_change_after_the_other_properties() {
 
 #[test]
 fn a_paragraph_accepts_a_negative_div_id_and_refuses_zero_by_words_rule() {
-    let div_id = |value: &str| {
-        word_document(
-            "",
-            &format!(r#"<w:p><w:pPr><w:divId w:val="{value}"/></w:pPr></w:p>"#),
-        )
-    };
-    accepted_at_every_version(&div_id("-5"), "w:divId");
-    refused_with(&div_id("0"), "w:divId", "AttributeValueOutsideConstraint");
+    accepted_at_every_version(&paragraph_in_div("-5"), "w:divId");
+    refused_with(
+        &paragraph_in_div("0"),
+        "w:divId",
+        "AttributeValueOutsideConstraint",
+    );
 }
 
 #[test]
@@ -876,24 +1310,35 @@ fn a_style_refuses_p_style_after_keep_next() {
 
 #[test]
 fn a_band_size_that_is_not_an_integer_is_refused() {
-    let package = styles_document(
-        r#"<w:style w:type="table" w:styleId="T1"><w:name w:val="T1"/><w:tblPr><w:tblStyleRowBandSize w:val="x"/></w:tblPr></w:style>"#,
+    let mut band = NumberOfRowsInRowBand::default();
+    band.val = Some(number("x"));
+    let mut properties = PreviousTableProperties::default();
+    properties.number_of_rows_in_row_band = Some(Box::new(band));
+    let mut style = typed_style("table", "T1");
+    style.previous_table_properties = Some(Box::new(properties));
+    refused_with(
+        &typed_styles(vec![style]),
+        "w:tblStyleRowBandSize",
+        "InvalidAttributeValue",
     );
-    refused_with(&package, "w:tblStyleRowBandSize", "InvalidAttributeValue");
 }
 
 #[test]
 fn a_div_id_that_is_not_an_integer_is_refused() {
-    let package = word_document("", r#"<w:p><w:pPr><w:divId w:val="x"/></w:pPr></w:p>"#);
-    refused_with(&package, "w:divId", "w:val");
+    refused_with(&paragraph_in_div("x"), "w:divId", "w:val");
 }
 
 #[test]
 fn a_compatibility_setting_accepts_a_name_newer_than_the_target() {
-    let package = settings_document(
-        r#"<w:compat><w:compatSetting w:name="useWord2013TrackBottomHyphenation" w:uri="http://schemas.microsoft.com/office/word" w:val="1"/></w:compat>"#,
-    );
-    accepted_at_every_version(&package, "w:compatSetting");
+    let mut setting = CustomCompatibilitySetting::default();
+    setting.name = Some("useWord2013TrackBottomHyphenation".to_owned());
+    setting.uri = Some("http://schemas.microsoft.com/office/word".to_owned());
+    setting.val = Some("1".to_owned());
+    let mut compatibility = CompatibilitySettings::default();
+    compatibility.custom_compatibility_setting = vec![setting];
+    let mut settings = DocumentSettings::default();
+    settings.compatibility_settings = Some(Box::new(compatibility));
+    accepted_at_every_version(&typed_settings(&settings), "w:compatSetting");
 }
 
 #[test]
