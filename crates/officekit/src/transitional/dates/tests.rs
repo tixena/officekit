@@ -1,4 +1,4 @@
-use officekit_markup::spreadsheet::Worksheet;
+use officekit_markup::spreadsheet::{Cell, CellType, CellValue, Row, Worksheet};
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::Document as Part;
 use officekit_xml::error::WriteError;
@@ -194,6 +194,73 @@ fn a_date_cell_whose_text_is_not_a_date_stays_and_is_refused() {
             tag: "c/@t",
         })
     ));
+}
+
+/// A worksheet whose one cell, A1, is a date cell holding `date`, built as a caller builds one.
+fn date_sheet(date: &str) -> Worksheet {
+    let mut value = CellValue::default();
+    value.value = date.to_owned();
+    let mut cell = Cell::default();
+    cell.r = Some("A1".to_owned());
+    cell.t = Some(CellType::from("d".to_owned()));
+    cell.value = Some(Box::new(value));
+    let mut row = Row::default();
+    row.r = Some("1".to_owned());
+    row.cell.push(cell);
+    let mut sheet = Worksheet::default();
+    sheet.sheet_data.row.push(row);
+    sheet
+}
+
+/// The type and the value of the one cell of `sheet`.
+fn only_cell(sheet: &Worksheet) -> (Option<&str>, &str) {
+    let cell = sheet
+        .sheet_data
+        .row
+        .first()
+        .and_then(|row| row.cell.first())
+        .unwrap();
+    (
+        cell.t.as_ref().map(|kind| kind.0.as_str()),
+        cell.value.as_ref().map_or("", |value| value.value.as_str()),
+    )
+}
+
+#[test]
+fn a_date_before_the_1900_range_stays_and_is_refused() {
+    let part = PartName::new("/xl/worksheets/sheet1.xml").unwrap();
+    for date in ["1899-12-25", "1899-12-28T18:00"] {
+        let mut sheet = date_sheet(date);
+        assert_eq!(
+            convert_date_cells(&mut sheet, false, &part),
+            Vec::new(),
+            "{date}"
+        );
+        assert_eq!(only_cell(&sheet), (Some("d"), date));
+        assert!(matches!(
+            sheet.to_transitional(),
+            Err(WriteError::NotInClass {
+                class: ConformanceClass::Transitional,
+                tag: "c/@t",
+            })
+        ));
+    }
+    for (date, serial) in [
+        ("1899-12-30", "0"),
+        ("00:00", "0"),
+        ("1899-12-31T12:00", "0.5"),
+        ("1900-01-01", "1"),
+    ] {
+        let mut sheet = date_sheet(date);
+        assert_eq!(
+            convert_date_cells(&mut sheet, false, &part).len(),
+            1,
+            "{date}"
+        );
+        assert_eq!(only_cell(&sheet), (None, serial));
+    }
+    let mut system_1904 = date_sheet("1899-12-25");
+    assert_eq!(convert_date_cells(&mut system_1904, true, &part).len(), 1);
 }
 
 #[test]

@@ -436,8 +436,8 @@ assert_eq!(rebuilt.kind(), WordprocessingKind::Document);
 //! - A save in Strict fails with `PackageError::Write`, naming the first part that holds content
 //!   Strict has no form for. A save of a workbook in Transitional turns each date cell into a
 //!   number cell and returns one warning per converted cell. A date cell with no value loses its type
-//!   and gets no warning. A date cell whose text is not a date stays, and the write then fails
-//!   with `WriteError::NotInClass`.
+//!   and gets no warning. A date cell whose text is not a date, or whose date comes before the
+//!   1900 date system's range, stays, and the write then fails with `WriteError::NotInClass`.
 //! - A file is read whole from a buffer in memory. The binary form is read as `officekit` writes
 //!   it, at version 2 only.
 //! - The typed tree keeps content it does not model, but it gives that content as raw elements,

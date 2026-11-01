@@ -67,7 +67,8 @@ impl fmt::Display for SaveWarning {
 ///
 /// The serial is in the 1900 date system, or the 1904 one when `date1904`. A
 /// date cell with no value loses its type alone; a date cell whose text is
-/// not a date stays, and a Transitional write refuses it.
+/// not a date, or whose date comes before the 1900 system's range (ECMA-376
+/// Part 4, 15.3.4), stays, and a Transitional write refuses it.
 pub fn convert_date_cells(
     worksheet: &mut Worksheet,
     date1904: bool,
@@ -85,6 +86,7 @@ pub fn convert_date_cells(
             };
             let Some(serial) = cell_date(&value.value, date1904)
                 .and_then(|date| serial_date_time(&date, date1904))
+                .filter(|serial| date1904 || *serial >= 0.0_f64)
             else {
                 continue;
             };

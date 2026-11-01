@@ -34,7 +34,8 @@
 //! The [`dates`] module turns the date cells of a worksheet into number cells before a save.
 //! [`dates::convert_date_cells`] changes each one that holds a date and returns a
 //! [`dates::SaveWarning`] for it. A date cell with no value loses its type with no warning. A date
-//! cell whose text is not a date stays, and a Transitional write refuses it.
+//! cell whose text is not a date, or whose date comes before the 1900 date system's range, stays,
+//! and a Transitional write refuses it.
 //! [`dates::serial_date_time`] is the number a date becomes.
 //!
 //! # Example

@@ -361,7 +361,8 @@ impl Xlsx {
     /// Transitional's spelling, and every other part, an embedded workbook among them, as it is.
     /// Each date cell of a worksheet that holds a date becomes a number cell in the workbook's date
     /// system, with one warning per cell. A date cell with no value loses its type with no
-    /// warning, and one whose text is not a date stays, so the write refuses it. Needs the feature `transitional`.
+    /// warning, and one whose text is not a date, or whose date comes before the 1900 date
+    /// system's range, stays, so the write refuses it. Needs the feature `transitional`.
     ///
     /// # Errors
     ///
