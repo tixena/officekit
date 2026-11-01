@@ -566,6 +566,18 @@ fn control_of(
 }
 
 /// The XML of an element, written in the compact layout.
+/// A body of `blocks` and empty section properties, with the comment `c` after its child
+/// `after`.
+fn body_with_comment(blocks: Vec<BlockContent>, after: usize) -> DocumentBody {
+    let mut body = DocumentBody::default();
+    body.content = blocks;
+    body.document_final_section_properties = Some(Box::default());
+    body.unknown
+        .children
+        .push(Extra::new(after, Node::Comment("c".to_owned())));
+    body
+}
+
 fn compact(element: &Element) -> String {
     let mut bytes = Vec::new();
     PartWriter::new(&mut bytes, Layout::Compact)
@@ -590,6 +602,16 @@ fn document(blocks: Vec<BlockContent>) -> Document {
     let mut node = Document::default();
     node.body = Some(Box::new(body));
     node
+}
+
+/// `count` empty paragraphs.
+fn empty_paragraphs(count: usize) -> Vec<BlockContent> {
+    vec![BlockContent::Paragraph(Paragraph::default()); count]
+}
+
+/// An element `x:local` of the namespace `urn:x`, which the typed tree does not know.
+fn generic(local: &str) -> Node {
+    Node::Element(Element::new(QName::prefixed("x", local, "urn:x")))
 }
 
 /// The XML the tree writer writes for an embedded object.
@@ -1124,9 +1146,7 @@ fn an_extra_after_a_list_a_hook_lengthens_stays_after_its_neighbours() {
 
 #[test]
 fn an_extra_after_a_list_a_hook_empties_stays_after_its_neighbours() {
-    let source = read::document_body(&parsed(&format!(
-        "<w:body xmlns:w=\"{W}\"><w:p/><w:p/><w:sectPr/><!--c--></w:body>"
-    )));
+    let source = body_with_comment(empty_paragraphs(2), 3);
     let transformed = source.transform(&mut copies(&[0, 0]));
     assert_eq!(
         tree_xml(&transformed),
@@ -1140,9 +1160,9 @@ fn an_extra_after_a_list_a_hook_empties_stays_after_its_neighbours() {
 
 #[test]
 fn a_transform_asks_the_hooks_of_a_nodes_children_in_document_order() {
-    let source = read::paragraph(&parsed(&format!(
-        "<w:p xmlns:w=\"{W}\"><w:pPr/><w:r/></w:p>"
-    )));
+    let mut source = Paragraph::default();
+    source.content = vec![ParagraphContent::TextRun(TextRun::default())];
+    source.properties = Some(Box::default());
     let mut record = Record::default();
     let _: Paragraph = source.transform(&mut record);
     assert_eq!(record.0, ["paragraph_properties", "text_run"]);
@@ -1152,13 +1172,7 @@ fn a_transform_asks_the_hooks_of_a_nodes_children_in_document_order() {
 fn an_extra_between_list_items_stays_between_their_replacements() {
     // Read, a comment between two blocks joins the block list; built here,
     // it is an `Extra` after the first block.
-    let mut source = read::document_body(&parsed(&format!(
-        "<w:body xmlns:w=\"{W}\"><w:p/><w:p/><w:sectPr/></w:body>"
-    )));
-    source
-        .unknown
-        .children
-        .push(Extra::new(1, Node::Comment("c".to_owned())));
+    let source = body_with_comment(empty_paragraphs(2), 1);
     let transformed = source.transform(&mut copies(&[3, 2]));
     assert_eq!(
         tree_xml(&transformed),
@@ -1225,13 +1239,9 @@ fn an_extra_after_a_child_a_hook_turns_unknown_stays_after_it() {
 fn an_extra_after_the_first_block_stays_there_when_an_unknown_item_before_it_becomes_a_paragraph() {
     // Read, a comment between two blocks joins the block list; built here,
     // it is an `Extra` after the first block.
-    let mut source = read::document_body(&parsed(&format!(
-        "<w:body xmlns:w=\"{W}\"><x:u xmlns:x=\"urn:x\"/><w:p/><w:p/><w:sectPr/></w:body>"
-    )));
-    source
-        .unknown
-        .children
-        .push(Extra::new(1, Node::Comment("c".to_owned())));
+    let mut blocks = vec![BlockContent::Other(generic("u"))];
+    blocks.extend(empty_paragraphs(2));
+    let source = body_with_comment(blocks, 1);
     let through = written(&source, &mut ParagraphForOther);
     assert_eq!(
         through,
