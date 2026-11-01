@@ -11,6 +11,10 @@ use crate::parts::kinds::SpreadsheetKind;
 use crate::parts::kinds::WordprocessingKind;
 #[cfg(feature = "strict")]
 use officekit_markup::wordprocessing;
+use officekit_markup::wordprocessing::{
+    BlockContent, Document, DocumentBody, Paragraph, ParagraphContent, Text, TextRun,
+    TextRunContent,
+};
 use officekit_xml::conformance::ConformanceClass;
 #[cfg(all(feature = "strict", feature = "transitional"))]
 use officekit_xml::error::WriteError;
@@ -22,7 +26,7 @@ use officekit_xml::packaging::error::PackageError;
 use officekit_xml::packaging::package::{OpenOptions, Package};
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::{RelationshipType, Target};
-#[cfg(feature = "strict")]
+#[cfg(all(feature = "strict", feature = "transitional"))]
 use officekit_xml::parse::parse;
 #[cfg(feature = "transitional")]
 use officekit_xml::ready::ready_now;
@@ -38,35 +42,10 @@ use super::Docx;
 use crate::StrictRefusal;
 use crate::compact::Comments;
 
+#[cfg(any(feature = "strict", feature = "transitional"))]
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 #[cfg(feature = "strict")]
 const STRICT_W: &str = "http://purl.oclc.org/ooxml/wordprocessingml/main";
-
-/// A Transitional main document with a left-justified paragraph.
-#[cfg(feature = "strict")]
-const JUSTIFIED: &str = "<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body><w:p><w:pPr><w:jc w:val=\"left\"/></w:pPr></w:p></w:body></w:document>";
-
-/// A Transitional main document whose content control is bound to a bibliography's first title.
-#[cfg(all(feature = "strict", feature = "transitional"))]
-const BOUND: &str = concat!(
-    "<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body><w:p>",
-    "<w:sdt><w:sdtPr><w:dataBinding ",
-    "w:prefixMappings=\"xmlns:ns0='http://schemas.openxmlformats.org/officeDocument/2006/bibliography' \" ",
-    "w:xpath=\"/ns0:Sources[1]/ns0:Source[1]/ns0:Title[1]\" w:storeItemID=\"{1}\"/><w:text/></w:sdtPr>",
-    "<w:sdtContent><w:r><w:t>x</w:t></w:r></w:sdtContent></w:sdt></w:p></w:body></w:document>"
-);
-
-/// A Transitional main document holding a picture's frame, which names its content by address.
-#[cfg(all(feature = "strict", feature = "transitional"))]
-const PICTURE_FRAME: &str = concat!(
-    "<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" ",
-    "xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" ",
-    "xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\">",
-    "<w:body><w:p><w:r><w:drawing><wp:inline><wp:extent cx=\"1\" cy=\"1\"/>",
-    "<wp:docPr id=\"1\" name=\"Picture 1\"/><a:graphic>",
-    "<a:graphicData uri=\"http://schemas.openxmlformats.org/drawingml/2006/picture\"/>",
-    "</a:graphic></wp:inline></w:drawing></w:r></w:p></w:body></w:document>"
-);
 
 /// A Transitional main document whose run holds a block only Office 2015 understands, with a
 /// fallback.
@@ -81,14 +60,11 @@ const SOURCES: &str = "<b:Sources xmlns:b=\"http://schemas.openxmlformats.org/of
 #[cfg(any(feature = "strict", feature = "transitional"))]
 const FOREIGN: &str = "<DocumentGeneration xmlns=\"http://example.org/generation\"><Field key=\"a\"/></DocumentGeneration>";
 
-/// A Transitional main document whose run holds a VML picture outside any `mc:AlternateContent`.
-#[cfg(all(feature = "strict", feature = "transitional"))]
-const LOOSE_VML: &str = "<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:v=\"urn:schemas-microsoft-com:vml\"><w:body><w:p><w:r><w:pict><v:shape style=\"width:108.75pt;height:40.5pt\"/></w:pict></w:r></w:p></w:body></w:document>";
-
 fn name(text: &str) -> PartName {
     PartName::new(text).unwrap()
 }
 
+#[cfg(any(feature = "strict", feature = "transitional"))]
 fn text(package: &Package, part: &PartName) -> String {
     String::from_utf8(package.part_bytes(part).unwrap()).unwrap()
 }
@@ -116,45 +92,66 @@ fn package_of(class: ConformanceClass, content_type: &str) -> Package {
 /// setting Strict has no form for, a custom XML part no module knows, and an image.
 #[cfg(feature = "transitional")]
 fn template() -> Package {
+    use officekit_markup::wordprocessing::{
+        CharacterSetSupportedByFont, CompatibilitySettings, DocumentSettings, FontTableRootElement,
+        PropertiesForASingleFont, TwoDigitHexadecimalValue,
+    };
+    use officekit_xml::write::WriteOptions as PartWriteOptions;
+
+    let mut charset = CharacterSetSupportedByFont::default();
+    charset.val = Some(TwoDigitHexadecimalValue::from("FF".to_owned()));
+    let mut font = PropertiesForASingleFont::default();
+    font.character_set_supported_by_font = Some(Box::new(charset));
+    font.name = Some("Terminal".to_owned());
+    let mut fonts = FontTableRootElement::default();
+    fonts.properties_for_a_single_font = vec![font];
+    let mut compatibility = CompatibilitySettings::default();
+    compatibility.ignore_page_break_from_continuous_section_break = Some(Box::default());
+    let mut settings = DocumentSettings::default();
+    settings.compatibility_settings = Some(Box::new(compatibility));
     let mut package = Docx::new(WordprocessingKind::Document)
         .unwrap()
         .package()
         .duplicate()
         .unwrap();
     let main = name("/word/document.xml");
-    let parts = [
-        (
-            "/word/fontTable.xml",
-            font_table::CONTENT_TYPE,
-            RelationshipType::FONT_TABLE,
-            format!(
-                "<w:fonts xmlns:w=\"{W}\"><w:font w:name=\"Terminal\"><w:charset w:val=\"FF\"/></w:font></w:fonts>"
-            ),
-        ),
-        (
-            "/word/settings.xml",
-            document_settings::CONTENT_TYPE,
-            RelationshipType::SETTINGS,
-            format!(
-                "<w:settings xmlns:w=\"{W}\"><w:compat><w:footnoteLayoutLikeWW8/></w:compat></w:settings>"
-            ),
-        ),
-        (
-            "/word/media/image1.png",
-            "image/png",
-            RelationshipType::IMAGE,
-            "\u{89}PNG not really".to_owned(),
-        ),
-    ];
-    for (path, content_type, relationship_type, content) in parts {
-        let part = name(path);
-        package
-            .set_part_bytes(&part, content_type, content.as_bytes())
-            .unwrap();
-        package
-            .relate(Some(&main), &part, relationship_type.transitional)
-            .unwrap();
-    }
+    let fonts_part = name("/word/fontTable.xml");
+    font_table::store_transitional(
+        &mut package,
+        &fonts_part,
+        &fonts,
+        PartWriteOptions::default(),
+    )
+    .unwrap();
+    package
+        .relate(
+            Some(&main),
+            &fonts_part,
+            RelationshipType::FONT_TABLE.transitional,
+        )
+        .unwrap();
+    let settings_part = name("/word/settings.xml");
+    document_settings::store_transitional(
+        &mut package,
+        &settings_part,
+        &settings,
+        PartWriteOptions::default(),
+    )
+    .unwrap();
+    package
+        .relate(
+            Some(&main),
+            &settings_part,
+            RelationshipType::SETTINGS.transitional,
+        )
+        .unwrap();
+    let image = name("/word/media/image1.png");
+    package
+        .set_part_bytes(&image, "image/png", "\u{89}PNG not really".as_bytes())
+        .unwrap();
+    package
+        .relate(Some(&main), &image, RelationshipType::IMAGE.transitional)
+        .unwrap();
     package
         .add_custom_xml(
             &main,
@@ -164,6 +161,48 @@ fn template() -> Package {
         )
         .unwrap();
     package
+}
+
+/// A main document whose body holds a paragraph of `content`.
+fn document_of(content: Vec<ParagraphContent>) -> Document {
+    let mut paragraph = Paragraph::default();
+    paragraph.content = content;
+    let mut body = DocumentBody::default();
+    body.content = vec![BlockContent::Paragraph(paragraph)];
+    let mut document = Document::default();
+    document.body = Some(Box::new(body));
+    document
+}
+
+/// The paragraphs of the main document of `docx`.
+fn paragraphs(docx: &Docx) -> Vec<Paragraph> {
+    docx.main_document()
+        .unwrap()
+        .body
+        .map_or_default(|body| body.content)
+        .into_iter()
+        .filter_map(|block| {
+            if let BlockContent::Paragraph(found) = block {
+                Some(found)
+            } else {
+                None
+            }
+        })
+        .collect()
+}
+
+/// A run holding `content`.
+fn run_of(content: Vec<TextRunContent>) -> ParagraphContent {
+    let mut run = TextRun::default();
+    run.content = content;
+    ParagraphContent::TextRun(run)
+}
+
+/// Text of `value` with no `xml:space`.
+fn text_of(value: &str) -> TextRunContent {
+    let mut text = Text::default();
+    text.value = value.to_owned();
+    TextRunContent::Text(text)
 }
 
 #[test]
@@ -178,9 +217,8 @@ fn a_new_document_holds_one_empty_paragraph_in_its_main_part() {
         docx.package().content_type(&main),
         Some(WordprocessingKind::Template.main_content_type())
     );
-    assert!(text(docx.package(), &main).ends_with(&format!(
-        "<w:document xmlns:w=\"{W}\"><w:body><w:p/></w:body></w:document>"
-    )));
+    let blocks = docx.main_document().unwrap().body.unwrap().content;
+    assert_eq!(blocks, [BlockContent::Paragraph(Paragraph::default())]);
     let related = docx.package().related(None).unwrap();
     assert_eq!(related.len(), 1);
     assert_eq!(related[0].id, "rId1");
@@ -409,8 +447,24 @@ fn a_strict_save_of_content_strict_has_no_form_for_fails_and_writes_nothing() {
 #[cfg(feature = "strict")]
 #[test]
 fn a_new_document_saved_strict_takes_strict_names_values_and_relationship_types() {
+    use officekit_markup::wordprocessing::{
+        HorizontalAlignmentType, HorizontalAlignmentTypeMember, ParagraphAlignment,
+        ParagraphProperties,
+    };
+
+    let mut alignment = ParagraphAlignment::default();
+    alignment.val = Some(HorizontalAlignmentType::from(
+        HorizontalAlignmentTypeMember::Left,
+    ));
+    let mut properties = ParagraphProperties::default();
+    properties.paragraph_alignment = Some(Box::new(alignment));
+    let mut paragraph = Paragraph::default();
+    paragraph.properties = Some(Box::new(properties));
+    let mut body = DocumentBody::default();
+    body.content = vec![BlockContent::Paragraph(paragraph)];
+    let mut document = Document::default();
+    document.body = Some(Box::new(body));
     let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
-    let document = wordprocessing::read::document(&parse(JUSTIFIED.as_bytes()).unwrap().root);
     docx.set_main_document(&document).unwrap();
     let strict = Docx::from_bytes(docx.to_bytes_strict().unwrap(), OpenOptions::default()).unwrap();
     assert_eq!(strict.conformance_class(), ConformanceClass::Strict);
@@ -488,10 +542,19 @@ fn the_write_options_apply_to_every_store_the_save_included() {
 #[cfg(all(feature = "strict", feature = "transitional"))]
 #[test]
 fn vml_takes_the_wrapper_in_strict_and_keeps_it_through_a_round_trip() {
-    let block = "<mc:AlternateContent xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\"><mc:Choice Requires=\"v\"><w:pict>";
+    use officekit_markup::vml::ShapeDefinition;
+    use officekit_markup::wordprocessing::{VMLObject, VmlElementContent};
+
+    let block = "<mc:AlternateContent xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:v=\"urn:schemas-microsoft-com:vml\"><mc:Choice Requires=\"v\"><w:pict>";
+    let mut shape = ShapeDefinition::default();
+    shape.style = Some("width:108.75pt;height:40.5pt".to_owned());
+    let mut picture = VMLObject::default();
+    picture.content = vec![VmlElementContent::ShapeDefinition(shape)];
     let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
-    let document = wordprocessing::read::document(&parse(LOOSE_VML.as_bytes()).unwrap().root);
-    docx.set_main_document(&document).unwrap();
+    docx.set_main_document(&document_of(vec![run_of(vec![TextRunContent::VMLObject(
+        picture,
+    )])]))
+    .unwrap();
     let strict = Docx::from_bytes(docx.to_bytes_strict().unwrap(), OpenOptions::default()).unwrap();
     let first = text(strict.package(), strict.main_document_part());
     assert!(first.contains(block), "{first}");
@@ -588,31 +651,60 @@ fn a_strict_file_saved_transitional_takes_transitional_names_back() {
 #[test]
 fn compact_runs_merges_neighbouring_runs_of_the_main_part_and_keeps_the_text() {
     let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
-    let main = name("/word/document.xml");
-    let xml = format!(
-        "<w:document xmlns:w=\"{W}\"><w:body><w:p><w:r><w:t>The </w:t></w:r><w:r><w:t>fox</w:t></w:r></w:p></w:body></w:document>"
-    );
-    docx.package_mut()
-        .set_part_bytes(
-            &main,
-            WordprocessingKind::Document.main_content_type(),
-            xml.as_bytes(),
-        )
-        .unwrap();
+    docx.set_main_document(&document_of(vec![
+        run_of(vec![text_of("The ")]),
+        run_of(vec![text_of("fox")]),
+    ]))
+    .unwrap();
     docx.compact_runs(Comments::Keep).unwrap();
-    let stored = text(docx.package(), &main);
-    assert_eq!(stored.matches("<w:r>").count(), 1, "{stored}");
-    assert!(stored.contains("<w:t>The </w:t><w:t>fox</w:t>"), "{stored}");
+    let runs: Vec<Vec<String>> = paragraphs(&docx)
+        .iter()
+        .flat_map(|paragraph| &paragraph.content)
+        .filter_map(|item| {
+            if let ParagraphContent::TextRun(found) = item {
+                Some(
+                    found
+                        .content
+                        .iter()
+                        .filter_map(|content| {
+                            if let TextRunContent::Text(characters) = content {
+                                Some(characters.value.clone())
+                            } else {
+                                None
+                            }
+                        })
+                        .collect(),
+                )
+            } else {
+                None
+            }
+        })
+        .collect();
+    assert_eq!(runs, [["The ".to_owned(), "fox".to_owned()]]);
 }
 
 #[cfg(all(feature = "strict", feature = "transitional"))]
 #[test]
 fn a_save_writes_the_addresses_of_graphics_and_schema_references_in_its_class() {
+    use officekit_markup::drawing::{DrawingElementID, PositiveCoordinate};
+    use officekit_markup::wordprocessing::{DrawingMLObject, DrawingObjectContent};
+    use officekit_markup::wordprocessing_drawing::InlineDrawingMLObject;
+
     let picture = "http://schemas.openxmlformats.org/drawingml/2006/picture";
     let bibliography = "http://schemas.openxmlformats.org/officeDocument/2006/bibliography";
+    let mut frame = InlineDrawingMLObject::default();
+    frame.drawing_object_size.cx = Some(PositiveCoordinate::from("1".to_owned()));
+    frame.drawing_object_size.cy = Some(PositiveCoordinate::from("1".to_owned()));
+    frame.drawing_object_non_visual_properties.id = Some(DrawingElementID::from("1".to_owned()));
+    frame.drawing_object_non_visual_properties.name = Some("Picture 1".to_owned());
+    frame.graphic_object.data.uri = Some(picture.to_owned());
+    let mut drawing = DrawingMLObject::default();
+    drawing.content = vec![DrawingObjectContent::InlineDrawingMLObject(frame)];
     let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
-    let document = wordprocessing::read::document(&parse(PICTURE_FRAME.as_bytes()).unwrap().root);
-    docx.set_main_document(&document).unwrap();
+    docx.set_main_document(&document_of(vec![run_of(vec![
+        TextRunContent::DrawingMLObject(drawing),
+    ])]))
+    .unwrap();
     let main = docx.main_document_part().clone();
     docx.package_mut()
         .add_custom_xml(&main, SOURCES.as_bytes(), "{1}", &[bibliography])
@@ -671,26 +763,57 @@ fn strict_refusals_names_everything_a_strict_save_refuses_in_one_call() {
 #[cfg(feature = "strict")]
 #[test]
 fn a_strict_save_removes_the_settings_word_leaves_out_and_goes_on() {
+    use officekit_markup::vml::VMLExtensionHandlingBehaviors;
+    use officekit_markup::vml_office_drawing::NewShapeDefaults;
+    use officekit_markup::wordprocessing::{
+        CompatibilitySettings, DefaultPropertiesForVMLObjectsInMainDocument, DocumentSettings,
+        VmlOfficeDrawingElementContent,
+    };
+    use officekit_xml::element::Document as XmlDocument;
+    use officekit_xml::packaging::package::DECLARATION;
+    use officekit_xml::write::Scope;
+
+    let mut compatibility = CompatibilitySettings::default();
+    compatibility.do_not_bypass_east_asian_complex_script_layout_code = Some(Box::default());
+    let mut shape_defaults = NewShapeDefaults::default();
+    shape_defaults.ext = Some(VMLExtensionHandlingBehaviors::from("edit".to_owned()));
+    shape_defaults.spidmax = Some("1026".to_owned());
+    let mut defaults = DefaultPropertiesForVMLObjectsInMainDocument::default();
+    defaults.content = vec![VmlOfficeDrawingElementContent::NewShapeDefaults(
+        shape_defaults,
+    )];
+    let mut settings = DocumentSettings::default();
+    settings.compatibility_settings = Some(Box::new(compatibility));
+    settings.default_properties_for_vml_objects_in_main_document = Some(Box::new(defaults));
+    let bytes = XmlDocument::new(
+        DECLARATION,
+        wordprocessing::write::document_settings(&settings, &mut Scope::default()),
+    )
+    .to_xml(WriteOptions::default());
     let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
     let main = docx.main_document_part().clone();
-    let (settings, _) = docx
+    let (part, _) = docx
         .package_mut()
         .add_part(
             Some(&main),
             RelationshipType::SETTINGS.transitional,
             document_settings::CONTENT_TYPE,
             "/word/settings{}.xml",
-            format!(
-                "<w:settings xmlns:w=\"{W}\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:v=\"urn:schemas-microsoft-com:vml\"><w:compat><w:useFELayout/></w:compat><w:shapeDefaults><o:shapedefaults v:ext=\"edit\" spidmax=\"1026\"/></w:shapeDefaults></w:settings>"
-            )
-            .as_bytes(),
+            &bytes,
         )
         .unwrap();
     assert_eq!(docx.strict_refusals().unwrap(), []);
     let strict = Package::from_bytes(docx.to_bytes_strict().unwrap()).unwrap();
-    let written = text(&strict, &settings);
-    assert!(!written.contains("shapeDefaults"), "{written}");
-    assert!(!written.contains("useFELayout"), "{written}");
+    let written = document_settings::load(&strict, &part, OpenOptions::default()).unwrap();
+    assert_eq!(
+        written.default_properties_for_vml_objects_in_main_document,
+        None
+    );
+    let kept = written.compatibility_settings.unwrap_or_default();
+    assert_eq!(
+        kept.do_not_bypass_east_asian_complex_script_layout_code,
+        None
+    );
 }
 
 #[cfg(feature = "strict")]
@@ -701,50 +824,94 @@ fn strict_refusals_is_empty_for_a_file_a_strict_save_takes() {
     docx.to_bytes_strict().unwrap();
 }
 
-/// Whether the main part's binding maps its prefix to the namespace the bibliography's root is in.
+/// Whether the main document's binding maps its prefix to the namespace the bibliography's root
+/// is in.
 #[cfg(all(feature = "strict", feature = "transitional"))]
-fn binding_names_the_root(package: &Package, main: &PartName, item: &PartName) -> bool {
-    let root = parse(&package.part_bytes(item).unwrap()).unwrap().root;
+fn binding_names_the_root(docx: &Docx, item: &PartName) -> bool {
+    let root = parse(&docx.package().part_bytes(item).unwrap())
+        .unwrap()
+        .root;
     let address = &root
         .namespace_declarations
         .iter()
         .find(|declaration| declaration.prefix == root.name.prefix)
         .unwrap()
         .uri;
-    text(package, main).contains(&format!("xmlns:ns0='{address}'"))
+    let mappings = paragraphs(docx)
+        .first()
+        .and_then(|paragraph| paragraph.content.first())
+        .and_then(|node| {
+            if let ParagraphContent::InlineLevelStructuredDocumentTag(control) = node {
+                control
+                    .properties
+                    .as_ref()?
+                    .xml_mapping
+                    .as_ref()?
+                    .prefix_mappings
+                    .clone()
+            } else {
+                None
+            }
+        });
+    mappings.is_some_and(|text| text.contains(&format!("xmlns:ns0='{address}'")))
 }
 
 #[cfg(all(feature = "strict", feature = "transitional"))]
 #[test]
 fn a_binding_to_a_bibliography_follows_the_bibliography_into_each_class() {
+    use officekit_markup::wordprocessing::{
+        InlineLevelStructuredDocumentTag, InlineLevelStructuredDocumentTagContent,
+        PlainTextStructuredDocumentTag, StructuredDocumentTagProperties,
+        StructuredDocumentTagPropertiesContent, XMLMapping,
+    };
+
+    let mut mapping = XMLMapping::default();
+    mapping.prefix_mappings = Some(
+        "xmlns:ns0='http://schemas.openxmlformats.org/officeDocument/2006/bibliography' "
+            .to_owned(),
+    );
+    mapping.store_item_id = Some("{1}".to_owned());
+    mapping.xpath = Some("/ns0:Sources[1]/ns0:Source[1]/ns0:Title[1]".to_owned());
+    let mut properties = StructuredDocumentTagProperties::default();
+    properties.content = Some(Box::new(
+        StructuredDocumentTagPropertiesContent::PlainTextStructuredDocumentTag(
+            PlainTextStructuredDocumentTag::default(),
+        ),
+    ));
+    properties.xml_mapping = Some(Box::new(mapping));
+    let mut content = InlineLevelStructuredDocumentTagContent::default();
+    content.content = vec![run_of(vec![text_of("x")])];
+    let mut control = InlineLevelStructuredDocumentTag::default();
+    control.content = Some(Box::new(content));
+    control.properties = Some(Box::new(properties));
     let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
+    docx.set_main_document(&document_of(vec![
+        ParagraphContent::InlineLevelStructuredDocumentTag(control),
+    ]))
+    .unwrap();
     let main = docx.main_document_part().clone();
-    let content_type = docx.package().content_type(&main).unwrap().to_owned();
-    docx.package_mut()
-        .set_part_bytes(&main, &content_type, BOUND.as_bytes())
-        .unwrap();
     let item = docx
         .package_mut()
         .add_custom_xml(&main, SOURCES.as_bytes(), "{1}", &[])
         .unwrap();
 
     let strict_bytes = docx.to_bytes_strict().unwrap();
-    let strict = Package::from_bytes(strict_bytes.clone()).unwrap();
+    let strict = Docx::from_bytes(strict_bytes.clone(), OpenOptions::default()).unwrap();
     assert!(
-        binding_names_the_root(&strict, &main, &item),
+        binding_names_the_root(&strict, &item),
         "{}",
-        text(&strict, &main)
+        text(strict.package(), &main)
     );
 
     let (back, _) = Docx::from_bytes(strict_bytes, OpenOptions::default())
         .unwrap()
         .to_bytes_transitional()
         .unwrap();
-    let transitional = Package::from_bytes(back).unwrap();
+    let transitional = Docx::from_bytes(back, OpenOptions::default()).unwrap();
     assert!(
-        binding_names_the_root(&transitional, &main, &item),
+        binding_names_the_root(&transitional, &item),
         "{}",
-        text(&transitional, &main)
+        text(transitional.package(), &main)
     );
 }
 
