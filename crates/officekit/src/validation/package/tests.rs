@@ -1,12 +1,17 @@
 use std::path::Path;
 
+use officekit_markup::wordprocessing::{StyleDefinitions, write};
+use officekit_xml::element::Document as XmlDocument;
 use officekit_xml::name::OfficeVersion;
-use officekit_xml::packaging::package::Package;
+use officekit_xml::packaging::package::{DECLARATION, Package};
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::ready::ready_now;
+use officekit_xml::write::{Scope, WriteOptions};
 use os_shim::mock::MemorySystem;
 
 use super::check;
+use crate::docx::Docx;
+use crate::parts::kinds::WordprocessingKind;
 use crate::validation::error::{ErrorCode, Errors, Finding, ValidationError};
 use crate::validation::validator::Validator;
 
@@ -200,10 +205,20 @@ fn a_part_whose_content_type_contradicts_its_part_type_gets_no_schema_error() {
 
 #[test]
 fn a_clean_docx_has_no_error() {
-    let package = word(&[("/word/styles.xml", STYLES, STYLES_TYPE, STYLES_XML)]);
-    assert_eq!(package_errors(&package), []);
+    let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
+    let main = docx.main_document_part().clone();
+    let styles = PartName::new("/word/styles.xml").unwrap();
+    let xml = XmlDocument::new(
+        DECLARATION,
+        write::style_definitions(&StyleDefinitions::default(), &mut Scope::default()),
+    )
+    .to_xml(WriteOptions::default());
+    let package = docx.package_mut();
+    package.set_part_bytes(&styles, STYLES, &xml).unwrap();
+    package.relate(Some(&main), &styles, STYLES_TYPE).unwrap();
+    assert_eq!(package_errors(docx.package()), []);
     assert_eq!(
-        Validator::new(OfficeVersion::Microsoft365).validate(&reopened(&package)),
+        Validator::new(OfficeVersion::Microsoft365).validate(&reopened(docx.package())),
         []
     );
 }

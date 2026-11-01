@@ -1,6 +1,16 @@
+use officekit_markup::common_simple_types::OnOffValue;
+use officekit_markup::wordprocessing::{
+    LeftParagraphBorderTblWidth, MeasurementOrPercentageValue,
+    ParagraphBorderAboveIdenticalParagraphsTblWidth,
+    ParagraphBorderBelowIdenticalParagraphsTblWidth, PreviousTableProperties, PrimaryStyleName,
+    RightParagraphBorderTblWidth, StyleDefinition, StyleDefinitions, StyleTypes,
+    TableCellMarginExceptions, TableWidthUnits, write,
+};
+use officekit_xml::element::Document as XmlDocument;
 use officekit_xml::name::OfficeVersion;
-use officekit_xml::packaging::package::Package;
+use officekit_xml::packaging::package::{DECLARATION, Package};
 use officekit_xml::packaging::part_name::PartName;
+use officekit_xml::write::{Scope, WriteOptions};
 
 use crate::validation::error::{ErrorCode, ValidationError};
 use crate::validation::validator::Validator;
@@ -73,15 +83,46 @@ fn found(package: &Package, target: OfficeVersion) -> Vec<(ErrorCode, String)> {
         .collect()
 }
 
+/// The default table style's four cell margins, each `width` wide in twentieths of a point.
 fn margins(width: &str) -> Package {
-    let styles = format!(
-        "<w:styles xmlns:w=\"{W}\"><w:style w:type=\"table\" w:default=\"1\" w:styleId=\"TableNormal\">\
-         <w:name w:val=\"Normal Table\"/><w:tblPr><w:tblCellMar>\
-         <w:top w:w=\"{width}\" w:type=\"dxa\"/><w:left w:w=\"{width}\" w:type=\"dxa\"/>\
-         <w:bottom w:w=\"{width}\" w:type=\"dxa\"/><w:right w:w=\"{width}\" w:type=\"dxa\"/>\
-         </w:tblCellMar></w:tblPr></w:style></w:styles>"
-    );
-    document(W, OFFICE_DOCUMENT, "<w:body/>", Some(&styles))
+    let value = || Some(MeasurementOrPercentageValue::from(width.to_owned()));
+    let unit = || Some(TableWidthUnits::from("dxa".to_owned()));
+    let mut top = ParagraphBorderAboveIdenticalParagraphsTblWidth::default();
+    (top.w, top.r#type) = (value(), unit());
+    let mut left = LeftParagraphBorderTblWidth::default();
+    (left.w, left.r#type) = (value(), unit());
+    let mut bottom = ParagraphBorderBelowIdenticalParagraphsTblWidth::default();
+    (bottom.w, bottom.r#type) = (value(), unit());
+    let mut right = RightParagraphBorderTblWidth::default();
+    (right.w, right.r#type) = (value(), unit());
+    let mut cell_margins = TableCellMarginExceptions::default();
+    cell_margins.left_paragraph_border_tbl_width = Some(Box::new(left));
+    cell_margins.paragraph_border_above_identical_paragraphs_tbl_width = Some(Box::new(top));
+    cell_margins.paragraph_border_below_identical_paragraphs_tbl_width = Some(Box::new(bottom));
+    cell_margins.right_paragraph_border_tbl_width = Some(Box::new(right));
+    let mut properties = PreviousTableProperties::default();
+    properties.table_cell_margin_exceptions = Some(Box::new(cell_margins));
+    let mut name = PrimaryStyleName::default();
+    name.val = Some("Normal Table".to_owned());
+    let mut style = StyleDefinition::default();
+    style.default = Some(OnOffValue::from("1".to_owned()));
+    style.previous_table_properties = Some(Box::new(properties));
+    style.primary_style_name = Some(Box::new(name));
+    style.style_id = Some("TableNormal".to_owned());
+    style.r#type = Some(StyleTypes::from("table".to_owned()));
+    let mut styles = StyleDefinitions::default();
+    styles.style_definition = vec![style];
+    let xml = XmlDocument::new(
+        DECLARATION,
+        write::style_definitions(&styles, &mut Scope::default()),
+    )
+    .to_xml(WriteOptions::default());
+    document(
+        W,
+        OFFICE_DOCUMENT,
+        "<w:body/>",
+        Some(&String::from_utf8(xml).unwrap()),
+    )
 }
 
 #[test]
