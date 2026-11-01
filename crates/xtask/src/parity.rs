@@ -731,6 +731,13 @@ pub const DIVERGENCES: &[Divergence] = &[
         reason: CONDITIONAL_VAL,
         targets: ALL_TARGETS,
     },
+    Divergence {
+        id: "Sch_UnexpectedElementContentExpectingComplex",
+        mentioning: None,
+        path: &[(WORD, "rPr")],
+        reason: RUN_PROPERTY_ORDER,
+        targets: ALL_TARGETS,
+    },
 ];
 
 const ALL_TARGETS: &[&str] = &[
@@ -761,6 +768,9 @@ const DRAWING: &str = "http://schemas.openxmlformats.org/drawingml/2006/main";
 
 const LEVEL_JUSTIFICATION: &str = "SDK 3.5.1 gives w:lvlJc the values left, center and right; \
     ECMA-376 types it CT_Jc (CT_Lvl), whose val is ST_Jc, with start and end";
+
+const RUN_PROPERTY_ORDER: &str = "SDK 3.5.1 gives run properties one order; ECMA-376 types them \
+    a choice that repeats (EG_RPrContent, CT_ParaRPr), as the defect report DR 09-0157 asked";
 
 const SMART_TAG: &str = "SDK 3.5.1 leaves out w:smartTag and w:smartTagType; ECMA-376 declares \
     them in EG_ContentRunContent, EG_ContentRunContentBase and CT_Settings, and Word 16 writes them";

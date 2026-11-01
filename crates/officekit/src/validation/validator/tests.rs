@@ -1002,3 +1002,35 @@ fn a_conditional_format_needs_no_val_in_either_class() {
         "TransitionalOnlyAttribute",
     );
 }
+
+#[test]
+fn run_properties_come_in_any_order_and_repeat() {
+    let body = r#"<w:p><w:r><w:rPr><w:lang w:val="en-US"/><w:highlight w:val="yellow"/><w:b/><w:b/></w:rPr><w:t>x</w:t></w:r></w:p>"#;
+    assert_eq!(all_errors(&word_document("", body)), Vec::<String>::new());
+    assert_eq!(all_errors(&strict_document(body)), Vec::<String>::new());
+    let mark = r#"<w:p><w:pPr><w:rPr><w:ins w:id="1" w:author="a"/><w:lang w:val="en-US"/><w:b/></w:rPr></w:pPr></w:p>"#;
+    assert_eq!(all_errors(&word_document("", mark)), Vec::<String>::new());
+}
+
+#[test]
+fn a_tracked_change_keeps_its_place_in_run_properties() {
+    let last = r#"<w:p><w:r><w:rPr><w:rPrChange w:id="1" w:author="a"><w:rPr/></w:rPrChange><w:b/></w:rPr></w:r></w:p>"#;
+    refused_with(&word_document("", last), "w:rPr", "UnexpectedChild");
+    let first = r#"<w:p><w:pPr><w:rPr><w:b/><w:ins w:id="1" w:author="a"/></w:rPr></w:pPr></w:p>"#;
+    refused_with(&word_document("", first), "w:rPr", "UnexpectedChild");
+}
+
+#[test]
+fn a_style_still_refuses_the_run_properties_word_does_not_allow_there() {
+    let styles = format!(
+        r#"<w:styles {WORD_NAMESPACES}><w:style w:type="paragraph" w:styleId="S"><w:name w:val="S"/><w:rPr><w:highlight w:val="yellow"/></w:rPr></w:style></w:styles>"#
+    );
+    let package = with_part(
+        word_document("", ""),
+        "/word/styles.xml",
+        STYLES,
+        STYLES_CONTENT,
+        &styles,
+    );
+    assert_eq!(all_errors(&package).len(), 1);
+}

@@ -330,3 +330,26 @@ parents = ["w:CT_Settings/w:settings"]
 [[optional]]
 type = "w:CT_Cnf/w:cnfStyle"
 attribute = "w:val"
+
+# ECMA-376 types a run's properties as EG_RPrBase, a choice that repeats
+# (wml.xsd, EG_RPrContent and CT_ParaRPr), so they come in any order. The data
+# gives them one fixed order. Excel's rich text and fonts keep theirs:
+# [MS-OI29500] 2.1.674 and 2.1.706 say Excel requires it, and it says no such
+# thing of Word.
+[[any_order]]
+type = "w:CT_RPr/w:rPr"
+after = ["w:CT_RPrChange/w:rPrChange"]
+
+[[any_order]]
+type = "w:CT_RPrBaseStyleable/w:rPr"
+
+[[any_order]]
+type = "w:CT_RPrList/w:rPr"
+
+[[any_order]]
+type = "w:CT_RPrStyle/w:rPr"
+
+[[any_order]]
+type = "w:CT_ParaRPr/w:rPr"
+before = ["w:CT_TrackChange/w:ins", "w:CT_TrackChange/w:del", "w:CT_TrackChange/w:moveFrom", "w:CT_TrackChange/w:moveTo"]
+after = ["w:CT_ParaRPrChange/w:rPrChange"]

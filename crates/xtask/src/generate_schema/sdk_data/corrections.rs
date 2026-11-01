@@ -9,7 +9,7 @@ use core::slice;
 use anyhow::{Context as _, Result, bail};
 
 use self::standard::{FromStandard, place};
-use super::{DataParticle, DataType, Facet, SdkData};
+use super::{DataParticle, DataType, DataVersion, Facet, Occurs, SdkData};
 use crate::generate_schema::model::SchemaSet;
 
 #[cfg(test)]
@@ -74,6 +74,14 @@ struct Alternative {
     beside: String,
     like: String,
     parent: String,
+    type_name: String,
+}
+
+/// One type whose children the standard lets come in any order and repeat, and
+/// the data orders. `after` and `before` keep their places around them.
+struct AnyOrder {
+    after: Vec<String>,
+    before: Vec<String>,
     type_name: String,
 }
 
@@ -151,6 +159,10 @@ pub(super) fn apply(data: &mut SdkData, text: &str, standard: &SchemaSet) -> Res
     }
     for row in optionals(&table)? {
         make_optional(data, &row)
+            .with_context(|| format!("in the correction of `{}`", row.type_name))?;
+    }
+    for row in any_orders(&table)? {
+        free_order(data, &row)
             .with_context(|| format!("in the correction of `{}`", row.type_name))?;
     }
     Ok(())
@@ -344,6 +356,88 @@ fn add_alternative(data: &mut SdkData, row: &Alternative) -> Result<()> {
     Ok(())
 }
 
+/// Move every element of the type's content model into one choice that repeats.
+fn free_order(data: &mut SdkData, row: &AnyOrder) -> Result<()> {
+    let data_type = data
+        .types
+        .get_mut(&row.type_name)
+        .with_context(|| format!("the data has no `{}`", row.type_name))?;
+    let particle = data_type
+        .particle
+        .as_ref()
+        .with_context(|| format!("`{}` has no content model", row.type_name))?;
+    let mut leaves = Vec::new();
+    collect_leaves(particle, None, &mut leaves);
+    let named = |names: &[String]| -> Result<Vec<DataParticle>> {
+        names
+            .iter()
+            .map(|name| {
+                leaves
+                    .iter()
+                    .find(|leaf| leaf.name.as_deref() == Some(name.as_str()))
+                    .cloned()
+                    .with_context(|| format!("the type does not hold `{name}`"))
+            })
+            .collect()
+    };
+    let mut items = named(&row.before)?;
+    let after = named(&row.after)?;
+    let free: Vec<DataParticle> = leaves
+        .iter()
+        .filter(|leaf| {
+            let name = leaf.name.as_deref().unwrap_or_default();
+            !row.before.iter().chain(&row.after).any(|kept| kept == name)
+        })
+        .cloned()
+        .map(|mut leaf| {
+            leaf.occurs.clear();
+            leaf
+        })
+        .collect();
+    items.push(DataParticle {
+        initial_version: None,
+        items: free,
+        kind: Some("Choice".to_owned()),
+        name: None,
+        namespace: None,
+        occurs: vec![Occurs {
+            include_version: false,
+            max: 0,
+            min: 0,
+            version: None,
+        }],
+        require_filter: false,
+    });
+    items.extend(after);
+    data_type.particle = Some(DataParticle {
+        initial_version: None,
+        items,
+        kind: Some("Sequence".to_owned()),
+        name: None,
+        namespace: None,
+        occurs: Vec::new(),
+        require_filter: false,
+    });
+    Ok(())
+}
+
+/// The element items under `particle`, each with the first version its groups name.
+fn collect_leaves(
+    particle: &DataParticle,
+    inherited: Option<DataVersion>,
+    leaves: &mut Vec<DataParticle>,
+) {
+    let version = particle.initial_version.or(inherited);
+    if particle.name.is_some() {
+        let mut leaf = particle.clone();
+        leaf.initial_version = version;
+        leaves.push(leaf);
+    }
+    for item in &particle.items {
+        collect_leaves(item, version, leaves);
+    }
+}
+
 fn make_optional(data: &mut SdkData, row: &Optional) -> Result<()> {
     let attribute = data
         .types
@@ -441,6 +535,27 @@ fn alternatives(table: &toml::Table) -> Result<Vec<Alternative>> {
             })
         })
         .collect()
+}
+
+fn any_orders(table: &toml::Table) -> Result<Vec<AnyOrder>> {
+    rows(table, "any_order")?
+        .into_iter()
+        .map(|row| {
+            Ok(AnyOrder {
+                after: optional_texts(row, "after")?,
+                before: optional_texts(row, "before")?,
+                type_name: text_field(row, "type")?,
+            })
+        })
+        .collect()
+}
+
+fn optional_texts(row: &toml::Table, name: &str) -> Result<Vec<String>> {
+    if row.contains_key(name) {
+        texts(row, name)
+    } else {
+        Ok(Vec::new())
+    }
 }
 
 fn optionals(table: &toml::Table) -> Result<Vec<Optional>> {

@@ -59,6 +59,14 @@ const WORD: &str = r#"{
       {"Kind": "Group", "Occurs": [{}], "Items": [{"Kind": "Choice", "Items": [{"Name": "w:CT_Sdt/w:sdt"}, {"Kind": "Group", "Items": [{"Kind": "Choice", "Items": [{"Name": "w:CT_Custom/w:custom"}]}]}]}]}
     ]}},
     {"Name": "w:CT_OnOff/w:extra", "IsDerived": true},
+    {"Name": "w:CT_Props/w:props", "Particle": {"Kind": "Sequence", "Items": [
+      {"Name": "w:CT_PFirst/w:pfirst", "Occurs": [{"Max": 1}]},
+      {"Kind": "Group", "InitialVersion": "Office2010", "Occurs": [{"Max": 1}], "Items": [{"Kind": "Sequence", "Items": [
+        {"Name": "w:CT_PMiddle/w:pa", "Occurs": [{"Max": 1}]},
+        {"Name": "w:CT_PMiddle/w:pb", "Occurs": [{"Max": 1}]}
+      ]}]},
+      {"Name": "w:CT_PLast/w:plast", "Occurs": [{"Max": 1}]}
+    ]}},
     {"Name": "w:CT_Own/w:own", "Particle": {"Kind": "Sequence", "Items": [
       {"Name": "w:CT_OnOff/w:bold"},
       {"Name": "w:CT_Setting/w:setting"}
@@ -154,6 +162,13 @@ const STRING_ROW: &str = r#"
 type = "w:CT_Setting/w:setting"
 attribute = "w:name"
 string = true
+"#;
+
+const ORDER_ROW: &str = r#"
+[[any_order]]
+type = "w:CT_Props/w:props"
+before = ["w:CT_PFirst/w:pfirst"]
+after = ["w:CT_PLast/w:plast"]
 "#;
 
 const OPTIONAL_ROW: &str = r#"
@@ -837,4 +852,35 @@ fn an_optional_row_takes_away_only_the_required_check() {
     let mut twice = read_word();
     twice.correct(OPTIONAL_ROW, &standard()).unwrap();
     assert!(twice.correct(OPTIONAL_ROW, &standard()).is_err());
+}
+
+#[test]
+fn an_any_order_row_makes_one_repeating_choice_between_what_keeps_its_place() {
+    let mut data = read_word();
+    data.correct(ORDER_ROW, &standard()).unwrap();
+    let model = data.types["w:CT_Props/w:props"].particle.clone().unwrap();
+    assert_eq!(model.items.len(), 3);
+    assert_eq!(model.items[0].name.as_deref(), Some("w:CT_PFirst/w:pfirst"));
+    assert_eq!(model.items[1].kind.as_deref(), Some("Choice"));
+    assert_eq!(model.items[1].occurs[0].max, 0);
+    assert_eq!(model.items[1].items.len(), 2);
+    assert_eq!(
+        model.items[1].items[0].initial_version,
+        Some(super::DataVersion::Office2010)
+    );
+    assert_eq!(model.items[2].name.as_deref(), Some("w:CT_PLast/w:plast"));
+}
+
+#[test]
+fn an_any_order_row_that_names_what_the_data_lacks_stops_the_generator() {
+    for (from, to) in [
+        ("w:CT_Props/w:props", "w:CT_Missing/w:props"),
+        ("w:CT_PLast/w:plast", "w:CT_Missing/w:plast"),
+    ] {
+        let mut data = read_word();
+        let error = data
+            .correct(&ORDER_ROW.replace(from, to), &standard())
+            .unwrap_err();
+        assert!(format!("{error:#}").contains(to), "{error:#}");
+    }
 }
