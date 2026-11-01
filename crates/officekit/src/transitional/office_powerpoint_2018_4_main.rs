@@ -207,7 +207,7 @@
 //   1ccb90bdf037137918dfb7ed2e243c2377dec75cfcc65808a1b8904f084302e2  inputs/open-xml-sdk/data/schemas/www_w3_org_XML_1998_namespace.json
 //   faa0956ead6fa73f20a3ea60eec008389b059f72512d83029c27109a69a87e0f  crates/xtask/data/enum_names.toml
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
-//   15d7605929c6001fc8949c1bad8f52f4f78bb8b4d3729a1f55007809a6364719  crates/xtask/data/strict_correspondences.toml
+//   b968709cb207c10c0e4c709caaf786004378630038cd5a2bd94a218cf1e794c2  crates/xtask/data/strict_correspondences.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 //! The `Transitional` impl of every node of `officekit_markup::office_powerpoint_2018_4_main`.

@@ -381,7 +381,7 @@ type = "w:ST_SignedTwipsMeasure"
 
 # Part 4, 14.5.1.1: each one-byte character-set code with the name Part 4
 # gives it, spelled as Part 4 prints it. 01 (default), 02 (Symbol), and FF
-# (OEM) have none.
+# (OEM) have none; the walk in officekit-strict drops 01 and 02 from a w:font.
 [charset]
 "00" = "iso-8859-1"
 "4D" = "macintosh"

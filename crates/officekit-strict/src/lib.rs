@@ -31,6 +31,7 @@
 //! - A bitmask unpacks into the attributes it packs.
 //! - A protection holding no password hash takes Part 1's `algorithmName` and `spinCount`.
 //! - The settings in [`REMOVED_SETTINGS`] are removed, as Word's own Strict files leave them out.
+//! - A `w:font` drops a `w:charset` holding `01` or `02`, which Part 4 gives no name.
 //! - The text of the `wp14` relative sizes and positions, a bare number counting thousandths of a
 //!   percent, becomes a percentage, as Word writes it in Strict.
 //! - A serial date-time becomes an ISO 8601 text (see [`iso_date_time`]), a character-set code
@@ -558,6 +559,7 @@ fn convert(
     }
     protection_with_no_password(element);
     background_color(element);
+    font_without_character_set(element);
     if named(element, MARKUP_COMPATIBILITY, "Choice") && holds_vml_requirement(element, scope) {
         convert_inside_vml(element, scope, found);
         return;
@@ -701,6 +703,23 @@ fn decimal(negative: bool, magnitude: u128, divisor: u128, places: Option<u32>) 
     } else {
         format!("{sign}{whole}.{trimmed}")
     })
+}
+
+/// A `w:font` drops a `w:charset` holding a code Part 4 gives no name and no `w:characterSet`,
+/// as Word does for a symbol font. `FF` has no name either, and stays for the rules to refuse.
+fn font_without_character_set(element: &mut Element) {
+    if !named(element, WORDPROCESSING, "font") {
+        return;
+    }
+    let namespace = element.name.namespace.clone();
+    element.children.retain(|node| {
+        let Node::Element(child) = node else {
+            return true;
+        };
+        !(named(child, WORDPROCESSING, "charset")
+            && child.attribute(&namespace, "characterSet").is_none()
+            && matches!(child.attribute(&namespace, "val"), Some("01" | "02")))
+    });
 }
 
 /// Whether `element` has an attribute named `local` in the namespace of its

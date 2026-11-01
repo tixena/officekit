@@ -128,7 +128,7 @@ fn template() -> Package {
             font_table::CONTENT_TYPE,
             RelationshipType::FONT_TABLE,
             format!(
-                "<w:fonts xmlns:w=\"{W}\"><w:font w:name=\"Symbol\"><w:charset w:val=\"01\"/></w:font></w:fonts>"
+                "<w:fonts xmlns:w=\"{W}\"><w:font w:name=\"Terminal\"><w:charset w:val=\"FF\"/></w:font></w:fonts>"
             ),
         ),
         (

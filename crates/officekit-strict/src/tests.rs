@@ -15,8 +15,8 @@ use officekit_markup::wordprocessing::{
     CharacterSetSupportedByFont, CheckboxFormFieldProperties, CompatibilitySettings, Document,
     DocumentBackground, DocumentEditingRestrictions, DropDownListFormFieldProperties,
     FramesetSplitterProperties, Paragraph, ParagraphConditionalFormatting, ParagraphIndentation,
-    PreferredTableWidth, RunProperties, SuggestedSorting, TableCellBorders,
-    TableStyleConditionalFormattingSettingsException, TextRun, WriteProtection,
+    PreferredTableWidth, PropertiesForASingleFont, RunProperties, SuggestedSorting,
+    TableCellBorders, TableStyleConditionalFormattingSettingsException, TextRun, WriteProtection,
 };
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::{Document as Part, Element};
@@ -461,6 +461,37 @@ fn a_character_set_code_takes_its_iana_name() {
     assert_eq!(
         refusal::<TextImportSettings>("<x:textPr xmlns:x=\"{x}\" codePage=\"720\"/>"),
         Some("textPr/@codePage")
+    );
+}
+
+#[test]
+fn a_font_drops_a_character_set_code_with_no_name() {
+    for code in ["01", "02"] {
+        let text = format!(
+            "<w:font xmlns:w=\"{{w}}\" w:name=\"Wingdings\"><w:charset w:val=\"{code}\"/><w:family w:val=\"auto\"/></w:font>"
+        );
+        let written = strict::<PropertiesForASingleFont>(&text);
+        assert!(!written.contains("charset"), "{written}");
+        assert!(written.contains("family"), "{written}");
+    }
+    let named = strict::<PropertiesForASingleFont>(
+        "<w:font xmlns:w=\"{w}\" w:name=\"Times New Roman\"><w:charset w:val=\"00\"/></w:font>",
+    );
+    assert!(named.contains("characterSet=\"iso-8859-1\""), "{named}");
+    let given = strict::<PropertiesForASingleFont>(
+        "<w:font xmlns:w=\"{w}\" w:name=\"Wingdings\"><w:charset w:val=\"02\" w:characterSet=\"windows-1252\"/></w:font>",
+    );
+    assert!(given.contains("characterSet=\"windows-1252\""), "{given}");
+    assert_eq!(
+        refusal::<PropertiesForASingleFont>(
+            "<w:font xmlns:w=\"{w}\" w:name=\"Terminal\"><w:charset w:val=\"FF\"/></w:font>",
+        ),
+        Some("charset/@val")
+    );
+    assert_eq!(
+        refusal::<CharacterSetSupportedByFont>("<w:charset xmlns:w=\"{w}\" w:val=\"01\"/>"),
+        Some("charset/@val"),
+        "a character set outside a font stays refused"
     );
 }
 
