@@ -5,15 +5,22 @@ use crate::parts::kinds::WordprocessingKind;
 use base64::Engine as _;
 use base64::engine::general_purpose::STANDARD;
 #[cfg(feature = "transitional")]
-use officekit_markup::wordprocessing::DocumentProtectionTypesMember;
+use officekit_markup::common_simple_types::{MeasurementInTwentiethsOfAPoint, OnOffValue};
+#[cfg(feature = "transitional")]
+use officekit_markup::wordprocessing::{
+    DistanceBetweenAutomaticTabStops, DocumentEditingRestrictions, DocumentProtectionTypes,
+    DocumentProtectionTypesMember, DocumentSettings, MagnificationSetting, PercentageMeasurement,
+};
 #[cfg(feature = "transitional")]
 use officekit_xml::conformance::ConformanceClass;
-#[cfg(all(feature = "transitional", feature = "strict"))]
+#[cfg(feature = "transitional")]
 use officekit_xml::packaging::package::OpenOptions;
 #[cfg(feature = "transitional")]
 use officekit_xml::packaging::part_name::PartName;
 #[cfg(feature = "transitional")]
 use officekit_xml::packaging::relationship::{RelationshipType, Target};
+#[cfg(feature = "transitional")]
+use officekit_xml::write::WriteOptions;
 
 use super::{hash, legacy_hash};
 #[cfg(feature = "transitional")]
@@ -25,7 +32,72 @@ fn salt() -> [u8; 16] {
     STANDARD.decode(ASPOSE_SALT).unwrap().try_into().unwrap()
 }
 
+/// The settings part of `docx`, read back through its part module.
 #[cfg(feature = "transitional")]
+fn settings(docx: &Docx) -> DocumentSettings {
+    let related = docx
+        .package()
+        .related_by_type(Some(docx.main_document_part()), &RelationshipType::SETTINGS)
+        .unwrap();
+    assert_eq!(related.len(), 1);
+    let Target::Part(name) = &related[0].target else {
+        return DocumentSettings::default();
+    };
+    document_settings::load(docx.package(), name, OpenOptions::default()).unwrap()
+}
+
+/// The attributes the document protection of `docx` sets, by name, in the order the schema
+/// declares them; the settings keep nothing else of it as unknown content.
+#[cfg(feature = "transitional")]
+fn protection(docx: &Docx) -> Vec<(&'static str, String)> {
+    let read = settings(docx);
+    assert_eq!(read.unknown.children, Vec::new());
+    let entry = read.document_editing_restrictions.unwrap_or_default();
+    [
+        ("edit", entry.edit.map(|value| value.0)),
+        ("enforcement", entry.enforcement.map(|value| value.0)),
+        (
+            "cryptProviderType",
+            entry.crypt_provider_type.map(|value| value.0),
+        ),
+        (
+            "cryptAlgorithmClass",
+            entry.crypt_algorithm_class.map(|value| value.0),
+        ),
+        (
+            "cryptAlgorithmType",
+            entry.crypt_algorithm_type.map(|value| value.0),
+        ),
+        (
+            "cryptAlgorithmSid",
+            entry.crypt_algorithm_sid.map(|value| value.0),
+        ),
+        (
+            "cryptSpinCount",
+            entry.crypt_spin_count.map(|value| value.0),
+        ),
+        ("hash", entry.hash),
+        ("salt", entry.salt),
+        ("algorithmName", entry.algorithm_name),
+        ("hashValue", entry.hash_value),
+        ("saltValue", entry.salt_value),
+        ("spinCount", entry.spin_count.map(|value| value.0)),
+    ]
+    .into_iter()
+    .filter_map(|(attribute, value)| Some((attribute, value?)))
+    .collect()
+}
+
+/// `pairs` as owned attribute values.
+#[cfg(feature = "transitional")]
+fn set(pairs: &[(&'static str, &str)]) -> Vec<(&'static str, String)> {
+    pairs
+        .iter()
+        .map(|(attribute, value)| (*attribute, (*value).to_owned()))
+        .collect()
+}
+
+#[cfg(all(feature = "transitional", feature = "strict"))]
 fn settings_text(docx: &Docx) -> String {
     let related = docx
         .package()
@@ -79,9 +151,10 @@ fn protecting_twice_leaves_one_entry_and_aspose_s_for_secret() {
         ConformanceClass::Transitional,
     )
     .unwrap();
-    let settings = settings_text(&docx);
-    assert_eq!(settings.matches("documentProtection").count(), 1);
-    assert!(settings.contains(r#"<w:documentProtection w:edit="comments" w:enforcement="1"/>"#));
+    assert_eq!(
+        protection(&docx),
+        set(&[("edit", "comments"), ("enforcement", "1")])
+    );
     docx.protect(
         DocumentProtectionTypesMember::ReadOnly,
         "secret",
@@ -89,11 +162,20 @@ fn protecting_twice_leaves_one_entry_and_aspose_s_for_secret() {
         ConformanceClass::Transitional,
     )
     .unwrap();
-    let protected = settings_text(&docx);
-    assert_eq!(protected.matches("documentProtection").count(), 1);
-    assert!(protected.contains(
-        r#"<w:documentProtection w:edit="readOnly" w:enforcement="1" w:cryptProviderType="rsaFull" w:cryptAlgorithmClass="hash" w:cryptAlgorithmType="typeAny" w:cryptAlgorithmSid="4" w:cryptSpinCount="50000" w:hash="7tpTMDU2cZks7+gVqBJPt9DaBHg=" w:salt="hIqOl99kIr/+N0hyovEq7Q=="/>"#
-    ));
+    assert_eq!(
+        protection(&docx),
+        set(&[
+            ("edit", "readOnly"),
+            ("enforcement", "1"),
+            ("cryptProviderType", "rsaFull"),
+            ("cryptAlgorithmClass", "hash"),
+            ("cryptAlgorithmType", "typeAny"),
+            ("cryptAlgorithmSid", "4"),
+            ("cryptSpinCount", "50000"),
+            ("hash", "7tpTMDU2cZks7+gVqBJPt9DaBHg="),
+            ("salt", ASPOSE_SALT),
+        ])
+    );
 }
 
 #[cfg(feature = "transitional")]
@@ -107,12 +189,18 @@ fn the_strict_entry_carries_part_1_attributes() {
         ConformanceClass::Strict,
     )
     .unwrap();
-    let settings = settings_text(&docx);
     let expected_hash = STANDARD.encode(hash("secret", &salt()));
-    let expected = format!(
-        r#"<w:documentProtection w:edit="readOnly" w:enforcement="1" w:algorithmName="SHA-1" w:hashValue="{expected_hash}" w:saltValue="{ASPOSE_SALT}" w:spinCount="50000"/>"#
+    assert_eq!(
+        protection(&docx),
+        set(&[
+            ("edit", "readOnly"),
+            ("enforcement", "1"),
+            ("algorithmName", "SHA-1"),
+            ("hashValue", &expected_hash),
+            ("saltValue", ASPOSE_SALT),
+            ("spinCount", "50000"),
+        ])
     );
-    assert!(settings.contains(&expected), "{settings}");
 }
 
 #[cfg(feature = "transitional")]
@@ -122,9 +210,10 @@ fn an_empty_password_gives_the_restriction_alone_in_either_class() {
         let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
         docx.protect(DocumentProtectionTypesMember::Forms, "", &salt(), class)
             .unwrap();
-        assert!(
-            settings_text(&docx)
-                .contains(r#"<w:documentProtection w:edit="forms" w:enforcement="1"/>"#)
+        assert_eq!(
+            protection(&docx),
+            set(&[("edit", "forms"), ("enforcement", "1")]),
+            "{class:?}"
         );
     }
 }
@@ -132,13 +221,29 @@ fn an_empty_password_gives_the_restriction_alone_in_either_class() {
 #[cfg(feature = "transitional")]
 #[test]
 fn an_existing_entry_is_replaced_where_it_stands_among_the_other_settings() {
+    let mut zoom = MagnificationSetting::default();
+    zoom.percent = Some(PercentageMeasurement::from("100".to_owned()));
+    let mut entry = DocumentEditingRestrictions::default();
+    entry.edit = Some(DocumentProtectionTypes::from(
+        DocumentProtectionTypesMember::Forms,
+    ));
+    entry.enforcement = Some(OnOffValue::from("1".to_owned()));
+    let mut tab_stop = DistanceBetweenAutomaticTabStops::default();
+    tab_stop.val = Some(MeasurementInTwentiethsOfAPoint::from("720".to_owned()));
+    let mut held = DocumentSettings::default();
+    held.distance_between_automatic_tab_stops = Some(Box::new(tab_stop));
+    held.document_editing_restrictions = Some(Box::new(entry));
+    held.magnification_setting = Some(Box::new(zoom));
     let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
     let main = docx.main_document_part().clone();
     let name = PartName::new("/word/settings.xml").unwrap();
-    let text = "<w:settings xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:zoom w:percent=\"100\"/><w:documentProtection w:edit=\"forms\" w:enforcement=\"1\"/><w:defaultTabStop w:val=\"720\"/></w:settings>";
-    docx.package_mut()
-        .set_part_bytes(&name, document_settings::CONTENT_TYPE, text.as_bytes())
-        .unwrap();
+    document_settings::store_transitional(
+        docx.package_mut(),
+        &name,
+        &held,
+        WriteOptions::default(),
+    )
+    .unwrap();
     docx.package_mut()
         .relate(Some(&main), &name, RelationshipType::SETTINGS.transitional)
         .unwrap();
@@ -149,13 +254,18 @@ fn an_existing_entry_is_replaced_where_it_stands_among_the_other_settings() {
         ConformanceClass::Transitional,
     )
     .unwrap();
-    let settings = settings_text(&docx);
-    let zoom = settings.find("<w:zoom").unwrap();
-    let protection = settings.find("<w:documentProtection").unwrap();
-    let tab_stop = settings.find("<w:defaultTabStop").unwrap();
-    assert!(zoom < protection && protection < tab_stop, "{settings}");
-    assert_eq!(settings.matches("documentProtection").count(), 1);
-    assert!(settings.contains(r#"w:edit="comments""#));
+    let text = String::from_utf8(docx.package().part_bytes(&name).unwrap()).unwrap();
+    let zoom_at = text.find("<w:zoom").unwrap();
+    let protection_at = text.find("<w:documentProtection").unwrap();
+    let tab_stop_at = text.find("<w:defaultTabStop").unwrap();
+    assert!(
+        zoom_at < protection_at && protection_at < tab_stop_at,
+        "{text}"
+    );
+    assert_eq!(
+        protection(&docx),
+        set(&[("edit", "comments"), ("enforcement", "1")])
+    );
 }
 
 #[cfg(all(feature = "transitional", feature = "strict"))]

@@ -2,14 +2,14 @@
 
 use crate::parts::kinds::WordprocessingKind;
 use officekit_markup::Read as _;
-use officekit_markup::drawing::{AnyElementContent, Blip};
+use officekit_markup::drawing::{AnyElementContent, Blip, Extension, ExtensionList};
 use officekit_markup::wordprocessing::{
     BlockContent, Document, DocumentBody, DrawingMLObject, DrawingObjectContent, Paragraph,
     ParagraphContent, TextRun, TextRunContent, write,
 };
 use officekit_markup::wordprocessing_drawing::InlineDrawingMLObject;
 use officekit_xml::element::Element;
-use officekit_xml::name::{Namespace, OfficeVersion, QName};
+use officekit_xml::name::{Namespace, OfficeVersion};
 use officekit_xml::packaging::error::PackageError;
 use officekit_xml::packaging::image::{Image, ImageFormat};
 use officekit_xml::packaging::package::{OpenOptions, Package};
@@ -152,40 +152,118 @@ fn related_ids(docx: &Docx) -> Vec<String> {
         .collect()
 }
 
-fn pagare_run() -> String {
-    format!("<w:r>{}</w:r>", drawing(&named("r")))
+/// A Word document whose main part names the image part `/word/media/image1.png` by `rId7`.
+fn with_old_image() -> Docx {
+    let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
+    let main = docx.main_document_part().clone();
+    let old = name("/word/media/image1.png");
+    let package = docx.package_mut();
+    package.set_part_bytes(&old, "image/png", b"old").unwrap();
+    package
+        .add_relationship(
+            Some(&main),
+            "rId7",
+            &Target::Part(old),
+            RelationshipType::IMAGE.transitional,
+        )
+        .unwrap();
+    docx
+}
+
+/// A picture 3135822 by 2000000 EMU of `rId7`, whose blip keeps an extension list of one entry.
+fn old_picture() -> DrawingMLObject {
+    let mut drawing = inline_picture(
+        PictureSource::Embedded("rId7"),
+        1,
+        "Picture 1",
+        None,
+        (3_135_822, 2_000_000),
+    );
+    let mut extension = Extension::default();
+    extension.uri = Some("{28A0092B-C50C-407E-A947-70E740481C1C}".to_owned());
+    let mut extensions = ExtensionList::default();
+    extensions.extension = alloc::vec![extension];
+    for item in &mut drawing.content {
+        if let DrawingObjectContent::InlineDrawingMLObject(inline) = item {
+            for content in &mut inline.graphic_object.data.content {
+                if let AnyElementContent::Picture(picture) = content
+                    && let Some(blip) = picture.fill.blip.as_deref_mut()
+                {
+                    blip.extension_list = Some(Box::new(extensions.clone()));
+                }
+            }
+        }
+    }
+    drawing
+}
+
+/// The inline drawings of `run`, in order.
+fn inlines(run: &TextRun) -> Vec<&InlineDrawingMLObject> {
+    run.content
+        .iter()
+        .filter_map(|item| {
+            if let TextRunContent::DrawingMLObject(found) = item {
+                Some(inline_of(found))
+            } else {
+                None
+            }
+        })
+        .collect()
+}
+
+/// The `r:embed` of the first picture of `run`.
+fn first_embed(run: &TextRun) -> String {
+    inlines(run)
+        .first()
+        .and_then(|inline| blip_of(inline).embed.clone())
+        .unwrap()
 }
 
 #[test]
 fn width_keeps_cx_sets_cy_from_the_pixel_size_and_leaves_the_extension_list_alone() {
-    let mut docx = docx_with(&pagare_run(), Some("r"));
+    let mut docx = with_old_image();
     let main = docx.main_document_part().clone();
-    let mut run = run_of(&docx);
+    let mut run = run_holding(old_picture());
     let replaced = docx
         .set_picture(&main, &mut run, &wide_png(), PictureFit::Width)
         .unwrap();
     assert_eq!(replaced.as_deref(), Some("rId7"));
-    let element = written(&docx, &run);
-    assert_eq!(values(&element, "extent", "cx"), ["3135822"]);
-    assert_eq!(values(&element, "extent", "cy"), ["1045274"]);
-    assert_eq!(values(&element, "ext", "cx"), ["3135822"]);
-    assert_eq!(values(&element, "ext", "cy"), ["1045274"]);
-    assert_eq!(values(&element, "ext", "uri").len(), 1);
-    assert_eq!(values(&element, "off", "x"), ["0"]);
-    assert_eq!(values(&element, "docPr", "name"), ["Picture 1"]);
+    let inline = *inlines(&run).first().unwrap();
+    let size = ("3135822".to_owned(), "1045274".to_owned());
+    assert_eq!(sizes(inline), [size.clone(), size]);
+    let extensions = blip_of(inline).extension_list.as_deref().unwrap();
+    assert_eq!(extensions.extension.len(), 1);
+    let offset = inline.graphic_object.data.content.iter().find_map(|item| {
+        if let AnyElementContent::Picture(picture) = item {
+            picture
+                .shape_properties
+                .xfrm_transform2d
+                .as_ref()?
+                .offset
+                .as_ref()?
+                .x
+                .clone()
+        } else {
+            None
+        }
+    });
+    assert_eq!(offset.map(|x| x.0).as_deref(), Some("0"));
+    assert_eq!(
+        inline.drawing_object_non_visual_properties.name.as_deref(),
+        Some("Picture 1")
+    );
 }
 
 #[test]
 fn the_image_joins_the_folder_of_the_part_and_the_old_part_stays_until_it_is_removed() {
-    let mut docx = docx_with(&pagare_run(), Some("r"));
+    let mut docx = with_old_image();
     let main = docx.main_document_part().clone();
-    let mut run = run_of(&docx);
+    let mut run = run_holding(old_picture());
     docx.set_picture(&main, &mut run, &wide_png(), PictureFit::Width)
         .unwrap();
-    let element = written(&docx, &run);
-    let embed = values(&element, "blip", "embed");
+    let embed = first_embed(&run);
     let related = docx.package().related(Some(&main)).unwrap();
-    let new = related.iter().find(|part| part.id == embed[0]).unwrap();
+    let new = related.iter().find(|part| part.id == embed).unwrap();
     assert_ne!(new.id, "rId7");
     assert_eq!(new.content_type.as_deref(), Some("image/png"));
     assert_eq!(new.target, Target::Part(name("/word/media/image2.png")));
@@ -205,39 +283,37 @@ fn the_image_joins_the_folder_of_the_part_and_the_old_part_stays_until_it_is_rem
 
 #[test]
 fn frame_changes_no_extent() {
-    let mut docx = docx_with(&pagare_run(), Some("r"));
+    let mut docx = with_old_image();
     let main = docx.main_document_part().clone();
-    let mut run = run_of(&docx);
+    let mut run = run_holding(old_picture());
     docx.set_picture(&main, &mut run, &wide_png(), PictureFit::Frame)
         .unwrap();
-    let element = written(&docx, &run);
-    assert_eq!(values(&element, "extent", "cy"), ["2000000"]);
-    assert_eq!(values(&element, "ext", "cy"), ["2000000"]);
-    assert_ne!(values(&element, "blip", "embed"), ["rId7"]);
+    let size = ("3135822".to_owned(), "2000000".to_owned());
+    assert_eq!(sizes(inlines(&run).first().unwrap()), [size.clone(), size]);
+    assert_ne!(first_embed(&run), "rId7");
 }
 
 #[test]
 fn an_image_without_a_pixel_size_leaves_the_frame() {
-    let mut docx = docx_with(&pagare_run(), Some("r"));
+    let mut docx = with_old_image();
     let main = docx.main_document_part().clone();
-    let mut run = run_of(&docx);
+    let mut run = run_holding(old_picture());
     let emf = Image::with_format(ImageFormat::Emf, b"emf".to_vec());
     docx.set_picture(&main, &mut run, &emf, PictureFit::Width)
         .unwrap();
-    let element = written(&docx, &run);
-    assert_eq!(values(&element, "extent", "cy"), ["2000000"]);
-    assert_eq!(values(&element, "ext", "cy"), ["2000000"]);
+    let size = ("3135822".to_owned(), "2000000".to_owned());
+    assert_eq!(sizes(inlines(&run).first().unwrap()), [size.clone(), size]);
     let related = docx.package().related(Some(&main)).unwrap();
-    let embed = values(&element, "blip", "embed");
-    let new = related.iter().find(|part| part.id == embed[0]).unwrap();
+    let embed = first_embed(&run);
+    let new = related.iter().find(|part| part.id == embed).unwrap();
     assert_eq!(new.target, Target::Part(name("/word/media/image1.emf")));
 }
 
 #[test]
 fn a_run_without_a_drawing_is_a_read_error_and_adds_nothing() {
-    let mut docx = docx_with(&pagare_run(), Some("r"));
+    let mut docx = with_old_image();
     let main = docx.main_document_part().clone();
-    let mut run = TextRun::read(&Element::new(QName::prefixed("w", "r", W)));
+    let mut run = TextRun::default();
     let before = related_ids(&docx);
     let error = docx
         .set_picture(&main, &mut run, &wide_png(), PictureFit::Width)
@@ -306,22 +382,26 @@ fn a_blip_naming_nothing_gets_r_declared_where_no_prefix_is_in_scope() {
 
 #[test]
 fn only_the_first_picture_of_the_run_changes() {
-    let markup = format!(
-        "<w:r>{}{}</w:r>",
-        drawing(&named("r")),
-        drawing(&named("r"))
-    );
-    let mut docx = docx_with(&markup, Some("r"));
+    let mut docx = with_old_image();
     let main = docx.main_document_part().clone();
-    let mut run = run_of(&docx);
+    let mut run = run_holding(old_picture());
+    run.content
+        .push(TextRunContent::DrawingMLObject(old_picture()));
     docx.set_picture(&main, &mut run, &wide_png(), PictureFit::Width)
         .unwrap();
-    let element = written(&docx, &run);
-    let embeds = values(&element, "blip", "embed");
+    let pictures = inlines(&run);
+    let embeds: Vec<Option<String>> = pictures
+        .iter()
+        .map(|inline| blip_of(inline).embed.clone())
+        .collect();
     assert_eq!(embeds.len(), 2);
-    assert_ne!(embeds[0], "rId7");
-    assert_eq!(embeds[1], "rId7");
-    assert_eq!(values(&element, "extent", "cy"), ["1045274", "2000000"]);
+    assert_ne!(embeds[0].as_deref(), Some("rId7"));
+    assert_eq!(embeds[1].as_deref(), Some("rId7"));
+    let heights: Vec<String> = pictures
+        .iter()
+        .map(|inline| sizes(inline)[0].1.clone())
+        .collect();
+    assert_eq!(heights, ["1045274", "2000000"]);
 }
 
 /// The inline drawing a picture of [`inline_picture`] holds.
