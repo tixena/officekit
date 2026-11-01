@@ -465,3 +465,39 @@ fn a_relative_folder_gives_paths_spelled_from_it() {
     let rebuilt = entries(bytes_of(&system, "/work/back/a/Report.docx"));
     assert!(rebuilt.iter().any(|(name, _)| name == "word/document.xml"));
 }
+
+#[test]
+fn up_writes_a_package_with_no_folder_items_and_the_content_types_first() {
+    let system = system_with("/in/d.docx");
+    ready_now(down(
+        &system,
+        Path::new("/in"),
+        Path::new("/out"),
+        options(false),
+    ))
+    .unwrap();
+    ready_now(up(
+        &system,
+        Path::new("/out"),
+        Path::new("/back"),
+        up_options(false),
+    ))
+    .unwrap();
+
+    let mut archive = ZipArchive::new(Cursor::new(bytes_of(&system, "/back/d.docx"))).unwrap();
+    let names: Vec<String> = (0..archive.len())
+        .map(|index| {
+            archive
+                .by_index(index)
+                .unwrap()
+                .name()
+                .unwrap()
+                .into_owned()
+        })
+        .collect();
+    assert_eq!(
+        names.first().map(String::as_str),
+        Some("[Content_Types].xml")
+    );
+    assert!(names.iter().all(|name| !name.ends_with('/')), "{names:?}");
+}

@@ -27,6 +27,7 @@ use regex::Regex;
 use serde_json::{Value, json};
 
 use officekit_xml::element::XmlError;
+use officekit_xml::packaging::archive::zip_files;
 use officekit_xml::parse::parse;
 use officekit_xml::write::{Layout, WriteOptions};
 
@@ -498,5 +499,5 @@ where
             .await
             .map_err(io_error(&target))?;
     }
-    archive.to_zip_vec(root).await.map_err(io_error(folder))
+    zip_files(&archive).map_err(|error| io_error(folder)(io::Error::other(error)))
 }

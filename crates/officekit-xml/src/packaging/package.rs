@@ -11,6 +11,7 @@ use crate::conformance::ConformanceClass;
 use crate::element::{Attribute, Document, Element, NamespaceDeclaration, Node};
 use crate::mc::MarkupCompatibility;
 use crate::name::QName;
+use crate::packaging::archive;
 use crate::parse::parse;
 use crate::ready::ready_now;
 use crate::stream::reader::PartReader;
@@ -939,13 +940,13 @@ impl Package {
             .collect())
     }
 
-    /// Zip the memory filesystem.
+    /// Zip the memory filesystem, in the form [`archive::zip_files`] writes.
     ///
     /// # Errors
     ///
     /// [`PackageError::Io`] when the archive cannot be built.
     pub fn to_bytes(&self) -> Result<Vec<u8>, PackageError> {
-        Ok(ready_now(self.fs.to_zip_vec(Path::new("/")))?)
+        archive::zip_files(&self.fs)
     }
 
     /// Parse the part called `name`, its markup compatibility left as written.

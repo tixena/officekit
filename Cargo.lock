@@ -668,7 +668,7 @@ dependencies = [
  "officekit-markup",
  "officekit-strict",
  "officekit-xml",
- "os-shim 0.3.0",
+ "os-shim 0.4.0",
  "quick-xml",
  "regex",
  "rkyv",
@@ -689,7 +689,7 @@ dependencies = [
  "officekit",
  "officekit-markdown",
  "officekit-xml",
- "os-shim 0.3.0",
+ "os-shim 0.4.0",
  "serde_json",
  "tempfile",
 ]
@@ -704,7 +704,7 @@ dependencies = [
  "officekit",
  "officekit-markup",
  "officekit-xml",
- "os-shim 0.3.0",
+ "os-shim 0.4.0",
  "png",
  "resvg",
  "thiserror",
@@ -756,7 +756,7 @@ dependencies = [
  "indexmap",
  "libc",
  "log",
- "os-shim 0.3.0",
+ "os-shim 0.4.0",
  "quick-xml",
  "regex",
  "regex-automata",
@@ -794,9 +794,9 @@ dependencies = [
 
 [[package]]
 name = "os-shim"
-version = "0.3.0"
+version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3f3a9f54dbf8c7dad7f65ec94a6b31ca852451c9b5bfbad286fb71fc688670ce"
+checksum = "ed815c47685d125278ec30a06c71ed9271d6363ed21459221d395c4ace431144"
 dependencies = [
  "futures-io",
  "ignore",
@@ -1604,7 +1604,7 @@ dependencies = [
  "officekit",
  "officekit-markup",
  "officekit-xml",
- "os-shim 0.3.0",
+ "os-shim 0.4.0",
  "quick-xml",
  "serde_json",
  "sha2",

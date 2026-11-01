@@ -105,6 +105,7 @@
 
 extern crate alloc;
 
+pub mod archive;
 pub mod content_types;
 pub mod error;
 pub mod image;
