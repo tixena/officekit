@@ -330,6 +330,21 @@ fn a_strict_file_accepts_a_chart_s_percentage_in_either_form() {
 }
 
 #[test]
+fn a_strict_file_accepts_the_thousandths_office_writes_on_a_fixed_percentage() {
+    let alpha = |value: &str| {
+        element(&format!(
+            "<a:alpha xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" val=\"{value}\"/>"
+        ))
+    };
+    let name = "a:CT_PositiveFixedPercentage/a:alpha";
+    assert_eq!(codes(&alpha("46.001%"), name, true).len(), 0);
+    assert_eq!(
+        codes(&alpha("101%"), name, true),
+        [ErrorCode::InvalidAttributeValue]
+    );
+}
+
+#[test]
 fn a_strict_file_checks_a_value_against_its_strict_type() {
     let alpha = |value: &str| {
         element(&format!(

@@ -17,6 +17,19 @@ use crate::generate_schema::model::{Facets, Name, SchemaSet, SimpleType, TypeRef
 #[cfg(test)]
 mod tests;
 
+/// The Strict patterns Office writes past, and what they take instead: any number of decimal
+/// places, as Word 15 writes on `a:alpha` and `PowerPoint` 15 on `p:restoredLeft`.
+const WIDER_PATTERNS: [(&str, &str); 2] = [
+    (
+        r"((100)|([0-9][0-9]?))(\.[0-9][0-9]?)?%",
+        r"((100)|([0-9][0-9]?))(\.[0-9]+)?%",
+    ),
+    (
+        r"-?((100)|([0-9][0-9]?))(\.[0-9][0-9]?)?%",
+        r"-?((100)|([0-9][0-9]?))(\.[0-9]+)?%",
+    ),
+];
+
 /// By Transitional complex type, each attribute both classes declare whose
 /// Strict type is not its Transitional type, or takes a universal measure,
 /// with the Strict type's checks.
@@ -403,7 +416,13 @@ fn restriction(
             facets
                 .patterns
                 .iter()
-                .map(|pattern| facet(Some(pattern.clone()), None, None, None))
+                .map(|pattern| {
+                    let wider = WIDER_PATTERNS
+                        .iter()
+                        .find(|(written, _)| written == pattern)
+                        .map_or(pattern.as_str(), |(_, wider)| wider);
+                    facet(Some(wider.to_owned()), None, None, None)
+                })
                 .collect(),
         );
     }

@@ -14,7 +14,7 @@ const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 
 const PERCENT: &str = "-?[0-9]+(\\.[0-9]+)?%";
 
-const POSITIVE_FIXED: &str = "((100)|([0-9][0-9]?))(\\.[0-9][0-9]?)?%";
+const POSITIVE_FIXED: &str = "((100)|([0-9][0-9]?))(\\.[0-9]+)?%";
 
 const MEASURE: &str = "-?[0-9]+(\\.[0-9]+)?(mm|cm|in|pt|pc|pi)";
 

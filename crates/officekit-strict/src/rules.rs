@@ -207,7 +207,7 @@
 //   1ccb90bdf037137918dfb7ed2e243c2377dec75cfcc65808a1b8904f084302e2  inputs/open-xml-sdk/data/schemas/www_w3_org_XML_1998_namespace.json
 //   faa0956ead6fa73f20a3ea60eec008389b059f72512d83029c27109a69a87e0f  crates/xtask/data/enum_names.toml
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
-//   87ddaec0674d7f7ef85efce241d09b933d6607874efbe843d734cf21c47b9617  crates/xtask/data/strict_correspondences.toml
+//   826c3dd8910b449bfeb890e69497433d022b1a31561d1821960683e824941ef2  crates/xtask/data/strict_correspondences.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 // The tables of the Strict walk, generated from the comparison of the two
@@ -230,12 +230,12 @@ static ATTRIBUTES: &[(Tag, Tag, AttributeRule)] = &[
     (
         (NS_A, "alpha"),
         (None, "val"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_A, "alphaBiLevel"),
         (None, "thresh"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_A, "alphaMod"),
@@ -250,17 +250,17 @@ static ATTRIBUTES: &[(Tag, Tag, AttributeRule)] = &[
     (
         (NS_A, "alphaOff"),
         (None, "val"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_A, "alphaRepl"),
         (None, "a"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_A, "biLevel"),
         (None, "thresh"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_A, "blue"),
@@ -360,17 +360,17 @@ static ATTRIBUTES: &[(Tag, Tag, AttributeRule)] = &[
     (
         (NS_A, "gs"),
         (None, "pos"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_A, "hsl"),
         (None, "lum"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_A, "hsl"),
         (None, "sat"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_A, "hslClr"),
@@ -390,12 +390,12 @@ static ATTRIBUTES: &[(Tag, Tag, AttributeRule)] = &[
     (
         (NS_A, "lum"),
         (None, "bright"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_A, "lum"),
         (None, "contrast"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_A, "lum"),
@@ -460,22 +460,22 @@ static ATTRIBUTES: &[(Tag, Tag, AttributeRule)] = &[
     (
         (NS_A, "reflection"),
         (None, "endA"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_A, "reflection"),
         (None, "endPos"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_A, "reflection"),
         (None, "stA"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_A, "reflection"),
         (None, "stPos"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_A, "reflection"),
@@ -535,7 +535,7 @@ static ATTRIBUTES: &[(Tag, Tag, AttributeRule)] = &[
     (
         (NS_A, "shade"),
         (None, "val"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_A, "spcPct"),
@@ -595,12 +595,12 @@ static ATTRIBUTES: &[(Tag, Tag, AttributeRule)] = &[
     (
         (NS_A, "tint"),
         (None, "amt"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_A, "tint"),
         (None, "val"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_A, "xfrm"),
@@ -820,17 +820,17 @@ static ATTRIBUTES: &[(Tag, Tag, AttributeRule)] = &[
     (
         (NS_P, "cMediaNode"),
         (None, "vol"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_P, "cTn"),
         (None, "accel"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_P, "cTn"),
         (None, "decel"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_P, "cTn"),
@@ -855,12 +855,12 @@ static ATTRIBUTES: &[(Tag, Tag, AttributeRule)] = &[
     (
         (NS_P, "hsl"),
         (None, "l"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_P, "hsl"),
         (None, "s"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_P, "modifyVerifier"),
@@ -945,32 +945,32 @@ static ATTRIBUTES: &[(Tag, Tag, AttributeRule)] = &[
     (
         (NS_P, "restoredLeft"),
         (None, "sz"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_P, "restoredTop"),
         (None, "sz"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_P, "rgb"),
         (None, "b"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_P, "rgb"),
         (None, "g"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_P, "rgb"),
         (None, "r"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_P, "tav"),
         (None, "tm"),
-        AttributeRule::Values(PERCENT_IN_1000THS_TO_2_PLACES),
+        AttributeRule::Values(PERCENT_IN_1000THS),
     ),
     (
         (NS_P, "tmPct"),
@@ -3819,11 +3819,6 @@ static REFUSED_NAMESPACES: &[(NamespaceId, &[&str])] = &[
 
 static PERCENT_IN_1000THS: &[Spelling] = &[Spelling::Percent {
     decimals: None,
-    per_percent: 1000,
-}];
-
-static PERCENT_IN_1000THS_TO_2_PLACES: &[Spelling] = &[Spelling::Percent {
-    decimals: Some(2),
     per_percent: 1000,
 }];
 

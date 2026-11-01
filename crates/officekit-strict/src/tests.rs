@@ -238,7 +238,7 @@ fn a_bare_percentage_takes_its_unit() {
     );
     assert_eq!(
         strict::<Alpha>("<a:alpha xmlns:a=\"{a}\" val=\"12345\"/>"),
-        format!("<a:alpha xmlns:a=\"{A_STRICT}\" val=\"12.35%\"/>")
+        format!("<a:alpha xmlns:a=\"{A_STRICT}\" val=\"12.345%\"/>")
     );
     assert_eq!(
         strict::<Alpha>("<a:alpha xmlns:a=\"{a}\" val=\"25%\"/>"),
