@@ -1,6 +1,11 @@
-use std::io::{Cursor, Read as _, Write as _};
+use std::io::{Cursor, Read as _};
 use std::path::{Path, PathBuf};
 
+use officekit_markup::wordprocessing::{
+    BlockContent, Document, DocumentBody, Paragraph, ParagraphContent, Text, TextRun,
+    TextRunContent,
+};
+use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::parse::parse;
 use officekit_xml::ready::ready_now;
 use officekit_xml::write::{Layout, WriteOptions};
@@ -8,28 +13,41 @@ use os_shim::System as _;
 use os_shim::bucket::Condition;
 use os_shim::mock::MemorySystem;
 use zip::ZipArchive;
-use zip::write::{SimpleFileOptions, ZipWriter};
 
 use super::{DEFAULT_SUFFIX, DownOptions, FolderError, UpOptions, down, format, up};
+use crate::docx::Docx;
+use crate::parts::kinds::WordprocessingKind;
 
-const RELS: &[u8] = b"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\"><Relationship Id=\"rId1\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument\" Target=\"word/document.xml\"/></Relationships>";
-const DOCUMENT: &[u8] = b"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body><w:p><w:r><w:t xml:space=\"preserve\"> kept </w:t></w:r></w:p></w:body></w:document>";
-const TYPES: &[u8] = b"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<Types xmlns=\"http://schemas.openxmlformats.org/package/2006/content-types\"><Default Extension=\"rels\" ContentType=\"application/vnd.openxmlformats-package.relationships+xml\"/></Types>";
 const BINARY: &[u8] = &[0, 159, 146, 150, 10, 32, 32, 60];
 
+/// A Word file whose one paragraph holds " kept " with its spaces preserved, and an opaque
+/// media part.
+fn typed_docx() -> Docx {
+    let mut characters = Text::default();
+    characters.space = Some("preserve".to_owned());
+    characters.value = " kept ".to_owned();
+    let mut run = TextRun::default();
+    run.content = vec![TextRunContent::Text(characters)];
+    let mut paragraph = Paragraph::default();
+    paragraph.content = vec![ParagraphContent::TextRun(run)];
+    let mut body = DocumentBody::default();
+    body.content = vec![BlockContent::Paragraph(paragraph)];
+    let mut document = Document::default();
+    document.body = Some(Box::new(body));
+    let mut file = Docx::new(WordprocessingKind::Document).unwrap();
+    file.set_main_document(&document).unwrap();
+    file.package_mut()
+        .set_part_bytes(
+            &PartName::new("/word/media/image1.bin").unwrap(),
+            "application/octet-stream",
+            BINARY,
+        )
+        .unwrap();
+    file
+}
+
 fn docx() -> Vec<u8> {
-    let mut writer = ZipWriter::new(Cursor::new(Vec::new()));
-    let options = SimpleFileOptions::default();
-    for (name, bytes) in [
-        ("[Content_Types].xml", TYPES),
-        ("_rels/.rels", RELS),
-        ("word/document.xml", DOCUMENT),
-        ("word/media/image1.bin", BINARY),
-    ] {
-        writer.start_file(name, options).unwrap();
-        writer.write_all(bytes).unwrap();
-    }
-    writer.finish().unwrap().into_inner()
+    typed_docx().package().to_bytes().unwrap()
 }
 
 fn system_with(path: &str) -> MemorySystem {
@@ -100,18 +118,19 @@ fn down_writes_every_entry_and_info() {
 
     let folder = PathBuf::from("/out/solicitud_cr\u{e9}dito_(1)_docx");
     assert_eq!(written, vec![folder.clone()]);
-    assert_eq!(
-        ready_now(system.read_to_string(&folder.join("_rels/.rels")))
-            .unwrap()
-            .as_bytes(),
-        RELS
-    );
-    assert_eq!(
-        ready_now(system.read_to_string(&folder.join("word/document.xml")))
-            .unwrap()
-            .as_bytes(),
-        DOCUMENT
-    );
+    let file = typed_docx();
+    for (entry, part) in [
+        ("_rels/.rels", "/_rels/.rels"),
+        ("word/document.xml", "/word/document.xml"),
+    ] {
+        assert_eq!(
+            ready_now(system.read(&folder.join(entry))).unwrap().0,
+            file.package()
+                .part_bytes(&PartName::new(part).unwrap())
+                .unwrap(),
+            "{entry}"
+        );
+    }
     assert_eq!(
         ready_now(system.read_to_string(&folder.join("info.json"))).unwrap(),
         "{\n  \"name\": \"Solicitud Cr\u{e9}dito (1).DOCX\"\n}"
