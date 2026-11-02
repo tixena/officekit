@@ -15,8 +15,7 @@ const NAMESPACES: &str = r#"[
   {"Prefix": "xml", "Uri": "http://www.w3.org/XML/1998/namespace"}
 ]"#;
 
-/// Excerpt of `sml.xsd`: `x:t` and `x:v` have the simple type it writes them with. Added for
-/// the tests: `x:plain` and `x:lone`, of the same type.
+/// `x:t` and `x:v` of the simple type `sml.xsd` gives them, and `x:plain` and `x:lone` of the same.
 const SML: &str = r#"<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"
   elementFormDefault="qualified"
@@ -30,9 +29,8 @@ const SML: &str = r#"<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   <xsd:element name="lone" type="ST_Xstring"/>
 </xsd:schema>"#;
 
-/// Excerpt of SDK 3.5.1's data: `x:CT_Xstring/` and two elements derived from it, as the data
-/// writes them. Added for the tests: `x:plain`, derived from a base with no attribute, and
-/// `x:lone`, derived from a base the data has no row for.
+/// `x:t` and `x:v` derive from a base with `xml:space`, `x:plain` from a base with no attribute,
+/// and `x:lone` from a base the data has no row for.
 const SML_DATA: &str = r#"{"TargetNamespace": "http://schemas.openxmlformats.org/spreadsheetml/2006/main", "Types": [
   {"Name": "x:CT_Xstring/", "IsLeafText": true, "Attributes": [{"QName": "xml:space", "Type": "EnumValue<DocumentFormat.OpenXml.SpaceProcessingModeValues>"}]},
   {"Name": "x:CT_Xstring/x:t", "IsDerived": true, "IsLeafText": true},
@@ -42,7 +40,6 @@ const SML_DATA: &str = r#"{"TargetNamespace": "http://schemas.openxmlformats.org
   {"Name": "x:CT_Lone/x:lone", "IsDerived": true, "IsLeafText": true}
 ]}"#;
 
-/// The catalog of [`SML`] and [`SML_DATA`].
 fn sml_catalog() -> Catalog {
     let system = MemorySystem::new()
         .with_file("/data/namespaces.json", NAMESPACES.as_bytes())
@@ -72,7 +69,6 @@ fn sml_catalog() -> Catalog {
     .unwrap()
 }
 
-/// The attributes of the struct of `tag`, which holds text.
 fn text_node_attributes(catalog: &Catalog, tag: &str) -> Vec<Attribute> {
     let node = catalog
         .nodes
