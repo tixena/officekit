@@ -3,6 +3,8 @@ use std::path::Path;
 
 use crate::parts::kinds::SpreadsheetKind;
 #[cfg(feature = "strict")]
+use crate::parts::part_root::{PartRoot, store};
+#[cfg(feature = "strict")]
 use crate::parts::pivot_table_cache_definition;
 use crate::parts::worksheet;
 #[cfg(feature = "strict")]
@@ -10,74 +12,42 @@ use crate::parts::{pivot_table, table_definition};
 #[cfg(all(feature = "strict", feature = "transitional"))]
 use crate::transitional::dates::SaveWarning;
 #[cfg(feature = "strict")]
-use officekit_markup::spreadsheet::WorkbookProperties;
+use officekit_markup::spreadsheet::{
+    AutoFilterColumn, AutoFilterColumnContent, AutoFilterSettings, DynamicFilter, FileSharing,
+    Filters, NumberFormatId, PivotCacheDefinition, PivotCacheField,
+    PivotCacheSourceDescriptionContent, PivotCacheType, PivotFilterTypes, PivotTableAdvancedFilter,
+    PivotTableDefinition, StDynamicFilterType, Table, TableColumn, UnsignedShortHex,
+    WorkbookProperties, WorksheetPivotCacheSource,
+};
+#[cfg(all(feature = "strict", feature = "transitional"))]
+use officekit_markup::spreadsheet::{Cell, CellType, CellValue, Row};
 #[cfg(feature = "strict")]
 use officekit_strict::iso_date_time;
 use officekit_xml::conformance::ConformanceClass;
-#[cfg(feature = "strict")]
-use officekit_xml::element::Element;
 #[cfg(feature = "transitional")]
 use officekit_xml::mc::MarkupCompatibility;
-#[cfg(feature = "strict")]
-use officekit_xml::name::Namespace;
 #[cfg(feature = "transitional")]
 use officekit_xml::name::OfficeVersion;
 #[cfg(any(feature = "strict", feature = "transitional"))]
 use officekit_xml::packaging::package::OpenOptions;
-#[cfg(feature = "strict")]
-use officekit_xml::packaging::package::Package;
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::{RelationshipType, Target};
-#[cfg(feature = "strict")]
-use officekit_xml::parse::parse;
 #[cfg(feature = "transitional")]
 use officekit_xml::ready::ready_now;
+#[cfg(feature = "strict")]
+use officekit_xml::write::WriteOptions;
 #[cfg(feature = "transitional")]
 use os_shim::mock::MemorySystem;
 
 use super::Xlsx;
 
-/// A Transitional worksheet whose filter keeps the dates up to a serial date-time.
-#[cfg(feature = "strict")]
-const FILTERED_SHEET: &str = "<worksheet xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\"><sheetData/><autoFilter ref=\"A1:A3\"><filterColumn colId=\"0\"><dynamicFilter type=\"aboveAverage\" val=\"46000\" maxVal=\"46309\"/></filterColumn></autoFilter></worksheet>";
-
-/// A Transitional table definition whose filter keeps the dates up to a serial date-time.
-#[cfg(feature = "strict")]
-const FILTERED_TABLE: &str = "<table xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\" id=\"1\" name=\"T\" displayName=\"T\" ref=\"A1:A3\"><autoFilter ref=\"A1:A3\"><filterColumn colId=\"0\"><dynamicFilter type=\"aboveAverage\" val=\"46000\" maxVal=\"46309\"/></filterColumn></autoFilter><tableColumns count=\"1\"><tableColumn id=\"1\" name=\"Day\"/></tableColumns></table>";
-
-/// A Transitional pivot table whose advanced filter keeps the dates up to a serial date-time.
-#[cfg(feature = "strict")]
-const FILTERED_PIVOT_TABLE: &str = "<pivotTableDefinition xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\" name=\"P\" cacheId=\"1\" dataCaption=\"Values\"><location ref=\"A1:B3\" firstHeaderRow=\"1\" firstDataRow=\"1\" firstDataCol=\"1\"/><filters count=\"1\"><filter fld=\"0\" type=\"dateBetween\" id=\"1\"><autoFilter ref=\"A1:A3\"><filterColumn colId=\"0\"><dynamicFilter type=\"aboveAverage\" val=\"46000\" maxVal=\"46309\"/></filterColumn></autoFilter></filter></filters></pivotTableDefinition>";
-
-/// A Transitional pivot cache definition refreshed at a serial date-time.
-#[cfg(feature = "strict")]
-const PIVOT_CACHE: &str = "<pivotCacheDefinition xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\" refreshedDate=\"46309\" createdVersion=\"8\" recordCount=\"0\"><cacheSource type=\"worksheet\"><worksheetSource ref=\"A1:A3\" sheet=\"Sheet1\"/></cacheSource><cacheFields count=\"1\"><cacheField name=\"Day\" numFmtId=\"0\"><sharedItems/></cacheField></cacheFields></pivotCacheDefinition>";
-
-/// A Strict worksheet holding one date cell.
-#[cfg(all(feature = "strict", feature = "transitional"))]
-const DATED_SHEET: &str = "<worksheet xmlns=\"http://purl.oclc.org/ooxml/spreadsheetml/main\"><sheetData><row r=\"1\"><c r=\"A1\" s=\"1\" t=\"d\"><v>2024-03-01T12:00:00</v></c></row></sheetData></worksheet>";
-
 fn name(text: &str) -> PartName {
     PartName::new(text).unwrap()
 }
 
-/// The first element below `element`, itself included, named `local`.
+/// Turn `workbookPr/@date1904` of `xlsx`'s workbook to `date1904` when it names a value.
 #[cfg(feature = "strict")]
-fn find<'tree>(element: &'tree Element, local: &str) -> Option<&'tree Element> {
-    if element.name.local == local {
-        return Some(element);
-    }
-    element
-        .child_elements()
-        .find_map(|child| find(child, local))
-}
-
-/// A new workbook, given `workbookPr/@date1904` when `date1904` names a value, its sheet
-/// filtered by `maxVal` and a pivot cache definition refreshed at `refreshedDate`, saved Strict:
-/// the dynamic filter and the pivot cache definition as Strict writes them.
-#[cfg(feature = "strict")]
-fn saved_strict(date1904: Option<&str>) -> (Element, Element) {
-    let mut xlsx = Xlsx::new(SpreadsheetKind::Workbook).unwrap();
+fn date_system(xlsx: &mut Xlsx, date1904: Option<&str>) {
     if let Some(value) = date1904 {
         let mut workbook = xlsx.workbook().unwrap();
         let mut properties = WorkbookProperties::default();
@@ -85,25 +55,161 @@ fn saved_strict(date1904: Option<&str>) -> (Element, Element) {
         workbook.properties = Some(Box::new(properties));
         xlsx.set_workbook(&workbook).unwrap();
     }
+}
+
+/// Store `root` as the part `part` of `xlsx`, in the file's class.
+#[cfg(feature = "strict")]
+fn put<R>(xlsx: &mut Xlsx, part: &PartName, content_type: &str, root: &R)
+where
+    R: PartRoot,
+{
+    let class = xlsx.conformance_class();
+    store(
+        xlsx.package_mut(),
+        part,
+        content_type,
+        root,
+        class,
+        WriteOptions::default(),
+    )
+    .unwrap();
+}
+
+/// A filter of the cells A1 to A3 whose first column keeps the dates up to the serial date-time
+/// 46309.
+#[cfg(feature = "strict")]
+fn filtered() -> AutoFilterSettings {
+    let mut dynamic = DynamicFilter::default();
+    dynamic.r#type = Some(StDynamicFilterType::from("aboveAverage".to_owned()));
+    dynamic.val = Some("46000".to_owned());
+    dynamic.max_val = Some("46309".to_owned());
+    let mut column = AutoFilterColumn::default();
+    column.col_id = Some("0".to_owned());
+    column.content = Some(Box::new(AutoFilterColumnContent::DynamicFilter(dynamic)));
+    let mut settings = AutoFilterSettings::default();
+    settings.r#ref = Some("A1:A3".to_owned());
+    settings.autofilter_column = vec![column];
+    settings
+}
+
+/// The dynamic filter of the first column `settings` filters.
+#[cfg(feature = "strict")]
+fn dynamic_filter(settings: &AutoFilterSettings) -> Option<&DynamicFilter> {
+    let content = settings.autofilter_column.first()?.content.as_deref()?;
+    if let AutoFilterColumnContent::DynamicFilter(found) = content {
+        Some(found)
+    } else {
+        None
+    }
+}
+
+/// The maximum `filter` keeps, as an ISO date-time and as a serial date-time.
+#[cfg(feature = "strict")]
+fn maximum(filter: &DynamicFilter) -> (Option<&str>, Option<&str>) {
+    (filter.max_val_iso.as_deref(), filter.max_val.as_deref())
+}
+
+/// A table of one column over A1 to A3, filtered.
+#[cfg(feature = "strict")]
+fn filtered_table() -> Table {
+    let mut column = TableColumn::default();
+    column.id = Some("1".to_owned());
+    column.name = Some("Day".to_owned());
+    let mut table = Table::default();
+    table.id = Some("1".to_owned());
+    table.name = Some("T".to_owned());
+    table.display_name = Some("T".to_owned());
+    table.r#ref = Some("A1:A3".to_owned());
+    table.autofilter_settings = Some(Box::new(filtered()));
+    table.columns.count = Some("1".to_owned());
+    table.columns.table_column = vec![column];
+    table
+}
+
+/// A pivot table whose one advanced filter is filtered.
+#[cfg(feature = "strict")]
+fn filtered_pivot_table() -> PivotTableDefinition {
+    let mut filter = PivotTableAdvancedFilter::default();
+    filter.fld = Some("0".to_owned());
+    filter.r#type = Some(PivotFilterTypes::from("dateBetween".to_owned()));
+    filter.id = Some("1".to_owned());
+    *filter.autofilter_settings = filtered();
+    let mut filters = Filters::default();
+    filters.count = Some("1".to_owned());
+    filters.pivottable_advanced_filter = vec![filter];
+    let mut definition = PivotTableDefinition::default();
+    definition.name = Some("P".to_owned());
+    definition.cache_id = Some("1".to_owned());
+    definition.data_caption = Some("Values".to_owned());
+    let location = &mut definition.pivottable_location;
+    location.r#ref = Some("A1:B3".to_owned());
+    location.first_header_row = Some("1".to_owned());
+    location.first_data_row = Some("1".to_owned());
+    location.first_data_col = Some("1".to_owned());
+    definition.filters = Some(Box::new(filters));
+    definition
+}
+
+/// A pivot cache of one field over Sheet1's A1 to A3, refreshed at the serial date-time 46309.
+#[cfg(feature = "strict")]
+fn pivot_cache() -> PivotCacheDefinition {
+    let mut source = WorksheetPivotCacheSource::default();
+    source.r#ref = Some("A1:A3".to_owned());
+    source.sheet = Some("Sheet1".to_owned());
+    let mut field = PivotCacheField::default();
+    field.name = Some("Day".to_owned());
+    field.num_fmt_id = Some(NumberFormatId::from("0".to_owned()));
+    field.shared_items = Some(Box::default());
+    let mut definition = PivotCacheDefinition::default();
+    definition.refreshed_date = Some("46309".to_owned());
+    definition.created_version = Some("8".to_owned());
+    definition.record_count = Some("0".to_owned());
+    let description = &mut definition.pivotcache_source_description;
+    description.r#type = Some(PivotCacheType::from("worksheet".to_owned()));
+    description.content = Some(Box::new(
+        PivotCacheSourceDescriptionContent::WorksheetPivotCacheSource(source),
+    ));
+    definition.pivotcache_fields.count = Some("1".to_owned());
+    definition.pivotcache_fields.pivotcache_field = vec![field];
+    definition
+}
+
+/// A new workbook, given `workbookPr/@date1904` when `date1904` names a value, its sheet
+/// filtered and a pivot cache definition refreshed at a serial date-time, saved Strict: the
+/// dynamic filter and the pivot cache definition read back from the Strict file.
+#[cfg(feature = "strict")]
+fn saved_strict(date1904: Option<&str>) -> (DynamicFilter, PivotCacheDefinition) {
+    let mut xlsx = Xlsx::new(SpreadsheetKind::Workbook).unwrap();
+    date_system(&mut xlsx, date1904);
     let sheet = name("/xl/worksheets/sheet1.xml");
+    let mut filtered_sheet =
+        worksheet::load(xlsx.package(), &sheet, OpenOptions::default()).unwrap();
+    filtered_sheet.autofilter_settings = Some(Box::new(filtered()));
+    put(&mut xlsx, &sheet, worksheet::CONTENT_TYPE, &filtered_sheet);
+    let cache = name("/xl/pivotCache/pivotCacheDefinition1.xml");
+    put(
+        &mut xlsx,
+        &cache,
+        pivot_table_cache_definition::CONTENT_TYPE,
+        &pivot_cache(),
+    );
     let main = xlsx.workbook_part().clone();
     xlsx.package_mut()
-        .set_part_bytes(&sheet, worksheet::CONTENT_TYPE, FILTERED_SHEET.as_bytes())
-        .unwrap();
-    let (cache, _) = xlsx
-        .package_mut()
-        .add_part(
+        .relate(
             Some(&main),
+            &cache,
             RelationshipType::PIVOT_CACHE_DEFINITION.transitional,
-            pivot_table_cache_definition::CONTENT_TYPE,
-            "/xl/pivotCache/pivotCacheDefinition{}.xml",
-            PIVOT_CACHE.as_bytes(),
         )
         .unwrap();
-    let strict = Package::from_bytes(xlsx.to_bytes_strict().unwrap()).unwrap();
-    let filter = parse(&strict.part_bytes(&sheet).unwrap()).unwrap().root;
-    let definition = parse(&strict.part_bytes(&cache).unwrap()).unwrap().root;
-    (find(&filter, "dynamicFilter").unwrap().clone(), definition)
+    let strict = Xlsx::from_bytes(xlsx.to_bytes_strict().unwrap(), OpenOptions::default()).unwrap();
+    let saved = worksheet::load(strict.package(), &sheet, OpenOptions::default()).unwrap();
+    let filter = dynamic_filter(saved.autofilter_settings.as_deref().unwrap())
+        .unwrap()
+        .clone();
+    let definition =
+        pivot_table_cache_definition::load(strict.package(), &cache, OpenOptions::default())
+            .unwrap();
+    (filter, definition)
 }
 
 /// A Strict workbook whose sheet holds one date cell, its `workbookPr/@date1904` on when
@@ -116,20 +222,21 @@ fn strict_dated(date1904: bool) -> Xlsx {
         .unwrap();
     let mut xlsx = Xlsx::from_bytes(strict, OpenOptions::default()).unwrap();
     assert_eq!(xlsx.conformance_class(), ConformanceClass::Strict);
-    if date1904 {
-        let mut workbook = xlsx.workbook().unwrap();
-        let mut properties = WorkbookProperties::default();
-        properties.date1904 = Some("1".to_owned());
-        workbook.properties = Some(Box::new(properties));
-        xlsx.set_workbook(&workbook).unwrap();
-    }
-    xlsx.package_mut()
-        .set_part_bytes(
-            &name("/xl/worksheets/sheet1.xml"),
-            worksheet::CONTENT_TYPE,
-            DATED_SHEET.as_bytes(),
-        )
-        .unwrap();
+    date_system(&mut xlsx, date1904.then_some("1"));
+    let mut value = CellValue::default();
+    value.value = "2024-03-01T12:00:00".to_owned();
+    let mut cell = Cell::default();
+    cell.r = Some("A1".to_owned());
+    cell.s = Some("1".to_owned());
+    cell.t = Some(CellType::from("d".to_owned()));
+    cell.value = Some(Box::new(value));
+    let mut row = Row::default();
+    row.r = Some("1".to_owned());
+    row.cell = vec![cell];
+    let sheet = name("/xl/worksheets/sheet1.xml");
+    let mut dated = worksheet::load(xlsx.package(), &sheet, OpenOptions::default()).unwrap();
+    dated.sheet_data.row = vec![row];
+    put(&mut xlsx, &sheet, worksheet::CONTENT_TYPE, &dated);
     xlsx
 }
 
@@ -218,12 +325,25 @@ fn a_strict_date_cell_saved_transitional_becomes_a_number_cell_with_one_warning(
             transitional.conformance_class(),
             ConformanceClass::Transitional
         );
+        let saved =
+            worksheet::load(transitional.package(), &sheet, OpenOptions::default()).unwrap();
+        let cells: Vec<_> = saved
+            .sheet_data
+            .row
+            .iter()
+            .flat_map(|row| &row.cell)
+            .map(|cell| {
+                (
+                    cell.r.as_deref(),
+                    cell.s.as_deref(),
+                    cell.t.as_ref().map(|kind| kind.0.as_str()),
+                    cell.value.as_ref().map(|held| held.value.as_str()),
+                )
+            })
+            .collect();
+        assert_eq!(cells, [(Some("A1"), Some("1"), None, Some(serial))]);
         let written =
             String::from_utf8(transitional.package().part_bytes(&sheet).unwrap()).unwrap();
-        assert!(
-            written.contains(&format!("<c r=\"A1\" s=\"1\"><v>{serial}</v></c>")),
-            "{written}"
-        );
         assert!(
             written.contains("http://schemas.openxmlformats.org/spreadsheetml/2006/main"),
             "{written}"
@@ -238,18 +358,13 @@ fn a_strict_save_writes_iso_date_times_in_the_workbook_date_system() {
         let (filter, definition) = saved_strict(date1904);
         let iso = iso_date_time("46309", system_1904).unwrap();
         assert_eq!(
-            definition.attribute(&Namespace::None, "refreshedDateIso"),
-            Some(iso.as_str())
+            (
+                definition.refreshed_date_iso.as_deref(),
+                definition.refreshed_date.as_deref()
+            ),
+            (Some(iso.as_str()), None)
         );
-        assert_eq!(
-            definition.attribute(&Namespace::None, "refreshedDate"),
-            None
-        );
-        assert_eq!(
-            filter.attribute(&Namespace::None, "maxValIso"),
-            Some(iso.as_str())
-        );
-        assert_eq!(filter.attribute(&Namespace::None, "maxVal"), None);
+        assert_eq!(maximum(&filter), (Some(iso.as_str()), None));
     }
     assert_ne!(iso_date_time("46309", true), iso_date_time("46309", false));
 }
@@ -259,45 +374,54 @@ fn a_strict_save_writes_iso_date_times_in_the_workbook_date_system() {
 fn a_strict_save_writes_table_and_pivot_table_filter_dates_in_the_workbook_date_system() {
     for (date1904, system_1904) in [(Some("1"), true), (None, false)] {
         let mut xlsx = Xlsx::new(SpreadsheetKind::Workbook).unwrap();
-        if let Some(value) = date1904 {
-            let mut workbook = xlsx.workbook().unwrap();
-            let mut properties = WorkbookProperties::default();
-            properties.date1904 = Some(value.to_owned());
-            workbook.properties = Some(Box::new(properties));
-            xlsx.set_workbook(&workbook).unwrap();
-        }
+        date_system(&mut xlsx, date1904);
         let sheet = name("/xl/worksheets/sheet1.xml");
-        let (table, _) = xlsx
-            .package_mut()
-            .add_part(
-                Some(&sheet),
-                RelationshipType::TABLE.transitional,
-                table_definition::CONTENT_TYPE,
-                "/xl/tables/table{}.xml",
-                FILTERED_TABLE.as_bytes(),
-            )
-            .unwrap();
-        let (pivot, _) = xlsx
-            .package_mut()
-            .add_part(
-                Some(&sheet),
-                RelationshipType::PIVOT_TABLE.transitional,
-                pivot_table::CONTENT_TYPE,
-                "/xl/pivotTables/pivotTable{}.xml",
-                FILTERED_PIVOT_TABLE.as_bytes(),
-            )
-            .unwrap();
-        let strict = Package::from_bytes(xlsx.to_bytes_strict().unwrap()).unwrap();
+        let table = name("/xl/tables/table1.xml");
+        put(
+            &mut xlsx,
+            &table,
+            table_definition::CONTENT_TYPE,
+            &filtered_table(),
+        );
+        let pivot = name("/xl/pivotTables/pivotTable1.xml");
+        put(
+            &mut xlsx,
+            &pivot,
+            pivot_table::CONTENT_TYPE,
+            &filtered_pivot_table(),
+        );
+        for (part, relationship_type) in [
+            (&table, RelationshipType::TABLE),
+            (&pivot, RelationshipType::PIVOT_TABLE),
+        ] {
+            xlsx.package_mut()
+                .relate(Some(&sheet), part, relationship_type.transitional)
+                .unwrap();
+        }
+        let strict =
+            Xlsx::from_bytes(xlsx.to_bytes_strict().unwrap(), OpenOptions::default()).unwrap();
         let iso = iso_date_time("46309", system_1904).unwrap();
-        for part in [table, pivot] {
-            let root = parse(&strict.part_bytes(&part).unwrap()).unwrap().root;
-            let filter = find(&root, "dynamicFilter").unwrap();
+        let saved_table =
+            table_definition::load(strict.package(), &table, OpenOptions::default()).unwrap();
+        let saved_pivot =
+            pivot_table::load(strict.package(), &pivot, OpenOptions::default()).unwrap();
+        let pivot_filters = saved_pivot.filters.as_deref().unwrap();
+        for (part, settings) in [
+            (&table, saved_table.autofilter_settings.as_deref().unwrap()),
+            (
+                &pivot,
+                &*pivot_filters
+                    .pivottable_advanced_filter
+                    .first()
+                    .unwrap()
+                    .autofilter_settings,
+            ),
+        ] {
             assert_eq!(
-                filter.attribute(&Namespace::None, "maxValIso"),
-                Some(iso.as_str()),
+                maximum(dynamic_filter(settings).unwrap()),
+                (Some(iso.as_str()), None),
                 "{part:?}"
             );
-            assert_eq!(filter.attribute(&Namespace::None, "maxVal"), None);
         }
     }
 }
@@ -327,20 +451,16 @@ fn a_new_workbook_saved_strict_reopens_strict() {
 fn strict_refusals_names_a_workbook_s_legacy_password() {
     let mut xlsx = Xlsx::new(SpreadsheetKind::Workbook).unwrap();
     assert_eq!(xlsx.strict_refusals().unwrap(), []);
-    let part = name("/xl/workbook.xml");
-    let content_type = xlsx.package().content_type(&part).unwrap().to_owned();
-    xlsx.package_mut()
-        .set_part_bytes(
-            &part,
-            &content_type,
-            b"<workbook xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\"><fileSharing reservationPassword=\"ABCD\"/><sheets/></workbook>",
-        )
-        .unwrap();
+    let mut sharing = FileSharing::default();
+    sharing.reservation_password = Some(UnsignedShortHex::from("ABCD".to_owned()));
+    let mut workbook = xlsx.workbook().unwrap();
+    workbook.file_sharing = Some(Box::new(sharing));
+    xlsx.set_workbook(&workbook).unwrap();
     assert_eq!(
         xlsx.strict_refusals().unwrap(),
         [crate::StrictRefusal {
             count: 1,
-            part,
+            part: name("/xl/workbook.xml"),
             prefix: "x",
             tag: "fileSharing/@reservationPassword",
         }]
