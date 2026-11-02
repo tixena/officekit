@@ -2,7 +2,8 @@
 //! of neighbouring runs that render the same becomes one run.
 //!
 //! Two runs merge when both hold only their properties element and text
-//! content, and the run properties that count are equal. Between them may sit
+//! content, and the run properties that count are equal; two `x:r` also need
+//! their texts to join, as an `x:r` holds one `x:t`. Between them may sit
 //! white space and `w:proofErr`, and under [`Comments::Remove`] the nodes of a
 //! Word comment; every other node ends the stretch. The merged run is the
 //! first run followed by the content of the others, adjacent text elements
@@ -394,6 +395,25 @@ fn join(
     true
 }
 
+/// Whether merging `next` into `first` adds no `x:t`, as an `x:r` holds one: [`absorb`] joins each
+/// `x:t` of `next` to the last child of `first`. `around` is whether `xml:space="preserve"` is in
+/// force around both.
+fn texts_join(first: &Element, next: &Element, around: bool) -> bool {
+    let joins = |text: &Element, preserves: bool| {
+        is(text, "x", "t") && text_of(text, Kind::Spreadsheet, preserves).is_some()
+    };
+    let first_preserves = preserves_space(first, around);
+    let next_preserves = preserves_space(next, around);
+    first
+        .child_elements()
+        .last()
+        .is_some_and(|last| joins(last, first_preserves))
+        && next
+            .child_elements()
+            .filter(|child| !is(child, "x", "rPr"))
+            .all(|text| joins(text, next_preserves))
+}
+
 /// Give a text element moved out of a run the `xml:space` it had there,
 /// `preserved`, when the run it moves into would read its white space
 /// otherwise.
@@ -475,6 +495,7 @@ fn merge_children(
                     && kind
                         .counted()
                         .equal(properties(first_run, kind), properties(&run, kind))
+                    && (kind != Kind::Spreadsheet || texts_join(first_run, &run, preserve))
                 {
                     absorb(first_run, run, kind, preserve);
                     between.clear();

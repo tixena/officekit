@@ -30,6 +30,8 @@ use officekit_markup::wordprocessing::{
 };
 use officekit_strict::traversal::Visit;
 use officekit_xml::element::{Document as XmlDocument, Element};
+#[cfg(feature = "transitional")]
+use officekit_xml::name::OfficeVersion;
 use officekit_xml::packaging::package::Package;
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::RelationshipType;
@@ -37,6 +39,16 @@ use officekit_xml::parse::parse;
 use officekit_xml::write::{Layout, Scope, WriteOptions};
 
 use super::{Comments, Compaction, PartCompaction, compact_package, compact_tree};
+#[cfg(feature = "transitional")]
+use crate::parts::kinds::SpreadsheetKind;
+#[cfg(feature = "transitional")]
+use crate::parts::shared_string_table;
+#[cfg(feature = "transitional")]
+use crate::validation::error::ValidationError;
+#[cfg(feature = "transitional")]
+use crate::validation::validator::Validator;
+#[cfg(feature = "transitional")]
+use crate::xlsx::Xlsx;
 
 const A: &str = r#"xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main""#;
 const MC: &str = r#"xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006""#;
@@ -731,6 +743,104 @@ fn spreadsheetml_rich_text_runs_merge_and_pivot_records_do_not() {
     );
 }
 
+#[test]
+fn spreadsheetml_runs_whose_white_space_cannot_join_stay_two_runs() {
+    for values in [["one", " two"], ["one ", "two"]] {
+        let xml = rich_text_xml(&values);
+        assert_eq!(compacted(&xml, Comments::Keep), (xml, merged(0)));
+    }
+}
+
+#[test]
+fn spreadsheetml_runs_whose_texts_join_become_one() {
+    let (compact, done) = compacted(&rich_text_xml(&["a", "b"]), Comments::Keep);
+    assert_eq!(done, merged(1));
+    assert_eq!(
+        runs_in(&spreadsheet_read::shared_string_table(
+            &parse(compact.as_bytes()).unwrap().root
+        )),
+        [r#""ab""#]
+    );
+}
+
+#[test]
+fn a_spreadsheetml_run_left_apart_starts_a_new_stretch() {
+    let cases: [(&[&str], usize, &str); 3] = [
+        (&["a", " b", "c"], 0, r#""a" " b" "c""#),
+        (&[" a", "b", "c"], 1, r#"" a" "bc""#),
+        (&["a", "b", " c", "d", "e"], 2, r#""ab" " c" "de""#),
+    ];
+    for (values, count, expected) in cases {
+        let (compact, done) = compacted(&rich_text_xml(values), Comments::Keep);
+        assert_eq!(done, merged(count));
+        assert!(!compact.contains("</x:t><x:t"), "{compact}");
+        assert_eq!(
+            runs_in(&spreadsheet_read::shared_string_table(
+                &parse(compact.as_bytes()).unwrap().root
+            )),
+            [expected]
+        );
+    }
+}
+
+#[test]
+fn a_spreadsheetml_run_already_holding_two_texts_takes_no_third() {
+    let cases = [
+        (
+            ["one", " two", "three"],
+            "</x:r><x:r><x:t> two",
+            "<x:t> two",
+        ),
+        (
+            ["one", "two", " three"],
+            "</x:r><x:r><x:t> three",
+            "<x:t> three",
+        ),
+    ];
+    for (values, apart, together) in cases {
+        let xml = rich_text_xml(&values).replacen(apart, together, 1);
+        assert!(xml.contains("</x:t><x:t> "), "{xml}");
+        assert_eq!(compacted(&xml, Comments::Keep), (xml, merged(0)));
+    }
+}
+
+#[cfg(feature = "transitional")]
+#[test]
+fn the_validator_passes_runs_left_apart_and_refuses_two_texts_in_one_run() {
+    let mut book = Xlsx::new(SpreadsheetKind::Workbook).unwrap();
+    let main = book.workbook_part().clone();
+    let part = name("/xl/sharedStrings.xml");
+    let held = book.package_mut();
+    shared_string_table::store_transitional(held, &part, &rich_text_table(&["one", " two"]), KEEP)
+        .unwrap();
+    held.relate(
+        Some(&main),
+        &part,
+        RelationshipType::SHARED_STRINGS.transitional,
+    )
+    .unwrap();
+    let validator = Validator::new(OfficeVersion::Microsoft365);
+    assert_eq!(
+        compact_package(held, Comments::Keep).unwrap(),
+        Compaction::default()
+    );
+    assert_eq!(validator.validate(held), []);
+    let two_texts = text(held, part.as_str()).replacen("</x:t></x:r><x:r><x:t>", "</x:t><x:t>", 1);
+    held.set_part_bytes(&part, SHARED_STRINGS, two_texts.as_bytes())
+        .unwrap();
+    let reported: Vec<String> = validator
+        .validate(held)
+        .iter()
+        .map(ValidationError::line)
+        .collect();
+    assert_eq!(
+        reported,
+        [
+            "/xl/sharedStrings.xml /x:sst[1]/x:si[1]/x:r[1]: schema UnexpectedChild: the element holds x:t where it does not expect it"
+        ]
+    );
+}
+
 pub(super) fn name(text: &str) -> PartName {
     PartName::new(text).unwrap()
 }
@@ -839,17 +949,40 @@ fn fragmented_drawing() -> TextParagraphs {
     paragraph
 }
 
-/// `SpreadsheetML` rich text runs of `a` and `b`, which merge.
-fn fragmented_rich_text() -> Vec<RichTextRun> {
-    ["a", "b"]
-        .map(|value| {
+/// `SpreadsheetML` rich text runs of `values`, with no properties and no `xml:space`.
+fn rich_text_runs(values: &[&str]) -> Vec<RichTextRun> {
+    values
+        .iter()
+        .map(|&value| {
             let mut text = SpreadsheetText::default();
             text.value = value.to_owned();
             let mut found = RichTextRun::default();
             found.text = Box::new(text);
             found
         })
-        .into()
+        .collect()
+}
+
+/// `SpreadsheetML` rich text runs of `a` and `b`, which merge.
+fn fragmented_rich_text() -> Vec<RichTextRun> {
+    rich_text_runs(&["a", "b"])
+}
+
+/// A shared string table whose one item holds the rich text runs of `values`.
+fn rich_text_table(values: &[&str]) -> SharedStringTable {
+    let mut item = StringItem::default();
+    item.rich_text_run = rich_text_runs(values);
+    let mut shared = SharedStringTable::default();
+    shared.string_item = vec![item];
+    shared
+}
+
+/// The part text of [`rich_text_table`].
+fn rich_text_xml(values: &[&str]) -> String {
+    xml_of(&spreadsheet_write::shared_string_table(
+        &rich_text_table(values),
+        &mut Scope::default(),
+    ))
 }
 
 /// A `SpreadsheetML` rich text run of `text`, bold and of size 11.
