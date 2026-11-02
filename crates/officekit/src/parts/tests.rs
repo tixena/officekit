@@ -1,12 +1,17 @@
 #[cfg(feature = "transitional")]
 use core::fmt::Debug;
 
+#[cfg(feature = "strict")]
+use officekit_markup::wordprocessing::Header;
+#[cfg(any(feature = "strict", feature = "transitional"))]
+use officekit_markup::wordprocessing::{
+    BlockContent, Document, DocumentBody, HorizontalAlignmentType, Paragraph, ParagraphAlignment,
+    ParagraphContent, ParagraphProperties, Text, TextRun, TextRunContent,
+};
 use officekit_xml::conformance::ConformanceClass;
 #[cfg(feature = "strict")]
 use officekit_xml::error::WriteError;
 use officekit_xml::packaging::error::PackageError;
-#[cfg(feature = "transitional")]
-use officekit_xml::packaging::package::DECLARATION;
 use officekit_xml::packaging::package::{OpenOptions, Package};
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::RelationshipType;
@@ -25,7 +30,7 @@ use super::{bytes_of, model_of};
 use crate::parts::part_root::PartRoot;
 
 const DOCUMENT: &str = "<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\"><w:body><w:p><w:pPr><w:jc w:val=\"left\"/></w:pPr><w:r><w:rPr><w:b/></w:rPr><w:t xml:space=\"preserve\">Hello </w:t></w:r></w:p><w:sectPr><w:headerReference r:id=\"rId1\" w:type=\"default\"/><w:pgSz w:w=\"12240\" w:h=\"15840\"/></w:sectPr></w:body></w:document>";
-#[cfg(any(feature = "strict", feature = "transitional"))]
+#[cfg(feature = "transitional")]
 const HEADER: &str = "<w:hdr xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:p><w:r><w:t>Top</w:t></w:r></w:p></w:hdr>";
 #[cfg(feature = "transitional")]
 const FOOTER: &str = "<w:ftr xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:p><w:pPr><w:jc w:val=\"center\"/></w:pPr></w:p></w:ftr>";
@@ -57,6 +62,35 @@ fn package_with(part: &PartName, content_type: &str, xml: &str) -> Package {
         .set_part_bytes(part, content_type, xml.as_bytes())
         .unwrap();
     package
+}
+
+/// A paragraph holding one run of `value`, justified `alignment` when given.
+#[cfg(any(feature = "strict", feature = "transitional"))]
+fn paragraph(alignment: Option<&str>, value: &str) -> Paragraph {
+    let mut characters = Text::default();
+    characters.value = value.to_owned();
+    let mut run = TextRun::default();
+    run.content = vec![TextRunContent::Text(characters)];
+    let mut paragraph = Paragraph::default();
+    paragraph.content = vec![ParagraphContent::TextRun(run)];
+    if let Some(justified) = alignment {
+        let mut justification = ParagraphAlignment::default();
+        justification.val = Some(HorizontalAlignmentType::from(justified.to_owned()));
+        let mut properties = ParagraphProperties::default();
+        properties.paragraph_alignment = Some(Box::new(justification));
+        paragraph.properties = Some(Box::new(properties));
+    }
+    paragraph
+}
+
+/// A main document whose body holds one left-justified paragraph of "Hello".
+#[cfg(any(feature = "strict", feature = "transitional"))]
+fn document() -> Document {
+    let mut body = DocumentBody::default();
+    body.content = vec![BlockContent::Paragraph(paragraph(Some("left"), "Hello"))];
+    let mut document = Document::default();
+    document.body = Some(Box::new(body));
+    document
 }
 
 /// Load the part, store it back, and check that the part holds the same
@@ -132,8 +166,7 @@ fn additional_characteristics_and_bibliography_store_back_the_same_tree() {
 #[test]
 fn a_new_part_takes_the_modules_first_content_type() {
     let source = name("/word/document.xml");
-    let package = package_with(&source, main_document::CONTENT_TYPES[1], DOCUMENT);
-    let root = main_document::load(&package, &source, OpenOptions::default()).unwrap();
+    let root = document();
     let mut target = Package::new();
     main_document::store_transitional(&mut target, &source, &root, WriteOptions::default())
         .unwrap();
@@ -141,7 +174,16 @@ fn a_new_part_takes_the_modules_first_content_type() {
         target.content_type(&source),
         Some("application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml")
     );
-    let mut kept = package_with(&source, main_document::CONTENT_TYPES[1], DOCUMENT);
+    let bytes = bytes_of(
+        &source,
+        &PartModel::MainDocument(root.clone()),
+        ConformanceClass::Transitional,
+        WriteOptions::default(),
+    )
+    .unwrap();
+    let mut kept = Package::new();
+    kept.set_part_bytes(&source, main_document::CONTENT_TYPES[1], &bytes)
+        .unwrap();
     main_document::store_transitional(&mut kept, &source, &root, WriteOptions::default()).unwrap();
     assert_eq!(
         kept.content_type(&source),
@@ -152,9 +194,10 @@ fn a_new_part_takes_the_modules_first_content_type() {
 #[cfg(feature = "strict")]
 #[test]
 fn a_strict_store_writes_the_strict_namespace_and_reads_the_same_content_back() {
+    let mut root = Header::default();
+    root.content = vec![BlockContent::Paragraph(paragraph(None, "Top"))];
     let part = name("/word/header1.xml");
-    let mut package = package_with(&part, header::CONTENT_TYPE, HEADER);
-    let root = header::load(&package, &part, OpenOptions::default()).unwrap();
+    let mut package = Package::new();
     header::store_strict(&mut package, &part, &root, WriteOptions::default()).unwrap();
     let text = String::from_utf8(package.part_bytes(&part).unwrap()).unwrap();
     assert!(
@@ -169,9 +212,8 @@ fn a_strict_store_writes_the_strict_namespace_and_reads_the_same_content_back() 
 #[test]
 fn a_strict_store_of_the_main_document_converts_the_content_and_marks_it_strict() {
     let part = name("/word/document.xml");
-    let mut package = package_with(&part, main_document::CONTENT_TYPES[0], DOCUMENT);
-    let root = main_document::load(&package, &part, OpenOptions::default()).unwrap();
-    main_document::store_strict(&mut package, &part, &root, WriteOptions::default()).unwrap();
+    let mut package = Package::new();
+    main_document::store_strict(&mut package, &part, &document(), WriteOptions::default()).unwrap();
     let text = String::from_utf8(package.part_bytes(&part).unwrap()).unwrap();
     assert!(text.contains("w:val=\"start\""), "{text}");
     assert!(!text.contains("w:val=\"left\""), "{text}");
@@ -237,19 +279,15 @@ fn model_of_reads_a_part_through_the_module_its_content_type_names() {
 #[test]
 fn bytes_of_writes_a_typed_root_as_the_store_of_its_module_does() {
     let part = name("/word/document.xml");
-    let xml = format!("<?{DECLARATION}?>\r\n{DOCUMENT}");
-    let mut package = package_with(&part, main_document::CONTENT_TYPES[0], &xml);
-    let model = model_of(&package, &part, OpenOptions::default())
-        .unwrap()
-        .unwrap();
+    let root = document();
     let bytes = bytes_of(
         &part,
-        &model,
+        &PartModel::MainDocument(root.clone()),
         ConformanceClass::Transitional,
         WriteOptions::default(),
     )
     .unwrap();
-    let root = main_document::load(&package, &part, OpenOptions::default()).unwrap();
+    let mut package = Package::new();
     main_document::store_transitional(&mut package, &part, &root, WriteOptions::default()).unwrap();
     assert_eq!(
         String::from_utf8(bytes).unwrap(),
