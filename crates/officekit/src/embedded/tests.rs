@@ -1,8 +1,13 @@
-use crate::parts::kinds::SpreadsheetKind;
-use crate::parts::worksheet::CONTENT_TYPE as WORKSHEET;
+use crate::docx::Docx;
+use crate::parts::kinds::{SpreadsheetKind, WordprocessingKind};
+use crate::parts::part_root::store;
+use crate::parts::worksheet;
+use officekit_markup::spreadsheet::{Cell, CellValue, Row, Worksheet};
 use officekit_xml::packaging::package::{OpenOptions, Package};
 use officekit_xml::packaging::part_name::PartName;
+#[cfg(feature = "transitional")]
 use officekit_xml::packaging::relationship::RelationshipType;
+use officekit_xml::write::WriteOptions;
 
 #[cfg(feature = "transitional")]
 use super::Embedded;
@@ -14,8 +19,6 @@ use super::store_transitional;
 use crate::xlsx::Xlsx;
 
 const WORKBOOK_TYPE: &str = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-const MAIN: &str =
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml";
 const SHEET: &str = "/xl/worksheets/sheet1.xml";
 
 fn name(text: &str) -> PartName {
@@ -31,28 +34,68 @@ fn workbook_of(embedded: Embedded) -> Xlsx {
     .unwrap()
 }
 
-fn sheet_with(b2: u32, c2: u32) -> Vec<u8> {
-    format!(
-        r#"<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetData><row r="2"><c r="B2"><v>{b2}</v></c><c r="C2"><v>{c2}</v></c></row></sheetData></worksheet>"#
-    )
-    .into_bytes()
+fn value_cell(reference: &str, value: u32) -> Cell {
+    let mut holding = CellValue::default();
+    holding.value = value.to_string();
+    let mut cell = Cell::default();
+    cell.r = Some(reference.to_owned());
+    cell.value = Some(Box::new(holding));
+    cell
 }
 
-/// A document holding a workbook at `/word/embeddings/Microsoft_Excel_Worksheet.xlsx`.
+/// A worksheet whose row 2 holds `b2` in B2 and `c2` in C2.
+fn sheet_with(b2: u32, c2: u32) -> Worksheet {
+    let mut row = Row::default();
+    row.cell = vec![value_cell("B2", b2), value_cell("C2", c2)];
+    row.r = Some("2".to_owned());
+    let mut sheet = Worksheet::default();
+    sheet.sheet_data.row = vec![row];
+    sheet
+}
+
+/// Store `sheet` as the first worksheet of `workbook`, in the workbook's class.
+fn set_sheet(workbook: &mut Xlsx, sheet: &Worksheet) {
+    let class = workbook.conformance_class();
+    store(
+        workbook.package_mut(),
+        &name(SHEET),
+        worksheet::CONTENT_TYPE,
+        sheet,
+        class,
+        WriteOptions::default(),
+    )
+    .unwrap();
+}
+
+/// The reference and value of each cell of `workbook`'s first worksheet.
+#[cfg(feature = "transitional")]
+fn values(workbook: &Xlsx) -> Vec<(String, String)> {
+    worksheet::load(workbook.package(), &name(SHEET), OpenOptions::default())
+        .unwrap()
+        .sheet_data
+        .row
+        .iter()
+        .flat_map(|row| &row.cell)
+        .map(|cell| {
+            (
+                cell.r.clone().unwrap_or_default(),
+                cell.value
+                    .as_ref()
+                    .map_or_else(String::new, |held| held.value.clone()),
+            )
+        })
+        .collect()
+}
+
+/// A Word document holding a workbook at `/word/embeddings/Microsoft_Excel_Worksheet.xlsx`.
 fn document_with_workbook() -> (Package, PartName) {
-    let mut package = Package::new();
-    let main = name("/word/document.xml");
-    package
-        .set_part_bytes(&main, MAIN, b"<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body/></w:document>")
-        .unwrap();
-    package
-        .relate(None, &main, RelationshipType::OFFICE_DOCUMENT.transitional)
+    let mut package = Docx::new(WordprocessingKind::Document)
+        .unwrap()
+        .package()
+        .duplicate()
         .unwrap();
     let mut workbook = Xlsx::new(SpreadsheetKind::Workbook).unwrap();
-    workbook
-        .package_mut()
-        .set_part_bytes(&name(SHEET), WORKSHEET, &sheet_with(1, 2))
-        .unwrap();
+    set_sheet(&mut workbook, &sheet_with(1, 2));
     let embedded = name("/word/embeddings/Microsoft_Excel_Worksheet.xlsx");
     package
         .set_part_bytes(
@@ -70,8 +113,11 @@ fn the_workbook_of_a_document_opens_as_xlsx() {
     let (package, part) = document_with_workbook();
     let workbook = workbook_of(open(&package, &part, OpenOptions::default()).unwrap());
     assert_eq!(
-        workbook.package().part_bytes(&name(SHEET)).unwrap(),
-        sheet_with(1, 2)
+        values(&workbook),
+        [
+            ("B2".to_owned(), "1".to_owned()),
+            ("C2".to_owned(), "2".to_owned())
+        ]
     );
 }
 
@@ -80,18 +126,18 @@ fn the_workbook_of_a_document_opens_as_xlsx() {
 fn a_workbook_edit_writes_back_with_its_edit() {
     let (mut package, part) = document_with_workbook();
     let mut workbook = workbook_of(open(&package, &part, OpenOptions::default()).unwrap());
-    workbook
-        .package_mut()
-        .set_part_bytes(&name(SHEET), WORKSHEET, &sheet_with(42, 17))
-        .unwrap();
+    set_sheet(&mut workbook, &sheet_with(42, 17));
     let warnings = store_transitional(&mut package, &part, &Embedded::Xlsx(workbook)).unwrap();
     assert_eq!(warnings, []);
     assert_eq!(package.content_type(&part), Some(WORKBOOK_TYPE));
     let reopened = Package::from_bytes(package.to_bytes().unwrap()).unwrap();
     let again = workbook_of(open(&reopened, &part, OpenOptions::default()).unwrap());
     assert_eq!(
-        again.package().part_bytes(&name(SHEET)).unwrap(),
-        sheet_with(42, 17)
+        values(&again),
+        [
+            ("B2".to_owned(), "42".to_owned()),
+            ("C2".to_owned(), "17".to_owned())
+        ]
     );
 }
 
