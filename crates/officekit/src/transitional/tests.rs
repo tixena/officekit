@@ -1,5 +1,11 @@
-use officekit_markup::spreadsheet::{Cell, Worksheet};
-use officekit_markup::wordprocessing::{Document, Paragraph, TextRun};
+use officekit_markup::common_simple_types::{
+    DocumentConformanceClassValue, DocumentConformanceClassValueMember,
+};
+use officekit_markup::spreadsheet::{Cell, CellType, CellValue, Row, Worksheet};
+use officekit_markup::wordprocessing::{
+    BlockContent, Document, DocumentBody, HorizontalAlignmentType, Paragraph, ParagraphAlignment,
+    ParagraphContent, ParagraphProperties, Text, TextRun, TextRunContent,
+};
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::{Document as Part, Element};
 use officekit_xml::error::{ReadError, WriteError};
@@ -26,35 +32,64 @@ fn element(text: &str) -> Element {
     parse(text.as_bytes()).unwrap().root
 }
 
-/// The refusal writing the node `text` holds in Transitional gives; `None`
-/// when the write succeeds.
-fn refusal<T>(text: &str) -> Option<&'static str>
+/// The node `text` holds, written in Transitional and serialized compact.
+fn transitional<T>(text: &str) -> String
 where
     T: Transitional,
 {
-    if let Err(WriteError::NotInClass { class, tag }) = T::from_transitional(&element(text))
-        .unwrap()
-        .to_transitional()
-    {
+    written(&T::from_transitional(&element(text)).unwrap())
+}
+
+/// The refusal writing `node` in Transitional gives; `None` when the write succeeds.
+fn refused<T>(node: &T) -> Option<&'static str>
+where
+    T: Transitional,
+{
+    if let Err(WriteError::NotInClass { class, tag }) = node.to_transitional() {
         (class == ConformanceClass::Transitional).then_some(tag)
     } else {
         None
     }
 }
 
-/// The node `text` holds, written in Transitional and serialized compact.
-fn transitional<T>(text: &str) -> String
+/// `node`, written in Transitional and serialized compact.
+fn written<T>(node: &T) -> String
 where
     T: Transitional,
 {
-    let root = T::from_transitional(&element(text))
-        .unwrap()
-        .to_transitional()
-        .unwrap();
-    let mut part = Part::new("", root);
+    let mut part = Part::new("", node.to_transitional().unwrap());
     part.declaration = None;
     part.prolog.clear();
     String::from_utf8(part.to_xml(KEEP)).unwrap()
+}
+
+/// A paragraph justified `alignment`, holding the run of `value` when given.
+fn justified(alignment: &str, value: Option<&str>) -> Paragraph {
+    let mut justification = ParagraphAlignment::default();
+    justification.val = Some(HorizontalAlignmentType::from(alignment.to_owned()));
+    let mut properties = ParagraphProperties::default();
+    properties.paragraph_alignment = Some(Box::new(justification));
+    let mut paragraph = Paragraph::default();
+    paragraph.properties = Some(Box::new(properties));
+    if let Some(text) = value {
+        let mut characters = Text::default();
+        characters.value = text.to_owned();
+        let mut run = TextRun::default();
+        run.content = vec![TextRunContent::Text(characters)];
+        paragraph.content = vec![ParagraphContent::TextRun(run)];
+    }
+    paragraph
+}
+
+/// A cell `A1` of the type `kind` holding `value`.
+fn typed_cell(kind: &str, value: &str) -> Cell {
+    let mut held = CellValue::default();
+    held.value = value.to_owned();
+    let mut cell = Cell::default();
+    cell.r = Some("A1".to_owned());
+    cell.t = Some(CellType::from(kind.to_owned()));
+    cell.value = Some(Box::new(held));
+    cell
 }
 
 #[test]
@@ -75,18 +110,25 @@ fn a_strict_and_a_transitional_paragraph_read_into_equal_structs() {
 
 #[test]
 fn a_transitional_paragraph_writes_back_unchanged() {
-    let text = format!(
-        "<w:p xmlns:w=\"{W}\"><w:pPr><w:jc w:val=\"left\"/></w:pPr><w:r><w:t>Hello</w:t></w:r></w:p>"
+    assert_eq!(
+        written(&justified("left", Some("Hello"))),
+        format!(
+            "<w:p xmlns:w=\"{W}\"><w:pPr><w:jc w:val=\"left\"/></w:pPr><w:r><w:t>Hello</w:t></w:r></w:p>"
+        )
     );
-    assert_eq!(transitional::<Paragraph>(&text), text);
 }
 
 #[test]
 fn a_strict_document_writes_the_transitional_uri_and_no_strict_conformance() {
+    let mut body = DocumentBody::default();
+    body.content = vec![BlockContent::Paragraph(justified("start", None))];
+    let mut document = Document::default();
+    document.body = Some(Box::new(body));
+    document.conformance = Some(DocumentConformanceClassValue::from(
+        DocumentConformanceClassValueMember::Strict,
+    ));
     assert_eq!(
-        transitional::<Document>(&format!(
-            "<w:document xmlns:w=\"{W_STRICT}\" w:conformance=\"strict\"><w:body><w:p><w:pPr><w:jc w:val=\"start\"/></w:pPr></w:p></w:body></w:document>"
-        )),
+        written(&document),
         format!(
             "<w:document xmlns:w=\"{W}\"><w:body><w:p><w:pPr><w:jc w:val=\"start\"/></w:pPr></w:p></w:body></w:document>"
         )
@@ -103,21 +145,17 @@ fn reading_another_tag_is_an_error() {
 
 #[test]
 fn a_date_cell_has_no_transitional_form() {
-    let cell =
-        format!("<x:c xmlns:x=\"{X}\" r=\"A1\" t=\"d\"><x:v>2026-10-14T00:00:00</x:v></x:c>");
-    assert_eq!(refusal::<Cell>(&cell), Some("c/@t"));
     assert_eq!(
-        refusal::<Worksheet>(&format!(
-            "<x:worksheet xmlns:x=\"{X}\"><x:sheetData><x:row r=\"1\"><x:c r=\"A1\" t=\"d\"><x:v>2026-10-14</x:v></x:c></x:row></x:sheetData></x:worksheet>"
-        )),
+        refused(&typed_cell("d", "2026-10-14T00:00:00")),
         Some("c/@t")
     );
-    assert_eq!(
-        refusal::<Cell>(&format!(
-            "<x:c xmlns:x=\"{X}\" r=\"A1\" t=\"n\"><x:v>46309</x:v></x:c>"
-        )),
-        None
-    );
+    let mut row = Row::default();
+    row.cell = vec![typed_cell("d", "2026-10-14")];
+    row.r = Some("1".to_owned());
+    let mut sheet = Worksheet::default();
+    sheet.sheet_data.row = vec![row];
+    assert_eq!(refused(&sheet), Some("c/@t"));
+    assert_eq!(refused(&typed_cell("n", "46309")), None);
 }
 
 /// A run holding `payload` in a Strict drawing, in the form Word's own Strict file has.

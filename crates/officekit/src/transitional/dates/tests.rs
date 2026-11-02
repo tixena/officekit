@@ -1,17 +1,11 @@
 use officekit_markup::spreadsheet::{Cell, CellType, CellValue, Row, Worksheet};
 use officekit_xml::conformance::ConformanceClass;
-use officekit_xml::element::Document as Part;
 use officekit_xml::error::WriteError;
 use officekit_xml::packaging::part_name::PartName;
-use officekit_xml::parse::parse;
 use officekit_xml::values::DateTime;
-use officekit_xml::write::{Layout, WriteOptions};
 
 use super::{SaveWarning, cell_date, convert_date_cells, serial_date_time};
 use crate::transitional::Transitional as _;
-
-const X: &str = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
-const KEEP: WriteOptions = WriteOptions::new(Layout::Compact, false);
 
 /// The serial date-time of a date cell's text, as Rust writes the `f64`.
 fn serial(text: &str, date1904: bool) -> Option<String> {
@@ -25,11 +19,46 @@ fn rounded(text: &str, date1904: bool, places: usize) -> Option<String> {
     serial_date_time(&date, date1904).map(|value| format!("{value:.places$}"))
 }
 
-fn worksheet(cells: &str) -> Worksheet {
-    let text = format!(
-        "<x:worksheet xmlns:x=\"{X}\"><x:sheetData><x:row r=\"1\">{cells}</x:row></x:sheetData></x:worksheet>"
-    );
-    Worksheet::from_transitional(&parse(text.as_bytes()).unwrap().root).unwrap()
+/// A cell of `reference`, of the style `style` and the type `kind` when given, holding `value`.
+fn cell(reference: &str, style: Option<&str>, kind: Option<&str>, value: &str) -> Cell {
+    let mut held = CellValue::default();
+    held.value = value.to_owned();
+    let mut cell = Cell::default();
+    cell.r = Some(reference.to_owned());
+    cell.s = style.map(str::to_owned);
+    cell.t = kind.map(|found| CellType::from(found.to_owned()));
+    cell.value = Some(Box::new(held));
+    cell
+}
+
+/// A worksheet whose row 1 holds `cells`.
+fn worksheet(cells: Vec<Cell>) -> Worksheet {
+    let mut row = Row::default();
+    row.cell = cells;
+    row.r = Some("1".to_owned());
+    let mut sheet = Worksheet::default();
+    sheet.sheet_data.row = vec![row];
+    sheet
+}
+
+/// The reference, style, type and value of each cell of `sheet`'s first row.
+fn cells(sheet: &Worksheet) -> Vec<(String, Option<String>, Option<String>, String)> {
+    sheet.sheet_data.row.first().map_or_default(|row| {
+        row.cell
+            .iter()
+            .map(|found| {
+                (
+                    found.r.clone().unwrap_or_default(),
+                    found.s.clone(),
+                    found.t.as_ref().map(|kind| kind.0.clone()),
+                    found
+                        .value
+                        .as_ref()
+                        .map_or_else(String::new, |held| held.value.clone()),
+                )
+            })
+            .collect()
+    })
 }
 
 #[test]
@@ -125,11 +154,11 @@ fn text_that_is_no_date_has_no_serial() {
 #[test]
 fn each_date_cell_becomes_a_number_cell_with_one_warning() {
     let part = PartName::new("/xl/worksheets/sheet1.xml").unwrap();
-    let mut sheet = worksheet(
-        "<x:c r=\"A1\" s=\"3\" t=\"d\"><x:v>2026-10-14T00:00:00</x:v></x:c>\
-         <x:c r=\"B1\"><x:v>7</x:v></x:c>\
-         <x:c r=\"C1\" t=\"d\"><x:v>1976-11-22T08:30</x:v></x:c>",
-    );
+    let mut sheet = worksheet(vec![
+        cell("A1", Some("3"), Some("d"), "2026-10-14T00:00:00"),
+        cell("B1", None, None, "7"),
+        cell("C1", None, Some("d"), "1976-11-22T08:30"),
+    ]);
     let warnings = convert_date_cells(&mut sheet, false, &part);
     let serial_c1 = serial("1976-11-22T08:30", false).unwrap();
     assert_eq!(
@@ -149,27 +178,25 @@ fn each_date_cell_becomes_a_number_cell_with_one_warning() {
             },
         ]
     );
-    let root = sheet.to_transitional().unwrap();
-    let mut tree = Part::new("", root);
-    tree.declaration = None;
-    tree.prolog.clear();
-    let written = String::from_utf8(tree.to_xml(KEEP)).unwrap();
-    assert!(
-        written.contains(
-            "<x:c r=\"A1\" s=\"3\"><x:v>46309</x:v></x:c><x:c r=\"B1\"><x:v>7</x:v></x:c>"
-        ),
-        "{written}"
-    );
-    assert!(
-        written.contains(&format!("<x:c r=\"C1\"><x:v>{serial_c1}</x:v></x:c>")),
-        "{written}"
+    assert_eq!(
+        cells(&sheet),
+        [
+            (
+                "A1".to_owned(),
+                Some("3".to_owned()),
+                None,
+                "46309".to_owned()
+            ),
+            ("B1".to_owned(), None, None, "7".to_owned()),
+            ("C1".to_owned(), None, None, serial_c1),
+        ]
     );
 }
 
 #[test]
 fn a_1904_workbook_counts_from_its_own_base_date() {
     let part = PartName::new("/xl/worksheets/sheet1.xml").unwrap();
-    let mut sheet = worksheet("<x:c r=\"A1\" t=\"d\"><x:v>2026-10-14T00:00:00</x:v></x:c>");
+    let mut sheet = worksheet(vec![cell("A1", None, Some("d"), "2026-10-14T00:00:00")]);
     let warnings = convert_date_cells(&mut sheet, true, &part);
     assert!(matches!(
         warnings.as_slice(),
@@ -180,13 +207,26 @@ fn a_1904_workbook_counts_from_its_own_base_date() {
             serial,
         }] if serial == "44847"
     ));
+    assert_eq!(
+        cells(&sheet),
+        [("A1".to_owned(), None, None, "44847".to_owned())]
+    );
 }
 
 #[test]
 fn a_date_cell_whose_text_is_not_a_date_stays_and_is_refused() {
     let part = PartName::new("/xl/worksheets/sheet1.xml").unwrap();
-    let mut sheet = worksheet("<x:c r=\"A1\" t=\"d\"><x:v>soon</x:v></x:c>");
+    let mut sheet = worksheet(vec![cell("A1", None, Some("d"), "soon")]);
     assert_eq!(convert_date_cells(&mut sheet, false, &part), Vec::new());
+    assert_eq!(
+        cells(&sheet),
+        [(
+            "A1".to_owned(),
+            None,
+            Some("d".to_owned()),
+            "soon".to_owned()
+        )]
+    );
     assert!(matches!(
         sheet.to_transitional(),
         Err(WriteError::NotInClass {
