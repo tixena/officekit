@@ -244,6 +244,7 @@ const NS_X14: Option<NamespaceId> = Some(120);
 const NS_X14AC: Option<NamespaceId> = Some(121);
 const NS_X15AC: Option<NamespaceId> = Some(123);
 const NS_XDR: Option<NamespaceId> = Some(129);
+const NS_XML: Option<NamespaceId> = Some(148);
 const NS_XXL21: Option<NamespaceId> = Some(164);
 
 pub static XML_MAPPING_DATA_BINDING_SHAPE: officekit_markup_base::Shape =
@@ -333,7 +334,7 @@ pub static OBJECT_CELL_ANCHOR_SHAPE: officekit_markup_base::Shape = officekit_ma
 };
 
 pub static AUTHOR_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Shape {
-    attributes: &[],
+    attributes: &[(NS_XML, "space")],
     name: (NS_X, "author"),
     slots: &[],
     text: true,
@@ -1666,14 +1667,14 @@ pub static ENTRIES_SHAPE: officekit_markup_base::Shape = officekit_markup_base::
 };
 
 pub static EVEN_PAGE_FOOTER_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Shape {
-    attributes: &[],
+    attributes: &[(NS_XML, "space")],
     name: (NS_X, "evenFooter"),
     slots: &[],
     text: true,
 };
 
 pub static EVEN_PAGE_HEADER_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Shape {
-    attributes: &[],
+    attributes: &[(NS_XML, "space")],
     name: (NS_X, "evenHeader"),
     slots: &[],
     text: true,
@@ -1942,14 +1943,14 @@ pub static FILTERS_SHAPE: officekit_markup_base::Shape = officekit_markup_base::
 };
 
 pub static FIRST_PAGE_FOOTER_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Shape {
-    attributes: &[],
+    attributes: &[(NS_XML, "space")],
     name: (NS_X, "firstFooter"),
     slots: &[],
     text: true,
 };
 
 pub static FIRST_PAGE_HEADER_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Shape {
-    attributes: &[],
+    attributes: &[(NS_XML, "space")],
     name: (NS_X, "firstHeader"),
     slots: &[],
     text: true,
@@ -1987,21 +1988,21 @@ pub static PIVOT_TABLE_FORMATS_SHAPE: officekit_markup_base::Shape = officekit_m
 };
 
 pub static FORMULA_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Shape {
-    attributes: &[],
+    attributes: &[(NS_XML, "space")],
     name: (NS_X, "formula"),
     slots: &[],
     text: true,
 };
 
 pub static FORMULA1_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Shape {
-    attributes: &[],
+    attributes: &[(NS_XML, "space")],
     name: (NS_X, "formula1"),
     slots: &[],
     text: true,
 };
 
 pub static FORMULA2_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Shape {
-    attributes: &[],
+    attributes: &[(NS_XML, "space")],
     name: (NS_X, "formula2"),
     slots: &[],
     text: true,
@@ -2749,14 +2750,14 @@ pub static OLD_CELL_DATA_SHAPE: officekit_markup_base::Shape = officekit_markup_
 };
 
 pub static ODD_PAGE_FOOTER_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Shape {
-    attributes: &[],
+    attributes: &[(NS_XML, "space")],
     name: (NS_X, "oddFooter"),
     slots: &[],
     text: true,
 };
 
 pub static ODD_HEADER_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Shape {
-    attributes: &[],
+    attributes: &[(NS_XML, "space")],
     name: (NS_X, "oddHeader"),
     slots: &[],
     text: true,
@@ -2796,7 +2797,7 @@ pub static OLAP_PROPERTIES_SHAPE: officekit_markup_base::Shape = officekit_marku
 };
 
 pub static OLD_FORMULA_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Shape {
-    attributes: &[],
+    attributes: &[(NS_XML, "space")],
     name: (NS_X, "oldFormula"),
     slots: &[],
     text: true,
@@ -4479,7 +4480,7 @@ pub static GRADIENT_STOP_SHAPE: officekit_markup_base::Shape = officekit_markup_
 };
 
 pub static STRINGS_IN_SUBTOPIC_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Shape {
-    attributes: &[],
+    attributes: &[(NS_XML, "space")],
     name: (NS_X, "stp"),
     slots: &[],
     text: true,
@@ -4537,7 +4538,7 @@ pub static TUPLE_MDX_METADATA_SHAPE: officekit_markup_base::Shape = officekit_ma
 };
 
 pub static TEXT_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Shape {
-    attributes: &[],
+    attributes: &[(NS_XML, "space")],
     name: (NS_X, "t"),
     slots: &[],
     text: true,
@@ -4862,14 +4863,14 @@ pub static USER_LIST_SHAPE: officekit_markup_base::Shape = officekit_markup_base
 };
 
 pub static CELL_VALUE_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Shape {
-    attributes: &[],
+    attributes: &[(NS_XML, "space")],
     name: (NS_X, "v"),
     slots: &[],
     text: true,
 };
 
 pub static DDE_LINK_VALUE_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Shape {
-    attributes: &[],
+    attributes: &[(NS_XML, "space")],
     name: (NS_X, "val"),
     slots: &[],
     text: true,
@@ -5431,6 +5432,8 @@ pub struct Alignment {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Author {
+    /// The attribute `xml:space`, when the element has it.
+    pub space: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
@@ -6375,6 +6378,8 @@ pub enum CellTypeMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct CellValue {
+    /// The attribute `xml:space`, when the element has it.
+    pub space: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
@@ -7936,6 +7941,8 @@ pub struct DDEItemsCollection {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct DDELinkValue {
+    /// The attribute `xml:space`, when the element has it.
+    pub space: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
@@ -9123,6 +9130,8 @@ pub struct ErrorValue {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EvenPageFooter {
+    /// The attribute `xml:space`, when the element has it.
+    pub space: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
@@ -9139,6 +9148,8 @@ pub struct EvenPageFooter {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct EvenPageHeader {
+    /// The attribute `xml:space`, when the element has it.
+    pub space: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
@@ -9712,6 +9723,8 @@ pub struct Filters {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FirstPageFooter {
+    /// The attribute `xml:space`, when the element has it.
+    pub space: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
@@ -9728,6 +9741,8 @@ pub struct FirstPageFooter {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct FirstPageHeader {
+    /// The attribute `xml:space`, when the element has it.
+    pub space: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
@@ -10100,6 +10115,8 @@ pub struct FormattingRecords {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Formula {
+    /// The attribute `xml:space`, when the element has it.
+    pub space: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
@@ -10116,6 +10133,8 @@ pub struct Formula {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Formula1 {
+    /// The attribute `xml:space`, when the element has it.
+    pub space: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
@@ -10132,6 +10151,8 @@ pub struct Formula1 {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Formula2 {
+    /// The attribute `xml:space`, when the element has it.
+    pub space: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
@@ -12327,6 +12348,8 @@ pub struct ObjectLinkItems {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct OddHeader {
+    /// The attribute `xml:space`, when the element has it.
+    pub space: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
@@ -12343,6 +12366,8 @@ pub struct OddHeader {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct OddPageFooter {
+    /// The attribute `xml:space`, when the element has it.
+    pub space: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
@@ -12429,6 +12454,8 @@ pub struct OldFormattingInformation {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct OldFormula {
+    /// The attribute `xml:space`, when the element has it.
+    pub space: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
@@ -17055,6 +17082,8 @@ pub struct StringItem {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct StringsInSubtopic {
+    /// The attribute `xml:space`, when the element has it.
+    pub space: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
@@ -17610,6 +17639,8 @@ pub enum TargetScreenSizeTypesMember {
 #[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
 #[non_exhaustive]
 pub struct Text {
+    /// The attribute `xml:space`, when the element has it.
+    pub space: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
@@ -19332,6 +19363,7 @@ impl Author {
     #[must_use]
     pub fn without_children(&self) -> Self {
         Self {
+            space: self.space.clone(),
             value: self.value.clone(),
             ..Self::default()
         }
@@ -20489,6 +20521,7 @@ impl CellValue {
     #[must_use]
     pub fn without_children(&self) -> Self {
         Self {
+            space: self.space.clone(),
             value: self.value.clone(),
             ..Self::default()
         }
@@ -22218,6 +22251,7 @@ impl DDELinkValue {
     #[must_use]
     pub fn without_children(&self) -> Self {
         Self {
+            space: self.space.clone(),
             value: self.value.clone(),
             ..Self::default()
         }
@@ -23635,6 +23669,7 @@ impl EvenPageFooter {
     #[must_use]
     pub fn without_children(&self) -> Self {
         Self {
+            space: self.space.clone(),
             value: self.value.clone(),
             ..Self::default()
         }
@@ -23659,6 +23694,7 @@ impl EvenPageHeader {
     #[must_use]
     pub fn without_children(&self) -> Self {
         Self {
+            space: self.space.clone(),
             value: self.value.clone(),
             ..Self::default()
         }
@@ -24428,6 +24464,7 @@ impl FirstPageFooter {
     #[must_use]
     pub fn without_children(&self) -> Self {
         Self {
+            space: self.space.clone(),
             value: self.value.clone(),
             ..Self::default()
         }
@@ -24452,6 +24489,7 @@ impl FirstPageHeader {
     #[must_use]
     pub fn without_children(&self) -> Self {
         Self {
+            space: self.space.clone(),
             value: self.value.clone(),
             ..Self::default()
         }
@@ -24923,6 +24961,7 @@ impl Formula {
     #[must_use]
     pub fn without_children(&self) -> Self {
         Self {
+            space: self.space.clone(),
             value: self.value.clone(),
             ..Self::default()
         }
@@ -24947,6 +24986,7 @@ impl Formula1 {
     #[must_use]
     pub fn without_children(&self) -> Self {
         Self {
+            space: self.space.clone(),
             value: self.value.clone(),
             ..Self::default()
         }
@@ -24971,6 +25011,7 @@ impl Formula2 {
     #[must_use]
     pub fn without_children(&self) -> Self {
         Self {
+            space: self.space.clone(),
             value: self.value.clone(),
             ..Self::default()
         }
@@ -27699,6 +27740,7 @@ impl OddHeader {
     #[must_use]
     pub fn without_children(&self) -> Self {
         Self {
+            space: self.space.clone(),
             value: self.value.clone(),
             ..Self::default()
         }
@@ -27723,6 +27765,7 @@ impl OddPageFooter {
     #[must_use]
     pub fn without_children(&self) -> Self {
         Self {
+            space: self.space.clone(),
             value: self.value.clone(),
             ..Self::default()
         }
@@ -27797,6 +27840,7 @@ impl OldFormula {
     #[must_use]
     pub fn without_children(&self) -> Self {
         Self {
+            space: self.space.clone(),
             value: self.value.clone(),
             ..Self::default()
         }
@@ -33062,6 +33106,7 @@ impl StringsInSubtopic {
     #[must_use]
     pub fn without_children(&self) -> Self {
         Self {
+            space: self.space.clone(),
             value: self.value.clone(),
             ..Self::default()
         }
@@ -33652,6 +33697,7 @@ impl Text {
     #[must_use]
     pub fn without_children(&self) -> Self {
         Self {
+            space: self.space.clone(),
             value: self.value.clone(),
             ..Self::default()
         }

@@ -13,7 +13,8 @@ use officekit_markup::presentation::{
     ShapeTextBody, read as presentation_read, write as presentation_write,
 };
 use officekit_markup::spreadsheet::{
-    self, Comment, CommentText, Comments as SpreadsheetComments, RichTextRun, SharedStringTable,
+    self, Comment, CommentText, Comments as SpreadsheetComments, FontSize, Numeric,
+    PivotCacheRecord, PivotCacheRecordContent, PivotCacheRecords, RichTextRun, SharedStringTable,
     StringItem, Text as SpreadsheetText, Workbook, read as spreadsheet_read,
     write as spreadsheet_write,
 };
@@ -44,7 +45,6 @@ const R: &str = r#"xmlns:r="http://schemas.openxmlformats.org/officeDocument/200
 const V: &str = r#"xmlns:v="urn:schemas-microsoft-com:vml""#;
 pub(super) const W: &str =
     r#"xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main""#;
-const X: &str = r#"xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main""#;
 
 const CHART: &str = "application/vnd.openxmlformats-officedocument.drawingml.chart+xml";
 const DOCX: &str = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
@@ -682,23 +682,53 @@ fn drawingml_runs_with_equal_properties_become_one() {
     );
 }
 
-// XML input: the typed tree keeps xml:space on x:t only as unknown content, and the merge depends on it.
 #[test]
 fn spreadsheetml_rich_text_runs_merge_and_pivot_records_do_not() {
-    let xml = format!(
-        r#"<si {X}><r><rPr><b/><sz val="11"/></rPr><t>one</t></r><r><rPr><b/><sz val="11"/></rPr><t xml:space="preserve"> two</t></r></si>"#
-    );
+    let mut one = SpreadsheetText::default();
+    one.value = "one".to_owned();
+    let mut two = SpreadsheetText::default();
+    two.value = " two".to_owned();
+    two.space = Some("preserve".to_owned());
+    let mut item = StringItem::default();
+    item.rich_text_run = vec![styled_rich_text_run(one), styled_rich_text_run(two)];
+    let mut shared = SharedStringTable::default();
+    shared.string_item = vec![item];
+    let written = xml_of(&spreadsheet_write::shared_string_table(
+        &shared,
+        &mut Scope::default(),
+    ));
+    let properties = r#"<x:rPr><x:b/><x:sz val="11"/></x:rPr>"#;
+    assert!(written.contains(&format!(
+        r#"<x:r>{properties}<x:t>one</x:t></x:r><x:r>{properties}<x:t xml:space="preserve"> two</x:t></x:r>"#
+    )));
+    let (compact, done) = compacted(&written, Comments::Keep);
+    assert_eq!(done, merged(1));
+    assert!(compact.contains(&format!("<x:r>{properties}<x:t>one two</x:t></x:r></x:si>")));
     assert_eq!(
-        compacted(&xml, Comments::Keep),
-        (
-            format!(r#"<si {X}><r><rPr><b/><sz val="11"/></rPr><t>one two</t></r></si>"#),
-            merged(1)
-        )
+        runs_in(&spreadsheet_read::shared_string_table(
+            &parse(compact.as_bytes()).unwrap().root
+        )),
+        [r#""one two""#]
     );
-    let records = format!(
-        r#"<pivotCacheRecords {X}><r/><r/><r><n v="1"/></r><r><n v="1"/></r></pivotCacheRecords>"#
+    let mut numeric = Numeric::default();
+    numeric.v = Some("1".to_owned());
+    let mut valued = PivotCacheRecord::default();
+    valued.content = vec![PivotCacheRecordContent::Numeric(numeric)];
+    let mut records = PivotCacheRecords::default();
+    records.pivotcache_record = vec![
+        PivotCacheRecord::default(),
+        PivotCacheRecord::default(),
+        valued.clone(),
+        valued,
+    ];
+    let records_xml = xml_of(&spreadsheet_write::pivot_cache_records(
+        &records,
+        &mut Scope::default(),
+    ));
+    assert_eq!(
+        compacted(&records_xml, Comments::Keep),
+        (records_xml, merged(0))
     );
-    assert_eq!(compacted(&records, Comments::Keep), (records, merged(0)));
 }
 
 pub(super) fn name(text: &str) -> PartName {
@@ -820,6 +850,21 @@ fn fragmented_rich_text() -> Vec<RichTextRun> {
             found
         })
         .into()
+}
+
+/// A `SpreadsheetML` rich text run of `text`, bold and of size 11.
+fn styled_rich_text_run(text: SpreadsheetText) -> RichTextRun {
+    let mut size = FontSize::default();
+    size.val = Some("11".to_owned());
+    let mut properties = spreadsheet::RunProperties::default();
+    properties.content = vec![
+        spreadsheet::RunPropertiesContent::Bold(spreadsheet::Bold::default()),
+        spreadsheet::RunPropertiesContent::FontSize(size),
+    ];
+    let mut found = RichTextRun::default();
+    found.properties = Some(Box::new(properties));
+    found.text = Box::new(text);
+    found
 }
 
 /// A slide's common data, its one shape holding the paragraph of [`fragmented_drawing`].

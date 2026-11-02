@@ -1,7 +1,87 @@
 use alloc::collections::BTreeSet;
+use std::path::Path;
 
+use os_shim::mock::MemorySystem;
+
+use super::names::{Overrides, Titles};
 use super::render::layout::{self, Expr};
-use super::{Crate, assign};
+use super::structs::{Attribute, Body, Catalog, Value};
+use super::{Crate, Data, assign, namespaces};
+use crate::generate_schema::model::SchemaSet;
+use crate::generate_schema::sdk_data::SdkData;
+
+const NAMESPACES: &str = r#"[
+  {"Prefix": "x", "Uri": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"},
+  {"Prefix": "xml", "Uri": "http://www.w3.org/XML/1998/namespace"}
+]"#;
+
+/// Excerpt of `sml.xsd`: `x:t` and `x:v` have the simple type it writes them with. Added for
+/// the tests: `x:plain` and `x:lone`, of the same type.
+const SML: &str = r#"<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"
+  elementFormDefault="qualified"
+  targetNamespace="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
+  <xsd:simpleType name="ST_Xstring">
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+  <xsd:element name="t" type="ST_Xstring"/>
+  <xsd:element name="v" type="ST_Xstring"/>
+  <xsd:element name="plain" type="ST_Xstring"/>
+  <xsd:element name="lone" type="ST_Xstring"/>
+</xsd:schema>"#;
+
+/// Excerpt of SDK 3.5.1's data: `x:CT_Xstring/` and two elements derived from it, as the data
+/// writes them. Added for the tests: `x:plain`, derived from a base with no attribute, and
+/// `x:lone`, derived from a base the data has no row for.
+const SML_DATA: &str = r#"{"TargetNamespace": "http://schemas.openxmlformats.org/spreadsheetml/2006/main", "Types": [
+  {"Name": "x:CT_Xstring/", "IsLeafText": true, "Attributes": [{"QName": "xml:space", "Type": "EnumValue<DocumentFormat.OpenXml.SpaceProcessingModeValues>"}]},
+  {"Name": "x:CT_Xstring/x:t", "IsDerived": true, "IsLeafText": true},
+  {"Name": "x:CT_Xstring/x:v", "IsDerived": true, "IsLeafText": true},
+  {"Name": "x:CT_Plain/", "IsLeafText": true},
+  {"Name": "x:CT_Plain/x:plain", "IsDerived": true, "IsLeafText": true},
+  {"Name": "x:CT_Lone/x:lone", "IsDerived": true, "IsLeafText": true}
+]}"#;
+
+/// The catalog of [`SML`] and [`SML_DATA`].
+fn sml_catalog() -> Catalog {
+    let system = MemorySystem::new()
+        .with_file("/data/namespaces.json", NAMESPACES.as_bytes())
+        .unwrap()
+        .with_file("/data/typed/namespaces.json", b"[]")
+        .unwrap()
+        .with_file("/data/parts/none.json", br#"{"Name": "None"}"#)
+        .unwrap()
+        .with_file("/data/schematrons.json", b"[]")
+        .unwrap()
+        .with_file("/data/schemas/sml.json", SML_DATA.as_bytes())
+        .unwrap()
+        .with_file("/xsd/sml.xsd", SML.as_bytes())
+        .unwrap();
+    let sdk = SdkData::read(&system, Path::new("data")).unwrap();
+    let transitional = SchemaSet::read(&system, &["/xsd/sml.xsd"]).unwrap();
+    let strict = SchemaSet::default();
+    let rows = namespaces::rows(&sdk, &transitional, &strict, &SchemaSet::default()).unwrap();
+    Catalog::build(
+        &Data::new(&sdk, &transitional),
+        &strict,
+        &rows,
+        &Titles::read("", ""),
+        &Overrides::parse("").unwrap(),
+        &[],
+    )
+    .unwrap()
+}
+
+/// The attributes of the struct of `tag`, which holds text.
+fn text_node_attributes(catalog: &Catalog, tag: &str) -> Vec<Attribute> {
+    let node = catalog
+        .nodes
+        .iter()
+        .find(|node| node.key.tag.local == tag)
+        .unwrap();
+    assert!(matches!(node.body, Body::Text(_)));
+    node.attributes.clone()
+}
 
 fn call(name: &str, arguments: &[&str]) -> Expr {
     Expr::call(
@@ -140,6 +220,34 @@ fn a_method_call_as_a_nested_calls_lone_argument_takes_rustfmts_comma() {
         out,
         "        return Some(super::Model3DExtensionContent::ArcSegment(\n            arm.transform(ctx),\n        ));\n"
     );
+}
+
+#[test]
+fn a_simple_typed_element_takes_the_attributes_of_its_base_in_the_data() {
+    let catalog = sml_catalog();
+    let xml = catalog
+        .prefixes
+        .iter()
+        .position(|prefix| prefix == "xml")
+        .map(|index| u8::try_from(index).unwrap());
+    for tag in ["t", "v"] {
+        assert_eq!(
+            text_node_attributes(&catalog, tag),
+            [Attribute {
+                field: "space".to_owned(),
+                local: "space".to_owned(),
+                namespace: xml,
+                value: Value::Text,
+            }]
+        );
+    }
+}
+
+#[test]
+fn a_simple_typed_element_with_no_such_base_in_the_data_takes_no_attribute() {
+    let catalog = sml_catalog();
+    assert_eq!(text_node_attributes(&catalog, "plain"), []);
+    assert_eq!(text_node_attributes(&catalog, "lone"), []);
 }
 
 #[test]

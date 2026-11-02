@@ -498,7 +498,11 @@ impl<'data> Builder<'data> {
             }) => self.xsd_content(key, name),
             Source::Xsd(type_ref) => {
                 let value = self.xsd_value(type_ref)?;
-                Ok((Vec::new(), Body::Text(value), Vec::new()))
+                Ok((
+                    self.inherited_attributes(key)?,
+                    Body::Text(value),
+                    Vec::new(),
+                ))
             }
             Source::Data(name) => self.data_content(name),
         }
@@ -589,6 +593,10 @@ impl<'data> Builder<'data> {
     /// The value of an attribute of the data, by its class: an enumeration's
     /// newtype, `ST_OnOff`'s for `OnOffValue`, else the text.
     fn data_value(&mut self, class: &str) -> Result<Value> {
+        // `xml:space` stays its text, as on `w:t`: the XML namespace has no module.
+        if class == "EnumValue<DocumentFormat.OpenXml.SpaceProcessingModeValues>" {
+            return Ok(Value::Text);
+        }
         if class == "OnOffValue" {
             let shared = "http://schemas.openxmlformats.org/officeDocument/2006/sharedTypes";
             return self.simple(&simple_types::Key::Xsd(Name::new(shared, "ST_OnOff")));
@@ -769,6 +777,33 @@ impl<'data> Builder<'data> {
         }
         names::identifier(&names::snake_words(&words))
             .with_context(|| format!("a child field of {}", node.name))
+    }
+
+    /// The attributes a simple-typed element takes from its base in the data,
+    /// `xml:space` on `x:t`, which ECMA-376's prose declares and its schema's
+    /// `ST_Xstring` has no place for.
+    fn inherited_attributes(&mut self, key: &NodeKey) -> Result<Vec<Attribute>> {
+        let data = self.data;
+        let Some(prefix) = self.prefix(&key.tag.namespace) else {
+            return Ok(Vec::new());
+        };
+        let suffix = format!("/{prefix}:{}", key.tag.local);
+        let mut attributes = Vec::new();
+        for (name, data_type) in &data.sdk.types {
+            if !(name.ends_with(&suffix) && data_type.is_derived && data_type.is_leaf_text) {
+                continue;
+            }
+            let Some((schema_type, _)) = name.split_once('/') else {
+                continue;
+            };
+            let Some(base) = data.sdk.types.get(&format!("{schema_type}/")) else {
+                continue;
+            };
+            for attribute in &base.attributes {
+                attributes.push(self.data_attribute(attribute)?);
+            }
+        }
+        Ok(attributes)
     }
 
     /// Enums used at a required single position get `Default`.

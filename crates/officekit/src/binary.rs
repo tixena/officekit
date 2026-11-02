@@ -27,7 +27,7 @@ pub const MAGIC: &[u8; 10] = b"officekit\0";
 const PACKAGE_RELATIONSHIPS: &str = "/_rels/.rels";
 
 /// The version of the binary form this officekit writes and reads.
-pub const VERSION: u8 = 2;
+pub const VERSION: u8 = 3;
 
 /// Why bytes are not a file in officekit's binary form, or a file cannot go into it.
 #[derive(Debug, thiserror::Error)]

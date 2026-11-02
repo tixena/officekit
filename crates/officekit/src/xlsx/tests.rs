@@ -6,11 +6,15 @@ use crate::parts::kinds::SpreadsheetKind;
 use crate::parts::part_root::{PartRoot, store};
 #[cfg(feature = "strict")]
 use crate::parts::pivot_table_cache_definition;
+#[cfg(feature = "transitional")]
+use crate::parts::shared_string_table;
 use crate::parts::worksheet;
 #[cfg(feature = "strict")]
 use crate::parts::{pivot_table, table_definition};
 #[cfg(all(feature = "strict", feature = "transitional"))]
 use crate::transitional::dates::SaveWarning;
+#[cfg(feature = "transitional")]
+use crate::validation::validator::Validator;
 #[cfg(feature = "strict")]
 use officekit_markup::spreadsheet::{
     AutoFilterColumn, AutoFilterColumnContent, AutoFilterSettings, DynamicFilter, FileSharing,
@@ -21,6 +25,8 @@ use officekit_markup::spreadsheet::{
 };
 #[cfg(all(feature = "strict", feature = "transitional"))]
 use officekit_markup::spreadsheet::{Cell, CellType, CellValue, Row};
+#[cfg(feature = "transitional")]
+use officekit_markup::spreadsheet::{SharedStringTable, StringItem, Text};
 #[cfg(feature = "strict")]
 use officekit_strict::iso_date_time;
 use officekit_xml::conformance::ConformanceClass;
@@ -34,7 +40,7 @@ use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::{RelationshipType, Target};
 #[cfg(feature = "transitional")]
 use officekit_xml::ready::ready_now;
-#[cfg(feature = "strict")]
+#[cfg(any(feature = "strict", feature = "transitional"))]
 use officekit_xml::write::WriteOptions;
 #[cfg(feature = "transitional")]
 use os_shim::mock::MemorySystem;
@@ -268,6 +274,35 @@ fn a_new_workbook_holds_one_empty_sheet_related_as_rid1() {
     assert_eq!(sheets[0].name.as_deref(), Some("Sheet1"));
     assert_eq!(sheets[0].sheet_id.as_deref(), Some("1"));
     assert_eq!(sheets[0].id.as_deref(), Some("rId1"));
+}
+
+#[cfg(feature = "transitional")]
+#[test]
+fn a_shared_string_that_keeps_its_space_has_no_validation_error() {
+    let mut text = Text::default();
+    text.space = Some("preserve".to_owned());
+    text.value = " two".to_owned();
+    let mut item = StringItem::default();
+    item.text = Some(Box::new(text));
+    let mut shared = SharedStringTable::default();
+    shared.string_item = vec![item];
+    let mut xlsx = Xlsx::new(SpreadsheetKind::Workbook).unwrap();
+    let main = xlsx.workbook_part().clone();
+    let part = name("/xl/sharedStrings.xml");
+    let package = xlsx.package_mut();
+    shared_string_table::store_transitional(package, &part, &shared, WriteOptions::default())
+        .unwrap();
+    package
+        .relate(
+            Some(&main),
+            &part,
+            RelationshipType::SHARED_STRINGS.transitional,
+        )
+        .unwrap();
+    assert_eq!(
+        Validator::new(OfficeVersion::Microsoft365).validate(xlsx.package()),
+        []
+    );
 }
 
 #[cfg(feature = "transitional")]

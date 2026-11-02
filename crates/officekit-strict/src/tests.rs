@@ -13,8 +13,8 @@ use officekit_markup::office_word_2010_wordprocessing_drawing::{
 };
 use officekit_markup::presentation::Presentation;
 use officekit_markup::spreadsheet::{
-    Border, CalculationChainInfo, Cell, CellCalcCell, DynamicFilter, PivotArea, ProtectedRange,
-    ReferenceSequence, TextImportSettings, Workbook,
+    Border, CalculationChainInfo, Cell, CellCalcCell, CellValue, DynamicFilter, PivotArea,
+    ProtectedRange, ReferenceSequence, Text as SpreadsheetText, TextImportSettings, Workbook,
 };
 use officekit_markup::vml::{
     DocumentBackground as VmlBackground, ShapeDefinition, ShapeFillProperties, ShapeFillType,
@@ -198,6 +198,49 @@ fn a_transitional_paragraph_writes_as_strict() {
             "<w:p xmlns:w=\"{W_STRICT}\"><w:pPr><w:jc w:val=\"start\"/></w:pPr><w:r><w:t>Hello</w:t></w:r></w:p>"
         )
     );
+}
+
+#[test]
+fn spreadsheet_string_elements_read_back_with_their_space() {
+    let mut text = SpreadsheetText::default();
+    text.space = Some("preserve".to_owned());
+    text.value = " two".to_owned();
+    assert_eq!(
+        written(text.to_strict().unwrap()),
+        format!("<x:t xmlns:x=\"{X_STRICT}\" xml:space=\"preserve\"> two</x:t>")
+    );
+    let read_text = through_strict(&text);
+    assert_eq!(read_text.space, text.space);
+    assert_eq!(read_text.value, text.value);
+    let mut value = CellValue::default();
+    value.space = Some("preserve".to_owned());
+    value.value = " 1".to_owned();
+    let read_value = through_strict(&value);
+    assert_eq!(read_value.space, value.space);
+    assert_eq!(read_value.value, value.value);
+}
+
+#[test]
+fn spreadsheet_text_with_no_space_writes_no_attribute() {
+    let mut text = SpreadsheetText::default();
+    text.value = "two".to_owned();
+    assert_eq!(
+        written(text.to_strict().unwrap()),
+        format!("<x:t xmlns:x=\"{X_STRICT}\">two</x:t>")
+    );
+}
+
+#[test]
+fn a_read_holds_xml_space_on_the_field_of_spreadsheet_text() {
+    for uri in [X, X_STRICT] {
+        let text = SpreadsheetText::from_strict(&element(&format!(
+            "<x:t xmlns:x=\"{uri}\" xml:space=\"preserve\"> two</x:t>"
+        )))
+        .unwrap();
+        assert_eq!(text.space.as_deref(), Some("preserve"));
+        assert_eq!(text.value, " two");
+        assert_eq!(text.unknown.attributes, []);
+    }
 }
 
 #[test]

@@ -241,6 +241,7 @@ pub fn alignment(node: &super::Alignment, scope: &mut Scope) -> Element {
 #[must_use]
 pub fn author(node: &super::Author, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::AUTHOR_SHAPE, &node.unknown);
+    writer.attribute(0, &node.space);
     writer.text(&node.value);
     writer.finish()
 }
@@ -630,6 +631,7 @@ pub fn cell_styles(node: &super::CellStyles, scope: &mut Scope) -> Element {
 pub fn cell_value(node: &super::CellValue, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::CELL_VALUE_SHAPE, &node.unknown);
+    writer.attribute(0, &node.space);
     writer.text(&node.value);
     writer.finish()
 }
@@ -1537,6 +1539,7 @@ pub fn dde_items_collection(node: &super::DDEItemsCollection, scope: &mut Scope)
 pub fn dde_link_value(node: &super::DDELinkValue, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DDE_LINK_VALUE_SHAPE, &node.unknown);
+    writer.attribute(0, &node.space);
     writer.text(&node.value);
     writer.finish()
 }
@@ -1886,6 +1889,7 @@ pub fn error_value(node: &super::ErrorValue, scope: &mut Scope) -> Element {
 pub fn even_page_footer(node: &super::EvenPageFooter, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EVEN_PAGE_FOOTER_SHAPE, &node.unknown);
+    writer.attribute(0, &node.space);
     writer.text(&node.value);
     writer.finish()
 }
@@ -1895,6 +1899,7 @@ pub fn even_page_footer(node: &super::EvenPageFooter, scope: &mut Scope) -> Elem
 pub fn even_page_header(node: &super::EvenPageHeader, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EVEN_PAGE_HEADER_SHAPE, &node.unknown);
+    writer.attribute(0, &node.space);
     writer.text(&node.value);
     writer.finish()
 }
@@ -2155,6 +2160,7 @@ pub fn filters(node: &super::Filters, scope: &mut Scope) -> Element {
 pub fn first_page_footer(node: &super::FirstPageFooter, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::FIRST_PAGE_FOOTER_SHAPE, &node.unknown);
+    writer.attribute(0, &node.space);
     writer.text(&node.value);
     writer.finish()
 }
@@ -2164,6 +2170,7 @@ pub fn first_page_footer(node: &super::FirstPageFooter, scope: &mut Scope) -> El
 pub fn first_page_header(node: &super::FirstPageHeader, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::FIRST_PAGE_HEADER_SHAPE, &node.unknown);
+    writer.attribute(0, &node.space);
     writer.text(&node.value);
     writer.finish()
 }
@@ -2315,6 +2322,7 @@ pub fn formatting_records(node: &super::FormattingRecords, scope: &mut Scope) ->
 pub fn formula(node: &super::Formula, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::FORMULA_SHAPE, &node.unknown);
+    writer.attribute(0, &node.space);
     writer.text(&node.value);
     writer.finish()
 }
@@ -2324,6 +2332,7 @@ pub fn formula(node: &super::Formula, scope: &mut Scope) -> Element {
 pub fn formula1(node: &super::Formula1, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::FORMULA1_SHAPE, &node.unknown);
+    writer.attribute(0, &node.space);
     writer.text(&node.value);
     writer.finish()
 }
@@ -2333,6 +2342,7 @@ pub fn formula1(node: &super::Formula1, scope: &mut Scope) -> Element {
 pub fn formula2(node: &super::Formula2, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::FORMULA2_SHAPE, &node.unknown);
+    writer.attribute(0, &node.space);
     writer.text(&node.value);
     writer.finish()
 }
@@ -3104,6 +3114,7 @@ pub fn object_link_items(node: &super::ObjectLinkItems, scope: &mut Scope) -> El
 pub fn odd_header(node: &super::OddHeader, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::ODD_HEADER_SHAPE, &node.unknown);
+    writer.attribute(0, &node.space);
     writer.text(&node.value);
     writer.finish()
 }
@@ -3113,6 +3124,7 @@ pub fn odd_header(node: &super::OddHeader, scope: &mut Scope) -> Element {
 pub fn odd_page_footer(node: &super::OddPageFooter, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::ODD_PAGE_FOOTER_SHAPE, &node.unknown);
+    writer.attribute(0, &node.space);
     writer.text(&node.value);
     writer.finish()
 }
@@ -3451,6 +3463,7 @@ pub fn old_formatting_information(
 pub fn old_formula(node: &super::OldFormula, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::OLD_FORMULA_SHAPE, &node.unknown);
+    writer.attribute(0, &node.space);
     writer.text(&node.value);
     writer.finish()
 }
@@ -5365,6 +5378,7 @@ pub fn string_item(node: &super::StringItem, scope: &mut Scope) -> Element {
 pub fn strings_in_subtopic(node: &super::StringsInSubtopic, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::STRINGS_IN_SUBTOPIC_SHAPE, &node.unknown);
+    writer.attribute(0, &node.space);
     writer.text(&node.value);
     writer.finish()
 }
@@ -5585,6 +5599,7 @@ pub fn tables_content(
 #[must_use]
 pub fn text(node: &super::Text, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::TEXT_SHAPE, &node.unknown);
+    writer.attribute(0, &node.space);
     writer.text(&node.value);
     writer.finish()
 }

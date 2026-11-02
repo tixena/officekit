@@ -247,8 +247,10 @@ pub fn author(element: &Element) -> super::Author {
     let mut node = super::Author::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::AUTHOR_SHAPE);
     for (index, field) in &mut reader {
-        if index == 0 {
-            field.text(&mut node.value);
+        match index {
+            0 => field.attribute(&mut node.space),
+            1 => field.text(&mut node.value),
+            _ => {}
         }
     }
     node.unknown = reader.finish();
@@ -797,8 +799,10 @@ pub fn cell_value(element: &Element) -> super::CellValue {
     let mut node = super::CellValue::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CELL_VALUE_SHAPE);
     for (index, field) in &mut reader {
-        if index == 0 {
-            field.text(&mut node.value);
+        match index {
+            0 => field.attribute(&mut node.space),
+            1 => field.text(&mut node.value),
+            _ => {}
         }
     }
     node.unknown = reader.finish();
@@ -1995,8 +1999,10 @@ pub fn dde_link_value(element: &Element) -> super::DDELinkValue {
     let mut node = super::DDELinkValue::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DDE_LINK_VALUE_SHAPE);
     for (index, field) in &mut reader {
-        if index == 0 {
-            field.text(&mut node.value);
+        match index {
+            0 => field.attribute(&mut node.space),
+            1 => field.text(&mut node.value),
+            _ => {}
         }
     }
     node.unknown = reader.finish();
@@ -2448,8 +2454,10 @@ pub fn even_page_footer(element: &Element) -> super::EvenPageFooter {
     let mut node = super::EvenPageFooter::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EVEN_PAGE_FOOTER_SHAPE);
     for (index, field) in &mut reader {
-        if index == 0 {
-            field.text(&mut node.value);
+        match index {
+            0 => field.attribute(&mut node.space),
+            1 => field.text(&mut node.value),
+            _ => {}
         }
     }
     node.unknown = reader.finish();
@@ -2462,8 +2470,10 @@ pub fn even_page_header(element: &Element) -> super::EvenPageHeader {
     let mut node = super::EvenPageHeader::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EVEN_PAGE_HEADER_SHAPE);
     for (index, field) in &mut reader {
-        if index == 0 {
-            field.text(&mut node.value);
+        match index {
+            0 => field.attribute(&mut node.space),
+            1 => field.text(&mut node.value),
+            _ => {}
         }
     }
     node.unknown = reader.finish();
@@ -2838,8 +2848,10 @@ pub fn first_page_footer(element: &Element) -> super::FirstPageFooter {
     let mut node = super::FirstPageFooter::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FIRST_PAGE_FOOTER_SHAPE);
     for (index, field) in &mut reader {
-        if index == 0 {
-            field.text(&mut node.value);
+        match index {
+            0 => field.attribute(&mut node.space),
+            1 => field.text(&mut node.value),
+            _ => {}
         }
     }
     node.unknown = reader.finish();
@@ -2852,8 +2864,10 @@ pub fn first_page_header(element: &Element) -> super::FirstPageHeader {
     let mut node = super::FirstPageHeader::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FIRST_PAGE_HEADER_SHAPE);
     for (index, field) in &mut reader {
-        if index == 0 {
-            field.text(&mut node.value);
+        match index {
+            0 => field.attribute(&mut node.space),
+            1 => field.text(&mut node.value),
+            _ => {}
         }
     }
     node.unknown = reader.finish();
@@ -3076,8 +3090,10 @@ pub fn formula(element: &Element) -> super::Formula {
     let mut node = super::Formula::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FORMULA_SHAPE);
     for (index, field) in &mut reader {
-        if index == 0 {
-            field.text(&mut node.value);
+        match index {
+            0 => field.attribute(&mut node.space),
+            1 => field.text(&mut node.value),
+            _ => {}
         }
     }
     node.unknown = reader.finish();
@@ -3090,8 +3106,10 @@ pub fn formula1(element: &Element) -> super::Formula1 {
     let mut node = super::Formula1::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FORMULA1_SHAPE);
     for (index, field) in &mut reader {
-        if index == 0 {
-            field.text(&mut node.value);
+        match index {
+            0 => field.attribute(&mut node.space),
+            1 => field.text(&mut node.value),
+            _ => {}
         }
     }
     node.unknown = reader.finish();
@@ -3104,8 +3122,10 @@ pub fn formula2(element: &Element) -> super::Formula2 {
     let mut node = super::Formula2::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FORMULA2_SHAPE);
     for (index, field) in &mut reader {
-        if index == 0 {
-            field.text(&mut node.value);
+        match index {
+            0 => field.attribute(&mut node.space),
+            1 => field.text(&mut node.value),
+            _ => {}
         }
     }
     node.unknown = reader.finish();
@@ -4124,8 +4144,10 @@ pub fn odd_header(element: &Element) -> super::OddHeader {
     let mut node = super::OddHeader::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ODD_HEADER_SHAPE);
     for (index, field) in &mut reader {
-        if index == 0 {
-            field.text(&mut node.value);
+        match index {
+            0 => field.attribute(&mut node.space),
+            1 => field.text(&mut node.value),
+            _ => {}
         }
     }
     node.unknown = reader.finish();
@@ -4138,8 +4160,10 @@ pub fn odd_page_footer(element: &Element) -> super::OddPageFooter {
     let mut node = super::OddPageFooter::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ODD_PAGE_FOOTER_SHAPE);
     for (index, field) in &mut reader {
-        if index == 0 {
-            field.text(&mut node.value);
+        match index {
+            0 => field.attribute(&mut node.space),
+            1 => field.text(&mut node.value),
+            _ => {}
         }
     }
     node.unknown = reader.finish();
@@ -4595,8 +4619,10 @@ pub fn old_formula(element: &Element) -> super::OldFormula {
     let mut node = super::OldFormula::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::OLD_FORMULA_SHAPE);
     for (index, field) in &mut reader {
-        if index == 0 {
-            field.text(&mut node.value);
+        match index {
+            0 => field.attribute(&mut node.space),
+            1 => field.text(&mut node.value),
+            _ => {}
         }
     }
     node.unknown = reader.finish();
@@ -7123,8 +7149,10 @@ pub fn strings_in_subtopic(element: &Element) -> super::StringsInSubtopic {
     let mut node = super::StringsInSubtopic::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::STRINGS_IN_SUBTOPIC_SHAPE);
     for (index, field) in &mut reader {
-        if index == 0 {
-            field.text(&mut node.value);
+        match index {
+            0 => field.attribute(&mut node.space),
+            1 => field.text(&mut node.value),
+            _ => {}
         }
     }
     node.unknown = reader.finish();
@@ -7410,8 +7438,10 @@ pub fn text(element: &Element) -> super::Text {
     let mut node = super::Text::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TEXT_SHAPE);
     for (index, field) in &mut reader {
-        if index == 0 {
-            field.text(&mut node.value);
+        match index {
+            0 => field.attribute(&mut node.space),
+            1 => field.text(&mut node.value),
+            _ => {}
         }
     }
     node.unknown = reader.finish();

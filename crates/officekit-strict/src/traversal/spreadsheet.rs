@@ -321,6 +321,7 @@ impl WriteThrough for spreadsheet::Author {
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
         let mut through = super::Through::new(out, &spreadsheet::AUTHOR_SHAPE, &self.unknown);
+        through.attribute(0, &self.space);
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -2859,6 +2860,7 @@ impl WriteThrough for spreadsheet::CellValue {
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
         let mut through = super::Through::new(out, &spreadsheet::CELL_VALUE_SHAPE, &self.unknown);
+        through.attribute(0, &self.space);
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -6803,6 +6805,7 @@ impl WriteThrough for spreadsheet::DDELinkValue {
     ) -> io::Result<()> {
         let mut through =
             super::Through::new(out, &spreadsheet::DDE_LINK_VALUE_SHAPE, &self.unknown);
+        through.attribute(0, &self.space);
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -9593,6 +9596,7 @@ impl WriteThrough for spreadsheet::EvenPageFooter {
     ) -> io::Result<()> {
         let mut through =
             super::Through::new(out, &spreadsheet::EVEN_PAGE_FOOTER_SHAPE, &self.unknown);
+        through.attribute(0, &self.space);
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -9665,6 +9669,7 @@ impl WriteThrough for spreadsheet::EvenPageHeader {
     ) -> io::Result<()> {
         let mut through =
             super::Through::new(out, &spreadsheet::EVEN_PAGE_HEADER_SHAPE, &self.unknown);
+        through.attribute(0, &self.space);
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -11433,6 +11438,7 @@ impl WriteThrough for spreadsheet::FirstPageFooter {
     ) -> io::Result<()> {
         let mut through =
             super::Through::new(out, &spreadsheet::FIRST_PAGE_FOOTER_SHAPE, &self.unknown);
+        through.attribute(0, &self.space);
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -11505,6 +11511,7 @@ impl WriteThrough for spreadsheet::FirstPageHeader {
     ) -> io::Result<()> {
         let mut through =
             super::Through::new(out, &spreadsheet::FIRST_PAGE_HEADER_SHAPE, &self.unknown);
+        through.attribute(0, &self.space);
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -12604,6 +12611,7 @@ impl WriteThrough for spreadsheet::Formula {
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
         let mut through = super::Through::new(out, &spreadsheet::FORMULA_SHAPE, &self.unknown);
+        through.attribute(0, &self.space);
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -12663,6 +12671,7 @@ impl WriteThrough for spreadsheet::Formula1 {
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
         let mut through = super::Through::new(out, &spreadsheet::FORMULA1_SHAPE, &self.unknown);
+        through.attribute(0, &self.space);
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -12722,6 +12731,7 @@ impl WriteThrough for spreadsheet::Formula2 {
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
         let mut through = super::Through::new(out, &spreadsheet::FORMULA2_SHAPE, &self.unknown);
+        through.attribute(0, &self.space);
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -18785,6 +18795,7 @@ impl WriteThrough for spreadsheet::OddHeader {
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
         let mut through = super::Through::new(out, &spreadsheet::ODD_HEADER_SHAPE, &self.unknown);
+        through.attribute(0, &self.space);
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -18853,6 +18864,7 @@ impl WriteThrough for spreadsheet::OddPageFooter {
     ) -> io::Result<()> {
         let mut through =
             super::Through::new(out, &spreadsheet::ODD_PAGE_FOOTER_SHAPE, &self.unknown);
+        through.attribute(0, &self.space);
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -19103,6 +19115,7 @@ impl WriteThrough for spreadsheet::OldFormula {
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
         let mut through = super::Through::new(out, &spreadsheet::OLD_FORMULA_SHAPE, &self.unknown);
+        through.attribute(0, &self.space);
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -29186,6 +29199,7 @@ impl WriteThrough for spreadsheet::StringsInSubtopic {
     ) -> io::Result<()> {
         let mut through =
             super::Through::new(out, &spreadsheet::STRINGS_IN_SUBTOPIC_SHAPE, &self.unknown);
+        through.attribute(0, &self.space);
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -30389,6 +30403,7 @@ impl WriteThrough for spreadsheet::Text {
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
         let mut through = super::Through::new(out, &spreadsheet::TEXT_SHAPE, &self.unknown);
+        through.attribute(0, &self.space);
         through.text(&self.value)?;
         through.finish(ctx)
     }

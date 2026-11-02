@@ -1,7 +1,9 @@
 use officekit_markup::common_simple_types::{
     DocumentConformanceClassValue, DocumentConformanceClassValueMember,
 };
-use officekit_markup::spreadsheet::{Cell, CellType, CellValue, Row, Worksheet};
+use officekit_markup::spreadsheet::{
+    Cell, CellType, CellValue, Row, Text as SpreadsheetText, Worksheet,
+};
 use officekit_markup::wordprocessing::{
     BlockContent, Document, DocumentBody, HorizontalAlignmentType, Paragraph, ParagraphAlignment,
     ParagraphContent, ParagraphProperties, Text, TextRun, TextRunContent,
@@ -116,6 +118,44 @@ fn a_transitional_paragraph_writes_back_unchanged() {
             "<w:p xmlns:w=\"{W}\"><w:pPr><w:jc w:val=\"left\"/></w:pPr><w:r><w:t>Hello</w:t></w:r></w:p>"
         )
     );
+}
+
+#[test]
+fn spreadsheet_string_elements_read_back_with_their_space() {
+    let mut text = SpreadsheetText::default();
+    text.space = Some("preserve".to_owned());
+    text.value = " two".to_owned();
+    assert_eq!(
+        written(&text),
+        format!("<x:t xmlns:x=\"{X}\" xml:space=\"preserve\"> two</x:t>")
+    );
+    let read_text = SpreadsheetText::from_transitional(&text.to_transitional().unwrap()).unwrap();
+    assert_eq!(read_text.space, text.space);
+    assert_eq!(read_text.value, text.value);
+    let mut value = CellValue::default();
+    value.space = Some("preserve".to_owned());
+    value.value = " 1".to_owned();
+    let read_value = CellValue::from_transitional(&value.to_transitional().unwrap()).unwrap();
+    assert_eq!(read_value.space, value.space);
+    assert_eq!(read_value.value, value.value);
+}
+
+#[test]
+fn spreadsheet_text_with_no_space_writes_no_attribute() {
+    let mut text = SpreadsheetText::default();
+    text.value = "two".to_owned();
+    assert_eq!(written(&text), format!("<x:t xmlns:x=\"{X}\">two</x:t>"));
+}
+
+#[test]
+fn a_read_holds_xml_space_on_the_field_of_spreadsheet_text() {
+    let text = SpreadsheetText::from_transitional(&element(&format!(
+        "<x:t xmlns:x=\"{X}\" xml:space=\"preserve\"> two</x:t>"
+    )))
+    .unwrap();
+    assert_eq!(text.space.as_deref(), Some("preserve"));
+    assert_eq!(text.value, " two");
+    assert_eq!(text.unknown.attributes, []);
 }
 
 #[test]
